@@ -26,12 +26,12 @@ const quickCheckQuestions = [
     id: 'fire-triangle-elements',
     question: 'Which three elements make up the fire triangle?',
     options: [
-      'Heat, water, and fuel',
       'Heat, fuel, and oxygen',
+      'Heat, water, and fuel',
       'Fuel, electricity, and air',
       'Oxygen, carbon dioxide, and heat',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The fire triangle consists of three elements: heat (an ignition source), fuel (a combustible material), and oxygen (an oxidising agent). All three must be present simultaneously for combustion to occur. Remove any one element and the fire cannot start or sustain itself. This fundamental model underpins all fire prevention and firefighting strategies.',
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
     question: 'Which additional element does the fire tetrahedron add to the fire triangle model?',
     options: [
       'Water vapour',
-      'Carbon dioxide',
       'The chemical chain reaction (uninhibited free radical chain reaction)',
+      'Carbon dioxide',
       'Electrical energy',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The fire tetrahedron extends the fire triangle by adding a fourth element: the chemical chain reaction, specifically the uninhibited free radical chain reaction. This fourth element explains why certain extinguishing agents (such as dry powder and formerly halon) work &mdash; they interrupt the chain reaction at a molecular level rather than removing heat, fuel, or oxygen. Understanding the tetrahedron is essential for selecting the correct firefighting method.',
   },
@@ -127,11 +127,11 @@ const quizQuestions = [
     question: 'What is the flash point of a liquid fuel?',
     options: [
       'The temperature at which a liquid spontaneously ignites without any external ignition source',
-      'The lowest temperature at which a liquid gives off enough vapour to form an ignitable mixture with air near its surface',
       'The temperature at which a liquid begins to boil',
       'The maximum temperature a liquid can reach before it evaporates completely',
+      'The lowest temperature at which a liquid gives off enough vapour to form an ignitable mixture with air near its surface',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The flash point is the lowest temperature at which a liquid gives off sufficient vapour to form an ignitable mixture with air near its surface. At the flash point, the vapour will ignite briefly if an external ignition source is applied, but combustion may not be sustained. This is distinct from the fire point (the temperature at which sustained combustion occurs) and the auto-ignition temperature (the temperature at which spontaneous ignition occurs without an external source).',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the approximate oxygen concentration in normal atmospheric air?',
     options: [
-      'Approximately 16%',
       'Approximately 20.9%',
+      'Approximately 16%',
       'Approximately 23.5%',
       'Approximately 30%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Normal atmospheric air contains approximately 20.9% oxygen, 78% nitrogen, and small amounts of other gases (argon, carbon dioxide, etc.). Fire generally requires at least approximately 16% oxygen to sustain combustion. An atmosphere is considered oxygen-enriched above 23.5%, at which point fire risk increases dramatically.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the auto-ignition temperature of a substance?',
     options: [
-      'The temperature at which a substance first begins to decompose',
-      'The lowest temperature at which a substance gives off flammable vapour',
       'The temperature at which a substance will ignite spontaneously in air without any external ignition source',
+      'The lowest temperature at which a substance gives off flammable vapour',
+      'The temperature at which a substance first begins to decompose',
       'The temperature at which a substance changes from solid to liquid state',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The auto-ignition temperature (also called the spontaneous ignition temperature) is the lowest temperature at which a substance will ignite spontaneously in normal atmospheric air without any external ignition source such as a spark or flame. For example, paper has an auto-ignition temperature of approximately 233 degrees Celsius. This is a critical concept for electricians because electrical equipment can generate sustained temperatures above the auto-ignition temperature of surrounding materials, particularly during fault conditions.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     options: [
       'Fuel &mdash; the plastic casing of the distribution board',
       'Oxygen &mdash; the normal atmospheric air around the board',
-      'Heat &mdash; the electrical energy from the overheated termination',
       'Chain reaction &mdash; the free radicals produced during combustion',
+      'Heat &mdash; the electrical energy from the overheated termination',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The primary initial cause was heat generated by the overheated cable termination. While fuel (the plastic and insulation materials) and oxygen (normal air) were also present and necessary for the fire, the ignition was initiated by excessive heat from the electrical fault. Loose or poorly torqued terminations create high-resistance connections that generate heat, which can exceed the ignition temperature of surrounding combustible materials. This is why correct torquing of terminations to manufacturer specifications and regular thermal imaging during inspection are important fire prevention measures.',
   },

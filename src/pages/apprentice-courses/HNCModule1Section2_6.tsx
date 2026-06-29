@@ -37,9 +37,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of a dynamic risk assessment?',
     options: [
       'To assess risks in real-time as conditions change',
-      'Short circuit causing flashover and burns',
-      'Before any person enters or works in a confined space',
-      'Non-combustible material or metal enclosure',
+      'To replace the need for a written risk assessment',
+      'To record the cost of controls before work starts',
+      'To assign blame after an accident has occurred',
     ],
     correctIndex: 0,
     explanation:
@@ -75,10 +75,10 @@ const quickCheckQuestions = [
     id: 'take-5-timing',
     question: 'When should a Take 5 assessment typically be performed?',
     options: [
-      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
+      'Only at the very end of the working day',
       'Before starting each new task or when conditions change',
-      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
-      'Direct loss and expense caused by relevant matters',
+      'Only once a week during the toolbox talk',
+      'Only when the supervisor specifically requests it',
     ],
     correctIndex: 1,
     explanation:
@@ -118,9 +118,9 @@ const quizQuestions = [
     id: 3,
     question: 'During a Take 5 assessment, which of the following should be considered?',
     options: [
-      'Consistently delivering work that meets or exceeds standards',
-      'Ceiling tiles, partition walls, and fire protection panels',
-      'Just fits — but with virtually no headroom for additional cables or future modification',
+      'Only the electrical hazards within your own trade',
+      'Only the hazards listed in the written method statement',
+      'Only hazards that have caused accidents before',
       'All hazards including environmental, physical, and work activity risks',
     ],
     correctAnswer: 3,
@@ -133,9 +133,9 @@ const quizQuestions = [
       'When working in an occupied commercial building, which scenario would MOST likely require a dynamic risk assessment?',
     options: [
       'Fire alarm testing begins unexpectedly during your installation work',
-      'False - essential for both small domestic and complex industrial systems',
-      'To demonstrate compliance during fire inspections and provide evidence for insurers',
-      'Adequate capacity, diversity factors, and future expansion',
+      'You complete the task exactly as the method statement describes',
+      'You finish early and tidy your tools away',
+      'The building manager signs off your completed work',
     ],
     correctAnswer: 0,
     explanation:
@@ -173,9 +173,9 @@ const quizQuestions = [
     question:
       'During installation work in a hospital, a patient emergency is declared in an adjacent area. What is the appropriate response?',
     options: [
-      'Fraud, disciplinary action, loss of employment, or prosecution',
-      'Over-reporting — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safer to raise issues than ignore them',
-      'A durable label or marking identifying its purpose',
+      'Continue working, as the emergency is not in your area',
+      'Pack away all tools before doing anything else',
+      'Wait for a supervisor to tell you what to do',
       'Stop work, assess the situation, and follow emergency protocols',
     ],
     correctAnswer: 3,
@@ -199,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: 'When should a dynamic risk assessment be documented?',
     options: [
-      'Ensure compliance with safety legislation and best practices',
+      'Only at the end of the project for the handover file',
       'When significant hazards are identified or changes made to work methods',
-      'Very low resistance measurements like busbar joints',
-      'That there is no breakdown between conductors or to earth',
+      'Only if an accident actually results from the hazard',
+      'Never, as dynamic assessments are always informal',
     ],
     correctAnswer: 1,
     explanation:
@@ -213,10 +213,10 @@ const quizQuestions = [
     question:
       'A building services engineer discovers that a supposedly isolated circuit is actually live during testing. According to dynamic risk assessment principles, what should happen FIRST?',
     options: [
-      'To avoid interference and ensure accurate readings',
-      'To provide safety and visibility while awaiting rescue',
+      'Carry on testing to confirm which circuit is live',
+      'Note the finding and continue with extra caution',
       'Stop work immediately and make the area safe',
-      'Overloading with heavy fittings',
+      'Re-check the drawings before taking any action',
     ],
     correctAnswer: 2,
     explanation:

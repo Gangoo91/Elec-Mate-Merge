@@ -3,10 +3,10 @@ export const bmsModule6Section3Quiz = [
     id: 1,
     question: 'What is the main purpose of a BMS dashboard?',
     options: [
-      'Testing devices and verifying that field changes appear correctly on dashboards',
+      'To store the building electrical test certificates',
       'To convert technical data into actionable information for decision-making',
-      'It allows operators to monitor and respond to building issues from anywhere',
-      'The CO₂ sensor had been wired into the wrong input channel',
+      'To replace the field controllers that run the plant',
+      'To log every keystroke made by maintenance engineers',
     ],
     correctAnswer: 1,
     explanation:
@@ -16,10 +16,10 @@ export const bmsModule6Section3Quiz = [
     id: 2,
     question: 'Why do dashboards simplify building data?',
     options: [
-      'Operators make incorrect decisions based on false data displayed',
-      'The CO₂ sensor had been wired into the wrong input channel',
+      'They hide alarm conditions so operators are not distracted',
+      'They reduce the number of sensors the system needs',
       'They present complex control systems as easy-to-read graphics and summaries',
-      'It ensures dashboard displays correspond to the correct equipment and locations',
+      'They compress historical data so it cannot be reviewed later',
     ],
     correctAnswer: 2,
     explanation:
@@ -29,9 +29,9 @@ export const bmsModule6Section3Quiz = [
     id: 3,
     question: 'Give one example of information displayed on a dashboard floor plan.',
     options: [
-      'Testing devices and verifying that field changes appear correctly on dashboards',
-      'They present complex control systems as easy-to-read graphics and summaries',
-      'Percentage of time within comfort temperature band',
+      'The wiring schematic of each distribution board',
+      'The annual electricity bill for the building',
+      'The make and model of every installed controller',
       'Room temperatures with colour-coded zones showing normal/alarm status',
     ],
     correctAnswer: 3,
@@ -43,9 +43,9 @@ export const bmsModule6Section3Quiz = [
     question: 'What is one KPI that might be used in a dashboard?',
     options: [
       'Percentage of time within comfort temperature band',
-      'Operators make incorrect decisions based on false data displayed',
-      'The CO₂ sensor had been wired into the wrong input channel',
-      'Interactive trend charts showing data over time',
+      'The colour scheme used for the floor-plan graphics',
+      'The number of operators logged into the system',
+      'The cable type used between sensors and controllers',
     ],
     correctAnswer: 0,
     explanation:
@@ -55,10 +55,10 @@ export const bmsModule6Section3Quiz = [
     id: 5,
     question: 'Why is remote access important for modern dashboards?',
     options: [
-      'They present complex control systems as easy-to-read graphics and summaries',
+      'It removes the need for any on-site maintenance staff',
       'It allows operators to monitor and respond to building issues from anywhere',
-      'Operators make incorrect decisions based on false data displayed',
-      'To convert technical data into actionable information for decision-making',
+      'It speeds up the field controllers that run the plant',
+      'It stops unauthorised users from viewing building data',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,10 +68,10 @@ export const bmsModule6Section3Quiz = [
     id: 6,
     question: 'What is one risk of miswired sensors feeding into dashboards?',
     options: [
-      'To convert technical data into actionable information for decision-making',
-      'The CO₂ sensor had been wired into the wrong input channel',
+      'The dashboard graphics load more slowly than normal',
+      'The trend charts display data in the wrong colour',
       'Operators make incorrect decisions based on false data displayed',
-      'Percentage of time within comfort temperature band',
+      'The remote access feature is automatically disabled',
     ],
     correctAnswer: 2,
     explanation:
@@ -81,9 +81,9 @@ export const bmsModule6Section3Quiz = [
     id: 7,
     question: 'Why is accurate labelling important for dashboards?',
     options: [
-      'It allows operators to monitor and respond to building issues from anywhere',
-      'Operators make incorrect decisions based on false data displayed',
-      'Room temperatures with colour-coded zones showing normal/alarm status',
+      'It makes the dashboard graphics load faster',
+      'It reduces the number of sensors needed in the building',
+      'It allows the dashboard to run without an internet connection',
       'It ensures dashboard displays correspond to the correct equipment and locations',
     ],
     correctAnswer: 3,
@@ -95,9 +95,9 @@ export const bmsModule6Section3Quiz = [
     question: "What is the electrician's role in dashboard commissioning?",
     options: [
       'Testing devices and verifying that field changes appear correctly on dashboards',
-      'It allows operators to monitor and respond to building issues from anywhere',
-      'They present complex control systems as easy-to-read graphics and summaries',
-      'It ensures dashboard displays correspond to the correct equipment and locations',
+      'Designing the dashboard graphics and choosing the colour scheme',
+      'Setting the KPI targets used to judge building performance',
+      'Writing the control logic that runs inside the BMS software',
     ],
     correctAnswer: 0,
     explanation:
@@ -107,10 +107,10 @@ export const bmsModule6Section3Quiz = [
     id: 9,
     question: 'What type of chart might be used for historical performance in dashboards?',
     options: [
-      'A full-length platform with toeboards on all open sides',
+      'A single-point gauge showing the current value only',
       'Interactive trend charts showing data over time',
-      'It could not detect a broken neutral conductor',
-      'It produces less toxic smoke in a fire',
+      'A static floor plan with no live data overlay',
+      'An on/off status indicator for each item of plant',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,10 +120,10 @@ export const bmsModule6Section3Quiz = [
     id: 10,
     question: 'In the real-world example, why did CO₂ levels appear low on the dashboard?',
     options: [
-      'Operators make incorrect decisions based on false data displayed',
-      'Percentage of time within comfort temperature band',
+      'The CO₂ sensor had been set to display in the wrong units',
+      'The dashboard refresh rate was set too slowly',
       'The CO₂ sensor had been wired into the wrong input channel',
-      'To convert technical data into actionable information for decision-making',
+      'The ventilation fans were running at full speed',
     ],
     correctAnswer: 2,
     explanation:

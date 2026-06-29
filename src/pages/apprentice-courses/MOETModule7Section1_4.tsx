@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question: 'What is the most reliable method for identifying knowledge gaps before the EPA?',
     options: [
       'Analysing your scores by topic across multiple practice tests to find consistent weak areas',
-      'Its energy band gap is small enough that doping or heat can free electrons into conduction',
-      'Stop, don\\\'t disturb the tile, isolate the area, ring the supervisor and ask the duty holder for the asbestos register',
-      'Previous certificates, circuit schedules, and instructions for operation',
+      'Re-reading every module from start to finish until you feel confident overall',
+      'Asking other apprentices which topics they personally found the hardest',
+      'Focusing on the topics you already enjoy because you will revise them more willingly',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'study-plan',
     question: 'A good study plan should prioritise:',
     options: [
-      'Mirroring back the speaker\\\\\\\'s feelings and content to show understanding',
-      'When site conditions change, after an incident, or when the work method changes',
+      'Equal time on every topic, regardless of how well you currently score on each',
+      'Only the topics with the heaviest EPA weighting, ignoring everything else',
       'Weak areas identified through practice test analysis, while maintaining revision of strong areas',
-      'To measure the level of a substance or its metabolite in a worker\\\\\\\'s body (e.g., blood, urine)',
+      'The topics you can revise fastest, so you can tick off more of the syllabus each day',
     ],
     correctIndex: 2,
     explanation:
@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question:
       "When self-assessing your knowledge using a confidence rating system, what does a rating of 'amber' typically indicate?",
     options: [
-      'Automated scheduling, searchable databases, error checking, and audit trails',
-      'Voltage can be easily changed with transformers for efficient transmission',
-      'Appropriate PPE, safe working practices, and correct procedures',
+      'You are fully confident and consistently score highly on this topic under exam conditions',
+      'You have a significant gap and would struggle to answer even basic questions on the topic',
+      'The topic does not appear in the EPA and so does not need any revision',
       'You have some understanding but are not confident you could answer exam questions reliably',
     ],
     correctIndex: 3,
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'The first step in identifying knowledge gaps is to:',
     options: [
-      'They reduce grip on loads and underfoot surfaces, increasing the risk of slips and dropped loads',
+      'Book your EPA date so you have a firm deadline to work towards',
       'Complete a diagnostic assessment covering all module areas to establish a baseline',
-      'Provide the price but clearly define what "fully inclusive" means by listing all inclusions and exclusions',
-      '0.18 watts pass through each m² for every 1K temperature difference',
+      'Start revising the topic you feel least confident about straight away',
+      'Re-read the whole syllabus once before attempting any practice questions',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 2,
     question: 'A traffic-light self-assessment system uses which categories?',
     options: [
-      'To vary motor speed for energy efficiency and demand matching',
-      'Version control, backup procedures, access control, and format standards',
+      'Pass, merit, distinction (graded by overall percentage)',
+      'Beginner, intermediate, advanced (graded by experience level)',
       'Green (confident), amber (partial), red (significant gap)',
-      'Through voice control, automation, and remote monitoring capabilities',
+      'Low, medium, high (graded by EPA weighting of the topic)',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ const quizQuestions = [
     id: 3,
     question: 'When tracking scores by topic, you should record data from:',
     options: [
-      'Complete electrical path between two points',
-      'The body\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
-      'Work effectively with other trades and stakeholders',
+      'Only your most recent test, since older results are no longer relevant',
+      'Only the tests where you scored above the pass mark',
+      'Only your very first diagnostic test, as your true baseline',
       'Multiple tests over time to identify consistent patterns',
     ],
     correctAnswer: 3,
@@ -98,9 +98,9 @@ const quizQuestions = [
       'Which approach to revision is most effective for addressing identified knowledge gaps?',
     options: [
       'Focused study of the specific topics identified as weak, combined with practice questions on those topics',
-      'A predecessor must complete before its successor can start (with FS relationship)',
-      'To provide legal documentation that the system meets recognised standards and establish professional accountability',
-      'A failure in the preventive maintenance programme to include functional testing of protective devices',
+      'Re-reading every module evenly so no topic is neglected before the EPA',
+      'Doing large numbers of practice questions without first studying the underlying content',
+      'Memorising the answers to past practice questions in case they recur',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,9 +138,9 @@ const quizQuestions = [
     id: 7,
     question: 'A study plan should include which of the following elements?',
     options: [
-      'Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity',
-      'At least every 7 days by a competent person, and after any event likely to have affected its stability',
-      'To determine the number of luminaires needed to achieve target illuminance',
+      'Only a list of the topics you intend to cover, with no fixed timings',
+      'Only the date of your final mock exam and nothing else',
+      'Only the resources you will use, leaving the schedule to fit around work',
       'Topics, time allocation, resources, practice test dates, and progress review points',
     ],
     correctAnswer: 3,
@@ -153,9 +153,9 @@ const quizQuestions = [
       'If your practice test analysis shows you consistently score well on health and safety but poorly on electrical science, you should:',
     options: [
       'Increase the proportion of study time allocated to electrical science while maintaining periodic H&S review',
-      'Delivery notes, compliance certificates, test certificates, and handling instructions',
-      'Stop, do not proceed with testing, and obtain a replacement indicator that passes the prove test',
-      'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
+      'Keep splitting your time equally between the two topics regardless of the scores',
+      'Stop revising electrical science, since it is clearly your weakest subject',
+      'Spend more time on health and safety to push that strong score even higher',
     ],
     correctAnswer: 0,
     explanation:
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 9,
     question: 'The MOET course modules can be used for targeted review by:',
     options: [
-      'Do not click the link. Contact the wholesaler directly using their known phone number to verify the request',
+      'Working through every module in order, whether or not the topic is a weak area',
       'Identifying the specific sections that correspond to your weak topics and studying those sections in depth',
-      'Better heat dissipation allows higher current capacity because I²R losses can be removed more effectively',
-      'The area directly below the working area plus a margin for falling objects, typically established with barriers and warning signs',
+      'Reading only the section summaries, since the detail is rarely tested',
+      'Skipping the modules entirely and relying on workplace experience alone',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 10,
     question: 'How often should you reassess your knowledge gaps during EPA preparation?',
     options: [
-      'For flexible applications and harsh environments',
-      'To separate the chilled water circuit from the condenser water circuit',
+      'Once at the very start, then not again until the day before the EPA',
+      'Only when your overall score drops below the pass mark',
       'After every practice test, with a formal review every 2-3 weeks',
-      'Achieving net zero greenhouse gas emissions by 2050',
+      'Only if your tutor specifically asks you to review your progress',
     ],
     correctAnswer: 2,
     explanation:

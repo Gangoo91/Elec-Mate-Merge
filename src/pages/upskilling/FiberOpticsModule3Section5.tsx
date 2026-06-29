@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'firestop-qc1',
     question: 'What is the primary purpose of firestop systems in cable installations?',
     options: [
-      'Improve signal quality',
       'Maintain fire barrier integrity',
+      'Improve signal quality',
       'Reduce cable costs',
       'Increase cable capacity',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Firestop systems maintain the fire-resistance rating of walls and floors by sealing penetrations and preventing fire spread between compartments.',
   },
@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     options: [
       'The building owner',
       'The cable installer',
-      'A certified firestop contractor',
       'The fire service',
+      'A certified firestop contractor',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Firestop installation should be carried out or certified by qualified contractors trained in the specific firestop systems being used.',
   },
@@ -50,8 +50,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What document provides guidance on fire stopping in the UK?',
-    options: ['BS 7671', 'Approved Document B', 'ETSI standards', 'ISO 9001'],
-    correctAnswer: 1,
+    options: ['Approved Document B', 'BS 7671', 'ETSI standards', 'ISO 9001'],
+    correctAnswer: 0,
     explanation:
       'Approved Document B of the Building Regulations provides fire safety guidance in England and Wales.',
   },
@@ -60,11 +60,11 @@ const quizQuestions = [
     question: 'What is an intumescent material?',
     options: [
       'A flexible sealant',
-      'A material that expands when heated',
       'A rigid fire block',
+      'A material that expands when heated',
       'A cable coating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Intumescent materials expand significantly when exposed to heat, sealing gaps and preventing fire passage.',
   },
@@ -73,11 +73,11 @@ const quizQuestions = [
     question: "What does 'E' rating indicate in fire testing?",
     options: [
       'Energy efficiency',
-      'Integrity (flame/hot gas passage)',
       'External rating',
       'Environmental protection',
+      'Integrity (flame/hot gas passage)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'E rating indicates integrity - the ability to prevent flame and hot gas passage through the barrier.',
   },
@@ -85,28 +85,28 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the maximum fill ratio typically specified for fire-stopped cable penetrations?',
-    options: ['100%', '80%', '60%', '40%'],
-    correctAnswer: 2,
+    options: ['100%', '60%', '80%', '40%'],
+    correctAnswer: 1,
     explanation: 'Most firestop systems specify a maximum 60% fill ratio for cable penetrations.',
   },
   {
     id: 5,
     question: 'What must be done when adding cables to an existing firestopped penetration?',
     options: [
-      'Nothing - existing firestop is sufficient',
+      "Follow manufacturer's re-entry procedures",
       'Remove and reinstall complete firestop',
       'Add silicone sealant around new cables',
-      "Follow manufacturer's re-entry procedures",
+      'Nothing - existing firestop is sufficient',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Re-enterable firestop systems have specific procedures that must be followed to maintain the fire rating.',
   },
   {
     id: 6,
     question: 'What colour are intumescent plugs commonly marked?',
-    options: ['Yellow', 'Red or orange', 'Blue', 'Green'],
-    correctAnswer: 1,
+    options: ['Yellow', 'Blue', 'Red or orange', 'Green'],
+    correctAnswer: 2,
     explanation:
       'Intumescent materials are typically coloured red or orange for easy identification.',
   },
@@ -115,11 +115,11 @@ const quizQuestions = [
     question: 'What does a transit device or frame provide?',
     options: [
       'Mechanical support only',
-      'Organised entry point maintaining fire rating',
       'Electrical grounding',
       'Cable identification',
+      'Organised entry point maintaining fire rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Transit frames provide organised cable entry points while maintaining the required fire rating.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 8,
     question: 'Where must firestop documentation be retained?',
     options: [
-      'With cable manufacturer',
       'In building fire safety file/O&M manual',
+      'With cable manufacturer',
       'At local council offices',
       'Online only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Firestop documentation must be retained in the building's fire safety file and O&M manual.",
   },
@@ -154,11 +154,11 @@ const quizQuestions = [
     question: 'Which regulation covers fire safety in non-domestic buildings?',
     options: [
       'Building Regulations only',
-      'Regulatory Reform (Fire Safety) Order 2005',
       'Data Protection Act',
+      'Regulatory Reform (Fire Safety) Order 2005',
       'Health and Safety at Work Act only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Regulatory Reform (Fire Safety) Order 2005 covers fire safety requirements in non-domestic buildings.',
   },

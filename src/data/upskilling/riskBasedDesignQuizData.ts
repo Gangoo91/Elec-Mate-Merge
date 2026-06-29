@@ -11,10 +11,10 @@ export const riskBasedDesignQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'Why are risk-based adjustments necessary in emergency lighting design?',
     options: [
-      'To increase installation costs',
-      'Every building has unique challenges that generic minimum standards may not address',
-      'To comply with insurance requirements only',
-      'They are not necessary if BS 5266 is followed',
+      'To deliberately increase the cost of the installation',
+      'Generic minimum standards may not address each building\'s unique risks',
+      'To satisfy building insurance requirements and nothing more',
+      'They are unnecessary provided BS 5266 minimums are followed',
     ],
     correct: 1,
     explanation:
@@ -64,10 +64,10 @@ export const riskBasedDesignQuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Why do theatres often need adapted lighting strategies?',
     options: [
-      'For better stage lighting effects',
-      'To maintain low background levels while providing wayfinding without disrupting dark adaptation',
-      'To reduce electricity costs',
-      'For architectural aesthetics only',
+      'To improve the visual quality of stage lighting effects',
+      'To give wayfinding without disrupting the audience\'s dark adaptation',
+      'To reduce the venue\'s overall electricity running costs',
+      'For architectural and decorative aesthetics only',
     ],
     correct: 1,
     explanation:
@@ -75,16 +75,16 @@ export const riskBasedDesignQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 6,
-    question: 'How long must emergency lighting last in high-rise buildings?',
+    question: 'What emergency lighting duration is generally specified for high-rise residential buildings?',
     options: [
-      '30 minutes is sufficient',
-      '1 hour like all buildings',
-      '3 hours due to extended evacuation times',
-      'Duration depends on building height only',
+      '30 minutes, the minimum permitted by BS 5266',
+      '1 hour, the same as a small single-storey premises',
+      '3 hours, to allow for extended and phased evacuation',
+      '2 hours, regardless of evacuation strategy',
     ],
     correct: 2,
     explanation:
-      'High-rise buildings generally require 3-hour duration due to extended evacuation times caused by stairwell capacity limits and phased evacuation procedures.',
+      'A 3-hour duration is generally specified for high-rise buildings because phased evacuation and stairwell capacity limits extend the time occupants need illuminated escape routes. BS 5266-1 permits rated durations of 1, 2 or 3 hours.',
   },
   {
     id: 7,

@@ -46,9 +46,9 @@ const quickCheckQuestions = [
     question: 'Why is the Weibull distribution used in wind resource assessment?',
     options: [
       'It accurately models the statistical distribution of wind speeds',
-      'Evacuation time allowance for larger buildings',
-      'A transient current spike may occur during changeover',
-      'Have technical knowledge and experience to prevent danger and recognise risk',
+      'It converts wind speed directly into electrical power output',
+      'It calculates the structural loading on the turbine tower',
+      'It predicts the noise level produced at the nearest dwelling',
     ],
     correctIndex: 0,
     explanation:
@@ -59,28 +59,28 @@ const quickCheckQuestions = [
     question:
       'Why are building-mounted wind turbines generally less effective than freestanding installations?',
     options: [
+      'They are limited to a maximum hub height of 11.1 metres',
+      'They require a more expensive G99 grid connection application',
       'Building interference creates turbulent, low-velocity airflow',
-      'They must be CAT III or CAT IV rated with finger guards',
-      'Circuit protective conductor (CPC) resistance',
-      'By wearing high-visibility vests or armbands, often in a distinct colour',
+      'They cannot use a yaw mechanism to track the wind direction',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Buildings create significant turbulence and reduce wind speed in their vicinity. The building effect zone extends to approximately 2-3 times building height. Turbulent flow reduces energy capture and increases mechanical stress on the turbine.',
   },
   {
     id: 'grid-connection',
     question:
-      'For a small wind turbine connecting to the UK grid, what is the maximum single-phase inverter capacity typically permitted without DNO application?',
+      'For a small wind turbine connecting to the UK grid, what is the maximum single-phase inverter capacity typically permitted under the G98 notification process?',
     options: [
-      '3.68 kW',
       '1.6 kW',
+      '2.5 kW',
+      '3.68 kW',
       '6 kW',
-      '10 kW',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
-      'Under G98 (formerly G83), single-phase inverters up to 3.68 kW can be connected using the notification process without requiring a formal DNO application. Above this threshold, or for three-phase systems above 11.04 kW, G99 application is required.',
+      'Under G98 (formerly G83), single-phase inverters up to 3.68 kW (16 A) can be connected using the notification process without requiring a formal DNO application. Above this threshold, or for three-phase systems above 11.04 kW, a G99 application is required.',
   },
 ];
 
@@ -226,9 +226,9 @@ const quizQuestions = [
     question:
       'For grid-connected small wind systems, the inverter must comply with which current UK standard?',
     options: [
-      'Sharp bends and potential damage points',
-      'Polarity test at outlets/switches',
-      'Decreases UGR (better glare control)',
+      'BS 7671 Section 712 (solar PV systems)',
+      'ETSU-R-97 (turbine noise assessment)',
+      'MCS MIS 3003 (wind turbine installation)',
       'G98/G99 (Engineering Recommendations)',
     ],
     correctAnswer: 3,
@@ -240,9 +240,9 @@ const quizQuestions = [
     question: 'What is the primary structural concern for building-mounted wind turbines?',
     options: [
       'Dynamic loading and resonance with building structure',
-      'At regular intervals as specified in regulations',
-      'HMRC refunds the £5,000 overpayment after filing the tax return',
-      'Cracked insulation, damaged probes, or intermittent readings',
+      'Excessive cable voltage drop between the turbine and inverter',
+      'The need for a separate earth electrode at the tower base',
+      'Shading of nearby solar PV panels by the rotating blades',
     ],
     correctAnswer: 0,
     explanation:

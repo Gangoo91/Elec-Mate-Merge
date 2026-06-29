@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'k-factor',
     question: 'A K-factor transformer rated K-13 is designed for installations with:',
     options: [
-      'Current and the cable’s resistance',
-      'Proportional, Integral, Derivative',
+      'Purely linear, resistive loads only',
+      'Loads with a very low power factor',
       'Moderate to heavy harmonic loads',
-      'Further Investigation required',
+      'No connected load below 50% of rating',
     ],
     correctIndex: 2,
     explanation:
@@ -73,10 +73,10 @@ const quickCheckQuestions = [
     question:
       'In a three-phase system, 5th harmonic currents create a rotating magnetic field that:',
     options: [
-      'Describe behaviour, express feelings, state impact, request change',
+      'Rotates in the same direction (positive sequence)',
       'Rotates in the opposite direction (negative sequence)',
-      'Test lead connections and instrument battery',
-      'Proactive monitoring and preventive maintenance',
+      'Produces no rotating field (zero sequence)',
+      'Cancels the fundamental rotating field entirely',
     ],
     correctIndex: 1,
     explanation:
@@ -145,14 +145,14 @@ const quizQuestions = [
     question:
       'What is the primary cause of additional heating in cables carrying harmonic currents?',
     options: [
-      'Skin effect at higher frequencies',
-      'Both A and B',
-      'Reduced insulation resistance',
-      'Increased RMS current value',
+      'A lower power factor at the load',
+      'Increased RMS current combined with skin effect at higher frequencies',
+      'Reduced insulation resistance of the cable',
+      'A rise in the nominal supply voltage',
     ],
     correctAnswer: 1,
     explanation:
-      'Harmonic currents increase both the RMS current value and cause skin effect at higher frequencies, pushing current to the conductor surface and increasing effective resistance. Both effects contribute to additional heating.',
+      'Harmonic currents increase the RMS current value and cause skin effect at higher frequencies, pushing current to the conductor surface and increasing effective resistance. Both effects contribute to additional heating.',
   },
   {
     id: 6,
@@ -187,9 +187,9 @@ const quizQuestions = [
       'According to G5/4-1, what assessment is required before connecting a large non-linear load to the distribution network?',
     options: [
       'Harmonic current assessment at the point of connection',
-      'The volume of air forcibly exhaled in the first one second',
-      'To identify obvious faults safely before applying power',
-      'Summarising and checking understanding',
+      'A power factor assessment at the supply transformer',
+      'An insulation resistance test of the whole installation',
+      'A voltage drop calculation for the final circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -212,10 +212,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is Total Harmonic Distortion (THD)?',
     options: [
-      'That they are fitted at the correct height (950mm minimum), secured and undamaged',
-      'To prevent the cable from overheating due to reduced heat dissipation',
+      'The ratio of the fundamental to the supply voltage',
+      'The phase angle between voltage and current',
       'The ratio of harmonic content to fundamental, expressed as a percentage',
-      'Raise the alarm and ensure all persons in the area are alerted',
+      'The total current drawn by all non-linear loads',
     ],
     correctAnswer: 2,
     explanation:

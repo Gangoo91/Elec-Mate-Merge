@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     question:
       "According to Aaron Beck's Cognitive Behavioural Therapy model, what is the fundamental link that drives emotional responses?",
     options: [
-      'Events directly cause emotions — the same event produces the same emotion in everyone',
       'Thoughts (cognitions) mediate between events and emotions — it is your interpretation that determines your emotional response',
+      'Events directly cause emotions — the same event produces the same emotion in everyone',
       'Emotions cause thoughts — you feel first and think second',
       'Behaviour determines both thoughts and emotions — changing what you do changes how you think and feel',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Beck's CBT model is built on the principle that it is not the event itself that determines your emotional response, but your interpretation of that event. The same situation — such as failing an EICR — can produce very different emotions depending on how you think about it. If you think 'I am a terrible electrician,' you will feel shame and despair. If you think 'This is useful feedback that will help me improve,' you will feel motivated. The event is identical; the emotional response is completely different because the thought (cognition) between event and emotion is different.",
   },
@@ -36,11 +36,11 @@ const quickCheckQuestions = [
       "In Ellis's ABC Model, what does the 'B' stand for, and why is it the most important element?",
     options: [
       'Behaviour — because changing behaviour changes everything else',
-      'Beliefs — because your beliefs about the activating event determine the consequences (emotional and behavioural)',
       'Biology — because physiological responses drive emotional reactions',
       'Balance — because maintaining emotional balance prevents negative consequences',
+      'Beliefs — because your beliefs about the activating event determine the consequences (emotional and behavioural)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "In Ellis's ABC Model, B stands for Beliefs — the thoughts, interpretations, and assumptions you hold about the Activating event (A). B is the most important element because it is the filter through which the event is processed before it produces Consequences (C — your emotional and behavioural response). Two people can experience the same Activating event and have completely different Consequences because their Beliefs about the event differ. This is why cognitive reframing targets B: by changing your beliefs about the event, you change the emotional and behavioural consequences.",
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       "According to Beck's CBT model, what is the primary target for changing emotional responses?",
     options: [
-      'The external event or situation that triggered the emotion',
       'The automatic thoughts and interpretations between the event and the emotion',
+      'The external event or situation that triggered the emotion',
       'The physiological stress response in the body',
       'The behaviour that follows the emotional response',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Beck's CBT model identifies automatic thoughts — the rapid, often unconscious interpretations we make about events — as the primary target for changing emotional responses. While you cannot always control the events that happen to you, and while physiological responses and behaviours are also important, the most effective point of intervention is the cognitive level: changing how you interpret and think about events changes the emotional response they produce.",
   },
@@ -107,11 +107,11 @@ const quizQuestions = [
     question: 'Which of the following is an example of catastrophising?',
     options: [
       '"I made a mistake on this circuit, so I need to fix it before testing."',
-      '"If I fail this inspection, I will lose my business, my house, and everything I have worked for."',
       '"The client seems unhappy, so I should ask what is wrong."',
+      '"If I fail this inspection, I will lose my business, my house, and everything I have worked for."',
       '"I found an error in my calculations, which means I need to recalculate."',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Catastrophising involves taking a single event (failing an inspection) and rapidly escalating it to the worst possible outcome (losing business, house, and everything). The thought leaps from a specific, manageable problem to a total, irreversible disaster without considering the many intermediate steps, alternative outcomes, or coping resources available. The other options represent proportionate, balanced thinking about problems — acknowledging the issue and focusing on a practical response.',
   },
@@ -133,11 +133,11 @@ const quizQuestions = [
     question: 'What is the correct sequence of steps in a thought record?',
     options: [
       'Emotion, thought, evidence, balanced thought, situation',
-      'Situation, automatic thought, emotion, evidence for, evidence against, balanced thought',
       'Trigger, response, reflection, action plan',
       'Event, feeling, behaviour, outcome',
+      'Situation, automatic thought, emotion, evidence for, evidence against, balanced thought',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct sequence for a thought record is: (1) Situation — what happened, when, where, who was involved; (2) Automatic thought — what went through your mind; (3) Emotion — what you felt and how intense it was (0-100%); (4) Evidence for — what facts support the automatic thought; (5) Evidence against — what facts contradict the automatic thought; and (6) Balanced thought — a more accurate, proportionate thought that accounts for all the evidence. This structured process forces you to examine your thoughts critically rather than accepting them at face value.',
   },
@@ -145,8 +145,8 @@ const quizQuestions = [
     id: 6,
     question:
       'An electrician thinks: "I should be faster at wiring boards by now." Which cognitive distortion does this represent?',
-    options: ['Mind reading', 'Overgeneralisation', 'Should statement', 'Personalisation'],
-    correctAnswer: 2,
+    options: ['Mind reading', 'Should statement', 'Overgeneralisation', 'Personalisation'],
+    correctAnswer: 1,
     explanation:
       'This is a "should statement" — an arbitrary, self-imposed rule about how things ought to be. Should statements create guilt and frustration because they set standards that may not be realistic, evidence-based, or fair. The word "should" implies that there is a fixed, universal standard for how fast someone ought to be, which is rarely the case. A balanced alternative: "I am progressing at my own pace. Speed comes with experience, and I am faster now than I was six months ago."',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the key difference between cognitive reframing and positive thinking?',
     options: [
-      'There is no meaningful difference — both involve thinking more positively',
       'Cognitive reframing replaces distorted thoughts with accurate, balanced ones; positive thinking replaces negative thoughts with artificially positive ones',
+      'There is no meaningful difference — both involve thinking more positively',
       'Positive thinking is evidence-based; cognitive reframing is not',
       'Cognitive reframing only works for minor problems; positive thinking works for major ones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cognitive reframing replaces distorted, unbalanced thoughts with thoughts that are accurate and proportionate — which may still acknowledge difficulty and negative aspects, but do so without distortion. Positive thinking replaces negative thoughts with artificially positive ones regardless of accuracy, which often feels forced and unsustainable. A reframed thought is not necessarily positive; it is simply more balanced and accurate than the distorted original.',
   },

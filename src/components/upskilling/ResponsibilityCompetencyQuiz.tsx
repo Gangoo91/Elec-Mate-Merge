@@ -42,12 +42,12 @@ const ResponsibilityCompetencyQuiz = () => {
       question:
         'Under the Electricity at Work Regulations 1989, who can carry out inspection and testing?',
       options: [
-        'A. Anyone employed by a contractor',
-        'B. Only persons deemed competent',
+        'A. Only persons deemed competent',
+        'B. Anyone employed by a contractor',
         'C. The site manager',
         'D. The client',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'EAWR 1989 Regulation 16 specifically requires that work on electrical systems be carried out only by competent persons. This is a legal requirement, not just best practice.',
     },
@@ -56,11 +56,11 @@ const ResponsibilityCompetencyQuiz = () => {
       question: 'What is a serious risk of working outside your level of competence?',
       options: [
         'A. You might take longer to finish',
-        'B. You may be overcharged for training',
-        'C. You could face legal action and endanger lives',
+        'B. You could face legal action and endanger lives',
+        'C. You may be overcharged for training',
         'D. The certificate will need more pages',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Working outside competency limits creates serious legal liability and safety risks. This can result in prosecution, imprisonment, fines, and most importantly, could endanger lives through missed hazards or incorrect certification.',
     },
@@ -68,12 +68,12 @@ const ResponsibilityCompetencyQuiz = () => {
       id: 5,
       question: 'Which of these best demonstrates competency for inspection and testing?',
       options: [
-        'A. Watching online videos',
+        'A. City & Guilds 2391 qualification plus practical experience',
         'B. Reading outdated guidance',
-        'C. City & Guilds 2391 qualification plus practical experience',
+        'C. Watching online videos',
         'D. Asking a friend for advice',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Competency is best demonstrated through recognised qualifications (like C&G 2391) combined with practical experience. This provides both theoretical knowledge and real-world application skills necessary for safe and effective work.',
     },
@@ -83,11 +83,11 @@ const ResponsibilityCompetencyQuiz = () => {
         'What are the potential penalties for electrical work carried out by non-competent persons?',
       options: [
         'A. Warning letter only',
-        'B. Unlimited fines and up to 2 years imprisonment',
-        'C. Small fixed penalty notice',
-        'D. Just increased insurance premiums',
+        'B. Small fixed penalty notice',
+        'C. Just increased insurance premiums',
+        'D. Unlimited fines and up to 2 years imprisonment',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Under EAWR 1989 and HASWA 1974, penalties can include unlimited fines, imprisonment up to 2 years, and director disqualification. These are serious criminal offences with severe consequences.',
     },
@@ -96,11 +96,11 @@ const ResponsibilityCompetencyQuiz = () => {
       question: 'Which regulation specifically requires competent persons for electrical work?',
       options: [
         'A. Regulation 4 of EAWR 1989',
-        'B. Regulation 16 of EAWR 1989',
-        'C. Section 7 of HASWA 1974',
+        'B. Section 7 of HASWA 1974',
+        'C. Regulation 16 of EAWR 1989',
         'D. Building Regulations Part P',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Regulation 16 of the Electricity at Work Regulations 1989 specifically states that no person shall be engaged in work which requires technical knowledge or experience unless they possess such knowledge or experience.',
     },
@@ -110,11 +110,11 @@ const ResponsibilityCompetencyQuiz = () => {
         "What should you do if asked to inspect an installation type you're unfamiliar with?",
       options: [
         'A. Proceed carefully and do your best',
-        'B. Use similar test methods from other installations',
-        'C. Seek appropriate training or refer to a specialist',
+        'B. Seek appropriate training or refer to a specialist',
+        'C. Use similar test methods from other installations',
         'D. Ask the client what they think should be done',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Working outside your competency area is dangerous and illegal. You should seek appropriate training or refer the work to someone with the necessary competency for that specific installation type.',
     },
@@ -122,14 +122,14 @@ const ResponsibilityCompetencyQuiz = () => {
       id: 9,
       question: 'Which professional body membership can help demonstrate ongoing competency?',
       options: [
-        'A. Local football club',
-        'B. NICEIC or NAPIT membership',
-        'C. Gym membership',
-        'D. Social media groups',
+        'A. Local chamber of commerce membership',
+        'B. A public liability insurance policy',
+        'C. A trade supplier loyalty account',
+        'D. NICEIC or NAPIT membership',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
-        'Professional membership with bodies like NICEIC, NAPIT, ECA, or SELECT provides ongoing assessment, technical support, and demonstrates commitment to maintaining professional standards and competency.',
+        'Professional membership with competent-person scheme bodies like NICEIC, NAPIT, ECA, or SELECT provides ongoing assessment, technical support, and demonstrates commitment to maintaining professional standards and competency.',
     },
     {
       id: 10,

@@ -5,10 +5,10 @@ export const rcdFundamentalsQuizData: QuizQuestion[] = [
     id: 1,
     question: 'What does an RCD detect in an electrical circuit?',
     options: [
-      'It prevents ventricular fibrillation in most people',
+      'An overload current drawn by connected equipment',
       'Current imbalance between live and neutral conductors',
-      'Live and neutral magnetic fields cancel out',
-      'Fire protection and equipment protection',
+      'A short circuit between line and neutral conductors',
+      'A drop in supply voltage below the rated value',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,25 +68,25 @@ export const rcdFundamentalsQuizData: QuizQuestion[] = [
   },
   {
     id: 6,
-    question: 'Which type of current can a 100mA RCD be used to protect against?',
+    question: 'What is a 100mA RCD typically used to provide?',
     options: [
-      'Live and neutral magnetic fields cancel out',
-      'It prevents ventricular fibrillation in most people',
-      'Fire protection and equipment protection',
-      'Ventricular fibrillation risk',
+      'Additional protection against direct contact for socket-outlets',
+      'Protection against overload on the final circuit',
+      'Fire protection and protection of fixed equipment',
+      'Personal protection in bathrooms and shower rooms',
     ],
     correctAnswer: 2,
     explanation:
-      '100mA RCDs are typically used for fire protection and equipment protection. They detect earth faults that could cause fires while providing discrimination with downstream 30mA devices.',
+      '100mA RCDs are typically used for fire protection and protection of fixed equipment. They detect earth-fault leakage that could cause fires while providing discrimination with downstream 30mA devices.',
   },
   {
     id: 7,
-    question: 'What happens in the RCD toroidal core during a normal operation?',
+    question: 'What happens in the RCD toroidal core during normal (healthy) operation?',
     options: [
-      'Strong magnetic flux is created',
-      'Voltage is induced in the detection coil',
-      'The trip mechanism is activated',
-      'Live and neutral magnetic fields cancel out',
+      'A strong net magnetic flux builds up in the core',
+      'A voltage is induced in the sensing coil',
+      'The tripping solenoid is held energised',
+      'The line and neutral magnetic fields cancel out',
     ],
     correctAnswer: 3,
     explanation:
@@ -94,25 +94,25 @@ export const rcdFundamentalsQuizData: QuizQuestion[] = [
   },
   {
     id: 8,
-    question: 'According to BS 7671, which cables require 30mA RCD protection?',
+    question: 'According to BS 7671, which cables generally require 30mA RCD protection?',
     options: [
-      'Cables concealed in walls at depth ≤50mm',
-      'Ventricular fibrillation risk',
-      'It prevents ventricular fibrillation in most people',
-      'Cannot protect against live-neutral shock',
+      'Cables concealed in a wall at a depth of less than 50mm',
+      'Cables clipped directly to the surface of a wall',
+      'Cables installed in earthed steel conduit throughout',
+      'Cables run in an unearthed plastic trunking system',
     ],
     correctAnswer: 0,
     explanation:
-      'Regulation 522.6.202 requires 30mA RCD protection for cables concealed in walls at depth ≤50mm unless they have earthed metallic covering or mechanical protection.',
+      'Regulation 522.6.202 requires 30mA RCD protection for cables concealed in a wall at a depth of less than 50mm, unless they have an earthed metallic covering or sufficient mechanical protection.',
   },
   {
     id: 9,
-    question: 'What should you do if an RCD trips repeatedly without obvious cause?',
+    question: 'What should you do if an RCD trips repeatedly without an obvious cause?',
     options: [
-      'Current imbalance between live and neutral conductors',
+      'Replace it with a device of a higher rated residual current',
       'Investigate for earth faults and insulation breakdown',
-      'Cables concealed in walls at depth ≤50mm',
-      'Cannot protect against live-neutral shock',
+      'Fit a time-delay link to stop the nuisance tripping',
+      'Bridge out the RCD until a replacement can be sourced',
     ],
     correctAnswer: 1,
     explanation:

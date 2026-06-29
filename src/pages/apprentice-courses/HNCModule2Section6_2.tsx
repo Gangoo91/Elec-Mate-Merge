@@ -47,9 +47,9 @@ const quickCheckQuestions = [
     question: "The 'performance gap' in buildings refers to:",
     options: [
       'Gap between design predictions and actual operational energy use',
-      'It ensures knowledge remains current as legislation and practice evolve',
-      'For inaccessible points where measurement is impractical',
-      'To determine cable sizes and protective device ratings',
+      'Gap between the EPC asset rating and the Building Regulations minimum',
+      'Gap between summer and winter peak electrical demand',
+      'Gap between installed plant capacity and the connected load',
     ],
     correctIndex: 0,
     explanation:
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'tm54-approach',
     question: 'CIBSE TM54 addresses the performance gap by:',
     options: [
-      'The load receives reduced voltage (1/sqrt(3) of intended)',
-      'Immediate investigation and response following security procedures',
+      'Tightening the Part L compliance target so designs are more conservative',
+      'Requiring an air-tightness test on every completed building',
       'Using realistic operational profiles and unregulated loads',
-      'To detect mains failure and automatically start the generator',
+      'Mandating annual recalibration of the building energy meters',
     ],
     correctIndex: 2,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     question:
       'Which energy use is NOT included in Part L compliance calculations but contributes to actual consumption?',
     options: [
-      'Uneven runs or missing fixings',
-      'Line and neutral conductors',
+      'Fixed space heating plant',
+      'Permanently installed lighting',
       'Server rooms and IT equipment',
-      'Receive, Appreciate, Summarise, Ask',
+      'Mechanical ventilation fans',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'The energy balance equation for a building during heating mode is:',
     options: [
-      'Extended operating hours and out-of-hours consumption',
-      'Collecting anonymised actual vs predicted energy data',
-      'Normalise energy consumption for weather variations',
+      'Losses (fabric + ventilation) = Solar gains only',
+      'Gains (heating only) = Losses (fabric + ventilation + internal)',
+      'Heating system output = Solar gains + internal gains',
       'Gains (heating + solar + internal) = Losses (fabric + ventilation)',
     ],
     correctAnswer: 3,
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which factor typically has the largest impact on the performance gap?',
     options: [
-      'Normalise energy consumption for weather variations',
-      'Gains (heating + solar + internal) = Losses (fabric + ventilation)',
+      'Slightly oversized heating plant operating at part load',
+      'The choice of carbon emission factor used in reporting',
       'Extended operating hours and out-of-hours consumption',
-      'Collecting anonymised actual vs predicted energy data',
+      'Use of gross internal area instead of net internal area',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'TM46 provides separate benchmarks for:',
     options: [
-      'Actual metered energy consumption',
-      'Server rooms and IT equipment',
-      'Collecting anonymised actual vs predicted energy data',
+      'Summer and winter operation separately',
+      'New-build and existing buildings separately',
+      'Regulated and unregulated loads separately',
       'Fossil-thermal and electricity separately',
     ],
     correctAnswer: 3,
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "When conducting energy analysis, 'degree days' are used to:",
     options: [
-      'Its energy use is 85% of the TM46 typical benchmark',
+      'Convert metered energy use into a carbon emissions figure',
       'Normalise energy consumption for weather variations',
-      'Gains (heating + solar + internal) = Losses (fabric + ventilation)',
-      'Extended operating hours and out-of-hours consumption',
+      'Count the number of days a building is occupied each year',
+      'Adjust benchmarks for differences in building floor area',
     ],
     correctAnswer: 1,
     explanation:
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: "The 'Carbonbuzz' database helps address the performance gap by:",
     options: [
       'Collecting anonymised actual vs predicted energy data',
-      'Fossil-thermal and electricity separately',
-      'Gains (heating + solar + internal) = Losses (fabric + ventilation)',
-      'Its energy use is 85% of the TM46 typical benchmark',
+      'Publishing the official UK grid carbon emission factors each year',
+      'Setting the minimum energy targets required under Part L',
+      'Issuing Display Energy Certificates for public buildings',
     ],
     correctAnswer: 0,
     explanation:

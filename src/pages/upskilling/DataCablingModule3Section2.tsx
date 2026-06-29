@@ -25,9 +25,9 @@ const inlineChecks = [
       'You are specifying duplex connectors for a 48-port floor-distributor patch panel. Density and quick polarity changes matter. Which connector is the modern default?',
     options: [
       'ST — bayonet, 2.5 mm ferrule, simplex.',
-      'LC — small-form-factor, 1.25 mm ferrule, latching, duplex clip — twice the port density of SC and the modern in-building default.',
-      'FC — threaded, 2.5 mm ferrule.',
-      'MTP/MPO 12-fibre.',
+      'LC — 1.25 mm ferrule, latching duplex clip, ~twice SC density.',
+      'FC — threaded coupling, 2.5 mm ferrule.',
+      'MTP/MPO — keyed 12-fibre parallel-optic ferrule.',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'A junior brings you a green-bodied LC patch lead and asks: "this is APC — can we use it on the OM4 multimode link?" What is the correct answer?',
     options: [
-      'Yes — APC works with all fibre types.',
-      'No. APC (angled physical contact, 8° angled endface, green) is for single-mode only. Forcing an APC connector against a UPC or PC mate (or against multimode) damages the endface and introduces a large insertion loss. Multimode uses PC or UPC (typically blue housings); single-mode duplex is UPC blue or APC green. Never mate APC to non-APC.',
-      'Yes — APC reduces insertion loss on any fibre.',
-      'Only with an APC-to-UPC adapter.',
+      'Yes — APC connectors work with all fibre types and mates.',
+      'No — APC (8° angled, green) is single-mode only; multimode uses PC/UPC.',
+      'Yes — an APC endface reduces insertion loss on any fibre.',
+      'Only with a dedicated APC-to-UPC conversion adapter fitted.',
     ],
     correctIndex: 1,
     explanation:
@@ -54,8 +54,8 @@ const inlineChecks = [
     options: [
       'PC — simple physical contact, return loss around -35 dB.',
       'UPC — domed convex polish, return loss typically -50 dB.',
-      'APC — 8° angled endface, return loss typically -65 dB or better. The angle directs the small fraction of reflected light into the cladding rather than back down the core, which is exactly what reflection-sensitive services (PON, RFoG, CATV, narrow-linewidth lasers) need.',
-      'All three grades give the same return loss.',
+      'APC — 8° angle steers reflections into the cladding, -65 dB or better.',
+      'All three polish grades give an identical return loss.',
     ],
     correctIndex: 2,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'A previously certified OM4 link starts showing intermittent 10G link errors after a recent patch change. Visual inspection of the connector endface shows a small dark contamination ring. Most likely cause and first action?',
     options: [
-      'The fibre is failing — replace the run.',
-      'Endface contamination — a single fingerprint, dust particle or oil residue can dominate the loss budget at a connector. Inspect with a fibre microscope per IEC 61300-3-35, clean with an IBC click cleaner or lint-free wipe + IPA, re-inspect, then re-mate. Cleanliness is the single most common fault in fibre channels.',
-      'PoE has been enabled and is heating the fibre.',
-      'The polish grade has changed.',
+      'The fibre itself is failing — replace the whole run.',
+      'Endface contamination — inspect per IEC 61300-3-35, clean, re-inspect, re-mate.',
+      'PoE has been enabled on the link and is heating the fibre.',
+      'The connector polish grade has somehow changed since install.',
     ],
     correctIndex: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     question:
       'Which fibre connector is the dominant duplex connector in modern in-building installations, and what makes it the default?',
     options: [
-      'ST — bayonet locking, twist-and-lock.',
-      'LC (Lucent Connector) — small-form-factor with a 1.25 mm ferrule (half the diameter of SC/ST/FC), an RJ-style latching clip and an integral duplex clip. The smaller ferrule gives roughly twice the port density per rack-unit, the latch allows single-handed insertion, and the duplex clip enables fast polarity reversal. LC is the de-facto modern default for SM and MM duplex applications inside buildings.',
-      'FC — threaded coupling.',
-      'MTP — 12-fibre parallel.',
+      'ST — bayonet twist-and-lock, 2.5 mm ferrule, simplex.',
+      'FC — threaded screw coupling, 2.5 mm ferrule, vibration-tolerant.',
+      'MTP — 12-fibre parallel-optic ferrule for backbone trunks.',
+      'LC — 1.25 mm ferrule, latching duplex clip; ~twice SC density, the modern in-building default.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LC has dominated in-building duplex applications since the early 2000s for density, latch action and tooling. SC (push-pull, 2.5 mm ferrule) is still common in older installations and remains a perfectly compliant connector. ST (bayonet) is mostly seen on legacy multimode. FC (threaded) is preferred in metrology / test equipment for vibration tolerance. MTP / MPO is parallel-optic only — a different application class.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the difference between PC, UPC and APC polish grades?',
     options: [
-      'They are different ferrule diameters.',
-      'PC (physical contact, flat / slightly domed polish, return loss around -35 dB), UPC (ultra physical contact, tighter convex polish, return loss around -50 dB) and APC (angled physical contact, 8° angled endface, return loss -65 dB or better). The polish geometry controls how much light is reflected back from the endface.',
-      'They are different fibre types.',
-      'They are different connector body materials.',
+      'Endface polish geometry — PC (~-35 dB), UPC (convex, ~-50 dB), APC (8° angled, -65 dB or better) return loss.',
+      'Three different ferrule diameters for the same connector body.',
+      'Three different optical fibre types within one connector family.',
+      'Three different connector body materials (metal, ceramic, polymer).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Polish grade is about the geometry of the endface where the two ferrules mate. PC is the original "physical contact" polish — flat / slightly domed. UPC adds a tighter convex polish for lower back-reflection. APC angles the endface at 8° so any reflected light is directed into the cladding rather than back down the core. Return-loss numbers escalate: PC ~-35 dB, UPC ~-50 dB, APC ~-65 dB or better. APC is needed where a service is reflection-sensitive (PON, RFoG, narrow-linewidth lasers).',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'When is APC connectorisation the correct choice, and when is UPC the correct default?',
     options: [
-      'APC for everything single-mode; UPC for everything multimode.',
-      'APC is the default for single-mode reflection-sensitive applications (PON / GPON / XGS-PON, RFoG, CATV, narrow-linewidth DFB lasers, analogue RF over fibre, OTDR with high dynamic range). UPC is the default for general single-mode duplex applications (Ethernet over SM short reach, simple LR / ER point-to-point) and is the universal default for multimode (which has no APC variant in commercial use).',
-      'They are interchangeable.',
-      'APC for short reach, UPC for long reach.',
+      'APC on every single-mode link; UPC on every multimode link, without exception.',
+      'They are fully interchangeable, so the choice never actually matters.',
+      'APC for SM reflection-sensitive services (PON, RFoG, narrow-linewidth lasers); UPC for general SM and all multimode.',
+      'APC for short-reach links and UPC for long-reach links.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'APC is mandated by reflection-sensitivity. PON systems specifically require APC because the upstream transmitter is right next to a downstream receiver, and reflections from the network back into the upstream laser destabilise the link. UPC is the workhorse SM polish for bog-standard Ethernet point-to-point (10GBASE-LR, 25GBASE-LR). Multimode in commercial use is PC or UPC — there is no widespread APC multimode connector because multimode\u2019s short reach and modal noise dominate any return-loss benefit.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Why must you NEVER mate an APC connector to a UPC or PC connector, even if mechanically forceable?',
     options: [
-      'Because APC is more expensive.',
-      'Because the endface geometries do not match — APC is angled at 8°, UPC and PC are perpendicular. Forcing them together prevents proper ferrule contact (a small air gap forms), insertion loss spikes by 1-3 dB or more, return loss collapses, and the polished surfaces of one or both connectors are physically damaged. This damage is permanent — the connector must be re-terminated or scrapped.',
-      'Because APC is single-mode and UPC is multimode.',
-      'Because the colours do not match.',
+      'Because APC connectors are considerably more expensive than UPC ones.',
+      'Because APC is strictly single-mode while UPC is strictly multimode.',
+      'Because the green and blue housing colours simply do not match.',
+      'Because the angled (8°) and perpendicular endfaces leave an air gap — loss spikes and the faces are damaged permanently.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The angled endface of an APC connector requires an APC mate. Forcing APC against UPC / PC creates an air gap (no proper physical contact), spikes insertion loss, drops return loss, and damages both endfaces. The connector colour code (green = APC, blue = UPC / PC, beige = MM PC) exists for exactly this reason — but on a dimly-lit panel with similar-shaped LC bodies, mistakes happen. The discipline: confirm polish grade before every mate, and never accept "I think it is APC" without checking the housing colour and the print legend.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'A 12-fibre parallel-optic 100GBASE-SR4 link uses which connector type, and why?',
     options: [
-      'Twelve individual LC duplex connectors.',
-      'MTP/MPO — a single multi-fibre push-on connector that aligns 8 or 12 (sometimes 24) fibres in a single moulded ferrule, with a key for orientation. Parallel optics use 4 or 10 fibres in each direction; MTP/MPO terminates them in one cassette-friendly footprint and is the standard connector for 40 / 100 / 400 G parallel-optic links.',
-      'A single SC connector.',
-      'An ST bayonet.',
+      'MTP/MPO — one keyed multi-fibre ferrule (8/12/24 fibres) for 40/100/400 G parallel optics.',
+      'Twelve separate LC duplex connectors, one per fibre pair.',
+      'A single SC push-pull connector carrying all twelve fibres.',
+      'A single ST bayonet connector with a multi-fibre ferrule.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'MTP/MPO terminates 8, 12 or 24 fibres in a single ferrule with a key on the connector body for polarity. 100GBASE-SR4 uses 4 fibres in each direction (4 transmit, 4 receive over a 12-fibre MPO with 4 unused), so a single MPO / MTP cable carries the whole 100 G link. Modern data-centre cassettes routinely break a 12-fibre MPO trunk out to 6 LC duplex pairs at the cassette face, giving fast deployment of parallel-optic backbones with familiar LC at the device.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'What does an LC connector\u2019s 1.25 mm ferrule deliver that the older 2.5 mm ferrule (SC, ST, FC) does not?',
     options: [
-      'Lower insertion loss in absolute terms.',
-      'Roughly half the cross-section of a 2.5 mm ferrule, so panels can be packed at roughly twice the duplex-port density per rack-unit. Combined with the integral RJ-style latch and duplex clip, this is what made LC the in-building default — density is what matters when you have 48-96 horizontal fibres terminating at one floor distributor.',
-      'Stronger mechanical retention.',
-      'Compatibility with copper cables.',
+      'A lower insertion loss per connector in absolute terms.',
+      'A stronger mechanical retention force at the mated joint.',
+      'About half the ferrule cross-section, so panels pack roughly twice the duplex-port density per rack-unit.',
+      'Direct compatibility with copper twisted-pair cables.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Density is the LC value proposition. The half-diameter ferrule means a 1U patch panel can present ~96 LC duplex (192 fibres) where the same panel would carry ~48 SC duplex. For a floor distributor that has to terminate 48 work-area fibres plus uplinks and breakouts, this is decisive. Insertion loss per connector is similar across LC / SC / ST when polished and inspected to the same grade — density is the win.',
   },
@@ -166,11 +166,11 @@ const quizQuestions = [
       'An installer is preparing to plug a freshly-pulled OM4 LC patch lead into a port for the first time. What inspection / cleaning step MUST happen first?',
     options: [
       'None — factory pre-polished connectors are clean by definition.',
-      'Inspect the endface with a fibre microscope (or a video probe per IEC 61300-3-35 acceptance criteria) and clean with an IBC click cleaner or lint-free wipe + IPA if any contamination is visible. Re-inspect, then mate. Even brand-new factory-polished connectors collect dust and lint between unboxing and mating; on-site air carries plenty of particulate.',
-      'Bend-test the cable.',
-      'Apply a drop of optical-grade gel to the ferrule.',
+      'Bend-test the patch lead to confirm the fibre is intact first.',
+      'Apply a drop of optical-grade index-matching gel to the ferrule.',
+      'Inspect the endface per IEC 61300-3-35, clean if contaminated, re-inspect, then mate.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cleanliness is the single most common cause of fibre faults. IEC 61300-3-35 sets the visual acceptance criteria for connector endfaces (zones, allowable defect counts and sizes). The discipline: inspect, clean, re-inspect, mate. Optical gel / index-matching fluid is NOT used in connector mating in modern systems — it traps dirt and degrades over time. Click cleaners (one-shot mechanical wipe via an internal tape) are the modern default; lint-free wipe with 99 %+ IPA is the alternative.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       'A site has a mix of legacy ST multimode and modern LC patch panels in the same comms room. Which approach to bridging them is preferred?',
     options: [
-      'Force-mate them with a hard-handled adapter.',
-      'Use a hybrid ST-to-LC patch lead (factory-terminated, both ends to the same fibre type), or break the legacy section out at a small migration patch panel that takes ST on one face and LC on the other. Same fibre type both sides (MM-to-MM only), same polish grade, factory terminations.',
-      'Splice the legacy ST cores onto LC pigtails using crystal connectors.',
-      'Run an APC adapter between them.',
+      'A factory-terminated hybrid ST-to-LC lead or migration panel — same fibre type (MM-to-MM) and polish grade.',
+      'Force-mate the ST and LC ferrules together with a hard-handled adapter.',
+      'Field-splice the legacy ST cores onto LC pigtails using crystal connectors.',
+      'Run an APC-bodied adapter between the ST and LC faces.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Legacy connector formats can be bridged cleanly with hybrid patch leads or migration patch panels. The constraints: same fibre type both sides (multimode to multimode only — see the previous section\u2019s reminder against MM-to-SM splicing), same polish grade, factory-terminated ends. APC adapters are specifically WRONG for ST-to-LC because ST has no APC variant in common use. Field-terminating connectors of mixed formats is a maintenance liability — factory pre-polished or pigtailed-fusion is much cleaner.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'What does "duplex" mean on a fibre patch lead, and why does multimode communication need it?',
     options: [
-      'Two cables in one outer jacket.',
-      'Two fibres in one patch lead — one for transmit, one for receive — so a single LC duplex connector at each end carries a full bidirectional link. Multimode systems are unidirectional per fibre (light goes one way), so you need a transmit fibre and a receive fibre to make a full Ethernet link. Single-mode short-reach and PON systems often use a single fibre with bidirectional optics (BiDi) on different wavelengths, but multimode duplex is the in-building norm.',
-      'Twice the data rate per fibre.',
-      'A polish grade.',
+      'Two separate cables sharing a single outer jacket.',
+      'Twice the data rate carried on each individual fibre.',
+      'Two fibres in one lead — transmit and receive — since each multimode fibre carries light one way only.',
+      'A particular endface polish grade applied to the connector.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A duplex patch lead carries two fibres (transmit + receive). The duplex clip on an LC pair keeps polarity correct so the transmit fibre always lands on the receive side at the far end. BiDi optics on a single SM fibre exist (10G-BX-U / -D, GPON downstream / upstream) but are wavelength-multiplexed; in-building multimode universally uses duplex pairs. Polarity discipline at panels is the operational discipline that prevents transmit-to-transmit miswires.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'Why is connector endface inspection covered by an INTERNATIONAL STANDARD (IEC 61300-3-35) rather than left to manufacturer guidance?',
     options: [
-      'It is not — manufacturers each set their own acceptance criteria.',
-      'IEC 61300-3-35 standardises the visual acceptance criteria for fibre connector endfaces — defining inspection zones (Core, Cladding, Adhesive, Contact / Outer), allowable defect counts and sizes per zone, scratch / pit / contamination classifications, and pass / fail thresholds. Without a single standard, a "clean" connector would mean different things to different inspectors and different test equipment, which would make commissioning, fault-finding and warranty claims arbitrary.',
-      'Because BS 7671 demands it.',
-      'Because TIA invented the connector.',
+      'It is not standardised — each manufacturer sets its own acceptance criteria.',
+      'Because BS 7671 specifically demands endface inspection on data cabling.',
+      'Because the TIA body originally invented the fibre connector itself.',
+      'It fixes the visual acceptance criteria — zones, defect counts and pass/fail thresholds — so "clean" means the same everywhere.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IEC 61300-3-35 is the international acceptance standard for fibre connector endfaces. It is built into commercial fibre microscope / video-probe firmware: the probe captures the endface image, segments it into the standard zones, counts and sizes any defects, and flags pass / fail per IEC 61300-3-35 thresholds. This is what lets two contractors, two countries apart, agree on whether a connector is acceptable. Manufacturer guidance still applies (specific cleaning chemicals, ferrule materials), but the visual acceptance bar is in 61300-3-35.',
   },

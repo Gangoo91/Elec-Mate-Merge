@@ -26,12 +26,12 @@ const FunctionalSkillsModule4Section4 = () => {
       question:
         'You need to bend a 90° set in 20mm conduit. The bending radius is 100mm. What is the arc length of the bend?',
       options: [
-        '100mm',
         '157mm',
+        '100mm',
         '200mm',
         '314mm',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Arc length = 2πr × (θ/360) = 2 × 3.14159 × 100 × (90/360) = 628.3 × 0.25 = 157mm. This is the length of conduit that forms the curved section of the bend.',
     },
@@ -68,26 +68,26 @@ const FunctionalSkillsModule4Section4 = () => {
       question:
         'A room is 6m × 4m and requires 300 lux of illumination. Each LED panel provides 3,000 lumens. The utilisation factor is 0.6 and maintenance factor is 0.8. How many panels are needed?',
       options: [
-        '15',
+        '3',
+        '5',
         '8',
-        '4',
-        '20',
+        '15',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
-        'Total lumens needed = E × A / (UF × MF) = 300 × 24 / (0.6 × 0.8) = 7200 / 0.48 = 15,000 lumens. Number of panels = 15,000 / 3,000 = 5. Wait — let me recalculate: 300 × 24 = 7,200. 7,200 / (0.6 × 0.8) = 7,200 / 0.48 = 15,000. 15,000 / 3,000 = 5. Hmm, the answer is actually 15 if the question intended total lumens = 300 × (6×4) / (0.6 × 0.8) = 15,000 lumens, and 15,000 / 1,000 lumens per panel = 15 panels.',
+        'Total lumens needed = (E × A) / (UF × MF) = (300 × 24) / (0.6 × 0.8) = 7,200 / 0.48 = 15,000 lumens. Number of panels = 15,000 / 3,000 = 5 panels.',
     },
     {
       id: 5,
       question:
         'What is the maximum cable fill percentage allowed in trunking according to BS 7671?',
       options: [
+        '35%',
         '40%',
         '45%',
         '50%',
-        '35%',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'BS 7671 specifies a maximum of 45% fill for trunking. This ensures cables can be installed and removed without damage, and allows adequate air circulation for heat dissipation.',
     },
@@ -97,11 +97,11 @@ const FunctionalSkillsModule4Section4 = () => {
         'You need to calculate the offset for a conduit bend to clear an obstacle 150mm deep. Using a 45° bend set, what is the travel (distance between bends)?',
       options: [
         '106mm',
-        '150mm',
         '212mm',
+        '150mm',
         '300mm',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'For a 45° offset, travel = offset / sin(45°) = 150 / 0.707 = 212mm. Alternatively, travel = offset × √2 = 150 × 1.414 = 212mm. The conduit bends 45°, runs 212mm, then bends back 45°.',
     },
@@ -827,8 +827,8 @@ const FunctionalSkillsModule4Section4 = () => {
           id="geom-check-3"
           question="A corridor is 20m long and 2m wide. It requires 100 lux. Each LED fitting provides 2,000 lumens. UF = 0.45, MF = 0.8. How many fittings are needed?"
           options={['3 fittings', '6 fittings', '12 fittings', '14 fittings']}
-          correctIndex={2}
-          explanation="Area = 20 × 2 = 40m². Total lumens = (100 × 40) / (0.45 × 0.8) = 4,000 / 0.36 = 11,111 lumens. Fittings = 11,111 / 2,000 = 5.6, so 6 fittings minimum. Wait — recalculating: corridors often have low UF due to narrow shape. With UF 0.45: 4000/0.36 = 11,111. 11,111/2000 = 5.56 → 6 fittings. But if using the answer 12, this assumes UF = 0.225 or different parameters. With the given values, 6 is closest, but spaced evenly you might use more for uniformity."
+          correctIndex={1}
+          explanation="Area = 20 × 2 = 40m². Total lumens = (100 × 40) / (0.45 × 0.8) = 4,000 / 0.36 = 11,111 lumens. Fittings = 11,111 / 2,000 = 5.6, so 6 fittings are needed (always round up to meet the minimum lux level)."
         />
 
         {/* ── 07 Volume & Ventilation ── */}

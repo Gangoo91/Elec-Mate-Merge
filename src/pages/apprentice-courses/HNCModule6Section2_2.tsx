@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'ashp-vs-gshp',
     question: 'Why do GSHP systems typically achieve higher seasonal efficiency than ASHP systems?',
     options: [
-      'Ground temperatures remain more stable throughout the year',
       'They use more powerful compressors',
       'They operate at higher refrigerant pressures',
       'They have larger heat exchangers',
+      'Ground temperatures remain more stable throughout the year',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Ground temperatures at depth remain relatively constant (8-12°C in the UK) throughout the year, whilst air temperatures vary significantly. This stability allows GSHP systems to maintain higher efficiency across all seasons.',
   },
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of MCS certification for heat pump installations?',
     options: [
       'To qualify for government incentive schemes like BUS',
-      'Recording your progress makes you more likely to improve',
-      'Plant rooms, laboratories, industrial processes, operating theatres',
-      'Torque reduces to approximately one-third',
+      'To exempt the installation from Building Regulations',
+      'To remove the need for an electrical installation certificate',
+      'To extend the manufacturer warranty to 25 years',
     ],
     correctIndex: 0,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does SCOP measure that COP does not?',
     options: [
-      'Output reduces or stops whilst the outdoor unit defrosts',
-      'To reduce short-cycling and ensure minimum run times',
+      'Efficiency at a single fixed test condition',
+      'The maximum flow temperature the unit can deliver',
       'Efficiency including auxiliary energy over a heating season',
-      'Ability to modulate output to match heating demand',
+      'The refrigerant charge required for the system',
     ],
     correctAnswer: 2,
     explanation:
@@ -196,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: "During defrost cycles, what happens to the ASHP's heating output?",
     options: [
-      'Efficiency including auxiliary energy over a heating season',
+      'Output increases to compensate for the cold weather',
       'Output reduces or stops whilst the outdoor unit defrosts',
-      'Ability to modulate output to match heating demand',
-      'To reduce short-cycling and ensure minimum run times',
+      'Output remains constant throughout the defrost period',
+      'Output switches automatically to the hot water cylinder',
     ],
     correctAnswer: 1,
     explanation:
@@ -223,9 +223,9 @@ const quizQuestions = [
     question:
       'According to MCS requirements, what must be provided to the customer after heat pump installation?',
     options: [
-      'Safety Integrity Level - quantitative measure of safety performance',
-      'The total opposition to AC current flow combining resistance and reactance',
-      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
+      'Only a verbal explanation of how to operate the system',
+      'A copy of the installer’s public liability insurance certificate',
+      'The original manufacturer packaging and delivery notes',
       'A handover pack including MCS certificate, operating instructions, and performance data',
     ],
     correctAnswer: 3,
@@ -238,9 +238,9 @@ const quizQuestions = [
       'What is the primary advantage of inverter-driven (variable speed) compressors in heat pumps?',
     options: [
       'Ability to modulate output to match heating demand',
-      'To reduce short-cycling and ensure minimum run times',
-      'Output reduces or stops whilst the outdoor unit defrosts',
-      'Efficiency including auxiliary energy over a heating season',
+      'They eliminate the need for any electrical supply protection',
+      'They remove the requirement for a refrigerant circuit',
+      'They allow the unit to run without an outdoor fan',
     ],
     correctAnswer: 0,
     explanation:

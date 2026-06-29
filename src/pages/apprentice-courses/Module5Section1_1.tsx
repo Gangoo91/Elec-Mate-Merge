@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a specification in electrical work?',
     options: [
-      'Total useful floor area greater than 500m²',
+      'A rough sketch of where sockets and switches will go',
       'A formal document defining materials, methods and standards',
-      'To ensure they are safe and provide accurate readings',
-      'First fix completion, pressure testing, and commissioning sign-off',
+      'A price list of materials supplied by the wholesaler',
+      'The certificate issued once the installation is tested',
     ],
     correctIndex: 1,
     explanation:
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one difference between performance and prescriptive specifications.',
     options: [
-      'One controller output operating two final control elements sequentially',
-      'Personal factors, job factors, organisational factors, environmental factors',
+      'Performance is used indoors; prescriptive is used outdoors',
+      'Performance is written by the client; prescriptive is written by the contractor',
       'Performance states the outcome required; prescriptive states the exact method/materials',
-      'Short-circuited via the test block when not connected to a relay/meter',
+      'Performance applies to lighting only; prescriptive applies to power only',
     ],
     correctIndex: 2,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must specifications and drawings be used together?',
     options: [
-      'In controlled document systems with version control and access records',
-      'Protective devices may not operate quickly enough',
-      'UV radiation from mercury discharge excites phosphor coating',
+      'Drawings are only a legal requirement on commercial projects',
+      'Specifications replace the need to read drawings on site',
+      'Both contain identical information for cross-checking errors',
       'Drawings show where to install, specifications show how to install',
     ],
     correctIndex: 3,
@@ -62,10 +62,10 @@ const Module5Section1_1 = () => {
       id: 1,
       question: 'What is the main purpose of a specification?',
       options: [
-        'Through the design risk register and H&S file information',
+        'To record the test results once the work is complete',
         'To define materials, standards, and methods of installation',
-        'Heating using organic materials like wood pellets, chips, or logs',
-        'Strong encryption, regular updates, and network segmentation',
+        'To list the prices the client will be charged for each item',
+        'To show the physical layout and routing of the circuits',
       ],
       correctAnswer: 1,
       explanation:
@@ -102,9 +102,9 @@ const Module5Section1_1 = () => {
       question: 'Give one example of information typically included in a specification.',
       options: [
         'Materials to be used (e.g., cable type)',
-        'Manufacturing and engineering time required',
-        'Bonding between exposed and extraneous parts',
-        'Removing asbestos insulation (lagging) from pipes',
+        'The wholesaler the materials must be bought from',
+        'The hourly rate charged by each electrician',
+        'The weather conditions expected during the works',
       ],
       correctAnswer: 0,
       explanation:
@@ -114,10 +114,10 @@ const Module5Section1_1 = () => {
       id: 5,
       question: 'Why is it important to use specifications and drawings together?',
       options: [
-        'Investigate further — the minimum acceptable value for a 230 V circuit is 1.0 MΩ per BS 7671',
+        'Because the client signs the drawings but not the specification',
         'Because drawings show where to install and specifications show how to install',
-        'Earthing connects to earth, bonding connects metalwork together',
-        'Preventing emergency response fatigue and maintaining system credibility',
+        'Because drawings are mandatory but specifications are optional',
+        'Because specifications are only needed when drawings are unclear',
       ],
       correctAnswer: 1,
       explanation:

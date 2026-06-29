@@ -24,10 +24,10 @@ const inlineChecks = [
     question:
       'A UK rural off-grid PV install (5 kWp + 25 kWh battery, design autonomy 3 days). When is generator backup recommended?',
     options: [
-      'Never',
-      "For full-year occupation in regions with low December PSH (typically Scotland, Northern Ireland, North Wales, upland Lakes/Pennines). Recommended whenever: (a) load is critical (medical equipment, vulnerable resident); (b) winter cloud cover routinely exceeds the design autonomy (5-7+ consecutive cloud days happens in UK winters); (c) customer can't accept any outage. Optional for seasonal / holiday properties where customer accepts winter shutdown",
-      'Always required',
-      'Only for commercial',
+      'Never — a correctly sized PV and battery system always rides through UK winters',
+      "For full-year occupation in low-December-PSH regions, critical loads, or where outage can't be accepted",
+      'Always required by BS 7671 on every off-grid install regardless of load or location',
+      'Only for commercial off-grid sites, never for a domestic dwelling',
     ],
     correctIndex: 1,
     explanation:
@@ -38,10 +38,10 @@ const inlineChecks = [
     question:
       'Off-grid backup generator — diesel vs petrol vs LPG. Which is most common in UK rural off-grid, and why?',
     options: [
-      'Petrol everywhere',
-      'Diesel and LPG dominate UK rural off-grid. Diesel: high energy density, long shelf life (12+ months in suitable tank), reliable cold-weather starting with glow plugs, low cost per kWh produced. LPG: clean burning, less storage hazard than diesel for indoor / domestic settings, longer fuel shelf life (years), but lower energy density than diesel. Petrol is rare — short fuel shelf life (3-6 months), volatile storage hazard, and cold-start issues',
-      'Battery only',
-      'Wood-burning',
+      'Petrol everywhere, for its low purchase cost and easy availability at filling stations',
+      'Diesel and LPG dominate — high energy density and long shelf life; petrol is rare (degrades fast)',
+      'Battery-only backup with no generator, recharged from a second standby array',
+      'Wood-burning gasifier generators, valued for their fully renewable fuel source',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const inlineChecks = [
     question:
       'Off-grid generator auto-start logic — what triggers the generator to start automatically, and what stops it?',
     options: [
-      'Customer presses a button',
-      'Auto-start trigger: battery state-of-charge (SoC) drops below a threshold (typically 20-30% SoC for LFP installs); or battery voltage drops below a threshold (low-V protection backup). Auto-stop: SoC reaches a target charge level (typically 70-90% — partial charge to leave headroom for PV); or after a maximum run-time limit; or on fault detection. Modern hybrid inverters (Victron, Studer, Sigenergy) have built-in auto-gen control via their Cerbo / Xcom / Sigen apps',
-      'Random timer',
-      'No automation',
+      'The customer presses a physical button each time the battery runs low',
+      'Starts on low battery SoC (~20-30%); stops at a target SoC (~70-90%) to leave PV headroom',
+      'A random timer runs the generator for a fixed period each day irrespective of SoC',
+      'There is no automation; the generator must be started and stopped entirely by hand',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const inlineChecks = [
     question:
       'Automatic Transfer Switch (ATS) panel — what does it do in an off-grid install with generator backup?',
     options: [
-      'Nothing',
-      'The ATS is the electrical switch that transfers the property load between the inverter output (PV+battery primary) and the generator output (backup). When the generator starts, ATS senses generator V/freq stable, transfers load from inverter to generator. When generator stops, ATS transfers back to inverter. In integrated hybrid inverters (Victron Multiplus, Studer Xtender), the ATS function is INSIDE the inverter — no separate ATS panel needed. In split installs with separate inverter + generator, an external ATS panel is fitted',
-      "Customer's phone",
-      'A type of MCB',
+      'Nothing of significance — the ATS is a legacy item left over from older installs',
+      'It transfers the property load between inverter and generator; modern hybrid inverters build it in',
+      'It is the customer\'s phone app that they use to start the generator manually',
+      'It is simply a higher-rated type of MCB fitted at the generator terminals',
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +80,10 @@ const inlineChecks = [
     question:
       'When the generator is running, it both supplies the property load AND charges the battery. What are the three charging stages?',
     options: [
-      'No stages',
-      '(1) BULK — generator at maximum charge current, raises battery SoC quickly; (2) ABSORPTION — battery V at the absorption setpoint, current tapers as battery approaches full; (3) FLOAT — maintain V at float setpoint with minimal trickle current for any standby load. For LFP batteries, the stages compress (no float stage typically; absorption is brief); for lead-acid, the stages are traditional and well-defined. Hybrid inverter / charge controller handles the stage transitions automatically',
-      'Just one',
-      'Hundred stages',
+      'No stages — the generator simply pushes a constant current until the battery is full',
+      'Bulk (constant current), then absorption (constant V, current tapers), then float (low maintenance V)',
+      'Just one continuous constant-voltage stage held from empty all the way to full',
+      'A fixed sequence of one hundred micro-stages stepped by the BMS every few seconds',
     ],
     correctIndex: 1,
     explanation:
@@ -94,10 +94,10 @@ const inlineChecks = [
     question:
       'How does BS 7671 Section 551 (generating sets) apply to an off-grid PV install with generator backup?',
     options: [
-      "Doesn't apply",
-      "Section 551 applies to BOTH the PV+battery generating set (Reg 551.1.1(d) PV + (e) batteries) AND the diesel/LPG generator (551.1.1(a) combustion engines). Reg 551.2.2: prospective short-circuit / earth fault assessed for each source / combination. Reg 551.2.3: capacity / operating characteristics handle each source's load + V/freq protection. Reg 551.4.1: fault protection for each source. Reg 551.6: precautions against parallel operation between sources where parallel is not intended (typical off-grid: ATS transfers load, never parallels grid and gen)",
-      'Only one applies',
-      "Customer's choice",
+      "It doesn't apply once both a generator and an inverter are present together",
+      'It applies to BOTH the PV+battery set and the combustion generator, per source and per combination',
+      'Only one source falls under Section 551; the other is treated purely as a load',
+      "Which source Section 551 covers is left to the installer's choice",
     ],
     correctIndex: 1,
     explanation:
@@ -108,10 +108,10 @@ const inlineChecks = [
     question:
       'Off-grid generator considerations beyond electrical safety — what UK regulatory framework applies?',
     options: [
-      'None',
-      'Multiple frameworks: (a) Noise — UK domestic noise nuisance law via Environmental Protection Act 1990; local council bylaws on permitted hours; typical limits 50-55 dB at boundary 3am-7am, 60-65 dB daytime; (b) Emissions — Air Quality (Standards) Regulations 2010; some areas have smoke-control zones restricting diesel/wood burning; (c) Fuel storage — Petroleum (Consolidation) Regulations 2014 for petrol; HSE guidance for diesel; (d) Planning — generator enclosures may need planning permission if visible / large',
-      "Customer's discretion",
-      'No regulations',
+      'None — only the electrical wiring is regulated; siting and fuel are unrestricted',
+      'Several: noise (EPA 1990), emissions (Air Quality Regs), fuel storage (Petroleum Regs) and planning',
+      "Everything beyond the wiring is at the customer's own discretion to decide",
+      'A single combined generator regulation covers noise, emissions and fuel together',
     ],
     correctIndex: 1,
     explanation:
@@ -122,10 +122,10 @@ const inlineChecks = [
     question:
       'Some hybrid inverters support "PowerAssist" mode — running the generator in PARALLEL with the inverter to handle peak loads. What\'s the BS 7671 regulatory implication?',
     options: [
-      'No issue',
-      'Reg 551.7 parallel-operation rules apply when the generator runs in parallel with the inverter (as opposed to switched-alternative via ATS). Reg 551.7.1(c) NEW A4:2026: bidirectional protective device required where energy flow is bidirectional. Reg 551.7.2.1: stationary batteries (Chapter 57) shall be considered a generating set not a load. The cert evidence bundle records the PowerAssist configuration and the protective devices selected per Section 551.7',
-      'Only one direction',
-      'No regs apply',
+      'No regulatory issue — parallel running is identical to switched-alternative operation',
+      'Reg 551.7 applies, including the A4:2026 Reg 551.7.1(c) bidirectional protective device',
+      'Only single-direction protection is needed because the generator never absorbs power',
+      'No BS 7671 regulations cover parallel operation; only the inverter datasheet applies',
     ],
     correctIndex: 1,
     explanation:
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "Off-grid customer's 5 kWp PV + 25 kWh LFP battery system. Daily load 6 kWh. December PSH 1.0. Worst-case 7 consecutive cloudy days expected once per winter. Generator sizing recommendation?",
     options: [
-      '20 kVA',
-      '5 kVA — enough to fully recharge the battery within reasonable run-time + supply the property load during charge. Worked: bulk charging needs ~3-4 kW continuous to fast-charge 25 kWh LFP within 6-8 hours; property load 0.5-1.0 kW typical; generator output 4-5 kW continuous handles both. Brand: Pramac, Cummins, Honda EU65 with silenced canopy. Auto-start tied to battery SoC threshold (e.g. start at 20% SoC, stop at 80%). Fuel: diesel preferred',
-      '0.5 kVA',
-      '100 kVA',
+      '20 kVA — sized to run the whole property and recharge the battery in under an hour',
+      '5 kVA — covers ~3-4 kW battery charging plus property load, recharging in 6-8 hours',
+      '0.5 kVA — just enough to trickle-charge the 25 kWh battery slowly overnight',
+      '100 kVA — to guarantee ample headroom for any future load growth at the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       "Off-grid generator runs for 2 hours during deep winter to recharge battery. Customer asks why generator doesn't fully charge to 100% SoC.",
     options: [
-      'Generator faulty',
-      "Auto-stop typically configured at 70-90% SoC (NOT 100%). Reason: the battery should retain HEADROOM to absorb any PV that's generating during the day. If charged to 100% by generator, any PV produced thereafter has nowhere to go and is wasted. By stopping at ~80% SoC, the system leaves room for PV to charge the battery to 100% later — maximising PV utilisation, minimising generator runtime. Cert evidence bundle records the threshold setting",
-      'Battery is broken',
-      "Customer's fault",
+      'The generator is faulty and cannot deliver its full rated output',
+      'The battery has degraded and can no longer reach 100% SoC',
+      'The generator runtime was too short to reach full charge in winter',
+      'Auto-stop is set at 70-90% SoC, leaving headroom for daytime PV to finish the charge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Generator auto-stop at partial SoC is INTENTIONAL — leaves headroom for PV. Stop at 100% means PV produced after generator-stop is wasted (battery can't absorb). Stop at 80% means PV produced afterwards charges the battery from 80% → 100%, capturing free solar energy. Trade-off: stopping too low (e.g. 60%) wastes generator efficiency (lots of generator runtime needed to top up); stopping too high (e.g. 95%) wastes solar capture. 70-90% is the typical sweet spot, location-dependent. Customer-configurable per the inverter app; cert evidence bundle records.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       "Off-grid install with diesel generator. Customer reports the generator won't start in cold January morning. Diagnosis priority?",
     options: [
-      'Replace generator',
-      'Diesel cold-start issues are common in UK winter. Diagnostic priority: (1) battery health — cranking battery (separate from the off-grid PV battery) may be low / sulfated; (2) glow plug system — pre-heat may be failing; (3) fuel quality — diesel "waxing" in extreme cold (-5°C and below) clogs filter; winter-grade diesel or anti-waxing additive needed; (4) air filter blockage; (5) coolant level. Replace generator only after diagnostic. Most issues fix-able with simple maintenance',
-      'Buy new battery',
-      "Customer's fault",
+      'Check the cranking battery, glow plugs, fuel waxing, then filters — diagnose before replacing',
+      'Replace the whole generator, since a no-start in cold weather means a failed engine',
+      'Fit a new off-grid PV storage battery to restore the engine cranking power',
+      'Run the property on the grid supply until the cold weather warms up again',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'UK diesel cold-start diagnostic: (1) START BATTERY — generators have a separate small starter battery (12V or 24V) for cranking; it ages and sulfates over 3-5 years; load-test it; replace if marginal. (2) GLOW PLUGS — pre-heat the diesel before start; failing glow plugs make cold start impossible; test resistance; replace per service interval. (3) FUEL — diesel "waxing" at -5°C and below (UK winter rare but possible in N Scotland); winter diesel grades are pre-treated; aftermarket anti-wax additives available. (4) FILTERS — air + fuel + oil; service per schedule. Maintenance log in customer information pack; cert evidence bundle records the diagnostic.',
   },
@@ -181,10 +181,10 @@ const quizQuestions = [
     question:
       'Off-grid generator runs for the first time in 6 months (rare backup use). Customer reports generator runs rough and exhaust smoke is excessive. Likely cause?',
     options: [
-      'Generator broken',
-      'Diesel fuel degradation. Diesel left in tank for 6+ months without use can accumulate water (condensation), microbial growth ("diesel bug"), or oxidation. Symptoms: rough running, smoke, hard start. Resolution: drain old fuel; replace fuel filters; refill with fresh diesel + fuel stabiliser; consider fuel polishing for large tanks. Preventive: run generator under load monthly (exercise run, typically 30 min) to cycle fuel through; use fuel stabiliser; bunded tank with drain to remove water condensation',
-      'New customer',
-      'Always like this',
+      'The engine block has cracked from winter frost and the unit must be replaced',
+      'Diesel fuel degradation after 6 months — drain the old fuel, change filters, refuel',
+      'The alternator windings have shorted internally, producing the exhaust smoke',
+      'This is entirely normal for an idle generator and needs no remedial action',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       "Customer's off-grid generator runs in PowerAssist parallel mode with the Victron Multiplus inverter. EICR-style inspection. What additional BS 7671 regs apply?",
     options: [
-      'Same as switched-alternative',
-      "Reg 551.7 parallel-operation requirements: Reg 551.7.1(c) NEW A4:2026 bidirectional protective device required where energy flow is bidirectional (the protective device must operate in either direction); Reg 551.7.4 automatic disconnection on V/freq deviation; Reg 551.7.5 prevent connection during loss/deviation; Reg 551.7.6 means of isolation. The inverter's built-in transfer/parallel logic typically handles these; the cert evidence bundle records the inverter manufacturer's compliance statement against Reg 551.7",
-      'No regs apply',
-      'Only the inverter',
+      'The same requirements as a switched-alternative changeover source, with nothing extra',
+      'No additional regulations apply at all once a hybrid inverter is in the circuit',
+      'Reg 551.7 parallel-operation requirements apply, including the 551.7.1(c) bidirectional device',
+      'Only the inverter\'s own datasheet matters; BS 7671 does not cover parallel running',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PowerAssist parallel mode triggers Reg 551.7 parallel-operation requirements. Critical additions: Reg 551.7.1(c) NEW A4:2026 — bidirectional protective device (current can flow either way during PowerAssist; the protective device must operate in either direction). Reg 551.7.4-6: V/freq protection, disconnect on loss/deviation, means of isolation. Victron / Studer / Sigenergy hybrid inverters provide compliance through their internal transfer/parallel logic; cert evidence bundle records the manufacturer compliance statement and the as-configured mode.',
   },
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'Off-grid customer asks "can the generator backup itself supply our heat pump for prolonged cold weather?". Heat pump 8 kW electrical, 3 kW continuous typical operation, 6 kW peak.',
     options: [
-      'Always',
-      'Yes — if generator sized adequately. Heat pump 3 kW continuous + property baseline 0.5 kW + battery charging 2 kW = ~5.5 kW continuous. Generator 7-8 kVA (~5.5-6.5 kW continuous at 80% derating) handles this. Generator runs continuously through the cold spell (potentially days of operation). Fuel consumption: ~1-1.5 L/hr for 6-8 kW diesel generator at typical loading = 24-36 L/day; tank size needs to support 5-7 day cold spells. Cert evidence bundle records the cold-spell design scenario',
-      'Never',
-      'Magic',
+      'Yes, but only if the heat pump is switched to its 6 kW peak mode continuously',
+      'No — a generator can never supply an electric heat pump load directly',
+      'No — the heat pump must be turned off entirely whenever the generator runs',
+      'Yes if sized right — ~5.5 kW total load suits a 7-8 kVA generator, with a 5-7 day tank',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Off-grid generator + heat pump cold-spell scenario: typical sizing 7-10 kVA generator (5.5-8 kW continuous at 80% derating) handles heat pump 3 kW continuous + property baseline + battery top-up concurrently. The generator essentially becomes the prime mover during prolonged cold weather (PV producing minimally in cloud/short days). Fuel: diesel consumption 1-1.5 L/hr at 6-8 kW load = 24-36 L/day. Tank sizing for worst case: 5-7 day cold spell × 30 L/day = 150-210 L tank needed. The design pack records the cold-spell scenario assumption and the tank sizing rationale.',
   },
@@ -223,10 +223,10 @@ const quizQuestions = [
     question:
       'Off-grid generator wiring — what BS 7671 Section 551 / 712 / 537 isolation requirement applies?',
     options: [
-      'No isolation needed',
-      'Reg 551.2.4: provision for isolation per Chapter 46 + Section 537 for EACH source / combination of sources. Reg 551.4.3.3.3: where static convertor (inverter) is part of the install, means of isolation on BOTH SIDES (DC and AC). For generator: separate isolator at the generator output AC terminals (BS EN 60947-3 switch-disconnector). The ATS panel itself provides switching but separate isolation per source is mandatory for safe maintenance work',
-      "Customer's choice",
-      'Only one isolator',
+      'No isolation is needed because the ATS panel already disconnects everything together',
+      'Reg 551.2.4 requires isolation per source — both convertor sides plus a generator AC isolator',
+      'A single main isolator at the installation origin adequately covers all the sources',
+      'Isolation is left entirely to the customer to arrange however they prefer it',
     ],
     correctAnswer: 1,
     explanation:
@@ -237,12 +237,12 @@ const quizQuestions = [
     question:
       "Off-grid customer's generator: 5 kVA Pramac diesel, used 4 hours/month average. Maintenance schedule recommendation?",
     options: [
-      'No maintenance',
-      'Service intervals per manufacturer (Pramac typical): oil + filter change every 100-200 hours OR annually; air filter every 200-400 hours OR annually; fuel filter every 200 hours; battery test annually; spark arrestor / muffler check annually; coolant change every 2-3 years; fuel polishing if tank ≥500L. At 48 hours/year usage, time-based (annual) intervals are the binding constraint. Customer / contractor maintenance log records each service. The cert evidence bundle includes the maintenance schedule',
-      'Every day',
-      "Customer's preference",
+      'No routine maintenance is needed at all for such light occasional use',
+      'A full engine service is required every single day the generator is run',
+      'Maintenance is entirely at the customer\'s discretion with no set schedule',
+      'Service on whichever binds first — at ~48 hrs/year the annual interval drives it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Off-grid generator maintenance: typical interval whichever comes first — hour-based OR time-based. For LIGHT USE (4 hrs/month = 48 hrs/year): ANNUAL service is the binding interval; oil/filter change at year 1 or 100-200 hours; air filter year 1 or 200-400 hours; fuel filter year 1 or 200 hrs. Spark arrestor cleaning, coolant level check, battery test, glow plug test — annual. Coolant change every 2-3 years. Modern Stage V emissions generators have additional emissions-system checks. Customer informed of schedule; maintenance log in customer information pack; cert evidence bundle records the contractor agreement.',
   },

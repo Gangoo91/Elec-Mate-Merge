@@ -90,10 +90,10 @@ const quizQuestions = [
     options: [
       'The salary and financial benefits offered to employees',
       'The amount of say a worker has in how they do their work',
-      'Workload, work patterns, and the working environment',
       'The level of support available from managers and colleagues',
+      'Workload, work patterns, and the working environment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       '"Demands" in the HSE Management Standards refers to workload, work patterns, and the working environment. The standard states that employees should be able to cope with the demands of their jobs, that systems should be in place to respond to concerns about work demands, and that the organisation should provide achievable demands in relation to the agreed hours of work. In construction, excessive demands are one of the most common sources of stress: too many tasks, unrealistic deadlines, insufficient resources, and poor planning all increase demand beyond manageable levels.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 3,
     question: 'In the HSE Management Standards framework, "Control" refers to:',
     options: [
-      "The employer's ability to control employee behaviour through disciplinary procedures",
       'How much say the person has in the way they do their work',
+      "The employer's ability to control employee behaviour through disciplinary procedures",
       'The use of CCTV and monitoring equipment on construction sites',
       'Financial controls such as budgets and spending limits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '"Control" refers to how much autonomy and influence a worker has over the way they do their work. The standard states that employees should have a say in how they do their work, be encouraged to develop new skills, and have a degree of control over their working pace. Lack of control is a significant stressor \u2014 being told exactly what to do, how to do it, and when, with no input or flexibility, is inherently more stressful than having some autonomy. In construction, control issues arise when workers have no say in scheduling, methods, or priorities.',
   },
@@ -129,11 +129,11 @@ const quizQuestions = [
       'Which of the following construction-specific stressors is most associated with the CIS (Construction Industry Scheme) and self-employment?',
     options: [
       'Exposure to asbestos and hazardous materials',
-      'Feast-and-famine work cycles, financial insecurity, lack of sick pay, and no holiday pay',
       'Noise levels exceeding the action values in the Control of Noise at Work Regulations 2005',
+      'Feast-and-famine work cycles, financial insecurity, lack of sick pay, and no holiday pay',
       'Working in confined spaces such as ceiling voids and ducts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The CIS (Construction Industry Scheme) and self-employment bring specific financial stressors that employed workers do not face: unpredictable income, feast-and-famine work cycles (too much work one month, nothing the next), no sick pay, no holiday pay, late payment by clients and main contractors, the cost of running a van and buying tools, and the constant pressure to find the next job. These financial stressors are chronic and pervasive \u2014 they do not switch off at the end of the working day. Research consistently links financial insecurity to elevated levels of stress, anxiety, and depression.',
   },
@@ -142,11 +142,11 @@ const quizQuestions = [
     question: 'The "man up" culture in construction is harmful because:',
     options: [
       'It makes construction workers physically tougher, which increases injury risk',
-      'It discourages workers from talking about stress and mental health, leading to silent suffering, substance use, and delayed help-seeking',
       'It only affects apprentices and young workers, not experienced tradespeople',
       'It has no measurable impact on mental health outcomes in the industry',
+      'It discourages workers from talking about stress and mental health, leading to silent suffering, substance use, and delayed help-seeking',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The "man up" culture creates a toxic silence around mental health. When workers believe that admitting to stress, anxiety, or depression is a sign of weakness, they suffer in silence. They may turn to alcohol or substance use as a coping mechanism. They avoid seeking professional help. Their condition worsens over time. And because the culture suppresses discussion, they believe they are alone in their struggles. This culture affects workers at all levels and all ages \u2014 not just apprentices. Changing this culture is one of the most important things the construction industry can do to reduce mental health harm.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'The Management of Health and Safety at Work Regulations 1999, Regulation 3, requires employers to:',
     options: [
-      'Provide free gym membership to all employees',
       'Carry out a suitable and sufficient assessment of risks to the health and safety of employees \u2014 including psychosocial risks such as stress',
+      'Provide free gym membership to all employees',
       'Pay for private counselling for any employee diagnosed with a stress-related condition',
       'Appoint a dedicated mental health officer on every construction site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 3 of the Management of Health and Safety at Work Regulations 1999 requires employers to carry out a suitable and sufficient risk assessment of all risks to the health and safety of their employees. This includes psychosocial risks such as work-related stress. The HSE Management Standards provide the framework for conducting this assessment. An employer who fails to assess stress risks is potentially in breach of Regulation 3, regardless of whether any employee has actually suffered harm.',
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
       'A self-employed electrician has been working 60-hour weeks for three months to keep up with demand. They have not taken a holiday. They are exhausted, irritable, and their work quality has dropped. Which HSE Management Standard area is MOST directly relevant?',
     options: [
       'Relationships \u2014 promoting positive working relationships',
-      'Role \u2014 whether people understand their role in the organisation',
       'Demands \u2014 workload, work patterns, and the working environment',
+      'Role \u2014 whether people understand their role in the organisation',
       'Change \u2014 how organisational change is managed and communicated',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'This scenario is primarily a "Demands" issue. The workload (60-hour weeks), work pattern (three months without a break), and the resulting exhaustion all fall within the Demands area of the HSE Management Standards. The standard states that employees should be able to cope with the demands of their jobs and that the organisation should provide achievable demands in relation to agreed hours. While the electrician is self-employed (and therefore technically not covered by the Management Standards in an employer-employee relationship), the principle applies: their workload demands are unsustainable and are causing harm.',
   },

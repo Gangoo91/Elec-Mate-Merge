@@ -31,10 +31,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 1,
     question: 'What is the primary purpose of periodic inspection and testing?',
     options: [
-      'To provide clear information for future work and maintenance',
+      'To prove the installation complies with the latest edition of BS 7671',
       'To verify the installation remains safe for continued use',
-      'Verifying correct connection of phase, neutral and earth conductors',
-      'All connections secure, covers replaced, no tools left, all tests complete',
+      'To increase the value of the property before sale',
+      'To extend the manufacturer warranty on the consumer unit',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,9 +84,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Who is legally qualified to carry out electrical inspection and testing?',
     options: [
       'A competent person with appropriate knowledge and experience',
-      'To verify the RCD trips within the required time',
-      'Absorption of current by the insulation (polarisation)',
-      'Correct polarity, fuse rating, and that the switch breaks the phase',
+      'Anyone holding a current ECS card regardless of qualification',
+      'Only an electrician directly employed by the DNO',
+      'Any person over 18 who owns approved test equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,9 +136,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What does a C2 classification indicate?',
     options: [
-      'They may give false readings and cannot verify absence of voltage',
-      'DC provides a steady stress on insulation without capacitive current',
-      'Adequate support, correct spacing, and suitable for cable type/weight',
+      'Danger present - immediate remedial action required',
+      'Improvement recommended but not essential for safety',
+      'Further investigation required without delay',
       'Potentially dangerous - urgent remedial action required',
     ],
     correctAnswer: 3,
@@ -203,9 +203,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: 'Which document must be provided after completing an initial verification?',
     options: [
-      'Mineral Insulated Copper Clad',
-      'A unique key lock personal to the worker',
-      'Any voltage that could cause injury',
+      'An Electrical Installation Condition Report',
+      'A Minor Electrical Installation Works Certificate',
+      'A PAT testing register',
       'Electrical Installation Certificate',
     ],
     correctAnswer: 3,
@@ -255,10 +255,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 14,
     question: 'Who should receive a copy of the EICR?',
     options: [
-      'Lower than individual readings due to parallel paths',
-      'Correct polarity, fuse rating, and that the switch breaks the phase',
+      'The local authority building control department only',
+      'The Distribution Network Operator and the local fire service',
       'The person ordering the work and the installation owner/occupier',
-      'Temperature - conductors are cooler when tested',
+      'Only the inspector who carried out the work',
     ],
     correctAnswer: 2,
     explanation:
@@ -291,9 +291,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'Which regulation introduced mandatory electrical safety checks for private rented properties in England?',
     options: [
       'Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
-      'Electronic equipment, capacitors, indicating devices, and surge protectors',
-      'The parts of the installation inspected and any areas not accessible',
-      'Correct rating, secure fixing, circuit identification, and protection from damage',
+      'The Electricity at Work Regulations 1989',
+      'Part P of the Building Regulations 2005',
+      'The Landlord and Tenant Act 1985',
     ],
     correctAnswer: 0,
     explanation:
@@ -307,10 +307,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 17,
     question: "What does the term 'initial verification' refer to?",
     options: [
-      'Absorption of current by the insulation (polarisation)',
+      'The periodic re-testing of an installation every ten years',
       'Inspection and testing of a new installation before energisation',
-      'Mechanical protection and sometimes a CPC path for cables',
-      'It measures actual trip time and current, not just mechanism function',
+      'The first functional check carried out by the end user',
+      'Confirmation of supply characteristics provided by the DNO',
     ],
     correctAnswer: 1,
     explanation:
@@ -324,10 +324,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: 'What is the main difference between an EIC and an EICR?',
     options: [
-      'Verifying the absence of voltage at the work location',
-      'Isolated system with no intentional connection to earth',
+      'An EIC is issued by the DNO, an EICR by the electrician',
+      'An EIC covers domestic work only, an EICR covers commercial only',
       'EIC is for new installations, EICR is for existing installations',
-      'An area made safe from electrical and other hazards during work',
+      'An EIC is valid for ten years, an EICR for one year',
     ],
     correctAnswer: 2,
     explanation:
@@ -375,10 +375,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 21,
     question: 'What is the purpose of sampling during periodic inspection?',
     options: [
-      'Maximum current that could flow during a short circuit',
+      'To allow the inspection to be completed more cheaply for the client',
       'To assess the overall condition when full inspection is impractical',
-      'To verify low resistance connection between MET and extraneous-conductive-parts',
-      'An instrument for measuring insulation resistance in megohms',
+      'To test only the circuits the client specifically requests',
+      'To avoid disconnecting any circuits during the inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -410,9 +410,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 23,
     question: 'What minimum information must be recorded during inspection?',
     options: [
-      'Earth for correct equipment operation, not primarily for safety',
-      'Changeover to battery, duration under load, and charging',
-      'To prevent unauthorised access to the work area',
+      'Only the date of the inspection and the inspector name',
+      'The cost of the work and the client payment details',
+      'The make and model of every accessory installed',
       'Method of protection, earthing arrangements, and test results',
     ],
     correctAnswer: 3,
@@ -428,9 +428,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What action should be taken if a dangerous condition is found during inspection?',
     options: [
       'Make safe immediately and inform the person in control',
-      'Separate earth conductor from the supply transformer',
-      'Insulation, barriers, enclosures, and obstacles are adequate',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the current edition of BS 7671 requirements',
+      'Complete all remaining tests before taking any action',
+      'Wait until the report is issued before notifying anyone',
+      'Note it on the report and continue testing the next circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -478,9 +478,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'What device should be used to verify isolation?',
     options: [
-      'AC sinusoidal residual currents',
-      'Visual inspection, testing, documentation',
-      'Electrical Installation Certificate',
+      'A non-contact voltage detector pen',
+      'A standard digital multimeter on the AC range',
+      'A neon screwdriver tester',
       'Approved voltage indicator (AVI)',
     ],
     correctAnswer: 3,
@@ -496,9 +496,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the proving unit used for?',
     options: [
       'To prove the voltage indicator is working correctly',
-      'To verify insulation between live conductors',
-      'A tester designed to test without tripping RCDs',
-      'Cumulative earth leakage from multiple circuits or equipment',
+      'To discharge any stored energy in the circuit before work',
+      'To indicate the phase rotation of a three-phase supply',
+      'To measure the loop impedance at the point of isolation',
     ],
     correctAnswer: 0,
     explanation:
@@ -529,10 +529,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What does GS38 relate to?',
     options: [
-      'Potentially dangerous - urgent remedial action required',
-      'To prevent unauthorised access to the work area',
+      'The selection and sizing of protective conductors',
+      'The maximum disconnection times for final circuits',
       'Electrical test equipment used by electricians',
-      'Any voltage that could cause injury',
+      'The classification codes used on an EICR',
     ],
     correctAnswer: 2,
     explanation:
@@ -564,9 +564,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What colour should warning notices for isolation be?',
     options: [
       'Yellow/black or red/white',
-      'The calculated design value',
-      'Approved voltage indicator (AVI)',
-      'Inspection and testing',
+      'Green/white only',
+      'Blue/white for all mandatory notices',
+      'Plain white with no colour coding',
     ],
     correctAnswer: 0,
     explanation:
@@ -580,10 +580,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 33,
     question: 'What type of lock should be used for safe isolation?',
     options: [
-      'Protected against objects >1mm and water splashes',
+      'A combination padlock shared by the work team',
       'A unique key lock personal to the worker',
-      'Test lead connections and instrument battery',
-      'Electrical Installation Condition Report',
+      'Any padlock available on site at the time',
+      'A keyed-alike lock so any electrician can remove it',
     ],
     correctAnswer: 1,
     explanation:
@@ -597,10 +597,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: 'When should an isolation be tested?',
     options: [
-      'High humidity typically reduces insulation resistance',
-      'Schedule of Inspections and Schedule of Test Results',
+      'Only once, immediately before energising the circuit again',
+      'At the end of the working day only',
       'At the beginning and at intervals during work',
-      'Gas, water, oil, and structural steel',
+      'Only if the isolator is left unattended for over an hour',
     ],
     correctAnswer: 2,
     explanation:
@@ -614,9 +614,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 35,
     question: "What is a 'safe working area'?",
     options: [
-      'For user functional testing between proper inspections',
-      'A tester designed to test without tripping RCDs',
-      'With a low resistance ohmmeter between simultaneously accessible parts',
+      'Any area where 230V equipment is not present',
+      'An area designated only for storing test equipment',
+      'A zone where live working is always permitted',
       'An area made safe from electrical and other hazards during work',
     ],
     correctAnswer: 3,
@@ -632,9 +632,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should you check regarding backup supplies before isolation?',
     options: [
       'Whether generators, UPS, or other backup supplies feed the circuit',
-      'Where cables penetrate fire-resistant construction',
-      'That all points of isolation are secure and the circuit is dead',
-      'The test voltage could damage them or give false readings',
+      'Whether the backup supply has a current calibration certificate',
+      'Whether the backup supply is rated above 100A',
+      'Whether the backup supply uses the same cable colours',
     ],
     correctAnswer: 0,
     explanation:
@@ -648,10 +648,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: 'What is the purpose of using barriers during isolation?',
     options: [
-      'Protective device may not operate quickly enough',
+      'To provide mechanical support for the isolated cables',
       'To prevent unauthorised access to the work area',
-      'Phase rotation indicator or meter',
-      'Allow capacitive discharge before touching conductors',
+      'To indicate the direction of supply to other workers',
+      'To shield test instruments from electrical interference',
     ],
     correctAnswer: 1,
     explanation:
@@ -666,10 +666,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       "What action should be taken if someone else's lock is on an isolator you need to use?",
     options: [
-      'The resistance of the circuit protective conductor',
-      'A unique key lock personal to the worker',
+      'Cut the lock off and fit your own personal lock',
+      'Use bolt croppers if the worker cannot be located quickly',
       'Find the person and discuss coordination',
-      'Incorrect rotation causes motors to run backwards',
+      'Add your own lock alongside and start work anyway',
     ],
     correctAnswer: 2,
     explanation:
@@ -701,9 +701,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'When is live working permitted?',
     options: [
       'Only when dead working is unreasonable and suitable precautions are taken',
-      'A person with relevant knowledge, skills, and experience',
-      'To verify the installation remains safe for continued use',
-      'Longer cables typically show lower insulation resistance',
+      'Whenever it would save time on the job',
+      'Only on circuits operating below 400V',
+      'At any time provided rubber gloves are worn',
     ],
     correctAnswer: 0,
     explanation:
@@ -717,10 +717,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: 'What voltage level requires formal safe isolation procedures?',
     options: [
-      'Identify the source of supply',
+      'Only voltages above 1000V AC',
       'Any voltage that could cause injury',
-      'The prospective fault current at its location',
-      'Non-combustible material or metal enclosure',
+      'Only the standard 230V single-phase supply',
+      'Only three-phase 400V supplies and above',
     ],
     correctAnswer: 1,
     explanation:
@@ -734,10 +734,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: 'What is a permit to work system used for?',
     options: [
-      'To verify voltage at load is within acceptable limits',
-      'Correct colour coding or marking as per BS 7671',
+      'To record the test results of completed circuits',
+      'To certify that an installation complies with BS 7671',
       'To formally control high-risk work activities',
-      'To prevent unexpected energisation during work',
+      'To schedule routine maintenance of test instruments',
     ],
     correctAnswer: 2,
     explanation:
@@ -751,9 +751,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question: 'What should be done with stored energy after isolation?',
     options: [
-      'PV arrays generate DC voltage whenever light is present',
-      'The parts of the installation inspected and any areas not accessible',
-      'Compliance with standards, correct installation, and absence of damage',
+      'Leave it to dissipate naturally over several hours',
+      'Reconnect the supply briefly to drain the capacitors',
+      'Short the conductors directly together with a screwdriver',
       'Discharge capacitors and release mechanical energy safely',
     ],
     correctAnswer: 3,
@@ -803,10 +803,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'Why should non-contact voltage detectors not be solely relied upon?',
     options: [
-      'It measures actual trip time and current, not just mechanism function',
-      'Higher temperatures typically result in lower readings',
+      'They can only detect voltages above 400V reliably',
+      'They require a calibration certificate before each use',
       'They may give false readings and cannot verify absence of voltage',
-      'Continuity, insulation resistance, and polarity',
+      'They drain the circuit of stored energy during testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -839,9 +839,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'When working near exposed live conductors, what minimum distance should be maintained?',
     options: [
       'A safe distance where accidental contact is not possible',
-      'Enclosure IP rating is suitable for the location and environment',
-      'Non-combustible material or metal enclosure',
-      'It measures actual trip time and current, not just mechanism function',
+      'Exactly 1 metre regardless of the voltage present',
+      'A minimum of 300mm for all low voltage work',
+      'No specific distance is required if gloves are worn',
     ],
     correctAnswer: 0,
     explanation:
@@ -855,10 +855,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 49,
     question: 'What is the purpose of an isolation certificate?',
     options: [
-      'The competent person who carried out the inspection and testing',
+      'To certify the installation complies with BS 7671',
       'To formally record that equipment has been isolated and is safe to work on',
-      'To maintain all conductive parts at the same potential',
-      'Observations, classification codes, recommendations, and test results',
+      'To record the calibration status of the test instruments used',
+      'To authorise the supply to be reconnected by the DNO',
     ],
     correctAnswer: 1,
     explanation:
@@ -872,10 +872,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: 'What should be verified before starting work after isolation?',
     options: [
-      'Readings that don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t follow the expected pattern around the ring',
-      'An instrument for measuring insulation resistance in megohms',
+      'That the supply has been restored at the main switch',
+      'That the insulation resistance exceeds 1 megohm',
       'That all points of isolation are secure and the circuit is dead',
-      'It creates a brief high current and measures voltage drop',
+      'That the earth fault loop impedance is within limits',
     ],
     correctAnswer: 2,
     explanation:
@@ -890,9 +890,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 51,
     question: 'What is the purpose of a protective conductor continuity test?',
     options: [
-      'Investigate the cause as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s below minimum',
-      'Allow capacitive discharge before touching conductors',
-      'Longer cables typically show lower insulation resistance',
+      'To verify insulation between live conductors and earth',
+      'To confirm the protective device will trip within 0.4 seconds',
+      'To measure the prospective fault current at the origin',
       'To verify the integrity of the protective conductor',
     ],
     correctAnswer: 3,
@@ -909,9 +909,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'What is the maximum permissible resistance for the R1+R2 measurement on a ring final circuit?',
     options: [
       'The calculated design value',
-      'Working on de-energised equipment',
-      'AC sinusoidal residual currents',
-      'Yellow/black or red/white',
+      'A fixed maximum of 1 ohm for all ring circuits',
+      'No more than 0.05 ohms in every case',
+      'Exactly half of the measured Ze value',
     ],
     correctAnswer: 0,
     explanation:
@@ -942,10 +942,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: 'What is the purpose of the ring final circuit test?',
     options: [
-      'The parts of the installation inspected and any areas not accessible',
-      'Based on installation type, use, and condition found',
+      'To verify the insulation resistance of each socket outlet',
+      'To confirm the RCD protecting the ring trips correctly',
       'To verify continuity and identify breaks or interconnections in the ring',
-      'Secure connections, adequate size, accessibility, and correct labelling',
+      'To measure the prospective fault current at each socket',
     ],
     correctAnswer: 2,
     explanation:
@@ -960,9 +960,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'In a correctly wired ring circuit, what should be the relationship between end-to-end readings of L, N, and CPC?',
     options: [
-      'They may give false readings and cannot verify absence of voltage',
-      'Longer cables typically show lower insulation resistance',
-      'Readings increase progressively around the ring then drop',
+      'All three readings should be identical to each other',
+      'The CPC should read exactly half of the L and N readings',
+      'L should be much higher than N if correctly wired',
       'L and N should be similar, CPC may differ if different CSA',
     ],
     correctAnswer: 3,
@@ -979,9 +979,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'After cross-connecting conductors at the consumer unit, what reading should be obtained at each socket?',
     options: [
       'Approximately 25% of the end-to-end reading',
-      'Higher temperatures typically result in lower readings',
-      'At the beginning and at intervals during work',
-      'To prove the voltage indicator is working correctly',
+      'Approximately equal to the end-to-end reading',
+      'Approximately twice the end-to-end reading',
+      'Approximately 50% of the end-to-end reading',
     ],
     correctAnswer: 0,
     explanation:
@@ -995,10 +995,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 57,
     question: 'What indicates a break in a ring final circuit?',
     options: [
-      'At the beginning and at intervals during work',
+      'All sockets read approximately 25% of end-to-end',
       'Readings increase progressively around the ring then drop',
-      'Isolated system with no intentional connection to earth',
-      'Investigate and rectify the cause before energising',
+      'L, N and CPC end-to-end readings are all equal',
+      'The reading at every socket is identical and very low',
     ],
     correctAnswer: 1,
     explanation:
@@ -1012,10 +1012,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: 'What is the purpose of testing main bonding conductor continuity?',
     options: [
-      'Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
-      'Verifying correct connection of phase, neutral and earth conductors',
+      'To verify the resistance of the circuit protective conductor',
+      'To confirm the polarity of the incoming supply is correct',
       'To verify low resistance connection between MET and extraneous-conductive-parts',
-      'A test to verify equipment operates as intended when energised',
+      'To measure the earth electrode resistance on a TT system',
     ],
     correctAnswer: 2,
     explanation:
@@ -1080,10 +1080,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question: 'Why should test lead resistance be measured and subtracted from readings?',
     options: [
-      'The resistance of the circuit protective conductor',
-      'Correct termination, tightness, and protection of connections',
+      'To check the test leads comply with GS38 requirements',
+      'To confirm the instrument battery has sufficient charge',
       'To ensure accurate results not affected by lead resistance',
-      'Central point connecting all earthing and bonding conductors',
+      'To verify the leads can carry the full test current safely',
     ],
     correctAnswer: 2,
     explanation:
@@ -1097,9 +1097,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question: "What is the 'wandering lead' method used for?",
     options: [
-      'Moisture, damaged insulation, or contamination',
-      'Earth fault loop impedance, RCD testing, and functional tests',
-      'Using a continuity tester between specific conductors',
+      'Measuring insulation resistance across long cable runs',
+      'Checking polarity at the origin of the installation',
+      'Linking the line and CPC together at the consumer unit',
       'Testing continuity of protective conductors at multiple points',
     ],
     correctAnswer: 3,
@@ -1115,9 +1115,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What might cause an unexpectedly high R1+R2 reading?',
     options: [
       'Poor connections, damaged conductors, or incorrect cable',
-      'Isolated system with no intentional connection to earth',
-      'Test quarterly or recommended test frequency',
-      'Maximum current that could flow during a short circuit',
+      'A test current that is set too high on the instrument',
+      'Testing with the circuit still energised',
+      'An oversized protective conductor in the circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -1131,10 +1131,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'How should continuity of supplementary bonding be tested?',
     options: [
-      'To confirm the supply has correct phase and neutral identification',
+      'With an insulation resistance tester at 500V DC',
       'With a low resistance ohmmeter between simultaneously accessible parts',
-      'It creates a brief high current and measures voltage drop',
-      'Whether phase, neutral and earth are correctly connected using LED indicators',
+      'With a loop impedance tester between line and earth',
+      'With an RCD tester applied at the bonding clamp',
     ],
     correctAnswer: 1,
     explanation:
@@ -1148,10 +1148,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 66,
     question: 'What is the purpose of testing the continuity of radial circuits?',
     options: [
-      'The competent person who carried out the inspection and testing',
-      'A conductive part of equipment that can be touched and may become live under fault',
+      'To verify the insulation resistance at each outlet',
+      'To confirm the circuit forms a complete loop back to origin',
       'To verify protective conductor continuity from origin to each point',
-      'Enclosure IP rating is suitable for the location and environment',
+      'To measure the prospective fault current at the furthest point',
     ],
     correctAnswer: 2,
     explanation:
@@ -1166,9 +1166,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'What should be done if a ring circuit shows significantly different readings on one leg?',
     options: [
-      'Multiply by 1.2 for thermoplastic, 1.04 for thermosetting',
-      'To prove the voltage indicator is working correctly',
-      'To confirm the supply has correct phase and neutral identification',
+      'Average the two leg readings and record the result',
+      'Energise the circuit and re-test under load',
+      'Accept the readings as normal for a ring final circuit',
       'Investigate for possible interconnection, spur, or different cable',
     ],
     correctAnswer: 3,
@@ -1200,10 +1200,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'When testing a ring circuit, if L-N end-to-end is 0.8Ω and L-CPC is 1.2Ω, what does this indicate?',
     options: [
-      'It shows the highest reading during cross-connected test',
+      'The line and CPC conductors have the same CSA',
       'The CPC has a smaller CSA than the live conductors',
-      'Because Ze is typically too high for overcurrent devices alone',
-      'Ensuring only the device nearest the fault operates',
+      'There is a break in the neutral conductor of the ring',
+      'The CPC has a larger CSA than the live conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1217,10 +1217,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 70,
     question: 'What should be checked if continuity readings are inconsistent?',
     options: [
-      'Approved voltage indicator (AVI)',
-      'Protective device may not operate quickly enough',
+      'The nominal supply voltage at the origin',
+      'The disconnection time of the protective device',
       'Test lead connections and instrument battery',
-      'Risk of shock when maintaining equipment that appears off',
+      'The IP rating of the consumer unit enclosure',
     ],
     correctAnswer: 2,
     explanation:
@@ -1252,9 +1252,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What does a reading of 0.00Ω on a continuity test typically indicate?',
     options: [
       'Possible short circuit or test leads touching',
-      'To ensure accurate results not affected by lead resistance',
-      'Prove tester, test dead, prove tester',
-      'Electrical Installation Certificate',
+      'A complete break in the conductor under test',
+      'The instrument battery is too low to read',
+      'An open circuit at the far end of the cable',
     ],
     correctAnswer: 0,
     explanation:
@@ -1303,9 +1303,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question: 'What should be done with electronic equipment before insulation resistance testing?',
     options: [
-      'Warning of presence of more than one supply',
-      'Electrical test equipment used by electricians',
-      'Yes, if correctly terminated with appropriate glands',
+      'Leave it connected to test the equipment as well',
+      'Switch it off but leave it wired into the circuit',
+      'Test it at a reduced voltage of 250V DC',
       'Disconnect or bypass it to prevent damage',
     ],
     correctAnswer: 3,
@@ -1322,9 +1322,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What does insulation resistance testing verify?',
     options: [
       'The quality of insulation between conductors and earth',
-      'Signs of damage, deterioration, overheating, or unsafe conditions',
-      'That all points of isolation are secure and the circuit is dead',
-      'Using a voltage indicator or socket tester',
+      'The continuity of the circuit protective conductor',
+      'The disconnection time of the protective device',
+      'The resistance of the earth electrode on a TT system',
     ],
     correctAnswer: 0,
     explanation:
@@ -1336,16 +1336,16 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 77,
-    question: 'What should the minimum insulation resistance be for SELV circuits?',
+    question: 'What should the minimum insulation resistance be for SELV and PELV circuits?',
     options: [
       '0.5 MΩ',
       '0.25 MΩ',
       '1.0 MΩ',
       '2.0 MΩ',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'SELV and PELV circuits with voltage not exceeding 50V AC have a minimum insulation resistance of 0.25 MΩ.',
+      'BS 7671 Table 64 requires SELV and PELV circuits to achieve a minimum insulation resistance of 0.5 MΩ when tested at 250V DC.',
     section: 'Insulation Resistance',
     difficulty: 'intermediate',
     topic: 'Acceptance Criteria',
@@ -1355,10 +1355,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: 'Which two tests are performed during insulation resistance testing?',
     options: [
-      'Record the limitation in the report',
-      'A unique key lock personal to the worker',
+      'Neutral to earth and earth to CPC',
+      'Line to line and line to neutral only',
       'Live to earth and live to neutral',
-      'Support and protection for cables',
+      'Phase to earth and earth electrode to neutral',
     ],
     correctAnswer: 2,
     explanation:
@@ -1372,9 +1372,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: "Why should all switches be in the 'on' position during insulation testing?",
     options: [
-      'It shows the highest reading during cross-connected test',
-      'For minor additions not involving a new circuit',
-      'To prevent fire spreading through cable penetrations',
+      'To allow the test current to discharge to earth',
+      'To prevent the protective device from tripping',
+      'To protect electronic equipment from the test voltage',
       'To test all insulation and wiring in the circuit',
     ],
     correctAnswer: 3,
@@ -1390,9 +1390,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What could cause a low insulation resistance reading?',
     options: [
       'Moisture, damaged insulation, or contamination',
-      'Test quarterly or recommended test frequency',
-      'Readings increase progressively around the ring then drop',
-      'Investigate and rectify the cause before energising',
+      'A test voltage set too high for the circuit',
+      'Conductors that are too large for the circuit',
+      'A newly installed cable with dry insulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1423,10 +1423,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 82,
     question: 'What precautions should be taken after insulation resistance testing?',
     options: [
-      'To prevent fire spreading through cable penetrations',
-      'For user functional testing between proper inspections',
+      'Immediately re-energise the circuit to dissipate charge',
+      'Leave the test leads connected for at least an hour',
       'Allow capacitive discharge before touching conductors',
-      'Risk of shock when maintaining equipment that appears off',
+      'Record the reading before disconnecting the leads',
     ],
     correctAnswer: 2,
     explanation:
@@ -1440,9 +1440,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'What effect does cable length have on insulation resistance?',
     options: [
-      'Correct colour coding or marking as per BS 7671',
-      'To contain fire in the event of a fault within the unit',
-      'Protective device may not operate quickly enough',
+      'Cable length has no effect on insulation resistance',
+      'Longer cables typically show higher insulation resistance',
+      'Only cables over 100m affect the reading',
       'Longer cables typically show lower insulation resistance',
     ],
     correctAnswer: 3,
@@ -1458,9 +1458,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should be done if insulation resistance is below the minimum acceptable value?',
     options: [
       'Investigate and rectify the cause before energising',
-      'A competent person with appropriate knowledge and experience',
-      'They may give false readings and cannot verify absence of voltage',
-      'To provide discrimination with downstream RCDs',
+      'Energise the circuit and re-test after one hour',
+      'Record it as a pass if it exceeds 0.5 megohm',
+      'Repeat the test at a lower voltage until it passes',
     ],
     correctAnswer: 0,
     explanation:
@@ -1474,10 +1474,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: 'What items should be disconnected before testing insulation resistance?',
     options: [
-      'For user functional testing between proper inspections',
+      'Only the main switch and the protective devices',
       'Electronic equipment, capacitors, indicating devices, and surge protectors',
-      'Multiply by 1.2 for thermoplastic, 1.04 for thermosetting',
-      'Discharge capacitors and release mechanical energy safely',
+      'All socket outlets and lighting accessories',
+      'The earthing and main bonding conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -1509,9 +1509,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: 'Why is DC voltage used for insulation resistance testing?',
     options: [
-      'Isolate the affected circuit and clearly inform the client',
-      'The resistance of the circuit protective conductor',
-      'The CPC has a smaller CSA than the live conductors',
+      'DC is safer to handle than AC at the same voltage',
+      'DC cannot damage the insulation under test',
+      'AC voltage is not available from battery instruments',
       'DC provides a steady stress on insulation without capacitive current',
     ],
     correctAnswer: 3,
@@ -1528,9 +1528,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'What might cause an insulation resistance reading to gradually increase during testing?',
     options: [
       'Absorption of current by the insulation (polarisation)',
-      'Removed from holders or switches left off',
-      'Correct colour coding or marking as per BS 7671',
-      'The test current passes through earth causing imbalance',
+      'The instrument battery slowly draining during the test',
+      'Rising temperature of the conductors under test',
+      'Moisture being driven off the insulation by the test',
     ],
     correctAnswer: 0,
     explanation:
@@ -1562,10 +1562,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'When testing a complete installation, what is the likely reading if all circuits pass individually?',
     options: [
-      'To test all insulation and wiring in the circuit',
-      'Check calibration date, condition, and battery level',
+      'Higher than individual readings due to series paths',
+      'Exactly the average of all the individual readings',
       'Lower than individual readings due to parallel paths',
-      'Fire-resistant cable (e.g., MICC, FP cables)',
+      'The same as the highest individual circuit reading',
     ],
     correctAnswer: 2,
     explanation:
@@ -1579,9 +1579,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'What effect does temperature have on insulation resistance readings?',
     options: [
-      'To provide clear information for future work and maintenance',
-      'Enclosure IP rating is suitable for the location and environment',
-      'Protection against finger contact when cover is removed',
+      'Temperature has no measurable effect on the reading',
+      'Higher temperatures typically result in higher readings',
+      'Only temperatures below freezing affect the reading',
       'Higher temperatures typically result in lower readings',
     ],
     correctAnswer: 3,
@@ -1596,9 +1596,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is a megohmmeter?',
     options: [
       'An instrument for measuring insulation resistance in megohms',
-      'EIC is for new installations, EICR is for existing installations',
-      'To verify the earth electrode provides adequate earthing',
-      'Basic protection, fault protection, and additional protection',
+      'An instrument for measuring earth fault loop impedance',
+      'An instrument for measuring residual current in milliamps',
+      'An instrument for measuring continuity in milliohms',
     ],
     correctAnswer: 0,
     explanation:
@@ -1612,10 +1612,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 93,
     question: 'What should lamps be during L-E insulation resistance testing?',
     options: [
-      'To prove the voltage indicator is working correctly',
+      'Left fitted and switched on for the test',
       'Removed from holders or switches left off',
-      'Approved voltage indicator (AVI)',
-      'Electrical test equipment used by electricians',
+      'Replaced with higher wattage lamps first',
+      'Tested individually at 1000V DC',
     ],
     correctAnswer: 1,
     explanation:
@@ -1629,10 +1629,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: 'What is the purpose of testing L-N insulation resistance?',
     options: [
-      'The resistance of the circuit protective conductor',
-      'Before testing, with the installation isolated',
+      'To verify the continuity of the neutral conductor',
+      'To confirm correct polarity at each socket outlet',
       'To verify insulation between live conductors',
-      'Potentially dangerous - urgent remedial action required',
+      'To measure the earth fault loop impedance',
     ],
     correctAnswer: 2,
     explanation:
@@ -1647,9 +1647,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'If insulation resistance of a circuit is found to be 0.9 MΩ, what action is required?',
     options: [
-      "Yes, if correctly terminated with appropriate glands",
-      "Check calibration date, condition, and battery level",
-      "As per manufacturer recommendations, typically annually",
+      "Record it as a pass as it exceeds 0.5 megohm",
+      "Accept it as satisfactory for an existing installation",
+      "Re-test at 250V DC to obtain a higher reading",
       "Investigate the cause as it's below minimum",
     ],
     correctAnswer: 3,
@@ -1665,9 +1665,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What does Zs represent?',
     options: [
       'The total earth fault loop impedance at the furthest point',
-      'Potentially dangerous - urgent remedial action required',
-      'Signs of damage, deterioration, overheating, or unsafe conditions',
-      'Using a continuity tester between specific conductors',
+      'The external earth fault loop impedance at the origin',
+      'The resistance of the circuit protective conductor only',
+      'The insulation resistance between live and earth',
     ],
     correctAnswer: 0,
     explanation:
@@ -1715,9 +1715,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'Why is earth fault loop impedance testing important?',
     options: [
-      'Observations, classification codes, recommendations, and test results',
-      'Only when dead working is unreasonable and suitable precautions are taken',
-      'To verify the installation remains safe for continued use',
+      'To verify the insulation resistance of the circuit',
+      'To confirm correct polarity at the consumer unit',
+      'To check the continuity of the main bonding conductors',
       'To ensure protective devices disconnect quickly enough under fault conditions',
     ],
     correctAnswer: 3,
@@ -1739,7 +1739,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'For a 32A Type B MCB, maximum Zs is 1.37Ω per BS 7671:2018+A3:2024 Table 41.3 (incorporating Cmin = 0.95) to ensure disconnection within 0.4 seconds.',
+      'For a 32A Type B MCB, maximum Zs is 1.37Ω per BS 7671 Table 41.3 (incorporating Cmin = 0.95) to ensure disconnection within the required time.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Maximum Values',
@@ -1783,9 +1783,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question: 'What causes the difference between measured Zs and calculated Zs values?',
     options: [
-      'Continuously monitor insulation resistance of IT systems',
-      'The test current passes through earth causing imbalance',
-      'The resistance of the phase conductor',
+      'The test instrument always reads slightly high',
+      'Parallel earth paths through bonding and pipework',
+      'The supply voltage varies during the test',
       'Temperature - conductors are cooler when tested',
     ],
     correctAnswer: 3,
@@ -1801,9 +1801,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What correction factor should be applied to measured Zs values?',
     options: [
       'Multiply by 1.2 for thermoplastic, 1.04 for thermosetting',
-      'The total earth fault loop impedance at the furthest point',
-      'A competent person with appropriate knowledge and experience',
-      'Visual inspection, testing, documentation',
+      'Multiply by a fixed factor of 0.8 for all cable types',
+      'Divide by 1.2 for thermoplastic, 1.04 for thermosetting',
+      'No correction is needed as Zs is measured cold',
     ],
     correctAnswer: 0,
     explanation:
@@ -1834,10 +1834,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'What does a high Zs reading indicate?',
     options: [
-      'Before testing, with the installation isolated',
-      'It creates a brief high current and measures voltage drop',
+      'A very high prospective fault current at that point',
+      'Excellent insulation resistance of the circuit',
       'Protective device may not operate quickly enough',
-      'Correct colour coding or marking as per BS 7671',
+      'A low resistance earth path back to the source',
     ],
     correctAnswer: 2,
     explanation:
@@ -1889,7 +1889,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       '200Ω',
     ],
     correctAnswer: 1,
-    explanation: 'The typical maximum Ze for a TT system is 21Ω, but RCDs are typically required.',
+    explanation: 'IET Guidance Note 3 gives a typical maximum stable Ze of 21Ω for a TT system; BS 7671 itself relies on the RCD condition Ra × IΔn ≤ 50V (Table 41.5), and an RCD is required on a TT system.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'intermediate',
     topic: 'System Values',
@@ -1899,10 +1899,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: 'How does a loop impedance tester work?',
     options: [
-      'To test on both halves of the AC waveform',
-      'Correct colour coding or marking as per BS 7671',
+      'It applies 500V DC and measures the leakage current',
+      'It injects a small signal and counts the phase angle',
       'It creates a brief high current and measures voltage drop',
-      'To provide strain relief, earth continuity, and environmental sealing',
+      'It measures the residual current between line and neutral',
     ],
     correctAnswer: 2,
     explanation:
@@ -1916,9 +1916,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 111,
     question: 'Why might RCDs trip during loop impedance testing?',
     options: [
-      'Risk of shock when maintaining equipment that appears off',
-      'A competent person with appropriate knowledge and experience',
-      'Electrical Installation Condition Report',
+      'The test voltage exceeds the RCD rated voltage',
+      'The high test current overheats the RCD coil',
+      'The test reverses the polarity at the RCD terminals',
       'The test current passes through earth causing imbalance',
     ],
     correctAnswer: 3,
@@ -1934,9 +1934,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: "What is a 'no-trip' loop tester?",
     options: [
       'A tester designed to test without tripping RCDs',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the current edition of BS 7671 requirements',
-      'Verifying the absence of voltage at the work location',
-      'Non-combustible material or metal enclosure',
+      'A tester that automatically resets the RCD after each test',
+      'A tester that bypasses the RCD via a separate earth lead',
+      'A tester that only works on circuits without an RCD',
     ],
     correctAnswer: 0,
     explanation: 'No-trip testers use lower test currents to measure Zs without tripping RCDs.',
@@ -1949,10 +1949,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 113,
     question: 'What is prospective fault current (PFC)?',
     options: [
-      'For minor additions not involving a new circuit',
+      'The normal operating current of the circuit under full load',
       'The maximum current that could flow during a fault',
-      'Prove tester, test dead, prove tester',
-      'The quality of insulation between conductors and earth',
+      'The current at which the RCD provides additional protection',
+      'The leakage current measured during insulation testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -1982,9 +1982,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: "What must a protective device's breaking capacity exceed?",
     options: [
-      'Protected against objects >1mm and water splashes',
-      'Temperature - conductors are cooler when tested',
-      'High circuit impedance that may affect device operation',
+      'The rated residual current of any upstream RCD',
+      'The maximum design current of the circuit it protects',
+      'The earth fault loop impedance at the origin',
       'The prospective fault current at its location',
     ],
     correctAnswer: 3,
@@ -2016,10 +2016,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 117,
     question: 'How does an RCD detect a fault?',
     options: [
-      'To contain and protect cables and wiring',
+      'By measuring the loop impedance of the earth path',
       'By detecting imbalance between live and neutral currents',
-      'An area made safe from electrical and other hazards during work',
-      'Isolate and lock off all sources of supply',
+      'By sensing overcurrent in the line conductor only',
+      'By monitoring the voltage between line and earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -2083,10 +2083,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 121,
     question: 'What is the purpose of RCD testing?',
     options: [
-      'Continuity, insulation resistance, and polarity',
+      'To verify the insulation resistance of the protected circuit',
       'To verify the RCD trips within the required time',
-      'Using a voltage indicator or socket tester',
-      'L and N should be similar, CPC may differ if different CSA',
+      'To measure the earth fault loop impedance downstream',
+      'To confirm the breaking capacity of the device',
     ],
     correctAnswer: 1,
     explanation:
@@ -2133,9 +2133,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is a Type A RCD designed to detect?',
     options: [
       'AC sinusoidal and pulsating DC residual currents',
-      'The resistance of the circuit protective conductor',
-      'Because Ze is typically too high for overcurrent devices alone',
-      'Lower than individual readings due to parallel paths',
+      'AC sinusoidal residual currents only',
+      'Smooth DC residual currents only',
+      'Pulsating DC and smooth DC residual currents only',
     ],
     correctAnswer: 0,
     explanation: 'Type A RCDs detect AC sinusoidal and pulsating DC residual currents.',
@@ -2160,10 +2160,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: 'What is the test button on an RCD used for?',
     options: [
-      'Electrical Installation Condition Report',
-      'To test on both halves of the AC waveform',
+      'To measure the actual trip time of the device',
+      'To reset the RCD after it has tripped on a fault',
       'For user functional testing between proper inspections',
-      'The total earth fault loop impedance at the furthest point',
+      'To verify the RCD trips at exactly 30mA',
     ],
     correctAnswer: 2,
     explanation:
@@ -2177,9 +2177,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 127,
     question: 'Why is an instrument test preferred over the test button?',
     options: [
-      'Observations, classification codes, recommendations, and test results',
-      'An area made safe from electrical and other hazards during work',
-      'The total earth fault loop impedance at the furthest point',
+      'It avoids any risk of tripping the RCD during the test',
+      'It does not require the circuit to be energised',
+      'It can be carried out by the end user without tools',
       'It measures actual trip time and current, not just mechanism function',
     ],
     correctAnswer: 3,
@@ -2194,9 +2194,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is an RCBO?',
     options: [
       'A combined RCD and circuit breaker in one device',
-      'Allow capacitive discharge before touching conductors',
-      'Disconnect or bypass it to prevent damage',
-      'Make safe immediately and inform the person in control',
+      'A device that monitors earth leakage without disconnecting',
+      'A time-delayed RCD used only at the supply origin',
+      'A surge protection device fitted in the consumer unit',
     ],
     correctAnswer: 0,
     explanation: 'An RCBO combines the functions of an RCD and an MCB in a single device.',
@@ -2209,10 +2209,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: 'What is the advantage of using RCBOs over a single RCD?',
     options: [
-      "The maximum current that could flow during a fault",
+      "They are significantly cheaper than a single RCD",
       "Individual circuit protection - one fault doesn't affect other circuits",
-      "It creates a brief high current and measures voltage drop",
-      "To verify voltage at load is within acceptable limits",
+      "They do not require periodic testing once installed",
+      "They detect smooth DC residual currents as standard",
     ],
     correctAnswer: 1,
     explanation: 'RCBOs provide individual circuit protection.',
@@ -2225,10 +2225,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: 'What is an S-type or time-delayed RCD used for?',
     options: [
-      'Poor connections, damaged conductors, or incorrect cable',
-      'Mechanical protection and sometimes a CPC path for cables',
+      'To provide additional protection against electric shock',
+      'To detect smooth DC residual currents only',
       'To provide discrimination with downstream RCDs',
-      'For minor additions not involving a new circuit',
+      'To trip faster than a general type RCD',
     ],
     correctAnswer: 2,
     explanation: 'S-type RCDs allow discrimination with downstream RCDs.',
@@ -2258,9 +2258,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What causes nuisance tripping of RCDs?',
     options: [
       'Cumulative earth leakage from multiple circuits or equipment',
-      'Absorption of current by the insulation (polarisation)',
-      'They may give false readings and cannot verify absence of voltage',
-      'The maximum current that could flow during a fault',
+      'An RCD rating that is too high for the circuit',
+      'Excessive insulation resistance on the circuit',
+      'A break in the circuit protective conductor',
     ],
     correctAnswer: 0,
     explanation: 'Nuisance tripping is often caused by cumulative earth leakage current.',
@@ -2274,10 +2274,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the maximum permissible standing earth leakage for a 30mA RCD protected circuit?',
     options: [
-      'To calculate Zs when added to Ze',
+      '30mA (equal to the rating)',
       '10mA (one-third of rating)',
-      'Improvement recommended',
-      'Approved voltage indicator (AVI)',
+      '15mA (one-half of rating)',
+      '3mA (one-tenth of rating)',
     ],
     correctAnswer: 1,
     explanation: 'Standing leakage should not exceed one-third of the RCD rating.',
@@ -2290,10 +2290,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 134,
     question: 'How should an RCD tester be connected?',
     options: [
-      'The person ordering the work and the installation owner/occupier',
-      'Cumulative earth leakage from multiple circuits or equipment',
+      'Between line and neutral only at the consumer unit',
+      'Across the RCD test button terminals directly',
       'Between line, neutral and earth at the point of test',
-      'To prove the voltage indicator is working correctly',
+      'Between neutral and earth at the main earthing terminal',
     ],
     correctAnswer: 2,
     explanation:
@@ -2307,9 +2307,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: 'What should be done if an RCD fails to trip during testing?',
     options: [
-      'To provide discrimination with downstream RCDs',
-      'Fire alarm systems and emergency circuits requiring fire resistance',
-      'To verify the earth electrode provides adequate earthing',
+      'Record it as a pass if the test button still works',
+      'Increase the test current until the device trips',
+      'Leave it in service and note it for the next inspection',
       'Check connections first, then replace if still faulty',
     ],
     correctAnswer: 3,
@@ -2325,9 +2325,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is polarity testing?',
     options: [
       'Verifying correct connection of phase, neutral and earth conductors',
-      'Combined PEN in supply, separated in installation',
-      'That it isolates all poles and auxiliary contacts operate correctly',
-      'Switching, dimming (if applicable), and correct operation of controls',
+      'Verifying the insulation resistance between live conductors',
+      'Verifying the earth fault loop impedance at each point',
+      'Verifying the continuity of the ring final circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -2341,10 +2341,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: 'Why is correct polarity important for single-pole switches?',
     options: [
-      'Test lead connections and instrument battery',
+      'To ensure the switch breaks the neutral conductor',
       'To ensure the switch breaks the phase conductor',
-      'Construction site or caravan park',
-      'Check status indicator shows device is functional',
+      'To ensure the switch breaks the earth conductor',
+      'To ensure the switch breaks both phase and neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -2358,10 +2358,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: 'What could happen if polarity is reversed at a socket outlet?',
     options: [
-      'The test voltage could damage them or give false readings',
-      'To assess deterioration and continued safety of an existing installation',
+      'The RCD will trip every time the socket is used',
+      'The earth conductor will carry the full load current',
       'Risk of shock when maintaining equipment that appears off',
-      'Observations, classification codes, recommendations, and test results',
+      'The circuit will draw twice its normal current',
     ],
     correctAnswer: 2,
     explanation:
@@ -2375,9 +2375,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: 'How is polarity tested during dead testing?',
     options: [
-      'Central point connecting all earthing and bonding conductors',
-      'PV arrays generate DC voltage whenever light is present',
-      'Mechanical protection and sometimes a CPC path for cables',
+      'Using a voltage indicator at each accessory',
+      'Using an insulation resistance tester at 500V DC',
+      'Using a socket tester with LED indicators',
       'Using a continuity tester between specific conductors',
     ],
     correctAnswer: 3,
@@ -2393,9 +2393,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Where should the centre contact of an Edison screw lampholder be connected?',
     options: [
       'To the phase (line) conductor',
-      'Identify the source of supply',
-      'Electrical Installation Certificate',
-      'AC sinusoidal residual currents',
+      'To the neutral conductor',
+      'To the circuit protective conductor',
+      'To the main earthing terminal',
     ],
     correctAnswer: 0,
     explanation: 'The centre contact must be connected to phase for safety.',
@@ -2408,10 +2408,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: 'What is a functional test?',
     options: [
-      'As per manufacturer recommendations, typically annually',
+      'A test of the insulation resistance of the equipment',
       'A test to verify equipment operates as intended when energised',
-      'To provide strain relief, earth continuity, and environmental sealing',
-      'The person ordering the work and the installation owner/occupier',
+      'A test of the earth fault loop impedance at the equipment',
+      'A test of the continuity of the protective conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -2425,10 +2425,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'What should be functionally tested on a lighting circuit?',
     options: [
-      'Protection against mechanical damage and fire stopping where required',
-      'High humidity typically reduces insulation resistance',
+      'The insulation resistance between switch terminals',
+      'The earth fault loop impedance at each light fitting',
       'Switching, dimming (if applicable), and correct operation of controls',
-      'To verify the integrity of the protective conductor',
+      'The prospective fault current at the lighting point',
     ],
     correctAnswer: 2,
     explanation:
@@ -2442,9 +2442,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: 'What is the purpose of testing interlocks?',
     options: [
-      'Nature of danger, who isolated it, and contact details',
-      'Electronic equipment, capacitors, indicating devices, and surge protectors',
-      'The parts of the installation inspected and any areas not accessible',
+      'To measure the disconnection time of the interlock',
+      'To verify the insulation resistance of the interlock wiring',
+      'To confirm the interlock complies with its IP rating',
       'To confirm safety interlocks prevent dangerous situations',
     ],
     correctAnswer: 3,
@@ -2460,9 +2460,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should be verified when testing a switched fused connection unit?',
     options: [
       'Correct polarity, fuse rating, and that the switch breaks the phase',
-      'To verify the RCD trips within the required time',
-      'To test all insulation and wiring in the circuit',
-      'They may give false readings and cannot verify absence of voltage',
+      'Only that the fuse is the correct colour for the rating',
+      'That the switch breaks the neutral conductor of the circuit',
+      'That the unit is bonded to the nearest water pipe',
     ],
     correctAnswer: 0,
     explanation:
@@ -2476,10 +2476,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: 'How is polarity verified in a live installation?',
     options: [
-      'Protected against objects >1mm and water splashes',
+      'Using a low resistance ohmmeter between conductors',
       'Using a voltage indicator or socket tester',
-      'Temperature - conductors are cooler when tested',
-      'To prove the voltage indicator is working correctly',
+      'Using an insulation resistance tester at 500V DC',
+      'Using a loop impedance tester at the origin',
     ],
     correctAnswer: 1,
     explanation:
@@ -2493,10 +2493,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: 'What does a socket tester indicate about polarity?',
     options: [
-      'DC provides a steady stress on insulation without capacitive current',
-      'To assess the overall condition when full inspection is impractical',
+      'The exact earth fault loop impedance at the socket',
+      'The insulation resistance between the socket terminals',
       'Whether phase, neutral and earth are correctly connected using LED indicators',
-      'To verify the installation remains safe for continued use',
+      'The disconnection time of the protective device',
     ],
     correctAnswer: 2,
     explanation:
@@ -2510,9 +2510,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'Why should polarity be verified at the origin of the installation?',
     options: [
-      'Whether generators, UPS, or other backup supplies feed the circuit',
-      'To identify circuits for safe isolation and future work',
-      'To ensure accurate results not affected by lead resistance',
+      'To measure the external earth fault loop impedance Ze',
+      'To verify the main bonding conductors are continuous',
+      'To confirm the insulation resistance of the tails',
       'To confirm the supply has correct phase and neutral identification',
     ],
     correctAnswer: 3,
@@ -2528,9 +2528,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is checked during functional testing of an isolator?',
     options: [
       'That it isolates all poles and auxiliary contacts operate correctly',
-      'To assess deterioration and continued safety of an existing installation',
-      'Only when dead working is unreasonable and suitable precautions are taken',
-      'Protective device may not operate quickly enough',
+      'That its insulation resistance exceeds 1 megohm',
+      'That the loop impedance through it is below 0.35 ohms',
+      'That it trips within 0.4 seconds under fault conditions',
     ],
     correctAnswer: 0,
     explanation:
@@ -2544,10 +2544,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 149,
     question: 'What must be verified for a correctly wired 13A socket outlet?',
     options: [
-      'Temperature - conductors are cooler when tested',
+      'Phase is top, earth left, neutral right when viewed face-on',
       'Earth is top, neutral left, phase right when viewed face-on',
-      'To verify the installation remains safe for continued use',
-      'Enclosure IP rating is suitable for the location and environment',
+      'Neutral is top, phase left, earth right when viewed face-on',
+      'Earth is top, phase left, neutral right when viewed face-on',
     ],
     correctAnswer: 1,
     explanation:
@@ -2561,10 +2561,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: 'What should be tested on emergency lighting systems?',
     options: [
-      'Fire-resistant cable (e.g., MICC, FP cables)',
-      'Longer cables typically show lower insulation resistance',
+      'Only the insulation resistance of the supply cable',
+      'Only the earth fault loop impedance at each luminaire',
       'Changeover to battery, duration under load, and charging',
-      'Cumulative earth leakage from multiple circuits or equipment',
+      'Only the lux level achieved under mains supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -2578,9 +2578,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 151,
     question: 'What is the purpose of phase rotation testing?',
     options: [
-      'Basic protection, fault protection, and additional protection',
-      'An area made safe from electrical and other hazards during work',
-      'It creates a brief high current and measures voltage drop',
+      'To verify the insulation resistance between phases',
+      'To measure the voltage drop across each phase',
+      'To confirm the prospective fault current is balanced',
       'To verify correct phase sequence in three-phase installations',
     ],
     correctAnswer: 3,
@@ -2596,9 +2596,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Why is correct phase rotation important for motors?',
     options: [
       'Incorrect rotation causes motors to run backwards',
-      'Ensuring only the device nearest the fault operates',
-      'Correct colour coding or marking as per BS 7671',
-      'Maximum current that could flow during a short circuit',
+      'Incorrect rotation increases the motor insulation resistance',
+      'Incorrect rotation reduces the supply voltage to the motor',
+      'Incorrect rotation prevents the motor from starting at all',
     ],
     correctAnswer: 0,
     explanation:
@@ -2612,10 +2612,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: 'What instrument is used to check phase rotation?',
     options: [
-      'Protection against transient overvoltages',
+      'An insulation resistance tester',
       'Phase rotation indicator or meter',
-      'Disconnect or bypass it to prevent damage',
-      'Live to earth and live to neutral',
+      'A low resistance ohmmeter',
+      'An approved voltage indicator',
     ],
     correctAnswer: 1,
     explanation: 'A phase rotation indicator or meter is used to check the sequence of phases.',
@@ -2628,10 +2628,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 154,
     question: 'What should be verified when testing a cooker control unit?',
     options: [
-      'Critical systems like operating theatres where first fault must not cause shutdown',
-      'Higher temperatures typically result in lower readings',
+      'Only that the unit is rated at 45A or above',
+      'Only the insulation resistance of the cooker cable',
       'Correct polarity, switch in phase conductor, and socket polarity if fitted',
-      'Switching, dimming (if applicable), and correct operation of controls',
+      'Only that the neon indicator illuminates when switched on',
     ],
     correctAnswer: 2,
     explanation:
@@ -2645,9 +2645,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 155,
     question: 'What does functional testing of fire alarm interfaces include?',
     options: [
-      'An instrument for measuring insulation resistance in megohms',
-      'To formally control high-risk work activities',
-      'To assess deterioration and continued safety of an existing installation',
+      'Measuring the insulation resistance of the alarm wiring',
+      'Verifying the loop impedance of the alarm supply circuit',
+      'Confirming the alarm panel is bonded to the MET',
       'Verifying cause and effect relationships with other systems',
     ],
     correctAnswer: 3,
@@ -2664,9 +2664,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'When should visual inspection be carried out?',
     options: [
       'Before testing, with the installation isolated',
-      'Removed from holders or switches left off',
-      'Investigate and rectify the cause before energising',
-      'To verify the RCD trips within the required time',
+      'After all dead and live testing is complete',
+      'Only once the installation has been energised',
+      'After the certificate has been signed off',
     ],
     correctAnswer: 0,
     explanation:
@@ -2680,10 +2680,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question: 'What does visual inspection verify?',
     options: [
-      'The test current passes through earth causing imbalance',
+      'The earth fault loop impedance at every accessory',
       'Compliance with standards, correct installation, and absence of damage',
-      'Must be sealed to prevent moisture ingress into the hygroscopic insulation',
-      'EIC is for new installations, EICR is for existing installations',
+      'The insulation resistance of every circuit in megohms',
+      'The disconnection times of all protective devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -2697,10 +2697,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: 'What should be checked regarding cable selection during visual inspection?',
     options: [
-      'Whether phase, neutral and earth are correctly connected using LED indicators',
-      'As per manufacturer recommendations, typically annually',
+      'Only the colour of the cable sheath',
+      'Only the manufacturer of the cable',
       'Correct type, current-carrying capacity, and suitability for the environment',
-      'The test current passes through earth causing imbalance',
+      'Only that the cable was tested before installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -2714,9 +2714,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 159,
     question: 'What is checked regarding connection of conductors?',
     options: [
-      'To provide strain relief, earth continuity, and environmental sealing',
-      'DC provides a steady stress on insulation without capacitive current',
-      'To ensure the switch breaks the phase conductor',
+      'Only the length of each conductor in the enclosure',
+      'Only the colour coding of each conductor',
+      'Only the insulation resistance at each terminal',
       'Correct termination, tightness, and protection of connections',
     ],
     correctAnswer: 3,
@@ -2732,9 +2732,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What identification should conductors have?',
     options: [
       'Correct colour coding or marking as per BS 7671',
-      'The CPC has a smaller CSA than the live conductors',
-      'As per manufacturer recommendations, typically annually',
-      'Discharge capacitors and release mechanical energy safely',
+      'A unique serial number on each conductor',
+      'The date of installation marked at each end',
+      'The current rating printed along the conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -2748,10 +2748,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: 'What protective measures should be verified during visual inspection?',
     options: [
-      'Warning of presence of more than one supply',
+      'Only the additional protection provided by RCDs',
       'Basic protection, fault protection, and additional protection',
-      'It creates a brief high current and measures voltage drop',
-      'Multiply by 1.2 for thermoplastic, 1.04 for thermosetting',
+      'Only the fault protection provided by earthing',
+      'Only the basic protection provided by insulation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2765,10 +2765,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'What should be checked for consumer units and distribution boards?',
     options: [
-      'To confirm safety interlocks prevent dangerous situations',
-      'Observations, classification codes, recommendations, and test results',
+      'Only the manufacturer and model of the unit',
+      'Only the number of spare ways available',
       'Correct rating, secure fixing, circuit identification, and protection from damage',
-      'Testing continuity of protective conductors at multiple points',
+      'Only the colour of the enclosure cover',
     ],
     correctAnswer: 2,
     explanation:
@@ -2782,9 +2782,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What condition of accessories should be noted?',
     options: [
-      'Lower than individual readings due to parallel paths',
-      'Continuity, insulation resistance, and polarity',
-      'Moisture, damaged insulation, or contamination',
+      'Only the manufacturer and date of accessories',
+      'Only the colour and finish of accessories',
+      'Only the number of accessories on each circuit',
       'Signs of damage, deterioration, overheating, or unsafe conditions',
     ],
     correctAnswer: 3,
@@ -2800,9 +2800,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of circuit diagrams and schedules?',
     options: [
       'To provide clear information for future work and maintenance',
-      'Only when dead working is unreasonable and suitable precautions are taken',
-      'To confirm the supply has correct phase and neutral identification',
-      'Adequate support, correct spacing, and suitable for cable type/weight',
+      'To record the test instrument calibration dates',
+      'To list the materials used for billing the client',
+      'To prove the installer holds the correct qualifications',
     ],
     correctAnswer: 0,
     explanation:
@@ -2816,10 +2816,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: 'What should be checked regarding basic protection?',
     options: [
-      'Protective device may not operate quickly enough',
+      'That the RCD provides additional protection on every circuit',
       'Insulation, barriers, enclosures, and obstacles are adequate',
-      'To provide clear information for future work and maintenance',
-      'To verify the installation remains safe for continued use',
+      'That the earthing arrangement disconnects within 0.4 seconds',
+      'That the main bonding conductors are correctly sized',
     ],
     correctAnswer: 1,
     explanation:
@@ -2833,10 +2833,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: 'What IP rating information should be verified during visual inspection?',
     options: [
-      'Correct polarity, switch in phase conductor, and socket polarity if fitted',
-      'Central point connecting all earthing and bonding conductors',
+      'That every enclosure has the same IP rating throughout',
+      'That the IP rating is at least IP68 in all locations',
       'Enclosure IP rating is suitable for the location and environment',
-      'The person ordering the work and the installation owner/occupier',
+      'That the IP rating is printed in the circuit schedule',
     ],
     correctAnswer: 2,
     explanation:
@@ -2850,9 +2850,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 167,
     question: 'What should be checked for cables passing through walls or floors?',
     options: [
-      'RCD disconnects supply, RCM only monitors and alarms',
-      'The total earth fault loop impedance at the furthest point',
-      'A test to verify equipment operates as intended when energised',
+      'That the cable colour matches the rest of the circuit',
+      'That the cable run is no longer than 50 metres',
+      'That the insulation resistance increases at the penetration',
       'Protection against mechanical damage and fire stopping where required',
     ],
     correctAnswer: 3,
@@ -2868,9 +2868,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What documentation should be available at the installation?',
     options: [
       'Previous certificates, circuit schedules, and instructions for operation',
-      'A competent person with appropriate knowledge and experience',
-      'Correct type, current-carrying capacity, and suitability for the environment',
-      'Between line, neutral and earth at the point of test',
+      'Only the manufacturer warranty for the consumer unit',
+      'Only the client invoice for the most recent work',
+      'Only the test instrument calibration certificates',
     ],
     correctAnswer: 0,
     explanation:
@@ -2884,10 +2884,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: 'What must an EICR include?',
     options: [
-      'Poor connections, damaged conductors, or incorrect cable',
+      'Only a pass or fail statement for the installation',
       'Observations, classification codes, recommendations, and test results',
-      'Monitor earth leakage current without disconnecting supply',
-      'The competent person who carried out the inspection and testing',
+      'Only a list of the circuits that were not tested',
+      'Only the cost of any remedial work identified',
     ],
     correctAnswer: 1,
     explanation:
@@ -2901,10 +2901,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: "What does the term 'extent and limitations' refer to in an EICR?",
     options: [
-      'Readings increase progressively around the ring then drop',
-      'Check status indicator shows device is functional',
+      'The classification codes applied to each observation',
+      'The recommended date for the next inspection',
       'The parts of the installation inspected and any areas not accessible',
-      'To confirm the supply has correct phase and neutral identification',
+      'The number of circuits found to be defective',
     ],
     correctAnswer: 2,
     explanation:
@@ -2918,9 +2918,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 171,
     question: 'What Schedule is used to record test results on an EICR?',
     options: [
-      'Fire alarm, emergency lighting, and data/telecommunications',
-      'EIC is for new installations, EICR is for existing installations',
-      'The external earth fault loop impedance',
+      'Schedule of Materials and Schedule of Labour',
+      'Schedule of Circuits and Schedule of Accessories',
+      'Schedule of Observations and Schedule of Recommendations',
       'Schedule of Inspections and Schedule of Test Results',
     ],
     correctAnswer: 3,
@@ -2936,9 +2936,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Who should sign the EICR?',
     options: [
       'The competent person who carried out the inspection and testing',
-      'Combined PEN in supply, separated in installation',
-      'The CPC has a smaller CSA than the live conductors',
-      'Incorrect rotation causes motors to run backwards',
+      'The owner or occupier of the installation',
+      'The person who ordered the inspection work',
+      'The local authority building control officer',
     ],
     correctAnswer: 0,
     explanation:
@@ -2952,10 +2952,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: 'What is the recommended date for next inspection on an EICR?',
     options: [
-      'An area made safe from electrical and other hazards during work',
+      'Always exactly ten years regardless of the installation',
       'Based on installation type, use, and condition found',
-      'It shows the highest reading during cross-connected test',
-      'Gas, water, oil, and structural steel',
+      'Set by the client according to their preference',
+      'Always one year for every type of installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2969,10 +2969,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What should be done with old documentation when issuing a new EICR?',
     options: [
-      'Continuity, insulation resistance, and polarity',
-      'To provide clear information for future work and maintenance',
+      'Destroy it immediately as it is now superseded',
+      'Return it unread to the client before testing',
       'Review it to understand the installation history',
-      'Potentially dangerous - urgent remedial action required',
+      'Send it to the local authority for their records',
     ],
     correctAnswer: 2,
     explanation:
@@ -2986,9 +2986,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: 'How should sampling be recorded on an EICR?',
     options: [
-      'Temperature - conductors are cooler when tested',
-      'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
-      'To prove the voltage indicator is working correctly',
+      'Sampling does not need to be recorded on the report',
+      'Only the percentage sampled needs to be recorded',
+      'Sampling is recorded only in the test results schedule',
       'The extent and method of sampling must be clearly stated',
     ],
     correctAnswer: 3,
@@ -3005,9 +3005,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: "What does the term 'competent person' mean in inspection and testing?",
     options: [
       'A person with relevant knowledge, skills, and experience',
-      'Investigate and rectify the cause before energising',
-      'The maximum current that could flow during a fault',
-      'Multiple tests with one instrument reducing equipment and time',
+      'Any person registered with a competent person scheme',
+      'A person who holds a current ECS card',
+      'Any electrician with more than five years experience',
     ],
     correctAnswer: 0,
     explanation:
@@ -3038,10 +3038,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: 'What is the purpose of an Electrical Installation Certificate (EIC)?',
     options: [
-      'Isolated system with no intentional connection to earth',
-      'To provide strain relief, earth continuity, and environmental sealing',
+      'To assess the condition of an existing installation',
+      'To record minor additions to an existing circuit',
       'To certify that a new installation complies with BS 7671',
-      'Based on installation type, use, and condition found',
+      'To confirm the supply characteristics provided by the DNO',
     ],
     correctAnswer: 2,
     explanation:
@@ -3055,9 +3055,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: 'When should a Minor Electrical Installation Works Certificate be issued?',
     options: [
-      'To verify the integrity of the protective conductor',
-      'Allow capacitive discharge before touching conductors',
-      'Investigate the cause before continuing',
+      'For any new installation of a complete consumer unit',
+      'For periodic inspection of an existing installation',
+      'For the installation of a new final circuit',
       'For minor additions not involving a new circuit',
     ],
     correctAnswer: 3,
@@ -3073,9 +3073,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is Part P of the Building Regulations concerned with?',
     options: [
       'Electrical safety in dwellings',
-      'AC sinusoidal residual currents',
-      'Phase rotation indicator or meter',
-      'PFC = Voltage / Impedance',
+      'Fire safety in commercial premises',
+      'Ventilation requirements in new buildings',
+      'Structural stability of building works',
     ],
     correctAnswer: 0,
     explanation:
@@ -3089,10 +3089,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: "What voltage is considered 'extra-low voltage' (ELV)?",
     options: [
-      'Any voltage that could cause injury',
+      'Not exceeding 230V AC or 400V DC',
       'Not exceeding 50V AC or 120V DC',
-      'Mineral Insulated Copper Clad',
-      'The calculated design value',
+      'Not exceeding 1000V AC or 1500V DC',
+      'Not exceeding 25V AC or 60V DC',
     ],
     correctAnswer: 1,
     explanation:
@@ -3106,10 +3106,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: 'What is the purpose of an isolation procedure?',
     options: [
-      'Make safe immediately and inform the person in control',
-      'Electrical Installation Certificate',
+      'To verify the installation complies with BS 7671',
+      'To measure the supply voltage before work begins',
       'To prevent unexpected energisation during work',
-      'To verify the integrity of the protective conductor',
+      'To discharge stored energy from the supply transformer',
     ],
     correctAnswer: 2,
     explanation:
@@ -3123,9 +3123,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: "What does 'proving dead' mean?",
     options: [
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the current edition of BS 7671 requirements',
-      'An instrument for measuring insulation resistance in megohms',
-      'To verify the installation remains safe for continued use',
+      'Switching off the main switch and removing the fuse carrier',
+      'Locking off the isolator with a personal padlock',
+      'Posting warning notices at the point of isolation',
       'Verifying the absence of voltage at the work location',
     ],
     correctAnswer: 3,
@@ -3156,10 +3156,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: 'What might a reading of OL (overload) on a continuity tester indicate?',
     options: [
-      'Electrical Installation Condition Report',
+      'A short circuit between the test leads',
       'An open circuit or break in the conductor',
-      'To prevent unexpected energisation during work',
-      'Approximately 25% of the end-to-end reading',
+      'A perfectly continuous low resistance path',
+      'A correctly wired ring final circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -3173,10 +3173,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: 'Why is it important to null test leads before continuity testing?',
     options: [
-      'To verify the installation remains safe for continued use',
-      'To identify circuits for safe isolation and future work',
+      'To confirm the instrument battery is fully charged',
+      'To check the test leads comply with GS38',
       'To subtract lead resistance from measurements',
-      'Construction site or caravan park',
+      'To increase the test current through the circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -3207,9 +3207,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What effect does humidity have on insulation resistance?',
     options: [
       'High humidity typically reduces insulation resistance',
-      'Check status indicator shows device is functional',
-      'Allow capacitive discharge before touching conductors',
-      'Signs of damage, deterioration, overheating, or unsafe conditions',
+      'High humidity typically increases insulation resistance',
+      'Humidity has no measurable effect on the reading',
+      'Only humidity above 90% affects the reading',
     ],
     correctAnswer: 0,
     explanation:
@@ -3223,10 +3223,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: 'Why should SPDs be disconnected before insulation testing?',
     options: [
-      'Insulation, barriers, enclosures, and obstacles are adequate',
+      'They prevent the test current from reaching earth',
       'The test voltage could damage them or give false readings',
-      'Because Ze is typically too high for overcurrent devices alone',
-      'Must be sealed to prevent moisture ingress into the hygroscopic insulation',
+      'They increase the insulation resistance reading artificially',
+      'They cannot operate while the circuit is isolated',
     ],
     correctAnswer: 1,
     explanation:
@@ -3257,9 +3257,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 191,
     question: 'Why is temperature correction applied to Zs measurements?',
     options: [
-      'The parts of the installation inspected and any areas not accessible',
-      'Potentially dangerous - urgent remedial action required',
-      'L and N should be similar, CPC may differ if different CSA',
+      'Conductors have lower resistance at operating temperature than when cold',
+      'The test instrument reads low at warm temperatures',
+      'The supply voltage rises as the conductors warm up',
       'Conductors have higher resistance at operating temperature than when cold',
     ],
     correctAnswer: 3,
@@ -3291,10 +3291,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: 'What is the tripping characteristic of a Type B RCD?',
     options: [
-      'They may give false readings and cannot verify absence of voltage',
+      'Trips on AC sinusoidal residual currents only',
       'Trips on AC sinusoidal, pulsating DC and smooth DC',
-      'To ensure the device can safely interrupt the fault',
-      'An area made safe from electrical and other hazards during work',
+      'Trips on smooth DC residual currents only',
+      'Trips on AC sinusoidal and pulsating DC only',
     ],
     correctAnswer: 1,
     explanation:
@@ -3324,9 +3324,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: 'What is the purpose of the 0° and 180° test on an RCD?',
     options: [
-      'At the beginning and at intervals during work',
-      'Review it to understand the installation history',
-      'The external earth fault loop impedance',
+      'To test the RCD at both half and full rated current',
+      'To check the RCD on both the line and neutral connection',
+      'To measure the trip time twice and average the result',
       'To test on both halves of the AC waveform',
     ],
     correctAnswer: 3,
@@ -3342,9 +3342,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What does IP44 rating indicate?',
     options: [
       'Protected against objects >1mm and water splashes',
-      'Maximum current that could flow during a short circuit',
-      'To test on both halves of the AC waveform',
-      'To prevent unexpected energisation during work',
+      'Protected against dust and total immersion in water',
+      'Protected against finger contact and dripping water',
+      'Protected against objects >12mm and water jets',
     ],
     correctAnswer: 0,
     explanation:
@@ -3374,10 +3374,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: 'What should be checked regarding cable support and fixings?',
     options: [
-      'Earthing connects to earth, bonding connects conductive parts together',
-      'As per manufacturer recommendations, typically annually',
+      'Only that the fixings match the colour of the cable',
+      'Only that the cable is supported at both ends',
       'Adequate support, correct spacing, and suitable for cable type/weight',
-      'Cumulative earth leakage from multiple circuits or equipment',
+      'Only that metal fixings are used throughout',
     ],
     correctAnswer: 2,
     explanation:
@@ -3391,9 +3391,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 199,
     question: 'What is the purpose of testing voltage drop?',
     options: [
-      'To separate circuits of different categories to prevent interference',
-      'EIC is for new installations, EICR is for existing installations',
-      'Absorption of current by the insulation (polarisation)',
+      'To verify the disconnection time of the protective device',
+      'To confirm the insulation resistance of the cable',
+      'To measure the prospective fault current at the load',
       'To verify voltage at load is within acceptable limits',
     ],
     correctAnswer: 3,
@@ -3409,9 +3409,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What final checks should be made before re-energising after testing?',
     options: [
       'All connections secure, covers replaced, no tools left, all tests complete',
-      'Insulation, barriers, enclosures, and obstacles are adequate',
-      'The person ordering the work and the installation owner/occupier',
-      'Earth is top, neutral left, phase right when viewed face-on',
+      'Only that the main switch is in the off position',
+      'Only that the client has paid for the work',
+      'Only that the test instrument is within calibration',
     ],
     correctAnswer: 0,
     explanation:
@@ -3443,10 +3443,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 202,
     question: 'What should be done before using any test instrument?',
     options: [
-      'To formally control high-risk work activities',
-      'To verify the installation remains safe for continued use',
+      'Record the instrument serial number on the certificate',
+      'Set the instrument to its highest measuring range',
       'Check calibration date, condition, and battery level',
-      'Sensitive electronic equipment requiring low-noise earth reference',
+      'Connect the instrument to a known live supply first',
     ],
     correctAnswer: 2,
     explanation:
@@ -3477,9 +3477,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the difference between live testing and dead testing?',
     options: [
       'Dead testing is done with power off, live testing with power on',
-      'Earth for correct equipment operation, not primarily for safety',
-      'High humidity typically reduces insulation resistance',
-      'Trips on AC sinusoidal, pulsating DC and smooth DC',
+      'Dead testing is done with power on, live testing with power off',
+      'Dead testing applies only to new installations',
+      'Live testing is only carried out on three-phase circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -3493,10 +3493,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 205,
     question: 'What should be recorded if a circuit cannot be tested?',
     options: [
-      'Protected against objects >1mm and water splashes',
+      'Nothing, as untested circuits are simply omitted',
       'The reason and limitation in the report',
-      'Find the person and discuss coordination',
-      'To test all insulation and wiring in the circuit',
+      'A satisfactory result based on visual inspection alone',
+      'An estimated test result based on similar circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -3545,9 +3545,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the significance of the 18th Edition wiring regulations?',
     options: [
       "It's the current edition of BS 7671 requirements",
-      "To verify the installation remains safe for continued use",
-      "The prospective fault current at its location",
-      "Allow capacitive discharge before touching conductors",
+      "It's the HSE guidance on electrical test equipment",
+      "It's the current edition of the On-Site Guide",
+      "It's the building regulation covering electrical safety",
     ],
     correctAnswer: 0,
     explanation:
@@ -3577,10 +3577,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 210,
     question: 'What should be verified about protective device ratings during inspection?',
     options: [
-      'Allow capacitive discharge before touching conductors',
-      'Approximately 25% of the end-to-end reading',
+      'Only that the device is the correct manufacturer',
+      'Only that the device colour matches the cable',
       'Rating is appropriate for the circuit and cable',
-      'High circuit impedance that may affect device operation',
+      'Only that the device is the most recent model available',
     ],
     correctAnswer: 2,
     explanation:
@@ -3612,9 +3612,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of testing earth electrode resistance?',
     options: [
       'To verify the earth electrode provides adequate earthing',
-      'To ensure the switch breaks the phase conductor',
-      'Longer cables typically show lower insulation resistance',
-      'Investigate the cause as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s below minimum',
+      'To measure the prospective fault current at the origin',
+      'To verify the continuity of the earthing conductor',
+      'To measure the resistance of the main protective bonding conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -3636,7 +3636,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'For a 30mA RCD providing fault protection, maximum electrode resistance is 50V/0.03A = 1667Ω.',
+      'BS 7671 Table 41.5 gives a maximum earth fault loop impedance of 1667Ω for a 30mA RCD (50V ÷ 0.03A, per Reg 411.5.3). NOTE 2 to the table adds that an electrode value exceeding 200Ω may not be stable (Reg 542.2.4).',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Earth Electrodes',
@@ -3646,10 +3646,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 214,
     question: 'What is discrimination between protective devices?',
     options: [
-      'Readings increase progressively around the ring then drop',
-      'Investigate and rectify the cause before energising',
+      'Ensuring all devices operate together under a fault',
+      'Ensuring the main switch operates before any MCB',
       'Ensuring only the device nearest the fault operates',
-      'L and N should be similar, CPC may differ if different CSA',
+      'Ensuring the RCD always operates before the MCB',
     ],
     correctAnswer: 2,
     explanation: 'Discrimination ensures the protective device nearest the fault operates first.',
@@ -3662,9 +3662,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 215,
     question: 'What should be checked about cable routes during visual inspection?',
     options: [
-      'Switching, dimming (if applicable), and correct operation of controls',
-      'Critical systems like operating theatres where first fault must not cause shutdown',
-      'Because Ze is typically too high for overcurrent devices alone',
+      'Only that the cable run takes the shortest path',
+      'Only that the cable is the correct colour throughout',
+      'Only that the cable route is shown on the schedule',
       'Protection from damage, correct zones, and separation from other services',
     ],
     correctAnswer: 3,
@@ -3680,9 +3680,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of labelling at the consumer unit?',
     options: [
       'To identify circuits for safe isolation and future work',
-      'Compliance with standards, correct installation, and absence of damage',
-      'Investigate the cause before continuing',
-      'Testing continuity of protective conductors at multiple points',
+      'To record the test results for each circuit',
+      'To display the manufacturer warranty details',
+      'To indicate the cable colour used on each circuit',
     ],
     correctAnswer: 0,
     explanation:
@@ -3696,10 +3696,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 217,
     question: 'What is the purpose of periodic testing compared to initial verification?',
     options: [
-      'The total earth fault loop impedance at the furthest point',
+      'To certify a brand new installation before energising',
       'To assess deterioration and continued safety of an existing installation',
-      'Check calibration date, condition, and battery level',
-      'To provide strain relief, earth continuity, and environmental sealing',
+      'To record minor additions to an existing circuit',
+      'To confirm the design current of each new circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -3714,10 +3714,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'What should be done if unsafe conditions are found that cannot be immediately rectified?',
     options: [
-      'L and N should be similar, CPC may differ if different CSA',
-      'Must be sealed to prevent moisture ingress into the hygroscopic insulation',
+      'Continue testing and note it on the report only',
+      'Wait until the next periodic inspection to act',
       'Isolate the affected circuit and clearly inform the client',
-      'Within 600mm of the meter or point of entry',
+      'Energise the circuit to confirm the fault is genuine',
     ],
     correctAnswer: 2,
     explanation:
@@ -3731,9 +3731,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 219,
     question: 'What is the difference between bonding and earthing?',
     options: [
-      'Combined PEN in supply, separated in installation',
-      'Potentially dangerous - urgent remedial action required',
-      'To confirm safety interlocks prevent dangerous situations',
+      'Bonding connects to earth, earthing connects conductive parts together',
+      'They are two terms for exactly the same connection',
+      'Earthing is for AC circuits, bonding is for DC circuits',
       'Earthing connects to earth, bonding connects conductive parts together',
     ],
     correctAnswer: 3,
@@ -3749,9 +3749,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is an extraneous-conductive-part?',
     options: [
       'A conductive part not forming part of the installation but liable to introduce a potential',
-      'Whether generators, UPS, or other backup supplies feed the circuit',
-      'To verify continuity and identify breaks or interconnections in the ring',
-      'To disconnect supply automatically under fault conditions before shock becomes dangerous',
+      'A part of electrical equipment that can be touched and may become live under fault',
+      'A conductor used solely for functional earthing of equipment',
+      'A protective conductor connecting the MET to the earth electrode',
     ],
     correctAnswer: 0,
     explanation:
@@ -3765,10 +3765,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 221,
     question: 'What is an exposed-conductive-part?',
     options: [
-      'All connections secure, covers replaced, no tools left, all tests complete',
+      'A conductive part outside the installation that may introduce a potential',
       'A conductive part of equipment that can be touched and may become live under fault',
-      'L and N should be similar, CPC may differ if different CSA',
-      'Protection against mechanical damage and fire stopping where required',
+      'A live conductor that is intentionally left uninsulated',
+      'A protective conductor running between the MET and a service pipe',
     ],
     correctAnswer: 1,
     explanation:
@@ -3799,9 +3799,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 223,
     question: 'What is the function of an SPD (Surge Protection Device)?',
     options: [
-      'Gas, water, oil, and structural steel',
-      'Record the limitation in the report',
-      'Approximately 25% of the end-to-end reading',
+      'Protection against earth leakage current',
+      'Protection against overcurrent and short circuit',
+      'Protection against arc faults in the wiring',
       'Protection against transient overvoltages',
     ],
     correctAnswer: 3,
@@ -3851,10 +3851,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 226,
     question: 'What is meant by touch voltage?',
     options: [
-      'DC provides a steady stress on insulation without capacitive current',
-      'Monitor earth leakage current without disconnecting supply',
+      'The nominal supply voltage between line and neutral',
+      'The voltage induced in a conductor by a nearby cable',
       'Voltage between simultaneously accessible parts during a fault',
-      'Conductors have higher resistance at operating temperature than when cold',
+      'The voltage drop along a conductor under normal load',
     ],
     correctAnswer: 2,
     explanation:
@@ -3886,9 +3886,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of Class II (double insulated) equipment?',
     options: [
       'Protection by double or reinforced insulation without earthing',
-      'To separate circuits of different categories to prevent interference',
-      'To prevent fire spreading through cable penetrations',
-      'Nature of danger, who isolated it, and contact details',
+      'Protection by connecting the casing to the main earthing terminal',
+      'Protection by automatic disconnection within 0.4 seconds',
+      'Protection by an RCD providing additional protection',
     ],
     correctAnswer: 0,
     explanation:
@@ -3919,10 +3919,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 230,
     question: 'What is a TN-S earthing system?',
     options: [
-      'Between line, neutral and earth at the point of test',
-      'Investigate the cause as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s below minimum',
+      'An installation relying on its own local earth electrode',
+      'Combined neutral and earth throughout the supply and installation',
       'Separate earth conductor from the supply transformer',
-      'To provide discrimination with downstream RCDs',
+      'A combined PEN in the supply, separated at the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -3936,9 +3936,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 231,
     question: 'What is a TN-C-S (PME) earthing system?',
     options: [
-      'To verify the integrity of the protective conductor',
-      'The total earth fault loop impedance at the furthest point',
-      'For minor additions not involving a new circuit',
+      'A separate earth conductor provided all the way from the transformer',
+      'An installation relying on its own local earth electrode',
+      'Combined neutral and earth throughout supply and installation',
       'Combined PEN in supply, separated in installation',
     ],
     correctAnswer: 3,
@@ -3954,9 +3954,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is a TT earthing system?',
     options: [
       'Installation has its own earth electrode',
-      'Any voltage that could cause injury',
-      'A unique key lock personal to the worker',
-      'AC sinusoidal and pulsating DC residual currents',
+      'A separate earth conductor provided from the transformer',
+      'Combined PEN in the supply, separated at the installation',
+      'Combined neutral and earth throughout supply and installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -3970,10 +3970,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 233,
     question: 'Why do TT systems typically require RCD protection?',
     options: [
-      'To maintain all conductive parts at the same potential',
+      'Because the supply provides no neutral conductor',
       'Because Ze is typically too high for overcurrent devices alone',
-      'The prospective fault current at its location',
-      'DC provides a steady stress on insulation without capacitive current',
+      'Because the earth electrode carries the full load current',
+      'Because TT systems have a very high prospective fault current',
     ],
     correctAnswer: 1,
     explanation:
@@ -3987,10 +3987,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 234,
     question: 'What is the purpose of the main earthing terminal (MET)?',
     options: [
-      'Enclosure IP rating is suitable for the location and environment',
-      'Protection against finger contact when cover is removed',
+      'A device that disconnects the supply under earth fault',
+      'The point where the neutral connects to the supply',
       'Central point connecting all earthing and bonding conductors',
-      'Must be sealed to prevent moisture ingress into the hygroscopic insulation',
+      'The terminal where the SPD connects to the consumer unit',
     ],
     correctAnswer: 2,
     explanation:
@@ -4004,9 +4004,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 235,
     question: 'What should be checked when inspecting the MET?',
     options: [
-      'A safe distance where accidental contact is not possible',
-      'To separate circuits of different categories to prevent interference',
-      'To verify low resistance connection between MET and extraneous-conductive-parts',
+      'Only that the MET is painted green and yellow',
+      'Only that the MET is located inside the consumer unit',
+      'Only that the MET has a current calibration certificate',
       'Secure connections, adequate size, accessibility, and correct labelling',
     ],
     correctAnswer: 3,
@@ -4029,7 +4029,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'For installations with 25mm² tails, main bonding conductors should be minimum 10mm².',
+      'Under PME conditions, main protective bonding is sized from the PEN conductor using BS 7671 Table 54.8 (Reg 544.1.1). A typical domestic PME supply has a PEN of 35mm² or less, giving a minimum main bonding conductor of 10mm² copper.',
     section: 'Continuity Testing',
     difficulty: 'advanced',
     topic: 'Bonding',
@@ -4039,10 +4039,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 237,
     question: 'What is the purpose of equipotential bonding?',
     options: [
-      'Investigate and rectify the cause before energising',
+      'To provide a low impedance path back to the supply transformer',
       'To maintain all conductive parts at the same potential',
-      'To separate circuits of different categories to prevent interference',
-      'With a low resistance ohmmeter between simultaneously accessible parts',
+      'To disconnect the supply automatically under earth fault',
+      'To carry the full load current of the installation safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -4056,10 +4056,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 238,
     question: 'What services typically require main bonding?',
     options: [
-      'Electrical Installation Condition Report',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the current edition of BS 7671 requirements',
+      'Plastic water and waste pipes within the building',
+      'Telephone, broadband, and television aerial cabling',
       'Gas, water, oil, and structural steel',
-      'Isolate and lock off all sources of supply',
+      'The lighting and socket circuits in each room',
     ],
     correctAnswer: 2,
     explanation:
@@ -4073,9 +4073,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 239,
     question: 'Where should main bonding connections be made on metallic service pipes?',
     options: [
-      'To record what was visually inspected and the outcome',
-      'To test all insulation and wiring in the circuit',
-      'The resistance of the circuit protective conductor',
+      'On the consumer side of any stopcock or valve',
+      'At the furthest point of the pipework from the meter',
+      'Anywhere along the pipe provided it is accessible',
       'Within 600mm of the meter or point of entry',
     ],
     correctAnswer: 3,
@@ -4091,9 +4091,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the requirement for consumer unit enclosures in domestic installations?',
     options: [
       'Non-combustible material or metal enclosure',
-      'Visual inspection, testing, documentation',
-      'The CPC has a smaller CSA than the live conductors',
-      'Nature of danger, who isolated it, and contact details',
+      'Any rigid plastic enclosure rated at least IP2X',
+      'A transparent enclosure for easy visual inspection',
+      'A timber enclosure treated with fire-retardant coating',
     ],
     correctAnswer: 0,
     explanation:
@@ -4107,10 +4107,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 241,
     question: 'What does IP2X or IPXXB mean regarding consumer units?',
     options: [
-      'To prevent unauthorised access to the work area',
+      'Protection against water jets from any direction',
       'Protection against finger contact when cover is removed',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the current edition of BS 7671 requirements',
-      'Electrical Installation Condition Report',
+      'Protection against total immersion in water up to 1 metre',
+      'Protection against dust ingress into the enclosure',
     ],
     correctAnswer: 1,
     explanation:
@@ -4124,10 +4124,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 242,
     question: 'What is the purpose of cable glands?',
     options: [
-      'Readings that don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t follow the expected pattern around the ring',
-      'To ensure protective devices disconnect quickly enough under fault conditions',
+      'To increase the current rating of the cable',
+      'To provide mechanical protection along the cable run',
       'To provide strain relief, earth continuity, and environmental sealing',
-      'A competent person with appropriate knowledge and experience',
+      'To identify the circuit the cable belongs to',
     ],
     correctAnswer: 2,
     explanation:
@@ -4159,9 +4159,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'Can SWA cable armouring be used as a CPC?',
     options: [
       'Yes, if correctly terminated with appropriate glands',
-      'That it isolates all poles and auxiliary contacts operate correctly',
-      'To assess the overall condition when full inspection is impractical',
-      'Correct termination, tightness, and protection of connections',
+      'No, armouring may never be used as a CPC',
+      'Yes, but only on circuits below 6A',
+      'No, unless a separate earth tail is added in parallel',
     ],
     correctAnswer: 0,
     explanation:
@@ -4175,10 +4175,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 245,
     question: 'What is the purpose of conduit?',
     options: [
-      'To prove the voltage indicator is working correctly',
+      'To increase the current rating of the enclosed cables',
       'Mechanical protection and sometimes a CPC path for cables',
-      'Using a continuity tester between specific conductors',
-      'All connections secure, covers replaced, no tools left, all tests complete',
+      'To provide environmental sealing at cable terminations',
+      'To identify the category of circuits within it',
     ],
     correctAnswer: 1,
     explanation:
@@ -4192,10 +4192,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 246,
     question: 'Can steel conduit be used as a CPC?',
     options: [
-      'Based on installation type, use, and condition found',
-      'The person ordering the work and the installation owner/occupier',
+      'No, steel conduit must never be used as a CPC',
+      'Yes, but only on lighting circuits up to 6A',
       'Yes, if properly installed with correct fittings maintaining continuity',
-      'EIC is for new installations, EICR is for existing installations',
+      'No, unless a separate earth conductor runs inside it',
     ],
     correctAnswer: 2,
     explanation:
@@ -4209,9 +4209,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 247,
     question: 'What is the purpose of trunking?',
     options: [
-      'Electrical safety in dwellings',
-      'Investigate the cause as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s below minimum',
-      'Construction site or caravan park',
+      'To provide a CPC for every circuit it carries',
+      'To increase the current rating of enclosed cables',
+      'To provide environmental sealing at cable ends',
       'To contain and protect cables and wiring',
     ],
     correctAnswer: 3,
@@ -4227,9 +4227,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of segregation in trunking?',
     options: [
       'To separate circuits of different categories to prevent interference',
-      'PV arrays generate DC voltage whenever light is present',
-      'Electronic equipment, capacitors, indicating devices, and surge protectors',
-      'It measures actual trip time and current, not just mechanism function',
+      'To increase the current rating of the power circuits',
+      'To provide a separate CPC for each category of circuit',
+      'To reduce the voltage drop across the trunking run',
     ],
     correctAnswer: 0,
     explanation:
@@ -4243,10 +4243,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 249,
     question: 'What is the purpose of fire stopping?',
     options: [
-      'The external earth fault loop impedance',
+      'To provide mechanical protection where cables enter walls',
       'To prevent fire spreading through cable penetrations',
-      'Make safe immediately and inform the person in control',
-      'Central point connecting all earthing and bonding conductors',
+      'To maintain earth continuity across a wall penetration',
+      'To seal cables against moisture ingress at penetrations',
     ],
     correctAnswer: 1,
     explanation:
@@ -4260,10 +4260,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 250,
     question: 'What type of cable is typically used in fire alarm systems?',
     options: [
-      'Live to earth and live to neutral',
-      'Separate earth conductor from the supply transformer',
+      'Standard PVC twin and earth cable',
+      'Steel wire armoured (SWA) cable',
       'Fire-resistant cable (e.g., MICC, FP cables)',
-      'Removed from holders or switches left off',
+      'Flexible rubber-insulated cable',
     ],
     correctAnswer: 2,
     explanation:
@@ -4296,9 +4296,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What precaution is needed with MICC cable terminations?',
     options: [
       'Must be sealed to prevent moisture ingress into the hygroscopic insulation',
-      'Check connections first, then replace if still faulty',
-      'Separate earth conductor from the supply transformer',
-      'To verify protective conductor continuity from origin to each point',
+      'Must be made only with crimped lugs and no glands',
+      'Must be left unsealed to allow the insulation to breathe',
+      'Must be wrapped in PVC tape to provide insulation',
     ],
     correctAnswer: 0,
     explanation:
@@ -4329,10 +4329,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 254,
     question: 'What is the purpose of a residual current monitor?',
     options: [
-      'EIC is for new installations, EICR is for existing installations',
-      'Within 600mm of the meter or point of entry',
+      'Disconnect the supply automatically on earth leakage',
+      'Measure the insulation resistance continuously',
       'Monitor earth leakage current without disconnecting supply',
-      'To prevent unexpected energisation during work',
+      'Limit the prospective fault current at the origin',
     ],
     correctAnswer: 2,
     explanation:
@@ -4346,9 +4346,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 255,
     question: 'What is the difference between an RCD and an RCM?',
     options: [
-      'The CPC has a smaller CSA than the live conductors',
-      'Trips on AC sinusoidal, pulsating DC and smooth DC',
-      'Electrical Installation Condition Report',
+      'RCM disconnects supply, RCD only monitors and alarms',
+      'An RCD detects overcurrent, an RCM detects earth leakage',
+      'They are two terms for exactly the same device',
       'RCD disconnects supply, RCM only monitors and alarms',
     ],
     correctAnswer: 3,
@@ -4364,9 +4364,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is an IT earthing system?',
     options: [
       'Isolated system with no intentional connection to earth',
-      'Using a continuity tester between specific conductors',
-      'By detecting imbalance between live and neutral currents',
-      'To contain and protect cables and wiring',
+      'A combined PEN conductor in the supply network',
+      'A separate earth conductor provided from the transformer',
+      'An installation relying on its own local earth electrode',
     ],
     correctAnswer: 0,
     explanation:
@@ -4380,10 +4380,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 257,
     question: 'Where are IT earthing systems commonly used?',
     options: [
-      'A test to verify equipment operates as intended when energised',
+      'Standard domestic dwellings supplied by the DNO',
       'Critical systems like operating theatres where first fault must not cause shutdown',
-      'The total earth fault loop impedance at the furthest point',
-      'To separate circuits of different categories to prevent interference',
+      'Construction sites and temporary installations',
+      'Outdoor lighting and garden socket circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -4397,10 +4397,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 258,
     question: 'What is the advantage of multifunction test instruments?',
     options: [
-      'Investigate for possible interconnection, spur, or different cable',
-      'Higher temperatures typically result in lower readings',
+      'They do not require periodic calibration',
+      'They give more accurate results than single-function testers',
       'Multiple tests with one instrument reducing equipment and time',
-      'To verify the installation remains safe for continued use',
+      'They can be used safely without proving leads first',
     ],
     correctAnswer: 2,
     explanation:
@@ -4414,9 +4414,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 259,
     question: 'How often should test instruments be calibrated?',
     options: [
-      'Combined PEN in supply, separated in installation',
-      'The test voltage could damage them or give false readings',
-      'A unique key lock personal to the worker',
+      'Only once when the instrument is first purchased',
+      'Every five years regardless of use',
+      'Only if the instrument gives an obviously wrong reading',
       'As per manufacturer recommendations, typically annually',
     ],
     correctAnswer: 3,
@@ -4432,9 +4432,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of keeping calibration certificates?',
     options: [
       'To demonstrate instruments are accurate and traceable to national standards',
-      'To verify the installation remains safe for continued use',
-      'To separate circuits of different categories to prevent interference',
-      'Correct rating, secure fixing, circuit identification, and protection from damage',
+      'To prove the instrument was purchased from an approved supplier',
+      'To record the serial number for insurance purposes',
+      'To show the instrument has never been dropped or damaged',
     ],
     correctAnswer: 0,
     explanation:
@@ -4449,10 +4449,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question:
       'What should be done before testing an installation with a generator as backup supply?',
     options: [
-      'For minor additions not involving a new circuit',
+      'Run the generator to confirm it is functioning correctly',
       'Verify the generator is isolated and cannot start automatically',
-      'Using a continuity tester between specific conductors',
-      'To provide discrimination with downstream RCDs',
+      'Connect the generator in parallel with the mains supply',
+      'Disconnect the main earthing conductor from the MET',
     ],
     correctAnswer: 1,
     explanation:
@@ -4466,10 +4466,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 262,
     question: 'What special consideration applies to PV (solar) installations during testing?',
     options: [
-      'Protection against finger contact when cover is removed',
-      'A combined RCD and circuit breaker in one device',
+      'PV arrays must be tested only at 1000V DC',
+      'PV arrays can be fully isolated at the AC isolator alone',
       'PV arrays generate DC voltage whenever light is present',
-      'An area made safe from electrical and other hazards during work',
+      'PV arrays do not require any insulation resistance testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -4483,9 +4483,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 263,
     question: 'What is the purpose of the schedule of items inspected on an EICR?',
     options: [
-      'Trips on AC sinusoidal, pulsating DC and smooth DC',
-      'To subtract lead resistance from measurements',
-      'Check status indicator shows device is functional',
+      'To record the test instrument readings for each circuit',
+      'To list the remedial work and its estimated cost',
+      'To record the next recommended inspection date',
       'To record what was visually inspected and the outcome',
     ],
     correctAnswer: 3,
@@ -4502,9 +4502,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
       'What should be done if previous test results are unavailable during periodic inspection?',
     options: [
       'Carry out full initial verification style testing',
-      'Practical guidance for day-to-day installation work',
-      'To maintain all conductive parts at the same potential',
-      'Non-combustible material or metal enclosure',
+      'Carry out a visual inspection only and omit testing',
+      'Refuse to inspect the installation until they are found',
+      'Assume the previous results were satisfactory',
     ],
     correctAnswer: 0,
     explanation:
@@ -4518,10 +4518,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 265,
     question: "Which tests are performed as 'dead tests'?",
     options: [
-      'To verify the earth electrode provides adequate earthing',
+      'Earth fault loop impedance, RCD, and functional tests',
       'Continuity, insulation resistance, and polarity',
-      'Visual inspection, testing, documentation',
-      'By detecting imbalance between live and neutral currents',
+      'Phase rotation, voltage drop, and RCD testing',
+      'Loop impedance, prospective fault current, and RCD tests',
     ],
     correctAnswer: 1,
     explanation:
@@ -4535,10 +4535,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 266,
     question: "Which tests are performed as 'live tests'?",
     options: [
-      'To verify correct phase sequence in three-phase installations',
-      'High circuit impedance that may affect device operation',
+      'Continuity, insulation resistance, and dead polarity',
+      'Insulation resistance, continuity, and ring final tests',
       'Earth fault loop impedance, RCD testing, and functional tests',
-      'The person ordering the work and the installation owner/occupier',
+      'Continuity of protective conductors and bonding only',
     ],
     correctAnswer: 2,
     explanation:
@@ -4552,9 +4552,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 267,
     question: 'What is the correct order of testing during initial verification?',
     options: [
-      'That it isolates all poles and auxiliary contacts operate correctly',
-      'The person ordering the work and the installation owner/occupier',
-      'Potentially dangerous - urgent remedial action required',
+      'Zs, RCD (live), then continuity, insulation, polarity (dead)',
+      'Insulation, then Zs and RCD, then continuity and polarity',
+      'RCD and functional tests first, then all dead tests',
       'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
     ],
     correctAnswer: 3,
@@ -4619,9 +4619,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 271,
     question: 'What warning label is required for dual supply installations?',
     options: [
-      'A unique key lock personal to the worker',
-      'Check calibration date, condition, and battery level',
-      'Between line, neutral and earth at the point of test',
+      'Warning that the installation uses a TT earthing system',
+      'Warning of the date of the next periodic inspection',
+      'Warning of the maximum demand of the installation',
       'Warning of presence of more than one supply',
     ],
     correctAnswer: 3,
@@ -4637,9 +4637,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should the RCD test button be labelled with?',
     options: [
       'Test quarterly or recommended test frequency',
-      'To contain and protect cables and wiring',
-      'Yes, if correctly terminated with appropriate glands',
-      'Continuously monitor insulation resistance of IT systems',
+      'The rated breaking capacity of the device',
+      'The earth fault loop impedance at the device',
+      'The date the device was manufactured',
     ],
     correctAnswer: 0,
     explanation:
@@ -4653,10 +4653,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 273,
     question: 'What information should be on a danger notice for isolated equipment?',
     options: [
-      'To ensure the switch breaks the phase conductor',
+      'The rating of the protective device for that equipment',
       'Nature of danger, who isolated it, and contact details',
-      'Insulation, barriers, enclosures, and obstacles are adequate',
-      'The test current passes through earth causing imbalance',
+      'The date of the last periodic inspection',
+      'The make and model of the isolated equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -4670,10 +4670,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 274,
     question: 'What does the On-Site Guide provide?',
     options: [
-      'To provide clear information for future work and maintenance',
-      'Poor connections, damaged conductors, or incorrect cable',
+      'The legal requirements for private rented properties',
+      'HSE guidance on safe use of test equipment',
       'Practical guidance for day-to-day installation work',
-      'For user functional testing between proper inspections',
+      'The full set of mandatory regulations replacing BS 7671',
     ],
     correctAnswer: 2,
     explanation:
@@ -4687,9 +4687,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 275,
     question: 'When is AFDD protection recommended?',
     options: [
-      'Earthing connects to earth, bonding connects conductive parts together',
-      'High circuit impedance that may affect device operation',
-      'The total earth fault loop impedance at the furthest point',
+      'Only on three-phase industrial distribution boards',
+      'Only on circuits supplying outdoor socket outlets',
+      'Only on TT systems where Ze is very high',
       'In locations with sleeping accommodation and high fire risk locations',
     ],
     correctAnswer: 3,
@@ -4705,9 +4705,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What visual check should be made on SPDs?',
     options: [
       'Check status indicator shows device is functional',
-      'Testing continuity of protective conductors at multiple points',
-      'Verify the generator is isolated and cannot start automatically',
-      'Rating is appropriate for the circuit and cable',
+      'Check the SPD trips when the test button is pressed',
+      'Check the SPD insulation resistance exceeds 1 megohm',
+      'Check the SPD disconnection time is below 0.4 seconds',
     ],
     correctAnswer: 0,
     explanation:
@@ -4721,10 +4721,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 277,
     question: 'What action should be taken if an MCB trips during testing?',
     options: [
-      'To calculate Zs when added to Ze',
+      'Replace the MCB with a higher rated device',
       'Investigate the cause before continuing',
-      'To contain and protect cables and wiring',
-      'Prove tester, test dead, prove tester',
+      'Reset it repeatedly until it stays in',
+      'Ignore it and move on to the next circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -4738,10 +4738,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 278,
     question: 'What is measured during a PFC (Prospective Fault Current) test?',
     options: [
-      'A tester designed to test without tripping RCDs',
-      'Correct colour coding or marking as per BS 7671',
+      'The normal operating current of the circuit under load',
+      'The residual current at which the RCD operates',
       'Maximum current that could flow during a short circuit',
-      'Investigate and rectify the cause before energising',
+      'The insulation resistance between live and earth',
     ],
     correctAnswer: 2,
     explanation:
@@ -4755,9 +4755,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 279,
     question: 'Why must PFC not exceed the breaking capacity of protective devices?',
     options: [
-      'L and N should be similar, CPC may differ if different CSA',
-      'Yes, if correctly terminated with appropriate glands',
-      'Based on installation type, use, and condition found',
+      'To ensure the device disconnects within 0.4 seconds',
+      'To prevent nuisance tripping under normal load',
+      'To keep the earth fault loop impedance within limits',
       'To ensure the device can safely interrupt the fault',
     ],
     correctAnswer: 3,
@@ -4773,9 +4773,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What does a very low PFC reading at a remote point indicate?',
     options: [
       'High circuit impedance that may affect device operation',
-      'A test to verify equipment operates as intended when energised',
-      'Signs of damage, deterioration, overheating, or unsafe conditions',
-      'Protection against transient overvoltages',
+      'A short circuit between the line and neutral conductors',
+      'Excellent insulation resistance of the circuit',
+      'A very low earth fault loop impedance at that point',
     ],
     correctAnswer: 0,
     explanation:
@@ -4789,10 +4789,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 281,
     question: 'What is the main purpose of ADS?',
     options: [
-      'Correct rating, secure fixing, circuit identification, and protection from damage',
+      'To limit the prospective fault current at the origin',
       'To disconnect supply automatically under fault conditions before shock becomes dangerous',
-      'To confirm the supply has correct phase and neutral identification',
-      'Enclosure IP rating is suitable for the location and environment',
+      'To maintain all conductive parts at the same potential',
+      'To protect against transient overvoltages from lightning',
     ],
     correctAnswer: 1,
     explanation:
@@ -4841,9 +4841,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What circuits require segregation from power circuits?',
     options: [
       'Fire alarm, emergency lighting, and data/telecommunications',
-      'To confirm safety interlocks prevent dangerous situations',
-      'Method of protection, earthing arrangements, and test results',
-      'Investigate for possible interconnection, spur, or different cable',
+      'Lighting circuits and socket circuits in the same room',
+      'Single-phase circuits and three-phase circuits',
+      'Ring final circuits and radial final circuits',
     ],
     correctAnswer: 0,
     explanation:
@@ -4857,10 +4857,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 285,
     question: 'Where should fire stopping be provided?',
     options: [
-      'Longer cables typically show lower insulation resistance',
+      'At every cable termination inside an enclosure',
       'Where cables penetrate fire-resistant construction',
-      'The person ordering the work and the installation owner/occupier',
-      'To record what was visually inspected and the outcome',
+      'Wherever cables change direction around a corner',
+      'At the consumer unit where all circuits originate',
     ],
     correctAnswer: 1,
     explanation:
@@ -4874,10 +4874,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 286,
     question: 'What is the purpose of a functional earth?',
     options: [
-      'To maintain all conductive parts at the same potential',
-      'The parts of the installation inspected and any areas not accessible',
+      'Earth that disconnects the supply under fault conditions',
+      'Earth that connects all extraneous parts to the MET',
       'Earth for correct equipment operation, not primarily for safety',
-      'Protection by double or reinforced insulation without earthing',
+      'Earth provided by a local electrode on a TT system',
     ],
     correctAnswer: 2,
     explanation:
@@ -4891,9 +4891,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 287,
     question: 'What should be verified about trunking lids during inspection?',
     options: [
-      'The external earth fault loop impedance',
-      'AC sinusoidal residual currents',
-      'Visual inspection, testing, documentation',
+      'That the lids are a different colour to the cables',
+      'That the lids carry a current rating label',
+      'That the lids are removed for ventilation',
       'All lids are in place and secured',
     ],
     correctAnswer: 3,
@@ -4909,9 +4909,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What should be checked about cable glands during inspection?',
     options: [
       'Correct type, properly tightened, and providing earth continuity where required',
-      'Secure fixing, adequate support, and bonding if required',
-      'Investigate for possible interconnection, spur, or different cable',
-      'By detecting imbalance between live and neutral currents',
+      'Only that the gland matches the colour of the cable',
+      'Only that the gland is the most recent model available',
+      'Only that the gland carries a current rating label',
     ],
     correctAnswer: 0,
     explanation:
@@ -4925,10 +4925,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 289,
     question: 'What test verifies SWA armouring continuity?',
     options: [
-      'The external earth fault loop impedance',
+      'Insulation resistance test from armouring to live conductors',
       'Continuity test from armouring to MET',
-      'To prevent unexpected energisation during work',
-      'Electrical Installation Condition Report',
+      'Loop impedance test between armouring and neutral',
+      'RCD test applied across the armouring gland',
     ],
     correctAnswer: 1,
     explanation:
@@ -4942,10 +4942,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 290,
     question: 'What is a clean earth or technical earth used for?',
     options: [
-      'To ensure the switch breaks the phase conductor',
-      'Ensuring only the device nearest the fault operates',
+      'Providing the main protective earth for the whole installation',
+      'Carrying fault current back to the supply transformer',
       'Sensitive electronic equipment requiring low-noise earth reference',
-      'The total earth fault loop impedance at the furthest point',
+      'Bonding all extraneous-conductive-parts together',
     ],
     correctAnswer: 2,
     explanation:
@@ -4959,9 +4959,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 291,
     question: 'What is the purpose of insulation monitoring devices?',
     options: [
-      'To identify circuits for safe isolation and future work',
-      'Insulation, barriers, enclosures, and obstacles are adequate',
-      'Protection by double or reinforced insulation without earthing',
+      'Monitor earth leakage current and disconnect on a fault',
+      'Test insulation resistance once at initial verification',
+      'Limit the prospective fault current on TN systems',
       'Continuously monitor insulation resistance of IT systems',
     ],
     correctAnswer: 3,
@@ -4977,9 +4977,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is MICC cable particularly used for?',
     options: [
       'Fire alarm systems and emergency circuits requiring fire resistance',
-      'To verify the RCD trips within the required time',
-      'Ensuring only the device nearest the fault operates',
-      'Testing continuity of protective conductors at multiple points',
+      'Buried supply cables on TT earthing systems',
+      'Flexible connections to portable equipment',
+      'Data and telecommunications cabling only',
     ],
     correctAnswer: 0,
     explanation:
@@ -4993,10 +4993,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 293,
     question: 'What type of installation requires the most frequent inspection?',
     options: [
-      'Any voltage that could cause injury',
+      'A standard domestic dwelling',
       'Construction site or caravan park',
-      'Prove tester, test dead, prove tester',
-      'Electromagnetic Compatibility',
+      'A commercial office building',
+      'An agricultural installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -5010,10 +5010,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 294,
     question: 'What might indicate a cross-connected ring circuit?',
     options: [
-      "L and N should be similar, CPC may differ if different CSA",
-      "Maximum current that could flow during a short circuit",
+      "Identical low readings at every socket on the ring",
+      "An open circuit reading on the CPC end-to-end test",
       "Readings that don't follow the expected pattern around the ring",
-      "Because Ze is typically too high for overcurrent devices alone",
+      "L, N and CPC end-to-end readings that are all equal",
     ],
     correctAnswer: 2,
     explanation:
@@ -5051,7 +5051,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Supplementary bonding conductors connecting exposed-conductive-parts should be minimum 4mm² if mechanically protected.',
+      'A supplementary bonding conductor between extraneous-conductive-parts must be at least 4mm² where it is not mechanically protected (2.5mm² is permitted where protected).',
     section: 'Continuity Testing',
     difficulty: 'advanced',
     topic: 'Bonding',
@@ -5061,10 +5061,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 297,
     question: 'What is the purpose of the 17th Edition consumer unit with metal enclosure?',
     options: [
-      'Between line, neutral and earth at the point of test',
+      'To provide a CPC path for all the circuits inside',
       'To contain fire in the event of a fault within the unit',
-      'To provide strain relief, earth continuity, and environmental sealing',
-      'As per manufacturer recommendations, typically annually',
+      'To shield the circuits from electromagnetic interference',
+      'To increase the current rating of the busbar',
     ],
     correctAnswer: 1,
     explanation:
@@ -5078,10 +5078,10 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 298,
     question: 'What is the purpose of cable tray and ladder?',
     options: [
-      'Not exceeding 50V AC or 120V DC',
-      'Record the limitation in the report',
+      'To provide a CPC for every cable it carries',
+      'To increase the current rating of the cables',
       'Support and protection for cables',
-      'Prove tester, test dead, prove tester',
+      'To provide environmental sealing at cable terminations',
     ],
     correctAnswer: 2,
     explanation:
@@ -5095,9 +5095,9 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     id: 299,
     question: 'What should be checked about cable tray during inspection?',
     options: [
-      'Earth is top, neutral left, phase right when viewed face-on',
-      'It shows the highest reading during cross-connected test',
-      'To ensure the switch breaks the phase conductor',
+      'Only that the tray is painted the correct colour',
+      'Only that the tray carries a current rating label',
+      'Only that the tray is the most recent model available',
       'Secure fixing, adequate support, and bonding if required',
     ],
     correctAnswer: 3,

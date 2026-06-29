@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Name one type of site documentation that must be stored.',
     options: [
-      'Personal notes',
+      'Workers’ payslips and timesheets',
       'Drawings and as-builts',
-      'Weather reports',
-      'Shopping lists',
+      'Supplier marketing brochures',
+      'Tea-break rotas for the site team',
     ],
     correctIndex: 1,
     explanation:
@@ -42,9 +42,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Give one benefit of digital storage.',
     options: [
-      'Conduit bending machine or former',
-      'Seasonal Affective Disorder (SAD)',
-      'They must be competent or supervised',
+      'It removes the need to keep any records',
+      'It prevents documents from ever changing',
+      'It avoids the need for access permissions',
       'Easy backup and instant access',
     ],
     correctIndex: 3,
@@ -61,10 +61,10 @@ export default function Module5Section7_5() {
       id: 1,
       question: 'Name one type of site documentation that must be stored.',
       options: [
-        'An NO contact of the output coil wired in parallel with the start button to maintain the circuit',
+        'Workers’ payslips, timesheets and HR records',
         'Drawings, specifications, test certificates, RAMS, manufacturer instructions',
-        'Product type (orite type), extent of damage/deterioration, surface treatment, and asbestos type',
-        'Part 4 — General requirements for all construction sites',
+        'Supplier marketing brochures and price lists',
+        'Personal phone contacts of the site team',
       ],
       correctAnswer: 1,
       explanation:
@@ -74,10 +74,10 @@ export default function Module5Section7_5() {
       id: 2,
       question: 'What is the purpose of test certificates?',
       options: [
-        'Pulsed output meters connected to BMS or data logger',
-        'To confirm your voltage tester is working correctly',
+        'To record the cost of the installation',
+        'To list the workers who carried out the job',
         'To verify safety and compliance of installations',
-        'Investigate, rectify, and retest before certification',
+        'To show the delivery dates of materials',
       ],
       correctAnswer: 2,
       explanation:
@@ -102,9 +102,9 @@ export default function Module5Section7_5() {
       question: 'What is one risk of poor physical document storage?',
       options: [
         'Loss or damage from water, fire, or misplacement',
-        'Durable and legible marking identifying each circuit',
-        'Record all test results with locations and conditions',
-        'Meet specific requirements for hazardous area classification',
+        'Faster retrieval of current drawings',
+        'Improved version control across the team',
+        'Better protection against unauthorised access',
       ],
       correctAnswer: 0,
       explanation:
@@ -114,10 +114,10 @@ export default function Module5Section7_5() {
       id: 5,
       question: 'Give one benefit of digital storage.',
       options: [
-        'Short-circuit AND earth fault conditions',
+        'It removes the need for any backups',
         'Easy backup, instant access, version control',
-        'They introduce twists that can stress the fibre',
-        'Reduce, Reuse, Recycle, Recover, Dispose',
+        'It guarantees documents can never be deleted',
+        'It avoids the need to control access rights',
       ],
       correctAnswer: 1,
       explanation:
@@ -127,10 +127,10 @@ export default function Module5Section7_5() {
       id: 6,
       question: 'What is the correct way to issue drawings to site staff?',
       options: [
-        'Use intermediate pull points to reduce total tension',
-        '"The circuits were tested and found to be satisfactory."',
+        'Hand out whichever copy is nearest to hand',
+        'Issue all past revisions so nothing is missed',
         'Ensure they are the latest, stamped/dated copies',
-        'Allow for reasonably anticipated additions',
+        'Let each worker keep their own version',
       ],
       correctAnswer: 2,
       explanation:
@@ -140,9 +140,9 @@ export default function Module5Section7_5() {
       id: 7,
       question: 'In the real-world scenario, what caused project delays?',
       options: [
-        'The tower location, date, inspector details, findings, any defects and actions taken',
-        'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
-        'A legal requirement imposed by an Act of Parliament or Regulations',
+        'Drawings were issued in the wrong scale',
+        'The client changed the design halfway through',
+        'A power cut stopped work for two days',
         'Paper drawings were destroyed by water damage, with no backups available',
       ],
       correctAnswer: 3,
@@ -154,9 +154,9 @@ export default function Module5Section7_5() {
       question: 'Who should have editing rights for site documents?',
       options: [
         'Authorised supervisors/managers only',
-        'Maintained mode for constant visibility',
-        'Generic cabling for customer premises',
-        'Control circuit with voltage monitoring',
+        'Every worker who can access the system',
+        'The materials supplier and subcontractors',
+        'Anyone who finds an error in a document',
       ],
       correctAnswer: 0,
       explanation:
@@ -166,10 +166,10 @@ export default function Module5Section7_5() {
       id: 9,
       question: 'Why should documents be accessible to all relevant team members?',
       options: [
-        'Installing accessories and making final connections',
+        'To reduce the cost of printing copies',
         'To allow safe, compliant, and efficient working',
-        'Insulated gloves and face protection',
-        'Avoid working at height altogether where possible',
+        'To replace the need for a site induction',
+        'To avoid having to update the drawings',
       ],
       correctAnswer: 1,
       explanation:
@@ -179,10 +179,10 @@ export default function Module5Section7_5() {
       id: 10,
       question: 'List one best practice for protecting physical copies of documents.',
       options: [
-        'Technical problem-solving and site coordination responsibilities',
-        'Current, duration, path through body, frequency',
+        'Leave them on site overnight for convenience',
+        'Keep them loose in the van between visits',
         'Store in waterproof folders or locked site cabinets',
-        'Verify scheduled items match specification requirements',
+        'Mark them up freely so they stay current',
       ],
       correctAnswer: 2,
       explanation:

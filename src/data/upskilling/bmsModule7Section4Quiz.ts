@@ -5,10 +5,10 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of software upload in a BMS?',
     options: [
-      'To prevent memory corruption and upload failures',
+      'To increase the supply voltage delivered to field devices',
       'To load control logic, mappings, and setpoints into controllers',
-      'To enable efficient programming and troubleshooting',
-      'To ensure accurate logging and coordinated scheduling',
+      'To physically rewire the inputs and outputs on the controller',
+      'To replace the controller firmware with the manufacturer operating system',
     ],
     correctAnswer: 1,
     explanation:
@@ -31,9 +31,9 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     id: 3,
     question: 'Why must controllers be powered and stable before upload?',
     options: [
-      'All I/O points and safety functions',
-      'Control logic, mappings, setpoints, and schedules',
-      'To enable efficient programming and troubleshooting',
+      'To allow the controller to drive its outputs during the transfer',
+      'To let the engineer view live sensor readings while uploading',
+      'To keep the network switch from dropping the connection',
       'To prevent memory corruption and upload failures',
     ],
     correctAnswer: 3,
@@ -57,10 +57,10 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     id: 5,
     question: 'Why is time synchronisation important across BMS controllers?',
     options: [
-      'To prevent memory corruption and upload failures',
+      'It reduces the electrical load drawn by each controller',
       'To ensure accurate logging and coordinated scheduling',
-      'Ensuring stable power and communication infrastructure',
-      'To load control logic, mappings, and setpoints into controllers',
+      'It removes the need to assign each controller a unique address',
+      'It increases the speed of the communication network',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     id: 6,
     question: "What is the electrician's role during software upload?",
     options: [
-      'Control logic, mappings, setpoints, and schedules',
-      'To ensure accurate logging and coordinated scheduling',
+      'Writing the control logic sequences for the engineer',
+      'Setting the temperature and schedule setpoints in software',
       'Ensuring stable power and communication infrastructure',
-      'To enable efficient programming and troubleshooting',
+      'Assigning BACnet Device IDs to each controller on the network',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,9 +83,9 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     id: 7,
     question: 'Why should controller communication ports be easily accessible?',
     options: [
-      'Ensuring stable power and communication infrastructure',
-      'To load control logic, mappings, and setpoints into controllers',
-      'To prevent memory corruption and upload failures',
+      'To improve natural ventilation and cooling of the controller',
+      'To reduce the length of the field wiring to sensors',
+      'To allow the controller to be powered from the port',
       'To enable efficient programming and troubleshooting',
     ],
     correctAnswer: 3,
@@ -122,10 +122,10 @@ export const bmsModule7Section4Quiz: QuizQuestion[] = [
     id: 10,
     question: 'What type of data is typically included in a software upload?',
     options: [
-      'To enable efficient programming and troubleshooting',
-      'To prevent memory corruption and upload failures',
+      'Historical trend logs collected from the controller',
+      'The mains supply waveform measured at the panel',
       'Control logic, mappings, setpoints, and schedules',
-      'To ensure accurate logging and coordinated scheduling',
+      'The physical wiring diagram for the field devices',
     ],
     correctAnswer: 2,
     explanation:

@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'What type of sensor is most commonly used for occupancy detection in offices?',
     options: [
-      'False - damaged leads must not be used',
-      'Correct type, rating, and indicator status',
-      'Verified Carbon Standard (VCS/Verra)',
+      'Photocell (light level only)',
+      'Thermostatic (temperature only)',
+      'Microwave (through-wall only)',
       'Dual technology (PIR + ultrasonic)',
     ],
     correctAnswer: 3,
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Where should a daylight sensor be positioned?',
     options: [
-      'BACnet, Modbus, KNX, or DALI for lighting',
+      'Inside the luminaire housing next to the LED',
       'On the ceiling looking at the task area',
-      'Complete electrical path between two points',
-      'Mind-reading, personalising, and catastrophising',
+      'On the window glass facing outward',
+      'At low level near the skirting board',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: "What is 'corridor hold' in occupancy sensor programming?",
     options: [
-      'Electrical equipment being charged accidentally',
-      'Converting sound energy to heat in porous material',
+      'Holding the lights at a dimmed level overnight',
+      'Locking the controls so users cannot override them',
       'Preventing lights switching off while someone walks through',
-      'Correct connection of line, neutral, and earth conductors',
+      'Linking the corridor sensor to the fire alarm panel',
     ],
     correctAnswer: 2,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'In an open plan office, what control strategy is recommended for energy efficiency?',
     options: [
-      'The employer (or self-employed person, or person in control of the premises)',
+      'Manual switching only, with no automatic control',
       'Combined daylight linking, presence detection and local override',
-      'They\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re installing the new lighting circuit on Tuesday',
-      'Maintain high standards of workmanship and business ethics',
+      'A single time clock switching the whole floor together',
+      'Presence detection on the core, none at the perimeter',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: "What is 'constant light output' (CLO) control?",
     options: [
-      'A dead short between line and neutral',
-      'Use barriers or separate compartments',
+      'Holding the colour temperature fixed as the LED ages',
+      'Keeping the luminaire on continuously without switching',
       'Maintaining light level as lamps depreciate',
-      'Section Y - Building services general',
+      'Running every luminaire at exactly the same wattage',
     ],
     correctAnswer: 2,
     explanation:

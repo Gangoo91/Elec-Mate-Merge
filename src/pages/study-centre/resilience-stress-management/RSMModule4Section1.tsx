@@ -90,8 +90,8 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the NHS-recommended amount of sleep per night for adults?',
-    options: ['5-6 hours', '6-7 hours', '7-9 hours', '9-10 hours'],
-    correctAnswer: 2,
+    options: ['7-9 hours', '5-6 hours', '6-7 hours', '9-10 hours'],
+    correctAnswer: 0,
     explanation:
       'The NHS recommends 7-9 hours of sleep per night for adults. Research consistently shows that sleeping less than 7 hours impairs cognitive function, emotional regulation, immune response and physical recovery. Construction workers, who rely on physical coordination and safety-critical decision-making, are particularly vulnerable to the effects of insufficient sleep.',
   },
@@ -112,8 +112,8 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the approximate half-life of caffeine in the human body?',
-    options: ['1-2 hours', '2-3 hours', '5-6 hours', '10-12 hours'],
-    correctAnswer: 2,
+    options: ['1-2 hours', '2-3 hours', '10-12 hours', '5-6 hours'],
+    correctAnswer: 3,
     explanation:
       'Caffeine has a half-life of approximately 5-6 hours. This means that a 200mg cup of coffee consumed at 2pm still has roughly 100mg of caffeine active in your system at 7-8pm. This residual caffeine can delay sleep onset and reduce sleep quality even if you do not feel wide awake. This is why sleep experts recommend no caffeine after early afternoon.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 5,
     question: 'How does alcohol affect sleep quality?',
     options: [
+      'Alcohol helps you fall asleep but suppresses REM sleep, reducing overall sleep quality',
       'Alcohol improves sleep quality by helping you relax',
       'Alcohol has no measurable effect on sleep quality',
-      'Alcohol helps you fall asleep but suppresses REM sleep, reducing overall sleep quality',
       'Alcohol only affects sleep if consumed within 30 minutes of bedtime',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Alcohol is a sedative that may help you fall asleep faster, but it significantly disrupts sleep architecture. It suppresses REM sleep (the restorative stage critical for memory, emotional processing and mental health), increases night-time awakenings, and leads to lighter, less restorative sleep overall. Even 2-3 units in the evening can reduce sleep quality by up to 24%.',
   },
@@ -164,11 +164,11 @@ const quizQuestions = [
       'What is the recommended minimum amount of moderate-intensity exercise per week for adults, according to NHS guidelines?',
     options: [
       '30 minutes per week',
-      '75 minutes per week',
       '150 minutes per week',
+      '75 minutes per week',
       '300 minutes per week',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The NHS recommends at least 150 minutes of moderate-intensity aerobic activity per week (such as brisk walking, cycling or swimming) along with strength exercises on 2 or more days per week. This can be broken into manageable sessions — for example, 30 minutes on 5 days, or two longer sessions at the weekend combined with shorter weekday sessions.',
   },
@@ -178,11 +178,11 @@ const quizQuestions = [
       'Which of the following best describes the relationship between physical wellbeing and stress resilience?',
     options: [
       'Physical wellbeing has no connection to stress resilience — they are completely separate',
-      'Physical wellbeing is a foundation for stress resilience: sleep, nutrition and exercise directly affect your ability to cope with stress',
       'Stress resilience is purely psychological and cannot be affected by physical habits',
       'Only exercise matters for stress resilience — sleep and nutrition are irrelevant',
+      'Physical wellbeing is a foundation for stress resilience: sleep, nutrition and exercise directly affect your ability to cope with stress',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Physical wellbeing forms the biological foundation of stress resilience. Sleep restores cognitive function and emotional regulation. Proper nutrition provides the brain and body with the fuel needed to manage stress responses. Exercise reduces cortisol (the stress hormone) and increases endorphins. When any of these foundations is compromised, your capacity to cope with stress is significantly diminished — which is why physical wellbeing is the starting point for building daily resilience.',
   },

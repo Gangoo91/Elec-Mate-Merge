@@ -16,11 +16,11 @@ export const DocumentationQuiz = () => {
         'Which document is legally required to be retained for the life of the electrical installation?',
       options: [
         'Periodic inspection report',
-        'Electrical Installation Certificate',
         'Minor works certificate',
+        'Electrical Installation Certificate',
         'Risk assessment',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'BS 7671 requires Electrical Installation Certificates to be retained for the life of the installation as they provide essential design and compliance information.',
     },
@@ -28,14 +28,14 @@ export const DocumentationQuiz = () => {
       question:
         'What should you do if critical design documentation is missing before visual inspection?',
       options: [
-        'Proceed anyway and note limitations',
         'Refuse to carry out the inspection',
-        'Create as-built drawings during inspection',
-        'Both A and C are correct approaches',
+        'Proceed and create as-built drawings, clearly documenting the limitations',
+        'Cancel the job until the original drawings are located',
+        'Carry on as normal without recording anything unusual',
       ],
-      correct: 3,
+      correct: 1,
       explanation:
-        'You can proceed but must clearly document limitations and may need to create as-built drawings, significantly increasing inspection time.',
+        'You can proceed but must clearly document the limitations and may need to create as-built drawings, significantly increasing inspection time.',
     },
     {
       question:
@@ -53,12 +53,12 @@ export const DocumentationQuiz = () => {
     {
       question: 'What information should building plans show for electrical inspection purposes?',
       options: [
-        'Only room dimensions',
         'Socket outlet and lighting positions plus routing',
+        'Only room dimensions',
         'Just structural elements',
         'Colour schemes only',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Building plans for electrical inspection should show socket outlets, lighting positions, and cable routing to enable proper verification of the installation.',
     },
@@ -78,11 +78,11 @@ export const DocumentationQuiz = () => {
       question: 'What is the minimum information required on circuit charts according to BS 7671?',
       options: [
         'Circuit number only',
-        'Circuit designation, protective device type and rating',
         'Just the cable type',
         'Only the final circuit length',
+        'Circuit designation, protective device type and rating',
       ],
-      correct: 1,
+      correct: 3,
       explanation:
         'BS 7671 requires circuit charts to show circuit designation, protective device type and rating, plus other essential information for proper identification and safety.',
     },
@@ -98,11 +98,11 @@ export const DocumentationQuiz = () => {
         'What should be done if as-built drawings differ significantly from design drawings?',
       options: [
         'Use the design drawings anyway',
-        'Create new as-built drawings during inspection',
         'Estimate the differences',
+        'Create new as-built drawings during inspection',
         'Skip the visual inspection',
       ],
-      correct: 1,
+      correct: 2,
       explanation:
         'If as-built drawings differ significantly from design drawings, new as-built drawings should be created during inspection to ensure accurate documentation.',
     },
@@ -121,12 +121,12 @@ export const DocumentationQuiz = () => {
     {
       question: 'What must be included on protective device schedules?',
       options: [
-        'Device rating only',
         'Device type, rating, and circuit protected',
+        'Device rating only',
         'Just the manufacturer name',
         'Only the installation date',
       ],
-      correct: 1,
+      correct: 0,
       explanation:
         'Protective device schedules must include device type, rating, and the circuit protected to ensure proper identification and maintenance.',
     },

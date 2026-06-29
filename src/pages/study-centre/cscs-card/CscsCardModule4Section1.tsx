@@ -40,8 +40,8 @@ const quickCheckQuestions = [
     id: 'sds-sections-count',
     question:
       'How many sections does a Safety Data Sheet (SDS) contain under the REACH Regulations?',
-    options: ['8 sections', '12 sections', '16 sections', '20 sections'],
-    correctIndex: 2,
+    options: ['8 sections', '12 sections', '20 sections', '16 sections'],
+    correctIndex: 3,
     explanation:
       'Under the UK REACH Regulations and CLP Regulation, a Safety Data Sheet must contain exactly 16 sections in a prescribed order. These cover identification, hazards, composition, first-aid measures, firefighting, accidental release, handling and storage, exposure controls/PPE, physical and chemical properties, stability and reactivity, toxicological information, ecological information, disposal, transport, regulatory information, and other information. The format is internationally standardised under the Globally Harmonised System (GHS).',
   },
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 1,
     question: 'What do the COSHH Regulations 2002 require employers to do?',
     options: [
-      'Eliminate all hazardous substances from the workplace',
       'Assess and control exposure to hazardous substances to prevent ill health',
+      'Eliminate all hazardous substances from the workplace',
       'Provide every employee with a respirator regardless of the task',
       'Report every use of a hazardous substance to the HSE',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The COSHH Regulations 2002 require employers to assess the risks from hazardous substances in the workplace and to prevent or adequately control exposure to protect workers\u2019 health. The regulations do not require the elimination of all hazardous substances (which is often not reasonably practicable), but they do require that exposure is either prevented entirely or controlled to a level that does not cause harm. This follows a hierarchy of control measures.',
   },
@@ -122,11 +122,11 @@ const quizQuestions = [
       'What is the correct order of the hierarchy of control for hazardous substance exposure under COSHH?',
     options: [
       'PPE, administrative controls, engineering controls, substitution, elimination',
-      'Elimination, substitution, engineering controls, administrative controls, PPE',
       'Substitution, elimination, PPE, engineering controls, administrative controls',
+      'Elimination, substitution, engineering controls, administrative controls, PPE',
       'Engineering controls, elimination, substitution, PPE, administrative controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The hierarchy of control under COSHH follows the same principle as the general hierarchy of risk control: elimination (remove the substance entirely), substitution (replace with a less hazardous alternative), engineering controls (LEV, ventilation, enclosed systems), administrative controls (procedures, rotation, training), and PPE (respiratory protection, gloves, goggles) as the last resort. This hierarchy is fundamental to COSHH compliance and must be applied in order, with PPE used only when higher-level controls are not reasonably practicable.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'What is the most common route of exposure to hazardous substances on construction sites?',
     options: [
-      'Ingestion (swallowing)',
-      'Injection through the skin',
       'Inhalation (breathing in)',
+      'Injection through the skin',
+      'Ingestion (swallowing)',
       'Absorption through the eyes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Inhalation is the most common and often the most significant route of exposure to hazardous substances on construction sites. Activities such as cutting, grinding, drilling, sanding, mixing, and spraying generate airborne dusts, fumes, mists, and vapours that are readily inhaled. The lungs have an enormous surface area and a rich blood supply, meaning inhaled substances are rapidly absorbed into the body. This is why respiratory protective equipment (RPE) and engineering controls such as local exhaust ventilation (LEV) and water suppression are critical on construction sites.',
   },
@@ -163,11 +163,11 @@ const quizQuestions = [
     question: 'Prolonged skin contact with wet cement can cause which of the following conditions?',
     options: [
       'Occupational asthma and rhinitis',
-      'Silicosis and pleural thickening',
       'Cement burns (alkaline burns) and cement dermatitis',
+      'Silicosis and pleural thickening',
       'Hand-arm vibration syndrome (HAVS)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Wet cement is highly alkaline (pH 12\u201314) due to the calcium hydroxide formed when cement powder reacts with water. Prolonged skin contact can cause two distinct conditions: cement burns (chemical burns from the alkaline pH, which can be severe and deep, sometimes requiring skin grafts) and cement dermatitis (allergic contact dermatitis caused by the hexavalent chromium content, leading to chronic skin inflammation, cracking, and blistering). Both conditions are entirely preventable through the use of waterproof gloves, barrier creams, and prompt washing of any cement from the skin.',
   },
@@ -190,11 +190,11 @@ const quizQuestions = [
       'What is the PRIMARY purpose of storing hazardous substances in ventilated cabinets with appropriate signage?',
     options: [
       'To reduce the cost of purchasing hazardous substances',
-      'To prevent the build-up of hazardous vapours and ensure workers are aware of the hazards present',
       'To comply with environmental protection requirements only',
       'To make it easier for the fire brigade to locate the substances in an emergency',
+      'To prevent the build-up of hazardous vapours and ensure workers are aware of the hazards present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Storing hazardous substances in ventilated cabinets serves two primary purposes: preventing the accumulation of hazardous vapours (many substances release vapours even when containers are closed, and vapour accumulation in an unventilated space can create both health hazards and fire/explosion risks) and ensuring that appropriate hazard signage clearly communicates the nature of the substances stored to anyone who may need to access the area. This is a requirement under both the COSHH Regulations and DSEAR.',
   },

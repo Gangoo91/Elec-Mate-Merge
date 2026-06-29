@@ -75,9 +75,9 @@ const AM2Module2Section5 = () => {
       id: 'lock-off-device',
       question: 'True or false: Using tape instead of a lock-off device is acceptable in AM2?',
       options: [
-        'They automatically turn off when rooms are unoccupied to save energy',
-        'Corresponding adjustments to national inventories',
-        'Difference between synchronous and rotor speed',
+        'True - tape is acceptable if no one else is on site',
+        'True - provided you stay within sight of the isolator',
+        'True - as long as a warning notice is also fitted',
         'False - lock-off devices are mandatory for safe isolation',
       ],
       correctIndex: 3,
@@ -104,10 +104,10 @@ const AM2Module2Section5 = () => {
       id: 1,
       question: 'What is a critical safety error in AM2?',
       options: [
-        'Typically 5 years depending on type and use',
+        'A minor recording error that loses a single mark',
         'An unsafe practice that causes instant section failure',
-        'To establish true vertical reference lines',
-        'Null the leads using the tester\\\\\\\'s calibration function',
+        'Any task that takes longer than the allotted time',
+        'A neatness issue with the certificate paperwork',
       ],
       correctAnswer: 1,
       explanation:
@@ -144,9 +144,9 @@ const AM2Module2Section5 = () => {
       question: 'True or false: Using tape instead of a lock-off device is acceptable:',
       options: [
         'False - lock-off devices are mandatory for safe isolation',
-        'Industry developments and new technology requirements',
-        'Isolating the wrong circuit, leading to safety hazards',
-        'To filter out higher-order modes for consistent launch conditions',
+        'True - tape is fine for short tasks under five minutes',
+        'True - provided the isolator is clearly labelled',
+        'True - if the assessor is watching the isolator',
       ],
       correctAnswer: 0,
       explanation:
@@ -169,10 +169,10 @@ const AM2Module2Section5 = () => {
       id: 6,
       question: 'Can incorrect paperwork alone cause a critical fail?',
       options: [
-        'Clear, purposeful, respectful of working hours, and separate from social chat',
-        'The tilt of Earth\\\\\\\\\\\\\\\'s axis at 23.5° to the orbital plane',
+        'Yes - any paperwork mistake is an automatic critical fail',
+        'No - paperwork is never marked in the AM2',
         'Not usually - unless it hides or misrepresents a dangerous condition',
-        'The total flux through a coil multiplied by number of turns',
+        'Yes - but only if the certificate is left unsigned',
       ],
       correctAnswer: 2,
       explanation:
@@ -182,9 +182,9 @@ const AM2Module2Section5 = () => {
       id: 7,
       question: 'Name one PPE-related mistake that could count as a safety fail:',
       options: [
-        'Loose terminal, damaged cable, or incorrect routing',
-        'To establish true vertical reference lines',
-        'To identify and control hazards before accidents occur',
+        'Wearing safety glasses that are slightly scratched',
+        'Using gloves that are a size too large for your hands',
+        'Keeping your hard hat on during the paperwork stage',
         'Not wearing safety glasses while cutting or drilling',
       ],
       correctAnswer: 3,
@@ -196,9 +196,9 @@ const AM2Module2Section5 = () => {
       question: 'What should you always check before energising a circuit?',
       options: [
         'That all testing is complete and results are satisfactory',
-        'High-risk task area lighting providing minimum 10% of normal illuminance',
-        'Verify continuity and earth fault loop impedance',
-        'A saddle within ~150-200 mm of every box, fitting and change of direction.',
+        'That the certificate has already been signed and dated',
+        'That the assessor has left the assessment area',
+        'That the supply cable is the correct colour',
       ],
       correctAnswer: 0,
       explanation:

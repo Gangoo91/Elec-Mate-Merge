@@ -21,12 +21,12 @@ const quickCheckQuestions = [
     id: 'reading-ekman',
     question: 'According to Paul Ekman, micro-expressions last between:',
     options: [
-      '1 to 5 seconds',
       '1/5 to 1/25 of a second',
+      '1 to 5 seconds',
       '10 to 30 seconds',
       'They have no specific duration',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Ekman\u2019s research found that micro-expressions are extremely brief \u2014 lasting between 1/5 of a second (200 milliseconds) and 1/25 of a second (40 milliseconds). This makes them very difficult to detect without training, but they are significant because they reveal genuine emotions that a person may be trying to conceal.',
   },
@@ -109,8 +109,8 @@ const quizQuestions = [
     id: 3,
     question:
       'In Edward T. Hall\u2019s proxemics theory, "personal space" (the distance for conversations with friends) is approximately:',
-    options: ['0 to 45 cm', '45 cm to 1.2 m', '1.2 m to 3.6 m', '3.6 m to 7.6 m'],
-    correctAnswer: 1,
+    options: ['0 to 45 cm', '1.2 m to 3.6 m', '3.6 m to 7.6 m', '45 cm to 1.2 m'],
+    correctAnswer: 3,
     explanation:
       'Hall identified four distance zones: intimate (0\u201345 cm), personal (45 cm\u20131.2 m), social (1.2\u20133.6 m), and public (3.6\u20137.6 m). Personal space is the zone used for conversations with friends, family and close colleagues. These distances vary somewhat between cultures, which is why cultural sensitivity is important when reading proxemic cues.',
   },
@@ -145,12 +145,12 @@ const quizQuestions = [
     question:
       'The perspective-taking technique \u201cwhat would it be like if...\u201d is most useful for:',
     options: [
-      'Winning arguments by predicting the other person\u2019s response',
       'Developing empathy by mentally stepping into another person\u2019s situation and imagining their experience',
+      'Winning arguments by predicting the other person\u2019s response',
       'Avoiding responsibility by imagining what others would do',
       'Planning career moves by imagining different scenarios',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The \u201cwhat would it be like if...\u201d technique is a deliberate empathy exercise. By mentally placing yourself in another person\u2019s situation \u2014 with their background, pressures, skills and concerns \u2014 you develop a richer understanding of their perspective. This is cognitive empathy in practice, and regular use strengthens the neural pathways that support empathic perspective-taking.',
   },
@@ -173,11 +173,11 @@ const quizQuestions = [
     question: 'Reading people effectively in a construction context primarily improves:',
     options: [
       'Your ability to manipulate colleagues',
-      'Safety, communication and professional relationships',
       'Your chances of winning workplace arguments',
       'Only your relationship with clients, not colleagues',
+      'Safety, communication and professional relationships',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The purpose of developing people-reading skills in construction is to improve safety (noticing when someone is distracted or unfit to work safely), communication (understanding how your message is being received), and relationships (building trust, resolving conflicts, and working effectively with diverse teams). These skills benefit every professional interaction, from apprentice supervision to client management to team coordination.',
   },

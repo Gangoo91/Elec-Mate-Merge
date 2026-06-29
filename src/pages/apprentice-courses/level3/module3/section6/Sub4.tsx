@@ -73,16 +73,16 @@ const quizQuestions = [
     '100 lm',
   ], correctAnswer: 2, explanation: 'Lumens = watts × efficacy = 100 × 130 = 13 000 lm. (Or efficacy can be checked: 13000/100 = 130 lm/W.)' },
   { id: 7, question: 'Utilisation factor accounts for:', options: [
-    'Contractor may still be liable under the Limitation Act',
-    'It indicates dangerous conditions that could lead to fire or shock',
-    'Several months to over a year, depending on severity and support',
+    'The drop in lamp output as the lamp ages over its life',
+    'The colour temperature of the light source in kelvin',
+    'The glare experienced by occupants at a given viewing angle',
     'Fraction of lumens that reach the task surface vs lost to walls/ceiling',
   ], correctAnswer: 3, explanation: 'UF = lumens onto task / total lumens emitted. Depends on room dimensions, reflectance and luminaire distribution. Higher rooms = lower UF.' },
   { id: 8, question: 'Maintenance factor (MF) covers:', options: [
     'Light output reduction over time due to dirt, lamp ageing, room dirt',
-    'A systematic process to identify the underlying causes that led to the fire occurring',
-    'Overlapping design and construction phases to reduce total duration',
-    'Multiple interconnected communication paths for reliability',
+    'The fraction of emitted lumens that reach the working plane',
+    'The extra lumens a dimmable luminaire can deliver at full output',
+    'The reflectance of the walls, ceiling and floor surfaces',
   ], correctAnswer: 0, explanation: 'MF (typically 0.7-0.85) is design margin: actual install will deliver less light over years due to lamp lumen depreciation, luminaire dirt, room dirt. Specify lamps with extra margin.' },
 ];
 

@@ -10,12 +10,12 @@ const quizQuestions = [
     id: 1,
     question: 'Who developed the Pomodoro Technique and when was it first published?',
     options: [
-      'Cal Newport in 2016',
       'Francesco Cirillo, developed in the 1980s and published in 2006',
+      'Cal Newport in 2016',
       'David Allen in 2001',
       'Peter Drucker in 1954',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Francesco Cirillo developed the Pomodoro Technique as a university student in the late 1980s, using a tomato-shaped kitchen timer. He formally published the method in 2006.',
   },
@@ -37,11 +37,11 @@ const quizQuestions = [
     question: "What is Parkinson's Law?",
     options: [
       'Every task has an optimal time of day for completion',
-      'Work expands to fill the time available for its completion',
       'Productivity decreases by 50% after lunch',
+      'Work expands to fill the time available for its completion',
       'The more people involved in a task, the longer it takes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Parkinson's Law, articulated by Cyril Northcote Parkinson in 1955, states that work expands to fill the time available for its completion. If you give yourself all day to write a quote, it will take all day. If you give yourself 20 minutes, you will often complete it in 20 minutes.",
   },
@@ -51,10 +51,10 @@ const quizQuestions = [
     options: [
       'It should not be used for physical work at all',
       'The 25-minute sprint works perfectly for all physical tasks without modification',
-      'The break principle applies to physical work, but sprint lengths should match the natural rhythm of the task',
       'Physical work should use 60-minute sprints with no breaks',
+      'The break principle applies to physical work, but sprint lengths should match the natural rhythm of the task',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'While you cannot always stop wiring mid-circuit after exactly 25 minutes, the underlying principle of scheduled breaks applies strongly to physical work. Adapt sprint lengths to match natural task breakpoints, and use breaks to prevent fatigue-related errors.',
   },
@@ -62,12 +62,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is time-boxing?',
     options: [
-      'Working overtime to complete a task regardless of how long it takes',
       'Allocating a fixed amount of time to a task and stopping when the time expires',
+      'Working overtime to complete a task regardless of how long it takes',
       'Boxing up completed tasks for storage',
       'Scheduling tasks into specific calendar slots without time limits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Time-boxing means allocating a predetermined, fixed amount of time to a task and stopping when that time expires, regardless of whether the task is fully complete. This prevents perfectionism, creates urgency, and ensures no single task consumes disproportionate time.',
   },
@@ -90,11 +90,11 @@ const quizQuestions = [
       'An electrician has 6 quotes to prepare. Using time-boxing, what is the best approach?',
     options: [
       'Spend as long as needed on each quote until it is perfect',
-      'Allocate 20 minutes per quote with a timer, completing all 6 in a 2-hour batch',
       'Work on all 6 simultaneously, switching between them as ideas come',
+      'Allocate 20 minutes per quote with a timer, completing all 6 in a 2-hour batch',
       'Delegate all quoting to an admin assistant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Time-boxing each quote to 20 minutes creates urgency, prevents overthinking, and ensures all 6 are completed in a predictable 2-hour window. Without time-boxing, many tradespeople spend 45-60 minutes per quote, turning a 2-hour task into a 5-hour one with diminishing returns on quality.',
   },
@@ -103,11 +103,11 @@ const quizQuestions = [
     question: 'After completing 4 Pomodoro sprints (approximately 2 hours), what should you do?',
     options: [
       'Continue immediately with the next sprint to maintain momentum',
-      'Take a longer break of 15-30 minutes before starting another cycle',
       'Stop working for the rest of the day',
       'Switch to a completely different type of work permanently',
+      'Take a longer break of 15-30 minutes before starting another cycle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'After 4 Pomodoros (about 2 hours), Cirillo recommends a longer break of 15-30 minutes. This extended recovery prevents cumulative fatigue, allows your brain to consolidate what you have learned or accomplished, and resets your capacity for the next cycle of focused work.',
   },

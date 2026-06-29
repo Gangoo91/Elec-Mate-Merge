@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'An electrician has lost three expensive tools in the past six months due to leaving them on site. What is the most effective habit-based solution to this problem?',
     options: [
-      'Buy cheaper tools so the losses are less painful',
       'Implement an end-of-job tool count habit anchored to packing up, using a laminated checklist',
+      'Buy cheaper tools so the losses are less painful',
       'Try to remember to check for tools before leaving each site',
       'Only use tools that are brightly coloured and easy to spot',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The most effective solution is a systematic end-of-job tool count habit. The habit loop: Cue (packing up to leave the site), Routine (count tools against a laminated checklist), Reward (immediate satisfaction of a complete set plus long-term saving of thousands of pounds in replacement costs). &ldquo;Trying to remember&rdquo; is not a system &mdash; it is willpower-dependent and will fail under time pressure or fatigue. The laminated checklist makes the behaviour easy (satisfying the Fogg Ability criterion) and the end-of-job anchor makes it obvious (satisfying the Clear &ldquo;make it obvious&rdquo; law). This is a classic example of replacing willpower with systems.',
   },
@@ -43,11 +43,11 @@ const quickCheckQuestions = [
       'According to research on habit formation and professional development, what is the minimum effective daily study time for an electrician preparing for a qualification exam?',
     options: [
       'At least two hours per day, otherwise it is not worth doing',
-      'As little as 10&ndash;15 minutes per day, provided it is consistent',
       'Study time does not matter; only the number of practice questions completed matters',
       'At least one hour per day on weekdays and three hours per day on weekends',
+      'As little as 10&ndash;15 minutes per day, provided it is consistent',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Research consistently shows that consistency beats intensity for long-term learning and habit formation. A 15-minute daily study habit, maintained for three months, results in 22.5 hours of study and establishes a durable automatic behaviour. A two-hour weekend binge study session, maintained inconsistently, results in similar hours but does not build automaticity and is far more vulnerable to disruption. BJ Fogg&rsquo;s &ldquo;make it tiny&rdquo; principle applies: start with a study habit so small that you can maintain it even on your worst day (one page of BS 7671, one regulation, one practice question). Once the tiny habit is automatic, expand it. This approach leverages the compound effect and avoids the common trap of unsustainable over-ambition.',
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     question:
       'An electrician establishes a morning routine that includes a van check, job review, and weather check. According to research on keystone habits, what additional benefit is this routine most likely to produce beyond the immediate task completion?',
     options: [
-      'No additional benefits &mdash; the routine only achieves what it explicitly includes',
-      'A cascade of other positive behaviours throughout the day, such as better time management, fewer mistakes, and reduced stress',
-      'Increased earnings due to working faster',
-      'Better relationships with clients due to arriving in a clean van',
+      'No additional benefits, since the routine only achieves what it explicitly includes',
+      'Increased daily earnings, purely as a result of being able to work faster',
+      'A cascade of other positive behaviours throughout the rest of the working day',
+      'Better client relationships, driven mainly by arriving on site in a clean, tidy van',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Morning routines are classic keystone habits &mdash; they trigger a chain reaction of positive behaviours beyond the routine itself. Charles Duhigg&rsquo;s research shows that keystone habits create a sense of momentum and control that carries through the entire day. An electrician who starts the day with a structured routine is more likely to maintain focus, manage time effectively, communicate professionally, and avoid errors &mdash; all without additional willpower. The routine sets the tone. This is why elite performers in every field (athletes, executives, tradespeople) prioritise morning routines: the return on investment is disproportionately high.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'Which of the following tool management habits demonstrates the best application of the Four Laws of Behavior Change (obvious, attractive, easy, satisfying)?',
     options: [
-      'Keeping a mental note of which tools need replacing and buying them when convenient',
-      'Creating a colour-coded shadow board in the van, doing a 60-second tool check at the end of every job, and ticking off the day on a visible tracker',
-      'Buying the most expensive tools available so you are motivated to look after them',
-      'Conducting a full tool inventory and calibration check every Sunday evening',
+      'Keeping a mental note of which tools need replacing and buying them when it is convenient',
+      'Buying the most expensive tools available so you feel motivated to look after them properly',
+      'Conducting a full tool inventory and calibration check every single Sunday evening at home',
+      'A colour-coded shadow board plus a 60-second end-of-job tool check ticked off on a tracker',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The shadow board system applies all four laws: (1) Obvious &mdash; the shadow board makes missing tools immediately visible; (2) Attractive &mdash; the visual organisation is satisfying and professional; (3) Easy &mdash; the 60-second check is faster than searching for a lost tool later; (4) Satisfying &mdash; ticking off the day on a tracker provides immediate positive feedback. The Sunday inventory system violates &ldquo;make it easy&rdquo; (too time-consuming and infrequent to become automatic). Keeping a mental note violates &ldquo;make it obvious&rdquo; (relies on memory, which is unreliable). The shadow board approach is a perfect example of designing a system that makes good behaviour the default.',
   },
@@ -134,10 +134,10 @@ const quizQuestions = [
     question:
       'According to research on habit formation and health, what is the primary reason electricians should establish a daily hydration habit?',
     options: [
-      'Dehydration reduces cognitive function, reaction time, and decision-making ability, increasing the risk of errors and accidents on site',
-      'Drinking water makes you feel full and reduces the temptation to snack',
-      'Proper hydration improves your appearance and professionalism',
-      'Water is cheaper than other drinks and saves money',
+      'Dehydration impairs cognitive function and reaction time, raising the risk of errors on site',
+      'Drinking water makes you feel fuller and reduces the temptation to snack during the day',
+      'Proper hydration noticeably improves your appearance and overall on-site professionalism',
+      'Water is cheaper than energy drinks or fizzy drinks and so saves money over the week',
     ],
     correctAnswer: 0,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'An electrician struggles to maintain an end-of-day admin habit (updating job notes, filing invoices) because they are exhausted by the time they finish work. What is the best habit redesign strategy?',
     options: [
-      'Push through the tiredness using willpower and discipline',
-      'Move the admin habit to a time of day when willpower is higher, such as first thing in the morning or immediately after the first job',
-      'Hire a bookkeeper to do all admin so the habit is no longer necessary',
-      'Reduce the amount of admin by doing it only once per week',
+      'Push through the end-of-day tiredness using sheer willpower and personal discipline',
+      'Hire a bookkeeper to handle all admin so the habit is no longer necessary at all',
+      'Reduce the amount of admin by batching it and only doing it once per week instead',
+      'Move the admin habit to a time of day when willpower is higher, such as the morning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Moving the habit to a time when willpower is higher is the most effective strategy. Roy Baumeister&rsquo;s ego depletion research shows that willpower is a finite resource that depletes throughout the day. Asking your exhausted 6pm self to do admin that your fresh 9am self could do in half the time is setting yourself up for failure. Redesigned habit: &ldquo;After I complete the first job of the day, before I drive to the second job, I will spend five minutes updating yesterday&rsquo;s job notes and filing yesterday&rsquo;s invoice.&rdquo; This leverages high morning willpower and prevents the end-of-day backlog. It is a system design solution, not a willpower solution.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'An electrician wants to build a habit of stretching to prevent back and knee problems but struggles to remember. What is the most effective prompt design?',
     options: [
-      'Set a phone alarm for the same time every day',
-      'Anchor the stretching routine to an existing daily behaviour, such as &ldquo;After I lock the van at the end of the day, I will do three stretches before walking to the house&rdquo;',
-      'Put a note on the bathroom mirror saying &ldquo;Remember to stretch&rdquo;',
-      'Rely on feeling stiff as a reminder to stretch',
+      'Set a phone alarm to go off at the same fixed time every single day as a reminder',
+      'Put a written note on the bathroom mirror saying &ldquo;Remember to stretch&rdquo; each day',
+      'Anchor the stretching routine to an existing daily behaviour, such as locking the van',
+      'Rely on the feeling of stiffness in your back and knees as the prompt to stretch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Anchoring the habit to an existing behaviour (locking the van) is more reliable than time-based alarms (which can be ignored or dismissed) or passive reminders (which become invisible through habituation). The behaviour anchor is unavoidable and consistent &mdash; you always lock the van at the end of the day. The stretching routine becomes part of the transition from work mode to home mode. This is a direct application of James Clear&rsquo;s habit stacking and BJ Fogg&rsquo;s anchoring principle. After 66 days, you will feel a psychological prompt to stretch whenever you lock the van, and the behaviour will feel incomplete without it.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'According to the research on habit formation and professional development, which statement about building multiple habits simultaneously is most accurate?',
     options: [
-      'You can build as many habits as you want simultaneously if you are sufficiently motivated',
-      'You should focus on one habit at a time, establish it fully (66+ days), then stack a second habit onto it',
-      'Building habits in pairs (e.g., morning routine + evening routine) is more effective than building them one at a time',
-      'Habit formation speed is unaffected by the number of habits you are working on',
+      'You can build as many habits at once as you want, provided you are sufficiently motivated',
+      'Building habits in pairs, such as a morning plus an evening routine, beats doing them singly',
+      'Habit formation speed is unaffected by how many separate habits you are working on at once',
+      'Focus on one habit, establish it fully over 66+ days, then stack a second habit onto it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The research and expert consensus (James Clear, BJ Fogg, Charles Duhigg) strongly favour building one habit at a time. Each new habit requires cognitive load and willpower during the formation phase. Trying to establish multiple habits simultaneously overloads your limited willpower and increases the likelihood of total failure. The most effective approach: identify one keystone habit (such as a morning routine), commit to 66+ days of consistency, then stack additional habits onto the established foundation. This sequential approach may feel slower, but it is far more likely to result in durable, automatic behaviours than the common mistake of trying to overhaul your entire life simultaneously.',
   },

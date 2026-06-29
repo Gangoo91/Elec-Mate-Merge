@@ -25,10 +25,10 @@ const inlineChecks = [
     question:
       'A consultant is refurbishing a private GP examination room. The room contains a treatment couch where the doctor takes blood, performs ECGs and applies dermatology probes. No life-supporting equipment, no intra-cardiac procedures. Under Section 710, which medical location group applies?',
     options: [
-      'Group 0 — there are no patients in the room',
-      'Group 1 — applied parts contact patients during routine medical procedures, but the procedure is NOT life-critical',
-      'Group 2 — any room with a treatment couch is automatically Group 2',
-      'Outside the scope of Section 710 — private clinics are domestic',
+      'Group 0 — no medical applied parts ever contact a patient in this room',
+      'Group 1 — applied parts contact patients, but the procedure is not life-critical',
+      'Group 2 — any room containing a treatment couch is automatically classed Group 2',
+      'Outside Section 710 entirely — private clinics are treated as domestic premises',
     ],
     correctIndex: 1,
     explanation:
@@ -39,10 +39,10 @@ const inlineChecks = [
     question:
       'You are designing a circuit feeding a Group 2 operating theatre. The contractor wants to fit AFDDs on every final circuit "for safety". Under Reg 710.421.1.7, what is the correct response?',
     options: [
-      'Fit AFDDs — the new A4 default applies everywhere',
-      'AFDDs are PROHIBITED in Group 0 and Group 2 medical locations — fitting one risks nuisance disconnection of life-critical loads',
-      'AFDDs are mandatory in Group 2 — the theatre lighting circuit needs one',
-      'AFDDs are optional but recommended in all Part 7 locations',
+      'Fit AFDDs throughout — the new A4 default applies everywhere, including theatres',
+      'AFDDs are prohibited in Group 0 and Group 2 — they risk disconnecting life-critical loads',
+      'AFDDs are mandatory in Group 2, so the theatre lighting circuit must have one fitted',
+      'AFDDs are optional but recommended across all Part 7 special locations, including this one',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const inlineChecks = [
     question:
       'A Group 2 operating theatre has 12 socket-outlets used for life-supporting medical equipment. Section 710 requires those sockets to be supplied by an IT system. What is the headline characteristic of an IT system that makes it the right choice in Group 2?',
     options: [
-      'Lower voltage at the patient — typically 50 V SELV',
-      'Higher fault current to ensure rapid OPD operation',
-      'No intentional connection of any live conductor to earth — a first earth fault does not interrupt supply, allowing life-critical equipment to keep running while the IMD signals the fault',
-      'PEN conductor brought into the theatre to reduce CPC count',
+      'It delivers a lower voltage at the patient, typically 50 V SELV at every socket',
+      'It produces a higher fault current to guarantee rapid overcurrent device operation',
+      'No live conductor is earthed, so a first earth fault does not interrupt the supply',
+      'It brings the PEN conductor into the theatre to reduce the number of CPCs needed',
     ],
     correctIndex: 2,
     explanation:
@@ -67,10 +67,10 @@ const inlineChecks = [
     question:
       'In a Group 2 medical location, supplementary equipotential bonding (Reg 710.415.2) is required between specific items. Which combination correctly describes the resistance limit and what must be bonded?',
     options: [
-      'Resistance ≤ 0.5 Ω — only between the medical luminaire and MET',
-      'Resistance ≤ 0.2 Ω between the bonding bus (LPS) and any exposed-conductive-part / extraneous-conductive-part / metallic shield / metallic floor in the patient environment',
-      'Resistance ≤ 1.0 Ω — only between socket-outlets and the consumer unit',
-      'No specific limit — same as a domestic bathroom',
+      'Resistance ≤ 0.5 Ω, required only between the medical luminaire and the MET',
+      'Resistance ≤ 0.2 Ω between the LPS bus and every conductive part in the patient environment',
+      'Resistance ≤ 1.0 Ω, required only between the socket-outlets and the consumer unit',
+      'No specific resistance limit applies — it is treated the same as a domestic bathroom',
     ],
     correctIndex: 1,
     explanation:
@@ -81,10 +81,10 @@ const inlineChecks = [
     question:
       'Reg 710.413.1.5 requires SELV in Group 2 to limit voltage at applied parts to 25 V AC / 60 V DC ripple-free. How does this differ from the general SELV upper limit in Section 414?',
     options: [
-      'It does not differ — Section 414 already limits SELV to 25 V AC',
-      'Section 414 allows SELV up to 50 V AC / 120 V DC ripple-free; Reg 710.413.1.5 tightens this to 25 V AC / 60 V DC ripple-free in Group 2 because the patient may be cannulated and skin-resistance bypassed',
-      'Reg 710.413.1.5 raises the SELV limit to 120 V AC',
-      'There is no SELV requirement in Group 2',
+      'It does not differ — Section 414 already caps general SELV at 25 V AC RMS',
+      'It halves the general 50 V SELV limit to 25 V AC because skin resistance is bypassed',
+      'Reg 710.413.1.5 raises the SELV upper limit to 120 V AC for Group 2 applied parts',
+      'There is no SELV requirement at all in Group 2 medical locations under Section 710',
     ],
     correctIndex: 1,
     explanation:
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'Section 729 covers operating gangways and workspaces around switchgear. What is the minimum clear gangway width Section 729 requires for a service / restricted gangway?',
     options: [
-      '0.4 m',
-      '0.7 m for a restricted gangway, 1.0 m for a normal operating gangway',
-      '2.0 m unconditionally',
-      'No specific dimension — the IET wiring regs do not cover gangways',
+      '0.4 m clear width, regardless of who accesses the gangway',
+      '0.7 m for a restricted gangway, rising to 1.0 m for a normal operating gangway',
+      '2.0 m clear width unconditionally for both restricted and operating gangways',
+      'No specific dimension is given — the IET wiring regulations do not cover gangways',
     ],
     correctIndex: 1,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Section 710 medical locations are classified into three groups. What is the DEFINING distinction between Group 1 and Group 2?',
     options: [
-      'Group 1 is for adults, Group 2 is for children',
-      'Group 1 has applied parts that contact the patient during normal medical procedures; Group 2 either supports life with applied parts OR involves intra-cardiac procedures — the failure of supply may put the patient at risk',
-      'Group 1 is single-phase, Group 2 is three-phase',
-      'Group 1 is private, Group 2 is NHS',
+      'Group 1 applied parts contact the patient; Group 2 supports life or is intra-cardiac.',
+      'Group 1 covers rooms used for adults; Group 2 covers rooms used for children.',
+      'Group 1 locations are single-phase supplied; Group 2 locations are three-phase supplied.',
+      'Group 1 applies to private clinics; Group 2 applies to NHS hospital premises.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 710 classifies by procedure risk, not by occupancy type. Group 0: no applied parts in use (waiting rooms, offices). Group 1: applied parts contact the patient (examination rooms, dental, dermatology, routine ECG / ultrasound). Group 2: applied parts essential for life support OR intra-cardiac procedures (theatres, ICU, cath labs, anaesthesia recovery). The Group 2 distinction triggers the IT-system, IMD, supplementary-bonding (LPS) and SELV-25 V requirements — costly architecture that is appropriate where life depends on the supply, and inappropriate (over-engineered) where it does not.',
   },
@@ -126,11 +126,11 @@ const quizQuestions = [
     question: 'Reg 710.421.1.7 (new in A4) addresses AFDDs in medical locations. What does it say?',
     options: [
       'AFDDs are mandatory throughout Section 710',
-      'AFDDs are PROHIBITED in Group 0 and Group 2 medical locations; permitted but not required in Group 1',
       'AFDDs are mandatory in Group 1 only',
-      'AFDDs are not mentioned in Section 710',
+      'AFDDs are prohibited in Group 0 and Group 2; permitted but not required in Group 1',
+      'AFDDs are not mentioned anywhere in Section 710',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 710.421.1.7 prohibits AFDDs in Group 0 and Group 2. The reasoning differs by group. Group 0: there are no applied parts, no patient at fault-current risk, and the AFDD nuisance-trip risk on shared corridor / admin circuits would interrupt life-safety lighting or fire-alarm spurs without commensurate benefit. Group 2: the IT-system architecture is specifically designed to TOLERATE a first earth fault without disconnection — fitting an AFDD that interrupts on any waveform anomaly fights that design philosophy and risks disconnecting life-supporting equipment. Group 1 sits between: not prohibited, but not specifically required either; install only where the manufacturer of the medical equipment confirms compatibility.',
   },
@@ -138,12 +138,7 @@ const quizQuestions = [
     id: 3,
     question:
       'A medical IT system in a Group 2 theatre uses an isolating transformer per BS EN 61558-2-15. What is the maximum permitted output rating of a single-phase medical IT transformer?',
-    options: [
-      '3 kVA',
-      '8 kVA',
-      '10 kVA — the standard limits a single-phase medical IT transformer to 10 kVA so that fault energy and capacitive earth-leakage stay within IMD detection range',
-      '50 kVA',
-    ],
+    options: ['3 kVA', '8 kVA', '10 kVA', '50 kVA'],
     correctAnswer: 2,
     explanation:
       'BS EN 61558-2-15 limits a single-phase medical IT isolating transformer to 10 kVA output. The reason is that earth-leakage capacitance scales with cable length and equipment connected — and at higher kVA the natural capacitance of the IT bus pushes the IMD into a chronic alarm state where genuine first-fault detection becomes impossible. Larger theatres with higher loads use multiple 10 kVA transformers serving zones, or add a separately-monitored larger three-phase IT system for non-life-safety loads (e.g. theatre HVAC, scrub-room water heaters). The IMD must alarm before insulation falls below 50 kΩ.',
@@ -159,28 +154,28 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'Reg 710.413.1.5 sets the SELV upper limit in Group 2 at:',
+    question: 'In Group 1 and Group 2 medical locations, Reg 710.419.3 modifies the safe voltage limit to:',
     options: [
-      '12 V AC / 30 V DC',
-      '25 V AC / 60 V DC ripple-free — half of the general Section 414 limit, because skin resistance cannot be relied on with cannulated patients',
-      '50 V AC / 120 V DC ripple-free — same as Section 414',
-      '110 V AC',
+      '25 V AC / 60 V DC ripple-free.',
+      '12 V AC / 30 V DC.',
+      '50 V AC / 120 V DC ripple-free (same as Section 414).',
+      '110 V AC.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Reg 710.413.1.5 tightens the general SELV upper limit (50 V AC / 120 V DC ripple-free in Section 414) to 25 V AC / 60 V DC ripple-free in Group 2 medical locations. The clinical rationale: when a patient is cannulated, intubated, or carrying ECG / EEG electrodes, skin resistance is bypassed. A 50 V touch potential applied directly through a saline-filled catheter can drive cardiac fibrillation. The 25 V / 60 V floor mirrors the IEC 60601 medical electrical safety standard for type CF (cardiac floating) applied parts and aligns BS 7671 fixed-installation design with the medical-equipment standard.',
+      'Reg 710.419.3 modifies the general voltage limits to 25 V AC / 60 V DC ripple-free in Group 1 and Group 2 medical locations. When a patient is cannulated, intubated or carrying ECG electrodes, skin resistance is bypassed, so a 50 V touch potential applied through a saline-filled catheter could drive cardiac fibrillation; the tighter floor mirrors the IEC 60601 type CF (cardiac floating) limit.',
   },
   {
     id: 6,
     question:
       'A Group 2 theatre has its IT system fed from a medical IT isolating transformer. The Insulation Monitoring Device (IMD) alarms during a procedure. What is the correct clinical / engineering response?',
     options: [
-      'Disconnect the IT system immediately and switch to TN — patient safety is paramount',
-      'The IT system is designed to TOLERATE a first earth fault without disconnection; allow the procedure to complete safely while the engineering team locate and rectify the fault before a SECOND fault occurs',
-      'Reset the IMD and ignore the alarm',
-      'Increase the IMD threshold to silence the alarm',
+      'Disconnect the IT system immediately and switch to TN.',
+      'Reset the IMD and ignore the alarm during the procedure.',
+      'Increase the IMD threshold to silence the alarm.',
+      'Let the procedure finish safely while the fault is located and rectified.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The IT-system design philosophy is exactly the opposite of TN ADS. In TN, a first earth fault produces a fault loop and rapid OPD/RCD disconnection — appropriate for offices, fatal for a patient on bypass. In a medical IT system, no live conductor is intentionally earthed, so a first earth fault produces no significant fault current and supply continues. The IMD (BS EN 61557-8) alarms when insulation falls below 50 kΩ, signalling staff to isolate and rectify the affected circuit before a SECOND earth fault, which would create a phase-to-phase fault and cause real disconnection. The clinical workflow is: complete the procedure, isolate the IT bus (or the affected outlet) only after the patient is stable, fault-find with the system de-energised. Disconnecting on the first IMD alarm defeats the entire architecture.',
   },
@@ -198,12 +193,12 @@ const quizQuestions = [
     question:
       'Section 740 covers temporary installations — fairgrounds, amusement parks, circuses. Which of the following is a defining requirement for socket-outlets in a Section 740 environment?',
     options: [
-      'No RCD required because the installation is temporary',
-      '30 mA RCD additional protection on every socket-outlet, IP rating appropriate to the outdoor environment (typically IP44 minimum) and TT system with separate earth electrode where DNO earth is not provided',
-      '300 mA RCD only — 30 mA causes nuisance trips on stage equipment',
-      'Type B RCD required on every circuit',
+      'No RCD is required because the installation is temporary.',
+      '300 mA RCD only — 30 mA causes nuisance trips on stage equipment.',
+      '30 mA RCD on every socket-outlet, weatherproof IP rating, TT where no DNO earth.',
+      'A Type B RCD is required on every circuit regardless of load.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 740 (temporary installations — fairgrounds, amusement parks, booths, stalls, circuses) requires 30 mA RCD additional protection on socket-outlets, IP44 minimum (often IP55 or IP65 in practice), and where the supply is TT — which is common because portable generators or temporary feeds rarely include a DNO earth — a separate earth electrode with verified Ra such that Ra × IΔn ≤ 50 V (Reg 411.5.3). Wandering leads, public access by ordinary persons including children (BA1/BA2), and outdoor weather exposure all combine to make Section 740 one of the highest-risk environments in BS 7671 — the temporary nature of the install is not a justification for relaxed protection, it is the reason the protection is mandatory.',
   },

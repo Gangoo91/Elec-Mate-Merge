@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'io-modules-check1',
     question: 'Why would an I/O module be added to a BMS?',
     options: [
-      'To replace a faulty main controller',
       'To provide additional connection points when controller capacity is exceeded',
+      'To replace a faulty main controller',
       'To convert all signals from analog to digital',
-      "To reduce the system's power consumption",
+      "To reduce the system's overall power consumption",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "I/O modules are added to provide additional connection points for sensors and actuators when the main controller's capacity is exceeded, allowing system expansion without replacing the controller.",
   },
@@ -38,11 +38,11 @@ const quickCheckQuestions = [
     question: 'What must be configured so the BMS recognises an expansion module?',
     options: [
       "The module's power consumption rating",
-      "The module's communication address and point mapping",
       "The module's physical dimensions",
       "The module's colour coding scheme",
+      "The module's communication address and point mapping",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Each expansion module must have a unique communication address configured and its input/output points properly mapped in the BMS software so the controller can recognise and communicate with it.',
   },
@@ -50,10 +50,10 @@ const quickCheckQuestions = [
     id: 'io-modules-check4',
     question: 'Why is labelling important when installing I/O expansion modules?',
     options: [
-      'To meet fire safety regulations',
+      'To meet a specific fire safety regulation',
       'For easy identification, maintenance, and troubleshooting',
       "To improve the system's energy efficiency",
-      'To reduce electromagnetic interference',
+      'To reduce electromagnetic interference on the bus',
     ],
     correctIndex: 1,
     explanation:

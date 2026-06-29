@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'During a tender interview, the evaluation panel typically assesses:',
     options: [
-      'The contractor withdrawing their bid after submission',
-      'Screen contractors before ITT stage to create a shortlist',
-      'To seek clarity on ITT requirements without gaining unfair advantage',
+      'The contractor’s standard payment terms and credit limits',
+      'The lowest priced bid against the published budget',
+      'Whether the form of tender has been correctly signed',
       'Key personnel, methodology, and understanding of the project',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'A two-envelope tender system separates:',
     options: [
       'Technical/quality submission from commercial/price submission',
-      'To seek clarity on ITT requirements without gaining unfair advantage',
-      'Screen contractors before ITT stage to create a shortlist',
-      'Key personnel, methodology, and understanding of the project',
+      'Compliant bids from non-compliant bids before scoring',
+      'Pre-qualified contractors from the open market applicants',
+      'The main contractor’s bid from its subcontractors’ quotes',
     ],
     correctAnswer: 0,
     explanation:
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of tender clarification questions during the bidding period?',
     options: [
-      'Logical sequencing, resource allocation, and key milestones',
-      'Technical/quality submission from commercial/price submission',
+      'To allow the client to renegotiate price before submission',
+      'To let bidders privately propose changes to the scope of work',
       'To seek clarity on ITT requirements without gaining unfair advantage',
-      'Key personnel, methodology, and understanding of the project',
+      'To formally extend the tender deadline for all bidders',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: "A contractor's tender programme should demonstrate:",
     options: [
-      'To seek clarity on ITT requirements without gaining unfair advantage',
-      'Screen contractors before ITT stage to create a shortlist',
-      'The best combination of price and quality per stated criteria',
+      'A detailed breakdown of the contractor’s profit margin',
+      'The cheapest possible sequence regardless of dependencies',
+      'A fixed completion date set by the client with no float',
       'Logical sequencing, resource allocation, and key milestones',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'In Most Economically Advantageous Tender (MEAT) evaluation, the winning bid is:',
     options: [
       'The best combination of price and quality per stated criteria',
-      'Logical sequencing, resource allocation, and key milestones',
-      'Key personnel, methodology, and understanding of the project',
-      'To seek clarity on ITT requirements without gaining unfair advantage',
+      'Always the lowest compliant price submitted',
+      'The bid with the highest technical/quality score alone',
+      'The bid from the contractor with the most relevant experience',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'What is typically included in a tender method statement for electrical installation?',
     options: [
-      'The best combination of price and quality per stated criteria',
+      'A priced bill of quantities for all measured works',
       'Installation sequence, testing procedures, coordination, and quality assurance',
-      'Technical/quality submission from commercial/price submission',
-      'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
+      'The contractor’s overhead and profit percentages',
+      'A list of subcontractors and their financial standing',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'Post-tender negotiation is typically permitted to:',
     options: [
-      'Imbalance between phases indicating shorted turns, poor connections or winding damage',
-      'Mark it, move on to complete easier questions first, then return to it with remaining time',
+      'Reopen the competition and invite fresh bids from new contractors',
+      'Reduce the winning price without any corresponding change in scope',
       'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
-      'Regular assessment of work completed for interim payment certification',
+      'Cherry-pick the cheapest elements from each contractor bid',
     ],
     correctAnswer: 2,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: 'A tender bond or bid bond protects the client against:',
     options: [
-      'Key personnel, methodology, and understanding of the project',
-      'The best combination of price and quality per stated criteria',
-      'Pricing early activities higher to improve cash flow',
+      'Defective workmanship during the defects liability period',
+      'The contractor becoming insolvent mid-construction',
+      'Material price inflation over the tender validity period',
       'The contractor withdrawing their bid after submission',
     ],
     correctAnswer: 3,
@@ -234,9 +234,9 @@ const quizQuestions = [
     question: 'Pre-qualification questionnaires (PQQs) are used to:',
     options: [
       'Screen contractors before ITT stage to create a shortlist',
-      'Pricing early activities higher to improve cash flow',
-      'The contractor withdrawing their bid after submission',
-      'Key personnel, methodology, and understanding of the project',
+      'Score the priced bids submitted at tender stage',
+      'Agree final contract terms with the preferred bidder',
+      'Record the contractor’s proposed programme and milestones',
     ],
     correctAnswer: 0,
     explanation:

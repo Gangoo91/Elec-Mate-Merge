@@ -10,12 +10,12 @@ const quickCheckQuestions = [
     id: 'early-intervention-1',
     question: 'Why does early intervention matter when recognising signs of mental ill health?',
     options: [
-      'Because mental health problems always get worse without treatment',
       'Because early support can prevent escalation and improve outcomes significantly',
+      'Because mental health problems always get worse without treatment',
       'Because you can diagnose mental health conditions if you catch them early',
       "Because it's easier to deal with small problems than big ones",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Early intervention matters because research consistently shows that early support can prevent escalation, improve outcomes, reduce suffering, and help people recover faster. This doesn't mean problems always get worse without treatment, but that timely support makes a significant difference. You're not diagnosing — you're noticing changes and helping someone access appropriate support.",
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'According to the Stress Vulnerability Model (stress bucket), why does the same stressful event affect different people differently?',
     options: [
-      'Some people are mentally stronger than others',
-      'Everyone has different sized stress buckets (vulnerability thresholds) based on genetics, life experiences, current circumstances, and support systems',
-      'People who struggle with stress are just not trying hard enough to cope',
-      'The difference is entirely due to personality type',
+      'Some people are simply mentally stronger than others',
+      'People who struggle with stress are not trying hard enough to cope',
+      'The difference is entirely down to a person’s personality type',
+      'Bucket sizes differ with genetics, experience, circumstances and support',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The Stress Vulnerability Model explains that everyone has a different-sized 'stress bucket' (capacity to handle stress) based on factors like genetics, past experiences, current life circumstances, physical health, sleep, support networks, and coping skills. This isn't about mental strength or effort — it's about understanding that vulnerability is individual and can change over time.",
   },
@@ -77,12 +77,12 @@ const quizQuestions = [
     id: 1,
     question: "The 'notice and act' principle means:",
     options: [
-      'Noticing problems and immediately calling emergency services',
-      'Noticing changes in someone and taking appropriate action — which might just be a conversation',
+      'Noticing changes in someone and taking appropriate action',
+      'Noticing problems and immediately calling the emergency services',
       'Noticing signs of mental illness and diagnosing the condition yourself',
-      'Acting on your instincts without waiting to notice patterns',
+      'Acting on instinct without waiting to notice any clear pattern',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'notice and act' principle is about paying attention to changes in colleagues and then taking appropriate action. That action might be as simple as a caring conversation, checking in, or signposting to support. It doesn't mean diagnosing, fixing, or calling emergency services unless there's immediate danger. It's about noticing and responding with care.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is a behavioural warning sign worth noting?',
     options: [
-      'Someone having one bad day after receiving difficult news',
-      'A usually punctual worker being late three times in the last two weeks with no explanation',
-      'A colleague preferring to work alone on a solo task',
-      'Someone being quiet during their lunch break',
+      'Someone having a single bad day after receiving difficult personal news',
+      'A usually punctual worker now repeatedly late with no explanation',
+      'A colleague choosing to work alone on a task that is meant to be solo',
+      'Someone being a bit quiet and keeping to themselves during one lunch break',
     ],
     correctAnswer: 1,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     question:
       "A colleague's work quality has declined noticeably over the past month. Their installations are taking longer and have more errors than before. This could indicate:",
     options: [
-      "They're lazy and need to be managed more strictly",
-      'They need retraining on technical skills',
-      'This could be a sign of mental distress affecting concentration and performance',
-      "Nothing — everyone's performance varies",
+      "They're lazy and simply need to be managed far more strictly",
+      'They need retraining on their core technical skills and methods',
+      'Mental distress may be affecting their concentration and performance',
+      "Nothing — everyone's day-to-day work performance naturally varies",
     ],
     correctAnswer: 2,
     explanation:
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 4,
     question: 'Physical warning signs of mental distress can include:',
     options: [
-      'One headache after working in the heat',
-      'Persistent fatigue despite rest, unexplained aches and pains, and changes in appetite',
-      'Getting a cold during winter',
-      'Being tired after a long shift',
+      'One headache after a long stint working in the summer heat',
+      'Catching a common cold during the winter months',
+      'Feeling tired at the end of a long and physical shift',
+      'Persistent fatigue despite rest, unexplained aches, and appetite changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Persistent physical symptoms — especially when there's no obvious physical cause — can be manifestations of mental distress. These include chronic fatigue (not relieved by rest), unexplained aches and pains, changes in appetite or weight, and sleep problems. One headache, a winter cold, or tiredness after a long shift are normal. Persistent, unexplained symptoms are worth noting.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 5,
     question: 'Cognitive changes associated with mental distress include:',
     options: [
-      'Forgetting one thing on a busy day',
-      'Persistent difficulty concentrating, increased forgetfulness, indecision, and more frequent errors',
-      'Thinking carefully before making an important decision',
-      'Having a different opinion from colleagues',
+      'Forgetting a single thing during a particularly busy day',
+      'Thinking carefully before making an important work decision',
+      'Holding a different opinion from colleagues on a method',
+      'Persistent poor concentration, forgetfulness, indecision and errors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mental distress — particularly stress, anxiety, and depression — affects cognitive function. Warning signs include persistent difficulty concentrating, increased forgetfulness, indecisiveness even on small matters, more errors and mistakes, difficulty processing information, and negative thinking patterns. Occasional forgetfulness on a busy day is normal. Persistent cognitive changes are a warning sign.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'The Stress Vulnerability Model (stress bucket) teaches us that:',
     options: [
-      'Everyone has exactly the same capacity to handle stress',
-      "If you struggle with stress, it's because you're not strong enough",
-      'Everyone has different vulnerability thresholds (bucket sizes) based on genetics, experiences, and current circumstances',
-      'Stress only affects people who are already mentally ill',
+      'Vulnerability thresholds differ with genetics, experience and circumstances',
+      'Everyone has exactly the same capacity to handle stress and pressure',
+      "If you struggle with stress, it is because you are not strong enough",
+      'Stress only affects people who are already mentally unwell or ill',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The Stress Vulnerability Model explains that everyone has a different capacity to handle stress — like buckets of different sizes. Your bucket size is influenced by genetics, childhood experiences, past trauma, current life circumstances, physical health, sleep quality, support networks, and coping skills. This isn't about strength or weakness — it's about recognising that vulnerability is individual and can change. Understanding this helps explain why the same event affects people differently.",
   },
@@ -157,10 +157,10 @@ const quizQuestions = [
     question:
       'A worker is showing increased irritability, snapping at colleagues over small issues. Previously, they were calm and easy-going. This suggests:',
     options: [
-      "They're just a difficult person and always have been",
-      'This is normal behaviour and nothing to worry about',
-      'This represents a behavioural change that could indicate stress or mental distress',
-      'They need disciplinary action for unprofessional conduct',
+      "They're just a difficult person and have always been that way",
+      'This is entirely normal behaviour and nothing at all to worry about',
+      'A behavioural change that could point to stress or mental distress',
+      'They need formal disciplinary action for their unprofessional conduct',
     ],
     correctAnswer: 2,
     explanation:
@@ -171,8 +171,8 @@ const quizQuestions = [
     question:
       "Why is it important to understand that protective factors can raise someone's stress threshold?",
     options: [
-      'Because it means people with good support networks never experience mental health problems',
-      'Because it shows that building support systems, improving sleep, and developing coping skills can genuinely increase resilience',
+      'Because people with good support networks never have mental health problems',
+      'Because support, better sleep and coping skills genuinely build resilience',
       'Because it proves that mental health is entirely under individual control',
       'Because it means you should tell struggling people to just get more sleep',
     ],

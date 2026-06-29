@@ -5,10 +5,10 @@ export const insulationResistanceQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What does insulation resistance testing check for?',
     options: [
-      'Isolate, lock off, test dead, and disconnect sensitive equipment',
+      'That the circuit protective conductor is continuous end to end',
       'That there is no breakdown between conductors or to earth',
-      'False - IR testing is required regardless of installation age',
-      'High voltage can damage sensitive equipment',
+      'That the earth fault loop impedance is low enough to trip the device',
+      'That conductor polarity is correct throughout the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -44,10 +44,10 @@ export const insulationResistanceQuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'Why is it important to disconnect electronic devices before IR testing?',
     options: [
-      'High voltage can damage sensitive equipment',
-      "It's not necessary to disconnect them",
-      'To get more accurate readings',
-      'To prevent false readings from device leakage',
+      'The 500 V DC test voltage can damage sensitive electronic components',
+      'Electronic devices increase the resistance reading too much',
+      'They draw too much current from the insulation tester',
+      'They prevent the test voltage from reaching 500 V DC',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const insulationResistanceQuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What should you do before conducting IR tests on a circuit?',
     options: [
-      'False - IR testing is required regardless of installation age',
+      'Energise the circuit so the test current can flow',
       'Isolate, lock off, test dead, and disconnect sensitive equipment',
-      'Investigate the cause as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s below the minimum requirement',
-      'That there is no breakdown between conductors or to earth',
+      'Leave all loads connected to obtain a realistic reading',
+      'Connect line and neutral together to speed up the test',
     ],
     correctAnswer: 1,
     explanation:

@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of ISO 50001?',
     options: [
       'To provide a framework for establishing, implementing, and improving energy management systems',
-      'The client must fulfil the duties of any duty holder they fail to appoint',
-      'To prevent damage and ensure safety during excavation and drilling',
-      'Temperature decreases but moisture content remains constant (moving left horizontally on psychrometric chart)',
+      'To set mandatory maximum energy consumption limits for all buildings',
+      'To certify the safety of electrical installations in industrial premises',
+      'To regulate the price organisations pay for grid electricity',
     ],
     correctIndex: 0,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'pdca-cycle',
     question: 'What does the Plan-Do-Check-Act cycle represent in ISO 50001?',
     options: [
-      'State Pension + private pension + other savings',
-      'They must be isolated, locked out, tagged out, and proved dead',
+      'A one-off audit carried out before certification only',
+      'A fixed list of approved energy-saving technologies',
       'A continual improvement methodology for energy management',
-      'That the tower is vertical (plumb) and not leaning to any side',
+      'A financial model for calculating energy project payback',
     ],
     correctIndex: 2,
     explanation:
@@ -57,9 +57,9 @@ const quickCheckQuestions = [
     id: 'energy-baseline',
     question: 'What is an energy baseline in ISO 50001?',
     options: [
-      'Incorrect connection of line and neutral conductors',
-      'Profit, costs, and financial health of their work',
-      'Adaptive scheduling based on occupancy and weather',
+      'The minimum energy an organisation is legally allowed to use',
+      'The target consumption figure set for the year ahead',
+      'The lowest energy price available from any supplier',
       'A quantitative reference for comparing energy performance over time',
     ],
     correctIndex: 3,
@@ -70,9 +70,9 @@ const quickCheckQuestions = [
     id: 'certification-requirement',
     question: 'Which body typically certifies organisations to ISO 50001?',
     options: [
-      'Confusing \\\\\\\\\\\\\\\'maximum\\\\\\\\\\\\\\\' vs \\\\\\\\\\\\\\\'minimum\\\\\\\\\\\\\\\'',
-      'Withdraw it from service immediately',
-      'When there is more than one contractor on site',
+      'The organisation’s own internal energy manager',
+      'The Health and Safety Executive (HSE)',
+      'The local Building Control authority',
       'UKAS-accredited certification bodies',
     ],
     correctIndex: 3,
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is an Energy Performance Indicator (EnPI)?',
     options: [
-      'Automatic exemption from all energy regulations',
-      'Commitment to continual improvement in energy performance',
+      'The maximum energy an organisation is permitted to consume each year',
+      'A written pledge to reduce carbon emissions signed by top management',
       'A quantitative value or measure of energy performance',
-      'Monitoring, measuring, analysing, and evaluating energy performance',
+      'The reference period of data used to establish the energy baseline',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: "In the PDCA cycle, what occurs during the 'Check' phase?",
     options: [
-      'Information required to be controlled and maintained by the organisation',
-      'To review the EnMS for continuing suitability, adequacy, and effectiveness',
-      'Commitment to continual improvement in energy performance',
+      'Establishing the energy baseline and identifying significant energy uses',
+      'Implementing action plans and providing the resources to deliver them',
+      'Taking corrective action and revising objectives and targets',
       'Monitoring, measuring, analysing, and evaluating energy performance',
     ],
     correctAnswer: 3,
@@ -126,9 +126,9 @@ const quizQuestions = [
     question: 'What is a Significant Energy Use (SEU)?',
     options: [
       'Energy use accounting for substantial energy consumption and/or offering considerable potential for improvement',
-      'The machine must be taken out of service immediately; the defect must be rectified and the machine re-examined before it can return to use',
-      'Slower skill development, repeated errors and disengagement — feedback is what turns experience into competence',
-      'A balance between the risk and the sacrifice (money, time, trouble) needed to avert it',
+      'Any energy use that is supplied from a renewable source',
+      'The single largest energy bill received in a calendar year',
+      'Energy used outside the organisation’s normal working hours',
     ],
     correctAnswer: 0,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     id: 7,
     question: 'What must be included in an energy policy under ISO 50001?',
     options: [
-      'Information required to be controlled and maintained by the organisation',
-      'To review the EnMS for continuing suitability, adequacy, and effectiveness',
-      'A quantitative value or measure of energy performance',
+      'A list of every item of energy-using equipment on the site',
+      'The numerical energy reduction targets achieved in the previous year',
+      'The detailed results of the most recent internal energy audit',
       'Commitment to continual improvement in energy performance',
     ],
     correctAnswer: 3,
@@ -178,9 +178,9 @@ const quizQuestions = [
     question: 'What is the relationship between ISO 50001 and ISO 14001?',
     options: [
       'ISO 50001 focuses on energy while ISO 14001 covers broader environmental management, but they share common structure',
-      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
-      'Have a private, supportive conversation to ask if everything is okay, without making assumptions',
-      'The supply source impedance, the line conductor, the CPC, the installation earth electrode, and the general mass of earth back to the source earth',
+      'ISO 50001 has replaced ISO 14001 and the older standard is now withdrawn',
+      'ISO 14001 is a sub-clause that sits entirely within ISO 50001',
+      'The two standards cover identical requirements and are interchangeable',
     ],
     correctAnswer: 0,
     explanation:
@@ -190,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'During energy planning, what must be determined regarding legal requirements?',
     options: [
-      'To review the EnMS for continuing suitability, adequacy, and effectiveness',
+      'Only the requirements that carry a financial penalty for non-compliance',
       'Legal and other requirements applicable to energy uses and consumption',
-      'Monitoring, measuring, analysing, and evaluating energy performance',
-      'Information required to be controlled and maintained by the organisation',
+      'Solely the requirements imposed by the electricity supply contract',
+      'Only legislation introduced since the EnMS was first certified',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is documented information in ISO 50001 terminology?',
     options: [
-      'A quantitative value or measure of energy performance',
-      'Legal and other requirements applicable to energy uses and consumption',
+      'Only the formal energy policy signed off by top management',
+      'Marketing material communicating the EnMS to external parties',
       'Information required to be controlled and maintained by the organisation',
-      'To review the EnMS for continuing suitability, adequacy, and effectiveness',
+      'Verbal instructions given to staff during awareness training',
     ],
     correctAnswer: 2,
     explanation:
@@ -216,9 +216,9 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of management review in ISO 50001?',
     options: [
-      'Monitoring, measuring, analysing, and evaluating energy performance',
-      'Information required to be controlled and maintained by the organisation',
-      'A quantitative value or measure of energy performance',
+      'To carry out day-to-day metering of energy consumption on site',
+      'To approve individual purchase orders for energy-efficient equipment',
+      'To negotiate the organisation’s annual electricity supply tariff',
       'To review the EnMS for continuing suitability, adequacy, and effectiveness',
     ],
     correctAnswer: 3,
@@ -230,9 +230,9 @@ const quizQuestions = [
     question: 'Which of the following is NOT a benefit of ISO 50001 certification?',
     options: [
       'Automatic exemption from all energy regulations',
-      'Thoughts, feelings, and behaviours',
-      'Guardrails, mid-rails and toeboards',
-      'To monitor and manage energy consumption by end use',
+      'Reduced energy costs through systematic management',
+      'A recognised route to demonstrating ESOS compliance',
+      'Improved corporate reputation with customers and investors',
     ],
     correctAnswer: 0,
     explanation:

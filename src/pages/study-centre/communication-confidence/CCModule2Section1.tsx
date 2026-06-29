@@ -26,11 +26,10 @@ const quickCheckQuestions = [
       'According to Covey, what is the highest level of listening and why does it matter on a construction site?',
     options: [
       'Selective listening — it allows you to filter out irrelevant noise on a busy site',
-      'Attentive listening — it shows colleagues you are paying attention to their words',
       'Empathetic listening — it means understanding both the content and the emotion behind what someone is saying',
-      'Pretend listening — it allows you to appear engaged during long safety briefings',
-    ],
-    correctIndex: 2,
+      'Attentive listening — it shows colleagues you are paying attention to their words',
+      'Pretend listening — it allows you to appear engaged during long safety briefings'],
+    correctIndex: 1,
     explanation:
       'Empathetic listening is Covey\u2019s highest level. It goes beyond hearing words to understanding the speaker\u2019s feelings, perspective, and intent. On site, this means recognising when an apprentice says \u201cI\u2019m not sure about this\u201d that they may actually be saying \u201cI\u2019m afraid of making a dangerous mistake.\u201d',
   },
@@ -39,11 +38,10 @@ const quickCheckQuestions = [
       'Research suggests we retain only 25\u201350% of what we hear. Which of the following is the most effective strategy for improving retention during a safety briefing?',
     options: [
       'Record the briefing on your phone and listen again later',
-      'Actively paraphrase key points back to the speaker and take brief notes',
       'Sit at the front of the room so you can hear more clearly',
-      'Read the written briefing document instead of attending in person',
-    ],
-    correctIndex: 1,
+      'Actively paraphrase key points back to the speaker and take brief notes',
+      'Read the written briefing document instead of attending in person'],
+    correctIndex: 2,
     explanation:
       'Active engagement \u2014 paraphrasing, summarising, and note-taking \u2014 forces your brain to process information more deeply than passive listening. This moves information from short-term to long-term memory, significantly improving retention beyond the typical 25\u201350% baseline.',
   },
@@ -52,11 +50,10 @@ const quickCheckQuestions = [
       'Covey\u2019s Habit 5 states: \u201cSeek first to understand, then to be understood.\u201d Which scenario best demonstrates this principle?',
     options: [
       'An electrician explains their preferred cable routing to the main contractor before hearing the project constraints',
-      'A supervisor listens carefully to an apprentice\u2019s concern about a task, asks clarifying questions, then shares their guidance',
-      'A site manager sends a detailed email explaining the schedule before asking trades for their input',
       'An electrician finishes a colleague\u2019s sentences to show they already understand the issue',
-    ],
-    correctIndex: 1,
+      'A site manager sends a detailed email explaining the schedule before asking trades for their input',
+      'A supervisor listens carefully to an apprentice\u2019s concern about a task, asks clarifying questions, then shares their guidance'],
+    correctIndex: 3,
     explanation:
       'Habit 5 requires genuinely understanding the other person\u2019s perspective before presenting your own. The supervisor who listens first, asks questions to deepen understanding, and only then offers guidance is practising the principle correctly. The other options all prioritise speaking or assuming over listening.',
   },
@@ -100,11 +97,10 @@ const quizQuestions = [
       'Which of the following correctly lists Covey\u2019s five levels of listening from lowest to highest?',
     options: [
       'Selective, pretending, ignoring, attentive, empathetic',
-      'Ignoring, pretending, selective, attentive, empathetic',
       'Pretending, ignoring, selective, empathetic, attentive',
-      'Ignoring, selective, pretending, attentive, empathetic',
-    ],
-    correctAnswer: 1,
+      'Ignoring, pretending, selective, attentive, empathetic',
+      'Ignoring, selective, pretending, attentive, empathetic'],
+    correctAnswer: 2,
     explanation:
       'Covey\u2019s hierarchy runs from ignoring (the lowest) through pretending, selective, and attentive, up to empathetic listening (the highest). Each level represents a deeper degree of engagement with the speaker.',
   },
@@ -112,8 +108,8 @@ const quizQuestions = [
     id: 2,
     question:
       'According to listening research, approximately what percentage of a spoken message do most people retain?',
-    options: ['5\u201310%', '25\u201350%', '70\u201380%', '90\u201395%'],
-    correctAnswer: 1,
+    options: ['5\u201310%', '90\u201395%', '70\u201380%', '25\u201350%'],
+    correctAnswer: 3,
     explanation:
       'Research consistently shows that most people retain only 25\u201350% of what they hear. This has significant implications on construction sites, where a missed instruction during a safety briefing could lead to a serious incident.',
   },
@@ -121,12 +117,11 @@ const quizQuestions = [
     id: 3,
     question: 'Covey\u2019s Habit 5 is best summarised as:',
     options: [
-      'Begin with the end in mind',
-      'Put first things first',
       'Seek first to understand, then to be understood',
-      'Think win-win',
-    ],
-    correctAnswer: 2,
+      'Put first things first',
+      'Begin with the end in mind',
+      'Think win-win'],
+    correctAnswer: 0,
     explanation:
       'Habit 5 from The 7 Habits of Highly Effective People is \u201cSeek first to understand, then to be understood.\u201d Covey argued that most people listen with the intent to reply rather than to understand, and that reversing this order transforms communication.',
   },
@@ -136,11 +131,10 @@ const quizQuestions = [
       'An electrician nods along during a toolbox talk while mentally planning their lunch. This is an example of:',
     options: [
       'Attentive listening',
-      'Selective listening',
       'Pretend listening',
-      'Empathetic listening',
-    ],
-    correctAnswer: 2,
+      'Selective listening',
+      'Empathetic listening'],
+    correctAnswer: 1,
     explanation:
       'Pretend listening (Level 2) means giving the outward appearance of paying attention \u2014 nodding, making eye contact, saying \u201cmmhmm\u201d \u2014 while your mind is elsewhere. It is common during routine briefings but dangerous when critical safety information is being communicated.',
   },
@@ -149,11 +143,10 @@ const quizQuestions = [
     question: 'Which of the following best describes selective listening?',
     options: [
       'Completely ignoring the speaker and doing something else',
-      'Hearing only the parts of a message that interest you or confirm your existing view',
       'Giving full attention to both the content and emotion behind the speaker\u2019s words',
-      'Pretending to listen while thinking about something else entirely',
-    ],
-    correctAnswer: 1,
+      'Hearing only the parts of a message that interest you or confirm your existing view',
+      'Pretending to listen while thinking about something else entirely'],
+    correctAnswer: 2,
     explanation:
       'Selective listening (Level 3) means tuning in only to certain parts of a conversation \u2014 typically the bits that are relevant to you, that you agree with, or that confirm what you already believe. The rest is filtered out, which can cause you to miss crucial context or nuance.',
   },
@@ -176,12 +169,11 @@ const quizQuestions = [
     question:
       'Why is the statistic that we retain only 25\u201350% of what we hear particularly significant for construction safety?',
     options: [
-      'It means safety briefings should be replaced with written documents',
       'It suggests that critical safety information must be reinforced through repetition, visual aids, and active engagement',
+      'It means safety briefings should be replaced with written documents',
       'It proves that listening skills cannot be improved with practice',
-      'It indicates that only experienced workers should attend safety briefings',
-    ],
-    correctAnswer: 1,
+      'It indicates that only experienced workers should attend safety briefings'],
+    correctAnswer: 0,
     explanation:
       'If people naturally retain less than half of what they hear, then relying solely on spoken safety briefings is insufficient. Effective safety communication combines verbal instruction with written summaries, visual demonstrations, and active engagement techniques like asking workers to repeat back key points.',
   },
@@ -190,11 +182,10 @@ const quizQuestions = [
     question: 'According to Covey, the biggest barrier to empathetic listening is:',
     options: [
       'Background noise in the environment',
-      'Not having enough technical knowledge about the topic',
       'Listening with the intent to reply rather than to understand',
-      'The speaker talking too quickly for you to follow',
-    ],
-    correctAnswer: 2,
+      'Not having enough technical knowledge about the topic',
+      'The speaker talking too quickly for you to follow'],
+    correctAnswer: 1,
     explanation:
       'Covey identified that most people listen autobiographically \u2014 filtering everything through their own experience and preparing their response while the other person is still talking. This intent to reply, rather than to genuinely understand, is the fundamental barrier to empathetic listening.',
   },

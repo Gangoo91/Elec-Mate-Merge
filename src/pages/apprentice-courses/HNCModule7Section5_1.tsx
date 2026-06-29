@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'led-operation',
     question: 'How does an LED produce light?',
     options: [
-      'A blue circular sign (e.g., \\\\\\\\\\\\\\\'Hard hats must be worn\\\\\\\\\\\\\\\')',
-      'They must be isolated, locked out, tagged out, and proved dead',
       'By electroluminescence when current flows through a semiconductor junction',
-      'The first option might seem correct but a later option may be more complete or accurate',
+      'By heating a tungsten filament until it glows white-hot',
+      'By an electric arc striking between two electrodes in a gas',
+      'By exciting a phosphor coating with ultraviolet from a mercury discharge',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'LEDs produce light through electroluminescence - when current flows through the p-n junction of a semiconductor, electrons recombine with holes and release energy as photons (light).',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Why do most LED luminaires use constant current drivers rather than constant voltage?',
     options: [
-      'When the general public holds negative attitudes, beliefs, and stereotypes about people with mental health problems',
-      '"Can they do it but won\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019t, or do they want to but can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019t?"',
+      'Constant current drivers are cheaper to manufacture than constant voltage drivers',
       'LED forward voltage varies with temperature, making current control essential for consistent output',
-      'Because Level 1 is quick, easy, and cheap to measure, while higher levels require more time, effort, and planning',
+      'Constant voltage drivers cannot be dimmed, whereas constant current drivers always can',
+      'Mains voltage must be stepped down to exactly the LED forward voltage by the driver',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'LED forward voltage changes with temperature and manufacturing variations. Constant current drivers maintain consistent light output regardless of these voltage variations, ensuring stable illumination and preventing thermal runaway.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'thermal-management',
     question: 'What is the primary reason thermal management is critical for LED performance?',
     options: [
-      'Because heat reduces LED lifetime, efficacy, and causes colour shift',
-      'Temporary manual control mode for system setup and testing',
-      'A relatively high level of arousal, as the task requires less cognitive effort',
-      'Ordering materials before you need them on site, based on the job plan',
+      'Heat radiated forward from the LED would dazzle the occupants of the space',
+      'Without cooling the driver capacitors would charge too quickly at switch-on',
+      'Excessive junction temperature reduces LED lifetime and efficacy and causes colour shift',
+      'Cold operation is the main failure mode, so heatsinks keep the junction warm',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Excessive junction temperature accelerates LED degradation, reduces luminous efficacy, and causes colour temperature shift. Every 10°C increase above optimal operating temperature can halve LED lifetime.',
   },
@@ -67,12 +67,12 @@ const quickCheckQuestions = [
     id: 'l70-definition',
     question: 'What does L70 lifetime mean for an LED luminaire?',
     options: [
-      'Review all explanations and identify knowledge gaps',
-      'That they are fitted at the correct height (950mm minimum), secured and undamaged',
+      'The point at which 70% of a batch of luminaires has failed completely',
       'The time until light output depreciates to 70% of initial lumens',
-      'An unlimited fine and/or up to two years\\\\\\\' imprisonment',
+      'The maximum case temperature, 70°C, before the driver shuts down',
+      'The efficacy figure, 70 lm/W, that the luminaire maintains throughout life',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'L70 indicates the time (usually in hours) until the LED light output has depreciated to 70% of its initial lumen value. This is the industry standard metric for LED useful lifetime.',
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'An LED luminaire is rated L80B10. What does B10 indicate?',
     options: [
-      'To reduce the drive current to dim the LED output',
-      '10% of luminaires will have failed completely by L80 hours',
-      'May cause flickering, audible buzzing, reduced lifetime, or driver failure',
-      'Fidelity Index of 90, indicating good colour rendering accuracy',
+      'Light output will have dropped to 10% of its initial value',
+      '10% of luminaires will have failed completely by the stated L80 hours',
+      'The luminaire must be replaced after 10 years of service',
+      'Only 10% of the rated lumens are usable for design purposes',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is thermal runaway in LED systems?',
     options: [
-      'To ensure protection against both overloads and electric shock without nuisance tripping',
-      'System design drawings, emergency lighting logbook, and commissioning certificate',
+      'A protective feature that shuts the driver down once a set temperature is reached',
+      'The gradual drift of colour temperature as the phosphor warms up in service',
       'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
-      'A full inspection by a competent person must be carried out before the tower is used',
+      'The rapid cooling of the heatsink when the luminaire is switched off',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,7 +163,7 @@ const quizQuestions = [
       'Which colour temperature would be most appropriate for an office environment under UK lighting guidance?',
     options: [
       '2700K warm white',
-      'Any temperature is acceptable',
+      '3000K warm white',
       '6500K daylight',
       '4000K neutral white',
     ],
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of a constant current reduction (CCR) dimmer with LED drivers?',
     options: [
-      'To reduce the drive current to dim the LED output',
-      'HSG264 — Asbestos: The Survey Guide',
-      'The purpose used, conditions of use, and any foreseeable risk',
-      'Cable types, sizes, routes, and protective device coordination',
+      'To reduce the drive current supplied to the LEDs and dim the output',
+      'To switch the LEDs rapidly on and off at high frequency to dim them',
+      'To chop the leading edge of the mains waveform to reduce power',
+      'To raise the forward voltage of the LEDs and increase brightness',
     ],
     correctAnswer: 0,
     explanation:
@@ -188,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'A luminaire specification states TM-30-18 Rf=90. What does this indicate?',
     options: [
-      '10% of luminaires will have failed completely by L80 hours',
-      'Fidelity Index of 90, indicating good colour rendering accuracy',
-      'Higher power density and more uniform light output from a single point source',
-      'To reduce the drive current to dim the LED output',
+      'A colour temperature of 9000K, indicating a cool daylight appearance',
+      'A Fidelity Index of 90, indicating good colour rendering accuracy',
+      'A luminous efficacy of 90 lm/W maintained throughout the rated life',
+      'A gamut index showing colours are rendered 90% more saturated than reference',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,10 +202,10 @@ const quizQuestions = [
     question:
       'What is the main advantage of a chip-on-board (COB) LED compared to surface mount device (SMD) LEDs?',
     options: [
-      '10% of luminaires will have failed completely by L80 hours',
-      'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
+      'It runs at a lower junction temperature so needs no heatsink',
+      'It can be driven directly from the mains without a driver',
       'Higher power density and more uniform light output from a single point source',
-      'May cause flickering, audible buzzing, reduced lifetime, or driver failure',
+      'Each individual die can be addressed for full-colour RGB control',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,10 +215,10 @@ const quizQuestions = [
     id: 11,
     question: 'Why is in-rush current a consideration when specifying LED lighting circuits?',
     options: [
-      'A preliminary roost assessment followed by dusk emergence and/or dawn re-entry surveys if potential is identified',
-      'Personal relationship bias \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 the mentor may unconsciously assess the apprentice more favourably',
-      'Engulfment by free-flowing grain, oxygen depletion from grain respiration, and dust explosion risk',
-      'LED drivers can draw high in-rush current at switch-on, potentially tripping MCBs or causing contact welding in switches',
+      'LED drivers draw their highest current during normal running, not at switch-on',
+      'In-rush current causes the colour temperature to shift each time the lights are switched',
+      'It only affects the neutral conductor and so is ignored in circuit design',
+      'LED drivers can draw high in-rush current at switch-on, tripping MCBs or welding switch contacts',
     ],
     correctAnswer: 3,
     explanation:
@@ -229,10 +229,10 @@ const quizQuestions = [
     question:
       "An LED driver is marked as 'non-dimmable'. What happens if connected to a dimmer switch?",
     options: [
-      'May cause flickering, audible buzzing, reduced lifetime, or driver failure',
-      'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
-      'Fidelity Index of 90, indicating good colour rendering accuracy',
-      '10% of luminaires will have failed completely by L80 hours',
+      'It may flicker, buzz audibly, suffer reduced lifetime, or fail entirely',
+      'It will dim smoothly but only over a restricted 50-100% range',
+      'The dimmer overrides the driver and controls the LEDs directly with no ill effect',
+      'It operates normally at full output but cannot be switched off at the dimmer',
     ],
     correctAnswer: 0,
     explanation:

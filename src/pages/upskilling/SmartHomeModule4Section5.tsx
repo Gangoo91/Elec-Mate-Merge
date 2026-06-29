@@ -53,22 +53,22 @@ const quizQuestions = [
   {
     question: 'In a smart home, what should happen when the air conditioning activates?',
     options: [
+      'Heating should be locked out',
       'Heating should also activate for balance',
       'Windows should open automatically',
-      'Heating should be locked out',
       'Lighting should dim',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'When cooling activates, the heating system should be interlocked (locked out) to prevent both systems running simultaneously and working against each other.',
   },
   {
     question: 'What is a dead band in HVAC control?',
     options: [
-      'A faulty temperature sensor',
+      'A type of insulated ventilation duct',
       'A temperature range where neither heating nor cooling operates',
-      'A type of ventilation duct',
-      'Emergency shutdown mode',
+      'A faulty or drifting temperature sensor',
+      'An emergency system shutdown mode',
     ],
     correctAnswer: 1,
     explanation:
@@ -77,34 +77,34 @@ const quizQuestions = [
   {
     question: 'Why should bathroom extraction be interlocked with whole-house ventilation?',
     options: [
-      'To reduce noise',
+      'To reduce fan running noise at night',
+      'To deliberately raise indoor humidity',
       'To ensure adequate make-up air and prevent negative pressure issues',
-      'To save installation cost',
-      'To increase humidity',
+      'To lower the overall installation cost',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When bathroom extraction runs, the whole-house ventilation system should provide adequate make-up air to prevent negative pressure, which can cause backdraught from flues and poor extraction performance.',
   },
   {
-    question: 'What smart sensor data is most useful for HVAC integration?',
+    question: 'What combination of smart sensor data is most useful for HVAC integration?',
     options: [
-      'Light level only',
-      'Sound level only',
+      'Light level and brightness only',
+      'Ambient sound level only',
+      'Surface vibration readings only',
       'Temperature, humidity, and CO2',
-      'Vibration only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Temperature, humidity, and CO2 sensors provide the key data for intelligent HVAC control - enabling demand-based heating, cooling, and ventilation decisions.',
   },
   {
-    question: 'What is the benefit of linking HVAC to occupancy detection?',
+    question: 'What is the main benefit of linking HVAC to occupancy detection?',
     options: [
-      'Improved security',
+      'Improved home security coverage',
       'Energy savings by reducing conditioning of unoccupied spaces',
-      'Better lighting',
-      'Faster internet',
+      'Better quality of room lighting',
+      'Faster home internet speeds',
     ],
     correctAnswer: 1,
     explanation:

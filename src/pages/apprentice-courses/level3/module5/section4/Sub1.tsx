@@ -36,10 +36,10 @@ const checks = [
     id: 'm5-s4-sub1-3-lead',
     question: 'The 3-lead Zs measurement method works by:',
     options: [
-      'Annotate the SLD circuit with the calc\\\\\\\'d Zs and the regs-required maximum, with a flag (often a coloured marker or revision-cloud bubble) showing the design fails. The SLD is the dashboard — every breaker on the dashboard either passes or fails. Then resolve: change to RCBO 30 mA so the 0.4 s table applies and the Zs ceiling is much higher; or upsize the cable to drop Zs; or change device type. Re-annotate the SLD and the calc sheet.',
-      'HASAWA s.2 requires every employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. Section 2(2)(a) explicitly requires the provision of safe systems of work, and a clear management structure with defined supervisory responsibilities is part of that. An employer who can\\\\\\\'t say who supervises whom is in breach of s.2.',
-      'The tester briefly draws current between L and N to measure the L-N loop, then between L and E to measure the L-E loop. The L-N reading is the line-neutral path (essentially 2 × supply network plus internal cable run); the L-E reading is the line-earth path (Ze plus R1+R2). Some testers compute Zs from these and the cable parameters; the 2-lead method skips L-N and just reads L-E directly.',
-      'Section 135 amends the Defective Premises Act 1972: extends the limitation period for claims relating to dwellings from 6 years to 30 years for retrospective claims (work completed before BSA commencement) and 15 years for prospective claims (work after commencement). Significantly extends contractor liability for residential work in particular.',
+      'The tester measures the line-earth loop loaded and unloaded, then subtracts the two to remove load current from the Zs result.',
+      'The tester injects a 30 mA residual current between line and earth and converts the time the loop takes to settle directly into Zs.',
+      'The tester briefly draws current via the L-N loop and via the L-E loop, deriving Zs from the L-E reading (Ze plus R1+R2).',
+      'The tester compares no-load supply voltage against the voltage under a fixed resistive load between line and neutral to read Zs.',
     ],
     correctIndex: 2,
     explanation:
@@ -49,10 +49,10 @@ const checks = [
     id: 'm5-s4-sub1-rcd-no-trip',
     question: 'When measuring Zs on a circuit protected by a 30 mA RCD, you should:',
     options: [
-      'Eye protection (safety specs to BS EN 166) AND a face shield, hearing protection (the disc is well above 85 dB), gloves, the grinder\\\'s guard properly fitted and oriented to deflect sparks AWAY from the operative and any combustibles, the correct disc type (thin metal-cutting, not stone or wood), the disc rated for at least the grinder\\\'s free speed, and a clear cutting area with a fire watch if the sparks could reach combustibles.',
-      'Use the tester\\\\\\\'s "no-trip" or "low-current" Zs mode. The tester limits its test current below the RCD trip threshold (typically 15 mA peak for a 30 mA RCD), giving a slightly less accurate reading but avoiding nuisance trip during the test. Standard "high-current" Zs mode would draw enough current to trip the RCD, interrupting other circuits on the same RCD.',
-      'A RAMS that uses the same generic wording for every job (\\\'standard electrical install — usual precautions\\\') without reflecting the specific hazards and conditions of THIS site. The inspector spots it instantly because the wording doesn\\\'t match what\\\'s actually present on the job. It\\\'s evidence that the assessment wasn\\\'t \\\'suitable and sufficient\\\' under MHSWR 1999 Reg 3 even though the document exists.',
-      'Several. (1) Approved Electrician JIB grading. (2) QS (Qualified Supervisor) role in a CPS-registered firm — required for Part P self-certification. (3) Periodic inspection contract work (EICR work pays well, particularly in commercial estate and rental property maintenance). (4) Standalone testing-led roles in M&E, FM and consultancy. (5) Bridge to 2396 design qualification.',
+      'Bridge out the RCD with a temporary link across its line and load terminals for the test, then remove the link and reset before re-energising.',
+      'Use the tester\'s no-trip / low-current Zs mode, which limits test current below the RCD trip threshold to avoid nuisance tripping during the test.',
+      'Use the standard high-current Zs mode but press TEST once and quickly, so the test current pulse is too brief for the RCD to detect.',
+      'Disconnect the circuit CPC at the consumer unit so test current returns via the supply neutral rather than the RCD, then reconnect it afterwards.',
     ],
     correctIndex: 1,
     explanation:
@@ -62,10 +62,10 @@ const checks = [
     id: 'm5-s4-sub1-table-41-3',
     question: 'Measured Zs at the furthest point on a Type B 32 A radial socket circuit = 1.05 Ω. A4:2026 Table 41.3 max Zs (B32) = 1.37 Ω. Compliance:',
     options: [
-      'Apply the 0.8 rule for measured-vs-table comparison: Zs(measured) ≤ 0.8 × Zs(table) = 0.8 × 1.37 = 1.10 Ω. 1.05 ≤ 1.10 → pass with small margin (5 %). Worth noting on the schedule that compliance is borderline; investigate any reasons the cable might be hot in service (long run, bundled cables, high ambient temperature).',
-      '≤ 25 V. Agricultural locations have higher shock risk because livestock and humans are often in conductive contact with wet ground, reducing body resistance and increasing the perceived voltage. The Ra × IΔn ≤ 25 V criterion halves the allowable electrode resistance for the same RCD rating.',
-      'Because the line conductor only ever carries the design current Ib for hours on end (steady state), but the CPC briefly carries a fault current that can be many tens of times Ib for a fraction of a second. The two thermal regimes are completely different.',
-      'The person or persons holding responsibility for the structure and exterior of an HRRB during occupation. Where there are multiple APs (e.g. block of flats with structure owned by one entity and external walls by another), the Principal Accountable Person is the one with the most significant responsibility for the structure.',
+      'Apply the 0.8 rule: Zs(measured) ≤ 0.8 × 1.37 = 1.10 Ω. 1.05 ≤ 1.10 → pass, but only by a 5 % margin — borderline.',
+      'Compare measured Zs directly against the full table value: 1.05 Ω against 1.37 Ω — a clear pass, as the table builds in the temperature allowance.',
+      'Add the 20 % temperature rise to the measured value: 1.05 × 1.20 = 1.26 Ω against 1.37 Ω — a pass, as the warm value is still under the limit.',
+      'Halve the table limit to allow for the RCD: 1.37 ÷ 2 = 0.685 Ω. Measured 1.05 Ω exceeds 0.685 Ω, so the circuit fails the check.',
     ],
     correctIndex: 0,
     explanation:
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'The earth fault loop path on a TN-C-S installation consists of:',
     options: [
-      'Shock / direct contact → EAWR Reg 4 / 13 + BS 7671. Arc-flash → EAWR Reg 4 + 14 + COSHH (combustion products) + EN 61482 PPE. Fire → EAWR + RRFSO 2005 + Approved Doc B. Secondary injury → MHSWR Reg 3 (assessment of consequence chain). Each hazard has its regulatory home.',
-      'Line conductor from supply transformer through cable / supplier service to MET, internal cable line conductor (R1) through to fault point, fault path, CPC (R2) back to MET, MET to supplier earth (combined neutral-earth conductor on TN-C-S), supplier neutral / PEN back to transformer star point.',
-      'Best defence is documentary — contemporaneous notes, written refusals, escalations, evidence that personal s.7 duty was discharged. "I was told to" is no defence; "here is the email I sent declining the unsafe task" is.',
-      'Any place where a person could fall a distance liable to cause personal injury. NO HEIGHT THRESHOLD (the old "above 2m" rule was abolished). Could be standing on a step, on a ladder, on a roof, on a stair, near an unprotected edge.',
+      'Line conductor from the transformer to the MET, then the neutral conductor alone back to the star point — the CPC and fault path play no part.',
+      'Supply line to fault via R1, fault path, CPC (R2) to the MET, then the supplier combined PEN conductor back to the transformer star point.',
+      'Line to the fault, fault path, then the consumer earth electrode and soil mass back to the transformer earth — the same loop as a TT system.',
+      'Line from the transformer to the fault point only — on TN-C-S the combined PEN carries no fault current, so the loop ends at the metalwork.',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,10 +91,10 @@ const quizQuestions = [
     id: 2,
     question: 'The earth fault loop path on a TT installation:',
     options: [
-      'Three failure modes. (1) Mechanical wear — toggle, contacts, internal mechanism after thousands of operations; symptom is sluggish operation, doesn\'t latch on, doesn\'t trip when tested. (2) Electrical wear — contacts pitted from arc erosion after multiple fault clearances; symptom is high contact resistance under load (HRJ at the breaker itself). (3) RCD-specific — toroidal coil saturation from years of unbalanced load, electronic detection circuit drift; symptom is slow trip-time on the BS 7671 643.7 test. Tested with the MFT trip-time function. Brand patterns: Hager 6 kA RCBOs — typical 15-20 year life. Wylex NHX / MK Sentry — similar. Premium switchgear (Schneider Acti9, Eaton Memshield) — 25+ years.',
-      'Multiple frameworks: Building Regs Part J (combustion appliances, flues, ventilation); Clean Air Act (smoke control areas — many urban areas restrict what can be burned and require Defra-exempt appliances); Ecodesign Directive (new appliance emissions standards); MCS MIS 3004 / 3006 (installer competence and installation quality for solid biomass boilers and stoves). Plus the F-Gas-equivalent for any chiller / heat-pump component. Biomass is operationally heavier than gas or heat pumps because of fuel storage, ash handling and the regulatory layer on emissions.',
-      'Line conductor from supply transformer through cable to consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s line, R1 through to fault, fault path, CPC R2 back to MET, MET to consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earth electrode, soil mass between consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s electrode and supply transformer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s electrode (typically 30-200+ Ω), supply transformer earth back to star point.',
-      'Because EAWR is the trade-specific instrument made under HASAWA\'s enabling powers (s.15) — but HASAWA\'s general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.',
+      'Line to the fault, CPC to the MET, then the supplier combined PEN back to the star point — the soil plays no part as the supplier provides the earth.',
+      'Line to the fault, CPC to the MET, then the supplier separate earth conductor (cable sheath) back to the transformer earth — the same path as TN-S.',
+      'Line to fault via R1, CPC R2 to the MET, consumer electrode, then the soil mass (30-200+ Ω) to the transformer electrode and star point.',
+      'Line to the fault, CPC to the MET, then a dedicated consumer earth-return cable back to the substation — TT is wired with a third earth core.',
     ],
     correctAnswer: 2,
     explanation:
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 3,
     question: 'Live Zs measurement at the furthest point on a circuit gives:',
     options: [
-      'The pattern reveals power-based conflict behaviour — they accommodate those with more power, compete with those with less, revealing that their style is driven by power dynamics rather than situational appropriateness, risking apprentice wellbeing and development',
-      'Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor\\\\\\\\\\\\\\\'s team. For a client representative the escort is usually the Project Manager or Site Manager because they\\\\\\\\\\\\\\\'ll want to talk through progress, snags and any commercial issues.',
-      'Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s signature attests to the values, not the auto-import process.',
-      'The complete earth fault loop impedance — Ze (external supply network impedance to the consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s MET) plus R1+R2 (line + CPC of the circuit from MET to test point). The measured value should equal the calculated Zs from Ze (measured live) and R1+R2 (measured dead in Section 3) within instrument tolerance.',
+      'Only the internal cable impedance R1+R2 from the consumer unit to the test point — Ze is measured separately and is not part of the reading.',
+      'Only the external supply impedance Ze — the live test reads back to the origin and captures the supply network alone, not the consumer cabling.',
+      'The resistance of the protective conductor alone (R2) from the test point to the MET — the line conductor and supply network do not feature.',
+      'The complete loop impedance — Ze plus R1+R2 — which should equal the calculated Zs from Ze and R1+R2 within instrument tolerance.',
     ],
     correctAnswer: 3,
     explanation:
@@ -117,10 +117,10 @@ const quizQuestions = [
     id: 4,
     question: 'A4:2026 Table 41.3 Zs limits are stated for cable at:',
     options: [
-      'Operating temperature — typically 70 °C for thermoplastic-insulated cable. The values apply when the cable is fully loaded and warm. Measured Zs is at ambient (cool) conductor temperature; the standard correction is to require measured Zs ≤ 0.8 × table Zs to allow for the resistance increase as the cable warms in service.',
-      'Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC',
-      'Toolbox talks are short pre-shift safety briefings on a single topic — the RAMS for the day, a recent near-miss, a seasonal hazard. They keep the formal RAMS active in the day-to-day work. Recorded with attendance. Together with the RAMS sign-on they form the daily safety briefing chain.',
-      'Because EAWR is the trade-specific instrument made under HASAWA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s enabling powers (s.15) — but HASAWA\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.',
+      'Operating temperature — typically 70 °C for thermoplastic cable — so measured Zs at ambient must be ≤ 0.8 × the table value.',
+      'Ambient temperature — typically 20 °C — so the cold table values compare directly against a measured reading with no correction needed.',
+      'The maximum permitted insulation temperature — 90 °C for thermosetting cable — giving the absolute worst case at the insulation limit.',
+      'A fixed reference of 30 °C — the standard ambient for current-carrying capacity tables — so the same value applies whether loaded or not.',
     ],
     correctAnswer: 0,
     explanation:
@@ -130,10 +130,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why measure Zs live when you already calculated it from Ze + R1+R2 (dead)?',
     options: [
-      'Explaining the situation in person, leading with the safety reason ("I have found a section of wiring that does not meet current safety standards"), showing the specific issue where possible, expressing empathy for the inconvenience ("I understand this is not what you were expecting"), presenting options rather than a single demand, and giving the client time to process before requiring a decision',
-      'Independent verification. The dead-test calculation depends on Ze (one measurement) plus R1+R2 (one or many readings, depending on circuit). The live Zs measurement is one direct reading. Comparing the two catches errors in either method, gives confidence in the result, and provides a single value to compare against Table 41.3 with the 0.8 multiplier applied.',
-      'Stage 1: try to discuss and resolve — most disputes resolve through conversation. Stage 2: if unresolved, follow your written complaints procedure. Stage 3: if still unresolved, signpost ADR (RECC for MCS work, NICEIC/NAPIT for scheme work, generic ADR providers like Centre for Effective Dispute Resolution). Stage 4: as last resort, small claims court (under £10k, online process). Document everything in writing throughout.',
-      'It sits in the standards / technical family alongside BS 7671 and the IET OSG. BS 7671 Reg 510.3 ties equipment selection and erection to manufacturer\\\\\\\'s instructions. Reg 526.1 ties the connection itself (torque, ferrule requirement, mechanical strength) to those instructions. The data sheet is the authoritative source for how the unit is meant to be installed. Treat it as part of the site folder, not the bin.',
+      'Because the dead-test calculation is not permitted as evidence on an EIC — BS 7671 accepts only a live reading and disregards Ze plus R1+R2.',
+      'Independent verification — comparing the calculated value (Ze + R1+R2) against the directly measured Zs catches errors in either method.',
+      'Because the live reading is always lower than the calculated value, letting you record the more favourable figure against the Table 41.3 limit.',
+      'Because R1+R2 cannot be measured on an energised installation, so the live Zs reading is the only way to obtain R1+R2 once in service.',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 6,
     question: '2-lead Zs measurement (L-E only):',
     options: [
-      'If you process personal data for business purposes — almost every business does (customer names, addresses, phone numbers, photos). Small businesses (turnover < £632k AND fewer than 11 staff) pay the Tier 1 annual fee of £40 under the Data Protection (Charges and Information) Regulations 2018.',
-      'IT systems still have exposed-conductive-parts that must be earthed (locally or interconnected via a protective conductor — see Reg 411.6.2). They still need protective equipotential bonding of extraneous parts. The "I" in IT means the source is isolated (or earthed via high impedance), not that the installation has no earthing',
-      'Quicker than 3-lead, used when access to the neutral is impractical (e.g. testing at a fixed appliance with only L and E accessible). The instrument measures the L-E loop only; result is Zs directly without the auxiliary L-N measurement. Slightly less accurate than 3-lead but acceptable for routine Zs verification.',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.',
+      'Slower than 3-lead and used only where extra accuracy is needed — a second earth lead cancels supply noise for a more precise reading.',
+      'A method measuring between neutral and earth only, used where the line is inaccessible — the N-E loop, which equals Zs on a TN-C-S supply.',
+      'Quicker than 3-lead, used when the neutral is inaccessible — the instrument reads the L-E loop only, giving Zs directly without the L-N step.',
+      'A method requiring the protective device removed first, then measuring line to earth through the open device position during initial verification.',
     ],
     correctAnswer: 2,
     explanation:
@@ -156,10 +156,10 @@ const quizQuestions = [
     id: 7,
     question: 'Zs measurement at the supply origin gives:',
     options: [
-      'Reg 4(2) puts the duty on every employer and on every employee — and Reg 16 on every person working with electrical systems. For the L3 apprentice doing fault diagnosis: (1) the system you\'re working on must be assessed for its \'as-found\' safety BEFORE work starts (visual inspection of CU, supply, bonding, signs of damage); (2) any departures from safe construction must be recorded and not made worse by your work; (3) when you correct the fault, the corrected system must satisfy Reg 4 — i.e. you don\'t leave the installation in a worse state than you found it; (4) any defect that you can\'t fix safely is escalated for further work or for advisory documentation to the customer.',
-      'Multiple legitimate causes. (1) Instrument tolerance — both the Zs tester and the continuity tester have plus or minus 5-10 percent each, which can compound. (2) Slight temperature difference — the cables may be slightly warmer at live test time than at dead test time. (3) Supply voltage variation between the two tests can affect calculation. (4) The dead-test R1+R2 may include a parallel earth path (e.g. via metal back-boxes) that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t carry full fault current under live conditions. Up to 20 percent discrepancy is generally within acceptable tolerance; investigate above 20 percent.',
-      'OZEV requires installations to comply with the Electric Vehicles (Smart Charge Points) Regulations 2021 and to be installed by an OZEV-authorised installer. Periodic inspection follows the BS 7671 framework — typically 5-yearly EICR for domestic, plus EV-specific tests including RCD operation (Type B or RDC-DD), open-PEN protection function (where the charger has built-in open-PEN), and Zs at the charge point. Landlord properties additionally subject to the Electrical Safety Standards Regulations 2020 (5-year EICR plus change of tenancy).',
-      'Ze (external earth fault loop impedance at the origin) — the impedance of the path from a fault at the consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s MET back to the supply transformer star point, via the supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earth path. For TN-C-S typically 0.10-0.35 Ω; for TN-S typically 0.20-0.50 Ω; for TT essentially the consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s electrode resistance Ra (since the supplier\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s metallic earth path is absent).',
+      'Zs for the most onerous circuit — the origin reading captures the worst-case loop because every circuit branches from that point.',
+      'R1+R2 for the main tails — the short run from the cut-out to the consumer unit, added to each circuit Zs to give the total loop impedance.',
+      'The prospective fault current at the origin — measuring at the cut-out gives PFC directly, from which Ze is then derived via the supply voltage.',
+      'Ze — the external loop impedance from a fault at the MET back to the transformer star point via the supplier earth (for TT, essentially Ra).',
     ],
     correctAnswer: 3,
     explanation:
@@ -169,10 +169,10 @@ const quizQuestions = [
     id: 8,
     question: 'GN3 warns that EFLI tests use the supply voltage and create:',
     options: [
-      'Hazardous touch potentials on conductive parts during the test. The test current creates a voltage drop across the loop impedance — exposed-conductive-parts in the circuit may briefly rise toward line voltage during the test. Testers must control access to exposed conductive parts during these tests, follow safe working practices, and not allow others to touch the installation while testing.',
-      'Reg 134.1.1 requires that \\\\\\\'good workmanship by competent persons and proper materials shall be used in the erection of the electrical installation\\\\\\\'. This is the workmanship hook — how the install is physically put together has to meet trade-standard quality. Includes correct torque, correct conductor preparation, neat termination, secure containment, proper labelling. Workmanship is what distinguishes a competent install from one that just barely passes test.',
-      'Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\\\\\\\\\\\\\\\'s signature attests to the values, not the auto-import process.',
-      'Engineering Council registration typically correlates with meaningful salary uplift. EngTech-registered roles often pay £35-45k; IEng roles £45-65k; CEng roles £65k+. Registration alone doesn\\\\\\\'t generate the salary — the underlying competence and the roles you take on do — but the registration is widely used as a salary-band anchor in engineering job markets. For senior technical and design roles registration is often a job pre-requisite.',
+      'Hazardous touch potentials on conductive parts — test current raises exposed-conductive-parts briefly, so manage access to metalwork during the test.',
+      'A risk of damaging connected electronic equipment — the test current over-stresses surge devices and electronic controls, so they must be disconnected first.',
+      'A risk of corrupting stored test results — the test current interferes with the consumer unit smart meter, so readings must be hand-transcribed not downloaded.',
+      'A risk of tripping every RCD on the board — the test current always exceeds 30 mA, so all RCD-protected circuits must be bypassed before the test.',
     ],
     correctAnswer: 0,
     explanation:

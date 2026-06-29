@@ -56,10 +56,10 @@ const Module4Section4_3 = () => {
       id: 1,
       question: 'What is the function of a coupler?',
       options: [
-        'Viewing the measurement scale at an angle',
+        'To protect cables from sharp conduit edges',
         'To join two sections of containment',
-        '132 kV, 275 kV and 400 kV',
-        'Its excellent thermal resistance',
+        'To secure conduit to a wall surface',
+        'To seal a conduit end against moisture',
       ],
       correctAnswer: 1,
       explanation:
@@ -67,11 +67,16 @@ const Module4Section4_3 = () => {
     },
     {
       id: 2,
-      question: 'True or False: Bushes are only required for steel conduit.',
-      options: ['True', 'False'],
+      question: 'For which conduit materials are bushes required at cable entry points?',
+      options: [
+        'Steel conduit only',
+        'Both steel and PVC conduit',
+        'PVC conduit only',
+        'Only conduit in damp locations',
+      ],
       correctAnswer: 1,
       explanation:
-        'False. BS 7671 requires protection at cable entry points regardless of conduit material - bushes are required for both steel and PVC conduit.',
+        'BS 7671 requires protection at cable entry points regardless of conduit material - bushes are required for both steel and PVC conduit.',
     },
     {
       id: 3,
@@ -91,9 +96,9 @@ const Module4Section4_3 = () => {
       question: 'Why is deburring important before fitting a coupler?',
       options: [
         'To prevent cable damage and ensure proper fit',
-        'They are unresponsive and not breathing normally',
-        'Implementing a permit to work system for HV switching',
-        'To identify and control emerging hazards',
+        'To increase the current rating of the conduit',
+        'To improve the appearance of the joint only',
+        'To reduce the weight of the containment run',
       ],
       correctAnswer: 0,
       explanation:
@@ -104,10 +109,10 @@ const Module4Section4_3 = () => {
       question:
         "What should you do if two pieces of steel conduit don't make good electrical contact?",
       options: [
-        'BS 7671:2018 incorporating Amendment 4:2026',
+        'Apply more PTFE tape to the threads',
         'Clean the surfaces or fit an earth strap',
-        'Construction Design and Management',
-        'PWM (Pulse Width Modulation)',
+        'Increase the torque on the coupler',
+        'Replace the steel conduit with PVC',
       ],
       correctAnswer: 1,
       explanation:
@@ -117,10 +122,10 @@ const Module4Section4_3 = () => {
       id: 6,
       question: 'Name one situation where corrosion-resistant saddles are necessary.',
       options: [
-        'A high temperature and a rash',
-        'Yes, with appropriate IP rating',
+        'Short indoor runs in a dry office',
+        'Runs carrying only low-voltage data cables',
         'Outdoor or damp environments',
-        'Show circuit layouts and connections',
+        'Runs supported every 300 mm',
       ],
       correctAnswer: 2,
       explanation:
@@ -130,9 +135,9 @@ const Module4Section4_3 = () => {
       id: 7,
       question: 'What is the risk of missing bushes at cable entry points?',
       options: [
-        'Certsure / NICEIC Certification Portal',
-        'Hear, Empathise, Apologise, Resolve, Do follow up',
-        'Enhanced safety measures and suitable equipment',
+        'Reduced current-carrying capacity of the cable',
+        'A larger bend radius at the entry point',
+        'Loss of the cable colour identification',
         'Cable insulation damage leading to faults',
       ],
       correctAnswer: 3,
@@ -144,9 +149,9 @@ const Module4Section4_3 = () => {
       question: 'Why is alignment important when joining containment?',
       options: [
         'Prevents strain on cables and ensures compliance',
-        'PPE must be correctly rated for the hazard level',
-        'To prevent device damage and safely interrupt faults',
-        'Increased light output from luminaires',
+        'It increases the current rating of the cables',
+        'It removes the need for electrical continuity',
+        'It allows wider support spacing to be used',
       ],
       correctAnswer: 0,
       explanation:

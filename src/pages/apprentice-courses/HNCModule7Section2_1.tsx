@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'What is the minimum illuminance required on the centre line of an escape route up to 2m wide?',
     options: [
+      '1 lux',
       '0.5 lux',
       '5 lux',
-      '1 lux',
       '10 lux',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'BS 5266-1 requires a minimum of 1 lux at floor level on the centre line of a defined escape route up to 2m wide. The central band must be at least half the route width, with a minimum of 0.5 lux at the edges.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'maintained-definition',
     question: 'What defines a maintained emergency luminaire?',
     options: [
-      'It ensures consistent, accurate data that can be used in calculations and comparisons',
+      'Its lamp illuminates only when the mains supply fails',
       'Its lamp operates continuously during normal and emergency conditions',
-      'Consulting, training, inspection, or reduced-hours roles',
-      'The current level up to which discrimination is guaranteed',
+      'It is powered solely from a central battery, never a self-contained cell',
+      'It provides standby lighting rather than escape lighting',
     ],
     correctIndex: 1,
     explanation:
@@ -126,9 +126,9 @@ const quizQuestions = [
       'What is the maximum spacing between emergency luminaires on an escape route, as a general rule?',
     options: [
       'Four times the mounting height',
-      '2.0m above floor level',
-      'Open area (anti-panic) lighting',
-      'Central battery system',
+      'Twice the mounting height',
+      'A fixed 6 metres regardless of mounting height',
+      'Equal to the width of the escape route',
     ],
     correctAnswer: 0,
     explanation:
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: 'Where must emergency lighting be provided according to BS 5266-1?',
     options: [
       'At all safety signs, changes of level, and intersection points',
-      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
-      'Both employers and employees with duties under the regulations',
-      'To verify the installation remains safe for continued use',
+      'Only at the final exit door of the building',
+      'Only in rooms containing electrical switchgear',
+      'Only along corridors wider than 2 metres',
     ],
     correctAnswer: 0,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'A combined emergency luminaire provides:',
     options: [
-      'Heat, moisture, and mechanical stress',
-      'Training, written procedures, drills, signs, induction',
+      'Emergency lighting only, from a single dedicated lamp',
+      'Normal lighting only, with no emergency function',
       'Normal and emergency lighting from separate lamps',
-      'The maximum current a conductor can carry safely',
+      'Normal and emergency lighting from one shared lamp',
     ],
     correctAnswer: 2,
     explanation:

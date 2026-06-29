@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'pre-commission-purpose',
     question: 'What is the primary purpose of pre-commissioning tests?',
     options: [
-      'Conductor resistance increases with temperature',
-      'To reduce electromagnetic interference',
-      'Clearly identified and accessible',
-      'To verify systems are safe to energise/start',
+      'To balance the airflow at each diffuser to its design value',
+      'To train the client’s staff in the operation of the systems',
+      'To measure the energy consumption of the completed installation',
+      'To verify systems are correctly installed and safe to energise or start',
     ],
     correctIndex: 3,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'witness-testing',
     question: 'Why is witnessed testing important in building services?',
     options: [
-      'They reduce the temperature lift required, improving COP',
-      'It provides independent verification of results',
-      'Correct response to light level changes',
-      'Voltage imbalance and potential equipment damage',
+      'It removes the need to record the test results in writing',
+      'It provides independent verification that results are accurate',
+      'It allows the contractor to set the acceptance criteria afterwards',
+      'It speeds up the test by skipping the calibration of instruments',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'compliance-demo',
     question: 'Compliance demonstration typically includes:',
     options: [
-      'A diode (must be forward biased to turn the transistor on)',
-      'Assessing operational performance of existing buildings',
+      'The contractor’s tender price and programme of works',
+      'A marketing brochure for each item of installed equipment',
       'Test results, certificates, O&M manuals, and as-built drawings',
-      'BS 5839 (fire detection) and BS 5266 (emergency lighting)',
+      'A copy of the client’s insurance policy for the building',
     ],
     correctIndex: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which electrical test must be performed before energising a new distribution board?',
     options: [
-      'A record of defects requiring rectification',
-      'The commissioning engineer who conducted the tests',
-      'To operate systems under load to identify early failures',
+      'Earth fault loop impedance under full load',
+      'A burn-in test under realistic operating conditions',
+      'A thermal imaging survey of the live terminals',
       'Insulation resistance between all circuits and earth',
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: 'Performance verification of an air handling unit should include:',
     options: [
       'Airflow, temperature, humidity, noise levels, and energy consumption',
-      'Some systems can only be tested under specific ambient conditions',
-      'To operate systems under load to identify early failures',
-      'Insulation resistance between all circuits and earth',
+      'Only the supply voltage measured at the unit’s control panel',
+      'Only the insulation resistance of the supply cable to the unit',
+      'Only the colour and finish of the unit’s external casing',
     ],
     correctAnswer: 0,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: 'A commissioning certificate should be signed by:',
     options: [
-      'Some systems can only be tested under specific ambient conditions',
-      'A record of defects requiring rectification',
-      'To operate systems under load to identify early failures',
+      'Any operative present on site on the day of testing',
+      'The client’s receptionist on behalf of the building owner',
+      'The equipment manufacturer’s sales representative',
       'The commissioning engineer who conducted the tests',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "What is the purpose of a 'burn-in' period for building services?",
     options: [
       'To operate systems under load to identify early failures',
-      'Airflow, temperature, humidity, noise levels, and energy consumption',
-      'Achieve minimum energy efficiency standards',
-      'Insulation resistance between all circuits and earth',
+      'To raise the temperature of the building before occupants move in',
+      'To dry out the building fabric after wet trades are complete',
+      'To run the systems briefly to confirm the supply is connected',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'Seasonal commissioning is required because:',
     options: [
-      'Airflow, temperature, humidity, noise levels, and energy consumption',
-      'Some systems can only be tested under specific ambient conditions',
-      'The commissioning engineer who conducted the tests',
-      'Insulation resistance between all circuits and earth',
+      'Building control will only sign off projects in the summer months',
+      'Some systems can only be tested meaningfully under specific ambient conditions',
+      'Manufacturers’ warranties only apply during the heating season',
+      'Retention money is always released exactly twelve months after handover',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,10 +205,10 @@ const quizQuestions = [
     id: 10,
     question: 'What standard governs the commissioning of air distribution systems in the UK?',
     options: [
-      'Visual inspection and testing',
-      'Replaced with a short circuit',
+      'BS 7671 Wiring Regulations',
+      'BS 5839 Fire detection and alarm',
       'CIBSE Commissioning Codes',
-      'To ensure safe live testing',
+      'BS 5266 Emergency lighting',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,16 +217,16 @@ const quizQuestions = [
   {
     id: 11,
     question:
-      'During electrical testing, an RCD fails to trip within 40ms at rated current. The appropriate action is:',
+      'During electrical testing, a general (non-delay) RCD fails to trip within 300 ms at its rated residual operating current (IΔn). The appropriate action is:',
     options: [
-      'Increase the test current',
-      'Adjust the trip time setting',
-      'Record as acceptable with a note',
+      'Increase the test current to five times IΔn until it trips',
+      'Adjust the trip time setting on the device',
+      'Record the result as acceptable with an explanatory note',
       'Replace the RCD and retest',
     ],
     correctAnswer: 3,
     explanation:
-      'RCDs must trip within their specified time (typically 40ms for Type A at rated residual current). Failure to meet this requirement means the device must be replaced and retested - there is no adjustment option.',
+      'Per BS 7671, a general non-delay RCD must disconnect within 300 ms when tested at its rated residual operating current (IΔn). RCD trip times are not adjustable, so a device that fails this test must be replaced and retested.',
   },
   {
     id: 12,
@@ -380,7 +380,8 @@ const HNCModule5Section4_5 = () => {
                 tabulated maximum
               </li>
               <li>
-                <strong>RCD operation:</strong> Confirm protection function — Trip ≤40ms at IΔn
+                <strong>RCD operation:</strong> Confirm protection function — general non-delay
+                type trips ≤300 ms at IΔn (≤40 ms at 5×IΔn)
               </li>
             </ul>
             <p>

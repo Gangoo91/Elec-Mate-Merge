@@ -15,12 +15,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of bracing in a scaffold structure?',
     options: [
-      'To provide somewhere to hang tools',
-      "To prevent racking (parallelogram distortion) and maintain the scaffold's geometry",
-      'To create additional working platforms',
-      'To reduce the number of ties required',
+      "To prevent racking (parallelogram distortion) and hold the scaffold's geometry",
+      'To carry the vertical dead load of the platforms down to the foundations',
+      'To create the additional working platforms used by following trades',
+      'To remove the need for ties between the scaffold and the building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Bracing prevents racking — the tendency of the scaffold to distort into a parallelogram shape under lateral forces. Without adequate bracing the scaffold cannot maintain its square geometry and may collapse sideways.',
   },
@@ -28,10 +28,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a tube and fitting scaffold, ledger bracing (face bracing) is positioned:',
     options: [
-      'Horizontally between adjacent standards in the same lift',
-      'Diagonally across the face of the scaffold, connecting a standard at one lift to the next standard at the lift above',
-      'Across the width of the scaffold between inner and outer standards',
-      'Only at the base of the scaffold',
+      'Horizontally between adjacent standards within the same lift level',
+      'Diagonally across the face, from a standard at one lift to the adjacent standard one lift up',
+      'Horizontally across the width, between the inner and outer rows of standards',
+      'Vertically at the base only, between the bottom two lifts of the scaffold',
     ],
     correctAnswer: 1,
     explanation:
@@ -42,11 +42,11 @@ const quizQuestions = [
     question: 'What is the general rule for tie spacing on a standard independent scaffold?',
     options: [
       'Every standard at every lift',
-      'Every other standard at every other lift (a staggered diamond pattern)',
       'Ties are only needed at the top lift',
+      'Every other standard at every other lift (a staggered diamond pattern)',
       'One tie per bay is sufficient regardless of height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The general rule is that ties are required at every other standard at every other lift, creating a staggered diamond pattern across the face of the scaffold. This provides adequate restraint under normal conditions. Closer spacing is required for loaded scaffolds, sheeted scaffolds, or those exposed to higher wind loads.',
   },
@@ -54,12 +54,12 @@ const quizQuestions = [
     id: 4,
     question: 'A box tie secures the scaffold to the building by:',
     options: [
-      'Bolting a plate directly to the facade',
-      'Wrapping a tube around a structural member inside the opening (e.g. a window reveal) and connecting back to the scaffold with a tie tube',
-      'Drilling a through-bolt all the way through the wall',
-      'Using adhesive pads on the external surface',
+      'Bolting an anchor plate directly to the external face of the building',
+      'Drilling a single through-bolt all the way through the wall and plating it inside',
+      'Friction-gripping a reveal pin between the internal faces of a window opening',
+      'Placing a cross tube inside an opening and tying it back to the scaffold with a tie tube',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A box tie uses a short tube (the cross tube or box tube) placed inside a window or door opening, bearing against the reveals. A tie tube then connects this cross tube back to the scaffold ledger or standard. The arrangement 'boxes' around the structural opening, providing both push and pull restraint.",
   },
@@ -67,8 +67,8 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the minimum proof-load test requirement for a scaffold tie in a tube and fitting scaffold?',
-    options: ['2.5 kN', '4.0 kN', '6.25 kN', '10.0 kN'],
-    correctAnswer: 2,
+    options: ['6.25 kN', '2.5 kN', '4.0 kN', '10.0 kN'],
+    correctAnswer: 0,
     explanation:
       'For tube and fitting scaffolds, each tie must be capable of withstanding a proof-load test of at least 6.25 kN (approximately 625 kg). This is the minimum standard set by TG20 guidance. Ties should be tested at installation and re-tested if there is any doubt about their integrity.',
   },
@@ -76,10 +76,10 @@ const quizQuestions = [
     id: 6,
     question: 'What effect does adding sheeting or netting to a scaffold have on wind loading?',
     options: [
-      'No effect — sheeting is purely cosmetic',
-      'It significantly increases the wind load on the scaffold because the sheeting acts as a sail, requiring closer tie spacing and additional bracing',
-      'It reduces wind loading by deflecting the wind away from the scaffold',
-      'It only affects the scaffold if wind speed exceeds 50 mph',
+      'No effect — sheeting is purely cosmetic and carries no wind load',
+      'It greatly increases the wind load, as the sheeting acts as a sail requiring closer ties',
+      'It reduces wind loading by deflecting the wind away from the structure',
+      'It only affects the scaffold once wind speed exceeds about 50 mph',
     ],
     correctAnswer: 1,
     explanation:
@@ -90,11 +90,11 @@ const quizQuestions = [
     question: 'Plan bracing in a scaffold is positioned:',
     options: [
       'Vertically up the face of the scaffold',
-      'Horizontally in the plane of the ledgers, running diagonally between inner and outer standards',
       'Only at the top of the scaffold',
+      'Horizontally in the plane of the ledgers, running diagonally between inner and outer standards',
       'Between the scaffold and the building facade',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Plan bracing is installed horizontally in the plane of the ledgers. It runs diagonally between the inner and outer rows of standards, triangulating the scaffold in the horizontal plane to resist twisting and lateral forces acting across the width of the scaffold.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 8,
     question: 'A buttress (raker) is typically used when:',
     options: [
-      'The scaffold is less than 4 metres tall',
-      'The building facade cannot accept ties, so the scaffold must be stabilised by angled tubes braced back to ground level',
-      'The scaffold is sheeted and the wind speed is low',
-      'Only on system scaffolds, never on tube and fitting',
+      'The scaffold is less than 4 metres tall and lightly loaded',
+      'The scaffold is sheeted and the prevailing wind speed is low',
+      'A system scaffold is used, since rakers cannot be fitted to tube and fitting',
+      'The facade cannot accept ties, so angled tubes brace the scaffold back to ground level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Buttresses (rakers) are used when the building facade cannot accept ties — for example, on a new-build steel frame before cladding is fitted, or on a heritage building where drilling is prohibited. Rakers are angled tubes running from the scaffold down to ground level, effectively replacing the restraint that ties would normally provide.',
   },
@@ -119,12 +119,12 @@ const quickCheckQuestions = [
     question:
       'A scaffold has diagonal tubes running across its face connecting standards at different lift levels. It also has diagonal tubes running horizontally between the inner and outer rows of standards. Name the two types of bracing described.',
     options: [
-      'Box bracing and reveal bracing',
       'Ledger bracing (face bracing) and plan bracing',
+      'Box bracing and reveal bracing',
       'Through bracing and lip bracing',
       'Facade bracing and buttress bracing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The diagonal tubes across the face of the scaffold are ledger bracing (face bracing). The diagonal tubes running horizontally between the inner and outer standard rows are plan bracing. Together they triangulate the scaffold in both planes — preventing racking along the face and twisting across the width.',
   },

@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'fiscal-meter',
     question: 'What is the primary purpose of fiscal metering?',
     options: [
-      '33 kV → 11 kV → 400 V → 230 V',
-      'To enable safe shutdown and evacuation',
-      'All of the listed verifications',
+      'To detect harmonic distortion on the supply',
+      'To provide standby power during an outage',
+      'To monitor internal cost allocation only',
       'For billing and revenue purposes',
     ],
     correctIndex: 3,
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'part-l',
     question: 'What does Building Regulations Part L require regarding sub-metering?',
     options: [
-      'Investigate the cause as it\\\\\\\'s below minimum',
+      'A single fiscal meter at the incomer is sufficient',
       'Metering of end-use categories in buildings >1000m²',
-      'Praise their effort, strategy, and process',
-      'Switch off the electrical supply or isolate the circuit',
+      'Sub-metering only of the emergency lighting circuits',
+      'No sub-metering for any non-domestic building',
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the difference between MID and non-MID meters?',
     options: [
-      'To ensure continued safety over time',
+      'MID meters can only measure single-phase supplies',
       'MID meters are approved for fiscal/billing purposes',
-      'The voltage difference between positive and negative peaks',
-      'Largest motor at 125% or higher, others at full load',
+      'MID meters do not require any communication output',
+      'MID meters are only used for sub-metering, never billing',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'What end-use categories does Part L typically require to be sub-metered?',
     options: [
-      'Notify the scheme and provide certificate to customer and local authority',
-      'Isolating the wrong circuit, leading to safety hazards',
+      'Only the total incoming supply at the main meter',
+      'Each individual socket outlet on every floor',
       'Heating, cooling, fans, lighting, small power, and other significant loads',
-      'Emergency lighting cables were run in plastic trunking shared with data and general power cables',
+      'Only loads connected to standby generators',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,9 +115,9 @@ const quizQuestions = [
     id: 3,
     question: 'What is a CT (Current Transformer) used for in metering?',
     options: [
-      'Overheating leading to insulation breakdown and fire',
-      'Energy efficiency, comfort, and productivity',
-      'Reduced voltage, RCD protection, and robust equipment',
+      'To step the supply voltage down for the meter',
+      'To provide galvanic isolation for the meter PSU',
+      'To correct the power factor of the metered circuit',
       'To reduce high currents to measurable levels for meters',
     ],
     correctAnswer: 3,
@@ -154,10 +154,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is pulse output from a meter typically used for?',
     options: [
-      'VRMS = 0.707 x Vpeak, Vavg = 0.637 x Vpeak',
-      'Supporting natural human sleep-wake cycles',
+      'Supplying control power to the connected load',
+      'Synchronising the meter clock to the mains frequency',
       'Sending consumption data to BMS or external counters',
-      'Multiple variables and diagnostics over two wires',
+      'Triggering an alarm when the supply voltage dips',
     ],
     correctAnswer: 2,
     explanation:
@@ -167,9 +167,9 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of power quality monitoring?',
     options: [
-      'Avoid work at height, prevent falls, minimise consequences of falls',
-      'To reduce ripple and produce a steadier DC output',
-      'Investigate accidents, inspect workplace, be consulted on safety matters',
+      'To bill tenants for their reactive energy use',
+      'To switch capacitor banks for power factor correction',
+      'To record total energy consumption for Part L returns',
       'To identify voltage disturbances, harmonics and other quality issues',
     ],
     correctAnswer: 3,
@@ -181,9 +181,9 @@ const quizQuestions = [
     question: 'What is automatic meter reading (AMR)?',
     options: [
       'Remote collection of meter data without site visits',
-      'Each load operating independently of the others',
-      '1.37Ω (Ze + (R1+R2)×1.20 = 0.35 + 0.85×1.20 = 0.35 + 1.02 = 1.37Ω)',
-      'Visual and noise impact on communities',
+      'A meter that automatically resets at midnight',
+      'A meter that adjusts its own CT ratio under load',
+      'Manual reading of the meter by the site engineer',
     ],
     correctAnswer: 0,
     explanation:
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the advantage of multi-function power meters over simple kWh meters?',
     options: [
-      'Safety Integrity Level - quantitative measure of safety performance',
+      'They require no current transformers to operate',
       'Measure multiple parameters: V, I, kW, kVA, kVAr, PF, harmonics',
-      'Recognition, networking, resources, and professional development',
-      'Circulating currents induced in the solid core material',
+      'They are always MID approved for fiscal billing',
+      'They eliminate the need for any BMS integration',
     ],
     correctAnswer: 1,
     explanation:
@@ -206,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is load profiling in energy monitoring?',
     options: [
-      'University of Massachusetts Medical Centre',
-      'Be performed by competent fire alarm specialist',
+      'Calculating the maximum demand after diversity',
+      'Listing every connected load on a single circuit',
       'Recording energy consumption patterns over time',
-      'Determine friction factor for turbulent flow',
+      'Measuring the inrush current of a motor at startup',
     ],
     correctAnswer: 2,
     explanation:

@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "BSRIA BG6 'A Design Framework for Building Services' recommends coordination meetings at which stage?",
     options: [
-      'A log book recording all tests, inspections, and defects',
+      'Only at practical completion, once all systems are installed',
       'Throughout design, construction, and commissioning',
-      'To provide brief on-site safety briefings on specific topics',
-      'Category III — serious, irreversible or fatal risks',
+      'Only during the defects liability period after handover',
+      'Only at the initial briefing stage before design begins',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,9 +116,9 @@ const quizQuestions = [
     id: 3,
     question: "What is 'witness testing' in commissioning?",
     options: [
-      'COBie data and digital asset information',
-      'Buildings requiring an EPC under Part L',
-      'Equipment schedules, maintenance procedures, and spare parts',
+      'Testing carried out by a single operative working alone on site',
+      'A desktop review of test certificates without any physical testing',
+      'Testing the fire alarm only, witnessed by the fire officer',
       'Testing in the presence of the design team or client',
     ],
     correctAnswer: 3,
@@ -129,23 +129,23 @@ const quizQuestions = [
     id: 4,
     question: 'The Building Log Book (CIBSE TM31) is required for:',
     options: [
-      'Buildings requiring an EPC under Part L',
-      'Corrosion inhibitor and biocide treatment',
-      'After all dead tests and PFC measurement',
-      'The ratio of minimum to average illuminance',
+      'Non-domestic buildings under Approved Document L',
+      'Only buildings with a connected load above 1 MVA',
+      'Only listed buildings undergoing refurbishment',
+      'Only buildings seeking a BREEAM Outstanding rating',
     ],
     correctAnswer: 0,
     explanation:
-      'Part L requires a building log book for non-domestic buildings to facilitate energy-efficient operation. TM31 provides guidance on content and format.',
+      'Approved Document L (Building Regulations) requires a building log book for non-domestic buildings to facilitate energy-efficient operation. CIBSE TM31 provides guidance on content and format.',
   },
   {
     id: 5,
     question: "What is 'seasonal commissioning'?",
     options: [
-      'Equipment schedules, maintenance procedures, and spare parts',
+      'Commissioning that may only be carried out in spring or autumn',
       'Testing systems under both heating and cooling conditions',
-      'To ensure electrical supplies match equipment needs and controls integrate',
-      'BMS setpoint and schedule adjustment based on actual use',
+      'Annual recommissioning carried out every year after handover',
+      'Commissioning the heating and cooling plant before the building is occupied',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'BIM Level 2 requires handover of:',
     options: [
-      'Evaluate against expected service life',
-      'Personnel, tools, materials, and time requirements',
+      'Paper drawings and laminated O&M cards only',
+      'A single federated 3D model with no embedded data',
       'COBie data and digital asset information',
-      'All of the listed verifications',
+      'Verbal training records signed by the operator',
     ],
     correctAnswer: 2,
     explanation:
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'System optimisation during the first year typically includes:',
     options: [
-      'A list of defects and incomplete items to be rectified',
-      'Testing in the presence of the design team or client',
-      'Equipment schedules, maintenance procedures, and spare parts',
+      'Replacing the main plant with larger equipment',
+      'Rerunning the full clash-detection process on the BIM model',
+      'Reissuing the contract for competitive re-tender',
       'BMS setpoint and schedule adjustment based on actual use',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'CIBSE Code W covers commissioning of:',
     options: [
       'Water distribution systems',
-      'May require modified procedures',
-      '6 months of practical completion',
-      'Introduction, body, conclusion',
+      'Air distribution and ductwork systems',
+      'Lighting installations and lux levels',
+      'Refrigeration and chiller plant',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What information should O&M manuals contain?',
     options: [
-      'To ensure electrical supplies match equipment needs and controls integrate',
+      'Only the manufacturer warranty cards for each item of plant',
       'Equipment schedules, maintenance procedures, and spare parts',
-      'Testing systems under both heating and cooling conditions',
-      'A list of defects and incomplete items to be rectified',
+      'Only the tender pricing and bills of quantities',
+      'Only the architectural floor plans without services information',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is coordination between mechanical and electrical services critical?',
     options: [
-      'Testing systems under both heating and cooling conditions',
-      'Equipment schedules, maintenance procedures, and spare parts',
+      'It removes the need for any commissioning of the building',
+      'It allows the building log book to be omitted at handover',
       'To ensure electrical supplies match equipment needs and controls integrate',
-      'A list of defects and incomplete items to be rectified',
+      'It guarantees the project finishes within the defects liability period',
     ],
     correctAnswer: 2,
     explanation:

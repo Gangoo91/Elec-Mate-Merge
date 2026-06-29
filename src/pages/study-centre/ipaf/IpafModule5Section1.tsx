@@ -24,20 +24,20 @@ const quizQuestions = [
   {
     question: 'What is the number one cause of fatalities involving mobile access towers?',
     options: [
-      'Electrocution from overhead power lines',
       'Falls from unguarded or partially guarded platforms',
+      'Electrocution from overhead power lines',
       'Tower collapse due to overloading',
       'Being struck by falling tools',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Falls from unguarded or partially guarded platforms remain the leading cause of tower-related deaths. Ensuring full guardrails, toeboards, and a properly secured platform before use is critical.',
   },
   {
     question:
       'What is the minimum safe clearance distance from overhead power lines when positioning a tower near low-voltage lines?',
-    options: ['3 metres', '6 metres', '9 metres', '15 metres'],
-    correctAnswer: 3,
+    options: ['3 metres', '15 metres', '6 metres', '9 metres'],
+    correctAnswer: 1,
     explanation:
       'A minimum clearance of 15 metres from overhead power lines is recommended. If work must take place closer, you must seek specific guidance from the Distribution Network Operator (DNO) before proceeding.',
   },
@@ -45,11 +45,11 @@ const quizQuestions = [
     question: 'Why is climbing on the outside of a mobile access tower strictly prohibited?',
     options: [
       'It takes longer than using internal ladders',
-      'It places the climber outside the fall protection zone and creates overturning forces',
       'It damages the tower frame finish',
+      'It places the climber outside the fall protection zone and creates overturning forces',
       'It is only prohibited above 4 metres',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Climbing externally places the user outside any fall protection, creates lateral forces that can cause overturning, and is NEVER permitted regardless of tower height. Always climb internally using built-in ladders or stairs.',
   },
@@ -57,23 +57,23 @@ const quizQuestions = [
     question: 'What should be used to prevent tools and materials falling from the platform?',
     options: [
       'Larger platform area',
-      'Tool lanyards and toeboards',
       'A second worker watching from below',
       'Wrapping tools in cloth',
+      'Tool lanyards and toeboards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Tool lanyards secure tools to the user or tower, and toeboards (minimum 150mm high) prevent materials sliding off the platform edge. Both are required controls for preventing struck-by injuries at ground level.',
   },
   {
     question: 'What typically causes a mobile access tower to overturn?',
     options: [
+      'Wind loading, overloading, uneven ground, or over-reaching',
       'Using the correct stabilisers',
       'Working in calm conditions on level ground',
-      'Wind loading, overloading, uneven ground, or over-reaching',
       'Having too few people on the platform',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Overturning is caused by forces acting to tip the tower — wind loading, excessive weight on one side, uneven ground, or an operative leaning too far from the platform centre. All shift the centre of gravity beyond the base footprint.',
   },
@@ -92,8 +92,8 @@ const quizQuestions = [
   {
     question:
       'According to HSE statistics, approximately what percentage of tower scaffold accidents involve incorrect assembly?',
-    options: ['Around 10%', 'Around 25%', 'Around 50%', 'Around 75%'],
-    correctAnswer: 1,
+    options: ['Around 10%', 'Around 50%', 'Around 25%', 'Around 75%'],
+    correctAnswer: 2,
     explanation:
       'HSE data shows that approximately a quarter of mobile tower scaffold accidents are linked to incorrect assembly — missing braces, wrong build sequence, or components not fully locked. This underlines the need for trained, competent assemblers.',
   },
@@ -101,11 +101,11 @@ const quizQuestions = [
     question: 'How does fatigue increase the risk of accidents when working on towers?',
     options: [
       'It makes the tower less stable',
-      'It reduces concentration, reaction time, and grip strength',
       'It increases wind loading on the tower',
       'It only affects work above 10 metres',
+      'It reduces concentration, reaction time, and grip strength',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fatigue impairs cognitive function, slows reaction times, and weakens physical grip — all critical when working at height. Operatives should take regular breaks, stay hydrated, and avoid working at height when excessively tired.',
   },
@@ -116,12 +116,12 @@ const quickCheckQuestions = [
     question:
       'A tower is being set up near an 11kV overhead power line. The site manager says 10 metres clearance is enough. Is this correct?',
     options: [
-      'Yes — 10 metres exceeds the 6-metre minimum',
       'No — minimum 15 metres clearance is required, or seek DNO guidance',
+      'Yes — 10 metres exceeds the 6-metre minimum',
       'Yes — the tower is earthed so clearance does not matter',
       'No — you cannot use a tower within 50 metres of power lines',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The minimum recommended clearance from overhead power lines is 15 metres. At 10 metres there is still serious risk of flashover, especially with 11kV high-voltage lines. Contact the DNO before proceeding.',
   },

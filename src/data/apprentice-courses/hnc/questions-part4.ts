@@ -202,7 +202,7 @@ export const questionsPart4 = [
     ],
     correctAnswer: 3,
     explanation:
-      'Part L requires MVHR systems to achieve a minimum heat recovery efficiency of 70% to be counted towards building energy calculations.',
+      'Efficient MVHR units typically achieve at least 70% heat recovery; well-specified systems reach 90% or more, recovering heat from extract air to pre-warm incoming fresh air.',
     section: 'Building Regulations',
     difficulty: 'intermediate',
     topic: 'Part L Compliance',
@@ -246,10 +246,10 @@ export const questionsPart4 = [
     id: 390,
     question: 'What is a thermal bridge in building construction?',
     options: [
-      'Evaluating operational energy performance of buildings',
-      'To reject heat from the chiller condenser to atmosphere',
+      'A deliberate gap left in insulation for ventilation purposes',
+      'A structural connection between two separate buildings',
       'An area where heat transfers more readily through the building envelope',
-      'Automatically adjusting artificial light based on available daylight',
+      'A barrier installed to prevent moisture passing through walls',
     ],
     correctAnswer: 2,
     explanation:
@@ -263,9 +263,9 @@ export const questionsPart4 = [
     id: 391,
     question: 'What is the purpose of an air permeability test?',
     options: [
-      'More consistent performance throughout the year',
-      'A framework for gradual handover and extended aftercare',
-      'To certify that electricity was generated from renewable sources',
+      'To measure the moisture content within the building fabric',
+      'To verify the heat recovery efficiency of the ventilation system',
+      'To assess the acoustic insulation between adjacent rooms',
       'To measure the rate of air leakage through the building envelope',
     ],
     correctAnswer: 3,
@@ -366,10 +366,10 @@ export const questionsPart4 = [
     id: 397,
     question: 'What is the function of a Maximum Power Point Tracker (MPPT) in a solar PV system?',
     options: [
-      'A measure of how accurately colours appear; minimum Ra 80',
+      'To disconnect the array automatically if the grid supply fails',
       'To optimise the voltage and current for maximum power output',
-      'They reduce the temperature lift required, improving COP',
-      'To prevent short cycling and provide system volume',
+      'To convert the DC output of the panels into mains-frequency AC',
+      'To limit the array voltage to a safe level during maintenance',
     ],
     correctAnswer: 1,
     explanation:
@@ -384,10 +384,10 @@ export const questionsPart4 = [
     question:
       'What is the main advantage of a ground source heat pump over an air source heat pump?',
     options: [
-      'The ratio of light output at end of life to initial output',
-      'Proportional-Integral-Derivative control algorithm',
+      'It requires no electrical supply to operate the compressor',
+      'It does not need a defrost cycle in any weather conditions',
       'More consistent performance throughout the year',
-      'Reducing heating/cooling setpoints during unoccupied periods',
+      'It can be installed without any external groundworks',
     ],
     correctAnswer: 2,
     explanation:
@@ -452,10 +452,10 @@ export const questionsPart4 = [
     id: 402,
     question: 'What is embodied carbon in building construction?',
     options: [
-      'To monitor and control building services for comfort and efficiency',
-      'Building Research Establishment Environmental Assessment Method',
+      'Carbon emitted by the building during its occupied operational life',
+      'Carbon stored within timber and other natural building materials',
       'Carbon emissions from materials, construction and end-of-life',
-      'Terre-Neutre-Separés (separate earth and neutral)',
+      'Carbon offset purchased to make a building carbon neutral',
     ],
     correctAnswer: 2,
     explanation:
@@ -469,9 +469,9 @@ export const questionsPart4 = [
     id: 403,
     question: 'What is a nearly Zero Energy Building (nZEB)?',
     options: [
-      'Carbon emissions balanced by offsets or removals over the building lifecycle',
-      'To provide digital addressable control of individual or grouped luminaires',
-      'To verify and optimise system performance under different seasonal conditions',
+      'A building that uses absolutely no energy at any point in the year',
+      'A building constructed entirely from recycled or reclaimed materials',
+      'A building that exports more energy to the grid than it imports annually',
       'A building with very high energy performance where remaining energy is largely from renewable sources',
     ],
     correctAnswer: 3,
@@ -487,9 +487,9 @@ export const questionsPart4 = [
     question: 'What is the primary benefit of LED lighting for sustainability?',
     options: [
       'Significantly reduced energy consumption',
-      'To automatically switch lights based on occupancy',
-      'Conservation of fuel and power',
-      'A glare discomfort rating; maximum UGR 19',
+      'Elimination of the need for any lighting controls',
+      'Production of more heat output per unit of light',
+      'Higher illuminance than is possible with any other source',
     ],
     correctAnswer: 0,
     explanation:
@@ -520,10 +520,10 @@ export const questionsPart4 = [
     id: 406,
     question: "What does a building's carbon footprint include?",
     options: [
-      'They reduce the temperature lift required, improving COP',
-      'Thermal transmittance - lower means better insulation',
+      'Only the carbon emitted while the building is occupied',
+      'Only the carbon emitted manufacturing the building materials',
       'Both operational and embodied carbon emissions',
-      'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
+      'Only the carbon associated with on-site energy generation',
     ],
     correctAnswer: 2,
     explanation:
@@ -537,9 +537,9 @@ export const questionsPart4 = [
     id: 407,
     question: 'What is the purpose of commissioning renewable energy systems?',
     options: [
-      'When the consequence of overvoltage affects safety, public services, or valuable equipment',
-      'To measure the rate of air leakage through the building envelope',
-      'To automatically switch lights based on occupancy',
+      'To register the system with the local distribution network operator',
+      'To calculate the financial payback period of the installation',
+      'To obtain planning permission before installation begins',
       'To verify systems operate as designed and achieve expected performance',
     ],
     correctAnswer: 3,
@@ -589,10 +589,10 @@ export const questionsPart4 = [
     id: 410,
     question: 'Why are lower flow temperatures beneficial for heat pump efficiency?',
     options: [
-      'A local heating/cooling unit with fan and heat exchanger coil',
-      'Adjusting airflows to achieve design air quantities at all terminals',
+      'They allow smaller diameter pipework to be used throughout',
+      'They remove the need for a buffer vessel in the system',
       'They reduce the temperature lift required, improving COP',
-      'Automatically adjusting artificial light based on available daylight',
+      'They eliminate the need for any defrost cycles in winter',
     ],
     correctAnswer: 2,
     explanation:
@@ -606,9 +606,9 @@ export const questionsPart4 = [
     id: 411,
     question: 'What is the purpose of a buffer tank in a heat pump system?',
     options: [
-      'A system that varies airflow to match zone cooling/heating loads',
-      'To ensure only the device nearest the fault operates',
-      'Significantly reduced energy consumption',
+      'To store domestic hot water at mains pressure for taps',
+      'To raise the flow temperature above what the heat pump produces',
+      'To filter debris from the heating circuit before the compressor',
       'To prevent short cycling and provide system volume',
     ],
     correctAnswer: 3,
@@ -657,10 +657,10 @@ export const questionsPart4 = [
     id: 414,
     question: 'What is the purpose of thermal mass in sustainable building design?',
     options: [
-      'Evaluating operational energy performance of buildings',
-      'To determine the number of luminaires needed to achieve target illuminance',
+      'To increase the airtightness of the building envelope',
+      'To reduce the structural loading on the building foundations',
       'To store and release heat, stabilising internal temperatures',
-      'Automatically adjusting artificial light based on available daylight',
+      'To provide acoustic separation between occupied spaces',
     ],
     correctAnswer: 2,
     explanation:
@@ -707,12 +707,12 @@ export const questionsPart4 = [
   },
   {
     id: 417,
-    question: 'What does TM54 relate to in building energy assessment?',
+    question: 'What does CIBSE TM54 relate to in building energy assessment?',
     options: [
-      'To disconnect the system if the grid fails',
+      'Setting the minimum ventilation rates for occupied spaces',
       'Evaluating operational energy performance of buildings',
-      'To remove ice build-up on the outdoor evaporator coil',
-      'Serial communication for industrial devices',
+      'Specifying the maximum permitted internal noise levels',
+      'Calculating peak heating and cooling design loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -743,9 +743,9 @@ export const questionsPart4 = [
     id: 419,
     question: 'What is a Soft Landings approach in building delivery?',
     options: [
-      'To reject heat from the chiller condenser to atmosphere',
-      'UK regulations requiring new homes to be zero carbon ready from 2025',
-      'An area where heat transfers more readily through the building envelope',
+      'A method of phasing construction to minimise site disruption',
+      'A scheme certifying low-carbon construction materials',
+      'A structural technique for reducing foundation settlement',
       'A framework for gradual handover and extended aftercare',
     ],
     correctAnswer: 3,
@@ -761,9 +761,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of sub-metering in sustainable buildings?',
     options: [
       'To monitor and manage energy consumption by end use',
-      'VSDs can generate harmonic distortion and electrical noise',
-      'To optimise the voltage and current for maximum power output',
-      'To control the proportion of fresh and recirculated air',
+      'To reduce the building total energy demand automatically',
+      'To bill all tenants a single shared utility charge',
+      'To switch supply between the grid and on-site generation',
     ],
     correctAnswer: 0,
     explanation:
@@ -795,10 +795,10 @@ export const questionsPart4 = [
     id: 422,
     question: 'What is the primary purpose of a DC isolator on a solar PV installation?',
     options: [
-      'To automatically switch lights based on occupancy',
-      'An operational energy performance rating for offices',
+      'To track the maximum power point of the array',
+      'To convert the panel output from DC to AC',
       'To safely isolate the PV array for maintenance',
-      'A framework for gradual handover and extended aftercare',
+      'To protect the array against transient overvoltages',
     ],
     correctAnswer: 2,
     explanation:
@@ -848,10 +848,10 @@ export const questionsPart4 = [
     id: 425,
     question: 'What is the purpose of defrost cycles in air source heat pumps?',
     options: [
-      'Equal to or greater than the actual PSCC at that point',
+      'To raise the refrigerant pressure during very cold weather',
       'To remove ice build-up on the outdoor evaporator coil',
-      'To reject heat from the chiller condenser to atmosphere',
-      'To record historical data for analysis and fault finding',
+      'To boost the flow temperature for domestic hot water',
+      'To purge air from the heating circuit periodically',
     ],
     correctAnswer: 1,
     explanation:
@@ -865,10 +865,10 @@ export const questionsPart4 = [
     id: 426,
     question: 'What is the Renewable Heat Incentive (RHI)?',
     options: [
-      'Thermal transmittance - lower means better insulation',
-      'Proportional-Integral-Derivative control algorithm',
+      'A mandatory efficiency standard for new heating systems',
+      'A tariff paid for exporting surplus electricity to the grid',
       'A government financial incentive for renewable heating',
-      'To store and release heat, stabilising internal temperatures',
+      'A certificate proving heat came from renewable sources',
     ],
     correctAnswer: 2,
     explanation:
@@ -883,9 +883,9 @@ export const questionsPart4 = [
     question:
       'What is the typical COP of a ground source heat pump compared to an air source heat pump?',
     options: [
-      'To reject heat from the chiller condenser to atmosphere',
-      'To optimise the voltage and current for maximum power output',
-      'Building Research Establishment Environmental Assessment Method',
+      'GSHPs and ASHPs have identical COP at all temperatures',
+      'GSHPs typically have lower COP (2.0-3.0 vs 3.5-5.0)',
+      'COP depends only on flow temperature, not the heat source',
       'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
     ],
     correctAnswer: 3,
@@ -901,9 +901,9 @@ export const questionsPart4 = [
     question: "What is the purpose of Part L's Target Emission Rate (TER)?",
     options: [
       'To establish the maximum allowable CO2 emissions for compliance',
-      'To monitor and manage energy consumption by end use',
-      'To automatically switch lights based on occupancy',
-      'Carbon emissions from materials, construction and end-of-life',
+      'To set the minimum renewable energy proportion for a building',
+      'To define the maximum heat loss through the building fabric',
+      'To record the actual measured emissions once a building is occupied',
     ],
     correctAnswer: 0,
     explanation:
@@ -917,10 +917,10 @@ export const questionsPart4 = [
     id: 429,
     question: 'What is the Future Homes Standard?',
     options: [
-      'It operates continuously and remains lit during an emergency',
+      'A voluntary accreditation scheme for smart home technology',
       'UK regulations requiring new homes to be zero carbon ready from 2025',
-      'Equal to or greater than the actual PSCC at that point',
-      'VSDs can generate harmonic distortion and electrical noise',
+      'A minimum space standard for the size of new dwellings',
+      'A grant scheme funding insulation upgrades to existing homes',
     ],
     correctAnswer: 1,
     explanation:
@@ -934,10 +934,10 @@ export const questionsPart4 = [
     id: 430,
     question: 'What is a Power Purchase Agreement (PPA) for solar PV?',
     options: [
-      'It operates continuously and remains lit during an emergency',
-      'An area where heat transfers more readily through the building envelope',
+      'A contract to sell exported electricity back to the grid supplier',
+      'A maintenance contract covering inverter and panel repairs',
       'An agreement to buy electricity from a third-party owned system',
-      'To condition and circulate air for ventilation and climate control',
+      'A government tariff guaranteeing a fixed price for generation',
     ],
     correctAnswer: 2,
     explanation:
@@ -985,10 +985,10 @@ export const questionsPart4 = [
     id: 433,
     question: 'What is demand side response (DSR)?',
     options: [
-      'An agreement to buy electricity from a third-party owned system',
+      'Increasing on-site generation when grid demand is highest',
       'Shifting electricity demand in response to grid signals or pricing',
-      'VSDs can generate harmonic distortion and electrical noise',
-      'The difference between predicted and actual energy consumption',
+      'Storing surplus renewable energy in batteries for later export',
+      'Disconnecting a site automatically when the grid voltage drops',
     ],
     correctAnswer: 1,
     explanation:
@@ -1003,10 +1003,10 @@ export const questionsPart4 = [
     question:
       'What is the primary purpose of building fabric improvements before installing heat pumps?',
     options: [
-      'Proportional-Integral-Derivative control algorithm',
-      'Building Research Establishment Environmental Assessment Method',
+      'To increase the size of heat pump required for the property',
+      'To allow the heat pump to run at higher flow temperatures',
       'To reduce heat demand and allow lower flow temperatures',
-      'VSDs can generate harmonic distortion and electrical noise',
+      'To remove the need for any heat emitters in the building',
     ],
     correctAnswer: 2,
     explanation:
@@ -1020,9 +1020,9 @@ export const questionsPart4 = [
     id: 435,
     question: 'What is the net zero carbon definition for buildings?',
     options: [
-      'The ratio of light output at end of life to initial output',
-      'Adjusting airflows to achieve design air quantities at all terminals',
-      'Systematic process of verifying systems perform as designed',
+      'A building that produces zero carbon only during construction',
+      'A building that uses no fossil fuels in its heating systems',
+      'A building rated A on its Energy Performance Certificate',
       'Carbon emissions balanced by offsets or removals over the building lifecycle',
     ],
     correctAnswer: 3,
@@ -1038,9 +1038,9 @@ export const questionsPart4 = [
     question: 'What is the NABERS UK rating system?',
     options: [
       'An operational energy performance rating for offices',
-      'To disconnect the system if the grid fails',
-      'To provide centralised power supply and simplified maintenance',
-      'Mechanical Ventilation with Heat Recovery',
+      'A design-stage carbon assessment for new dwellings',
+      'A water efficiency standard for commercial buildings',
+      'A scheme certifying renewable electricity tariffs',
     ],
     correctAnswer: 0,
     explanation:
@@ -1054,10 +1054,10 @@ export const questionsPart4 = [
     id: 437,
     question: 'What is the purpose of renewable energy certificates (REGOs)?',
     options: [
-      'Ratio of minimum to average illuminance; typically 0.6 minimum',
+      'To pay generators a subsidy for each unit of renewable output',
       'To certify that electricity was generated from renewable sources',
-      'Adjusting airflows to achieve design air quantities at all terminals',
-      'Terre-Neutre-Separés (separate earth and neutral)',
+      'To guarantee the connection of renewable generation to the grid',
+      'To measure the carbon intensity of the national grid in real time',
     ],
     correctAnswer: 1,
     explanation:
@@ -1088,16 +1088,16 @@ export const questionsPart4 = [
   },
   {
     id: 439,
-    question: 'What does TNS stand for in electrical earthing systems?',
+    question: 'What does TN-S describe in electrical earthing systems?',
     options: [
-      'The difference between predicted and actual energy consumption',
-      'A local heating/cooling unit with fan and heat exchanger coil',
-      'A glare discomfort rating; maximum UGR 19',
-      'Terre-Neutre-Separés (separate earth and neutral)',
+      'An earthing system using the combined neutral and earth (PEN) throughout',
+      'An installation with no connection to the supply earth at all',
+      'A system where the earth electrode is provided by the consumer',
+      'A system where the earth and neutral are separate throughout',
     ],
     correctAnswer: 3,
     explanation:
-      'TNS (Terre-Neutre-Separés) is an earthing system where the earth and neutral are separate throughout, with the earth provided by the supply network.',
+      'In a TN-S system the earth and neutral conductors are kept separate throughout the installation, with the protective earth provided by the supply network (often the cable sheath).',
     section: 'Power Distribution',
     difficulty: 'basic',
     topic: 'Earthing Systems',
@@ -1108,9 +1108,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of discrimination (selectivity) in circuit protection?',
     options: [
       'To ensure only the device nearest the fault operates',
-      'Ratio of minimum to average illuminance; typically 0.6 minimum',
-      'To prevent short cycling and provide system volume',
-      'They reduce the temperature lift required, improving COP',
+      'To ensure the main incoming device trips first on any fault',
+      'To allow two protective devices to share a fault current equally',
+      'To increase the prospective fault current at each board',
     ],
     correctAnswer: 0,
     explanation:
@@ -1212,10 +1212,10 @@ export const questionsPart4 = [
     id: 446,
     question: 'What is the purpose of a maintained emergency luminaire?',
     options: [
-      'Equal to or greater than the actual PSCC at that point',
-      'Thermal transmittance - lower means better insulation',
+      'It illuminates only when the normal mains supply fails',
+      'It provides additional task lighting during normal occupation only',
       'It operates continuously and remains lit during an emergency',
-      'Building Research Establishment Environmental Assessment Method',
+      'It flashes intermittently to indicate the nearest fire exit',
     ],
     correctAnswer: 2,
     explanation:
@@ -1248,9 +1248,9 @@ export const questionsPart4 = [
       'What is the colour rendering index (CRI) and what minimum is typically required for offices?',
     options: [
       'A measure of how accurately colours appear; minimum Ra 80',
-      'An area where heat transfers more readily through the building envelope',
-      'Average performance over a heating season',
-      'To disconnect the system if the grid fails',
+      'A measure of the light source colour temperature; minimum 4000K',
+      'A measure of luminous efficacy in lumens per watt; minimum 80',
+      'A measure of glare from luminaires; maximum UGR 19',
     ],
     correctAnswer: 0,
     explanation:
@@ -1264,10 +1264,10 @@ export const questionsPart4 = [
     id: 449,
     question: 'What is the purpose of a lighting control system using DALI?',
     options: [
-      'To establish the maximum allowable CO2 emissions for compliance',
+      'To supply luminaires with a higher voltage to reduce cable size',
       'To provide digital addressable control of individual or grouped luminaires',
-      'The ratio of light output at end of life to initial output',
-      'When the consequence of overvoltage affects safety, public services, or valuable equipment',
+      'To convert mains AC into the DC required by LED drivers',
+      'To provide surge protection for the lighting distribution board',
     ],
     correctAnswer: 1,
     explanation:
@@ -1298,9 +1298,9 @@ export const questionsPart4 = [
     id: 451,
     question: 'What is the lumen maintenance factor (LMF)?',
     options: [
-      'A measure of how accurately colours appear; minimum Ra 80',
-      'To determine the number of luminaires needed to achieve target illuminance',
-      'Ventilation adjusted based on occupancy or air quality sensors',
+      'The ratio of useful light reaching the working plane to total output',
+      'The proportion of light lost through dirt on luminaire surfaces',
+      'The factor accounting for reduced output as supply voltage drops',
       'The ratio of light output at end of life to initial output',
     ],
     correctAnswer: 3,
@@ -1334,10 +1334,10 @@ export const questionsPart4 = [
     question:
       'What is the maximum prospective fault current (PSCC) that a distribution board must be rated to withstand?',
     options: [
-      'Carbon emissions from materials, construction and end-of-life',
+      'Half of the actual PSCC at that point',
       'Equal to or greater than the actual PSCC at that point',
-      'They reduce the temperature lift required, improving COP',
-      'Building Research Establishment Environmental Assessment Method',
+      'Equal to the rated current of the main switch only',
+      'At least twice the design current of the largest circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -1368,9 +1368,9 @@ export const questionsPart4 = [
     id: 455,
     question: 'When is a Type B RCD required?',
     options: [
-      'Shifting electricity demand in response to grid signals or pricing',
-      'An agreement to buy electricity from a third-party owned system',
-      'To store and release heat, stabilising internal temperatures',
+      'For all standard socket-outlet circuits in dwellings',
+      'Only where pulsating DC fault currents may be present',
+      'For circuits supplying purely resistive heating loads',
       'For equipment that may produce smooth DC fault currents',
     ],
     correctAnswer: 3,
@@ -1386,9 +1386,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of surge protection devices (SPDs) in electrical installations?',
     options: [
       'To protect against transient overvoltages',
-      'Fire-resistant cables maintaining circuit integrity',
-      'Standard Assessment Procedure',
-      'To prevent short cycling and provide system volume',
+      'To protect against sustained overcurrent and overload',
+      'To protect against earth fault and provide additional protection',
+      'To protect against undervoltage and supply brownouts',
     ],
     correctAnswer: 0,
     explanation:
@@ -1402,10 +1402,10 @@ export const questionsPart4 = [
     id: 457,
     question: 'According to BS 7671, when is SPD protection generally required?',
     options: [
-      'To determine the number of luminaires needed to achieve target illuminance',
+      'Only on installations supplied via overhead lines in rural areas',
       'When the consequence of overvoltage affects safety, public services, or valuable equipment',
-      'To verify and optimise system performance under different seasonal conditions',
-      'A building with very high energy performance where remaining energy is largely from renewable sources',
+      'Only where the prospective fault current exceeds 16 kA',
+      'On every final circuit regardless of the loads connected',
     ],
     correctAnswer: 1,
     explanation:
@@ -1419,10 +1419,10 @@ export const questionsPart4 = [
     id: 458,
     question: 'What is the purpose of circadian lighting in office environments?',
     options: [
-      'To ensure only the device nearest the fault operates',
-      'Simultaneous heating and cooling capability in different zones',
+      'To minimise energy use by dimming lights when spaces are empty',
+      'To improve colour rendering for detailed visual tasks',
       'To adjust colour temperature and intensity to support natural body rhythms',
-      'When the consequence of overvoltage affects safety, public services, or valuable equipment',
+      'To provide a fixed cool-white output that never varies through the day',
     ],
     correctAnswer: 2,
     explanation:
@@ -1437,9 +1437,9 @@ export const questionsPart4 = [
     question:
       'What colour temperature is typically used for morning alertness in circadian lighting?',
     options: [
-      'AC and pulsating DC residual currents',
-      'Average performance over a heating season',
-      'Present error magnitude',
+      '1800-2200K (very warm amber)',
+      '2700-3000K (warm white)',
+      '4000K (neutral white)',
       '5500-6500K (cool white/daylight)',
     ],
     correctAnswer: 3,
@@ -1471,10 +1471,10 @@ export const questionsPart4 = [
     id: 461,
     question: 'What is the purpose of presence detection in lighting control?',
     options: [
-      'To establish the maximum allowable CO2 emissions for compliance',
+      'To dim lighting in response to available daylight',
       'To automatically switch lights based on occupancy',
-      'For equipment that may produce smooth DC fault currents',
-      'To safely isolate the PV array for maintenance',
+      'To adjust colour temperature through the working day',
+      'To limit the maximum lighting power density of a space',
     ],
     correctAnswer: 1,
     explanation:
@@ -1488,10 +1488,10 @@ export const questionsPart4 = [
     id: 462,
     question: 'What is daylight linking in lighting control systems?',
     options: [
-      'Simultaneous heating and cooling capability in different zones',
-      'An area where heat transfers more readily through the building envelope',
+      'Switching lights off automatically when a space becomes unoccupied',
+      'Linking emergency luminaires to a central battery supply',
       'Automatically adjusting artificial light based on available daylight',
-      'To provide digital addressable control of individual or grouped luminaires',
+      'Synchronising luminaire colour temperature with the time of day',
     ],
     correctAnswer: 2,
     explanation:
@@ -1506,9 +1506,9 @@ export const questionsPart4 = [
     question:
       'What is the minimum illuminance required for high-risk task area emergency lighting?',
     options: [
-      'An operational energy performance rating for offices',
-      'Terre-Neutre-Separés (separate earth and neutral)',
-      'A glare discomfort rating; maximum UGR 19',
+      '1 lux measured on the centre line of the route',
+      '0.5 lux averaged across the floor area',
+      '5% of normal illuminance or 5 lux minimum',
       '10% of normal illuminance or 15 lux minimum',
     ],
     correctAnswer: 3,
@@ -1524,9 +1524,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of a central battery system for emergency lighting?',
     options: [
       'To provide centralised power supply and simplified maintenance',
-      'Daily visual check, monthly brief test, annual full duration test',
-      'To optimise the voltage and current for maximum power output',
-      'VSDs can generate harmonic distortion and electrical noise',
+      'To allow each luminaire its own independent battery and charger',
+      'To remove the need for any periodic testing of the system',
+      'To supply normal mains lighting at a reduced voltage',
     ],
     correctAnswer: 0,
     explanation:
@@ -1541,10 +1541,10 @@ export const questionsPart4 = [
     question:
       'What cable type is typically required for central battery emergency lighting circuits?',
     options: [
-      'To store and release heat, stabilising internal temperatures',
+      'Standard PVC twin-and-earth cable clipped direct',
       'Fire-resistant cables maintaining circuit integrity',
-      'AC and pulsating DC residual currents',
-      'To control the proportion of fresh and recirculated air',
+      'Screened cable to limit electromagnetic interference',
+      'Mineral-insulated cable only, with no alternatives permitted',
     ],
     correctAnswer: 1,
     explanation:
@@ -1558,10 +1558,10 @@ export const questionsPart4 = [
     id: 466,
     question: 'What does IP65 rating indicate for a luminaire?',
     options: [
-      'To remove ice build-up on the outdoor evaporator coil',
-      'A framework for gradual handover and extended aftercare',
+      'Protected against dust ingress and temporary immersion in water',
+      'Dust protected and protected against splashing water only',
       'Dust tight and protected against water jets',
-      'Both operational and embodied carbon emissions',
+      'Dust tight and protected against powerful water jets',
     ],
     correctAnswer: 2,
     explanation:
@@ -1593,9 +1593,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of a lighting design calculation using the lumen method?',
     options: [
       'To determine the number of luminaires needed to achieve target illuminance',
-      'To monitor and control building services for comfort and efficiency',
-      'Building Research Establishment Environmental Assessment Method',
-      'Equal to or greater than the actual PSCC at that point',
+      'To calculate the point illuminance at a single location precisely',
+      'To determine the glare rating of a proposed luminaire layout',
+      'To calculate the energy consumption of a lighting installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -1611,10 +1611,10 @@ export const questionsPart4 = [
     id: 469,
     question: 'What is the primary function of a Building Management System (BMS)?',
     options: [
-      'Carbon emissions from materials, construction and end-of-life',
+      'To provide the electrical protection for building services circuits',
       'To monitor and control building services for comfort and efficiency',
-      'To verify systems operate as designed and achieve expected performance',
-      'Systematic process of verifying systems perform as designed',
+      'To manage occupant access control and security only',
+      'To generate the design drawings for building services installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -1645,9 +1645,9 @@ export const questionsPart4 = [
     id: 471,
     question: 'What does Modbus protocol provide in HVAC control systems?',
     options: [
-      'To produce chilled water for cooling',
-      'A glare discomfort rating; maximum UGR 19',
-      'For equipment that may produce smooth DC fault currents',
+      'Wireless mesh networking between battery-powered sensors',
+      'High-bandwidth video streaming for plant room CCTV',
+      'Electrical isolation between control panels and field devices',
       'Serial communication for industrial devices',
     ],
     correctAnswer: 3,
@@ -1663,9 +1663,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of a Variable Speed Drive (VSD) in HVAC systems?',
     options: [
       'To control motor speed and reduce energy consumption',
-      'More consistent performance throughout the year',
-      'Building Research Establishment Environmental Assessment Method',
-      'To provide centralised power supply and simplified maintenance',
+      'To provide overload protection for the motor windings',
+      'To convert a single-phase supply into a three-phase supply',
+      'To maintain a constant motor speed regardless of load',
     ],
     correctAnswer: 0,
     explanation:
@@ -1714,9 +1714,9 @@ export const questionsPart4 = [
     id: 475,
     question: 'What type of motor is most commonly controlled by VSDs in HVAC applications?',
     options: [
-      '5500-6500K (cool white/daylight)',
-      'Present error magnitude',
-      '0.6 air changes per hour at 50 Pa',
+      'Single phase capacitor-start motor',
+      'DC series-wound motor',
+      'Universal (brushed) motor',
       'Three phase induction motor',
     ],
     correctAnswer: 3,
@@ -1732,9 +1732,9 @@ export const questionsPart4 = [
     question: 'What is a potential issue with VSDs and electromagnetic compatibility (EMC)?',
     options: [
       'VSDs can generate harmonic distortion and electrical noise',
-      'To prevent short cycling and provide system volume',
-      'A government financial incentive for renewable heating',
-      'Both operational and embodied carbon emissions',
+      'VSDs draw a purely sinusoidal current at all speeds',
+      'VSDs require a separate clean earth to function at all',
+      'VSDs cannot be used on circuits protected by an RCD',
     ],
     correctAnswer: 0,
     explanation:
@@ -1748,10 +1748,10 @@ export const questionsPart4 = [
     id: 477,
     question: 'What cable type is recommended between a VSD and motor?',
     options: [
-      'Flow is directly proportional to speed',
+      'Standard unscreened PVC singles in conduit',
       'Screened/shielded cable with symmetrical construction',
-      'Ventilation adjusted based on occupancy or air quality sensors',
-      '10% of normal illuminance or 15 lux minimum',
+      'Flexible rubber cable with no earth conductor',
+      'Mineral-insulated cable terminated without glands',
     ],
     correctAnswer: 1,
     explanation:
@@ -1765,10 +1765,10 @@ export const questionsPart4 = [
     id: 478,
     question: 'What is the purpose of an Air Handling Unit (AHU)?',
     options: [
-      'Terre-Neutre-Separés (separate earth and neutral)',
-      'To remove ice build-up on the outdoor evaporator coil',
+      'To produce chilled water for distribution to cooling coils',
+      'To generate electricity from waste heat in the exhaust air',
       'To condition and circulate air for ventilation and climate control',
-      'A controller that calculates when to start plant to achieve setpoint at occupancy',
+      'To store hot water for the building heating circuits',
     ],
     correctAnswer: 2,
     explanation:
@@ -1782,9 +1782,9 @@ export const questionsPart4 = [
     id: 479,
     question: 'What is the function of a mixing damper in an AHU?',
     options: [
-      'To ensure only the device nearest the fault operates',
-      'UK regulations requiring new homes to be zero carbon ready from 2025',
-      'An operational energy performance rating for offices',
+      'To isolate the supply fan during maintenance',
+      'To prevent the spread of smoke through the ductwork',
+      'To regulate the chilled water flow through the cooling coil',
       'To control the proportion of fresh and recirculated air',
     ],
     correctAnswer: 3,
@@ -1800,9 +1800,9 @@ export const questionsPart4 = [
     question: 'What is a fan coil unit (FCU)?',
     options: [
       'A local heating/cooling unit with fan and heat exchanger coil',
-      'To verify and optimise system performance under different seasonal conditions',
-      'To record historical data for analysis and fault finding',
-      'Carbon emissions balanced by offsets or removals over the building lifecycle',
+      'A central plant item that chills water for the whole building',
+      'A duct-mounted device that recovers heat from extract air',
+      'A roof-mounted unit that rejects condenser heat to atmosphere',
     ],
     correctAnswer: 0,
     explanation:
@@ -1816,10 +1816,10 @@ export const questionsPart4 = [
     id: 481,
     question: 'What is the advantage of a four-pipe FCU system over a two-pipe system?',
     options: [
-      'To remove ice build-up on the outdoor evaporator coil',
+      'It uses smaller diameter pipework and less plant space',
       'Simultaneous heating and cooling capability in different zones',
-      'To reject heat from the chiller condenser to atmosphere',
-      'To certify that electricity was generated from renewable sources',
+      'It removes the need for a fan within each terminal unit',
+      'It allows the system to run without any central chiller',
     ],
     correctAnswer: 1,
     explanation:
@@ -1833,10 +1833,10 @@ export const questionsPart4 = [
     id: 482,
     question: 'What is a Variable Air Volume (VAV) system?',
     options: [
-      'They reduce the temperature lift required, improving COP',
-      'To control the proportion of fresh and recirculated air',
+      'A system that varies supply air temperature at constant flow',
+      'A system that recirculates a fixed volume of air continuously',
       'A system that varies airflow to match zone cooling/heating loads',
-      'Shifting electricity demand in response to grid signals or pricing',
+      'A system that supplies only fresh air with no recirculation',
     ],
     correctAnswer: 2,
     explanation:
@@ -1850,9 +1850,9 @@ export const questionsPart4 = [
     id: 483,
     question: 'What is the purpose of a chiller in an HVAC system?',
     options: [
-      '2 times the mounting height',
-      'Mechanical Ventilation with Heat Recovery',
-      '5500-6500K (cool white/daylight)',
+      'To heat water for the building heating circuits',
+      'To filter and humidify the supply air',
+      'To recover heat from the building exhaust air',
       'To produce chilled water for cooling',
     ],
     correctAnswer: 3,
@@ -1884,10 +1884,10 @@ export const questionsPart4 = [
     id: 485,
     question: 'What is the purpose of a cooling tower in a chiller system?',
     options: [
-      'Automatically adjusting artificial light based on available daylight',
+      'To chill water directly for the cooling coils',
       'To reject heat from the chiller condenser to atmosphere',
-      'Ratio of minimum to average illuminance; typically 0.6 minimum',
-      'To control motor speed and reduce energy consumption',
+      'To pressurise the chilled water circuit',
+      'To filter the refrigerant within the chiller',
     ],
     correctAnswer: 1,
     explanation:
@@ -1901,10 +1901,10 @@ export const questionsPart4 = [
     id: 486,
     question: 'What is free cooling in a chilled water system?',
     options: [
-      'A framework for gradual handover and extended aftercare',
-      'An agreement to buy electricity from a third-party owned system',
+      'Running the chiller only at night when electricity is cheaper',
+      'Providing cooling at no cost using recovered waste heat',
       'Using cool outdoor conditions to provide cooling without running the chiller',
-      'To monitor and control building services for comfort and efficiency',
+      'Cooling the building using its thermal mass alone',
     ],
     correctAnswer: 2,
     explanation:
@@ -1952,10 +1952,10 @@ export const questionsPart4 = [
     id: 489,
     question: 'What is PID control in BMS applications?',
     options: [
-      'An operational energy performance rating for offices',
+      'A simple two-position on/off control method',
       'Proportional-Integral-Derivative control algorithm',
-      'Systematic process of verifying systems perform as designed',
-      'To record historical data for analysis and fault finding',
+      'A protocol for addressing field devices on a network',
+      'A scheduling function that starts plant before occupancy',
     ],
     correctAnswer: 1,
     explanation:
@@ -1986,9 +1986,9 @@ export const questionsPart4 = [
     id: 491,
     question: "What is the purpose of the 'I' (Integral) term in PID control?",
     options: [
-      'Average performance over a heating season',
-      'AC and pulsating DC residual currents',
-      'Mechanical Ventilation with Heat Recovery',
+      'To respond instantly to the present magnitude of error',
+      'To anticipate and dampen rapid future changes in error',
+      'To set the maximum and minimum output limits of the controller',
       'To eliminate steady-state error over time',
     ],
     correctAnswer: 3,
@@ -2004,9 +2004,9 @@ export const questionsPart4 = [
     question: 'What is commissioning in the context of HVAC systems?',
     options: [
       'Systematic process of verifying systems perform as designed',
-      'The ratio of light output at end of life to initial output',
-      'UK regulations requiring new homes to be zero carbon ready from 2025',
-      'The difference between predicted and actual energy consumption',
+      'The routine servicing of plant once it is in operation',
+      'The process of decommissioning and removing redundant plant',
+      'The initial sizing and selection of plant at design stage',
     ],
     correctAnswer: 0,
     explanation:
@@ -2020,10 +2020,10 @@ export const questionsPart4 = [
     id: 493,
     question: 'What is air balancing in HVAC commissioning?',
     options: [
-      'To verify and optimise system performance under different seasonal conditions',
+      'Setting supply and extract fans to run at maximum speed',
       'Adjusting airflows to achieve design air quantities at all terminals',
-      'Screened/shielded cable with symmetrical construction',
-      'An agreement to buy electricity from a third-party owned system',
+      'Equalising the air pressure between adjacent floors of a building',
+      'Matching the fresh air intake to the building occupancy',
     ],
     correctAnswer: 1,
     explanation:
@@ -2054,9 +2054,9 @@ export const questionsPart4 = [
     id: 495,
     question: 'What is the purpose of a trend log in a BMS?',
     options: [
-      'To disconnect the system if the grid fails',
-      'Mechanical Ventilation with Heat Recovery',
-      'Fire-resistant cables maintaining circuit integrity',
+      'To raise alarms when a value exceeds a set threshold',
+      'To schedule plant start and stop times automatically',
+      'To control the position of modulating valves and dampers',
       'To record historical data for analysis and fault finding',
     ],
     correctAnswer: 3,
@@ -2072,9 +2072,9 @@ export const questionsPart4 = [
     question: 'What is an optimum start controller in HVAC?',
     options: [
       'A controller that calculates when to start plant to achieve setpoint at occupancy',
-      'To provide centralised power supply and simplified maintenance',
-      'When the consequence of overvoltage affects safety, public services, or valuable equipment',
-      'Systematic process of verifying systems perform as designed',
+      'A controller that always starts plant at a fixed time each day',
+      'A controller that limits the inrush current when motors start',
+      'A controller that staggers plant starts to limit peak demand',
     ],
     correctAnswer: 0,
     explanation:
@@ -2088,10 +2088,10 @@ export const questionsPart4 = [
     id: 497,
     question: 'What is night setback in HVAC control?',
     options: [
-      'To measure the rate of air leakage through the building envelope',
+      'Switching all plant off completely overnight',
       'Reducing heating/cooling setpoints during unoccupied periods',
-      'The solar energy transmittance coefficient',
-      'To establish the maximum allowable CO2 emissions for compliance',
+      'Running plant overnight to pre-cool the building fabric',
+      'Boosting ventilation rates during the night to purge heat',
     ],
     correctAnswer: 1,
     explanation:
@@ -2105,10 +2105,10 @@ export const questionsPart4 = [
     id: 498,
     question: 'What is demand-controlled ventilation (DCV)?',
     options: [
-      'To verify and optimise system performance under different seasonal conditions',
-      'An area where heat transfers more readily through the building envelope',
+      'Ventilation that runs at a fixed rate whenever the building is open',
+      'Ventilation supplied only through openable windows and trickle vents',
       'Ventilation adjusted based on occupancy or air quality sensors',
-      'Building Research Establishment Environmental Assessment Method',
+      'Ventilation that recovers heat from the extract air stream',
     ],
     correctAnswer: 2,
     explanation:
@@ -2140,9 +2140,9 @@ export const questionsPart4 = [
     question: 'What is the purpose of seasonal commissioning in HVAC systems?',
     options: [
       'To verify and optimise system performance under different seasonal conditions',
-      'To reject heat from the chiller condenser to atmosphere',
-      'Carbon emissions from materials, construction and end-of-life',
-      'To store and release heat, stabilising internal temperatures',
+      'To shut down plant that is not required during a particular season',
+      'To rebalance airflows each time the clocks change',
+      'To replace refrigerant before the cooling season begins',
     ],
     correctAnswer: 0,
     explanation:

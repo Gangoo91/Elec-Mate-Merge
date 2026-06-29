@@ -57,9 +57,9 @@ const quizQuestions = [
     question: "Why fit a 'drip loop' before cable entry into an outdoor enclosure?",
     options: [
       'To prevent water tracking along the cable into the enclosure',
-      'Two teams needed the same scissor lift at once, causing delays',
-      'A tester designed to test without tripping RCDs',
-      'Loss caused by a gap between fibre end-faces at a connection',
+      'To make the cable run easier to identify later',
+      'To reduce the voltage drop along the cable',
+      'To improve the appearance of the installation',
     ],
     correctAnswer: 0,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'What installation detail helps prevent galvanic corrosion between dissimilar metals?',
     options: [
-      'Key design calculations, assumptions, and any as-built revisions',
-      'Isolate with plastic/nylon washers and appropriate sealants',
-      '"The installation includes lighting, power, and heating circuits."',
-      'AC sinusoidal and pulsating DC residual currents',
+      'Bonding the two metals tightly together',
+      'Isolating them with plastic/nylon washers and sealants',
+      'Increasing the cross-sectional area of the fixings',
+      'Applying a higher torque to the fasteners',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which is the best first step when selecting materials for a damp plant room?',
     options: [
-      'To provide an unbroken documented record of who handled the sample from collection to analysis',
-      'Reducing access to the means by which people could take their own life',
-      'Assess the environmental influences and duty (BS 7671 external influences)',
-      'A receiver\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
+      'Choose the cheapest enclosure available',
+      'Match the colours to the existing equipment',
+      'Assess the environmental influences and duty (BS 7671)',
+      'Order the same materials used on the last job',
     ],
     correctAnswer: 2,
     explanation:
@@ -96,10 +96,10 @@ const quizQuestions = [
     id: 7,
     question: 'What maintenance action is most critical for gasketed enclosures in damp areas?',
     options: [
-      'Installing and commissioning solar photovoltaic systems',
-      'Multiple sensors with overlapping detection zones',
-      'At least 12 months to capture seasonal variations',
-      'Monthly check and replacement of perished seals',
+      'Repainting the outside of the enclosure',
+      'Re-labelling the circuits inside',
+      'Adding extra fixings to the enclosure',
+      'Regular checking and replacement of perished seals',
     ],
     correctAnswer: 3,
     explanation:
@@ -139,12 +139,12 @@ const quickCheckQuestions = [
     id: 'ip-washdown',
     question: 'Minimum practical IP rating usually specified for regular high‑pressure washdown?',
     options: [
-      'IP66',
       'IP54',
+      'IP66',
       'IP55',
       'IP65',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'IP66 resists powerful water jets. Some food plants require higher—always confirm the client specification.',
   },
@@ -152,12 +152,12 @@ const quickCheckQuestions = [
     id: 'galvanic',
     question: 'How do you minimise galvanic corrosion at fixings?',
     options: [
+      'Bond the dissimilar metals tightly together',
+      'Use the highest torque the fixings allow',
       'Isolate dissimilar metals and use compatible fasteners',
-      'MA of about 1 — it just changes the direction of the force',
-      'Raise the alarm and ensure all persons in the area are alerted',
-      'May require modified procedures and criteria',
+      'Choose the cheapest fasteners available',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Isolating dissimilar metals and selecting compatible fasteners/coatings prevents galvanic corrosion cells forming.',
   },

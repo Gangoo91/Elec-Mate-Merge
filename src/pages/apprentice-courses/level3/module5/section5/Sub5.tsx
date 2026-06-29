@@ -47,9 +47,9 @@ const checks = [
     question: 'The fundamental difference between Initial Verification and Periodic Inspection (EICR) is:',
     options: [
       "Initial Verification is one-off, performed before the installation is energised for the first time (or after major alteration), and produces an EIC. Periodic Inspection is recurring, performed at intervals throughout the installation's life to verify it remains in safe condition, and produces an EICR. Initial Verification is in BS 7671 Chapter 64; Periodic Inspection is in Chapter 65.",
-      "Log internally — most firms have a near-miss reporting system; if not, write it up. Pull the step-up out of service immediately and tag it. Notify the firm\\\\'s H&S manager / contracts manager. Consider whether the issue affects other equipment in the firm\\\\'s fleet — does the fleet need a recall? Near-misses are the leading indicator that prevents incidents; treating them seriously is what stops the next one.",
-      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
-      "MIET (Member of the Institution of Engineering and Technology) is the standard professional membership grade of the IET. It's a membership grade, not an Engineering Council registration — so you can be MIET without being EngTech/IEng/CEng. Most engineers aim for MIET as the membership tier alongside their professional registration. Grants access to IET technical resources, member events, online journals.",
+      "Initial Verification is the visual inspection only, while Periodic Inspection is the testing only. The two are different halves of the same one-off process carried out at commissioning — the inspector looks first (Initial Verification), then tests (Periodic Inspection), and both are recorded together on the EIC.",
+      "Initial Verification applies to domestic installations and Periodic Inspection to commercial ones. The distinction is by property type rather than by lifecycle stage, so a new factory gets a Periodic Inspection at commissioning and a new house gets an Initial Verification.",
+      "Initial Verification is carried out by the installer and Periodic Inspection by the DNO. Both happen at commissioning, but the network operator performs the periodic check of the supply while the contractor performs the initial check of the consumer's wiring; both produce an EIC.",
     ],
     correctIndex: 0,
     explanation:
@@ -59,9 +59,9 @@ const checks = [
     id: 'm5-s5-sub5-frequency',
     question: 'Per Electrical Safety First and IET GN3 frequency guidance, the typical EICR interval for a rented dwelling is:',
     options: [
-      "Verify the existing cable fill does not already exceed the space factor, confirm the new cables will not breach it, and check that the additional heat load from new cables does not require derating of existing cables",
-      "The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained",
-      "A first fault to earth has occurred. The system stays energised by design (continuity of supply matters in critical settings) but the fault must be located and rectified as soon as practical, before a second fault on a different conductor causes auto-disconnection at TN/TT-style fault current levels",
+      "1 year — a rented dwelling must be inspected annually under the PRS Regulations 2020 because tenants change frequently and the landlord carries a heightened duty of care. The annual EICR is the statutory minimum and cannot be extended even where the installation is in good condition.",
+      "10 years (or change of tenancy, whichever is sooner) — the same interval as an owner-occupied dwelling. The PRS Regulations adopt the standard domestic 10-year cycle, with a fresh EICR only triggered earlier if a new tenant moves in.",
+      "3 years — the PRS Regulations set a three-year cycle for rented dwellings, sitting between the commercial and domestic intervals. The three-year figure reflects the higher turnover of tenants compared with owner-occupiers.",
       "5 years (or change of tenancy, whichever is sooner) — per the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. The 5-year interval is the statutory maximum; shorter intervals can be specified on the EICR where condition warrants.",
     ],
     correctIndex: 3,
@@ -72,10 +72,10 @@ const checks = [
     id: 'm5-s5-sub5-prs-penalty',
     question: 'A landlord receives an Unsatisfactory EICR. Under the PRS Regulations 2020 the landlord must remediate within 28 days and provide written confirmation. Failure to comply can result in:',
     options: [
-      "Other apprentices on the same job, the Improver(s) (post-college, pre-AM2 colleagues), the Approved Electrician(s) you're paired with, and the formally-allocated Mentor. The peer group is who you spend most of your time with day to day and who you learn the trade from in real time.",
-      "A two-pole voltage tester (Martindale VI-13800 or equivalent) with an associated proving unit (Martindale GVD2 or equivalent). The voltage tester is GS38-compliant; the proving unit confirms the tester itself is working both BEFORE the test on the live circuit AND AFTER the test on the now-dead circuit. Multimeters are NOT recommended for proving dead — they have small probe tips, no GS38 finger guard, and can show false readings on disconnected high-impedance circuits.",
+      "A criminal prosecution carrying an unlimited fine and up to two years' imprisonment for the landlord. Breach of the PRS Regulations is an either-way offence under the Health and Safety at Work Act, so the landlord faces the Crown Court rather than any civil penalty.",
+      "Immediate revocation of the landlord's rental licence by the Electrical Safety First charity, which administers the scheme. ESF withdraws the landlord's registration and bars them from letting property until the remediation is verified.",
       "Local authority enforcement with civil penalties up to £30,000 per breach. Multiple breaches can result in cumulative penalties. The local authority can also undertake the remedial works themselves and recover the cost from the landlord. Severe or repeat breaches can affect the landlord's standing in the rental market and (in extreme cases) result in property prohibition orders.",
-      "Conditionally yes — but only after the installer verifies and documents that the heating unit complies with Regulation 412.2.1.1 (Class II equipment type-tested and marked). Only when compliance with 412.2.1.1 is demonstrated may the mesh specified in Reg 753.411.3.2 be omitted. Verbal assurance is not acceptance — the documentary evidence of 412.2.1.1 conformity must be in the install file.",
+      "Automatic eviction of the tenant by the council so the property can be made safe. The local authority's remedy is to clear the property rather than penalise the landlord, after which the landlord is free to carry out the remedial works at their own pace.",
     ],
     correctIndex: 2,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 Chapter 64 (Initial Verification) and Chapter 65 (Periodic Inspection) differ in their:',
     options: [
-      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
+      "Test voltage only — Chapter 64 uses a 500 V insulation-resistance test for a new install while Chapter 65 uses 250 V for a periodic inspection. Every other aspect of the two chapters is identical, including the output document and the duty holder.",
       "Trigger event (Chapter 64 = before energising / after major alteration; Chapter 65 = recurring through installation life), output document (EIC for Chapter 64; EICR for Chapter 65), duty holder for commissioning (installer/designer for Chapter 64; owner/occupier for Chapter 65), and emphasis (Chapter 64 = compliance with BS 7671 at certification; Chapter 65 = safe condition for continued service).",
-      "Battery platforms are not interchangeable — Milwaukee M18 batteries don't fit Makita LXT tools and vice versa. If the firm runs Milwaukee, that's the platform whose chargers and spare packs are on every van and in every site box. A loose Makita drill is an outlier — one tool with no spare batteries when you need them, and no compatible charger nearby. Either ask for the matching Milwaukee tool, or accept you're working with one battery on the clock.",
-      "National Electrotechnical Training (NET) — the body that administers AM2 assessments at approved centres around the UK. Owned by JIB. NET also delivers other practical assessments (AM2E for renewables, AM2S for solar). The 'NET centre' you sit your AM2 at is a NET-approved facility.",
+      "Property type only — Chapter 64 covers domestic installations and Chapter 65 covers commercial and industrial ones. Both are carried out at the same point in the installation's life and both produce an EIC; the chapter chosen simply depends on the kind of building.",
+      "Who pays only — Chapter 64 work is charged to the customer while Chapter 65 work is funded by the DNO. The technical content and timing of the two chapters is the same; the chapters exist purely to separate the billing arrangements.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'A new build housing development reaches practical completion. The contractor issues an EIC for each dwelling. The next inspection event for each dwelling is:',
     options: [
-      "Plan an accessible route in advance, brief on the planned route, provide an escort, and adjust under Equality Act 2010 reasonable adjustments duty",
-      "Employers' Liability insurance — required by the Employers' Liability (Compulsory Insurance) Act 1969. £5m minimum statutory cover; £10m typically supplied. Penalty for trading without: up to £2,500 per day.",
+      "A second Initial Verification within twelve months of occupation, to confirm the new wiring has bedded in. The contractor returns a year after completion to repeat the EIC, and only then does the periodic inspection cycle begin.",
+      "An EICR after exactly one year regardless of property type. Every new dwelling is given a fixed first-year periodic inspection to catch installation defects early, after which it reverts to the standard 5- or 10-year cycle.",
       "An EICR at the end of the recommended interval set on the EIC — typically 10 years for owner-occupied, 5 years for rented under PRS Regs. The first periodic interval starts from EIC sign-off.",
-      "A description of the waste, the quantity, the type of container, the date of transfer, the SIC code of the waste producer, details of both parties, and the waste carrier's registration number",
+      "No further inspection at all — the EIC certifies the dwelling for the life of the installation. Because the wiring was verified as compliant at completion, a new build never needs a periodic EICR unless it is altered.",
     ],
     correctAnswer: 2,
     explanation:
@@ -114,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: "A commercial premises (small office, no special-risk equipment, owner-occupied by a small business) typically gets an EICR every:",
     options: [
-      "The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm's behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).",
-      "Updated Schedule of Inspections columns to reflect new requirements, AFDD presence to be checked where Reg 421.1.7 recommends them (HRRBs require under Building Safety Act 2022), and SPD presence/type checked per Section 443.",
-      "Per CAR 2012 Reg 4 - dutyholder of non-domestic premises maintains an asbestos register documenting location, condition, type of ACMs. Must be available to anyone working on the fabric. Updated as conditions change.",
+      "1 year per ESF/GN3 guidance — all commercial premises must be inspected annually because business use is inherently higher-risk than domestic. The annual cycle is fixed and cannot be extended even for a low-risk office.",
+      "10 years per ESF/GN3 guidance — a small low-risk office gets the same interval as an owner-occupied house, because both are low-footfall environments. The commercial setting makes no difference to the recommended interval.",
+      "Whenever the premises changes hands — there is no fixed interval for commercial property, and an EICR is only required at sale or new lease. A business that stays in the same premises indefinitely never needs a periodic inspection.",
       "5 years per ESF/GN3 frequency guidance — adjusted shorter where condition or risk warrants. The 5-year interval is a recommended starting point; commercial environments with higher risk (workshops, kitchens, public-facing spaces) typically warrant shorter intervals.",
     ],
     correctAnswer: 3,
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: "An industrial installation (small manufacturing unit with general process equipment) typically gets an EICR every:",
     options: [
       "3 years per ESF/GN3 guidance for general industrial — adjusted shorter for higher-risk processes (chemical, foundry, heavy machinery) or where the installation operates 24/7 with elevated thermal cycling.",
-      "The contract terms, the relationship, future work, payment timing. Commercial leverage is real but cannot override statutory duty. The L3 supervisor frames the conversation around legal compliance, not customer satisfaction.",
-      "Workmanship/materials defects are usually covered by your guarantee/scheme insurance-backed warranty (e.g. NICEIC PCG, NAPIT IBG); explain how to make a claim",
-      "A confined space has foreseeable risks of serious injury from hazardous conditions, while a restricted space simply has limited physical room to work but no such risks",
+      "10 years per ESF/GN3 guidance — industrial premises get the longest interval of any property type because the installations are robustly built for heavy duty and rarely altered.",
+      "6 months per ESF/GN3 guidance — every industrial installation must be inspected twice a year regardless of process risk, because manufacturing environments are the most hazardous of all building types.",
+      "There is no recommended interval for industrial installations — they are inspected only when a fault occurs, because continuous production cannot be interrupted for a scheduled EICR.",
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "A change of tenancy in a rented dwelling under the PRS Regulations 2020 triggers:",
     options: [
-      "Completion of the relevant year's college units (typically C&G 2365-03 Year 2 / NVQ Level 3 progress), portfolio entries signed by the workplace mentor, and your employer's formal approval through the JIB grading update. Stage progression is evidence-based, not time-based — you can't just 'wait' for the next Stage; you have to demonstrate you've earned it.",
+      "A fresh EICR every single time, regardless of how recent the existing certificate is. The PRS Regulations require a brand-new inspection at the start of each tenancy, so a certificate issued only months earlier is void as soon as a new tenant moves in.",
       "An EICR if the existing certificate is more than 5 years old at the date of the new tenancy starting. If the existing certificate is less than 5 years old, it carries forward to the new tenancy. Some local authorities or scheme providers recommend a refreshed EICR at any change of tenancy regardless of certificate age, but the statutory trigger is the 5-year maximum interval (or change of tenancy, whichever is sooner).",
-      "Yes — sole traders can register with MCS the same as Ltd companies. The registration is at firm level, not individual level, but a sole trader is a firm of one. The QS (technical lead) for the MCS registration is normally the sole trader themselves, who must hold the relevant technical competence (AM2S for PV, F-Gas Cat 1 for heat pump, etc.). Many sole-trader electricians use MCS as the route into a niche renewables specialism.",
-      "(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer's value (typically 2–3 Nm for Schneider isolators).",
+      "No inspection at all — a change of tenancy never triggers an EICR, only the passage of five years does. The existing certificate always carries forward to a new tenant for the remainder of its five-year life regardless of its age.",
+      "A Minor Works Certificate rather than an EICR. At each change of tenancy the landlord commissions an MWC to confirm nothing has changed since the last full inspection, which resets the clock without the cost of a complete EICR.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,10 +153,10 @@ const quizQuestions = [
     id: 6,
     question: "Special locations (Section 700 series — bathrooms, swimming pools, agricultural premises, caravans, marinas, EV charging) typically warrant:",
     options: [
-      "Assessment of the risks from substances hazardous to health (Reg 6); prevention or control of exposure (Reg 7) using the hierarchy of control (eliminate, substitute, engineer, system of work, PPE); use and maintenance of control measures (Reg 8–9); monitoring of exposure (Reg 10); health surveillance where appropriate (Reg 11); information, instruction and training (Reg 12); arrangements for accidents, incidents and emergencies (Reg 13).",
-      "Brief and respectful: \\\\\\\"I understand the pressure but the legal framework here is X. The consequences cascade if we cut corners. We\\\\\\\\'re a regulated trade; we have to comply. We can do this safely with X / Y / Z; we can\\\\\\\\'t do it the other way.&quot; Most customers accept the framing once explained calmly.",
+      "Longer cycles than the standard for the parent property type, because special-location circuits are designed to a higher specification and so degrade more slowly. A bathroom or swimming-pool circuit is inspected less often than the rest of the dwelling.",
+      "The same cycle as the parent property type — special locations carry no different inspection interval because Section 700 circuits are part of the same installation. A bathroom in a rented house is inspected on the same five-year cycle as everything else and never more often.",
       "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
-      "The 'workmanship' standard and 'manufacturers' instructions' obligation. So a faulty cable joint that's electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer's torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they're calling out poor workmanship without it being a specific technical-test failure.",
+      "No periodic inspection at all — special locations are exempt from the EICR regime because their circuits are protected by 30 mA RCDs, which are deemed to remove the need for routine inspection of those areas.",
     ],
     correctAnswer: 2,
     explanation:
@@ -166,9 +166,9 @@ const quizQuestions = [
     id: 7,
     question: "The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 apply to:",
     options: [
-      'Three documents. (1) Updated EICR (or supplementary report) — codes the previously-failed item as now compliant; references the rectification work. (2) Minor Electrical Installation Works Certificate (MEIWC) for the rectification work — formal compliance certificate for the new / repaired work under BS 7671. (3) Customer-friendly summary — what the certificates mean in plain English. The customer keeps all three; the firm retains copies for 7+ years. NICEIC / NAPIT registration audits will check the certificate trail.',
-      'Stop them and verify they understand what\\\\\\\'s locked off and why. Show them your padlock and tag. Confirm they\\\\\\\'re not about to remove your lock or restore your circuit. If they need to do work that affects YOUR isolation (e.g. they\\\\\\\'re investigating the busbar), the work must coordinate — both operatives\\\\\\\' locks stay on, both operatives complete their work, both operatives remove their own locks. The \\\\\\\'multi-lock hasp\\\\\\\' (Brady 65681 takes 6 padlocks) is designed for this — multiple operatives, one device, no operative removes their lock until they\\\\\\\'re personally finished.',
-      'Significantly. A repair that\\\\\\\'s exposed to harsh environment (outdoor, kitchen, plant room, washroom) may not last as long as the same repair in benign environment. The repair-vs-replace decision should consider: (a) what\\\\\\\'s the IP / environmental rating of the repaired vs replacement component? (b) Will the repair retain the original IP rating? (c) Is the new component IP-rated for the actual environment? Replacement often comes with current IP / environmental ratings; repair preserves the existing rating (which may have degraded). For harsh environments, replacement is usually the right call.',
+      'All domestic properties in England, both rented and owner-occupied. The 2020 Regulations made the five-yearly EICR a legal duty for every homeowner as well as every landlord, so an owner living in their own house must commission an EICR every five years.',
+      'All commercial and industrial premises in the United Kingdom. The PRS Regulations are a workplace safety measure requiring five-yearly EICRs across offices, shops and factories nationwide; domestic property is covered by separate housing legislation.',
+      'Holiday lets and short-term Airbnb-style accommodation only. The Regulations were written specifically for the short-stay rental market and do not apply to ordinary assured shorthold tenancies, which remain outside any mandatory EICR regime.',
       'Rented domestic properties in England — including most assured shorthold tenancies, licences to occupy, and HMOs. Excludes social housing tenancies under separate regulation, lodger arrangements where the landlord shares the dwelling, long leases (7+ years), student halls of residence under separate regimes, and accommodation provided to family members. Wales has its own equivalent (Renting Homes Wales Act 2016 plus the Renting Homes — Fitness for Human Habitation Regulations 2022); Scotland has the Housing (Scotland) Act 2006 plus tolerable standard / repairing standard guidance; Northern Ireland follows similar requirements via the Housing (Northern Ireland) Order 2003.',
     ],
     correctAnswer: 3,
@@ -180,9 +180,9 @@ const quizQuestions = [
     question: "After remediation of an Unsatisfactory EICR, the landlord must provide which evidence to demonstrate compliance with the PRS Regulations 2020?",
     options: [
       'Written confirmation from a competent person that (a) the remedial works have been completed, (b) the installation now meets the relevant safety standard. Plus the original EICR (showing the Unsatisfactory finding), the MWC or EIC for the remedial works, and ideally a re-issued or supplementary EICR confirming Satisfactory status. The matched pair (original EICR + remedial certs) evidences the full cycle. The landlord retains for at least the next 5-year cycle and provides on local authority request within 7 days.',
-      'Starting each week by asking your team: "What obstacles are you facing that I can help remove?" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves',
-      'A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)',
-      'A Request For Information is a formal written query from a contractor to the design team (architect, engineer, principal designer) when the drawings or specifications are unclear, contradictory or missing detail. It\\\\\\\'s logged, numbered, dated and tracked through to a written response. It protects the contractor from being held responsible for a design ambiguity and creates a paper trail for any later dispute. Use one whenever you\\\\\\\'d otherwise be guessing.',
+      'A dated photograph of each repaired item, which the landlord emails to the tenant. The Regulations accept photographic evidence as proof of remediation, so a set of before-and-after images is sufficient to demonstrate compliance.',
+      "The electrician's invoice for the remedial works. The PRS Regulations treat the paid invoice as confirmation that the faults have been put right, so the landlord simply retains the bill as evidence of compliance.",
+      "A signed statement from the tenant confirming the property feels safe to live in. Because the Regulations exist to protect occupants, the tenant's written acceptance is the evidence the landlord must keep, rather than any certificate from the electrician.",
     ],
     correctAnswer: 0,
     explanation:

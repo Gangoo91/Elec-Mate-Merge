@@ -25,12 +25,12 @@ const quickCheckQuestions = [
     id: 'screening-limitation',
     question: 'What is the key limitation of health screening for asbestos-related diseases?',
     options: [
-      'Screening can detect disease early but CANNOT prevent it — the only prevention is avoiding exposure',
       'Screening is 100% effective at detecting all asbestos-related diseases at any stage',
+      'Screening can detect disease early but CANNOT prevent it — the only prevention is avoiding exposure',
       'Screening can reverse the effects of asbestos exposure if caught early enough',
       'Screening is only useful for workers currently exposed, not those with past exposure',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Health screening for asbestos-related diseases is about early detection, not prevention. Screening cannot prevent disease from developing — once asbestos fibres are inhaled, the damage is done. The only true prevention is avoiding exposure entirely. However, early detection through screening can lead to earlier treatment, better management of symptoms, and timely access to support and compensation.',
   },
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     id: 'record-retention',
     question: 'How long must health records for asbestos-exposed workers be kept?',
     options: [
-      '40 years from the date of the last entry',
       '10 years from the date of last exposure',
       "25 years from the worker's date of birth",
+      '40 years from the date of the last entry',
       'Until the worker retires from the industry',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Health records for asbestos-exposed workers must be kept for 40 years from the date of the last entry. This extremely long retention period reflects the fact that asbestos-related diseases can take 15 to 60 years to develop after exposure. If the employer ceases trading, the records must be transferred to the HSE for safekeeping. Workers also have the right to access their own health records at any time.',
   },
@@ -81,8 +81,8 @@ const quizQuestions = [
     id: 1,
     question:
       'Under Regulation 22 of CAR 2012, how often must licensed asbestos workers undergo a medical examination?',
-    options: ['Every year', 'Every 2 years', 'Every 3 years', 'Every 5 years'],
-    correctAnswer: 1,
+    options: ['Every 2 years', 'Every year', 'Every 3 years', 'Every 5 years'],
+    correctAnswer: 0,
     explanation:
       'Regulation 22 of CAR 2012 requires licensed asbestos workers to undergo a medical examination every 2 years. The examination must be conducted by an HSE-appointed doctor or a doctor experienced in asbestos-related disease. The employer must arrange and pay for these examinations.',
   },
@@ -92,11 +92,11 @@ const quizQuestions = [
       'Which of the following is included in a standard medical examination for asbestos-exposed workers?',
     options: [
       'Blood tests for asbestos antibodies',
-      'Spirometry to measure lung capacity and airflow (FEV1 and FVC)',
       'Full-body MRI scan',
+      'Spirometry to measure lung capacity and airflow (FEV1 and FVC)',
       'Genetic testing for asbestos susceptibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Spirometry (measuring FEV1 and FVC) is a standard component of medical examinations for asbestos-exposed workers. It measures lung capacity and airflow, helping to detect early signs of asbestosis or other lung damage. The examination also includes a respiratory questionnaire, physical examination (including checking for finger clubbing), and may include chest imaging if concerns are identified.',
   },
@@ -120,10 +120,10 @@ const quizQuestions = [
     options: [
       '10 years from the date of last exposure',
       '25 years from the date of diagnosis',
-      '40 years from the date of the last entry',
       'Indefinitely — they must never be destroyed',
+      '40 years from the date of the last entry',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Health records must be kept for 40 years from the date of the last entry. This extremely long retention period exists because asbestos-related diseases can take 15 to 60 years to develop. If the employer ceases trading, the records must be transferred to the HSE. Workers have the right to access their own records at any time.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the current status of screening for mesothelioma?',
     options: [
-      'A reliable blood test exists that can detect mesothelioma at any stage',
       'No reliable screening test currently exists — diagnosis is usually based on symptoms',
+      'A reliable blood test exists that can detect mesothelioma at any stage',
       'Annual chest X-rays can reliably detect mesothelioma before symptoms appear',
       'CT scans are 100% effective at early mesothelioma detection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'There is currently no reliable screening test for mesothelioma. Diagnosis is usually made when symptoms appear — such as breathlessness, chest pain, or unexplained weight loss. This is one reason why mesothelioma is often diagnosed at an advanced stage. Research into early detection methods is ongoing, but prevention (avoiding asbestos exposure) remains the most important strategy.',
   },
@@ -146,11 +146,11 @@ const quizQuestions = [
       "What government scheme exists for mesothelioma sufferers who cannot trace their employer or the employer's insurer?",
     options: [
       "The Asbestos Workers' Relief Fund",
-      'The Diffuse Mesothelioma Payment Scheme (DMPS)',
       'The National Asbestos Compensation Board',
+      'The Diffuse Mesothelioma Payment Scheme (DMPS)',
       'The HSE Emergency Compensation Scheme',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Diffuse Mesothelioma Payment Scheme (DMPS) is a government scheme that provides lump-sum payments to mesothelioma sufferers (or their dependants) who cannot trace the employer responsible for their asbestos exposure or that employer's insurer. This scheme exists because many companies that used asbestos heavily have since ceased trading or their insurers can no longer be identified.",
   },
@@ -160,11 +160,11 @@ const quizQuestions = [
       'Within what time limit must most civil claims for asbestos-related disease be brought?',
     options: [
       'Within 1 year of diagnosis',
-      'Within 3 years of diagnosis (but exceptions exist)',
       'Within 10 years of the last exposure',
       'There is no time limit for any asbestos-related claim',
+      'Within 3 years of diagnosis (but exceptions exist)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Most civil claims for asbestos-related disease must be brought within 3 years of diagnosis. However, there are important exceptions — mesothelioma claims have no time limit, and courts can exercise discretion to allow late claims in exceptional circumstances. Given the long latency period of asbestos-related diseases (15–60 years), these time limits can be complex, and specialist legal advice is strongly recommended.',
   },

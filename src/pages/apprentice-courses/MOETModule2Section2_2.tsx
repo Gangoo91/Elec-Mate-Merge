@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'phase-angle',
     question: "Two sinusoidal waveforms of the same frequency are said to be 'in phase' when:",
     options: [
-      'Emergency lighting was isolated by mistake, creating a safety risk',
-      'Flow rate is directly proportional to speed (Q₁/Q₂ = N₁/N₂)',
+      'One reaches its peak exactly as the other reaches zero',
+      'They have equal peak values but different frequencies',
       'They reach their peak values at the same instant in time',
-      'Mastery experiences — succeeding at a task yourself',
+      'One is exactly half a cycle behind the other',
     ],
     correctIndex: 2,
     explanation:
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: 'A phasor is best described as:',
     options: [
       'A rotating vector that represents the magnitude and phase angle of a sinusoidal quantity',
-      'Step 3 — High-intensity interventions for moderate to severe depression',
-      'Electrical short circuit or overload causing fire or explosion',
-      'It is an alternative international forest certification scheme that endorses national certification programmes',
+      'A fixed scalar value equal to the RMS of the waveform',
+      'A graph plotting instantaneous voltage against time',
+      'A device used to measure the frequency of an AC supply',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why is the UK mains frequency standardised at exactly 50 Hz?',
     options: [
-      'Fixed electrical installations in new and existing dwellings, and parts of buildings serving dwellings',
-      'Non-specific lower back pain (mechanical back pain) affecting the lumbar region',
+      'It is the natural resonant frequency of the National Grid transmission lines',
+      'It matches the rotational speed limit of all UK power station turbines',
       'It provides a practical balance between generator size, transformer efficiency and transmission characteristics',
-      'Information about risks to health and safety during future construction, maintenance or demolition work',
+      'It is the highest frequency at which mains-rated insulation can safely operate',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,9 +164,9 @@ const quizQuestions = [
     question: 'The angular frequency (omega, ω) of the 50 Hz UK mains supply is:',
     options: [
       '100π rad/s (approximately 314 rad/s)',
-      'Non-sinusoidal or distorted AC waveforms',
-      'VRMS = 0.707 x Vpeak, Vavg = 0.637 x Vpeak',
-      'Peak value divided by RMS value',
+      '50π rad/s (approximately 157 rad/s)',
+      '25π rad/s (approximately 78.5 rad/s)',
+      '200π rad/s (approximately 628 rad/s)',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: "A 'true-RMS' meter is essential when measuring:",
     options: [
-      'Peak value divided by RMS value',
+      'A pure 50 Hz sine wave from the public supply',
       'Non-sinusoidal or distorted AC waveforms',
-      'The rate of change of magnetic flux linkage',
-      'VRMS = 0.707 x Vpeak, Vavg = 0.637 x Vpeak',
+      'A steady DC voltage from a battery',
+      'The peak value of any sinusoidal waveform',
     ],
     correctAnswer: 1,
     explanation:

@@ -14,10 +14,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why must faults be reported as soon as they are identified?',
     options: [
-      'Verbal provides immediate communication; written forms a permanent, traceable record',
+      'So the cost of the repair can be added to the invoice promptly',
       'Because minor defects can escalate into danger; prompt reporting prevents harm and demonstrates due diligence',
-      'Fault details, exact location, circuit/board IDs, action taken, further work required, date/time, who it was reported to',
-      'By immediate escalation, isolation, documentation, and rectification before energising',
+      'Because the wholesaler needs notice before supplying replacement parts',
+      'So the apprentice can hand the problem to the next shift and go home',
     ],
     correctAnswer: 1,
     explanation:
@@ -27,10 +27,10 @@ const quizQuestions = [
     id: 2,
     question: 'Who is responsible for receiving fault reports on most work sites?',
     options: [
-      'The landlord or appointed agent/responsible person',
-      'False - all faults must be reported immediately',
+      'The newest apprentice on the team',
+      'The wholesaler who supplied the materials',
       'The site supervisor or appointed responsible person',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s vague and may cause misunderstandings or incorrect action',
+      'The distribution network operator (DNO)',
     ],
     correctAnswer: 2,
     explanation:
@@ -40,9 +40,9 @@ const quizQuestions = [
     id: 3,
     question: 'Who might act as the duty holder in a rental property?',
     options: [
-      'They are unpredictable and likely to be drilled into',
-      'To highlight residual risks and required precautions on drawings',
-      'Until the next inspection or 3 months, whichever is greater',
+      'The current tenant living in the property',
+      'The electrician carrying out the work',
+      'The local authority building control officer',
       'The landlord or appointed agent/responsible person',
     ],
     correctAnswer: 3,
@@ -54,9 +54,9 @@ const quizQuestions = [
     question: 'Why is casual language unhelpful when reporting faults?',
     options: [
       "It's vague and may cause misunderstandings or incorrect action",
-      "It measures actual trip time and current, not just mechanism function",
-      "To reduce overwhelm and focus on the next step",
-      "Through the movement of heated air and gases rising and circulating",
+      "It takes longer to write than a formal technical report",
+      "It makes the report sound too friendly and unprofessional",
+      "It uses too much technical jargon for the duty holder to follow",
     ],
     correctAnswer: 0,
     explanation:
@@ -66,10 +66,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which is an example of a clear, professional fault report?',
     options: [
-      'A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness',
+      '"The socket in the front room is playing up — best get someone to look at it."',
       'Circuit 2 (ring final) — socket in living room shows signs of overheating at the neutral terminal. Circuit isolated and labelled. Requires further investigation before energising',
-      '"There could be several causes, such as a loose connection or a faulty switch. I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll carry out some tests to identify the exact issue and let you know what I find."',
-      'A pre-calculated design output sheet from the TG20 e-guide software that, for standard configurations, removes the need for a bespoke scaffold design',
+      '"There\'s a problem somewhere on the lighting side, not sure exactly where yet."',
+      '"It all seems a bit iffy in that room, I wouldn\'t use it if I were you."',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,10 +79,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the difference between verbal and written reporting?',
     options: [
-      'By immediate escalation, isolation, documentation, and rectification before energising',
-      'It\\\\\\\\\\\\\\\'s vague and may cause misunderstandings or incorrect action',
+      'Verbal reports are legally binding; written reports are only advisory',
+      'Written reports must be done first; verbal reports come afterwards',
       'Verbal provides immediate communication; written forms a permanent, traceable record',
-      'Because minor defects can escalate into danger; prompt reporting prevents harm and demonstrates due diligence',
+      'Verbal reports are for minor faults; written reports are for major faults only',
     ],
     correctAnswer: 2,
     explanation:
@@ -92,9 +92,9 @@ const quizQuestions = [
     id: 7,
     question: 'What details must always be included in written fault documentation?',
     options: [
-      'Because minor defects can escalate into danger; prompt reporting prevents harm and demonstrates due diligence',
-      'By immediate escalation, isolation, documentation, and rectification before energising',
-      'Verbal provides immediate communication; written forms a permanent, traceable record',
+      'Just a short note saying that a fault exists somewhere',
+      'Only the name of the customer and the date of the visit',
+      'A photograph of the fault, with no written explanation needed',
       'Fault details, exact location, circuit/board IDs, action taken, further work required, date/time, who it was reported to',
     ],
     correctAnswer: 3,
@@ -118,10 +118,10 @@ const quizQuestions = [
     id: 9,
     question: 'In the refurbishment project example, why did the fault escalate to a fire?',
     options: [
-      'Because minor defects can escalate into danger; prompt reporting prevents harm and demonstrates due diligence',
+      'The protective device was the wrong rating for the circuit',
       'The fault was only mentioned casually and not formally reported, so no action was taken',
-      'By immediate escalation, isolation, documentation, and rectification before energising',
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s vague and may cause misunderstandings or incorrect action',
+      'The circuit was overloaded by too many appliances at once',
+      'The cable used was undersized for the load it was carrying',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,10 +131,10 @@ const quizQuestions = [
     id: 10,
     question: 'How did correct reporting in the school installation example prevent danger?',
     options: [
-      'It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s vague and may cause misunderstandings or incorrect action',
-      'Because minor defects can escalate into danger; prompt reporting prevents harm and demonstrates due diligence',
+      'By replacing the consumer unit before the circuit was tested',
+      'By leaving the circuit energised but warning staff to avoid it',
       'By immediate escalation, isolation, documentation, and rectification before energising',
-      'Verbal provides immediate communication; written forms a permanent, traceable record',
+      'By waiting until the next periodic inspection to deal with it',
     ],
     correctAnswer: 2,
     explanation:

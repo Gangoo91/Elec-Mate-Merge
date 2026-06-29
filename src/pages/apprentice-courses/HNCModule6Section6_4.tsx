@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'wlc-definition',
     question: 'What does Whole Life Carbon (WLC) assessment measure?',
     options: [
-      'Using dedicated conduits, trunking, or trays exclusively for emergency circuits',
-      'Notify the scheme and provide certificate to customer and local authority',
-      'BS EN 60900 — rated to 1,000 V AC / 1,500 V DC and individually tested',
       'Total carbon emissions from cradle to grave including embodied and operational carbon',
+      'Only the operational energy used by the building during occupancy',
+      'Only the embodied carbon of the structural frame and foundations',
+      'The carbon emitted during the construction phase up to practical completion',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "Whole Life Carbon assessment measures the total carbon emissions across a building's entire life cycle, including both embodied carbon (materials, construction, maintenance, end-of-life) and operational carbon (energy use during occupancy).",
   },
@@ -46,11 +46,11 @@ const quickCheckQuestions = [
       "Which life cycle module covers the 'product stage' including raw material extraction and manufacturing?",
     options: [
       'Module D (Beyond system boundary)',
-      'Module B (Use stage)',
-      'Module C (End-of-life)',
       'Module A1-A3 (Product stage)',
+      'Module C (End-of-life)',
+      'Module B (Use stage)',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       "Module A1-A3 covers the product stage: A1 is raw material extraction and supply, A2 is transport to manufacturer, and A3 is manufacturing. This represents the 'cradle-to-gate' embodied carbon of materials.",
   },
@@ -58,12 +58,12 @@ const quickCheckQuestions = [
     id: 'epd-purpose',
     question: 'What is an Environmental Product Declaration (EPD)?',
     options: [
-      'Maintaining a consistent sleep and wake time, even on weekends',
-      'The percentage of consumption variation explained by degree days',
-      'The processing of raw sensor signals to make them suitable for the control system',
+      'A manufacturer marketing brochure summarising a product’s energy-saving features',
       'A standardised document reporting verified environmental impacts of a product',
+      'A planning condition requiring low-carbon materials on referable schemes',
+      'A government grant certificate awarded for low-embodied-carbon products',
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       'An EPD is a standardised, third-party verified document that reports the environmental impacts of a product based on Life Cycle Assessment. EPDs follow ISO 14025 and EN 15804 standards, providing reliable data for WLC calculations.',
   },
@@ -73,10 +73,10 @@ const quickCheckQuestions = [
     options: [
       '1500 kgCO2e/m2',
       '100 kgCO2e/m2',
-      '300 kgCO2e/m2',
       '600 kgCO2e/m2',
+      '300 kgCO2e/m2',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'LETI (London Energy Transformation Initiative) sets a 2030 target of 600 kgCO2e/m2 for whole life carbon in non-domestic buildings, with an aspirational 2050 target of 350 kgCO2e/m2. These benchmarks drive industry decarbonisation.',
   },
@@ -168,9 +168,9 @@ const quizQuestions = [
     id: 7,
     question: 'Which refrigerant property is measured in Global Warming Potential (GWP)?',
     options: [
-      'RIBA Stages 2, 3, 4 and completion',
-      'Carbon stored in bio-based materials like timber',
-      'Module B4 accounts for replacement cycles',
+      'The mass of refrigerant charge required per kW of cooling',
+      'The pressure at which the refrigerant evaporates in the system',
+      'The energy efficiency ratio of the refrigeration cycle',
       'Equivalent CO2 impact per kg released',
     ],
     correctAnswer: 3,
@@ -182,9 +182,9 @@ const quizQuestions = [
     question: 'RICS requires WLC assessment at which project stages?',
     options: [
       'RIBA Stages 2, 3, 4 and completion',
-      'Previous certificates and drawings',
-      'It compensates for cable resistance',
-      'Full fall protection system',
+      'Only at RIBA Stage 7 (in use), after handover',
+      'Only at RIBA Stage 0 (strategic definition)',
+      'At tender stage only, before contractor appointment',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the primary strategy for reducing operational carbon in MEP design?',
     options: [
-      'Equivalent CO2 impact per kg released',
+      'Specifying refrigerants with the lowest possible GWP',
       'Reducing system sizes through fabric-first approach',
-      'Embodied carbon coefficients for construction materials',
-      'Benefits and loads beyond the system boundary (recycling credits)',
+      'Using high recycled-content materials throughout',
+      'Maximising the use of Module D recycling credits',
     ],
     correctAnswer: 1,
     explanation:
@@ -220,9 +220,9 @@ const quizQuestions = [
     id: 11,
     question: "What does 'biogenic carbon' refer to in WLC assessment?",
     options: [
-      'Embodied carbon coefficients for construction materials',
-      'Reducing system sizes through fabric-first approach',
-      'Equivalent CO2 impact per kg released',
+      'Carbon emitted by site plant and machinery during construction',
+      'Carbon released from refrigerant leakage during operation',
+      'Carbon associated with biomass heating fuel combustion',
       'Carbon stored in bio-based materials like timber',
     ],
     correctAnswer: 3,
@@ -234,12 +234,12 @@ const quizQuestions = [
     question:
       'A cable tray system is replaced twice during a 60-year building life. How is this captured in WLC?',
     options: [
-      'Module B4 accounts for replacement cycles',
-      'Only the final installation is counted',
       'Only the initial installation is counted',
+      'Only the final installation is counted',
+      'Module B4 captures all replacement cycles',
       'Replacements are excluded from assessment',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Module B4 (Replacement) captures the embodied carbon of all replacement cycles within the study period. If cable tray has a 20-year life, two replacements (at years 20 and 40) would be included, effectively tripling the B4 carbon impact.',
   },

@@ -11,12 +11,12 @@ const quickCheckQuestions = [
     id: 'environmental-alarms',
     question: 'Give one example of an environmental alarm that a BMS might detect.',
     options: [
-      'A motor running at normal speed',
-      'High CO2 levels in an occupied space',
-      'Normal room temperature',
-      'Proper filter condition',
+      'High CO₂ levels detected in an occupied space',
+      'A supply fan running steadily at its normal speed',
+      'Room temperature sitting comfortably within setpoint',
+      'A filter showing a healthy, low pressure drop',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'High CO2 levels in an occupied space is a common environmental alarm that triggers increased ventilation to maintain acceptable indoor air quality and occupant comfort.',
   },
@@ -24,10 +24,10 @@ const quickCheckQuestions = [
     id: 'fire-alarm-action',
     question: 'What action might the BMS take during a fire alarm event?',
     options: [
-      'Increase heating to all zones',
-      'Shut down AHUs to prevent smoke spread and open smoke dampers',
+      'Increase heating output to all the zones',
+      'Shut down AHUs and open the smoke dampers',
       'Start all ventilation fans at maximum speed',
-      'Turn on all lighting circuits',
+      'Turn on all the building lighting circuits',
     ],
     correctIndex: 1,
     explanation:
@@ -38,12 +38,12 @@ const quickCheckQuestions = [
     question:
       'Why must alarm and shutdown circuits be labelled differently from standard control wiring?',
     options: [
-      'To make the installation look more organised',
-      'To prevent confusion during maintenance and ensure safety circuits are not accidentally modified',
-      'To reduce installation costs',
-      'To comply with manufacturer colour preferences',
+      'To make the finished installation look more organised',
+      'To reduce the overall cost of the installation',
+      'So safety circuits are not accidentally modified in maintenance',
+      'To comply with the manufacturer colour preferences',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Alarm and shutdown circuits must be clearly labelled to prevent confusion during maintenance and ensure safety-critical circuits are not accidentally modified, disconnected, or interfered with during routine work.',
   },
@@ -51,12 +51,12 @@ const quickCheckQuestions = [
     id: 'shutdown-testing',
     question: 'What commissioning step is required to test shutdown sequences?',
     options: [
-      'Visual inspection of wiring only',
-      'Simulate fire, gas, and fault alarms to prove sequences work correctly',
-      'Test only during actual emergencies',
-      'Check manufacturer documentation only',
+      'Carry out a visual inspection of the wiring only',
+      'Test the sequences only during actual emergencies',
+      'Check the manufacturer documentation on its own',
+      'Simulate fire, gas and fault alarms to prove the sequences',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commissioning must include simulating fire, gas, and fault alarms using appropriate test equipment to prove that all shutdown sequences work correctly, respond within acceptable time limits, and operate in the correct sequence.',
   },

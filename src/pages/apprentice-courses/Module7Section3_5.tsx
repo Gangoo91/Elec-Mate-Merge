@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why are user complaints valuable for fault diagnosis?',
     options: [
-      'Prevents tools from dropping and injuring people below',
+      'They remove the need to carry out any electrical testing',
       'They provide early warning of developing faults',
-      'Fixed guards, then other guards/protection devices, then PPE',
-      'Solvents, chemicals, dusts, fumes, and biological agents',
+      'They always identify the exact component that has failed',
+      'They allow you to bill the customer for additional work',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 2,
     question: "What should you do when a user reports 'lights flickering when the kettle is used'?",
     options: [
-      'Whenever working on or near electrical equipment',
-      'Uncontrolled air leakage through the building envelope',
+      'Advise the user to stop using the kettle and the lights together',
+      'Replace all the lamps on the affected circuit',
       'Investigate voltage drop and circuit loading',
-      'According to branch resistance (inversely proportional)',
+      'Reset the consumer unit and assume the fault has cleared',
     ],
     correctIndex: 2,
     explanation:
@@ -40,9 +40,9 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What type of information should you gather from user complaints?',
     options: [
-      'To ensure the switch breaks the phase conductor',
-      'All three phases L1, L2, L3 and neutral',
-      'At the origin of the installation (main switchboard)',
+      'Only the make and model of the affected appliance',
+      'Only how long the user has lived at the property',
+      'Only whether the user has reported the fault before',
       'When, what, where, and under what conditions',
     ],
     correctIndex: 3,
@@ -59,10 +59,10 @@ const Module7Section3_5 = () => {
       id: 1,
       question: 'What makes user complaints valuable for electrical fault diagnosis?',
       options: [
-        'The total loop length (out and back)',
+        'They confirm the installation fully complies with BS 7671',
         'They provide early warning of developing problems',
-        'Very high - often hundreds of MΩ or more',
-        'Direct sunlight or heat sources affecting the sensor',
+        'They remove the need for routine inspection and testing',
+        'They always pinpoint the exact circuit that has failed',
       ],
       correctAnswer: 1,
       explanation:
@@ -72,10 +72,10 @@ const Module7Section3_5 = () => {
       id: 2,
       question: "What does 'lights dim when appliances start' typically indicate?",
       options: [
-        'Tendency for AC current to flow near the conductor surface',
-        'Better ventilation and lighter weight',
+        'A faulty light switch on the lighting circuit',
+        'The lamps are simply reaching the end of their life',
         'Voltage drop due to overloading or poor connections',
-        'Review and revise the risk assessment and control measures',
+        'An RCD that is too sensitive for the installation',
       ],
       correctAnswer: 2,
       explanation:
@@ -111,10 +111,10 @@ const Module7Section3_5 = () => {
       id: 5,
       question: 'Why is documenting user complaints important?',
       options: [
-        'Realistic operational energy prediction methodology',
+        'It satisfies a legal requirement to log every customer phone call',
         'Identifies patterns and guides investigation priorities',
-        'Gathering information and visual inspection',
-        'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
+        'It allows you to charge the customer for the investigation',
+        'It removes the need to carry out follow-up testing',
       ],
       correctAnswer: 1,
       explanation:
@@ -124,10 +124,10 @@ const Module7Section3_5 = () => {
       id: 6,
       question: 'What should you ask about intermittent electrical problems?',
       options: [
-        'Level 3 Diploma in Installing Electrotechnical Systems',
-        'Simulating alarm conditions and checking BMS response',
+        'Only the age of the electrical installation',
+        'Only which manufacturer supplied the appliance',
         'Timing, conditions, frequency, and triggering events',
-        'Carry out full initial verification style testing',
+        'Only whether the property is owned or rented',
       ],
       correctAnswer: 2,
       explanation:
@@ -137,9 +137,9 @@ const Module7Section3_5 = () => {
       id: 7,
       question: 'How can user complaints help prioritise maintenance work?',
       options: [
-        'To provide a safe working environment, so far as is reasonably practicable',
-        'If it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s unsafe in the real world, it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s an instant fail in AM2',
-        'To obtain an accurate average air velocity across the duct cross-section',
+        'By ranking jobs purely by which customer complained first',
+        'By scheduling all reported faults for the next annual inspection',
+        'By dealing with the easiest faults before the more difficult ones',
         'Identify safety-critical issues requiring immediate attention',
       ],
       correctAnswer: 3,
@@ -163,10 +163,10 @@ const Module7Section3_5 = () => {
       id: 9,
       question: 'Why should user complaints be taken seriously even if seemingly minor?',
       options: [
-        'Free, confidential debt advice and debt management solutions',
+        'Because users are usually correct about the technical cause',
         'Minor symptoms often indicate developing serious faults',
-        'Inhalation, skin absorption, ingestion, and injection',
-        'All work and testing completed satisfactorily',
+        'Because every complaint must be reported to the HSE',
+        'Because it allows you to invoice for an extra site visit',
       ],
       correctAnswer: 1,
       explanation:
@@ -176,10 +176,10 @@ const Module7Section3_5 = () => {
       id: 10,
       question: 'In the office example, what did user complaints about computer resets reveal?',
       options: [
-        'Online learning, forums, and technical databases',
-        'Stop work, reassess, and update the method statement',
+        'A faulty batch of computers from the supplier',
+        'Overloaded socket circuits tripping the main switch',
         'Voltage variations due to loose neutral connections',
-        '7.2 V (1.8 percent) — passes 5 percent.',
+        'Interference from nearby data cabling',
       ],
       correctAnswer: 2,
       explanation:

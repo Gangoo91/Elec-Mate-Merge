@@ -33,8 +33,8 @@ const quickCheckQuestions = [
   {
     id: 'sds-advantage',
     question: 'What is the main advantage of an SDS drill over a standard drill?',
-    options: ['Lighter weight', 'Higher impact force for masonry', 'Lower cost'],
-    correctIndex: 1,
+    options: ['Higher impact force for masonry', 'It is lighter to hold overhead', 'It costs less to buy'],
+    correctIndex: 0,
     explanation:
       'SDS drills deliver much higher impact force through their hammer action mechanism, making them far more effective for masonry drilling than standard drills.',
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
     id: 'drill-inspection',
     question: 'What should be checked before using any power tool?',
     options: [
-      'Only the battery level',
-      'Tool condition, cables, and damage',
-      'Only the chuck mechanism',
+      'Only the battery charge level',
+      'Only that the chuck mechanism spins',
+      'Tool condition, cables and any signs of damage',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A complete inspection of the tool body, power cord, and overall condition is essential to identify potential safety hazards before use.',
   },
@@ -93,12 +93,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'True or False: Standard drill bits can always be used in an SDS drill without an adaptor.',
-    options: ['True', 'False'],
+    question: 'What is needed to use a standard round-shank drill bit in an SDS drill?',
+    options: [
+      'Nothing — the SDS chuck grips round shanks directly',
+      'A keyed chuck adaptor fitted into the SDS chuck',
+      'A higher rotation speed setting on the drill',
+      'A larger diameter bit than the hole required',
+    ],
     correctAnswer: 1,
     explanation:
-      'False. SDS drills require SDS shank bits unless the drill has an interchangeable chuck adaptor for standard bits.',
+      'SDS drills require SDS-shank bits unless the drill is fitted with an interchangeable chuck adaptor that accepts standard round-shank bits.',
   },
   {
     id: 4,
@@ -117,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should you let an SDS drill do the work rather than applying excessive force?',
     options: [
-      'The relationship between valve stem position (travel) and flow rate',
+      'It allows the chuck to grip a standard round-shank bit',
       'It prevents damage to the bit and improves drilling efficiency',
-      'A risk matrix combining likelihood and severity',
-      'Cease work, secure tools and materials, and descend the tower safely',
+      'It lets the drill run at a much higher rotation speed',
+      'It removes the need to wear eye protection while drilling',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,10 +134,10 @@ const quizQuestions = [
     id: 6,
     question: 'Give one safety check to perform before using a power tool.',
     options: [
-      'Setting reference with launch, receive, and link test cords',
-      'Carbon dioxide (CO2) emissions per unit of energy',
+      'Confirm the tool is the most expensive model available',
+      'Check the tool has been used recently by someone else',
       'Check for damage to the tool casing or power cord',
-      'Multimeter with data logging capability',
+      'Make sure the tool matches the colour of the toolbox',
     ],
     correctAnswer: 2,
     explanation:

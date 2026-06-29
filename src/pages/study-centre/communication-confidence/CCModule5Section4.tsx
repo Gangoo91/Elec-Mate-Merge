@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     question:
       'You need to tell a homeowner that the rewire will cost &pound;1,200 more than the original quote because concealed asbestos was found behind the consumer unit. Using the preparation framework, what should you do BEFORE the conversation?',
     options: [
-      'Ring the customer immediately and blurt out the bad news to get it over with',
-      'Plan what you will say, gather evidence (photos, asbestos survey report, revised quote), anticipate their likely reaction, and practise delivering the key message clearly and calmly',
-      'Send a text message so you do not have to speak to them directly',
-      'Add the cost to the final invoice without mentioning it and hope they do not notice',
+      'Gather your evidence and revised quote, anticipate their reaction, and rehearse the message',
+      'Ring the customer straight away and blurt out the bad news just to get it over with',
+      'Send a quick text message so that you do not have to speak to them directly at all',
+      'Slip the extra cost onto the final invoice without mention and hope they miss it',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The preparation framework (Plan, Practise, Execute) requires you to gather your facts and evidence, structure your key message, anticipate the other person&rsquo;s emotional reaction and likely questions, and rehearse your delivery before the conversation. Walking in unprepared leads to rambling, defensiveness, and a worse outcome for everyone. Having the asbestos survey report and photographs ready demonstrates professionalism and justifies the additional cost with evidence rather than opinion.',
   },
@@ -41,24 +41,24 @@ const quickCheckQuestions = [
     question:
       'A labourer on site keeps leaving cable drums in the walkway, creating a trip hazard. Which of the following is the best Thomas Gordon I-message to address this?',
     options: [
-      '"You&rsquo;re always leaving cables everywhere &mdash; you&rsquo;re going to get someone killed."',
-      '"When cable drums are left in the walkway, I worry that someone will trip and be seriously injured, and I need them stored in the designated area after use."',
-      '"The site manager says you need to stop being so careless."',
-      '"Everyone is fed up with your mess."',
+      '"You&rsquo;re always leaving cables everywhere &mdash; you&rsquo;ll get someone killed one day."',
+      '"The site manager has told me you really need to stop being so careless with these."',
+      '"Everyone on this job is completely fed up with the mess you keep leaving behind."',
+      '"When cable drums are left in the walkway I worry someone will trip; I need them stored away."',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
-      'A Thomas Gordon I-message has three parts: (1) "When [specific behaviour]" &mdash; describes the observable behaviour without judgement; (2) "I feel/I worry" &mdash; states the impact on you or the team; (3) "I need" &mdash; states what you need to change. Option B follows this formula precisely. Option A uses "you always" which is a generalisation and an accusation. Options C and D are third-party blame statements that invite defensiveness rather than cooperation.',
+      'A Thomas Gordon I-message has three parts: (1) "When [specific behaviour]" &mdash; describes the observable behaviour without judgement; (2) "I feel/I worry" &mdash; states the impact on you or the team; (3) "I need" &mdash; states what you need to change. The "When cable drums are left in the walkway, I worry... I need..." option follows this formula precisely. The "you&rsquo;re always" option is a generalisation and an accusation, and the third-party "site manager says" and "everyone is fed up" statements invite defensiveness rather than cooperation.',
   },
   {
     id: 'cc-difficult-deescalation',
     question:
       'A subcontractor is shouting angrily because you have flagged unsafe work that needs to be ripped out and redone. Which de-escalation technique should you use FIRST?',
     options: [
-      'Shout back louder to assert dominance',
-      'Walk away and refuse to engage',
-      'Acknowledge their frustration, lower your voice, and allow them a moment to vent before calmly restating the safety issue',
-      'Threaten to report them to the principal contractor immediately',
+      'Shout back even louder than they are to assert your dominance over them',
+      'Walk away from the situation entirely and refuse to engage with them at all',
+      'Acknowledge their frustration, lower your voice, and let them vent before restating it',
+      'Threaten to report them straight to the principal contractor there and then',
     ],
     correctIndex: 2,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'In Thomas Gordon&rsquo;s I-message framework, what are the three components of an effective I-message?',
     options: [
-      '"You always..." + accusation + demand for change',
       '"When [behaviour]..." + "I feel/I worry..." + "I need..."',
+      '"You always..." + accusation + demand for change',
       '"Everyone thinks..." + generalisation + ultimatum',
       '"The boss says..." + blame + punishment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thomas Gordon&rsquo;s I-message has three parts: (1) "When [specific observable behaviour]" describes what is happening without judgement or generalisation; (2) "I feel" or "I worry" states the tangible effect or emotional impact on you; (3) "I need" states the specific change you are requesting. This structure avoids blame, reduces defensiveness, and keeps the focus on the problem rather than the person. It was first described in Gordon&rsquo;s "Parent Effectiveness Training" (1970) and later adapted for workplace communication.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'A customer becomes angry when you explain that their consumer unit does not meet current regulations and needs replacing. Which de-escalation technique should you apply FIRST?',
     options: [
-      'Immediately offer a discount to calm them down',
-      'Tell them they are wrong to be upset because regulations are regulations',
-      'Acknowledge their frustration ("I understand this is unexpected"), pause, then explain the regulation and the safety reason behind it',
-      'Hand them a printed copy of BS 7671 and leave the room',
+      'Immediately offer them a discount on the work to try to calm them down',
+      'Acknowledge their frustration, pause, then explain the regulation and safety reason',
+      'Tell them they are wrong to be upset because the regulations are the regulations',
+      'Hand them a printed copy of BS 7671 to read and then leave the room',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The first de-escalation step is always to acknowledge the emotion: "I understand this is unexpected" or "I can see this is frustrating." This validates the person&rsquo;s feelings without agreeing that the situation is wrong. A brief pause allows the emotional intensity to drop. Only then should you present the factual explanation. Offering an immediate discount undermines your professional position. Telling someone they are wrong to feel upset escalates the situation. Handing over a technical document and leaving is dismissive and unprofessional.',
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       'You quoted &pound;3,800 for a domestic rewire but the job has taken two days longer than expected due to unforeseen plaster damage. The customer is expecting the original price. What is the BEST approach?',
     options: [
-      'Absorb the loss silently and resent the customer',
-      'Add the extra cost to the invoice without warning',
-      'Explain the situation honestly with evidence (photographs, time records), present the revised figure, and offer options such as a payment plan or a breakdown showing exactly where the additional time went',
-      'Blame the customer for having an old property',
+      'Absorb the whole loss silently and quietly resent the customer for it',
+      'Add the extra cost straight onto the final invoice without any warning',
+      'Blame the customer for owning an old property with hidden plaster damage',
+      'Explain honestly with evidence, present the revised figure, and offer options',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The "money conversation" requires honesty, evidence, and options. Explain what happened (the unforeseen plaster damage), show the evidence (photographs, time records), present the revised cost clearly, and offer the customer control through options (payment plan, itemised breakdown). This builds trust even in a difficult situation. Absorbing losses silently is unsustainable and breeds resentment. Surprise invoices destroy client relationships. Blaming the customer is defensive and unprofessional.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which of the following is an example of "fogging" as a de-escalation technique?',
     options: [
-      'Agreeing with everything the angry person says to make them stop',
-      'Partially agreeing with any truth in their complaint while maintaining your position: "You&rsquo;re right that this has taken longer than we planned, and I want to explain why"',
-      'Ignoring their complaint entirely and changing the subject',
-      'Repeating "I understand" robotically until they give up',
+      'Agreeing with absolutely everything the angry person says just to make them stop',
+      'Partially agreeing with the truth in their complaint while holding your position',
+      'Ignoring their complaint entirely and quickly changing the subject to something else',
+      'Repeating the phrase "I understand" robotically at them until they finally give up',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'An apprentice colleague regularly turns up late, meaning you have to cover their work. You have raised it informally twice but nothing has changed. What is the most appropriate next step?',
     options: [
-      'Continue covering their work and say nothing',
-      'Complain about them to everyone else on site',
-      'Have a structured, planned conversation using a DESC script: Describe the behaviour, Express how it affects you, Specify what needs to change, state the Consequences if it does not',
-      'Refuse to work with them and demand a different partner',
+      'Have a structured, planned conversation using a DESC script to address it',
+      'Continue quietly covering their work and carry on saying nothing about it',
+      'Complain about them to everyone else on site rather than to them directly',
+      'Refuse to work with them at all and demand a completely different partner',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'When informal approaches have not worked, escalating to a structured conversation using the DESC model (from Bower &amp; Bower, covered in Section 5.2) is the appropriate next step. DESC gives the conversation a clear framework: Describe the specific behaviour (arriving late), Express the impact (you are covering extra work, the team is short), Specify the change needed (arrive on time), and state the Consequence (you will need to raise it with the supervisor). This is assertive, not aggressive, and gives the other person a clear picture of the situation and the stakes.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'You discover that a subcontractor has installed a shower circuit without RCD protection, contrary to BS 7671. You need to tell them the work must be ripped out. Which preparation step is MOST important before this conversation?',
     options: [
-      'Deciding what insults to use if they argue',
-      'Gathering your evidence: the specific regulation reference (BS 7671 Regulation 411.3.3), photographs of the installation, and a clear explanation of the safety risk',
-      'Practising how to shout louder than them',
-      'Writing an email to their boss first without talking to them',
+      'Deciding in advance what insults to throw back at them if they start to argue',
+      'Practising how you can manage to shout even louder than they will at you',
+      'Writing an email to their boss first, without ever talking to them yourself',
+      'Gathering evidence: the regulation reference, photographs, and the safety risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most important preparation step is gathering evidence: the specific regulation reference, photographic documentation, and a clear, factual explanation of the safety risk. When you can point to a specific regulation and explain the risk to life in plain language, the conversation is grounded in facts rather than opinion. This makes it much harder for the other person to dismiss your concern. Going behind their back to their boss first (without speaking to them directly) damages the working relationship and is perceived as undermining.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'A client owes you &pound;4,500 for completed work and has not responded to two invoices. What is the recommended escalation sequence for the unpaid invoice conversation?',
     options: [
-      'Immediately instruct a solicitor to issue court proceedings',
-      'Turn up at their house unannounced and demand payment',
-      'Friendly reminder call &rarr; formal written reminder &rarr; final notice with deadline &rarr; letter before action &rarr; small claims court or mediation',
-      'Post about them on social media to shame them into paying',
+      'Immediately instruct a solicitor to issue formal court proceedings against them',
+      'Turn up at their house unannounced and demand the payment on the doorstep',
+      'Reminder call &rarr; written reminder &rarr; final notice &rarr; letter before action &rarr; small claims',
+      'Post publicly about them on social media to shame them into finally paying',
     ],
     correctAnswer: 2,
     explanation:
