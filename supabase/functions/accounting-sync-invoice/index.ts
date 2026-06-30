@@ -1072,7 +1072,7 @@ async function getOrCreateQBServiceItem(
   console.log('=== getOrCreateQBServiceItem START ===');
 
   // First, try to find any existing Service-type item
-  const query = `SELECT * FROM Item WHERE Type = 'Service' MAXRESULTS 10`;
+  const query = `SELECT * FROM Item WHERE Type = 'Service' MAXRESULTS 100`;
   const queryUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
 
   console.log('Querying for service items...');
@@ -1089,8 +1089,13 @@ async function getOrCreateQBServiceItem(
     const items = result.QueryResponse?.Item;
 
     if (items && items.length > 0) {
+      // Exclude CIS items — QuickBooks rejects a CIS item on an invoice for a
+      // non-CIS customer ("You cannot select CIS accounts/items..."). ELE-1235.
+      const nonCis = items.filter((item: any) => !/\bcis\b/i.test(String(item.Name || '')));
+      const pool = nonCis.length > 0 ? nonCis : items;
+
       // Prefer an item named "Services" or "Service" if it exists
-      const preferredItem = items.find(
+      const preferredItem = pool.find(
         (item: any) =>
           item.Name?.toLowerCase() === 'services' || item.Name?.toLowerCase() === 'service'
       );
@@ -1100,9 +1105,9 @@ async function getOrCreateQBServiceItem(
         return { id: String(preferredItem.Id), name: preferredItem.Name };
       }
 
-      // Otherwise return the first service item
-      console.log('Using first service item:', items[0].Id, items[0].Name);
-      return { id: String(items[0].Id), name: items[0].Name };
+      // Otherwise return the first non-CIS service item
+      console.log('Using first service item:', pool[0].Id, pool[0].Name);
+      return { id: String(pool[0].Id), name: pool[0].Name };
     }
   } else {
     const errorText = await queryResponse.text();
@@ -1209,7 +1214,7 @@ async function getQBSalesTaxCode(
  */
 async function getQBIncomeAccount(accessToken: string, realmId: string): Promise<string> {
   // Query for Income accounts
-  const query = `SELECT * FROM Account WHERE AccountType = 'Income' MAXRESULTS 5`;
+  const query = `SELECT * FROM Account WHERE AccountType = 'Income' MAXRESULTS 100`;
   const queryUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
 
   const response = await fetch(queryUrl, {
@@ -1224,8 +1229,18 @@ async function getQBIncomeAccount(accessToken: string, realmId: string): Promise
     const accounts = result.QueryResponse?.Account;
 
     if (accounts && accounts.length > 0) {
-      // Prefer "Sales" or "Services" income account
-      const preferredAccount = accounts.find(
+      // NEVER use a CIS (Construction Industry Scheme) account. On a CIS-enabled
+      // QuickBooks company, putting a CIS account/item on an invoice for a
+      // non-CIS customer is rejected with "You cannot select CIS accounts/items
+      // for a non-CIS supplier/customer". Filter CIS accounts out first. ELE-1235.
+      const isCis = (acc: any) =>
+        /\bcis\b/i.test(String(acc.Name || '')) ||
+        /cis/i.test(String(acc.AccountSubType || ''));
+      const pool = accounts.filter((acc: any) => !isCis(acc));
+      const usable = pool.length > 0 ? pool : accounts;
+
+      // Prefer a "Sales" / "Services" / "Income" named account
+      const preferredAccount = usable.find(
         (acc: any) =>
           acc.Name?.toLowerCase().includes('sales') ||
           acc.Name?.toLowerCase().includes('service') ||
@@ -1237,8 +1252,8 @@ async function getQBIncomeAccount(accessToken: string, realmId: string): Promise
         return String(preferredAccount.Id);
       }
 
-      console.log('Using first income account:', accounts[0].Id, accounts[0].Name);
-      return String(accounts[0].Id);
+      console.log('Using first non-CIS income account:', usable[0].Id, usable[0].Name);
+      return String(usable[0].Id);
     }
   }
 

@@ -30,6 +30,7 @@ import { TodayQueue } from '@/components/dashboard/editorial/TodayQueue';
 import { HeadlineStats } from '@/components/dashboard/editorial/HeadlineStats';
 import { EditorialHubGrid } from '@/components/dashboard/editorial/EditorialHubGrid';
 import { MomentumStrip } from '@/components/dashboard/editorial/MomentumStrip';
+import { QuickAccessRow } from '@/components/dashboard/editorial/QuickAccessRow';
 
 import { DashboardDataProvider } from '@/hooks/useDashboardData';
 import { useDashboardVerdict } from '@/hooks/useDashboardVerdict';
@@ -189,6 +190,7 @@ function EditorialDashboard() {
         cta={cta}
         isLoading={isLoading}
       />
+      <QuickAccessRow />
       <HeadlineStats number="01" label="THIS MONTH" />
       <EditorialHubGrid number="02" label="YOUR HUBS" />
       <TodayQueue number="03" label={todayLabel} items={queueItems} emptyMessage={todayEmpty} />

@@ -181,7 +181,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
       )}
 
       {/* Main Content — full-width mobile. Pad bottom to clear the fixed nav bar. */}
-      <main className="py-4 pb-32 sm:px-4 sm:pb-28">
+      <main className="py-4 pb-8 sm:px-4 sm:pb-8">
         {/* Locked certificates are read-only — autosave is already gated in the
             provider; this stops on-screen edits. */}
         <div

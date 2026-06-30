@@ -363,7 +363,20 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
       <Collapsible open={isExpanded} onOpenChange={onToggleExpanded}>
         <CollapsibleTrigger asChild>
-          <button className="w-full testing-info-header group">
+          {/* role=button (not <button>) so the reorder/remove action buttons below
+              can legally nest inside the clickable header (fixes validateDOMNesting:
+              <button> in <button>). Click handled by Radix; keyboard handled here. */}
+          <div
+            role="button"
+            tabIndex={0}
+            className="w-full testing-info-header group cursor-pointer"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onToggleExpanded(!isExpanded);
+              }
+            }}
+          >
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <div className="flex flex-col items-start min-w-0 flex-1 gap-1">
                 {/* Desktop: eyebrow with Main/Sub tag in editorial style (college pattern).
@@ -501,7 +514,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 </button>
               )}
             </div>
-          </button>
+          </div>
         </CollapsibleTrigger>
 
         <CollapsibleContent>

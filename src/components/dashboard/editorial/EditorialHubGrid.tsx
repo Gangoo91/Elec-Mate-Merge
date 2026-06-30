@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSharedDashboardData, type DashboardData } from '@/hooks/useDashboardData';
+import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
 import { cn } from '@/lib/utils';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 
@@ -117,8 +118,13 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
   const data = useSharedDashboardData();
   const [shareSheetOpen, setShareSheetOpen] = useState(false);
 
+  const { isHubVisible } = useDashboardPreferences();
+
   const role = profile?.role || 'electrician';
-  const visible = HUBS.filter((h) => h.roles.includes(role));
+  // Respect the user's Settings → Preferences hub toggles. These were saved to
+  // `dashboard_preferences` but never read here, so customising did nothing.
+  // isHubVisible() defaults to true (no row = visible).
+  const visible = HUBS.filter((h) => h.roles.includes(role) && isHubVisible(h.id));
 
   const handleHubClick = (hub: HubDef) => {
     if (hub.action === 'refer') {
