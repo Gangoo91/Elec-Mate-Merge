@@ -133,7 +133,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
 
             if (jobData.status === 'complete') {
               setIsGenerating(false);
-              setResult(jobData.result);
+              setResult(jobData.design_data);
               supabase.removeChannel(channel);
               toast({
                 title: 'Design spec generated',
@@ -153,6 +153,22 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
         )
         .subscribe();
 
+      // Close the insert→subscribe race: if the job already finished before the
+      // channel attached, the UPDATE event won't fire — poll the row once.
+      const { data: current } = await supabase
+        .from('circuit_design_jobs')
+        .select('status, design_data, error_message')
+        .eq('id', job.id)
+        .maybeSingle();
+      if (current?.status === 'complete') {
+        setIsGenerating(false);
+        setResult(current.design_data);
+        supabase.removeChannel(channel);
+      } else if (current?.status === 'failed') {
+        setIsGenerating(false);
+        setError(current.error_message || 'Design generation failed');
+        supabase.removeChannel(channel);
+      }
     } catch (err: any) {
       setIsGenerating(false);
       setError(err.message);

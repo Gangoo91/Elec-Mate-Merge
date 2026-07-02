@@ -79,7 +79,13 @@ import { toast } from 'sonner';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { calculatePointsServed } from '@/types/autoFillTypes';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
-import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
+import {
+  getMaxZsFromDeviceDetails,
+  getMaxZsWithRcd,
+  applyScheduleAutoCalc,
+  recalcAutoZsForZRefChange,
+} from '@/utils/zsCalculations';
+import { isNotApplicableValue } from '@/utils/testValidation';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 import { createCircuitWithDefaults } from '@/utils/circuitDefaults';
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
@@ -1312,8 +1318,33 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     );
     setDistributionBoards(updatedBoards);
 
+    // ELE-1241 — the normal on-site order is circuits first, Zdb last. When
+    // this board's Zdb changes, re-derive Zs on its circuits whose Zs is empty
+    // or still holds the previously auto-derived value (manual Zs untouched).
+    let resultsForSave = testResults;
+    if ('zdb' in updates) {
+      const parseZ = (raw: unknown) => {
+        const n = parseFloat(String(raw ?? '').replace(/[^0-9.]/g, ''));
+        return isNaN(n) ? null : n;
+      };
+      const prevZdb = parseZ(distributionBoards.find((b) => b.id === boardId)?.zdb);
+      const newZdb = parseZ(updates.zdb);
+      let changed = false;
+      resultsForSave = testResults.map((circuit) => {
+        if ((circuit.boardId || MAIN_BOARD_ID) !== boardId) return circuit;
+        const newZs = recalcAutoZsForZRefChange(circuit, prevZdb, newZdb);
+        if (newZs === null) return circuit;
+        changed = true;
+        return { ...circuit, zs: newZs };
+      });
+      if (changed) {
+        setTestResults(resultsForSave);
+        onUpdate('scheduleOfTests', resultsForSave);
+      }
+    }
+
     // Save to formData
-    const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, resultsForSave);
     Object.entries(formDataUpdate).forEach(([key, value]) => {
       onUpdate(key, value);
     });
@@ -2061,6 +2092,33 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               }
             }
 
+            // ELE-1241 — derive ring R1+R2 and Zs = Zdb + (R1+R2), where Zdb is
+            // the Ze measured at this circuit's board (Jordan Dick's request).
+            // Shared helper (mirrors EICR/ELE-1108): only empty or previously
+            // auto-derived values are written, so a measured value is never
+            // overwritten. No fallback board — a circuit pointing at a deleted
+            // board must not silently use another board's Zdb.
+            {
+              const board = distributionBoards.find(
+                (b) => b.id === (updatedResult.boardId || MAIN_BOARD_ID)
+              );
+              const zdb = parseFloat(String(board?.zdb ?? '').replace(/[^0-9.]/g, ''));
+              applyScheduleAutoCalc(result, updatedResult, field, isNaN(zdb) ? null : zdb);
+            }
+
+            // ELE-1238 parity with the EICR schedule: a real R1+R2 reading marks
+            // the standalone R2 column (ringContinuityLive) N/A; clearing R1+R2
+            // reverts an 'N/A' back to empty. N/A-family entries don't trigger it.
+            if (field === 'r1r2') {
+              const r1r2Entry = value.trim();
+              const r2Entry = String(updatedResult.ringContinuityLive || '').trim();
+              if (r1r2Entry && !isNotApplicableValue(r1r2Entry)) {
+                if (!r2Entry) updatedResult.ringContinuityLive = 'N/A';
+              } else if (!r1r2Entry && r2Entry.toLowerCase() === 'n/a') {
+                updatedResult.ringContinuityLive = '';
+              }
+            }
+
             return updatedResult;
           }
           return result;
@@ -2069,7 +2127,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         return updatedResults;
       });
     },
-    [onUpdate]
+    [onUpdate, distributionBoards]
   );
 
   const handleBulkUpdate = useCallback(

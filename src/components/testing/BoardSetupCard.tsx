@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import {
   DistributionBoard,
   isMainBoard as isMainBoardFn,
+  getBoardWays,
   BOARD_MANUFACTURERS,
   BOARD_TYPES,
   BOARD_LOCATIONS,
@@ -236,8 +237,11 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           </div>
         </div>
 
-        {/* EICR drops Model + From to streamline the board (ELE-1106). EIC keeps them. */}
-        <div className={cn('grid gap-2 items-end', isEicr ? 'grid-cols-1' : 'grid-cols-3')}>
+        {/* EICR drops Model to streamline the board (ELE-1106). From stays on BOTH
+            cert types: the EICR PDF prints supplied_from (with "DNO"/"Main DB"
+            template defaults), so hiding the input left users stuck with values
+            they couldn't change (ELE-1244). */}
+        <div className={cn('grid gap-2 items-end', isEicr ? 'grid-cols-2' : 'grid-cols-3')}>
           <div>
             <label className="text-[10px] text-white block mb-1">Make</label>
             <MobileSelectPicker value={board.make || ''} onValueChange={(value) => onUpdate('make', value)} options={BOARD_MANUFACTURERS.map((m) => ({ value: m, label: m }))} placeholder="Select" title="Manufacturer" triggerClassName="text-white" />
@@ -248,56 +252,71 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               <Input value={board.model || ''} onChange={(e) => onUpdate('model', e.target.value)} placeholder="VML110" className={inputCn} />
             </div>
           )}
-          {!isEicr && (
-            <div>
-              <label className="text-[10px] text-white block mb-1">From</label>
-              <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
-            </div>
-          )}
+          <div>
+            <label className="text-[10px] text-white block mb-1">From</label>
+            <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
+          </div>
         </div>
 
-        {/* Ways as toggle buttons + custom */}
+        {/* Ways as toggle buttons + custom. ELE-1245 — read the selection via
+            getBoardWays so boards whose way count arrived under a legacy or
+            alternate field (ways / totalWaysCustom) still highlight instead of
+            showing blank. Select/deselect writes a PATCH that also clears the
+            alternate fields — otherwise getBoardWays falls back to the old
+            value and the button can never be un-toggled. */}
         <div>
-          <label className="text-[10px] text-white block mb-1">Ways</label>
-          <div className="grid grid-cols-6 sm:grid-cols-9 gap-1">
-            {[4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map((w) => (
-              <button
-                key={w}
-                type="button"
-                onClick={() => onUpdate('totalWays', board.totalWays === w ? 0 : w)}
-                className={cn(
-                  'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                  board.totalWays === w
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+          {(() => {
+            const selectedWays = board.totalWays === -1 ? -1 : getBoardWays(board) ?? 0;
+            const clearedWays = { totalWays: 0, totalWaysCustom: '', ways: '' };
+            return (
+              <>
+                <label className="text-[10px] text-white block mb-1">Ways</label>
+                <div className="grid grid-cols-6 sm:grid-cols-9 gap-1">
+                  {[4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map((w) => (
+                    <button
+                      key={w}
+                      type="button"
+                      onClick={() =>
+                        onUpdate(selectedWays === w ? clearedWays : { ...clearedWays, totalWays: w })
+                      }
+                      className={cn(
+                        'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                        selectedWays === w
+                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                          : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                      )}
+                    >
+                      {w}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onUpdate(selectedWays === -1 ? clearedWays : { ...clearedWays, totalWays: -1 })
+                    }
+                    className={cn(
+                      'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                      selectedWays === -1
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                  >
+                    Other
+                  </button>
+                </div>
+                {selectedWays === -1 && (
+                  <Input
+                    type="number"
+                    inputMode="numeric"
+                    value={(board as any).totalWaysCustom || ''}
+                    onChange={(e) => onUpdate('totalWaysCustom' as any, e.target.value)}
+                    placeholder="e.g. 32"
+                    className={cn(inputCn, 'mt-1')}
+                  />
                 )}
-              >
-                {w}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => onUpdate('totalWays', board.totalWays === -1 ? 0 : -1)}
-              className={cn(
-                'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                board.totalWays === -1
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              Other
-            </button>
-          </div>
-          {board.totalWays === -1 && (
-            <Input
-              type="number"
-              inputMode="numeric"
-              value={(board as any).totalWaysCustom || ''}
-              onChange={(e) => onUpdate('totalWaysCustom' as any, e.target.value)}
-              placeholder="e.g. 32"
-              className={cn(inputCn, 'mt-1')}
-            />
-          )}
+              </>
+            );
+          })()}
         </div>
 
         {/* Board Type — dual select: Enclosure + Mounting */}

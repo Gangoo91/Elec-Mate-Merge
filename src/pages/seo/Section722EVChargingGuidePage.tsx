@@ -645,10 +645,10 @@ const sections = [
 export default function Section722EVChargingGuidePage() {
   return (
     <GuideTemplate
-      title="EV Charger Install Rules UK: BS 7671 Section 722"
+      title="BS 7671 Section 722: EV Charger Rules + PME Explained"
       description="BS 7671 Section 722 for UK EV charger installs: PME earthing restriction, Type A RCD + 6mA DC leakage, dedicated circuit, cable sizing, earth electrode option."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Guide"

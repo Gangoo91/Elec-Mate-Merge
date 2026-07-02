@@ -48,7 +48,8 @@ import {
 import { RecordActualCostSheet } from './sheets/RecordActualCostSheet';
 import { EditJobBudgetSheet } from './sheets/EditJobBudgetSheet';
 import { VariationOrderDetailSheet } from './sheets/VariationOrderDetailSheet';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 type FilterTab = 'all' | 'profitable' | 'over_budget';
 
@@ -66,6 +67,27 @@ export function JobFinancialsSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [openDetail, setOpenDetail] = useState<JobFinancialWithJob | null>(null);
+
+  // job_financials.invoiced/paid are never maintained by any writer, so derive
+  // the open job's payment status live from its linked invoices instead.
+  const { data: jobInvoiceTotals } = useQuery({
+    queryKey: ['job-invoice-totals', openDetail?.job_id],
+    enabled: !!openDetail?.job_id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('employer_invoices')
+        .select('amount, status')
+        .eq('job_id', openDetail!.job_id);
+      if (error) throw error;
+      const invoiced = (data || []).reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
+      const paid = (data || [])
+        .filter((inv) => inv.status === 'Paid')
+        .reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
+      return { invoiced, paid };
+    },
+  });
+  const invoicedValue = jobInvoiceTotals?.invoiced ?? 0;
+  const paidValue = jobInvoiceTotals?.paid ?? 0;
 
   const [showAddVariation, setShowAddVariation] = useState<string | null>(null);
   const [variationDesc, setVariationDesc] = useState('');
@@ -380,7 +402,7 @@ export function JobFinancialsSection() {
                       title="Invoiced"
                       trailing={
                         <span className="text-[13px] font-semibold text-white tabular-nums">
-                          {formatCurrency(Number(openDetail.invoiced))}
+                          {formatCurrency(invoicedValue)}
                         </span>
                       }
                     />
@@ -388,18 +410,16 @@ export function JobFinancialsSection() {
                       title="Paid"
                       trailing={
                         <span className="text-[13px] font-semibold text-emerald-400 tabular-nums">
-                          {formatCurrency(Number(openDetail.paid))}
+                          {formatCurrency(paidValue)}
                         </span>
                       }
                     />
-                    {Number(openDetail.invoiced) - Number(openDetail.paid) > 0 && (
+                    {invoicedValue - paidValue > 0 && (
                       <ListRow
                         title="Outstanding"
                         trailing={
                           <span className="text-[13px] font-semibold text-amber-400 tabular-nums">
-                            {formatCurrency(
-                              Number(openDetail.invoiced) - Number(openDetail.paid)
-                            )}
+                            {formatCurrency(invoicedValue - paidValue)}
                           </span>
                         }
                       />

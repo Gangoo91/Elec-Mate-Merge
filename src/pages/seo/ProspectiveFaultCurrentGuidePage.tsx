@@ -18,9 +18,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'What Is Prospective Fault Current? PFC + Ipf Explained';
+const PAGE_TITLE = 'What Is Prospective Fault Current? PFC, PSCC + Ipf';
 const PAGE_DESCRIPTION =
-  'Prospective fault current (PFC/Ipf): what it is, how to measure on site, typical UK values, MCB breaking capacity required, BS 7671 Reg 434.5 explained.';
+  'Prospective fault current (PFC/Ipf/PSCC): what it means, how to measure it on site, typical UK values, and the MCB breaking capacity BS 7671 Reg 434.5 requires.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -617,7 +617,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Testing"

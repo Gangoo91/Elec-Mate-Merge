@@ -377,26 +377,43 @@ export function ProcurementSection() {
                 </span>
               }
               footer={
-                selectedOrder.status === 'In Transit' ? (
-                  <PrimaryButton
-                    onClick={() => {
-                      updateOrderStatusMutation.mutate(
-                        {
-                          id: selectedOrder.id,
-                          status: 'Delivered',
-                          deliveryDate: new Date().toISOString().split('T')[0],
-                        },
-                        {
-                          onSuccess: () => setSelectedOrder(null),
-                        }
-                      );
-                    }}
-                    disabled={updateOrderStatusMutation.isPending}
-                    fullWidth
-                  >
-                    {updateOrderStatusMutation.isPending ? 'Marking…' : 'Mark as delivered'}
-                  </PrimaryButton>
-                ) : undefined
+                selectedOrder.status === 'Delivered' ||
+                selectedOrder.status === 'Cancelled' ? undefined : (
+                  <div className="flex gap-2">
+                    {selectedOrder.status === 'Processing' && (
+                      <SecondaryButton
+                        onClick={() => {
+                          updateOrderStatusMutation.mutate({
+                            id: selectedOrder.id,
+                            status: 'In Transit',
+                          });
+                        }}
+                        disabled={updateOrderStatusMutation.isPending}
+                        fullWidth
+                      >
+                        Mark in transit
+                      </SecondaryButton>
+                    )}
+                    <PrimaryButton
+                      onClick={() => {
+                        updateOrderStatusMutation.mutate(
+                          {
+                            id: selectedOrder.id,
+                            status: 'Delivered',
+                            deliveryDate: new Date().toISOString().split('T')[0],
+                          },
+                          {
+                            onSuccess: () => setSelectedOrder(null),
+                          }
+                        );
+                      }}
+                      disabled={updateOrderStatusMutation.isPending}
+                      fullWidth
+                    >
+                      {updateOrderStatusMutation.isPending ? 'Marking…' : 'Mark as delivered'}
+                    </PrimaryButton>
+                  </div>
+                )
               }
             >
               <StatStrip

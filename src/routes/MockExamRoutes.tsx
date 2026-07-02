@@ -4,7 +4,7 @@
  * 1 hub + 25 individual mock exam pages, all unauthenticated.
  * Mounted under "mock-exams/*" from AppRouter.tsx (Public section).
  */
-import { lazy } from 'react';
+import { lazy, type ComponentType } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
@@ -36,6 +36,27 @@ const EighteenthEditionMockExamPage = lazy(
 );
 const C2391MockExamPage = lazy(() => import('@/pages/mock-exams/C2391MockExamPage'));
 const AM2OnlineMockExamPage = lazy(() => import('@/pages/mock-exams/AM2OnlineMockExamPage'));
+
+// Upskilling / specialist electrical
+const PATTestingMockExamPage = lazy(() => import('@/pages/mock-exams/PATTestingMockExamPage'));
+const EmergencyLightingMockExamPage = lazy(
+  () => import('@/pages/mock-exams/EmergencyLightingMockExamPage')
+);
+const FireAlarmMockExamPage = lazy(() => import('@/pages/mock-exams/FireAlarmMockExamPage'));
+const EVChargingMockExamPage = lazy(() => import('@/pages/mock-exams/EVChargingMockExamPage'));
+const DataCablingMockExamPage = lazy(() => import('@/pages/mock-exams/DataCablingMockExamPage'));
+const RenewableEnergyMockExamPage = lazy(
+  () => import('@/pages/mock-exams/RenewableEnergyMockExamPage')
+);
+const SmartHomeMockExamPage = lazy(() => import('@/pages/mock-exams/SmartHomeMockExamPage'));
+const IndustrialElectricalMockExamPage = lazy(
+  () => import('@/pages/mock-exams/IndustrialElectricalMockExamPage')
+);
+const InstrumentationMockExamPage = lazy(
+  () => import('@/pages/mock-exams/InstrumentationMockExamPage')
+);
+const BMSMockExamPage = lazy(() => import('@/pages/mock-exams/BMSMockExamPage'));
+const FibreOpticsMockExamPage = lazy(() => import('@/pages/mock-exams/FibreOpticsMockExamPage'));
 
 // Level 2
 const L2HealthSafetyMockExamPage = lazy(
@@ -80,7 +101,7 @@ const L3CareerDevelopmentMockExamPage = lazy(
 // Dynamic topic landings — /mock-exams/:examSlug/:topicSlug
 const MockExamTopicPage = lazy(() => import('@/pages/mock-exams/MockExamTopicPage'));
 
-const wrap = (El: React.ComponentType) => (
+const wrap = (El: ComponentType) => (
   <LazyRoute>
     <El />
   </LazyRoute>
@@ -106,6 +127,19 @@ const MockExamRoutes = () => (
     <Route path="18th-edition-bs-7671" element={wrap(EighteenthEditionMockExamPage)} />
     <Route path="2391-inspection-testing" element={wrap(C2391MockExamPage)} />
     <Route path="am2-online-knowledge-test" element={wrap(AM2OnlineMockExamPage)} />
+
+    {/* Upskilling / specialist electrical */}
+    <Route path="pat-testing" element={wrap(PATTestingMockExamPage)} />
+    <Route path="emergency-lighting" element={wrap(EmergencyLightingMockExamPage)} />
+    <Route path="fire-alarm" element={wrap(FireAlarmMockExamPage)} />
+    <Route path="ev-charging" element={wrap(EVChargingMockExamPage)} />
+    <Route path="data-cabling" element={wrap(DataCablingMockExamPage)} />
+    <Route path="renewable-energy" element={wrap(RenewableEnergyMockExamPage)} />
+    <Route path="smart-home" element={wrap(SmartHomeMockExamPage)} />
+    <Route path="industrial-electrical" element={wrap(IndustrialElectricalMockExamPage)} />
+    <Route path="instrumentation" element={wrap(InstrumentationMockExamPage)} />
+    <Route path="bms" element={wrap(BMSMockExamPage)} />
+    <Route path="fibre-optics" element={wrap(FibreOpticsMockExamPage)} />
 
     {/* Level 2 */}
     <Route path="level-2-electrical-health-safety" element={wrap(L2HealthSafetyMockExamPage)} />

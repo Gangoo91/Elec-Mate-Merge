@@ -73,10 +73,17 @@ const EICElectricalInstallationSection = ({
     const actualValue = value === '__clear__' ? '' : value;
     onUpdate('rcdMainSwitch', actualValue);
 
-    // Clear RCD fields when "No" or cleared
+    // ELE-1246 — clear ALL RCD detail fields when "No" or cleared, not just
+    // rating/type: stale time readings survived in formData and printed on
+    // the PDF via the formatter's legacy fallback chain.
     if (actualValue === 'no' || actualValue === '') {
       onUpdate('rcdRating', '');
       onUpdate('rcdType', '');
+      onUpdate('rcdOperatingTime', '');
+      onUpdate('rcdTimeDelay', '');
+      onUpdate('rcdRatedTimeDelay', '');
+      onUpdate('rcdMeasuredTime', '');
+      onUpdate('rcdMeasuredOperatingTime', '');
     }
   };
 

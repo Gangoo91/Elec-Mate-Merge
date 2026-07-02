@@ -1,5 +1,5 @@
 /**
- * mockExamCatalog — single source of truth for the 25 free mock exams + hub.
+ * mockExamCatalog — single source of truth for the 36 free mock exams + hub.
  *
  * Used by PublicMockExamPage to render "Related mock exams" at the bottom
  * of each page (cross-linking improves user dwell time + internal authority
@@ -34,7 +34,7 @@ export const MOCK_EXAM_CATALOG: MockExamCatalogEntry[] = [
   { slug: 'fire-safety', title: 'Fire Safety Awareness', group: 'trade', qCount: 200 },
   { slug: 'confined-spaces', title: 'Confined Spaces (CSR 1997)', group: 'trade', qCount: 200 },
 
-  // Electrical exams (3)
+  // Electrical exams (14)
   { slug: '18th-edition-bs-7671', title: '18th Edition BS 7671', group: 'electrical', qCount: 300 },
   {
     slug: '2391-inspection-testing',
@@ -48,6 +48,37 @@ export const MOCK_EXAM_CATALOG: MockExamCatalogEntry[] = [
     group: 'electrical',
     qCount: 177,
   },
+  { slug: 'pat-testing', title: 'PAT Testing (C&G 2377)', group: 'electrical', qCount: 120 },
+  {
+    slug: 'emergency-lighting',
+    title: 'Emergency Lighting (BS 5266)',
+    group: 'electrical',
+    qCount: 300,
+  },
+  {
+    slug: 'fire-alarm',
+    title: 'Fire Alarm Systems (BS 5839-1)',
+    group: 'electrical',
+    qCount: 150,
+  },
+  { slug: 'ev-charging', title: 'EV Charging Installation', group: 'electrical', qCount: 150 },
+  { slug: 'data-cabling', title: 'Data Cabling', group: 'electrical', qCount: 150 },
+  {
+    slug: 'renewable-energy',
+    title: 'Renewable Energy & Solar PV',
+    group: 'electrical',
+    qCount: 200,
+  },
+  { slug: 'smart-home', title: 'Smart Home Technology', group: 'electrical', qCount: 200 },
+  {
+    slug: 'industrial-electrical',
+    title: 'Industrial Electrical',
+    group: 'electrical',
+    qCount: 120,
+  },
+  { slug: 'instrumentation', title: 'Instrumentation', group: 'electrical', qCount: 125 },
+  { slug: 'bms', title: 'Building Management Systems', group: 'electrical', qCount: 245 },
+  { slug: 'fibre-optics', title: 'Fibre Optics', group: 'electrical', qCount: 250 },
 
   // Level 2 (5)
   {

@@ -27,6 +27,12 @@ export interface CashFlowSummary {
   dueThisWeekCount: number;
   avgDaysToPayment: number;
   totalOutstanding: number;
+  // All-time collection health (consumed by the Cash flow snapshot card)
+  totalPaid: number;
+  collectionRate: number;
+  invoicesPaid: number;
+  invoicesOutstanding: number;
+  invoicesOverdue: number;
 }
 
 export interface ExpenseTrend {
@@ -231,10 +237,18 @@ export function useCashFlowSummary() {
           }, 0) / paidInvoices.length
         : 0;
 
-    // Total outstanding
-    const totalOutstanding = invoices
-      .filter((inv) => inv.status !== 'Paid')
-      .reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
+    // Outstanding (all-time, unpaid)
+    const outstandingInvoices = invoices.filter((inv) => inv.status !== 'Paid');
+    const totalOutstanding = outstandingInvoices.reduce(
+      (sum, inv) => sum + Number(inv.amount || 0),
+      0
+    );
+
+    // All-time collection health
+    const paidAll = invoices.filter((inv) => inv.status === 'Paid');
+    const totalPaid = paidAll.reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
+    const collectionBase = totalPaid + totalOutstanding;
+    const collectionRate = collectionBase > 0 ? Math.round((totalPaid / collectionBase) * 100) : 0;
 
     return {
       invoicedThisMonth,
@@ -245,6 +259,11 @@ export function useCashFlowSummary() {
       dueThisWeekCount: dueThisWeekInvoices.length,
       avgDaysToPayment: Math.round(avgDaysToPayment),
       totalOutstanding,
+      totalPaid,
+      collectionRate,
+      invoicesPaid: paidAll.length,
+      invoicesOutstanding: outstandingInvoices.length,
+      invoicesOverdue: overdueInvoices.length,
     };
   }, [invoices]);
 

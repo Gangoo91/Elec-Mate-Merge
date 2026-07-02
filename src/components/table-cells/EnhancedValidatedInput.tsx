@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { CircleCheck, CircleX, AlertTriangle } from 'lucide-react';
+import { CircleCheck, CircleX, AlertTriangle, Minus } from 'lucide-react';
 import { TestValidationResults } from '@/utils/testValidation';
 
 interface EnhancedValidatedInputProps {
@@ -81,6 +81,10 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
       case 'fail':
         return (
           <CircleX className="h-3.5 w-3.5 text-destructive absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
+        );
+      case 'na':
+        return (
+          <Minus className="h-3.5 w-3.5 text-muted-foreground/60 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
       default:
         return null;

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import {
@@ -46,6 +47,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
   const [recipientEmail, setRecipientEmail] = useState('');
   const [expiryDays, setExpiryDays] = useState('30');
   const [shareLink, setShareLink] = useState<string | null>(profile.shareable_link || null);
+  const qrRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open && !shareLink && profile.id) {
@@ -67,7 +69,8 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
     }
   };
 
-  const displayLink = shareLink || `https://elec-id.app/profile/${profile.elec_id_number}`;
+  const displayLink =
+    shareLink || `https://www.elec-mate.com/verify/${profile.elec_id_number}`;
 
   const handleCopyLink = async () => {
     await copyToClipboard(displayLink);
@@ -100,11 +103,52 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
     setRecipientEmail('');
   };
 
-  const handleGenerateQR = () => {
-    toast({
-      title: 'QR Code Generated',
-      description: 'Scan this code to view the Elec-ID profile.',
-    });
+  const handleDownloadQR = () => {
+    try {
+      const svg = qrRef.current?.querySelector('svg');
+      if (!svg) throw new Error('QR code not ready');
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Could not create canvas context');
+
+      const padding = 40;
+      const size = 400;
+      canvas.width = size + padding * 2;
+      canvas.height = size + padding * 2;
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const svgUrl = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, padding, padding, size, size);
+        ctx.fillStyle = '#1a1a2e';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Elec-ID: ${profile.elec_id_number}`, canvas.width / 2, canvas.height - 60);
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#666';
+        ctx.fillText('Scan to verify credentials', canvas.width / 2, canvas.height - 35);
+
+        const link = document.createElement('a');
+        link.download = `elec-id-${profile.elec_id_number}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        URL.revokeObjectURL(svgUrl);
+        toast({ title: 'QR code downloaded' });
+      };
+      img.src = svgUrl;
+    } catch {
+      toast({
+        title: 'Download failed',
+        description: 'Could not download the QR code.',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -194,16 +238,23 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
           <TabsContent value="qr" className="mt-4">
             <FormCard eyebrow="QR code">
               <div className="flex flex-col items-center">
-                <div className="w-48 h-48 bg-[hsl(0_0%_9%)] rounded-xl border-2 border-dashed border-elec-yellow/30 flex items-center justify-center mb-3">
-                  <div className="text-center">
-                    <QrCode className="h-24 w-24 text-elec-yellow/50 mx-auto" />
-                    <p className="mt-2 text-[11px] text-white">QR code preview</p>
-                  </div>
+                <div
+                  ref={qrRef}
+                  className="w-48 h-48 bg-white rounded-xl p-4 flex items-center justify-center mb-3"
+                >
+                  <QRCodeSVG
+                    value={displayLink}
+                    size={160}
+                    bgColor="#ffffff"
+                    fgColor="#1a1a2e"
+                    level="H"
+                    includeMargin={false}
+                  />
                 </div>
                 <p className="text-[12px] text-white text-center">
                   Scan to view {profile.employee?.name?.split(' ')[0] || 'worker'}'s Elec-ID profile
                 </p>
-                <PrimaryButton onClick={handleGenerateQR} className="mt-3">
+                <PrimaryButton onClick={handleDownloadQR} className="mt-3">
                   <QrCode className="h-4 w-4 mr-1.5" />
                   Download QR code
                 </PrimaryButton>

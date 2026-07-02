@@ -592,10 +592,10 @@ const sections = [
 export default function LoopImpedanceTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Ze vs Zs Explained: Loop Impedance Testing UK"
-      description="Difference between Ze and Zs: how to measure each, max Zs values for Type B/C MCBs, prospective fault current, BS 7671 + GN3 test procedure explained."
+      title="Ze vs Zs: What's the Difference? Max Zs Values (BS 7671)"
+      description="The difference between Ze and Zs explained simply: what each one measures, how to test loop impedance on site, and max Zs values for Type B + C MCBs."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

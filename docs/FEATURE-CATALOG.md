@@ -1,4 +1,4 @@
-<!-- Generated 2026-05-28. Structured to mirror the in-app sidebar navigation. Deduplicated: features are described once, in their home hub. -->
+<!-- Generated 2026-05-28. Updated 2026-07-02 (full 10-area code audit): QS review system, CIS/reverse-charge + accounting sync, site-visit live pricing + wholesaler RFQ, project handover packs, Employer Mate + Worker Tools + hiring marketplace, apprentice Today/tab bar, renewables designers, college EPA AI + LTI, founder story. Structured to mirror the in-app sidebar navigation. Deduplicated: features are described once, in their home hub. -->
 
 # Elec-Mate — Product Feature Catalogue
 
@@ -46,7 +46,10 @@ The Apprentice Hub is Elec-Mate's complete home for UK electrical apprentices �
 
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
-| Apprentice Hub home | Personalised landing with a rotating, time-of-day headline and a "today's verdict" that adapts to what the apprentice needs most — overdue tutor work, an active study streak, or a gentle nudge to start. Tappable headline stats (streak, course %, videos, diary) each open a detail sheet, and numbered editorial sections route into every other tool. | `/apprentice` | ✅ live |
+| Apprentice Hub home | The editorial "shop window": rotating, time-of-day headline, tappable headline stats (streak, course %, videos, diary) each opening a detail sheet, and numbered editorial sections routing into every other tool. Daily use now starts on the Today page below. | `/apprentice` | ✅ live |
+| Today dashboard *(new Jun 2026)* | The apprentice's daily front-door: greeting, a "What's next" recommendation engine (priority chain: overdue tutor quiz → new quiz → behind OTJ pace → keep the streak → start learning), a tappable stat strip (streak / week's OTJ hours / course % / awaiting sign-off), four quick actions (log hours, capture evidence, continue learning, quick quiz) and the From-your-college card. | `/apprentice/today` | ✅ live |
+| Bottom tab bar *(new Jun 2026)* | Persistent 5-tab native navigation across all apprentice and Study Centre pages — Today · Learn · CAPTURE (raised centre button opening the evidence capture sheet) · Hours · Me. One thumb, one tap to any core surface. | all `/apprentice/*` + `/study-centre/*` | ✅ live |
+| Weekly recap & achievements *(new Jun 2026)* | A weekly recap sheet rolling up learning activity, OTJ hours, evidence and diary entries, plus an achievement gallery of unlockable badges feeding the XP system. | `/apprentice` (sheets) | ✅ live |
 | From your college card | A prominent card showing goals and quizzes set by the apprentice's college tutor, with live "new" and "overdue" badges, so set work is never missed. Links straight into the College Hub. | `/apprentice` → `/apprentice/college-plan` | ✅ live |
 | Elec-ID banner | High-value account call-to-action surfaced on the hub for the apprentice's verified professional identity. | `/apprentice` | ✅ live |
 
@@ -71,7 +74,7 @@ The Apprentice Hub is Elec-Mate's complete home for UK electrical apprentices �
 
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
-| Off-the-job hours hub | A defensibility-first OTJ tracker built around the 20% rule. Apprentices see week and year totals against gateway targets, a verification rate, a stacked "source mix" bar (in-app auto-tracked vs tutor-recorded vs employer-attested vs pending), and a compliance forecast that projects whether they'll clear the gateway at their current pace — with the weekly hours needed to catch up. | `/apprentice/ojt-hub`, `/apprentice/ojt` | ✅ live |
+| Off-the-job hours hub | A defensibility-first OTJ tracker built around the apprenticeship standard's fixed hours requirement (e.g. 1,066 hours for ST0152, sourced per-standard rather than a generic 20% rule). Apprentices see week and year totals against gateway targets, a verification rate, a stacked "source mix" bar (in-app auto-tracked vs tutor-recorded vs employer-attested vs pending), and a compliance forecast that projects whether they'll clear the gateway at their current pace — with the weekly hours needed to catch up. | `/apprentice/ojt-hub`, `/apprentice/ojt` | ✅ live |
 | Quick log with voice & AI | Log an activity by speaking it: dictate what you did, tap "AI structure" and it fills the title, activity type, duration and picks up unit codes, ready to submit to your tutor for sign-off. Auto-tracked in-app study and video time also counts toward hours. | `/apprentice/ojt-hub` (log sheet) | ✅ live |
 | Employer attestation links | Generate a one-tap shareable link (native share or copy) so a site supervisor can confirm training hours from their own phone, flipping those hours to employer-attested. Rejected entries can be edited and resubmitted. | `/apprentice/ojt-hub` | ✅ live |
 
@@ -88,7 +91,7 @@ The Apprentice Hub is Elec-Mate's complete home for UK electrical apprentices �
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
 | Ask Dave AI tutor | A conversational AI tutor styled as a master sparky, grounded in UK standards and the apprentice's own course criteria and practice history, so answers fit where the learner actually is. Supports image upload (ask about a photo), saved chat history, smart suggested questions, and a "daily tips" mode that can hand a topic straight to a chat. | `/apprentice/advanced-help` | ✅ live |
-| Site diary | A daily site logbook with feed and calendar views, search, skill tagging, mood tracking and a streak counter. Full create/edit/delete, weekly summaries, and an AI diary coach that nudges entries toward portfolio evidence — linking site work to qualification criteria. | `/apprentice/site-diary` | ✅ live |
+| Site diary | A daily site logbook with feed and calendar views, search, skill tagging, mood tracking and a streak counter. Full create/edit/delete, weekly summaries, and an AI diary coach that nudges entries toward portfolio evidence — linking site work to qualification criteria. Hardened Jun 2026: timezone-correct streaks, failed-save form retention, photos stored privately with signed display, and coach advice grounded in BS 7671:2018+A4:2026. | `/apprentice/site-diary` | ✅ live |
 | Learning videos | A curated, categorised video library with an immersive inline player (no leaving the page), search, bookmarking and watch tracking that feeds the hub's "videos watched" stat and OTJ hours. | `/apprentice/learning-videos` | ✅ live |
 
 ### On-the-job tools & calculators
@@ -103,7 +106,7 @@ The Apprentice Hub is Elec-Mate's complete home for UK electrical apprentices �
 
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
-| Guidance area (toolbox) | A structured reference library covering apprenticeship expectations (year by year), off-the-job training, funding, end-point assessment, rights & pay, site jargon, portfolio building, communication skills, study tips, learning from mistakes and time management — each a multi-page mini-guide. | `/apprentice/toolbox` and sub-guides | ✅ live |
+| Guidance area (toolbox) | A structured reference library covering apprenticeship expectations (year by year), off-the-job training, funding, end-point assessment, rights & pay, site jargon, portfolio building, communication skills, study tips, learning from mistakes and time management. Overhauled Jun 2026 into a tabbed 11-topic structure (~50 sub-pages) with a BS 7671 A4:2026 accuracy pass and tap-to-call trade helplines (Electrical Industries Charity, Lighthouse, Samaritans). | `/apprentice/toolbox` and sub-guides | ✅ live |
 | Safety fundamentals | Six core safety knowledge modules: safe isolation, PPE & equipment, working at height, emergency procedures, risk assessment and site safety rules, with read-time estimates and emergency contacts. | `/apprentice/safety-fundamentals` and sub-pages | ✅ live |
 | Professional development | Career planning content — career pathways, certifications, professional skills, continuing education and industry networking. | `/apprentice/professional-development` and sub-pages | ✅ live |
 | Rights & pay | National wage tiers, on-site rights and support when things go wrong, with dedicated wages, rights, support and tools sub-pages. | `/apprentice/rights-and-pay` and sub-pages | ✅ live |
@@ -139,6 +142,9 @@ Everything a working electrician needs to run the day — from the first knock o
 | Project detail hub | A single screen that pulls together everything tied to a job: task progress, total time logged, estimated and unbilled value, and collapsible sections linking site visits, tasks, quotes, invoices, certificates, RAMS, circuit designs and cost estimates — each able to link an existing record or spin up a new one pre-filled with the job's customer and address. | `/electrician/projects/:id` | ✅ live |
 | Start timer / Ask Mate from a project | Start the time tracker pre-tagged to the job in one tap, or ask Mate what's outstanding. When unbilled time builds up, the project flags it and offers to draft an invoice for exactly those sessions. | `/electrician/projects/:id` | ✅ live |
 | Project AI notes | Saved AI working notes and diagnostic photo summaries attached to the project for later reference. | `/electrician/projects/:id` | 🟡 partial |
+| Project handover pack *(new Jun 2026)* | One-tap branded handover PDF for a finished job: a cover sheet (logo, scheme badge, project, customer, dates, value/spend/time cards) plus an expenses summary, with every linked certificate, quote and invoice merged in server-side — expired PDF links are regenerated on the fly — delivered as a secure 24-hour download link. | `/electrician/projects/:id` (Export pack) | ✅ live |
+| Project expenses *(new Jun 2026)* | Link expenses to projects for a true per-job P&L: a Spend metric on project tiles, spend-by-category in the detail view, receipt capture, and invoice pre-fill from project expenses. | `/electrician/projects/:id` (Expenses) | ✅ live |
+| Project actions sheet & AI-suggested links *(new Jun 2026)* | A unified bottom-sheet of project actions (add expense/task, link quote/invoice/cert/RAMS/site visit/design, export pack, complete, delete), plus AI-suggested linking of unlinked quotes, invoices, certs and site visits matched by customer or postcode — one-tap "Link all". | `/electrician/projects/:id` | ✅ live |
 
 #### Site visits (pre-site to sign-off)
 
@@ -149,7 +155,11 @@ Everything a working electrician needs to run the day — from the first knock o
 | Room-by-room capture | Walk the property room by room, adding items, photos, notes and smart prompts. Room templates speed up setup by property type, and a capture timer tracks how long the survey takes. | `/electrician/site-visit/new` | ✅ live |
 | Voice capture mode | Speak the survey out loud and the app listens, detects natural pauses and auto-extracts items into the right room as you talk — hands-free on a live site. | `/electrician/site-visit/new` | ✅ live |
 | Photo annotation | Mark up captured photos on a drawing canvas before they go into the scope or report, so issues are clearly flagged. | `/electrician/site-visit/new` | ✅ live |
-| Scope, generate & quote hand-off | Build the scope of works with pre-populated assumptions, then run a one-tap generate step that saves the visit, links or creates the customer, uploads photos into a documentation project, locks a scope baseline and produces a pre-start checklist — before handing straight off into the quote builder. | `/electrician/site-visit/new` | ✅ live |
+| Scope, generate & quote hand-off | Build the scope of works with pre-populated assumptions, then run a one-tap Finalise that saves the visit, links or creates the customer, uploads photos into a documentation project, locks a scope baseline and produces a pre-start checklist — before handing straight off into the quote builder. Finalise operations are idempotent, so an interrupted visit resumes cleanly with no duplicates. | `/electrician/site-visit/new` | ✅ live |
+| Live pricing engine *(new Jun 2026)* | The AI survey analysis now prices captured items with live material prices from UK wholesaler catalogues (Screwfix, CEF, Electrical Direct, Toolstation), showing an estimated total with confidence, and labour vs materials broken out — costs flow straight into the quote. | `/electrician/site-visit/:id` (Scope & Price) | ✅ live |
+| Editable materials table *(new Jun 2026)* | The analysed materials list is fully editable inline on the review screen — tap any quantity, unit, price or description, add or remove lines — with the cost header recalculating live. | `/electrician/site-visit/:id` (Scope & Price) | ✅ live |
+| Wholesaler RFQ *(new Jun 2026)* | Turn the materials list into a price-free, branded request-for-quotation and send it to saved wholesaler contacts in one go — BCC'd so merchants quote blind and compete. Add merchant reps by name and email; copy/WhatsApp fallbacks included. | `/electrician/site-visit/:id` (Scope & Price) | ✅ live |
+| On-capture photo upload *(new Jun 2026)* | Site photos upload to cloud storage the moment they're taken, with automatic retry when signal returns — no lost photos if the app is backgrounded or killed mid-survey. | `/electrician/site-visit/new` | ✅ live |
 | Client sign-off & completion | Finish the job in-app: capture after-photos, collect the client's signature on the device, generate a completion certificate PDF, and raise the invoice from the accepted quote — with live updates if the client signs remotely. | `/electrician/site-visit/:id?tab=post-job` | ✅ live |
 
 #### Snagging
@@ -177,7 +187,7 @@ Everything a working electrician needs to run the day — from the first knock o
 
 | Feature | What it does | Route(s) | Status |
 | --- | --- | --- | --- |
-| Worker Tools hub | A self-service hub for electricians employed by a firm: set your on-site status, clock in and out or log manual hours, request leave, view team comms, see your assigned jobs, view your digital credentials (Elec-ID), log progress notes, acknowledge safety documents, submit expense claims and raise snag reports — all as quick bottom sheets with live badges for unread messages and pending items. | `/electrician/worker-tools` | ✅ live |
+| Worker Tools hub | A self-service hub for electricians employed by a firm, rebuilt Jun 2026 from bottom sheets into 14 fully routed pages: My Jobs, My Tasks, Timesheets, My Pay, Expenses, Leave, Comms, Credentials, Equipment, Reports, Sign-offs, Progress Notes, QS Review and Status. Two-way live connectivity with the Employer Hub (changes sync instantly both ways), an in-app notification centre (bell + inbox, realtime, unread badges), and push notifications that deep-link straight to the relevant tool page. | `/electrician/worker-tools/*` | ✅ live |
 
 ---
 
@@ -249,6 +259,21 @@ This is the heart of Elec-Mate for the working electrician: a full suite of BS 7
 | Learning Hub (within I&T) | Eight training modules (isolation, testing procedures, continuity, IR, RCD, fault finding, BS 7671 reference and assessments) sitting alongside the tools. | `…?section=learning-hub` | 🟡 |
 | Legacy Certificates | A backward-compatibility view for older certificate records. | `…/legacy-certificates` | ⚠️ legacy |
 
+**QS review & smart test schedules (new Jun 2026)**
+
+| Feature | What it does | Route | Status |
+| --- | --- | --- | --- |
+| QS review workflow | Submit an EICR/EIC/Minor Works cert to a Qualifying Supervisor for counter-sign-off. The QS reviews the full certificate in-app, and on approval the cert auto-locks (preserving its content hash) with the QS counter-signature embedded in the PDF. | `…?section=qs-review` + per-cert sign-off tab | ✅ |
+| Itemised QS comments | The QS leaves targeted comments against specific circuits or observations; the electrician replies in-thread and either side marks items resolved — no email chains around a certificate. | within QS review | ✅ |
+| Auto-flagging of dubious circuits | AI pre-flags test-schedule circuits with questionable values for the QS's attention before sign-off. | within QS review | ✅ |
+| One-tap QS self-sign-off | A business owner or designated principal QS can review and counter-sign their own firm's certs in one tap from the I&T hub bench. | `…?section=qs-review` | ✅ |
+| AI observations, cited to A4:2026 | Flag a defect and get an AI-suggested classification code (C1/C2/C3/FI), description, remedial recommendation and the specific BS 7671:2018+A4:2026 regulation — accept fields individually or all at once. | within EICR/EIC observations | ✅ |
+| R1+R2 expected-value auto-calc | Expected R1+R2 computed from cable type, length and ambient temperature at test — no lookup tables. | schedule of tests | ✅ |
+| Max Zs RCD-aware quick-fill | One tap fills maximum Zs for every circuit from device type, curve and rating — RCD-aware per BS 7671, with the 80% cold-measured rule applied and recorded values validated against it. | schedule of tests | ✅ |
+| Bulk quick-fills & duplicate row | Bottom-sheet panels bulk-fill RCD details or insulation-resistance values across all blank circuits in one tap; any circuit row can be duplicated (all device details cloned) for identical circuits. | schedule of tests | ✅ |
+| Certificate versioning & lock bar | Approved certs store version snapshots with a lock bar showing status and QS approval date; older/locked versions remain downloadable. | per certificate | ✅ |
+| Unified signatures | One stored e-signature reused across all schedules and declarations, including the EIC circuit schedule. | per certificate | ✅ |
+
 ---
 
 ### 3.3 Business suite — quoting, invoicing & money
@@ -280,7 +305,21 @@ The Business suite turns Elec-Mate into a back-office in your pocket. From one e
 | Invoice builder & view | Create invoices directly or convert them from accepted quotes, then manage each one from a detailed view: generate a branded PDF, mark as paid, and copy a single-use mark-paid link (valid 30 days) to share with whoever confirms payment. | `/electrician/invoice-builder/create`, `/electrician/invoice-quote-builder/:id`, `/electrician/invoices/:id/view` | ✅ live |
 | Card payments via Stripe | Connect a Stripe account (instant OAuth) to add a "Pay Now" button to emailed invoices so clients can pay by card. A persistent banner prompts setup and confirms when connected, and the app syncs and reflects live Stripe account status. | `/electrician/invoices`, `/settings?tab=billing` | ✅ live |
 | Share invoices & quotes | Send documents however the client prefers: email a download link (or send a proper emailed invoice with an optional pay-now link), or share the PDF to WhatsApp — native share sheet on mobile, with a pre-written client message including invoice number and amount. PDF download is available throughout. | `/electrician/invoices`, `/electrician/invoices/:id/view` | ✅ live |
-| Accounting sync | Connect Xero or QuickBooks to push invoices and expenses across, and pull payment status back from the provider so an invoice marked paid externally is reflected in Elec-Mate. | `/electrician/invoices/:id/view`, `/electrician/expenses` | ✅ live |
+| Accounting sync | Connect Xero or QuickBooks (Sage and FreshBooks connections built and awaiting full testing) to push invoices and expenses across — VAT- and CIS-aware — and pull payment status back so an invoice marked paid externally is reflected in Elec-Mate. One-tap "Refresh from provider" plus bulk push of everything unsynced. | `/electrician/invoices/:id/view`, `/electrician/expenses` | ✅ live |
+
+#### Money compliance & document types (new Jun 2026)
+
+| Feature | What it does | Route(s) | Status |
+|---|---|---|---|
+| CIS deductions & VAT domestic reverse charge | Full subcontractor compliance on every quote and invoice: toggle reverse charge (VAT zeroed with the statutory s.55A wording) and CIS (20% registered / 30% unverified, deducted from labour lines only, with items tagged Labour/Materials). The true breakdown shows on the PDF, email, public client page and accounting sync. | quote/invoice builders + all views | ✅ live |
+| Estimate documents | A document-type toggle turns a quote into a branded **Estimate** — "guide only, final cost may vary" disclaimer, relabelled totals and an Estimate badge on the pipeline card — keeping estimates legally distinct from fixed-price quotes. | quote builder (Money Settings) | ✅ live |
+| TBD start dates | "Known start date" / "To be agreed with client" toggle; TBD renders "Start date: To be agreed" on the PDF and public quote view. | quote builder (Job Details) | ✅ live |
+| Default invoice settings | Set once (VAT registered, reverse charge, CIS, summary view) and every new invoice starts correct — overridable per invoice. | invoice settings sheet | ✅ live |
+| Record Payment & partial payments | A native Record Payment dialog with date picker on the invoice view; partial payments tracked against the outstanding balance. | `/electrician/invoices/:id/view` | ✅ live |
+| Deposit invoices on acceptance | When a client accepts a quote on the public page, a deposit invoice (default % from the business profile, overridable per quote) can be raised automatically with a card-payment link. | `/public/quote/:token` | ✅ live |
+| Create RAMS from a quote | One tap from the quote view opens the AI RAMS generator pre-seeded with the job title, description, location and client — no retyping. | quote actions → AI RAMS | ✅ live |
+| Branded PDFs & clearer line items | Quote and invoice PDFs carry the company's brand colour throughout, and line-item descriptions render as clean lists rather than text blocks. | all quote/invoice PDFs | ✅ live |
+| Dunning emails | Automatic, branded escalation emails for failed and overdue payments (failed-payment notice → overdue reminder → final notice). | automatic | ✅ live |
 
 #### Expenses, stock & customers
 
@@ -399,7 +438,7 @@ Elec-Mate puts a full electrical engineering toolkit in the electrician's pocket
 
 | Feature | What it does | Route(s) | Status |
 | --- | --- | --- | --- |
-| Electrical Calculations hub | A categorised library of 60+ standalone calculators selected from one searchable, grouped picker. Families span Fundamentals (Ohm's Law, AC power, three-phase, star-delta), Design & Installation (voltage drop, cable sizing, derating, conduit/trunking fill, conduit bending, diversity, maximum demand, power-factor correction), Testing & Inspection (maximum Zs, BS 7671 Zs lookup, R1+R2, ring continuity, earth fault loop, phase rotation), Protection & Safety (adiabatic, prospective fault current, RCD trip time, RCD discrimination, earth electrode/TT, circuit-breaker selector), Lighting & Power, Renewables and EV, Advanced Safety & Analysis (arc flash, power quality, selectivity, fault level, touch/step voltage, lightning protection), Specialist Locations (marine, swimming pool) and cost utilities. Each calculator shows the formula, results and a standards reference. | `/electrician/calculations` | ✅ live |
+| Electrical Calculations hub | A categorised library of 63 standalone calculators selected from one searchable, grouped picker. Families span Fundamentals (Ohm's Law, AC power, three-phase, star-delta), Design & Installation (voltage drop, cable sizing, derating, conduit/trunking fill, conduit bending, diversity, maximum demand, power-factor correction), Testing & Inspection (maximum Zs, BS 7671 Zs lookup, R1+R2, ring continuity, earth fault loop, phase rotation), Protection & Safety (adiabatic, prospective fault current, RCD trip time, RCD discrimination, earth electrode/TT, circuit-breaker selector), Lighting & Power, Renewables and EV, Advanced Safety & Analysis (arc flash, power quality, selectivity, fault level, touch/step voltage, lightning protection), Specialist Locations (marine, swimming pool) and cost utilities. Each calculator shows the formula, results and a standards reference. | `/electrician/calculations` | ✅ live |
 | BS 7671 calculation engines | Shared, reusable calculation engines underpin the design tools and headline calculators — simplified cable sizing, voltage drop, earth fault loop, cable current capacity, diversity, discrimination, load balancing, short-circuit, motor circuit/starting, thermal constraints and harmonic analysis — driven by built-in BS 7671 derating and temperature/grouping factor data. | (used across the design tools) | ✅ live |
 
 #### Installation Designer (Install Planner)
@@ -411,6 +450,14 @@ Elec-Mate puts a full electrical engineering toolkit in the electrician's pocket
 | Professional mode | A full-control calculator for a single circuit — design current, length, ambient temperature, grouping, installation method, cable type and voltage — running the cable-sizing, voltage-drop and earth-fault-loop engines with applied BS 7671 correction factors. | `/electrician/install-planner` (Professional) | ✅ live |
 | Multi-circuit mode | Builds a complete distribution board: add multiple circuits, set the main switch rating, earthing system (TN-S/TN-C-S/TT) and Ze, then auto-balance three-phase loads, generate an EIC schedule of circuit details and produce single-line and consumer-unit wiring diagrams. | `/electrician/install-planner` (Multi-circuit) | ✅ live |
 | Results, export & PDF | A dedicated results view presents the design with project details and supporting test documentation, and exports a branded PDF (using the company profile) for issue to clients or inclusion with certification. | `/electrician/install-planner/results/:conversationId?` | ✅ live |
+
+#### Renewables designers (new Jun 2026)
+
+| Feature | What it does | Route(s) | Status |
+| --- | --- | --- | --- |
+| Solar PV Designer | A five-step guided design flow (System → Strings → Cabling → Grid & Yield → Handover) using real kit from MCS databases: string sizing from cold-Voc/hot-Vmp limits, DC and AC cable schedules with voltage-drop targets, G98 vs G99 grid-connection routing, PVGIS yield and CO₂ figures — handing over a pre-filled Solar PV certificate, a quote with materials and labour, and a single-line diagram. Aligned to MCS MIS 3002, the IET Code of Practice and BS 7671:2018+A4:2026. | `/electrician/renewables/design/solar` | ✅ live |
+| Battery / EV / Heat Pump Designers | Companion guided designers for battery storage, EV charging (including maximum-demand assessment) and heat pump installs, sharing the same deterministic calculation engines as the renewables calculators. | `/electrician/renewables/design/battery`, `…/ev`, `…/heat-pump` | ✅ live |
+| AI design intake | Describe the job in plain English and get a structured design proposal, verified deterministically by the same audited engines and built only from real kit in the MCS databases — with drafts persisted locally and safe to resume. | renewables designers (intake) | ✅ live |
 
 #### AI design & estimating tools
 
@@ -460,12 +507,14 @@ Site Safety is one of Elec-Mate's deepest tool sets — a complete, mobile-first
 
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
-| AI RAMS Generator | Describe a job in plain English (with optional photo and drawing attachments) and Elec-Mate generates a complete RAMS — hazards identified and scored, control measures applied in hierarchy, and a matched method statement — in around a minute. Runs as a background job with live progress, draft auto-recovery, partial-result handling, single-agent retry, cloud auto-save and push notification when ready. Output is fully editable before export to PDF. | `/electrician/site-safety` (RAMS Generator tool), `/electrician/site-safety/ai-rams` | ✅ live |
+| AI RAMS Generator | Describe a job in plain English (with optional photo and drawing attachments) and Elec-Mate generates a complete RAMS — hazards identified and scored, control measures applied in hierarchy, and a matched method statement — typically in one to three minutes. Runs as a background job with live progress, draft auto-recovery, partial-result handling, single-agent retry, cloud auto-save and push notification when ready. Output is fully editable before export to PDF. | `/electrician/site-safety` (RAMS Generator tool), `/electrician/site-safety/ai-rams` | ✅ live |
 | Health & Safety Specialist | A dedicated specialist flow that takes a work brief plus project details and streams back a full RAMS in real time — hazards scored, controls hierarchical, BS 7671 and HSE references quantified — presented as a printable, audit-ready document and saved to the user's results. | `/electrician/health-safety` | ✅ live |
 | Method Statement Generator | A guided wizard that produces standalone step-by-step safe-working procedures with integrated risk assessment, for jobs that need a method statement on its own rather than a full RAMS pack. | `/electrician/method-statement`, `/electrician/site-safety` (Method Statement tool) | ✅ live |
 | Hazard Database | A searchable reference library of common electrical and construction hazards with associated control measures, used to browse risks and inform manual RAMS building. | `/electrician/site-safety` (Hazard Database) | ✅ live |
 | Safety Templates Library | A library of UK electrical safety document templates (risk assessments, method statements, safe systems of work and checklists) that can be browsed by category, opened and saved as the user's own working documents, with status tracking (Draft, Active, Review Due, Archived). | `/electrician/site-safety` (Safety Templates) | ✅ live |
 | Documents Hub | A single home for every saved safety document — RAMS, permits, COSHH assessments, inspections and more — pulled together with type-coded cards and search so the whole compliance picture is in one place. | `/electrician/site-safety` (Documents Hub) | ✅ live |
+| RAMS pre-fill from quote *(new Jun 2026)* | Pick an existing quote or estimate and its client, address, job title and description auto-populate the AI RAMS input — no retyping on site. | AI RAMS (quote selector) | ✅ live |
+| Amendable RAMS *(new Jun 2026)* | Generated RAMS are editable inline before export — tweak hazards, controls or method-statement text, then save the amended version and share. | AI RAMS results | ✅ live |
 
 #### Permits, isolation & compliance records
 
@@ -504,7 +553,7 @@ Site Safety is one of Elec-Mate's deepest tool sets — a complete, mobile-first
 
 ## 4. Elec-AI
 
-Elec-AI is the in-app assistant — a single, always-available chat that answers BS 7671 questions in real time. It is surfaced prominently in the main sidebar (badged "New") and opens as a full-height, native-feeling conversation screen. Answers stream in within seconds, every cited regulation is tappable to open its full text, and the whole experience is designed for one hand on a busy site. A companion Regulation Search gives a faster, search-box route into the same BS 7671 knowledge when a sparky just wants to look something up.
+Elec-AI is the in-app assistant — a single, always-available chat that answers BS 7671 questions in real time. It is surfaced prominently in the main sidebar and opens as a full-height, native-feeling conversation screen. Answers stream in within seconds, every cited regulation is tappable to open its full text, and the whole experience is designed for one hand on a busy site. A companion Regulation Search gives a faster, search-box route into the same BS 7671 knowledge when a sparky just wants to look something up.
 
 #### Elec-AI assistant
 
@@ -544,7 +593,9 @@ The Employer Hub is Elec-Mate's command centre for electrical contractors and fi
 | Elec-ID credentials | A credential wallet for the team: track qualifications and certifications with expiry alerts and work history, so you always know who is current and who needs a renewal. | `/employer?section=elecid` | ✅ live |
 | Timesheets | Capture and review worked hours and leave, including manual time entry, giving employers an auditable record of team time. | `/employer?section=timesheets` | ✅ live |
 | Communications | A team communications view with messaging stats and history, keeping conversations attached to the business rather than scattered across personal phones. | `/employer?section=comms` | ✅ live |
-| Talent Pool & Vacancies | Build a pool of candidates, post job vacancies and review incoming applications, with new-application counts surfaced on the Overview and People hub. | `/employer?section=talentpool`, `/employer?section=vacancies` | ✅ live |
+| Talent Pool & Vacancies | A two-sided hiring marketplace (redesigned Jun 2026): browse real electrician candidates with declared rates, skill years, verified documents, ECS card tier and qualifications (no fabricated stats), filter by tier/specialism/experience/rate, message candidates in-app, invite them to apply, and track applications against posted vacancies — candidates apply from their own electrician-side job feed. Contact details stay private until the employer reaches out. | `/employer?section=talentpool`, `/employer?section=vacancies` | ✅ live |
+| Apprentice college-progress bridge *(new Jun 2026)* | A read-only live view of each linked apprentice's college data — verified OTJ hours vs target, attendance %, EPA status (Gateway/Ready/Booked/Passed) and overdue-review flags — without logging into any college portal. | `/employer?section=apprentices` | ✅ live |
+| Worker 360 *(new Jun 2026)* | Tap any team member for a single sheet of their hours worked, spend (expenses + orders), leave balance and live on-site presence from clock-ins. | People hub (member sheet) | ✅ live |
 
 ### Jobs
 
@@ -553,12 +604,13 @@ The Employer Hub is Elec-Mate's command centre for electrical contractors and fi
 | Jobs & Job Board | Create, assign and track jobs across their lifecycle, with a board view for a quick read on workload. | `/employer?section=jobs`, `/employer?section=jobboard` | ✅ live |
 | Job Packs | Assemble job documentation packs (scope, hazards and more) that feed straight into the Smart Docs generators. | `/employer?section=jobpacks` | ✅ live |
 | Timeline & Progress Logs | A job timeline with milestones plus a running site diary of progress logs, so the office can see how a job is moving without phoning the team. | `/employer?section=timeline`, `/employer?section=progresslogs` | ✅ live |
-| Worker Tracking | Live worker location tracking so an employer can see where the team is and which job they're on. | `/employer?section=tracking` | ✅ live |
+| Worker Tracking | A live worker map (Google Maps, dark-styled) with colour-coded presence derived from clock-ins — On Site / En Route / Office / On Leave — plus office and job-site markers, auto-fitted so the whole firm is visible at a glance. | `/employer?section=tracking` | ✅ live |
+| Job "Needs attention" signals *(new Jun 2026)* | Every job card and job detail surfaces cross-section risk badges — open incidents, overdue invoice amounts, workers with certs expiring within 30 days — each tappable to fix; the panel disappears when all clear. | jobs list + job detail | ✅ live |
 | Job Issues & Quality / Snags | Log and chase job blockers and problems, and run a quality and snagging list to drive jobs to a clean finish. | `/employer?section=issues`, `/employer?section=quality` | ✅ live |
 | Testing Workflow | Track the testing and inspection stage of a job through to completion. | `/employer?section=testing` | ✅ live |
 | Job Financials | Per-job cost tracking so employers can see the money picture on each job, not just the firm as a whole. | `/employer?section=financials` | ✅ live |
 | Fleet & Photo Gallery | Manage vehicles and vans, and keep a photo gallery of site images organised against the business. | `/employer?section=fleet`, `/employer?section=photogallery` | ✅ live |
-| Client Portal (employer side) | Configure the client-facing portal so customers can follow their own job (paired with the public `/portal/:token` view). | `/employer?section=clientportal` | 🟡 partial |
+| Client Portal (employer side) | Configure the client-facing portal so customers can follow their own job (paired with the public `/portal/:token` view), now with full in-app messaging: clients message from the public portal without logging in, and the employer reads and replies in-thread with unread badges — no email loops. | `/employer?section=clientportal` | ✅ live |
 
 ### Finance
 
@@ -592,6 +644,20 @@ The Employer Hub is Elec-Mate's command centre for electrical contractors and fi
 | AI Briefing Pack | Generates a ready-to-use site briefing pack for the team. | `/employer?section=aibriefingpack` | ✅ live |
 | AI Quote | Produces a professional quote document, exported as a PDF. | `/employer?section=aiquote` | ✅ live |
 | AI Design Spec | Generates a circuit design specification from a job brief. | `/employer?section=aidesignspec` | ✅ live |
+
+### Employer Mate — the AI business partner (new Jun 2026)
+
+| Feature | What it does | Route(s) | Status |
+| --- | --- | --- | --- |
+| Employer Mate agent | An always-available AI business partner (floating launcher on every hub page) grounded in nearly 3,000 authoritative construction-industry sources (JIB, ACAS, RICS, HSE, gov.uk, Construction Act). Ask about retention, VAT reverse charge, notifiable work, pricing a job or hiring law and get a cited, streamed answer with copy and PDF export. | all `/employer` pages (sheet) | ✅ live |
+| Agentic orchestration | Mate doesn't just advise — it acts, across multiple rounds in one conversation: create a job with its task list, add team members and suppliers, build a quote or invoice, post a vacancy, assemble a job pack, add price-book lines. It sees a live snapshot of the firm each turn, confirms high-stakes actions before executing, and every action is auditable and undoable. | Employer Mate sheet | ✅ live |
+| Command palette | ⌘K (or the mobile search button) jumps to any section, fires quick actions (new job/quote/invoice/vacancy/expense) or sends a typed question straight to Mate. | all `/employer` pages | ✅ live |
+
+### Seats & billing (live Jun 2026)
+
+| Feature | What it does | Route(s) | Status |
+| --- | --- | --- | --- |
+| Seat-based billing | £49.99/month base (or £499.99/year) plus £9.99/month per linked team member — seats are only charged when a worker actually links, and linked workers' own subscriptions are replaced by their seat. Team invites auto-email sign-in details. | billing + team add flow | ✅ live |
 
 ### Automations
 
@@ -648,10 +714,14 @@ The dashboard is itself a large workspace — around 40 working areas grouped in
 | IQA Dashboard | Internal Quality Assurance: sampling plans, findings, standardisation, assessor-drift detection and a coverage matrix. | `/college/iqa` (+`/sampling/:id`) | ✅ |
 | Reports Hub | A CSV export hub for 7+ reports: OTJ hours, attendance, cohort progress, EPA readiness/pass rates, AC gaps and quiz results. | `/college/reports` | ✅ |
 | Cohort Comparison | A head-of-department tool comparing 2-3 cohorts on count, progress, attendance, OTJ, EPA verdicts and at-risk learners. | `/college/compare` | ✅ |
+| Mock EPA simulator *(new Jun 2026)* | Tutors run scored mock EPA assessments per learner, with latest/best score, delta vs the previous attempt and trend feeding the readiness picture — a learner's self-assessment can be inferred from their best mock. | Student 360 → EPA section | ✅ |
+| AI EPA readiness verdict *(new Jun 2026)* | A tri-perspective readiness view (learner, tutor, AI): the AI streams a reasoned verdict with predicted grade, confidence, strengths, blockers and BS 7671-cited gaps, built from the learner's real cross-hub evidence; the tutor co-signs or overrides, and an agreement banner flags consensus or outliers. A signals inspector shows every piece of evidence behind the verdict. | Student 360 → EPA section | ✅ |
+| Safeguarding queue *(new Jun 2026)* | Every safeguarding concern in one DSL-only queue; non-leads see a neutral "designated leads only" panel that never discloses whether a concern exists. | `/college/safeguarding` | ✅ |
+| One-tap college join *(new Jun 2026)* | Shareable invite links that auto-enrol staff or apprentices into the college and cohort — through signup if they don't have an account yet — with student-activation tracking on the dashboard. | `/college/join/:code` | ✅ |
 
 ### 6.4 Ofsted / compliance suite
 
-A dedicated toolkit for the provider's inspection and quality burden — six linked tools, not one page.
+A dedicated toolkit for the provider's inspection and quality burden — a suite of linked tools (compliance pack, EIF lens, SAR, QIP, rehearsal, policies & acknowledgement, staff register — plus the safeguarding queue in §6.3), not one page.
 
 | Feature | What it does | Route(s) | Status |
 | --- | --- | --- | --- |
@@ -661,7 +731,8 @@ A dedicated toolkit for the provider's inspection and quality burden — six lin
 | SAR Draft | A drafting tool for the provider's Self-Assessment Report. | `/college/compliance/sar` | ✅ |
 | QIP Tracker | A Quality Improvement Plan tracker: what needs to happen, why, and progress against it. | `/college/compliance/qip` | ✅ |
 | Inspection Rehearsal | An AI mock-inspector that interviews staff with typed Q&A to rehearse for a real Ofsted visit. | `/college/compliance/rehearsal` | ✅ |
-| Policy Management | Versioned policy documents with content, version history and an audit trail. | `/college/policies/:id` | 🟡 |
+| Policy Management & acknowledgement | Versioned policy documents with a read-scroll-sign workflow: staff must scroll to the end before the acknowledgement unlocks, and each sign-off is stamped with version, timestamp and device — an inspection-ready acknowledgement register. | `/college/policies/:id` | ✅ |
+| Staff compliance register | Per-staff DBS checks, qualifications, training records, safeguarding training and supervision dates in a drawer with inline editing. | `/college/compliance/docs` (Staff) | ✅ |
 
 ### 6.5 Apprentice ↔ College bridge (two-way, live)
 
@@ -683,7 +754,7 @@ The single most important integration in the platform: the College Hub and the a
 | --- | --- | --- | --- |
 | Curriculum Settings | Institution toggles for lesson content: British Values, Stretch & Challenge and Inclusion pedagogy. | `/college/settings/curriculum` | ✅ |
 | Operational Settings | Thresholds for IQA sampling rate, audit window, attendance bands and EPA verdict thresholds. | `/college/settings/operational` | ✅ |
-| LTI Integration | Connects the College Hub into a provider's existing LMS via LTI hand-off, so it slots into current systems. | dashboard (LTI settings) | ✅ |
+| LTI Integration | Full LTI 1.3 integration with a provider's existing LMS (Moodle, Canvas and compatible systems): dynamic registration means an LMS admin pastes one URL and Elec-Mate auto-registers as a tool — no key swapping — with OIDC launch, frame-breaking handoff so sign-in lands cleanly outside the LMS iframe, and health-check endpoints. | dashboard (LTI settings) + LMS-side | ✅ |
 
 ---
 
@@ -914,7 +985,7 @@ Every Elec-Mate account sits on a polished, mobile-first foundation: a single si
 
 | Feature | What it does | Route(s) | Status |
 | --- | --- | --- | --- |
-| Sign in / sign up | Clean email-and-password sign-in with live email validation, show/hide password, animated success state and a route straight to the dashboard. Sign-up is a guided three-step flow (account, role, trial) that captures your trade role and starts a 7-day free trial with no card required. | `/auth/signin`, `/auth/signup` | ✅ live |
+| Sign in / sign up | Clean email-and-password sign-in with live email validation, show/hide password, animated success state and a route straight to the dashboard. Sign-up is a guided three-step flow (account, role, trial) that captures your trade role and starts a 7-day free trial. | `/auth/signin`, `/auth/signup` | ✅ live |
 | Biometric sign-in | After your first password sign-in, Elec-Mate offers to enable Face ID / Touch ID (or the device equivalent), then lets you unlock the app with a single tap on future visits; credentials are stored securely on-device and re-verified against your password before activation. | `/auth/signin`, Settings → Preferences | ✅ live |
 | Password reset & email confirmation | Forgot-password and reset-password journeys plus email confirmation and a "check your email" holding screen, with a breached-password check applied at sign-up. | `/auth/forgot-password`, `/auth/reset-password`, `/auth/confirm-email`, `/auth/check-email` | ✅ live |
 | Complete-profile & trial checkout | Post-signup steps that finish your profile and, when needed, route into a trial checkout / OAuth completion handler. | `/auth/complete-profile`, `/auth/checkout-trial`, `/auth/oauth-complete` | ✅ live |
@@ -943,7 +1014,7 @@ Every Elec-Mate account sits on a polished, mobile-first foundation: a single si
 
 | Feature | What it does | Route(s) | Status |
 | --- | --- | --- | --- |
-| Plans & checkout | Role-based pricing (Apprentice, Electrician, Mate, plus Employer and College) with a monthly/annual toggle, a 7-day free trial on every plan, secure card checkout on web and native in-app purchase on iOS/Android, automatically using the correct store. | `/subscriptions` | ✅ live |
+| Plans & checkout | Role-based pricing (Apprentice £6.99/mo, Electrician £19.99/mo, Mate £34.99/mo — new-customer prices from 29 Jun 2026, existing subscribers grandfathered — plus Employer £49.99/mo + £9.99/seat and College) with a monthly/annual toggle, a 7-day free trial on every plan, secure card checkout on web and native in-app purchase on iOS/Android, automatically using the correct store. | `/subscriptions` | ✅ live |
 | Plan changes with proration | Existing subscribers switching plans have the price swapped on their current subscription with the difference prorated automatically, avoiding any risk of double-billing. | `/subscriptions` | ✅ live |
 | Subscription management | A live "your subscription" card showing tier, status and next billing date, with one-tap access to the billing portal to update payment details and view invoices; native users are routed to Apple/Google subscription managers, with clear guidance on managing where you bought it. | `/subscriptions`, `/settings?tab=billing` | ✅ live |
 | Cancel-prevention flow | A respectful three-step cancellation journey: capture the reason, then offer a personalised retention discount locked in for life, a direct line to the founder for bugs, or a clean exit — final confirmation reassures that data is kept safe for 90 days. | `/subscriptions` | ✅ live |
@@ -992,6 +1063,7 @@ Elec-Mate runs one of the largest dedicated content estates in the UK electrical
 | Main landing page | The primary marketing site. Sells the platform as a single end-to-end workflow (quote → design → comply → work → certify → invoice → get paid → train), with a feature showcase, on-site photo gallery, App Store badges, verified review proof, live pricing pulled from real subscription tiers, an FAQ block, a free-guides teaser, a lead-magnet email capture and an exit-intent modal. | `/` | ✅ live |
 | Hub overview landing | A secondary marketing/orientation page framing the four specialised hubs (Apprentice, Electrician, Employer, College) with a "Go to Dashboard" path for signed-in users. | `/index` | ✅ live |
 | For Colleges outreach landing | Dedicated sales page for FE colleges, linked from the college outreach email campaign. Pitches apprenticeship management, IQA and compliance, and carries a real enquiry form that submits to a back-end function plus a direct founder email path. Auto-scrolls to the form when arriving via the email CTA. | `/for-colleges` | ✅ live |
+| Founder story page *(new Jun 2026)* | A magazine-style personal letter from the founder — electrician background, why the app exists, real App Store review quotes, inline family photos, direct founder email and both app-store badges. Supports `?name=` personalisation for email campaigns. | `/story` | ✅ live |
 
 ### Guides library
 
@@ -1018,7 +1090,7 @@ Elec-Mate runs one of the largest dedicated content estates in the UK electrical
 
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
-| Head-to-head comparison pages | "Elec-Mate vs [competitor]" pages built on a shared comparison template with a structured feature-matrix table (AI Board Scanner, voice test entry, defect-code AI, calculator suite, training courses, etc.) plus FAQs and related comparisons. Targets high-intent switching searches. | `/compare/*`, `/guides/*vs*` (≈11 indexed compare URLs; ~30+ vs-pages overall) | ✅ live |
+| Head-to-head comparison pages | "Elec-Mate vs [competitor]" pages built on a shared comparison template with a structured feature-matrix table (AI Board Scanner, voice test entry, defect-code AI, calculator suite, training courses, etc.) plus FAQs and related comparisons. Targets high-intent switching searches. | `/compare/*`, `/guides/*vs*` (≈44 comparison/vs pages found in the Jul 2026 audit; ~11 head-to-head competitor URLs indexed) | ✅ live |
 
 ### Exam prep, free mock exams & topic pages
 
@@ -1040,6 +1112,7 @@ Elec-Mate runs one of the largest dedicated content estates in the UK electrical
 | Feature | What it does | Route(s) | Status |
 |---|---|---|---|
 | Auto-generated SEO route registry | A single generated registry lazy-loads every public content page (~1,380 route entries) so the large estate stays code-split and fast. Generated from page config files, not hand-edited. | `src/routes/SEORoutes.tsx`, `src/routes/MockExamRoutes.tsx` | ✅ live |
+| Real-content prerender *(new Jun 2026)* | Post-build headless-browser prerender of ~1,400 public routes on Vercel, traffic-prioritised from Search Console data, so crawlers (Google, Bing, AI crawlers, social unfurlers) get full HTML with schema and body content instead of meta-only shells. | `scripts/seo-prerender.mjs` | ✅ live |
 | Sitemaps, robots & AI-crawler files | Category-split XML sitemaps (guides, tools, compare, training, mock-exams, pages, images) totalling ~2,000 URLs, plus `robots.txt`, redirect rules and `llms.txt` / `llms-full.txt` for AI crawlers. Page templates emit per-page canonical, noindex (for thin/cannibalising pages) and local-area Service schema where relevant. | `/sitemap*.xml`, `/robots.txt`, `/llms.txt` | ✅ live |
 | Shared SEO component kit | A reusable component library (≈30 components) powering every content page: page shell with table of contents and breadcrumbs, FAQ accordion, how-to steps, key takeaways, feature grid, comparison table, related-pages cards, verified reviews, testimonial strip, social proof bar, share/follow widgets, sticky mobile CTA, inline lead-magnet capture, app-store badges and a reusable mock-exam engine. | n/a (infrastructure) | ✅ live |
 | Public page templates | Four shared templates (Guide, Tool, Comparison, Course) plus a business template drive consistent structure, schema and conversion across the whole estate from per-page config files. | n/a (infrastructure) | ✅ live |
@@ -1302,5 +1375,6 @@ Behind Elec-Mate sits a purpose-built operations console that lets the team run 
 ## Stats
 
 - **Sections deep-audited at code level this pass:** 15 (plus Inspection & Testing and College Hub, verified separately).
-- **Distinct features documented in the audited sections:** ~337.
+- **Distinct features documented in the audited sections:** ~337 (2026-05-28 pass) + ~55 new/updated entries added in the 2026-07-02 refresh.
 - See each section's status flags (✅ live / 🟡 partial / ⚠️ stub) and the audit findings above for maturity and cleanup signal.
+- **2026-07-02 refresh:** 10 parallel code audits covering all hubs; 244 commits since the previous generation were reviewed. Canonical public-facing numbers as coded on the landing page: 19 certificate types · 46+ courses · 20,000+ in-app exam questions (L2/L3/AM2/upskilling) · 70+ trade calculators (63 in the in-app hub plus public tool pages) · ~5,900 free public mock-exam questions across 25 exams · ≈720+ guides. Trial requires a card — never claim "no card required".

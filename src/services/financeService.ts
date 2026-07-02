@@ -89,6 +89,8 @@ export interface ExpenseClaim {
   created_at: string;
   updated_at: string;
   employee?: { name: string; avatar_initials: string };
+  // Aliased embed used by useExpenses queries (employees:employer_employees(...))
+  employees?: { name: string; avatar_initials: string } | null;
 }
 
 export interface Supplier {

@@ -486,7 +486,10 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
     } else if (name === 'add_team_member') {
       const { id, error } = await ins('employer_employees', {
         employer_id: uid, status: 'active', name: args.name, role: args.role ?? 'Electrician', team_role: args.team_role ?? 'Operative',
-        pay_type: args.pay_type ?? null, hourly_rate: args.hourly_rate ?? null, annual_salary: args.annual_salary ?? null,
+        // pay_type/hourly_rate are NOT NULL with DB defaults — omit when absent so the defaults apply
+        ...(args.pay_type != null ? { pay_type: args.pay_type } : {}),
+        ...(args.hourly_rate != null ? { hourly_rate: args.hourly_rate } : {}),
+        annual_salary: args.annual_salary ?? null,
         email: args.email ?? null, phone: args.phone ?? null, avatar_initials: initials(args.name),
       }, 'team');
       if (error) return `Failed to add ${args.name}: ${error.message}`;
@@ -508,9 +511,9 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       }, 'supplier');
       return error ? `Failed to add supplier ${args.name}: ${error.message}` : `Added supplier ${args.name} (id: ${id}).`;
     } else if (name === 'add_price_book_item') {
-      const buy = args.buy_price ?? null;
-      const sell = args.sell_price ?? null;
-      const markup = buy && sell ? Math.round(((sell - buy) / buy) * 100) : null;
+      const buy = args.buy_price ?? 0;
+      const sell = args.sell_price ?? 0;
+      const markup = buy > 0 && sell > 0 ? Math.round(((sell - buy) / buy) * 100) : null;
       const { id, error } = await ins('employer_price_book', {
         employer_id: uid, name: args.name, category: args.category ?? 'General', buy_price: buy, sell_price: sell, markup,
         unit: args.unit ?? 'each', sku: args.sku ?? null,
@@ -519,7 +522,7 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
     } else if (name === 'create_job') {
       const coords = args.location ? await geocodeJob(args.location) : null;
       const { id, error } = await ins('employer_jobs', {
-        user_id: uid, status: 'active', title: args.title, client: args.client ?? '', location: args.location ?? '',
+        user_id: uid, status: 'Active', title: args.title, client: args.client ?? '', location: args.location ?? '',
         value: args.value ?? null, start_date: args.start_date ?? null, description: args.description ?? null,
         client_phone: args.client_phone ?? null, client_email: args.client_email ?? null,
         ...(coords ?? {}),
@@ -530,7 +533,7 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       const num = `QTE-${String((count ?? 0) + 1).padStart(4, '0')}`;
       const { id, error } = await ins('employer_quotes', {
         employer_id: uid, quote_number: num, client: args.client, status: 'Draft', description: args.description ?? null,
-        value: args.value ?? null, job_title: args.job_title ?? null, valid_until: args.valid_until ?? null,
+        value: args.value ?? 0, job_title: args.job_title ?? null, valid_until: args.valid_until ?? null,
         client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
       }, 'quote');
       return error ? `Failed to create quote: ${error.message}` : `Created quote ${num} for ${args.client} (id: ${id}).`;
@@ -538,19 +541,19 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       const { count } = await admin.from('employer_invoices').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
       const num = `INV-${String((count ?? 0) + 1).padStart(4, '0')}`;
       const { id, error } = await ins('employer_invoices', {
-        employer_id: uid, invoice_number: num, client: args.client, status: 'Draft', amount: args.amount ?? null,
+        employer_id: uid, invoice_number: num, client: args.client, status: 'Draft', amount: args.amount ?? 0,
         project: args.project ?? null, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
       }, 'invoice');
       return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client} (id: ${id}).`;
     } else if (name === 'create_job_pack') {
       const { id, error } = await ins('employer_job_packs', {
         employer_id: uid, title: args.title, client: args.client, location: args.location, scope: args.scope ?? null,
-        status: 'draft', start_date: args.start_date ?? null, estimated_value: args.estimated_value ?? null,
+        status: 'Draft', start_date: args.start_date ?? null, estimated_value: args.estimated_value ?? null,
       }, 'job_pack');
       return error ? `Failed to create job pack: ${error.message}` : `Created job pack: ${args.title} (id: ${id}).`;
     } else if (name === 'create_vacancy') {
       const { id, error } = await ins('employer_vacancies', {
-        employer_id: uid, title: args.title, location: args.location, type: args.type ?? 'Full-time', status: 'open',
+        employer_id: uid, title: args.title, location: args.location, type: args.type ?? 'Full-time', status: 'Open',
         salary_min: args.salary_min ?? null, salary_max: args.salary_max ?? null, salary_period: args.salary_period ?? 'year',
         description: args.description ?? null,
       }, 'vacancy');

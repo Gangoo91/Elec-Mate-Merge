@@ -153,6 +153,7 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChan
             onBoardsChange={(boards: DistributionBoard[]) =>
               onChange({ distributionBoards: boards })
             }
+            certType="eicr"
           />
         </CardContent>
       </Card>

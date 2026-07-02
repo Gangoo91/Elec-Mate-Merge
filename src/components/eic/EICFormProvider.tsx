@@ -301,6 +301,33 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   const getLatestFormData = useCallback(() => formDataRef.current, []);
 
+  // Observations live in their own useState inside useEICObservations, seeded from
+  // formData.observations at FIRST render — before any async hydration lands. Every
+  // load path that replaces formData wholesale must therefore re-seed the hook via
+  // seedObservations, or a reopened cert renders zero observations and the next
+  // edit persists the wipe (ELE-1247: photos + limitations lost on reopen).
+  const {
+    observations,
+    setObservations,
+    addObservation,
+    updateObservation,
+    removeObservation,
+    autoCreateObservation,
+  } = useEICObservations(formData.observations);
+
+  // Update observations in form data when they change
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, observations }));
+  }, [observations]);
+
+  const seedObservations = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (data: any) => {
+      setObservations(Array.isArray(data?.observations) ? data.observations : []);
+    },
+    [setObservations]
+  );
+
   // State
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
 
@@ -372,9 +399,15 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           const certificateNumber =
             savedData.formData.certificateNumber || formData.certificateNumber;
           setFormData({ ...savedData.formData, certificateNumber });
+          seedObservations(savedData.formData);
         } else {
           const { certificateNumber: _discarded, ...dataWithoutCertNumber } = savedData.formData;
           setFormData((prev) => ({ ...prev, ...dataWithoutCertNumber }));
+          // Merge-spread only overwrites observations when the saved copy has the
+          // key — mirror that so the hook can't desync and wipe them on next edit.
+          if (Array.isArray(savedData.formData.observations)) {
+            seedObservations(savedData.formData);
+          }
         }
       }
     };
@@ -401,6 +434,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           ...draftDataWithoutCertNumber,
           certificateNumber: prev.certificateNumber,
         }));
+        if (Array.isArray(draft.data.observations)) {
+          seedObservations(draft.data);
+        }
         toast({
           title: 'Draft recovered',
           description: 'Your previous work has been restored.',
@@ -607,6 +643,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           console.log('[EIC] Using local draft (not authenticated)');
           const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
           setFormData({ ...localDraft.data, certificateNumber });
+          seedObservations(localDraft.data);
           setCurrentReportId(initialReportId);
           toast({
             title: 'Loaded from local storage',
@@ -630,6 +667,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           console.log('[EIC] Using local draft (offline)');
           const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
           setFormData({ ...localDraft.data, certificateNumber });
+          seedObservations(localDraft.data);
           setCurrentReportId(initialReportId);
           toast({
             title: 'Loaded from local storage',
@@ -679,6 +717,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
                 const certificateNumber =
                   localDraft.data.certificateNumber || formData.certificateNumber;
                 setFormData({ ...localDraft.data, certificateNumber });
+                seedObservations(localDraft.data);
                 setCurrentReportId(initialReportId);
                 toast({
                   title: 'Data recovered from local backup',
@@ -691,9 +730,37 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
           if (localDraft?.data && localTime > cloudTime) {
             console.log('[EIC] Using LOCAL draft (newer than cloud)');
+            // Guard (mirrors EICR): a newer local draft with ZERO observations while
+            // the cloud has some is almost always a stale-session artifact — e.g. a
+            // draft autosaved before observations hydrated — not a deliberate
+            // "delete every observation". Keep the cloud observations in that case.
+            const localObs = Array.isArray(localDraft.data.observations)
+              ? localDraft.data.observations
+              : [];
+            const cloudObs = Array.isArray(data.observations) ? data.observations : [];
+            const rescueObs = localObs.length === 0 && cloudObs.length > 0;
+            if (rescueObs) {
+              console.warn(
+                '[EIC] Local draft is newer but has no observations while cloud has',
+                cloudObs.length,
+                '— keeping cloud observations to avoid loss'
+              );
+              logIntegrityEvent('load_empty', {
+                reportType: 'eic',
+                reportId: initialReportId,
+                fieldCount: cloudObs.length,
+                error: 'newer-local-draft-missing-observations; kept cloud observations',
+              });
+            }
             const certificateNumber =
               localDraft.data.certificateNumber || formData.certificateNumber;
-            setFormData({ ...localDraft.data, certificateNumber });
+            const mergedData = {
+              ...localDraft.data,
+              observations: rescueObs ? cloudObs : localObs,
+              certificateNumber,
+            };
+            setFormData(mergedData);
+            seedObservations(mergedData);
             logIntegrityEvent('load_success', {
               reportType: 'eic',
               reportId: initialReportId,
@@ -708,6 +775,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             console.log('[EIC] Using CLOUD data');
             const certificateNumber = data.certificateNumber || formData.certificateNumber;
             setFormData({ ...data, certificateNumber });
+            seedObservations(data);
             logIntegrityEvent('load_success', {
               reportType: 'eic',
               reportId: initialReportId,
@@ -720,6 +788,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           console.log('[EIC] Cloud load failed, using local draft');
           const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
           setFormData({ ...localDraft.data, certificateNumber });
+          seedObservations(localDraft.data);
           setCurrentReportId(initialReportId);
           logIntegrityEvent('recovery_success', {
             reportType: 'eic',
@@ -749,20 +818,6 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialReportId, authCheckComplete, isAuthenticated, isOnline]);
-
-  // Observations hook
-  const {
-    observations,
-    addObservation,
-    updateObservation,
-    removeObservation,
-    autoCreateObservation,
-  } = useEICObservations(formData.observations);
-
-  // Update observations in form data when they change
-  useEffect(() => {
-    setFormData((prev) => ({ ...prev, observations }));
-  }, [observations]);
 
   // Form update handler
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -938,6 +993,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       inspectionItems: [],
       observations: [],
     });
+    // Reset the observations hook too — it holds its own state, and leaving the
+    // old cert's observations in it would bleed them into the new cert on next edit.
+    setObservations([]);
     setShowStartNewDialog(false);
     toast({
       title: 'New EIC started',

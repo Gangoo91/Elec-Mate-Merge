@@ -4,6 +4,7 @@ import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelecto
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { formatBriefingContent } from '@/utils/formatBriefingContent';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   PageFrame,
@@ -147,7 +148,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
             ? data.content
             : typeof data?.briefingContent === 'string'
               ? data.briefingContent
-              : JSON.stringify(data, null, 2);
+              : formatBriefingContent(data?.content ?? data);
         updateJobPack.mutate({
           id: selectedJobPackId,
           updates: {

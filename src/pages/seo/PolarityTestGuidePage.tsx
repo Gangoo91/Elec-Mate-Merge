@@ -584,10 +584,10 @@ const sections = [
 export default function PolarityTestGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Test UK: How to Test for Polarity (BS 7671)"
-      description="How to do a polarity test (UK): dead test (continuity method), live test sequence, common errors, BS 7671 + GN3 procedure, what fails an EICR."
+      title="Polarity Testing: Method, Results + What Fails an EICR"
+      description="Polarity testing explained: dead test (continuity method), live test sequence, expected results, common errors, and what fails an EICR — to BS 7671 + GN3."
       datePublished="2026-03-27"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

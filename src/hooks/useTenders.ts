@@ -145,12 +145,29 @@ export function useCreateTender() {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) throw new Error('Not authenticated');
 
+      // Whitelist real columns (callers may spread UI-only flags like
+      // fromOpportunity) and normalise empty-string dates → null so Postgres
+      // doesn't reject '' for a date column.
+      const insertData = {
+        title: data.title,
+        client: data.client,
+        value: data.value ?? 0,
+        deadline: data.deadline || null,
+        status: data.status,
+        category: data.category || null,
+        description: data.description || null,
+        contact_name: data.contact_name || null,
+        contact_email: data.contact_email || null,
+        contact_phone: data.contact_phone || null,
+        notes: data.notes || null,
+        opportunity_id: data.opportunity_id || null,
+        source_url: data.source_url || null,
+        user_id: userData.user.id,
+      };
+
       const { data: result, error } = await supabase
         .from('tenders')
-        .insert({
-          ...data,
-          user_id: userData.user.id,
-        })
+        .insert(insertData)
         .select()
         .single();
 

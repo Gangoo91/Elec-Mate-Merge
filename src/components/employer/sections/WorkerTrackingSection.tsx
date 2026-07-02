@@ -542,7 +542,7 @@ export function WorkerTrackingSection() {
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
                   {jobsData
-                    .filter((job) => job.status === 'In Progress' || job.status === 'Scheduled')
+                    .filter((job) => job.status === 'Active' || job.status === 'Pending')
                     .map((job) => (
                       <SelectItem key={job.id} value={job.id}>
                         {job.title}

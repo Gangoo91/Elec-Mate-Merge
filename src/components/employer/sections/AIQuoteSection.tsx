@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks } from '@/hooks/useJobPacks';
 import { useCreateQuote, useNextQuoteNumber } from '@/hooks/useFinance';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
@@ -122,48 +121,29 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     setError(null);
     setResult(null);
 
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => (prev >= 90 ? prev : prev + Math.random() * 20));
-    }, 300);
-
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke('generate-quote-pdf', {
-        body: {
-          clientName,
-          clientAddress,
-          projectDescription,
-          lineItems: validItems,
-          subtotal,
-          vat,
-          total,
-          jobPackId: selectedJobPackId,
-          projectInfo: selectedJobPack
-            ? {
-                projectName: selectedJobPack.title,
-                location: selectedJobPack.location,
-              }
-            : null,
-        },
-      });
-
-      clearInterval(progressInterval);
-
-      if (invokeError) {
-        throw invokeError;
-      }
-      // generate-quote-pdf is a TEMPLATE RENDERER — success:false with
-      // useFallback means nothing was generated. Don't celebrate it.
-      if (data && data.success === false) {
-        throw new Error(data.message || 'No quote template configured for your account yet.');
-      }
+      // Assemble the quote draft locally — the summary panel and Save path work
+      // entirely from the line items, subtotal, VAT and total we already hold.
+      const draft = {
+        clientName,
+        clientAddress,
+        projectDescription,
+        lineItems: validItems,
+        subtotal,
+        vat,
+        total,
+        projectInfo: selectedJobPack
+          ? { projectName: selectedJobPack.title, location: selectedJobPack.location }
+          : null,
+      };
 
       setProgress(100);
-      setResult(data);
+      setResult(draft);
       setIsGenerating(false);
 
       setHistory((prev) => [
         {
-          id: Date.now().toString(),
+          id: `${clientName}-${validItems.length}-${total}`,
           clientName,
           total,
           createdAt: Date.now(),
@@ -173,11 +153,10 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
       ]);
 
       toast({
-        title: 'Quote generated',
-        description: 'Your quote draft is ready.',
+        title: 'Quote ready',
+        description: 'Your quote draft is ready to review and save.',
       });
     } catch (err: any) {
-      clearInterval(progressInterval);
       setIsGenerating(false);
       setError(err.message);
       toast({
@@ -190,12 +169,29 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
 
   const handleDownload = () => {
     if (!result) return;
-    const content = JSON.stringify(result, null, 2);
-    const blob = new Blob([content], { type: 'application/json' });
+    const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
+    const lines = [
+      `QUOTE${clientName ? ` — ${clientName}` : ''}`,
+      clientAddress ? clientAddress : null,
+      selectedJobPack ? `Project: ${selectedJobPack.title}` : null,
+      projectDescription ? `\n${projectDescription}` : null,
+      '',
+      ...validItems.map(
+        (i) =>
+          `${i.description}  —  ${i.quantity} × £${i.unitPrice.toFixed(2)}  =  £${(
+            i.quantity * i.unitPrice
+          ).toFixed(2)}`
+      ),
+      '',
+      `Subtotal:  £${subtotal.toFixed(2)}`,
+      `VAT (20%): £${vat.toFixed(2)}`,
+      `Total:     £${total.toFixed(2)}`,
+    ].filter((l) => l !== null);
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Quote-${clientName || 'document'}.json`;
+    a.download = `Quote-${clientName || 'draft'}.txt`;
     a.click();
     URL.revokeObjectURL(url);
   };

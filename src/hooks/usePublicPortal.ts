@@ -156,7 +156,7 @@ export function usePortalPhotos(token: string | undefined) {
           let url = '';
           if (row.storage_path) {
             const { data: urlData } = supabase.storage
-              .from('visual-uploads')
+              .from('job-photos')
               .getPublicUrl(row.storage_path as string);
             url = urlData?.publicUrl || '';
           }

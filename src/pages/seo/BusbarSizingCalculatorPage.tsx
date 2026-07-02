@@ -21,7 +21,7 @@ export default function BusbarSizingCalculatorPage() {
       title="Busbar Calculator UK: Size + Current Rating (Free Tool)"
       description="Free UK busbar sizing + current calculator: copper + aluminium ratings, voltage drop, temperature rise per BS 7671. Single phase, 3-phase + DC supported."
       datePublished="2026-02-01"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Busbar Sizing Calculator', href: '/tools/busbar-sizing-calculator' },
@@ -60,7 +60,7 @@ export default function BusbarSizingCalculatorPage() {
         'Busbar current rating is determined by the cross-sectional area and the maximum allowable current density: typically 1.2 A/mm² for copper busbars in enclosed panels and up to 2.0 A/mm² for busbars in free air.',
         'Copper busbars have approximately 60% higher current carrying capacity than equivalent aluminium busbars, but aluminium is lighter and less expensive per unit length.',
         'Temperature rise is the governing design factor — BS EN 61439-1 limits the temperature rise of busbars in switchgear assemblies to 70K above ambient (105°C total at 35°C ambient).',
-        'Short-circuit withstand must be verified using the adiabatic equation: minimum CSA = root(I²t) / k, where k is 176 for copper and 76 for aluminium busbars.',
+        'Short-circuit withstand must be verified using the adiabatic equation: minimum CSA = root(I²t) / k, with k from BS 7671 Table 54.6 for bare conductors — 159 for copper and 105 for aluminium under normal conditions.',
         'Elec-Mate calculates busbar sizing for copper and aluminium, with temperature rise, voltage drop, and short-circuit verification all built in.',
       ]}
       sections={[
@@ -148,7 +148,7 @@ export default function BusbarSizingCalculatorPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                      <span>k factor (adiabatic): 176</span>
+                      <span>k factor (adiabatic): 159 bare, normal conditions (Table 54.6)</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -177,7 +177,7 @@ export default function BusbarSizingCalculatorPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                      <span>k factor (adiabatic): 76</span>
+                      <span>k factor (adiabatic): 105 bare, normal conditions (Table 54.6)</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -424,7 +424,8 @@ export default function BusbarSizingCalculatorPage() {
                   <li className="flex items-start gap-3">
                     <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong>k</strong> = 176 for copper busbars, 76 for aluminium busbars (see
+                      <strong>k</strong> = material factor from BS 7671 Table 54.6 for bare
+                      conductors — 159 for copper, 105 for aluminium under normal conditions (see
                       note on k values below)
                     </span>
                   </li>
@@ -452,26 +453,26 @@ export default function BusbarSizingCalculatorPage() {
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong>k = 176:</strong> bare copper conductors — applies where the busbar
-                      surface is uninsulated and the assumed temperature rise allows a higher final
-                      temperature.
+                      <strong>Bare copper (Table 54.6):</strong> k = 228 where the busbar is visible
+                      and in restricted areas, 159 under normal conditions, 138 where there is a
+                      fire risk. The condition determines the permissible final temperature, so
+                      check which column applies to your assembly.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong>Insulated connection points:</strong> where the busbar connects to
-                      insulated conductors or insulated terminations, use the k value from BS 7671
-                      Table 54.3 for the appropriate insulation class and initial temperature —
-                      these are lower than 176. Consult Table 54.3 for your specific installation
-                      conditions.
+                      <strong>Bare aluminium (Table 54.6):</strong> k = 125 visible and in
+                      restricted areas, 105 under normal conditions, 91 where there is a fire risk.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <strong>Aluminium:</strong> k = 76 for bare aluminium; lower values apply for
-                      insulated aluminium conductors — see Table 54.3.
+                      <strong>Type-tested assemblies:</strong> for busbars inside a switchgear or
+                      busbar trunking assembly, the manufacturer&apos;s verified short-circuit
+                      withstand rating to BS EN 61439 takes precedence over a generic adiabatic
+                      check — use the manufacturer&apos;s data where it exists.
                     </span>
                   </li>
                 </ul>
@@ -538,8 +539,9 @@ export default function BusbarSizingCalculatorPage() {
                       <strong className="text-yellow-400">525 mm²</strong>
                     </p>
                     <p className="font-mono text-white">
-                      Short-circuit check: A = root(25000² x 0.1) / 176 = root(62,500,000) / 176 =
-                      7906 / 176 = <strong className="text-yellow-400">44.9 mm²</strong>
+                      Short-circuit check (k = 159, bare copper, normal conditions): A =
+                      root(25000² x 0.1) / 159 = 7906 / 159 ={' '}
+                      <strong className="text-yellow-400">49.7 mm²</strong>
                     </p>
                     <p>
                       The current density requirement governs (525 mm² vs 44.9 mm²). Select a
@@ -659,7 +661,7 @@ export default function BusbarSizingCalculatorPage() {
         {
           question: 'How do I calculate busbar short-circuit withstand?',
           answer:
-            'The thermal withstand of a busbar under short-circuit conditions is checked using the adiabatic equation from BS 7671: minimum cross-sectional area = root(I²t) / k, where I is the prospective short-circuit current in amperes, t is the disconnection time of the protective device in seconds, and k is a material constant (176 for copper, 76 for aluminium). The calculated minimum area must be less than the actual busbar cross-section. For example, with a fault current of 25kA and a disconnection time of 0.1 seconds using a copper busbar: minimum area = root(25000² x 0.1) / 176 = 7906 / 176 = 44.9 mm². Any copper busbar with a cross-section greater than 44.9 mm² will withstand this fault. The mechanical forces also need checking for high fault levels.',
+            'The thermal withstand of a busbar under short-circuit conditions is checked using the adiabatic equation from BS 7671: minimum cross-sectional area = root(I²t) / k, where I is the prospective short-circuit current in amperes, t is the disconnection time of the protective device in seconds, and k is the material factor from BS 7671 Table 54.6 for bare conductors (copper: 159 under normal conditions; aluminium: 105). The calculated minimum area must be less than the actual busbar cross-section. For example, with a fault current of 25kA and a disconnection time of 0.1 seconds using a bare copper busbar under normal conditions: minimum area = root(25000² x 0.1) / 159 = 7906 / 159 = 49.7 mm². Any copper busbar with a cross-section greater than 49.7 mm² will withstand this fault. For type-tested assemblies, the manufacturer verified withstand rating to BS EN 61439 takes precedence. The mechanical forces also need checking for high fault levels.',
         },
         {
           question: 'What is busbar trunking and when is it used?',

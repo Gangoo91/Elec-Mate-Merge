@@ -10,6 +10,7 @@ import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
 import { getElecIdProfileByNumber, ElecIdProfile } from '@/services/elecIdService';
+import { useCreateEmployee } from '@/hooks/useEmployees';
 import {
   QrCode,
   Scan,
@@ -110,6 +111,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
   const [result, setResult] = useState<ElecIdProfile | null>(null);
   const [elecIdInput, setElecIdInput] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const createEmployee = useCreateEmployee();
 
   useEffect(() => {
     if (!open) {
@@ -205,13 +207,54 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
     setScanProgress(0);
   };
 
-  const handleAddToTeam = () => {
-    if (result) {
+  const handleAddToTeam = async () => {
+    if (!result) return;
+    const name = result.employee?.name?.trim();
+    if (!name) {
       toast({
-        title: 'Worker Added',
-        description: `${result.employee?.name} has been added to your team.`,
+        title: 'Cannot add worker',
+        description: 'This Elec-ID has no worker name attached.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const avatarInitials = name
+      .split(' ')
+      .map((p) => p[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+    try {
+      await createEmployee.mutateAsync({
+        name,
+        role: result.employee?.role || 'Electrician',
+        team_role: 'Operative',
+        status: 'Active',
+        email: result.employee?.email ?? null,
+        phone: result.employee?.phone ?? null,
+        avatar_initials: avatarInitials,
+        photo_url: null,
+        // DB defaults apply for pay; employer edits these on the roster
+        hourly_rate: 25,
+        annual_salary: null,
+        pay_type: 'hourly',
+        join_date: new Date().toISOString().split('T')[0],
+        certifications_count: 0,
+        active_jobs_count: 0,
+      });
+      toast({
+        title: 'Worker added',
+        description: result.employee?.email
+          ? `${name} added to your team — we've emailed them to link their account.`
+          : `${name} added to your team. Share your invite code so they can link their account.`,
       });
       onOpenChange(false);
+    } catch {
+      toast({
+        title: 'Could not add worker',
+        description: 'Something went wrong adding this worker to your team. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -441,9 +484,13 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                   <RotateCcw className="h-4 w-4 mr-1.5" />
                   Scan another
                 </SecondaryButton>
-                <PrimaryButton onClick={handleAddToTeam} fullWidth>
+                <PrimaryButton
+                  onClick={handleAddToTeam}
+                  fullWidth
+                  disabled={createEmployee.isPending}
+                >
                   <UserPlus className="h-4 w-4 mr-1.5" />
-                  Add to my team
+                  {createEmployee.isPending ? 'Adding…' : 'Add to my team'}
                 </PrimaryButton>
               </div>
             </div>

@@ -383,3 +383,91 @@ export {
   ZS_TEMP_FACTOR_PRACTICAL,
 };
 export type { DisconnectionTime, ZsLookupResult };
+
+/* ------------------------------------------------------------------ */
+/*  Schedule-of-tests auto-calculation (ELE-1108 EICR / ELE-1241 EIC) */
+/* ------------------------------------------------------------------ */
+
+/** Ring final circuit: estimated (R1+R2) at the furthest point (GN3). */
+export const estimateRingR1R2 = (r1EndToEnd: number, r2EndToEnd: number): number =>
+  (r1EndToEnd + r2EndToEnd) / 4;
+
+const AUTO_CALC_TRIGGER_FIELDS = ['r1r2', 'ringR1', 'ringR2', 'ringRn'];
+
+interface AutoCalcCircuitFields {
+  r1r2?: string;
+  ringR1?: string;
+  ringR2?: string;
+  zs?: string;
+  circuitType?: string;
+}
+
+const deriveRingR1R2 = (rr1s?: string, rr2s?: string): string => {
+  const rr1 = parseFloat(rr1s || '');
+  const rr2 = parseFloat(rr2s || '');
+  return rr1 > 0 && rr2 > 0 ? estimateRingR1R2(rr1, rr2).toFixed(2) : '';
+};
+
+const deriveZsValue = (r1r2s: string | undefined, zRefOhms: number | null): string => {
+  const v = parseFloat(r1r2s || '');
+  return v > 0 && zRefOhms !== null && !isNaN(zRefOhms)
+    ? calculateZs(v, zRefOhms).toFixed(2)
+    : '';
+};
+
+/**
+ * Shared EIC/EICR schedule auto-calc: derives ring (R1+R2) from the end-to-end
+ * readings and Zs = zRef + (R1+R2), mutating `updated` in place.
+ *
+ * A field is only auto-written when it is empty OR still equals the value we
+ * would have derived from the PREVIOUS readings — so a manually entered value
+ * is never overwritten, while per-keystroke commits keep tracking instead of
+ * freezing on the first parseable prefix (type "0.75" and the derived Zs
+ * follows through "0.7" to "0.75"). When the new readings can no longer derive
+ * a value, a previously auto-derived one is cleared rather than left stale.
+ *
+ * `zRefOhms` is the impedance upstream of the circuit: the board's Zdb where
+ * available, else the installation Ze. Pass null to skip the Zs derivation.
+ */
+export function applyScheduleAutoCalc(
+  prev: AutoCalcCircuitFields,
+  updated: AutoCalcCircuitFields,
+  field: string,
+  zRefOhms: number | null
+): void {
+  if (!AUTO_CALC_TRIGGER_FIELDS.includes(field)) return;
+
+  const isRing = (updated.circuitType || '').toLowerCase().includes('ring');
+
+  if (isRing && field !== 'r1r2') {
+    const prevDerived = deriveRingR1R2(prev.ringR1, prev.ringR2);
+    const current = String(updated.r1r2 || '').trim();
+    if (!current || current === prevDerived) {
+      updated.r1r2 = deriveRingR1R2(updated.ringR1, updated.ringR2);
+    }
+  }
+
+  const prevDerivedZs = deriveZsValue(prev.r1r2, zRefOhms);
+  const currentZs = String(updated.zs || '').trim();
+  if (!currentZs || currentZs === prevDerivedZs) {
+    updated.zs = deriveZsValue(updated.r1r2, zRefOhms);
+  }
+}
+
+/**
+ * When the upstream impedance itself changes (Zdb typed in AFTER the circuit
+ * readings — the normal on-site order), re-derive Zs for a circuit. Returns
+ * the new Zs string, or null when the circuit's Zs was manually entered (or
+ * nothing is derivable) and must not be touched.
+ */
+export function recalcAutoZsForZRefChange(
+  circuit: AutoCalcCircuitFields,
+  prevZRefOhms: number | null,
+  newZRefOhms: number | null
+): string | null {
+  const currentZs = String(circuit.zs || '').trim();
+  const prevDerivedZs = deriveZsValue(circuit.r1r2, prevZRefOhms);
+  if (currentZs && currentZs !== prevDerivedZs) return null; // manual value — keep
+  const next = deriveZsValue(circuit.r1r2, newZRefOhms);
+  return next === currentZs ? null : next;
+}

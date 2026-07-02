@@ -1,7 +1,7 @@
 /**
  * MockExamsHubPage — /mock-exams index.
  *
- * Lists all 25 free mock exams grouped by category. Designed as a share-target
+ * Lists all 36 free mock exams grouped by category. Designed as a share-target
  * (clean URL, branded card grid) for Facebook trade groups + apprentice chats.
  */
 import { Link } from 'react-router-dom';
@@ -97,6 +97,72 @@ const ELECTRICAL_EXAMS: ExamCard[] = [
     title: 'AM2 Online Knowledge Test',
     qCount: 177,
     blurb: 'Section E online theory — H&S, BS 7671, safe isolation, fault diagnosis.',
+  },
+  {
+    slug: 'pat-testing',
+    title: 'PAT Testing (C&G 2377)',
+    qCount: 120,
+    blurb: 'In-service inspection and testing, equipment classes, EAWR duties, records.',
+  },
+  {
+    slug: 'emergency-lighting',
+    title: 'Emergency Lighting (BS 5266)',
+    qCount: 300,
+    blurb: 'Maintained vs non-maintained, 3-hour duration, design, testing regimes.',
+  },
+  {
+    slug: 'fire-alarm',
+    title: 'Fire Alarm Systems (BS 5839-1)',
+    qCount: 150,
+    blurb: 'Categories L1-L5 and P1/P2, detectors, zoning, cabling, maintenance.',
+  },
+  {
+    slug: 'ev-charging',
+    title: 'EV Charging Installation',
+    qCount: 150,
+    blurb: 'Connector types, earthing and protection, smart charging, testing.',
+  },
+  {
+    slug: 'data-cabling',
+    title: 'Data Cabling',
+    qCount: 150,
+    blurb: 'Structured cabling, terminations, testing and certification, PoE.',
+  },
+  {
+    slug: 'renewable-energy',
+    title: 'Renewable Energy & Solar PV',
+    qCount: 200,
+    blurb: 'Panel tech, inverters, system design, grid connection, battery storage.',
+  },
+  {
+    slug: 'smart-home',
+    title: 'Smart Home Technology',
+    qCount: 200,
+    blurb: 'Zigbee, Z-Wave, mesh networking, hubs, security, installation practice.',
+  },
+  {
+    slug: 'industrial-electrical',
+    title: 'Industrial Electrical',
+    qCount: 120,
+    blurb: 'Three-phase distribution, motors, PLCs, fault finding, safe isolation.',
+  },
+  {
+    slug: 'instrumentation',
+    title: 'Instrumentation',
+    qCount: 125,
+    blurb: 'Sensors, 4-20mA loops, PID control, calibration, fault finding.',
+  },
+  {
+    slug: 'bms',
+    title: 'Building Management Systems',
+    qCount: 245,
+    blurb: 'BMS fundamentals, HVAC integration, protocols, commissioning.',
+  },
+  {
+    slug: 'fibre-optics',
+    title: 'Fibre Optics',
+    qCount: 250,
+    blurb: 'Singlemode vs multimode, connectors, splicing, installation, faults.',
   },
 ];
 
@@ -231,7 +297,7 @@ export default function MockExamsHubPage() {
   useSEO({
     title: 'Free UK Mock Exams for Electricians + Tradespeople',
     description:
-      '5,900+ free practice questions across 25 mock exams: CSCS, IPAF, PASMA, 18th Edition, 2391, AM2, Level 2 + Level 3 Electrical. No sign-up to try.',
+      '7,800+ free practice questions across 36 mock exams: CSCS, 18th Edition, 2391, AM2, PAT testing, EV charging, fire alarm, Level 2 + 3. No sign-up to try.',
     type: 'website',
     breadcrumbs: [
       { name: 'Home', url: '/' },
@@ -241,7 +307,7 @@ export default function MockExamsHubPage() {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: 'Free UK Mock Exams Hub',
-      description: `${TOTAL_QUESTIONS}+ free practice questions across 25 mock exams.`,
+      description: `${TOTAL_QUESTIONS}+ free practice questions across 36 mock exams.`,
       url: 'https://www.elec-mate.com/mock-exams',
       isAccessibleForFree: true,
       inLanguage: 'en-GB',

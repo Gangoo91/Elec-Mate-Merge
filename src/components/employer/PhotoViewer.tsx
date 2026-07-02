@@ -477,7 +477,7 @@ export function PhotoViewer({
                 <Clock className="h-3 w-3" />
                 {formatDate(photo.timestamp)}
               </span>
-              {!isMobile && (
+              {!isMobile && photo.location?.address && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3 w-3" />
                   {photo.location.address}

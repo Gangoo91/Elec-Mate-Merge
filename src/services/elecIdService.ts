@@ -308,17 +308,40 @@ export const verifyElecIdProfile = async (
   return data;
 };
 
-// Generate shareable link
-export const generateShareableLink = async (id: string): Promise<string> => {
-  const shareableLink = `https://elec-id.app/profile/${id}?token=${crypto.randomUUID()}`;
+// Generate shareable link — inserts a real, resolvable share-link row (the
+// /share/:token route reads employer_elec_id_share_links.share_token).
+export const generateShareableLink = async (
+  id: string,
+  options?: { sections?: string[]; expiresInDays?: number | null }
+): Promise<string> => {
+  const shareToken = crypto.randomUUID().replace(/-/g, '').substring(0, 12);
+  const url = `https://www.elec-mate.com/share/${shareToken}`;
+  const sections = options?.sections ?? [
+    'basics',
+    'qualifications',
+    'experience',
+    'skills',
+    'training',
+  ];
+  const days = options?.expiresInDays === undefined ? 30 : options.expiresInDays;
+  const expiresAt =
+    days == null ? null : new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
 
-  const { error } = await supabase
-    .from('employer_elec_id_profiles')
-    .update({ shareable_link: shareableLink })
-    .eq('id', id);
+  const { error } = await supabase.from('employer_elec_id_share_links').insert({
+    profile_id: id,
+    share_token: shareToken,
+    url,
+    sections,
+    expires_at: expiresAt,
+    is_active: true,
+  });
 
   if (error) throw error;
-  return shareableLink;
+
+  // Keep the profile's convenience copy in sync for surfaces that read it.
+  await supabase.from('employer_elec_id_profiles').update({ shareable_link: url }).eq('id', id);
+
+  return url;
 };
 
 // Skills CRUD

@@ -142,6 +142,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
+  // ELE-1236 — date-range filter (NAPIT/NICEIC assessments: "certs from the
+  // last 12 months"). Presets map to a rolling updated_at window; custom takes
+  // explicit from/to dates.
+  const [datePreset, setDatePreset] = useState<'all' | '30d' | '12m' | 'custom'>('all');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [reportToDelete, setReportToDelete] = useState<CloudReport | null>(null);
   // ELE-881 — confirmation when duplicating a cert with >=20 circuits
@@ -199,6 +205,33 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     return () => subscription.unsubscribe();
   }, []);
 
+  // ELE-1236 — resolve the date preset once, day-floored, so the window is
+  // stable across paginated fetches and cache keys (not a per-fetch timestamp).
+  // Invalid custom dates resolve to undefined instead of throwing in queryFn.
+  const resolvedDateRange = useMemo((): { from?: string; to?: string } => {
+    const safeIso = (d: Date): string | undefined => (isNaN(d.getTime()) ? undefined : d.toISOString());
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    if (datePreset === '30d') {
+      const d = new Date(startOfToday);
+      d.setDate(d.getDate() - 30);
+      return { from: safeIso(d) };
+    }
+    if (datePreset === '12m') {
+      const d = new Date(startOfToday);
+      d.setFullYear(d.getFullYear() - 1);
+      return { from: safeIso(d) };
+    }
+    if (datePreset === 'custom') {
+      return {
+        from: dateFrom ? safeIso(new Date(`${dateFrom}T00:00:00`)) : undefined,
+        // Inclusive end-of-day so "to 2026-06-30" includes certs from that day
+        to: dateTo ? safeIso(new Date(`${dateTo}T23:59:59.999`)) : undefined,
+      };
+    }
+    return {};
+  }, [datePreset, dateFrom, dateTo]);
+
   const {
     data: reportsData,
     isLoading: isLoadingReports,
@@ -206,7 +239,18 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   } = useQuery<ReportsResponse>({
     // ELE-NEW — page key includes type + status so changing tab fetches fresh
     // server-filtered results instead of using a stale paginated subset.
-    queryKey: ['my-reports', user?.id, currentPage, typeFilter, statusFilter],
+    // ELE-1236 — the RESOLVED date strings go in the key (not the preset name):
+    // rolling presets resolve to day-floored boundaries, so every page of a
+    // paginated load uses the identical window and the cache key moves with it.
+    queryKey: [
+      'my-reports',
+      user?.id,
+      currentPage,
+      typeFilter,
+      statusFilter,
+      resolvedDateRange.from,
+      resolvedDateRange.to,
+    ],
     queryFn: async () => {
       if (!user) {
         return { reports: [], totalCount: 0, hasMore: false };
@@ -216,6 +260,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         pageSize: 20,
         reportType: typeFilter,
         status: statusFilter,
+        dateFrom: resolvedDateRange.from,
+        dateTo: resolvedDateRange.to,
       });
       return result;
     },
@@ -253,7 +299,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // commit and this clear ran last, wiping the just-set list.
   useEffect(() => {
     setCurrentPage(1);
-  }, [typeFilter, statusFilter]);
+  }, [typeFilter, statusFilter, datePreset, dateFrom, dateTo]);
 
   // Realtime subscription — show toast + refetch when agent creates/updates certs
   useEffect(() => {
@@ -1175,6 +1221,53 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             })()}
           </div>
 
+          {/* Date range filter row — ELE-1236 (NAPIT/NICEIC: "certs from the
+              last 12 months"). Presets are rolling windows on last-updated;
+              Custom reveals from/to date inputs. */}
+          <div className="flex gap-2 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
+            {[
+              { value: 'all' as const, label: 'All time' },
+              { value: '30d' as const, label: 'Last 30 days' },
+              { value: '12m' as const, label: 'Last 12 months' },
+              { value: 'custom' as const, label: 'Custom' },
+            ].map(({ value, label }) => (
+              <button
+                key={value}
+                onClick={() => {
+                  navigator.vibrate?.(10);
+                  setDatePreset(value);
+                }}
+                className={cn(
+                  'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98]',
+                  datePreset === value
+                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {datePreset === 'custom' && (
+            <div className="flex items-center gap-2 px-4 pb-2.5">
+              <input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                aria-label="From date"
+                className="h-9 flex-1 min-w-0 rounded-md bg-white/[0.04] border border-white/[0.08] px-2.5 text-xs text-white touch-manipulation focus:outline-none focus:border-elec-yellow/40 [color-scheme:dark]"
+              />
+              <span className="text-[11px] text-white/50 shrink-0">to</span>
+              <input
+                type="date"
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                aria-label="To date"
+                className="h-9 flex-1 min-w-0 rounded-md bg-white/[0.04] border border-white/[0.08] px-2.5 text-xs text-white touch-manipulation focus:outline-none focus:border-elec-yellow/40 [color-scheme:dark]"
+              />
+            </div>
+          )}
+
           <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
 
           {/* Bulk Actions Bar */}
@@ -1196,7 +1289,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
           <div className="max-w-6xl mx-auto px-4 py-4">
             {filteredReports.length === 0 ? (
-              searchQuery || statusFilter !== 'all' || typeFilter !== 'all' ? (
+              searchQuery || statusFilter !== 'all' || typeFilter !== 'all' || datePreset !== 'all' ? (
                 <EmptyState
                   icon={Search}
                   title="No certificates found"
@@ -1207,6 +1300,9 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                       setSearchQuery('');
                       setStatusFilter('all');
                       setTypeFilter('all');
+                      setDatePreset('all');
+                      setDateFrom('');
+                      setDateTo('');
                     },
                   }}
                 />

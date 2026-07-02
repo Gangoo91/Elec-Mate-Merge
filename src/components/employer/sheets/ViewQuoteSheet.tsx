@@ -128,7 +128,7 @@ export function ViewQuoteSheet({
       setAcceptance(data);
 
       if (data?.access_token) {
-        setAcceptLink(`${window.location.origin}/quote/${data.access_token}`);
+        setAcceptLink(`${window.location.origin}/employer-quote/${data.access_token}`);
       }
     } catch (err) {
       console.error('Error loading acceptance:', err);

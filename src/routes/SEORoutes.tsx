@@ -527,6 +527,19 @@ const EmployerElectricalPlatformPage = lazy(
 );
 const EquipmentROICalculatorPage = lazy(() => import('@/pages/seo/EquipmentROICalculatorPage'));
 const EVChargerLoadCalculatorPage = lazy(() => import('@/pages/seo/EVChargerLoadCalculatorPage'));
+const EVChargerCableSizeCalculatorPage = lazy(
+  () => import('@/pages/seo/EVChargerCableSizeCalculatorPage')
+);
+const ShowerCableSizeCalculatorPage = lazy(
+  () => import('@/pages/seo/ShowerCableSizeCalculatorPage')
+);
+const SWACableSizeCalculatorPage = lazy(() => import('@/pages/seo/SWACableSizeCalculatorPage'));
+const CookerCircuitCalculatorPage = lazy(() => import('@/pages/seo/CookerCircuitCalculatorPage'));
+const HotTubElectricalCalculatorPage = lazy(
+  () => import('@/pages/seo/HotTubElectricalCalculatorPage')
+);
+const GarageSupplyCalculatorPage = lazy(() => import('@/pages/seo/GarageSupplyCalculatorPage'));
+const EicrCodeCheckerPage = lazy(() => import('@/pages/seo/EicrCodeCheckerPage'));
 const ExpensesManagerPage = lazy(() => import('@/pages/seo/ExpensesManagerPage'));
 const IPRatingGuidePage = lazy(() => import('@/pages/seo/IPRatingGuidePage'));
 const LearningVideosElectricianPage = lazy(
@@ -5127,6 +5140,62 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <EVChargerLoadCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/ev-charger-cable-size-calculator"
+        element={
+          <LazyRoute>
+            <EVChargerCableSizeCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/shower-cable-size-calculator"
+        element={
+          <LazyRoute>
+            <ShowerCableSizeCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/swa-cable-size-calculator"
+        element={
+          <LazyRoute>
+            <SWACableSizeCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/cooker-circuit-calculator"
+        element={
+          <LazyRoute>
+            <CookerCircuitCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/hot-tub-electrical-calculator"
+        element={
+          <LazyRoute>
+            <HotTubElectricalCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/garage-supply-calculator"
+        element={
+          <LazyRoute>
+            <GarageSupplyCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/eicr-code-checker"
+        element={
+          <LazyRoute>
+            <EicrCodeCheckerPage />
           </LazyRoute>
         }
       />

@@ -667,10 +667,10 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuit Cable Size UK: 20A in 2.5mm² / 32A in 4mm²"
-      description="Radial circuits to BS 7671:2018+A4:2026: 20A radial in 2.5mm² T&E (up to 50m²), 32A in 4mm² (up to 75m²), MCB/RCBO selection, RCD requirements, testing sequence. Worked examples + cable size tables."
+      title="What Is a Radial Circuit? 20A + 32A Cable Sizes (BS 7671)"
+      description="Radial circuits explained: how they differ from ring finals, 20A radials in 2.5mm² (up to 50m²), 32A in 4mm² (up to 75m²), MCB selection + cable size tables."
       datePublished="2025-06-15"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

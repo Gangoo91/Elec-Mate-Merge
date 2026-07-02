@@ -523,10 +523,10 @@ const sections = [
 export default function ApprenticeSalaryPage() {
   return (
     <GuideTemplate
-      title="Apprentice Electrician Pay UK 2026 | £7.55-£12.21 + JIB"
-      description="Complete guide to apprentice electrician pay rates in the UK for 2026. Minimum wage rates by age and year, JIB/ECS graded rates, weekly take-home pay…"
+      title="Apprentice Electrician Wages by Year: JIB Rates 2026 UK"
+      description="What apprentice electricians earn in each year of the apprenticeship: Year 1 to 4 hourly rates, JIB Stage 1-4 graded rates for 2026, and weekly take-home pay."
       datePublished="2025-09-10"
-      dateModified="2026-06-10"
+      dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

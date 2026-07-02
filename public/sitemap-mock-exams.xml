@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- 25 free mock exams + 1 hub. Generated 2026-05-23. -->
+  <!-- 36 free mock exams + 1 hub. Generated 2026-05-23, expanded 2026-07-02. -->
   <url>
     <loc>https://www.elec-mate.com/mock-exams</loc>
     <lastmod>2026-05-23</lastmod>
@@ -27,6 +27,19 @@
   <url><loc>https://www.elec-mate.com/mock-exams/18th-edition-bs-7671</loc><lastmod>2026-05-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.elec-mate.com/mock-exams/2391-inspection-testing</loc><lastmod>2026-05-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.elec-mate.com/mock-exams/am2-online-knowledge-test</loc><lastmod>2026-05-23</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+
+  <!-- Upskilling / specialist electrical (added 2026-07-02) -->
+  <url><loc>https://www.elec-mate.com/mock-exams/pat-testing</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/emergency-lighting</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/fire-alarm</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/ev-charging</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/data-cabling</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/renewable-energy</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/smart-home</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/industrial-electrical</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/instrumentation</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/bms</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/fibre-optics</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 
   <!-- Level 2 -->
   <url><loc>https://www.elec-mate.com/mock-exams/level-2-electrical-health-safety</loc><lastmod>2026-05-23</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -112,5 +125,10 @@
   <url><loc>https://www.elec-mate.com/mock-exams/working-at-height/fall-protection-and-prevention</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.elec-mate.com/mock-exams/working-at-height/safe-systems-of-work</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.elec-mate.com/mock-exams/working-at-height/incident-response-and-responsibilities</loc><lastmod>2026-05-25</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/pat-testing/regulations</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/pat-testing/equipment-classification</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/pat-testing/visual-inspection</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/pat-testing/testing-procedures</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.elec-mate.com/mock-exams/pat-testing/documentation</loc><lastmod>2026-07-02</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 
 </urlset>

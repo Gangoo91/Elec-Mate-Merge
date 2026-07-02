@@ -47,7 +47,7 @@ export interface ExpenseStats {
 async function fetchExpenseClaims(): Promise<ExpenseClaim[]> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
-    .select('*, employer_employees(name, avatar_initials)')
+    .select('*, employees:employer_employees(name, avatar_initials)')
     .order('submitted_date', { ascending: false });
   if (error) throw error;
   return data || [];
@@ -57,7 +57,7 @@ async function fetchExpenseClaims(): Promise<ExpenseClaim[]> {
 async function fetchMyExpenseClaims(employeeId: string): Promise<ExpenseClaim[]> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
-    .select('*, employer_employees(name, avatar_initials)')
+    .select('*, employees:employer_employees(name, avatar_initials)')
     .eq('employee_id', employeeId)
     .order('submitted_date', { ascending: false });
   if (error) throw error;
@@ -191,7 +191,7 @@ export function useExpenses(filters?: ExpenseFilters) {
           approved_date: new Date().toISOString(),
         })
         .eq('id', id)
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -217,7 +217,7 @@ export function useExpenses(filters?: ExpenseFilters) {
           rejection_reason: reason,
         })
         .eq('id', id)
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -241,7 +241,7 @@ export function useExpenses(filters?: ExpenseFilters) {
           paid_date: new Date().toISOString().split('T')[0],
         })
         .eq('id', id)
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -308,7 +308,7 @@ export function useExpenses(filters?: ExpenseFilters) {
       const { data, error } = await supabase
         .from('employer_expense_claims')
         .insert(claim)
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -329,7 +329,7 @@ export function useExpenses(filters?: ExpenseFilters) {
         .from('employer_expense_claims')
         .update(updates)
         .eq('id', id)
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -441,7 +441,7 @@ export function useMyExpenses(employeeId?: string) {
           status: 'Pending',
           submitted_date: new Date().toISOString().split('T')[0],
         })
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -464,7 +464,7 @@ export function useMyExpenses(employeeId?: string) {
         .update(updates)
         .eq('id', id)
         .eq('status', 'Pending') // Can only update pending expenses
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -544,7 +544,7 @@ export function useExpensesByJob(jobId: string | undefined) {
 
       const { data, error } = await supabase
         .from('employer_expense_claims')
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .eq('job_id', jobId)
         .order('submitted_date', { ascending: false });
 
@@ -562,7 +562,7 @@ export function useExpensesByDateRange(startDate: Date | undefined, endDate: Dat
     queryFn: async (): Promise<ExpenseClaim[]> => {
       let query = supabase
         .from('employer_expense_claims')
-        .select('*, employer_employees(name, avatar_initials)')
+        .select('*, employees:employer_employees(name, avatar_initials)')
         .order('submitted_date', { ascending: false });
 
       if (startDate) {

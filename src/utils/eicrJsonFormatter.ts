@@ -1074,14 +1074,23 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       };
     })(),
 
-    rcd_details: {
-      rcd_main_switch: get('rcdMainSwitch'),
-      rcd_rating: get('rcdRating'),
-      rcd_type: get('rcdType'),
-      rcd_time_delay: normaliseRcdTimeDelay(get('rcdTimeDelay')),
-      rcd_measured_time: get('rcdMeasuredTime'),
-      rcd_breaking_capacity: get('rcdBreakingCapacity'),
-    },
+    // ELE-1246 — when the user explicitly sets RCD Main to No, force the detail
+    // fields to N/A. Certs saved before the form cleared stale values (or where
+    // the user flipped Yes→No) still carried old type/time readings, and the PDF
+    // printed them under "RCD Main Switch: No". N/A (rather than '') also
+    // suppresses the template's Liquid `default:` fallbacks. Unset ('') is left
+    // alone so legacy certs keep whatever they recorded.
+    rcd_details: (() => {
+      const rcdMainOff = get('rcdMainSwitch') === 'no';
+      return {
+        rcd_main_switch: get('rcdMainSwitch'),
+        rcd_rating: rcdMainOff ? 'N/A' : get('rcdRating'),
+        rcd_type: rcdMainOff ? 'N/A' : get('rcdType'),
+        rcd_time_delay: rcdMainOff ? 'N/A' : normaliseRcdTimeDelay(get('rcdTimeDelay')),
+        rcd_measured_time: rcdMainOff ? 'N/A' : get('rcdMeasuredTime'),
+        rcd_breaking_capacity: rcdMainOff ? 'N/A' : get('rcdBreakingCapacity'),
+      };
+    })(),
 
     distribution_board: (() => {
       // Read from distributionBoards array if available, fall back to legacy flat fields

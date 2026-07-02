@@ -30,8 +30,8 @@ export const getWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]
     .select(
       `
       *,
-      employer_employees (*),
-      employer_jobs (*)
+      employees:employer_employees (*),
+      jobs:employer_jobs (*)
     `
     )
     .order('last_updated', { ascending: false });
@@ -50,8 +50,8 @@ export const getLatestWorkerLocations = async (): Promise<WorkerLocationWithEmpl
     .select(
       `
       *,
-      employer_employees (*),
-      employer_jobs (*)
+      employees:employer_employees (*),
+      jobs:employer_jobs (*)
     `
     )
     .order('last_updated', { ascending: false });
@@ -138,8 +138,8 @@ export const getWorkerLocationsByJob = async (
     .select(
       `
       *,
-      employer_employees (*),
-      employer_jobs (*)
+      employees:employer_employees (*),
+      jobs:employer_jobs (*)
     `
     )
     .eq('job_id', jobId)

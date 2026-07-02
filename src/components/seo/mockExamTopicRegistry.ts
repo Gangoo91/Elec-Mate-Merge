@@ -10,11 +10,11 @@
  * resolves an entry from here, filters the bank to the matching category,
  * and renders <PublicMockExamPage> with topic-specific copy.
  *
- * SCOPE: only includes the 12 exams whose banks carry a `category` field
+ * SCOPE: only includes the 13 exams whose banks carry a `category` field
  * (asbestos, COSHH, CSCS, confined spaces, fire safety, first aid, IPAF,
- * PASMA, manual handling, working at height, AM2, 2391/I&T). Level 2/3
- * banks use `section` numbers — those would need human-readable topic
- * names before they make good landing pages.
+ * PASMA, manual handling, working at height, AM2, 2391/I&T, PAT testing).
+ * Level 2/3 banks use `section` numbers — those would need human-readable
+ * topic names before they make good landing pages.
  */
 import { am2QuestionBank } from '@/data/apprentice-courses/am2/questionBank';
 import { asbestosQuestionBank } from '@/data/general-upskilling/asbestosMockExamData';
@@ -28,6 +28,7 @@ import { manualHandlingQuestionBank } from '@/data/general-upskilling/manualHand
 import { pasmaQuestionBank } from '@/data/general-upskilling/pasmaMockExamData';
 import { workingAtHeightQuestionBank } from '@/data/general-upskilling/workingAtHeightMockExamData';
 import { inspectionTestingQuestionBank } from '@/data/upskilling/inspectionTestingMockExamData';
+import { patTestingQuestionBank } from '@/data/upskilling/patTestingMockExamData';
 
 import type { SEOMockExamQuestion } from '@/components/seo/SEOMockExam';
 
@@ -68,6 +69,16 @@ const REGISTRY: TopicExamEntry[] = [
     timeLimitMinutes: 25,
     passThreshold: 70,
     bank: inspectionTestingQuestionBank as unknown as SEOMockExamQuestion[],
+  },
+  {
+    examSlug: 'pat-testing',
+    examShortName: 'PAT Testing (C&G 2377)',
+    subject: 'PAT testing questions',
+    signupRef: 'pat-testing',
+    questionsPerExam: 15,
+    timeLimitMinutes: 20,
+    passThreshold: 70,
+    bank: patTestingQuestionBank as unknown as SEOMockExamQuestion[],
   },
   {
     examSlug: 'asbestos-awareness',

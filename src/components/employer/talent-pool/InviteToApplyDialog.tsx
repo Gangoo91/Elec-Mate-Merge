@@ -65,7 +65,7 @@ export function InviteToApplyDialog({
           .from('employer_vacancies')
           .select('id, title, location, status, created_at')
           .eq('employer_id', user.id)
-          .eq('status', 'open')
+          .eq('status', 'Open')
           .order('created_at', { ascending: false });
 
         if (vacanciesError) throw vacanciesError;

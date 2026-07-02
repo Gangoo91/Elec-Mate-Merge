@@ -89,7 +89,12 @@ import { createCircuitWithDefaults, pickCableSize } from '@/utils/circuitDefault
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
 import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
 import { calculatePointsServed } from '@/types/autoFillTypes';
-import { getMaxZsFromDeviceDetails, getMaxZsWithRcd, calculateZs } from '@/utils/zsCalculations';
+import {
+  getMaxZsFromDeviceDetails,
+  getMaxZsWithRcd,
+  applyScheduleAutoCalc,
+} from '@/utils/zsCalculations';
+import { isNotApplicableValue } from '@/utils/testValidation';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 
 interface EICRScheduleOfTestsProps {
@@ -1604,35 +1609,36 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             }
           }
 
-          // ELE-1108 — calculator: derive ring R1+R2 (end-to-end) and Zs from the
-          // measured values. Auto-fills EMPTY fields only, so a manually entered /
-          // measured value is never overwritten.
-          const isRing = (updatedResult.circuitType || '').toLowerCase().includes('ring');
-
-          // Ring final: estimated R1+R2 at the furthest point ≈ (r1 + r2) / 4,
-          // where r1 = ring R1 end-to-end (line) and r2 = ring R2 end-to-end (cpc).
-          if (
-            isRing &&
-            (field === 'ringR1' || field === 'ringR2' || field === 'ringRn') &&
-            !String(updatedResult.r1r2 || '').trim()
-          ) {
-            const rr1 = parseFloat(updatedResult.ringR1 || '');
-            const rr2 = parseFloat(updatedResult.ringR2 || '');
-            if (rr1 > 0 && rr2 > 0) {
-              updatedResult.r1r2 = ((rr1 + rr2) / 4).toFixed(2);
-            }
+          // ELE-1108 — derive ring R1+R2 (end-to-end) and Zs from the measured
+          // values (shared helper: only empty or previously-auto-derived values
+          // are written, so manual readings are never overwritten). The Z
+          // reference is the circuit's board Zdb where entered, else the
+          // installation Ze from the supply section.
+          {
+            const board = (formData?.distributionBoards as { id?: string; zdb?: string }[] | undefined)?.find(
+              (b) => b.id === updatedResult.boardId
+            );
+            const zSource = String(board?.zdb ?? '').trim() || String(formData?.externalZe ?? '');
+            const zRef = parseFloat(zSource.replace(/[^0-9.]/g, ''));
+            applyScheduleAutoCalc(result, updatedResult, field, isNaN(zRef) ? null : zRef);
           }
 
-          // Zs = Ze + (R1+R2). Ze is the installation's external earth fault loop
-          // impedance from the supply section (formData.externalZe).
-          if (
-            (field === 'r1r2' || field === 'ringR1' || field === 'ringR2' || field === 'ringRn') &&
-            !String(updatedResult.zs || '').trim()
-          ) {
-            const ze = parseFloat(String(formData?.externalZe ?? '').replace(/[^0-9.]/g, ''));
-            const r1r2Val = parseFloat(updatedResult.r1r2 || '');
-            if (r1r2Val > 0 && !isNaN(ze)) {
-              updatedResult.zs = calculateZs(r1r2Val, ze).toFixed(2);
+          // ELE-1238 — (R1+R2) and standalone R2 are mutually exclusive test
+          // methods, so entering a real R1+R2 reading marks R2 N/A automatically
+          // (users forgot to and got an alarming red X — ELE-1237). N/A-family
+          // entries (N/A, LIM, …) in R1+R2 don't trigger it — a limitation on
+          // R1+R2 is exactly when a standalone R2 would be measured. Clearing
+          // R1+R2 reverts an 'N/A' R2 to empty (note: an identical manually
+          // typed 'N/A' is indistinguishable and also reverts). Standalone R2
+          // is stored in ringContinuityLive (legacy field name — see the
+          // column 20 comment in ContinuityCells).
+          if (field === 'r1r2') {
+            const r1r2Entry = value.trim();
+            const r2Entry = String(updatedResult.ringContinuityLive || '').trim();
+            if (r1r2Entry && !isNotApplicableValue(r1r2Entry)) {
+              if (!r2Entry) updatedResult.ringContinuityLive = 'N/A';
+            } else if (!r1r2Entry && r2Entry.toLowerCase() === 'n/a') {
+              updatedResult.ringContinuityLive = '';
             }
           }
 
@@ -1642,7 +1648,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       });
       return updatedResults;
     });
-  }, [formData?.externalZe]);
+  }, [formData?.externalZe, formData?.distributionBoards]);
 
   // Bulk infill handler
   const handleBulkInfill = (value: string, mode: 'all' | 'empty') => {

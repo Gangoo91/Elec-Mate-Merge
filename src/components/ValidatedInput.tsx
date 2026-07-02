@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { ValidationResult } from '@/utils/testValidation';
-import { CircleCheck, AlertTriangle, CircleX, Info } from 'lucide-react';
+import { CircleCheck, AlertTriangle, CircleX, Info, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ValidatedInputProps {
@@ -31,6 +31,8 @@ const ValidatedInput = ({
         return <AlertTriangle className="h-4 w-4 text-amber-600" />;
       case 'fail':
         return <CircleX className="h-4 w-4 text-red-600" />;
+      case 'na':
+        return <Minus className="h-4 w-4 text-muted-foreground/60" />;
       default:
         return null;
     }

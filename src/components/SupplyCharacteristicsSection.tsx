@@ -1015,7 +1015,16 @@ const SupplyCharacteristicsSectionInner = ({
                       haptic.light();
                       const newValue = formData.rcdMainSwitch === option.value ? '' : option.value;
                       onUpdate('rcdMainSwitch', newValue);
-                      if (newValue !== 'yes') onUpdate('rcdRating', '');
+                      // ELE-1246 — clear ALL RCD detail fields when the main switch
+                      // isn't an RCD, not just the rating: stale type/time values
+                      // were surviving in formData and printing on the PDF.
+                      if (newValue !== 'yes') {
+                        onUpdate('rcdRating', '');
+                        onUpdate('rcdType', '');
+                        onUpdate('rcdTimeDelay', '');
+                        onUpdate('rcdMeasuredTime', '');
+                        onUpdate('rcdBreakingCapacity', '');
+                      }
                     }}
                     className={cn(
                       'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',

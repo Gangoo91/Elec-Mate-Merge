@@ -74,10 +74,30 @@ export const BS7671_LIMITS = {
 
 export interface ValidationResult {
   isValid: boolean;
-  level: 'pass' | 'warning' | 'fail';
+  level: 'pass' | 'warning' | 'fail' | 'na';
   message: string;
   suggestedValue?: string;
 }
+
+// ELE-1237 — N/A and LIM are deliberate entries (test not applicable / limitation),
+// not failures. Without this they fall through to parseFloat → NaN → red X, which
+// reads as a failed test and alarms users.
+const NOT_APPLICABLE_VALUES = new Set(['n/a', 'na', 'not applicable', 'lim', 'limitation']);
+
+/** True when the entry is a deliberate N/A-family value (N/A, LIM, …). */
+export const isNotApplicableValue = (value: string): boolean =>
+  NOT_APPLICABLE_VALUES.has(value.trim().toLowerCase());
+
+const notApplicableResult = (value: string): ValidationResult | null => {
+  if (!value) return null;
+  const v = value.trim().toLowerCase();
+  if (!NOT_APPLICABLE_VALUES.has(v)) return null;
+  return {
+    isValid: true,
+    level: 'na',
+    message: v.startsWith('lim') ? 'Limitation recorded' : 'Not applicable',
+  };
+};
 
 export interface TestValidationResults {
   r1r2: ValidationResult;
@@ -118,6 +138,9 @@ const validateR1R2 = (value: string, circuitType: string): ValidationResult => {
     return { isValid: false, level: 'warning', message: 'R1+R2 value required' };
   }
 
+  const na = notApplicableResult(value);
+  if (na) return na;
+
   const numValue = parseFloat(value);
   if (isNaN(numValue)) {
     return { isValid: false, level: 'fail', message: 'Invalid R1+R2 value format' };
@@ -148,6 +171,9 @@ const validateRingContinuity = (value: string): ValidationResult => {
     return { isValid: true, level: 'pass', message: 'Not applicable for this circuit type' };
   }
 
+  const na = notApplicableResult(value);
+  if (na) return na;
+
   const numValue = parseFloat(value);
   if (isNaN(numValue)) {
     return { isValid: false, level: 'fail', message: 'Invalid continuity value format' };
@@ -172,6 +198,9 @@ const validateInsulationResistance = (value: string): ValidationResult => {
       message: 'Insulation resistance measurement required',
     };
   }
+
+  const na = notApplicableResult(value);
+  if (na) return na;
 
   // A ">" reading (e.g. ">200", ">999") means the result is off the top of the
   // meter's range. Strip < / > before parsing so ">200" doesn't fall through to
@@ -212,6 +241,9 @@ const validatePolarity = (value: string): ValidationResult => {
   if (!value || value.trim() === '') {
     return { isValid: false, level: 'warning', message: 'Polarity check required' };
   }
+
+  const na = notApplicableResult(value);
+  if (na) return na;
 
   const cleanValue = value.trim().toLowerCase();
   if (cleanValue === '✓' || cleanValue === 'correct' || cleanValue === 'pass') {
@@ -257,6 +289,9 @@ const validateZs = (
   if (!value || value.trim() === '') {
     return { isValid: false, level: 'warning', message: 'Zs measurement required' };
   }
+
+  const na = notApplicableResult(value);
+  if (na) return na;
 
   const numValue = parseFloat(value);
   if (isNaN(numValue)) {
@@ -371,6 +406,15 @@ const validateRCDTiming = (rating: string, oneX: string): ValidationResult => {
     return { isValid: true, level: 'pass', message: 'RCD not applicable for this circuit' };
   }
 
+  // N/A rating only neutralises the row when there's no real trip-time reading
+  // to assess — a recorded time with an N/A rating still needs the rating, so
+  // fall through to the "rating format unclear" warning instead of masking it.
+  const ratingNa = notApplicableResult(rating);
+  const oneXHasReading = !!oneX?.trim() && !isNaN(parseFloat(oneX));
+  if (ratingNa && !oneXHasReading) return ratingNa;
+  const oneXNa = notApplicableResult(oneX);
+  if (!ratingNa && oneXNa) return oneXNa;
+
   const ratingValue = parseInt(rating);
   const oneXValue = parseFloat(oneX);
 
@@ -401,6 +445,9 @@ const validatePFC = (value: string): ValidationResult => {
     return { isValid: false, level: 'warning', message: 'PFC measurement recommended' };
   }
 
+  const na = notApplicableResult(value);
+  if (na) return na;
+
   const numValue = parseFloat(value);
   if (isNaN(numValue)) {
     return { isValid: false, level: 'fail', message: 'Invalid PFC value format' };
@@ -429,6 +476,9 @@ const validateFunctionalTesting = (value: string): ValidationResult => {
   if (!value || value.trim() === '') {
     return { isValid: false, level: 'warning', message: 'Functional testing required' };
   }
+
+  const na = notApplicableResult(value);
+  if (na) return na;
 
   const cleanValue = value.trim().toLowerCase();
   if (cleanValue === '✓' || cleanValue === 'pass' || cleanValue === 'satisfactory') {
@@ -495,6 +545,9 @@ export const validatePhaseRotation = (value: string): ValidationResult => {
     };
   }
 
+  const naRotation = notApplicableResult(value);
+  if (naRotation) return naRotation;
+
   const cleanValue = value.trim().toLowerCase();
 
   if (cleanValue === '✓' || cleanValue === 'correct' || cleanValue === 'l1-l2-l3') {
@@ -512,10 +565,6 @@ export const validatePhaseRotation = (value: string): ValidationResult => {
       level: 'fail',
       message: 'Phase rotation incorrect - motor/equipment may run in reverse',
     };
-  }
-
-  if (cleanValue === 'n/a' || cleanValue === 'not applicable') {
-    return { isValid: true, level: 'pass', message: 'Phase rotation N/A for this circuit' };
   }
 
   return {

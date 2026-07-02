@@ -280,20 +280,32 @@ export async function formatEicJson(
       voltage_rating: formData.mainSwitchVoltageRating || 'N/A',
     },
 
-    rcd_details: {
-      rcd_main_switch: formData.rcdMainSwitch || '',
-      rcd_rating: formData.rcdRating || formData.mainSwitchRcdRating || 'N/A',
-      rcd_type: formData.rcdType || formData.mainSwitchRcdType || 'N/A',
-      rcd_operating_time: formData.rcdOperatingTime || formData.mainSwitchRcdOperatingTime || 'N/A',
-      rcd_rated_time_delay:
-        (formData.rcdTimeDelay && formData.rcdTimeDelay !== '__custom__'
-          ? formData.rcdTimeDelay
-          : '') ||
-        formData.rcdRatedTimeDelay ||
-        'N/A',
-      rcd_measured_operating_time:
-        formData.rcdMeasuredTime || formData.rcdMeasuredOperatingTime || 'N/A',
-    },
+    // ELE-1246 — when RCD Main is explicitly No, force the detail fields to N/A
+    // so stale readings from a Yes→No flip never print. Unset ('') keeps the
+    // legacy fallback chain for older certs.
+    rcd_details: (() => {
+      const rcdMainOff = formData.rcdMainSwitch === 'no';
+      return {
+        rcd_main_switch: formData.rcdMainSwitch || '',
+        rcd_rating: rcdMainOff
+          ? 'N/A'
+          : formData.rcdRating || formData.mainSwitchRcdRating || 'N/A',
+        rcd_type: rcdMainOff ? 'N/A' : formData.rcdType || formData.mainSwitchRcdType || 'N/A',
+        rcd_operating_time: rcdMainOff
+          ? 'N/A'
+          : formData.rcdOperatingTime || formData.mainSwitchRcdOperatingTime || 'N/A',
+        rcd_rated_time_delay: rcdMainOff
+          ? 'N/A'
+          : (formData.rcdTimeDelay && formData.rcdTimeDelay !== '__custom__'
+              ? formData.rcdTimeDelay
+              : '') ||
+            formData.rcdRatedTimeDelay ||
+            'N/A',
+        rcd_measured_operating_time: rcdMainOff
+          ? 'N/A'
+          : formData.rcdMeasuredTime || formData.rcdMeasuredOperatingTime || 'N/A',
+      };
+    })(),
 
     distribution_board: {
       board_size: formData.boardSize || '',

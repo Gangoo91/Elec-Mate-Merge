@@ -105,9 +105,17 @@ export interface VacancyApplication {
 
 // Vacancy CRUD
 export const getVacancies = async (): Promise<Vacancy[]> => {
+  // Open vacancies are publicly readable (job board policy) — scope the
+  // employer's management list to their own rows only
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
   const { data, error } = await supabase
     .from('employer_vacancies')
     .select('*')
+    .eq('employer_id', user.id)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -338,13 +346,13 @@ async function notifyVacancyOwner(vacancyId: string, applicantName: string, appl
     // Get vacancy details including owner
     const { data: vacancy } = await supabase
       .from('employer_vacancies')
-      .select('title, created_by')
+      .select('title, employer_id')
       .eq('id', vacancyId)
       .single();
 
-    if (vacancy?.created_by) {
+    if (vacancy?.employer_id) {
       await sendPushNotification(
-        vacancy.created_by,
+        vacancy.employer_id,
         '📋 New Job Application',
         `${applicantName} applied for ${vacancy.title}`,
         'job',
@@ -368,7 +376,7 @@ export const updateApplicationStatus = async (
       `
       status,
       applicant_profile_id,
-      vacancy:vacancies(title)
+      vacancy:employer_vacancies(title)
     `
     )
     .eq('id', id)

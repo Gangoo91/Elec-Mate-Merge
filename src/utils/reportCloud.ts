@@ -93,6 +93,10 @@ export const reportCloud = {
       // in the first 20 rows. Pass `'all'` (or omit) to disable a filter.
       reportType?: string;
       status?: string;
+      // ELE-1236 — server-side date-range filter on updated_at (ISO strings),
+      // for NAPIT/NICEIC assessments ("every cert in the last 12 months").
+      dateFrom?: string;
+      dateTo?: string;
     }
   ): Promise<ReportsResponse> => {
     // Slim SELECT (ELE-946): explicit columns + only the JSONB sub-keys the
@@ -128,6 +132,8 @@ export const reportCloud = {
       }
       if (reportTypeFilter) countQuery = countQuery.eq('report_type', reportTypeFilter);
       if (statusFilter) countQuery = countQuery.eq('status', statusFilter);
+      if (options?.dateFrom) countQuery = countQuery.gte('updated_at', options.dateFrom);
+      if (options?.dateTo) countQuery = countQuery.lte('updated_at', options.dateTo);
 
       const { count, error: countError } = await countQuery;
 
@@ -146,6 +152,8 @@ export const reportCloud = {
       }
       if (reportTypeFilter) query = query.eq('report_type', reportTypeFilter);
       if (statusFilter) query = query.eq('status', statusFilter);
+      if (options?.dateFrom) query = query.gte('updated_at', options.dateFrom);
+      if (options?.dateTo) query = query.lte('updated_at', options.dateTo);
 
       // Apply pagination or limit
       if (options?.limit) {
