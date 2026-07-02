@@ -69,6 +69,11 @@ const QuotesInvoicesSection = lazy(() =>
     default: m.QuotesInvoicesSection,
   }))
 );
+const ClientsSection = lazy(() =>
+  import('@/components/employer/sections/ClientsSection').then((m) => ({
+    default: m.ClientsSection,
+  }))
+);
 const TenderSection = lazy(() =>
   import('@/components/employer/sections/TenderSection').then((m) => ({ default: m.TenderSection }))
 );
@@ -281,6 +286,7 @@ export type Section =
   | 'aimethodstatement'
   | 'aibriefingpack'
   | 'aiquote'
+  | 'clients'
   | 'qsreviews';
 
 const getParentSection = (section: Section): Section => {
@@ -759,6 +765,8 @@ const EmployerDashboard = () => {
         return <ProcurementSection />;
       case 'expenses':
         return <ExpensesSection />;
+      case 'clients':
+        return <ClientsSection onNavigate={handleNavigate} />;
       case 'signatures':
         return <SignaturesSection />;
       case 'pricebook':

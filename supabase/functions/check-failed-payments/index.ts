@@ -6,6 +6,14 @@
  * Email 3: Sent 7+ days after payment failure (red "Final Notice")
  *
  * Stops when invoice is paid (resolved = true) or subscription is cancelled.
+ *
+ * Payday retry mode: invoked with body {"mode":"payday_retry"} by the
+ * friday-payday-retry cron (Friday morning) — re-attempts collection on
+ * every open subscription invoice. Most failures are "insufficient funds"
+ * and trades get paid on Friday, so a Friday-morning retry lands when the
+ * money is actually in the account. Hard declines (lost/stolen/expired
+ * card) are skipped — retrying those can't succeed and burns goodwill
+ * with the card networks.
  */
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
@@ -60,6 +68,93 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_URL') as string,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') as string
     );
+
+    // ── Payday retry mode (Friday-morning cron) ─────────────────────────────
+    let bodyMode: string | undefined;
+    try {
+      const body = await req.json();
+      bodyMode = body?.mode;
+    } catch {
+      // empty/malformed body — normal for the daily dunning cron
+    }
+    if (bodyMode === 'payday_retry') {
+      const paydayStripeKey = Deno.env.get('STRIPE_SECRET_KEY');
+      if (!paydayStripeKey) {
+        return new Response(JSON.stringify({ error: 'STRIPE_SECRET_KEY not configured' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      const stripe = new Stripe(paydayStripeKey, { apiVersion: '2023-10-16' });
+
+      // Hard declines that a retry can never fix — do not reattempt these.
+      const HARD_DECLINES = new Set([
+        'stolen_card',
+        'lost_card',
+        'pickup_card',
+        'expired_card',
+        'fraudulent',
+        'do_not_honor',
+        'restricted_card',
+        'revocation_of_all_authorizations',
+      ]);
+
+      const openInvoices = await stripe.invoices.list({
+        status: 'open',
+        limit: 100,
+        expand: ['data.charge'],
+      });
+
+      const results = { attempted: 0, recovered: 0, declined: 0, skipped: 0 };
+      const recoveredIds: string[] = [];
+      for (const invoice of openInvoices.data) {
+        // Subscription invoices only; skip anything already scheduled for
+        // collection in the next hour (Stripe is about to retry it anyway).
+        if (!invoice.subscription) {
+          results.skipped++;
+          continue;
+        }
+        const lastFailure = (invoice.charge as Stripe.Charge | null)?.failure_code;
+        if (lastFailure && HARD_DECLINES.has(lastFailure)) {
+          results.skipped++;
+          logger.info('Payday retry skipping hard decline', {
+            invoiceId: invoice.id,
+            failureCode: lastFailure,
+          });
+          continue;
+        }
+        results.attempted++;
+        try {
+          await stripe.invoices.pay(invoice.id);
+          results.recovered++;
+          recoveredIds.push(invoice.id);
+          logger.info('Payday retry recovered invoice', {
+            invoiceId: invoice.id,
+            amount: invoice.amount_due,
+          });
+        } catch (payError: unknown) {
+          results.declined++;
+          logger.info('Payday retry declined', {
+            invoiceId: invoice.id,
+            error: payError instanceof Error ? payError.message : String(payError),
+          });
+        }
+      }
+
+      // Mark recovered invoices resolved so the dunning email sequence stops.
+      if (recoveredIds.length > 0) {
+        await supabase
+          .from('failed_payment_emails')
+          .update({ resolved: true })
+          .in('stripe_invoice_id', recoveredIds)
+          .eq('resolved', false);
+      }
+
+      logger.info('Payday retry sweep complete', results);
+      return new Response(JSON.stringify({ mode: 'payday_retry', ...results }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {

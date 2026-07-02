@@ -242,9 +242,39 @@ export function useUploadSignature() {
   });
 }
 
-// Generate QR code data for a briefing
-export function generateBriefingQRData(briefingId: string): string {
-  // This generates a URL that can be scanned to sign off
+// Get (or mint) a working public sign-off link for a briefing.
+// Uses the token flow (/briefing-sign/:token → get_briefing_by_signing_token /
+// sign_briefing_by_token, both anon SECURITY DEFINER) so workers and QR scanners
+// can actually load and sign. The old /briefing-signoff/:id route is RLS-dead for
+// anyone but the briefing owner and its signature upload violates storage RLS.
+export async function getOrCreateBriefingSignLink(briefingId: string): Promise<string> {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-  return `${baseUrl}/briefing-signoff/${briefingId}`;
+
+  const { data: existing } = await supabase
+    .from('briefing_signing_tokens')
+    .select('public_token')
+    .eq('briefing_id', briefingId)
+    .eq('is_active', true)
+    .maybeSingle();
+
+  if (existing?.public_token) {
+    return `${baseUrl}/briefing-sign/${existing.public_token}`;
+  }
+
+  const token = crypto.randomUUID();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+  const { error } = await supabase.from('briefing_signing_tokens').insert({
+    briefing_id: briefingId,
+    public_token: token,
+    created_by_user_id: user.id,
+    expires_at: expiresAt,
+  });
+  if (error) throw error;
+
+  return `${baseUrl}/briefing-sign/${token}`;
 }

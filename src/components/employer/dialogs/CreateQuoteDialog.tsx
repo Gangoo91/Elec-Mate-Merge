@@ -23,6 +23,7 @@ import {
   X,
 } from 'lucide-react';
 import { useCreateQuote, useNextQuoteNumber, usePriceBook } from '@/hooks/useFinance';
+import { linkRecordToClient } from '@/services/employerClientService';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { calcEmployerTotals } from '@/utils/employerMoney';
@@ -371,7 +372,7 @@ export function CreateQuoteDialog({
       })),
     ];
 
-    await createQuoteMutation.mutateAsync({
+    const createdQuote = await createQuoteMutation.mutateAsync({
       quote_number: quoteNumber || `Q-${new Date().getFullYear()}-001`,
       client,
       client_address: clientAddress || null,
@@ -395,6 +396,11 @@ export function CreateQuoteDialog({
       vat_amount: vatAmount,
       cis_amount: cisAmount,
     } as any);
+
+    // Auto-link into the CRM so the client record builds itself (non-fatal).
+    if (createdQuote?.id && client) {
+      linkRecordToClient('employer_quotes', createdQuote.id, client).catch(() => {});
+    }
 
     resetForm();
     onOpenChange(false);

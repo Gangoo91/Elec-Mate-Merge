@@ -818,12 +818,16 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       // originals made the EICR render take 45-57s (PDF generation timed out). ELE-1189:
       // dropped from 1400px/q70 to 1200px/q65 (~45% smaller) so photo-heavy EICR PDFs
       // stay under Brevo's email-attachment limit; still sharp enough for the cert.
+      // The height cap matters as much as width: PDFMonkey's renderer re-encodes
+      // photos losslessly, so an uncapped 1200x2560 portrait photo ballooned to
+      // 4.4MB inside the PDF (EICR-2026-3291) and pushed the email past the
+      // attachment limit. Capping the long edge keeps the embedded raster small.
       const photoUrls = observationPhotos.map((photo) => {
         const {
           data: { publicUrl },
-        } = supabase.storage
-          .from('inspection-photos')
-          .getPublicUrl(photo.file_path, { transform: { width: 1200, quality: 65 } });
+        } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path, {
+          transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+        });
         return publicUrl;
       });
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { type Briefing } from '@/hooks/useBriefings';
-import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
+import { getOrCreateBriefingSignLink } from '@/hooks/useBriefingSignatures';
 import {
   useSendToTeams,
   useCopyBriefingLink,
@@ -48,7 +48,18 @@ export function BriefingDistribution({
   const [showWebhookConfig, setShowWebhookConfig] = useState(false);
   const [webhookInput, setWebhookInput] = useState('');
 
-  const signOffUrl = generateBriefingQRData(briefing.id);
+  const [signOffUrl, setSignOffUrl] = useState('');
+
+  useEffect(() => {
+    if (!open) return;
+    let active = true;
+    getOrCreateBriefingSignLink(briefing.id)
+      .then((url) => active && setSignOffUrl(url))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [open, briefing.id]);
 
   const { copyLink, copied } = useCopyBriefingLink();
   const { share } = useShareBriefing();

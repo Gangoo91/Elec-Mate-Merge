@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -28,7 +28,9 @@ import {
   useDeleteJobPack,
   useJobPackDocuments,
   useJobPackAcknowledgements,
+  useCreateJobPackDocument,
 } from '@/hooks/useJobPacks';
+import { uploadJobPackFile } from '@/services/jobPackDocumentService';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useCertificationsByEmployees } from '@/hooks/useCertifications';
 import { supabase } from '@/integrations/supabase/client';
@@ -95,6 +97,81 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
   const [isGenerating, setIsGenerating] = useState<string | null>(null);
   const [isSendingToWorkers, setIsSendingToWorkers] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [viewerDoc, setViewerDoc] = useState<{ title: string; content: string } | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const createJobPackDocument = useCreateJobPackDocument();
+
+  // Generated RAMS/Method/Briefing content is stored on the document row's
+  // `description` (markdown) — map each card's type to its generated doc.
+  const generatedDocByType = useMemo(() => {
+    const map: Record<string, { title: string; description: string | null; file_url: string | null }> = {};
+    for (const d of documents) {
+      if (d.generated_by === 'AI' && d.document_type) map[d.document_type.toUpperCase()] = d;
+    }
+    return map;
+  }, [documents]);
+
+  const openGeneratedDoc = (docType: string, fallbackTitle: string) => {
+    const doc = generatedDocByType[docType.toUpperCase()];
+    if (doc?.file_url) {
+      window.open(doc.file_url, '_blank');
+      return;
+    }
+    if (doc?.description) {
+      setViewerDoc({ title: doc.title || fallbackTitle, content: doc.description });
+    } else {
+      toast({ title: 'Not ready', description: 'Generate this document first.' });
+    }
+  };
+
+  const downloadGeneratedDoc = (docType: string, fallbackTitle: string) => {
+    const doc = generatedDocByType[docType.toUpperCase()];
+    if (doc?.file_url) {
+      window.open(doc.file_url, '_blank');
+      return;
+    }
+    if (!doc?.description) {
+      toast({ title: 'Not ready', description: 'Generate this document first.' });
+      return;
+    }
+    const blob = new Blob([doc.description], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${(doc.title || fallbackTitle).replace(/\s+/g, '-')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleUploadFiles = async (files: FileList | null) => {
+    if (!files?.length || !jobPack) return;
+    setIsUploading(true);
+    try {
+      for (const file of Array.from(files)) {
+        const fileUrl = await uploadJobPackFile(jobPack.id, file, 'attachment');
+        await createJobPackDocument.mutateAsync({
+          job_pack_id: jobPack.id,
+          title: file.name,
+          document_type: 'Other',
+          description: null,
+          file_url: fileUrl,
+          generated_by: 'Upload',
+          is_required: false,
+        });
+      }
+      toast({ title: 'Uploaded', description: 'Document(s) attached to the pack.' });
+    } catch {
+      toast({
+        title: 'Upload failed',
+        description: 'Could not attach the document. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
 
   useEffect(() => {
     if (jobPack) {
@@ -477,6 +554,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     description="Risk Assessment & Method Statement"
                     generated={jobPack.rams_generated}
                     onGenerate={() => handleGenerateDocument('rams')}
+                    onView={() => openGeneratedDoc('rams', 'RAMS')}
+                    onDownload={() => downloadGeneratedDoc('rams', 'RAMS')}
                     isGenerating={isGenerating === 'rams'}
                     disabled={isGenerating !== null}
                   />
@@ -487,6 +566,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     description="Step-by-step work procedure"
                     generated={jobPack.method_statement_generated}
                     onGenerate={() => handleGenerateDocument('method_statement')}
+                    onView={() => openGeneratedDoc('method_statement', 'Method statement')}
+                    onDownload={() => downloadGeneratedDoc('method_statement', 'Method statement')}
                     isGenerating={isGenerating === 'method_statement'}
                     disabled={isGenerating !== null}
                   />
@@ -497,6 +578,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     description="Complete worker briefing document"
                     generated={jobPack.briefing_pack_generated}
                     onGenerate={() => handleGenerateDocument('briefing_pack')}
+                    onView={() => openGeneratedDoc('briefing_pack', 'Briefing pack')}
+                    onDownload={() => downloadGeneratedDoc('briefing_pack', 'Briefing pack')}
                     isGenerating={isGenerating === 'briefing_pack'}
                     disabled={
                       isGenerating !== null ||
@@ -514,7 +597,20 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     <Upload className="h-8 w-8 mx-auto text-white mb-2" />
                     <p className="text-sm font-medium text-white">Upload additional documents</p>
                     <p className="text-xs text-white">Design drawings, specs, schedules</p>
-                    <SecondaryButton className="mt-3">Choose files</SecondaryButton>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => handleUploadFiles(e.target.files)}
+                    />
+                    <SecondaryButton
+                      className="mt-3"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploading}
+                    >
+                      {isUploading ? 'Uploading…' : 'Choose files'}
+                    </SecondaryButton>
                   </div>
 
                   {documents.length > 0 && (
@@ -529,7 +625,14 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                               <FileText className="h-4 w-4 text-white shrink-0" />
                               <span className="text-sm text-white truncate">{doc.title}</span>
                             </div>
-                            <SecondaryButton size="sm">
+                            <SecondaryButton
+                              size="sm"
+                              onClick={() => {
+                                if (doc.file_url) window.open(doc.file_url, '_blank');
+                                else if (doc.description)
+                                  setViewerDoc({ title: doc.title, content: doc.description });
+                              }}
+                            >
                               <Download className="h-4 w-4" />
                             </SecondaryButton>
                           </div>
@@ -877,6 +980,18 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
           </SheetShell>
         </SheetContent>
       </Sheet>
+
+      <Sheet open={!!viewerDoc} onOpenChange={(o) => !o && setViewerDoc(null)}>
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetShell title={viewerDoc?.title || 'Document'}>
+            <div className="px-5 sm:px-6 py-5">
+              <pre className="whitespace-pre-wrap break-words font-sans text-[13px] leading-relaxed text-white">
+                {viewerDoc?.content}
+              </pre>
+            </div>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }
@@ -890,6 +1005,8 @@ interface DocumentCardProps {
   isGenerating: boolean;
   disabled?: boolean;
   note?: string;
+  onView?: () => void;
+  onDownload?: () => void;
 }
 
 function DocumentCard({
@@ -901,6 +1018,8 @@ function DocumentCard({
   isGenerating,
   disabled,
   note,
+  onView,
+  onDownload,
 }: DocumentCardProps) {
   return (
     <div
@@ -928,11 +1047,11 @@ function DocumentCard({
         </div>
         {generated ? (
           <div className="flex gap-2">
-            <SecondaryButton size="sm">
+            <SecondaryButton size="sm" onClick={onView}>
               <Eye className="h-4 w-4 mr-1" />
               View
             </SecondaryButton>
-            <SecondaryButton size="sm">
+            <SecondaryButton size="sm" onClick={onDownload}>
               <Download className="h-4 w-4" />
             </SecondaryButton>
           </div>

@@ -8,7 +8,7 @@ import { ArrowRight, Check, ChevronDown, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StoreBadges } from '@/components/seo/StoreBadges';
 import { useAuth } from '@/contexts/AuthContext';
-import { trackLandingCtaClicked } from '@/lib/analytics-events';
+import { trackLandingCtaClicked, trackLandingSectionViewed } from '@/lib/analytics-events';
 import { usePublicStats } from '@/hooks/usePublicStats';
 import { useUserCount } from '@/hooks/useUserCount';
 import { LeadMagnetSection } from '@/components/landing/LeadMagnetSection';
@@ -416,6 +416,29 @@ const LandingPage = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+  // Section-view tracking — fires once per section per page load, cookieless
+  // via Vercel Analytics, so it sees every visitor (PostHog only sees consented
+  // ones). Tells us how far down the page people actually get.
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>('[data-analytics-section]');
+    if (!sections.length || typeof IntersectionObserver === 'undefined') return;
+    const seen = new Set<string>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const name = entry.target.getAttribute('data-analytics-section');
+          if (entry.isIntersecting && name && !seen.has(name)) {
+            seen.add(name);
+            trackLandingSectionViewed({ section: name });
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
   // realtime off — no point holding a websocket open on a public marketing page
   const userCount = useUserCount({ realtime: false });
   const publicStats = usePublicStats();
@@ -687,7 +710,7 @@ const LandingPage = () => {
       </nav>
 
       {/* ========== HERO ========== */}
-      <section className="relative px-5 pb-14 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-36">
+      <section data-analytics-section="hero" className="relative px-5 pb-14 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-36">
         {/* initial={false} — hero must paint immediately (LCP); no hidden-until-JS flash */}
         <motion.div
           variants={fadeUp}
@@ -791,6 +814,7 @@ const LandingPage = () => {
       {/* ========== WORKFLOW ========== */}
       <section
         id="workflow"
+        data-analytics-section="workflow"
         className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
       >
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
@@ -825,7 +849,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== TESTIMONIALS ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section data-analytics-section="testimonials" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>VERIFIED ON THE UK APP STORE</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -872,6 +896,7 @@ const LandingPage = () => {
       {/* ========== WHO IT IS FOR ========== */}
       <section
         id="features"
+        data-analytics-section="audience"
         className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24"
       >
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
@@ -894,7 +919,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== IN ACTION — SITE PHOTOS ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section data-analytics-section="site_photos" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>IN THE TRADE</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -930,7 +955,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== INSIDE THE APP ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section data-analytics-section="inside_the_app" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <h2 className="mx-auto max-w-[22ch] text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
             Inside <span className="text-yellow-400">the app.</span>
@@ -1019,6 +1044,7 @@ const LandingPage = () => {
       {/* ========== PRICING ========== */}
       <section
         id="pricing"
+        data-analytics-section="pricing"
         className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24"
       >
         <div className="mx-auto max-w-[80rem]">
@@ -1045,7 +1071,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== FAQ ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section data-analytics-section="faq" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[52rem] text-center lg:text-left">
           <Eyebrow>FAQ</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -1098,10 +1124,12 @@ const LandingPage = () => {
       </section>
 
       {/* ========== LEAD MAGNET — BS 7671 A4:2026 cheat sheet ========== */}
-      <LeadMagnetSection />
+      <div data-analytics-section="lead_magnet">
+        <LeadMagnetSection />
+      </div>
 
       {/* ========== MENTAL HEALTH MATES ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-14 sm:pb-20 lg:px-8 lg:pb-24">
+      <section data-analytics-section="mental_health" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-14 sm:pb-20 lg:px-8 lg:pb-24">
         <div className="mx-auto max-w-[80rem]">
           <div className="relative overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-7 text-center sm:p-10 lg:p-12 lg:text-left">
             <div
@@ -1143,7 +1171,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== FINAL CTA ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section data-analytics-section="final_cta" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem]">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-elec-yellow/[0.04] to-white/[0.01] px-6 py-16 text-center sm:px-12 sm:py-20 lg:rounded-[2.5rem] lg:px-16 lg:py-24">
             <div
@@ -1198,10 +1226,12 @@ const LandingPage = () => {
       </section>
 
       {/* ========== EMPLOYER & COLLEGE WAITLIST ========== */}
-      <WaitlistSection />
+      <div data-analytics-section="waitlist">
+        <WaitlistSection />
+      </div>
 
       {/* ========== FREE GUIDES (SEO LANDING PAGES) ========== */}
-      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section data-analytics-section="guides" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>FREE GUIDES</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -1231,7 +1261,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== FOOTER ========== */}
-      <footer className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-32 pt-8 sm:pb-12 lg:px-8">
+      <footer data-analytics-section="footer" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-32 pt-8 sm:pb-12 lg:px-8">
         <div className="mx-auto max-w-[80rem] border-t border-white/[0.08] pt-12">
           <div className="grid gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-[1.4fr_0.9fr_0.9fr_0.8fr]">
             <div>

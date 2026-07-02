@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
 import { type Briefing } from '@/hooks/useBriefings';
-import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
+import { getOrCreateBriefingSignLink } from '@/hooks/useBriefingSignatures';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
 
 // Teams webhook card format
@@ -37,8 +37,8 @@ interface TeamsAdaptiveCard {
 /**
  * Build Microsoft Teams Adaptive Card for briefing notification
  */
-function buildTeamsCard(briefing: Briefing): TeamsAdaptiveCard {
-  const signOffUrl = generateBriefingQRData(briefing.id);
+async function buildTeamsCard(briefing: Briefing): Promise<TeamsAdaptiveCard> {
+  const signOffUrl = await getOrCreateBriefingSignLink(briefing.id);
 
   return {
     type: 'message',
@@ -132,7 +132,7 @@ export function useSendToTeams() {
         throw new Error('Invalid Microsoft Teams webhook URL');
       }
 
-      const card = buildTeamsCard(briefing);
+      const card = await buildTeamsCard(briefing);
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
@@ -170,8 +170,8 @@ export function useCopyBriefingLink() {
   const [copied, setCopied] = useState(false);
 
   const copyLink = async (briefingId: string) => {
-    const link = generateBriefingQRData(briefingId);
     try {
+      const link = await getOrCreateBriefingSignLink(briefingId);
       await copyToClipboard(link);
       setCopied(true);
       toast({
@@ -198,7 +198,7 @@ export function useShareBriefing() {
   const { toast } = useToast();
 
   const share = async (briefing: Briefing) => {
-    const signOffUrl = generateBriefingQRData(briefing.id);
+    const signOffUrl = await getOrCreateBriefingSignLink(briefing.id);
 
     if (navigator.share) {
       try {

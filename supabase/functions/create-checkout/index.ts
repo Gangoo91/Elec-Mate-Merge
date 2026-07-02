@@ -187,6 +187,25 @@ serve(async (req) => {
       });
     }
 
+    // Trials are once per product per customer. A cancelled sub passes the
+    // live-sub guard above, and an unconditional trial below let
+    // cancel → re-checkout mint a fresh 7-day trial every time (the winback
+    // emails were feeding that loop). Any prior same-product subscription
+    // that ever ran (incomplete checkouts don't count — they never got
+    // access) marks a returning customer: charge immediately, no trial.
+    const hadPriorSameProductSub = existingSubs.data.some(
+      (s) =>
+        s.status !== 'incomplete' &&
+        s.status !== 'incomplete_expired' &&
+        s.items.data.some((it) => it.price.product === requestedPrice.product)
+    );
+    const effectiveTrialDays = hadPriorSameProductSub ? 0 : trialDays;
+    if (hadPriorSameProductSub && trialDays > 0) {
+      logger.info('Returning customer — prior subscription for this product, no repeat trial', {
+        customerId,
+      });
+    }
+
     // Store stripe_customer_id in profile for reliable webhook linking
     try {
       const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -364,7 +383,7 @@ serve(async (req) => {
     // All buyers (including Mate) land on the generic payment-success page
     // for now. Once Mate goes live publicly, swap the Mate branch back to
     // /electrician/business-ai so paying users reach the activation wizard.
-    const successUrl = `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`;
+    const successUrl = `${origin}/payment-success?plan=${planId}&trial=${effectiveTrialDays === 0 ? 'false' : 'true'}`;
 
     const checkoutOptions: Record<string, unknown> = {
       customer: customerId,
@@ -393,11 +412,11 @@ serve(async (req) => {
       ...(mode === 'subscription'
         ? {
             subscription_data: {
-              ...(trialDays > 0 ? { trial_period_days: trialDays } : {}),
+              ...(effectiveTrialDays > 0 ? { trial_period_days: effectiveTrialDays } : {}),
               metadata: {
                 userId: user.id,
                 planId: planId,
-                ...(trialDays > 0 ? { trial_days: String(trialDays) } : {}),
+                ...(effectiveTrialDays > 0 ? { trial_days: String(effectiveTrialDays) } : {}),
                 ...(isFounderCheckout ? { mate_founder: 'true' } : {}),
               },
             },

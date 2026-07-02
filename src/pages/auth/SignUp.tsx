@@ -27,6 +27,7 @@ import {
   trackCompleteRegistration,
   trackInitiateCheckout,
 } from '@/lib/marketing-pixels';
+import { trackSignupCompleted } from '@/lib/analytics-events';
 import {
   persistAttributionToProfile,
   fireServerCapi,
@@ -471,6 +472,9 @@ const SignUp = () => {
         const regEventId = trackCompleteRegistration({
           method: profileForm.role,
         });
+        // Cookieless funnel event (Vercel + PostHog) — the pixel/CAPI calls here
+        // are consent-gated; this one counts every signup in the Vercel dashboard.
+        trackSignupCompleted({ method: profileForm.role });
         const [firstName, ...rest] = fullName.trim().split(/\s+/);
         fireServerCapi({
           event_name: 'CompleteRegistration',

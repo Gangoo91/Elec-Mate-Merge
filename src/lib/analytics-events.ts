@@ -9,12 +9,27 @@
  */
 
 import { posthog } from '@/components/analytics/PostHogProvider';
+import { track as vercelTrack } from '@vercel/analytics';
 
 function send(name: string, props?: Record<string, unknown>): void {
   try {
     posthog.capture(name, props);
   } catch {
     /* PostHog not initialised / consent not given — silent no-op */
+  }
+}
+
+/**
+ * Vercel Web Analytics custom events — cookieless, so unlike PostHog these
+ * fire for EVERY visitor, not just the ones who accept the cookie banner.
+ * Used for the landing → signup funnel where consent-gated tools are blind.
+ * Props must be flat primitives (Vercel rejects nested objects).
+ */
+function sendVercel(name: string, props?: Record<string, string | number | boolean | null>): void {
+  try {
+    vercelTrack(name, props);
+  } catch {
+    /* Analytics script not loaded (dev / adblock) — silent no-op */
   }
 }
 
@@ -108,6 +123,27 @@ export function trackLandingCtaClicked(props: {
   label?: string;
 }): void {
   send('landing_cta_clicked', props);
+  sendVercel('landing_cta_clicked', { section: props.section, label: props.label ?? null });
+}
+
+/** Fired once per page load when a landing section first scrolls into view. */
+export function trackLandingSectionViewed(props: { section: string }): void {
+  send('landing_section_viewed', props);
+  sendVercel('landing_section_viewed', { section: props.section });
+}
+
+// ─── Signup funnel ─────────────────────────────────────────────────
+export function trackSignupCompleted(props?: { method?: string }): void {
+  send('signup_completed', props);
+  sendVercel('signup_completed', { method: props?.method ?? null });
+}
+
+export function trackCheckoutStarted(props?: { tier?: string; billing?: string }): void {
+  send('checkout_started', props);
+  sendVercel('checkout_started', {
+    tier: props?.tier ?? null,
+    billing: props?.billing ?? null,
+  });
 }
 
 // ─── AI usage ──────────────────────────────────────────────────────

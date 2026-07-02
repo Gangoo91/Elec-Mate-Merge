@@ -391,7 +391,10 @@ export function useSyncOpportunities() {
 
   return useMutation({
     mutationFn: async (sourceName: string) => {
-      const { data, error } = await supabase.functions.invoke(`sync-${sourceName}`, {});
+      // Source rows use underscores (contracts_finder) but function slugs use
+      // hyphens (sync-contracts-finder) — map before invoking.
+      const slug = `sync-${sourceName.replace(/_/g, '-')}`;
+      const { data, error } = await supabase.functions.invoke(slug, {});
 
       if (error) throw error;
       return data;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -34,6 +34,8 @@ import { sanitizeMoneyInput, parseMoney } from '@/utils/money-input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { EXPENSE_CATEGORIES, formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
+import { uploadReceipt } from '@/services/expenseReceiptService';
+import { toast } from '@/hooks/use-toast';
 import {
   Field,
   FormCard,
@@ -94,6 +96,10 @@ export function CreateExpenseSheet({
   const [step, setStep] = useState(1);
   // Raw text mirror so partial decimals (e.g. "19.") survive editing.
   const [amountText, setAmountText] = useState('');
+  const [receiptName, setReceiptName] = useState<string | null>(null);
+  const [isUploadingReceipt, setIsUploadingReceipt] = useState(false);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const totalSteps = employeeMode ? 3 : 4; // Skip employee step in employee mode
 
   const form = useForm<FormData>({
@@ -121,7 +127,30 @@ export function CreateExpenseSheet({
     reset();
     setStep(1);
     setAmountText('');
+    setReceiptName(null);
     onOpenChange(false);
+  };
+
+  const handleReceiptSelect = async (file: File | undefined) => {
+    if (!file) return;
+    setIsUploadingReceipt(true);
+    try {
+      // No expense id yet at create time — prefix with a temp id for the path.
+      const { url, error } = await uploadReceipt(file, `new-${Date.now()}`);
+      if (error || !url) throw new Error(error || 'Upload failed');
+      setValue('receipt_url', url);
+      setReceiptName(file.name);
+    } catch (e) {
+      toast({
+        title: 'Receipt upload failed',
+        description: e instanceof Error ? e.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploadingReceipt(false);
+      if (cameraInputRef.current) cameraInputRef.current.value = '';
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleFormSubmit = (data: FormData) => {
@@ -360,11 +389,17 @@ export function CreateExpenseSheet({
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <SecondaryButton>
+                  <SecondaryButton
+                    onClick={() => cameraInputRef.current?.click()}
+                    disabled={isUploadingReceipt}
+                  >
                     <Camera className="h-4 w-4 mr-2" />
-                    Take photo
+                    {isUploadingReceipt ? 'Uploading…' : 'Take photo'}
                   </SecondaryButton>
-                  <SecondaryButton>
+                  <SecondaryButton
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isUploadingReceipt}
+                  >
                     <Upload className="h-4 w-4 mr-2" />
                     Upload file
                   </SecondaryButton>
@@ -384,11 +419,14 @@ export function CreateExpenseSheet({
                     </div>
                     <div className="flex-1">
                       <p className="font-medium text-white">Receipt uploaded</p>
-                      <p className="text-sm text-white">receipt.jpg</p>
+                      <p className="text-sm text-white">{receiptName || 'Receipt attached'}</p>
                     </div>
                     <IconButton
                       aria-label="Remove receipt"
-                      onClick={() => setValue('receipt_url', null)}
+                      onClick={() => {
+                        setValue('receipt_url', null);
+                        setReceiptName(null);
+                      }}
                     >
                       <X className="h-4 w-4" />
                     </IconButton>
@@ -476,16 +514,27 @@ export function CreateExpenseSheet({
                     {values.receipt_url ? (
                       <IconButton
                         aria-label="Remove receipt"
-                        onClick={() => setValue('receipt_url', null)}
+                        onClick={() => {
+                        setValue('receipt_url', null);
+                        setReceiptName(null);
+                      }}
                       >
                         <X className="h-4 w-4" />
                       </IconButton>
                     ) : (
                       <div className="flex gap-2">
-                        <IconButton aria-label="Take photo">
+                        <IconButton
+                          aria-label="Take photo"
+                          onClick={() => cameraInputRef.current?.click()}
+                          disabled={isUploadingReceipt}
+                        >
                           <Camera className="h-4 w-4" />
                         </IconButton>
-                        <IconButton aria-label="Upload file">
+                        <IconButton
+                          aria-label="Upload file"
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={isUploadingReceipt}
+                        >
                           <Upload className="h-4 w-4" />
                         </IconButton>
                       </div>
@@ -496,6 +545,24 @@ export function CreateExpenseSheet({
             </>
           )}
         </div>
+
+        {/* Hidden receipt inputs — always mounted so both admin and employee
+            review steps can trigger camera capture / file upload. */}
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={(e) => handleReceiptSelect(e.target.files?.[0])}
+        />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/heic,application/pdf"
+          className="hidden"
+          onChange={(e) => handleReceiptSelect(e.target.files?.[0])}
+        />
 
         {/* Footer */}
         <div className="p-4 border-t border-white/[0.06] shrink-0 pb-safe">

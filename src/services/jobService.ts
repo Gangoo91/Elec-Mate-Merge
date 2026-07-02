@@ -75,7 +75,7 @@ export const archiveJob = async (id: string): Promise<boolean> => {
 
   if (error) {
     console.error('Error archiving job:', error);
-    return false;
+    throw error;
   }
 
   return true;
@@ -89,7 +89,7 @@ export const setJobAsTemplate = async (id: string, isTemplate: boolean): Promise
 
   if (error) {
     console.error('Error updating job template status:', error);
-    return false;
+    throw error;
   }
 
   return true;
@@ -173,7 +173,7 @@ export const updateJob = async (id: string, updates: Partial<Job>): Promise<Job 
 
   if (error) {
     console.error('Error updating job:', error);
-    return null;
+    throw error;
   }
 
   return data;
@@ -187,7 +187,7 @@ export const updateJobStatus = async (id: string, status: JobStatus): Promise<bo
 
   if (error) {
     console.error('Error updating job status:', error);
-    return false;
+    throw error;
   }
 
   return true;
@@ -213,7 +213,7 @@ export const deleteJob = async (id: string): Promise<boolean> => {
 
   if (error) {
     console.error('Error deleting job:', error);
-    return false;
+    throw error;
   }
 
   return true;

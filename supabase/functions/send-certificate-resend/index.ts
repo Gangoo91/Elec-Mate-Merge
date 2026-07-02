@@ -358,7 +358,7 @@ const handler = async (req: Request): Promise<Response> => {
           // Request", failing the whole send. EICR/cert PDFs with site photos can
           // exceed Brevo's limit, so cap the attachment; when skipped the email
           // still carries the secure download link (pdfUrl), so delivery never fails.
-          const MAX_BREVO_ATTACHMENT_BYTES = 7 * 1024 * 1024; // ~7 MB of base64
+          const MAX_BREVO_ATTACHMENT_BYTES = 10 * 1024 * 1024; // ~10 MB of base64 (Brevo message limit; oversize rejects fall back to link-only via the retry below)
           if (pdfBase64.length > MAX_BREVO_ATTACHMENT_BYTES) {
             console.warn(
               `PDF too large to attach (${pdfBase64.length} b64 bytes > ${MAX_BREVO_ATTACHMENT_BYTES}) — sending download link only`

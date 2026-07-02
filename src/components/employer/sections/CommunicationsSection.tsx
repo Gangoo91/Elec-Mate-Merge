@@ -276,18 +276,17 @@ export const CommunicationsSection = () => {
     if (!selectedMessage || !replyContent.trim()) return;
 
     try {
-      const isReplyToSpecific = selectedMessage.sender_id != null;
-
+      // A follow-up re-targets the SAME recipients as the original message.
+      // sender_id is the employer's own auth uid (not an employer_employees.id),
+      // so it must never be used as a recipient employee_id — that violates the
+      // recipients FK and the fan-out silently fails.
       await createCommunication.mutateAsync({
         type: 'message',
         title: `Re: ${selectedMessage.title}`,
         content: replyContent,
         priority: 'normal',
-        target_audience: isReplyToSpecific ? 'specific' : selectedMessage.target_audience,
-        target_employee_ids:
-          isReplyToSpecific && selectedMessage.sender_id
-            ? [selectedMessage.sender_id]
-            : selectedMessage.target_employee_ids,
+        target_audience: selectedMessage.target_audience,
+        target_employee_ids: selectedMessage.target_employee_ids,
         is_pinned: false,
         expires_at: null,
         sender_id: null,

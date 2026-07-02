@@ -198,8 +198,8 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
 
   const sectionTitle = isEmployeeMode ? 'My expenses' : 'Expenses';
   const sectionDescription = isEmployeeMode
-    ? 'Submit and track your expense claims with OCR receipt capture.'
-    : 'Team expenses and mileage with OCR receipts.';
+    ? 'Submit and track your expense claims with photo receipt capture.'
+    : 'Team expenses and mileage with photo receipts.';
   const addButtonLabel = isEmployeeMode ? 'Submit expense' : 'Add expense';
 
   if (isLoading) {

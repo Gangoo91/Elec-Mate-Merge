@@ -108,12 +108,15 @@ async function formatObservationsWithPhotos(observations: any[], reportId: strin
 
     // Resized via Supabase image transform so PDFMonkey downloads ~150KB thumbnails,
     // not multi-MB phone originals (keeps PDF render time in seconds).
+    // Height cap matters as much as width: PDFMonkey re-encodes photos
+    // losslessly, so uncapped portrait photos balloon inside the PDF and
+    // push the cert email past the attachment limit (see eicrJsonFormatter).
     const photoUrls = observationPhotos.map((photo) => {
       const {
         data: { publicUrl },
-      } = supabase.storage
-        .from('inspection-photos')
-        .getPublicUrl(photo.file_path, { transform: { width: 1200, quality: 65 } });
+      } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path, {
+        transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+      });
       return publicUrl;
     });
 

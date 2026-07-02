@@ -25,6 +25,7 @@ import { cn } from '@/lib/utils';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useUserCount } from '@/hooks/useUserCount';
 import { trackInitiateCheckout } from '@/lib/marketing-pixels';
+import { trackCheckoutStarted } from '@/lib/analytics-events';
 import { fireServerCapi } from '@/lib/attribution';
 
 const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string; label: string }> = {
@@ -163,6 +164,8 @@ const CheckoutTrial = () => {
         if (referralCode) storageRemoveSync('elec-mate-referral-code');
         // Fire InitiateCheckout on both Pixel and server CAPI before redirect
         const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
+        // Cookieless funnel event — consent-independent count for the Vercel dashboard
+        trackCheckoutStarted({ tier: priceInfo.planId });
         const eventId = trackInitiateCheckout({
           value: checkoutValue,
           currency: 'GBP',

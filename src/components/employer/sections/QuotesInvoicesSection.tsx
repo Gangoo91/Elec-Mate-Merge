@@ -14,6 +14,7 @@ import { ViewInvoiceSheet } from '@/components/employer/sheets/ViewInvoiceSheet'
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useQueryClient } from '@tanstack/react-query';
 import { sortQuotes, sortInvoices } from '@/utils/financeSorting';
+import { computeAging, type AgingInvoice } from '@/utils/invoiceAging';
 import type { Quote, Invoice } from '@/services/financeService';
 import { sendInvoice as sendInvoiceService } from '@/services/financeService';
 import { toast } from '@/hooks/use-toast';
@@ -193,6 +194,9 @@ export function QuotesInvoicesSection() {
     [invoices]
   );
 
+  // Debtor aging — £ outstanding by how long it's been past due.
+  const aging = useMemo(() => computeAging(invoices as AgingInvoice[]), [invoices]);
+
   const sortedQuotes = useMemo(() => sortQuotes(quotes), [quotes]);
   const sortedInvoices = useMemo(() => sortInvoices(invoices), [invoices]);
 
@@ -321,6 +325,27 @@ export function QuotesInvoicesSection() {
             onSearchChange={setSearchQuery}
             searchPlaceholder="Search quotes & invoices…"
           />
+
+          {activeTab === 'overdue' && aging.totalOverdue > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="red"
+                title="Aging"
+                meta={<Pill tone="red">{formatHero(aging.totalOverdue)} overdue</Pill>}
+              />
+              <div className="px-2 pb-2">
+                <StatStrip
+                  columns={4}
+                  stats={[
+                    { label: '1–30 days', value: formatHero(aging.d1_30), tone: 'amber' },
+                    { label: '31–60 days', value: formatHero(aging.d31_60), tone: 'orange' },
+                    { label: '61–90 days', value: formatHero(aging.d61_90), tone: 'red' },
+                    { label: '90+ days', value: formatHero(aging.d90_plus), tone: 'red' },
+                  ]}
+                />
+              </div>
+            </ListCard>
+          )}
 
           <ListCard>
             <ListCardHeader

@@ -23,6 +23,7 @@ import {
   X,
 } from 'lucide-react';
 import { useCreateInvoice, useNextInvoiceNumber, useQuotes } from '@/hooks/useFinance';
+import { linkRecordToClient } from '@/services/employerClientService';
 import { Switch } from '@/components/ui/switch';
 import { calcEmployerTotals, isLabourItem } from '@/utils/employerMoney';
 import type { Quote } from '@/services/financeService';
@@ -245,7 +246,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + Number(paymentTerms));
 
-    await createInvoiceMutation.mutateAsync({
+    const createdInvoice = await createInvoiceMutation.mutateAsync({
       invoice_number: invoiceNumber || `INV-${new Date().getFullYear()}-001`,
       client,
       project,
@@ -266,6 +267,11 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       cis_amount: cisAmount,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
+
+    // Auto-link into the CRM so the client record builds itself (non-fatal).
+    if (createdInvoice?.id && client) {
+      linkRecordToClient('employer_invoices', createdInvoice.id, client).catch(() => {});
+    }
 
     resetForm();
     onOpenChange(false);

@@ -12,6 +12,7 @@ export const EMPLOYER_ALLOWED_EMAILS = [
   'founder@elec-mate.com',
   'andrewgangoo91@gmail.com',
   'info@precisionei.co.uk',
+  'jason@aeeyorkshire.co.uk',
 ];
 
 /** Minimal shape of the fields we read from the auth profile. */

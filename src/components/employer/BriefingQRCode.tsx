@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { QRCodeSVG } from 'qrcode.react';
@@ -12,7 +12,7 @@ import {
   Users,
   ExternalLink,
 } from 'lucide-react';
-import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
+import { getOrCreateBriefingSignLink } from '@/hooks/useBriefingSignatures';
 import { type Briefing } from '@/hooks/useBriefings';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
@@ -33,7 +33,24 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
-  const signOffUrl = generateBriefingQRData(briefing.id);
+  const [signOffUrl, setSignOffUrl] = useState('');
+
+  useEffect(() => {
+    if (!open) return;
+    let active = true;
+    getOrCreateBriefingSignLink(briefing.id)
+      .then((url) => active && setSignOffUrl(url))
+      .catch(() =>
+        toast({
+          title: 'Link error',
+          description: 'Could not generate a sign-off link.',
+          variant: 'destructive',
+        })
+      );
+    return () => {
+      active = false;
+    };
+  }, [open, briefing.id, toast]);
 
   // Copy link to clipboard
   const handleCopyLink = async () => {

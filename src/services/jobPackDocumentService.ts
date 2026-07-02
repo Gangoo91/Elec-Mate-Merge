@@ -112,14 +112,14 @@ export const uploadJobPackFile = async (
   const fileExt = file.name.split('.').pop();
   const fileName = `${jobPackId}/${documentType.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.${fileExt}`;
 
-  const { data, error } = await supabase.storage.from('job-pack-documents').upload(fileName, file);
+  const { data, error } = await supabase.storage.from('pack-documents').upload(fileName, file);
 
   if (error) {
     console.error('Error uploading file:', error);
     throw error;
   }
 
-  const { data: urlData } = supabase.storage.from('job-pack-documents').getPublicUrl(data.path);
+  const { data: urlData } = supabase.storage.from('pack-documents').getPublicUrl(data.path);
 
   return urlData.publicUrl;
 };

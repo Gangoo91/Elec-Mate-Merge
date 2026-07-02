@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useBriefingWithAttendees, type Briefing } from '@/hooks/useBriefings';
-import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
+import { getOrCreateBriefingSignLink } from '@/hooks/useBriefingSignatures';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { SheetShell, PrimaryButton, SecondaryButton } from './editorial';
@@ -52,12 +52,20 @@ export function BriefingViewer({
   // Copy QR link to clipboard
   const handleCopyLink = async () => {
     if (!briefing) return;
-    const link = generateBriefingQRData(briefing.id);
-    await copyToClipboard(link);
-    toast({
-      title: 'Link copied',
-      description: 'Sign-off link copied to clipboard.',
-    });
+    try {
+      const link = await getOrCreateBriefingSignLink(briefing.id);
+      await copyToClipboard(link);
+      toast({
+        title: 'Link copied',
+        description: 'Sign-off link copied to clipboard.',
+      });
+    } catch {
+      toast({
+        title: 'Link error',
+        description: 'Could not generate a sign-off link.',
+        variant: 'destructive',
+      });
+    }
   };
 
   if (isLoading) {

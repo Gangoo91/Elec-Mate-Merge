@@ -476,6 +476,18 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
     if (!error && data?.id) await logAudit(admin, uid, 'create', entity, data.id, { name: row.name ?? row.title ?? row.client ?? null });
     return { id: data?.id as string | undefined, error };
   };
+  // Find-or-create a client record so Mate-created quotes/invoices/jobs populate
+  // the CRM automatically (mirrors the frontend linkRecordToClient path).
+  const findOrCreateClientId = async (clientName?: string): Promise<string | null> => {
+    const nm = (clientName ?? '').trim();
+    if (!nm) return null;
+    const { data: existing } = await admin
+      .from('employer_clients').select('id').eq('employer_id', uid).ilike('name', nm).limit(1).maybeSingle();
+    if (existing?.id) return existing.id as string;
+    const { data: created } = await admin
+      .from('employer_clients').insert({ employer_id: uid, name: nm, last_activity_at: new Date().toISOString() }).select('id').single();
+    return (created?.id as string) ?? null;
+  };
   try {
     if (name === 'search_employer_knowledge') {
       const qEmb = await embed(args.query, openAiKey);
@@ -521,8 +533,10 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       return error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name} (id: ${id}).`;
     } else if (name === 'create_job') {
       const coords = args.location ? await geocodeJob(args.location) : null;
+      const clientId = await findOrCreateClientId(args.client);
       const { id, error } = await ins('employer_jobs', {
         user_id: uid, status: 'Active', title: args.title, client: args.client ?? '', location: args.location ?? '',
+        client_id: clientId,
         value: args.value ?? null, start_date: args.start_date ?? null, description: args.description ?? null,
         client_phone: args.client_phone ?? null, client_email: args.client_email ?? null,
         ...(coords ?? {}),
@@ -531,8 +545,9 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
     } else if (name === 'create_quote') {
       const { count } = await admin.from('employer_quotes').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
       const num = `QTE-${String((count ?? 0) + 1).padStart(4, '0')}`;
+      const quoteClientId = await findOrCreateClientId(args.client);
       const { id, error } = await ins('employer_quotes', {
-        employer_id: uid, quote_number: num, client: args.client, status: 'Draft', description: args.description ?? null,
+        employer_id: uid, quote_number: num, client: args.client, client_id: quoteClientId, status: 'Draft', description: args.description ?? null,
         value: args.value ?? 0, job_title: args.job_title ?? null, valid_until: args.valid_until ?? null,
         client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
       }, 'quote');
@@ -540,8 +555,9 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
     } else if (name === 'create_invoice') {
       const { count } = await admin.from('employer_invoices').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
       const num = `INV-${String((count ?? 0) + 1).padStart(4, '0')}`;
+      const invoiceClientId = await findOrCreateClientId(args.client);
       const { id, error } = await ins('employer_invoices', {
-        employer_id: uid, invoice_number: num, client: args.client, status: 'Draft', amount: args.amount ?? 0,
+        employer_id: uid, invoice_number: num, client: args.client, client_id: invoiceClientId, status: 'Draft', amount: args.amount ?? 0,
         project: args.project ?? null, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
       }, 'invoice');
       return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client} (id: ${id}).`;

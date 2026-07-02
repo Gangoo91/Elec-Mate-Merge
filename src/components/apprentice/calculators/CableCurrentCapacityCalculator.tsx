@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   CalculatorCard,
   CalculatorDivider,
@@ -29,17 +29,30 @@ import { cableCurrentCapacityContent } from './content/cable-current-capacity';
 import {
   getTemperatureFactor,
   getGroupingFactor,
+  type GroupingArrangement,
 } from '@/lib/calculators/bs7671-data/temperatureFactors';
+import {
+  capacityTables,
+  METHOD_LABELS,
+  getSoilResistivityFactor,
+  type CableTypeKey,
+  type PhaseKey,
+} from '@/lib/calculators/bs7671-data/appendix4CurrentCapacity';
 
 const CableCurrentCapacityCalculator = () => {
   const config = CALCULATOR_CONFIG['cable'];
 
   const [cableSize, setCableSize] = useState<string>('');
-  const [cableType, setCableType] = useState<string>('pvc-single');
+  const [cableType, setCableType] = useState<CableTypeKey>('twin-earth');
+  const [phase, setPhase] = useState<PhaseKey>('singlePhase');
   const [installationMethod, setInstallationMethod] = useState<string>('method-c');
   const [ambientTemp, setAmbientTemp] = useState<string>('30');
-  const [groupingFactor, setGroupingFactor] = useState<string>('1.0');
+  // Grouping per Table 4C1 — number of circuits + arrangement, factor derived
+  const [numberOfCircuits, setNumberOfCircuits] = useState<string>('1');
+  const [arrangement, setArrangement] = useState<GroupingArrangement>('bunched');
   const [soilThermalResistivity, setSoilThermalResistivity] = useState<string>('2.5');
+
+  const groupingFactor = getGroupingFactor(parseInt(numberOfCircuits, 10), arrangement);
 
   // Enhanced inputs for design verification
   const [designCurrent, setDesignCurrent] = useState<string>('');
@@ -74,42 +87,14 @@ const CableCurrentCapacityCalculator = () => {
   } | null>(null);
 
   // Cable sizes dropdown options
-  const cableSizeOptions = [
-    '1.0',
-    '1.5',
-    '2.5',
-    '4.0',
-    '6.0',
-    '10.0',
-    '16.0',
-    '25.0',
-    '35.0',
-    '50.0',
-    '70.0',
-    '95.0',
-    '120.0',
-    '150.0',
-    '185.0',
-    '240.0',
-    '300.0',
-    '400.0',
-    '500.0',
-    '630.0',
-  ].map((s) => ({ value: s, label: `${s} mm²` }));
-
-  // Enhanced cable types with comprehensive options
-  const cableTypes = [
-    { value: 'pvc-single', label: 'Single Core PVC 70°C' },
-    { value: 'pvc-multicore', label: 'Multicore PVC 70°C' },
-    { value: 'xlpe-single', label: 'Single Core XLPE 90°C' },
-    { value: 'xlpe-multicore', label: 'Multicore XLPE 90°C' },
-    { value: 'twin-earth', label: 'Twin & Earth PVC' },
-    { value: 'swa-pvc', label: 'SWA PVC 70°C' },
-    { value: 'swa-xlpe', label: 'SWA XLPE 90°C' },
-    { value: 'lsf-single', label: 'LSF Single Core 70°C' },
-    { value: 'lsf-multicore', label: 'LSF Multicore 70°C' },
-    { value: 'mineral', label: 'Mineral Insulated 70°C' },
-  ];
+  // Cable types, sizes and installation methods all come from the verified
+  // Appendix 4 data module (see appendix4CurrentCapacity.ts) — every value
+  // transcribed from the standard for ELE-1256. Dropdowns are filtered so
+  // only combinations that exist in BS 7671 can be selected.
+  const cableTypes = (Object.keys(capacityTables) as CableTypeKey[]).map((key) => ({
+    value: key,
+    label: capacityTables[key].label,
+  }));
 
   // Extended device ratings for better selection
   const deviceRatings = [
@@ -127,22 +112,12 @@ const CableCurrentCapacityCalculator = () => {
     { value: '100', label: '100A' },
   ];
 
-  // Installation methods based on BS 7671 Reference Methods
-  const installationMethods = [
-    { value: 'method-a1', label: 'Method A1 - Enclosed in conduit on a wall' },
-    { value: 'method-a2', label: 'Method A2 - Enclosed in trunking on a wall' },
-    { value: 'method-b1', label: 'Method B1 - Enclosed in conduit in masonry' },
-    { value: 'method-b2', label: 'Method B2 - Enclosed in trunking in masonry' },
-    { value: 'method-c', label: 'Method C - Clipped direct to surface' },
-    { value: 'method-d1', label: 'Method D1 - Direct in ground or duct' },
-    { value: 'method-d2', label: 'Method D2 - In ducts in ground' },
-    { value: 'method-e', label: 'Method E - In free air' },
-    { value: 'method-f', label: 'Method F - On cable tray (perforated)' },
-    { value: 'method-g', label: 'Method G - On cable tray (unperforated)' },
-    { value: 'method-h', label: 'Method H - On cable ladder/cleats' },
+  const phaseOptions = [
+    { value: 'singlePhase', label: 'Single-phase' },
+    { value: 'threePhase', label: 'Three-phase' },
   ];
 
-  // Ambient temperature options
+  // Ambient temperature options (Table 4B1 air temperatures)
   const ambientTemperatures = [
     '10',
     '15',
@@ -157,73 +132,52 @@ const CableCurrentCapacityCalculator = () => {
     '60',
   ].map((t) => ({ value: t, label: `${t}°C` }));
 
-  // Grouping factors
-  const groupingFactors = [
-    { value: '1.0', label: '1.0 (Single circuit)' },
-    { value: '0.8', label: '0.8 (2 circuits)' },
-    { value: '0.7', label: '0.7 (3 circuits)' },
-    { value: '0.65', label: '0.65 (4 circuits)' },
-    { value: '0.6', label: '0.6 (5-6 circuits)' },
-    { value: '0.55', label: '0.55 (7-9 circuits)' },
-    { value: '0.5', label: '0.5 (10+ circuits)' },
+  // Grouping — number of circuits (Table 4C1 columns) + arrangement rows.
+  // The factor itself comes from the verified getGroupingFactor lookup.
+  const circuitCountOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 20].map((n) => ({
+    value: String(n),
+    label: n === 1 ? '1 (single circuit)' : `${n} circuits/cables`,
+  }));
+
+  const arrangementOptions: { value: GroupingArrangement; label: string }[] = [
+    { value: 'bunched', label: 'Bunched / enclosed (conduit, trunking)' },
+    { value: 'single-layer-wall', label: 'Single layer on wall or floor' },
+    { value: 'single-layer-tray', label: 'Single layer on perforated tray' },
+    { value: 'single-layer-ladder', label: 'Single layer on ladder / cleats' },
   ];
 
-  // Enhanced cable capacity data based on BS 7671
-  const cableCapacities: Record<string, Record<string, Record<string, number>>> = {
-    'pvc-single': {
-      '1.0': { 'method-c': 15, 'method-a1': 13, 'method-d1': 18, 'method-e': 17 },
-      '1.5': { 'method-c': 20, 'method-a1': 17, 'method-d1': 23, 'method-e': 22 },
-      '2.5': { 'method-c': 27, 'method-a1': 23, 'method-d1': 31, 'method-e': 30 },
-      '4.0': { 'method-c': 37, 'method-a1': 31, 'method-d1': 42, 'method-e': 40 },
-      '6.0': { 'method-c': 47, 'method-a1': 39, 'method-d1': 54, 'method-e': 51 },
-      '10.0': { 'method-c': 65, 'method-a1': 54, 'method-d1': 75, 'method-e': 70 },
-      '16.0': { 'method-c': 87, 'method-a1': 73, 'method-d1': 101, 'method-e': 94 },
-      '25.0': { 'method-c': 114, 'method-a1': 96, 'method-d1': 133, 'method-e': 119 },
-      '35.0': { 'method-c': 141, 'method-a1': 119, 'method-d1': 164, 'method-e': 148 },
-      '50.0': { 'method-c': 182, 'method-a1': 154, 'method-d1': 213, 'method-e': 185 },
-      '70.0': { 'method-c': 234, 'method-a1': 196, 'method-d1': 272, 'method-e': 234 },
-      '95.0': { 'method-c': 289, 'method-a1': 245, 'method-d1': 336, 'method-e': 291 },
-      '120.0': { 'method-c': 337, 'method-a1': 286, 'method-d1': 392, 'method-e': 341 },
-      '150.0': { 'method-c': 390, 'method-a1': 331, 'method-d1': 454, 'method-e': 396 },
-      '185.0': { 'method-c': 451, 'method-a1': 383, 'method-d1': 526, 'method-e': 459 },
-      '240.0': { 'method-c': 533, 'method-a1': 453, 'method-d1': 622, 'method-e': 542 },
-      '300.0': { 'method-c': 613, 'method-a1': 521, 'method-d1': 716, 'method-e': 624 },
-    },
-    'xlpe-single': {
-      '1.0': { 'method-c': 18, 'method-a1': 15, 'method-d1': 21, 'method-e': 20 },
-      '1.5': { 'method-c': 24, 'method-a1': 20, 'method-d1': 27, 'method-e': 26 },
-      '2.5': { 'method-c': 33, 'method-a1': 28, 'method-d1': 37, 'method-e': 36 },
-      '4.0': { 'method-c': 45, 'method-a1': 38, 'method-d1': 51, 'method-e': 49 },
-      '6.0': { 'method-c': 58, 'method-a1': 48, 'method-d1': 65, 'method-e': 62 },
-      '10.0': { 'method-c': 80, 'method-a1': 66, 'method-d1': 90, 'method-e': 85 },
-      '16.0': { 'method-c': 107, 'method-a1': 89, 'method-d1': 121, 'method-e': 115 },
-      '25.0': { 'method-c': 138, 'method-a1': 115, 'method-d1': 156, 'method-e': 147 },
-      '35.0': { 'method-c': 171, 'method-a1': 143, 'method-d1': 193, 'method-e': 182 },
-      '50.0': { 'method-c': 219, 'method-a1': 183, 'method-d1': 248, 'method-e': 233 },
-    },
-    'swa-pvc': {
-      '1.5': { 'method-c': 19, 'method-a1': 16, 'method-d1': 21, 'method-e': 20 },
-      '2.5': { 'method-c': 25, 'method-a1': 21, 'method-d1': 28, 'method-e': 27 },
-      '4.0': { 'method-c': 34, 'method-a1': 29, 'method-d1': 38, 'method-e': 36 },
-      '6.0': { 'method-c': 43, 'method-a1': 36, 'method-d1': 48, 'method-e': 46 },
-      '10.0': { 'method-c': 59, 'method-a1': 50, 'method-d1': 66, 'method-e': 63 },
-      '16.0': { 'method-c': 79, 'method-a1': 67, 'method-d1': 88, 'method-e': 84 },
-      '25.0': { 'method-c': 103, 'method-a1': 87, 'method-d1': 115, 'method-e': 109 },
-      '35.0': { 'method-c': 127, 'method-a1': 108, 'method-d1': 142, 'method-e': 134 },
-      '50.0': { 'method-c': 163, 'method-a1': 138, 'method-d1': 182, 'method-e': 172 },
-    },
-    'twin-earth': {
-      '1.0': { 'method-c': 13, 'method-a1': 11, 'method-d1': 15, 'method-e': 14 },
-      '1.5': { 'method-c': 17, 'method-a1': 14, 'method-d1': 19, 'method-e': 18 },
-      '2.5': { 'method-c': 23, 'method-a1': 19, 'method-d1': 26, 'method-e': 25 },
-      '4.0': { 'method-c': 31, 'method-a1': 26, 'method-d1': 35, 'method-e': 33 },
-      '6.0': { 'method-c': 39, 'method-a1': 33, 'method-d1': 45, 'method-e': 42 },
-      '10.0': { 'method-c': 54, 'method-a1': 45, 'method-d1': 62, 'method-e': 58 },
-      '16.0': { 'method-c': 73, 'method-a1': 61, 'method-d1': 85, 'method-e': 79 },
-    },
-  };
+  // Soil thermal resistivity options — Table 4B3 columns
+  const soilResistivityOptions = ['0.5', '0.8', '1.0', '1.2', '1.5', '2.0', '2.5', '3.0'].map(
+    (r) => ({ value: r, label: `${r} K·m/W${r === '2.5' ? ' (standard)' : ''}` })
+  );
 
-  const cableSizes = Object.keys(cableCapacities['pvc-single']);
+  // Legacy shape consumed throughout this component: type → size → method → It.
+  // Derived from the verified module for the selected phase.
+  const cableCapacities: Record<string, Record<string, Record<string, number>>> = useMemo(() => {
+    const out: Record<string, Record<string, Record<string, number>>> = {};
+    for (const key of Object.keys(capacityTables) as CableTypeKey[]) {
+      out[key] = {};
+      for (const [method, col] of Object.entries(capacityTables[key].methods)) {
+        const values = col[phase];
+        if (!values) continue;
+        for (const [size, it] of Object.entries(values)) {
+          (out[key][size] ||= {})[method] = it;
+        }
+      }
+    }
+    return out;
+  }, [phase]);
+
+  const installationMethods = Object.keys(METHOD_LABELS).map((value) => ({
+    value,
+    label: METHOD_LABELS[value],
+  }));
+
+  const cableSizes = Object.keys(cableCapacities[cableType] || {}).sort(
+    (a, b) => parseFloat(a) - parseFloat(b)
+  );
+
+  const cableSizeOptions = cableSizes.map((s) => ({ value: s, label: `${s} mm²` }));
 
   // Helper function to get next cable size that works
   const getNextCableSize = (currentSize: string, targetIz: number) => {
@@ -237,24 +191,17 @@ const CableCurrentCapacityCalculator = () => {
 
       if (baseCapacity) {
         const ambient = parseFloat(ambientTemp);
-        const grouping = parseFloat(groupingFactor);
+        const grouping = groupingFactor;
         const soilResistivity = parseFloat(soilThermalResistivity);
 
         let tempFactor = 1.0;
         if (ambient !== 30) {
-          const tempDiff = ambient - 30;
-          if (cableType.includes('xlpe')) {
-            tempFactor = 1.0 - tempDiff * 0.0067;
-          } else {
-            tempFactor = 1.0 - tempDiff * 0.0125;
-          }
+          tempFactor = getTemperatureFactor(ambient, capacityTables[cableType].insulation);
         }
 
         let soilFactor = 1.0;
-        if (installationMethod.includes('d1') || installationMethod.includes('d2')) {
-          if (soilResistivity !== 2.5) {
-            soilFactor = Math.sqrt(2.5 / soilResistivity);
-          }
+        if (installationMethod === 'method-d1' || installationMethod === 'method-d2') {
+          soilFactor = getSoilResistivityFactor(soilResistivity, installationMethod);
         }
 
         const finalCapacity = baseCapacity * tempFactor * grouping * soilFactor;
@@ -272,16 +219,15 @@ const CableCurrentCapacityCalculator = () => {
     return deviceValues.find((rating) => rating > currentIn && rating <= maxIz);
   };
 
-  // Filter installation methods based on available data
+  // Filter installation methods to what the standard actually tabulates for
+  // this cable type (and phase), narrowed further once a size is picked.
   const getAvailableInstallationMethods = () => {
-    if (!cableSize) return installationMethods;
-
-    const capacityData = cableCapacities[cableType];
-    const sizeData = capacityData?.[cableSize];
-
-    if (!sizeData) return installationMethods;
-
-    return installationMethods.filter((method) => sizeData[method.value] !== undefined);
+    const typeMethods = capacityTables[cableType]?.methods || {};
+    const typeFiltered = installationMethods.filter((m) => !!typeMethods[m.value]?.[phase]);
+    if (!cableSize) return typeFiltered;
+    const sizeData = cableCapacities[cableType]?.[cableSize];
+    if (!sizeData) return typeFiltered;
+    return typeFiltered.filter((method) => sizeData[method.value] !== undefined);
   };
 
   // Validation helper
@@ -292,8 +238,8 @@ const CableCurrentCapacityCalculator = () => {
   const calculateCapacity = () => {
     const size = parseFloat(cableSize);
     const ambient = Math.max(10, Math.min(60, parseFloat(ambientTemp)));
-    const grouping = parseFloat(groupingFactor);
-    const soilResistivity = Math.max(0.5, Math.min(4.0, parseFloat(soilThermalResistivity)));
+    const grouping = groupingFactor;
+    const soilResistivity = Math.max(0.5, Math.min(3.0, parseFloat(soilThermalResistivity)));
 
     if (size > 0 && ambient > 0 && grouping > 0) {
       const capacityData = cableCapacities[cableType];
@@ -306,15 +252,12 @@ const CableCurrentCapacityCalculator = () => {
         if (baseCapacity > 0) {
           let tempFactor = 1.0;
           if (ambient !== 30) {
-            const cableRating = cableType.includes('xlpe') ? '90C' : '70C';
-            tempFactor = getTemperatureFactor(ambient, cableRating);
+            tempFactor = getTemperatureFactor(ambient, capacityTables[cableType].insulation);
           }
 
           let soilFactor = 1.0;
-          if (installationMethod.includes('d1') || installationMethod.includes('d2')) {
-            if (soilResistivity !== 2.5) {
-              soilFactor = Math.sqrt(2.5 / soilResistivity);
-            }
+          if (installationMethod === 'method-d1' || installationMethod === 'method-d2') {
+            soilFactor = getSoilResistivityFactor(soilResistivity, installationMethod);
           }
 
           const finalCapacity = baseCapacity * tempFactor * grouping * soilFactor;
@@ -421,7 +364,8 @@ const CableCurrentCapacityCalculator = () => {
             soilCorrectionFactor: soilFactor,
             finalCapacity,
             voltageRating,
-            standard: 'BS 7671:2018+A3:2024',
+            // Show the working — cite the exact table the tabulated It came from
+            standard: `BS 7671:2018+A4:2026 · ${capacityTables[cableType].sourceTable}`,
             compliance,
             warnings,
             actionableGuidance,
@@ -437,7 +381,7 @@ const CableCurrentCapacityCalculator = () => {
             soilCorrectionFactor: 0,
             finalCapacity: 0,
             voltageRating: '',
-            standard: 'BS 7671:2018+A3:2024',
+            standard: 'BS 7671:2018+A4:2026',
             compliance: null,
             warnings: [
               `No capacity data for ${cableSize}mm² ${cableTypes.find((t) => t.value === cableType)?.label} with ${installationMethods.find((m) => m.value === installationMethod)?.label}`,
@@ -463,7 +407,7 @@ const CableCurrentCapacityCalculator = () => {
           soilCorrectionFactor: 0,
           finalCapacity: 0,
           voltageRating: '',
-          standard: 'BS 7671:2018+A3:2024',
+          standard: 'BS 7671:2018+A4:2026',
           compliance: null,
           warnings: [`${cableSize}mm² not available for selected cable type`],
           actionableGuidance: {
@@ -479,15 +423,33 @@ const CableCurrentCapacityCalculator = () => {
 
   const reset = () => {
     setCableSize('');
-    setCableType('pvc-single');
+    setCableType('twin-earth');
+    setPhase('singlePhase');
     setInstallationMethod('method-c');
     setAmbientTemp('30');
-    setGroupingFactor('1.0');
+    setNumberOfCircuits('1');
+    setArrangement('bunched');
     setSoilThermalResistivity('2.5');
     setDesignCurrent('');
     setDeviceRating('32');
     setResult(null);
   };
+
+  // Keep selections valid when cable type or phase changes — a method or size
+  // that doesn't exist in the new table must not linger in state.
+  useEffect(() => {
+    const available = Object.keys(capacityTables[cableType]?.methods || {}).filter(
+      (m) => !!capacityTables[cableType].methods[m][phase]
+    );
+    if (available.length && !available.includes(installationMethod)) {
+      setInstallationMethod(available.includes('method-c') ? 'method-c' : available[0]);
+    }
+    if (cableSize && !cableSizes.includes(cableSize)) {
+      setCableSize('');
+    }
+    setResult(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cableType, phase]);
 
   const getSafetyChip = (margin: number, isCompliant: boolean) => {
     if (!isCompliant) {
@@ -545,12 +507,27 @@ const CableCurrentCapacityCalculator = () => {
         </CalculatorInputGrid>
       </div>
 
-      <CalculatorSelect
-        label="Cable Type"
-        value={cableType}
-        onChange={setCableType}
-        options={cableTypes}
-      />
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Cable Type"
+          value={cableType}
+          onChange={(v) => setCableType(v as CableTypeKey)}
+          options={cableTypes}
+        />
+        <CalculatorSelect
+          label="Phase"
+          value={phase}
+          onChange={(v) => setPhase(v as PhaseKey)}
+          options={phaseOptions}
+        />
+      </CalculatorInputGrid>
+
+      {phase === 'threePhase' && cableType === 'twin-earth' && (
+        <p className="text-xs text-amber-400 px-1">
+          Flat twin &amp; earth is a single-phase cable — Table 4D5 has no three-phase ratings.
+          Choose a multicore or SWA type for three-phase circuits.
+        </p>
+      )}
 
       <CalculatorSelect
         label="Cable Size (mm²)"
@@ -566,30 +543,42 @@ const CableCurrentCapacityCalculator = () => {
         options={getAvailableInstallationMethods()}
       />
 
+      <CalculatorSelect
+        label="Ambient Temp (°C)"
+        value={ambientTemp}
+        onChange={setAmbientTemp}
+        options={ambientTemperatures}
+      />
+
+      {/* Grouping per Table 4C1 — ask for circuits + arrangement, derive the factor */}
       <CalculatorInputGrid columns={2}>
         <CalculatorSelect
-          label="Ambient Temp (°C)"
-          value={ambientTemp}
-          onChange={setAmbientTemp}
-          options={ambientTemperatures}
+          label="Grouped Circuits"
+          value={numberOfCircuits}
+          onChange={setNumberOfCircuits}
+          options={circuitCountOptions}
         />
         <CalculatorSelect
-          label="Grouping Factor"
-          value={groupingFactor}
-          onChange={setGroupingFactor}
-          options={groupingFactors}
+          label="Arrangement"
+          value={arrangement}
+          onChange={(v) => setArrangement(v as GroupingArrangement)}
+          options={arrangementOptions}
         />
       </CalculatorInputGrid>
+      {parseInt(numberOfCircuits, 10) > 1 && (
+        <p className="text-xs text-white/70 px-1">
+          Grouping factor Cg = {groupingFactor.toFixed(2)} (Table 4C1). Circuits loaded at 30% or
+          less of their grouped rating may be ignored when counting.
+        </p>
+      )}
 
-      {/* Soil Thermal Resistivity - only for buried cables */}
-      {(installationMethod.includes('d1') || installationMethod.includes('d2')) && (
-        <CalculatorInput
+      {/* Soil Thermal Resistivity - only for buried cables (Table 4B3) */}
+      {(installationMethod === 'method-d1' || installationMethod === 'method-d2') && (
+        <CalculatorSelect
           label="Soil Thermal Resistivity (K·m/W)"
-          type="text"
-          inputMode="decimal"
           value={soilThermalResistivity}
           onChange={setSoilThermalResistivity}
-          placeholder="2.5"
+          options={soilResistivityOptions}
         />
       )}
 

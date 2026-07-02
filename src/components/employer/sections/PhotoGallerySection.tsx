@@ -230,29 +230,36 @@ export function PhotoGallerySection() {
       (p) => p.category === 'After' || p.category === 'Completion'
     );
 
-    if (beforePhotos.length > 0 && afterPhotos.length > 0) {
-      const beforePhoto = beforePhotos[0];
-      const afterPhoto = afterPhotos.find((a) => a.jobId === beforePhoto.jobId) || afterPhotos[0];
+    // Only pair Before/After from the SAME job — a cross-job pair is misleading.
+    const beforePhoto = beforePhotos.find((b) =>
+      afterPhotos.some((a) => a.jobId === b.jobId)
+    );
+    const afterPhoto = beforePhoto
+      ? afterPhotos.find((a) => a.jobId === beforePhoto.jobId)
+      : undefined;
 
+    if (beforePhoto && afterPhoto) {
       setComparePhotos({
         before: {
           id: beforePhoto.id,
           category: beforePhoto.category,
           jobTitle: beforePhoto.jobTitle,
           timestamp: beforePhoto.timestamp,
+          filename: beforePhoto.filename,
         },
         after: {
           id: afterPhoto.id,
           category: afterPhoto.category,
           jobTitle: afterPhoto.jobTitle,
           timestamp: afterPhoto.timestamp,
+          filename: afterPhoto.filename,
         },
       });
       setCompareOpen(true);
     } else {
       toast({
         title: 'No comparison available',
-        description: 'Need both Before and After photos to compare',
+        description: 'Need a Before and an After photo from the same job to compare.',
       });
     }
   }, [filteredPhotos]);

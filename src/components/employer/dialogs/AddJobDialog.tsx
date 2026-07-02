@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCreateJob } from '@/hooks/useJobs';
+import { linkRecordToClient } from '@/services/employerClientService';
 import { toast } from '@/hooks/use-toast';
 import { Briefcase, Plus } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -114,7 +115,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
     }
 
     try {
-      await createJob.mutateAsync({
+      const job = await createJob.mutateAsync({
         title: formData.title,
         client: formData.client,
         location: formData.location,
@@ -128,6 +129,11 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
         lat: null,
         lng: null,
       });
+
+      // Auto-link into the CRM so the client record builds itself (non-fatal).
+      if (job?.id) {
+        linkRecordToClient('employer_jobs', job.id, formData.client).catch(() => {});
+      }
 
       toast({
         title: 'Job Created',

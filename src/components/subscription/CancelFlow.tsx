@@ -593,7 +593,7 @@ export function CancelFlow({
   };
 
   const content = (
-    <div className="flex h-full flex-col bg-[#0a0a0a]">
+    <div className="flex h-full min-h-0 flex-col bg-[#0a0a0a]">
       {/* Close X */}
       <div className="flex items-center justify-end px-5 pt-5">
         <button
@@ -608,7 +608,7 @@ export function CancelFlow({
       </div>
 
       {/* Body */}
-      <div className="flex-1 overflow-y-auto px-6 pb-2 sm:px-8">
+      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-2 sm:px-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -634,7 +634,7 @@ export function CancelFlow({
       <Sheet open={isOpen} onOpenChange={(open) => !open && resetAndClose()}>
         <SheetContent
           side="bottom"
-          className="h-[92vh] overflow-hidden rounded-t-[2rem] border-white/[0.08] p-0"
+          className="h-[92dvh] overflow-hidden rounded-t-[2rem] border-white/[0.08] p-0"
         >
           <VisuallyHidden>
             <DialogTitle>Cancel subscription</DialogTitle>
@@ -650,7 +650,10 @@ export function CancelFlow({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && resetAndClose()} modal>
-      <DialogContent className="w-full max-w-lg overflow-hidden rounded-[2rem] border-white/[0.08] bg-[#0a0a0a] p-0 shadow-[0_30px_120px_rgba(0,0,0,0.6)]">
+      {/* max-h + flex-col so the footer (with the Cancel button) can never be
+          pushed below the viewport on short laptop screens — the body scrolls
+          instead. A user reported physically not being able to cancel. */}
+      <DialogContent className="flex max-h-[85dvh] w-full max-w-lg flex-col overflow-hidden rounded-[2rem] border-white/[0.08] bg-[#0a0a0a] p-0 shadow-[0_30px_120px_rgba(0,0,0,0.6)]">
         <VisuallyHidden>
           <DialogTitle>Cancel subscription</DialogTitle>
           <DialogDescription>

@@ -86,6 +86,14 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
       <HubGrid columns={2}>
         <HubCard
           number="01"
+          eyebrow="Customers"
+          title="Clients"
+          description="Every customer in one place — their quotes, invoices, jobs and balance."
+          tone="yellow"
+          onClick={() => onNavigate('clients')}
+        />
+        <HubCard
+          number="02"
           eyebrow="Documents"
           title="Quotes & Invoices"
           description="Create, send and track quotes and invoices end to end."
@@ -98,7 +106,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('quotes')}
         />
         <HubCard
-          number="02"
+          number="03"
           eyebrow="Bidding"
           title="Tenders"
           description="AI-powered estimating and bid responses."
@@ -106,7 +114,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('tenders')}
         />
         <HubCard
-          number="03"
+          number="04"
           eyebrow="Outgoings"
           title="Expenses"
           description="Review, approve and reimburse team expense claims."
@@ -115,7 +123,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('expenses')}
         />
         <HubCard
-          number="04"
+          number="05"
           eyebrow="Materials"
           title="Procurement"
           description="Material orders, suppliers and delivery tracking."
@@ -124,7 +132,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('procurement')}
         />
         <HubCard
-          number="05"
+          number="06"
           eyebrow="Profitability"
           title="Job Financials"
           description="Budget versus actual, margin and labour costs per job."
@@ -132,7 +140,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('financials')}
         />
         <HubCard
-          number="06"
+          number="07"
           eyebrow="Insight"
           title="Reports"
           description="Revenue, cashflow and pipeline analytics."
@@ -141,7 +149,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('reports')}
         />
         <HubCard
-          number="07"
+          number="08"
           eyebrow="Sign-off"
           title="Signatures"
           description="Capture digital signatures on quotes and certificates."
@@ -149,7 +157,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick={() => onNavigate('signatures')}
         />
         <HubCard
-          number="08"
+          number="09"
           eyebrow="Pricing"
           title="Price Book"
           description="Materials catalogue, markup and stock levels."

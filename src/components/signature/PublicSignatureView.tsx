@@ -128,17 +128,22 @@ const PublicSignatureView = () => {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase
-        .from('signature_requests')
-        .update({
-          status: 'Declined',
-          ip_address: await getUserIP(),
-          message: notes.trim() || null,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', request.id);
+      // Anon signers can't UPDATE signature_requests directly (RLS) — go through
+      // the token-keyed SECURITY DEFINER RPC, and only report success on a real write.
+      // Cast: the RPC is added by migration 01 and isn't in the generated types yet.
+      const { data: declined, error } = await (
+        supabase.rpc as unknown as (
+          fn: string,
+          args: Record<string, unknown>
+        ) => Promise<{ data: { error?: string } | null; error: unknown }>
+      )('decline_signature_request', {
+        p_token: token,
+        p_ip: await getUserIP(),
+        p_notes: notes.trim() || null,
+      });
 
       if (error) throw error;
+      if (declined?.error) throw new Error(declined.error);
 
       toast({
         title: 'Request Declined',

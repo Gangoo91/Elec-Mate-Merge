@@ -5,18 +5,22 @@ export interface TemperatureFactor {
   ambientTemp: number;
   factor70C: number; // Thermoplastic insulation
   factor90C: number; // Thermosetting insulation
+  /** Table 4B1 "Mineral — thermoplastic covered or bare and exposed to touch, 70 °C sheath" column */
+  factorMineralExposed?: number;
 }
 
 // BS 7671 Table 4B1 - Ambient air temperature rating factors
 export const ambientTemperatureFactors: TemperatureFactor[] = [
-  { ambientTemp: 25, factor70C: 1.04, factor90C: 1.02 }, // Fixed from 1.06/1.04
-  { ambientTemp: 30, factor70C: 1.0, factor90C: 1.0 },
-  { ambientTemp: 35, factor70C: 0.94, factor90C: 0.96 },
-  { ambientTemp: 40, factor70C: 0.87, factor90C: 0.91 },
-  { ambientTemp: 45, factor70C: 0.79, factor90C: 0.87 },
-  { ambientTemp: 50, factor70C: 0.71, factor90C: 0.82 },
-  { ambientTemp: 55, factor70C: 0.61, factor90C: 0.76 },
-  { ambientTemp: 60, factor70C: 0.5, factor90C: 0.71 },
+  // 25 °C row verified against Table 4B1 (70°C thermoplastic column = 1.03)
+  { ambientTemp: 25, factor70C: 1.03, factor90C: 1.02, factorMineralExposed: 1.07 },
+  { ambientTemp: 30, factor70C: 1.0, factor90C: 1.0, factorMineralExposed: 1.0 },
+  { ambientTemp: 35, factor70C: 0.94, factor90C: 0.96, factorMineralExposed: 0.93 },
+  { ambientTemp: 40, factor70C: 0.87, factor90C: 0.91, factorMineralExposed: 0.85 },
+  { ambientTemp: 45, factor70C: 0.79, factor90C: 0.87, factorMineralExposed: 0.78 },
+  { ambientTemp: 50, factor70C: 0.71, factor90C: 0.82, factorMineralExposed: 0.67 },
+  { ambientTemp: 55, factor70C: 0.61, factor90C: 0.76, factorMineralExposed: 0.57 },
+  { ambientTemp: 60, factor70C: 0.5, factor90C: 0.71, factorMineralExposed: 0.45 },
+  // 4B1 tabulates nothing beyond 60 °C for 70 °C insulation — zeros act as a hard stop
   { ambientTemp: 65, factor70C: 0.35, factor90C: 0.65 },
   { ambientTemp: 70, factor70C: 0.0, factor90C: 0.58 },
   { ambientTemp: 75, factor70C: 0.0, factor90C: 0.5 },
@@ -162,14 +166,24 @@ export const groupingFactors: GroupingFactor[] = groupingFactorsTable4C1.map((g)
 }));
 
 // Helper functions to get factors by interpolation or lookup
-export const getTemperatureFactor = (ambientTemp: number, cableType: '70C' | '90C'): number => {
-  const factors = ambientTemperatureFactors;
-  const factorKey = cableType === '70C' ? 'factor70C' : 'factor90C';
+export const getTemperatureFactor = (
+  ambientTemp: number,
+  cableType: '70C' | '90C' | '70C-mineral'
+): number => {
+  const factors = ambientTemperatureFactors.filter(
+    (f) => cableType !== '70C-mineral' || f.factorMineralExposed !== undefined
+  );
+  const factorKey =
+    cableType === '70C-mineral'
+      ? ('factorMineralExposed' as const)
+      : cableType === '70C'
+        ? ('factor70C' as const)
+        : ('factor90C' as const);
 
   // Find exact match first
   const exactMatch = factors.find((f) => f.ambientTemp === ambientTemp);
   if (exactMatch) {
-    return exactMatch[factorKey];
+    return exactMatch[factorKey] ?? 0;
   }
 
   // Find interpolation points
@@ -181,15 +195,15 @@ export const getTemperatureFactor = (ambientTemp: number, cableType: '70C' | '90
     .filter((f) => f.ambientTemp >= ambientTemp)
     .sort((a, b) => a.ambientTemp - b.ambientTemp)[0];
 
-  if (!lowerPoint) return factors[0][factorKey];
-  if (!upperPoint) return factors[factors.length - 1][factorKey];
-  if (lowerPoint === upperPoint) return lowerPoint[factorKey];
+  if (!lowerPoint) return factors[0][factorKey] ?? 0;
+  if (!upperPoint) return factors[factors.length - 1][factorKey] ?? 0;
+  if (lowerPoint === upperPoint) return lowerPoint[factorKey] ?? 0;
 
   // Linear interpolation
   const ratio =
     (ambientTemp - lowerPoint.ambientTemp) / (upperPoint.ambientTemp - lowerPoint.ambientTemp);
 
-  return lowerPoint[factorKey] + ratio * (upperPoint[factorKey] - lowerPoint[factorKey]);
+  return (lowerPoint[factorKey] ?? 0) + ratio * ((upperPoint[factorKey] ?? 0) - (lowerPoint[factorKey] ?? 0));
 };
 
 export const getSoilTemperatureFactor = (soilTemp: number, cableType: '70C' | '90C'): number => {

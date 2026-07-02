@@ -120,7 +120,14 @@ interface ImportedAgentContext {
   source: string;
 }
 
-export const AIInstallationDesigner = () => {
+interface AIInstallationDesignerProps {
+  /** 'employer' hides electrician-only chrome (agent inbox, save-to-customer) so
+   *  the same engine can run inside the Employer Hub. Defaults to electrician. */
+  variant?: 'electrician' | 'employer';
+}
+
+export const AIInstallationDesigner = ({ variant = 'electrician' }: AIInstallationDesignerProps = {}) => {
+  const isEmployer = variant === 'employer';
   const routerLocation = useLocation();
   const { user } = useAuth();
 
@@ -239,17 +246,19 @@ export const AIInstallationDesigner = () => {
       trackFeatureUse(user?.id || '', 'ai_circuit_designer', {});
       console.log('🚀 Started circuit design job:', data.jobId);
 
-      // Link customer to job
-      if (customerId && data.jobId) {
-        supabase
-          .from('circuit_design_jobs')
-          .update({ customer_id: customerId })
-          .eq('id', data.jobId)
-          .then(({ error: linkErr }) => {
-            if (linkErr) console.error('Failed to link customer to circuit design job:', linkErr);
-          });
-      } else if (!customerId && inputs.clientName?.trim() && !savePromptDismissed) {
-        setShowSaveCustomerPrompt(true);
+      // Link customer to job (electrician customers only — not in the employer hub)
+      if (!isEmployer) {
+        if (customerId && data.jobId) {
+          supabase
+            .from('circuit_design_jobs')
+            .update({ customer_id: customerId })
+            .eq('id', data.jobId)
+            .then(({ error: linkErr }) => {
+              if (linkErr) console.error('Failed to link customer to circuit design job:', linkErr);
+            });
+        } else if (!customerId && inputs.clientName?.trim() && !savePromptDismissed) {
+          setShowSaveCustomerPrompt(true);
+        }
       }
     } catch (error: any) {
       console.error('Design generation error:', error);
@@ -629,8 +638,8 @@ export const AIInstallationDesigner = () => {
 
   return (
     <div className="space-y-4">
-      {/* Agent Inbox */}
-      <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />
+      {/* Agent Inbox — electrician-only cross-agent handoff */}
+      {!isEmployer && <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />}
 
       {/* Imported Context Banner - show when context is available and in input view */}
       <AnimatePresence>
@@ -646,8 +655,8 @@ export const AIInstallationDesigner = () => {
 
       {currentView === 'input' && (
         <>
-          {/* Save Customer Prompt */}
-          {showSaveCustomerPrompt && !customerId && (
+          {/* Save Customer Prompt — electrician customers only */}
+          {!isEmployer && showSaveCustomerPrompt && !customerId && (
             <SaveCustomerPrompt
               client={{ name: designData?.clientName || '' }}
               onSaved={(savedId) => {
@@ -671,8 +680,8 @@ export const AIInstallationDesigner = () => {
             onGenerate={handleGenerate}
             isProcessing={status === 'processing'}
             initialData={wizardInitialData}
-            customerId={customerId}
-            onCustomerIdChange={setCustomerId}
+            customerId={isEmployer ? undefined : customerId}
+            onCustomerIdChange={isEmployer ? undefined : setCustomerId}
           />
         </>
       )}
