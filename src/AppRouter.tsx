@@ -282,6 +282,7 @@ const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymb
 // Lazy-loaded route modules (with retry for chunk failures)
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
 const AttestOJT = lazyWithRetry(() => import('@/pages/AttestOJT'));
+const TeamInviteAccept = lazyWithRetry(() => import('@/pages/public/TeamInviteAccept'));
 const EmployerPortalView = lazyWithRetry(() => import('@/pages/public/EmployerPortalView'));
 const CollegeJoinPage = lazyWithRetry(() => import('@/pages/college/CollegeJoinPage'));
 const CohortComparePage = lazyWithRetry(() => import('@/pages/college/CohortComparePage'));
@@ -331,6 +332,16 @@ const AppRouter = () => {
 
           {/* Employer attestation — public, no auth, supervisor opens
             the link the apprentice shared and signs off OJT hours. */}
+          {/* Team invite acceptance — public, branded, no auth. */}
+          <Route
+            path="/team/accept/:token"
+            element={
+              <LazyRoute>
+                <TeamInviteAccept />
+              </LazyRoute>
+            }
+          />
+
           <Route
             path="/attest-ojt/:id"
             element={

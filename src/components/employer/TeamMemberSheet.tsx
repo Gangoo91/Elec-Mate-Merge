@@ -10,6 +10,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 export type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 export interface TeamMemberView {
   id: string;
+  userId?: string | null; // null = invited, not yet joined
+  status?: string;
   name: string;
   role: string;
   teamRole?: string;
@@ -58,6 +60,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 const roleColors: Record<TeamRole, string> = {
@@ -109,6 +112,7 @@ export function TeamMemberSheet({
   const { data: workerLocations = [] } = useWorkerLocations();
   const [activeTab, setActiveTab] = useState('details');
   const [createElecIdOpen, setCreateElecIdOpen] = useState(false);
+  const [resending, setResending] = useState(false);
 
   const { data: elecIdProfile, isLoading: elecIdLoading } = useElecIdProfileByEmployee(
     employee?.id || ''
@@ -117,22 +121,24 @@ export function TeamMemberSheet({
   if (!employee) return null;
 
   const employeeAssignments = rawAssignments
-    .filter((a) => !['completed', 'cancelled', 'removed', 'ended'].includes((a.status || '').toLowerCase()))
+    .filter(
+      (a) =>
+        !['completed', 'cancelled', 'removed', 'ended'].includes((a.status || '').toLowerCase())
+    )
     .map((a) => ({
       id: a.id,
       jobTitle: a.job?.title || 'Job',
       jobLocation: a.job?.location || '',
     }));
   const employeeCerts = rawCerts.map((c) => {
-    const days = c.expiry_date
-      ? differenceInDays(parseISO(c.expiry_date), new Date())
-      : null;
+    const days = c.expiry_date ? differenceInDays(parseISO(c.expiry_date), new Date()) : null;
     return {
       id: c.id,
       name: c.name,
       issuer: c.issuing_body || '',
       daysRemaining: days ?? 0,
-      status: days !== null && days < 0 ? 'Expired' : days !== null && days <= 60 ? 'Warning' : 'Active',
+      status:
+        days !== null && days < 0 ? 'Expired' : days !== null && days <= 60 ? 'Warning' : 'Active',
     };
   });
   const expiringSoonCerts = employeeCerts.filter(
@@ -153,9 +159,7 @@ export function TeamMemberSheet({
 
   // Expenses — already ordered by submitted_date desc from the hook
   const recentExpenses = rawExpenses.slice(0, 12);
-  const pendingExpenses = rawExpenses.filter(
-    (e) => (e.status || '').toLowerCase() === 'pending'
-  );
+  const pendingExpenses = rawExpenses.filter((e) => (e.status || '').toLowerCase() === 'pending');
   const pendingExpenseTotal = pendingExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
   const expenseStatusTone = (status: string) => {
     const s = (status || '').toLowerCase();
@@ -201,6 +205,29 @@ export function TeamMemberSheet({
       ? presence?.checked_out_at || presence?.last_updated
       : presence?.checked_in_at || presence?.last_updated;
 
+  const isInvited = !employee.userId && (employee.status ?? '').toLowerCase() !== 'archived';
+  const handleResendInvite = async () => {
+    setResending(true);
+    try {
+      const { error } = await supabase.functions.invoke('send-team-welcome', {
+        body: { employeeId: employee.id },
+      });
+      if (error) throw error;
+      toast({
+        title: 'Invite resent',
+        description: `A fresh invite is on its way to ${employee.email}.`,
+      });
+    } catch {
+      toast({
+        title: 'Could not resend',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setResending(false);
+    }
+  };
+
   const handleCall = () => (window.location.href = `tel:${employee.phone}`);
   const handleEmergencyCall = () => {
     if (employee.emergencyContact) {
@@ -231,18 +258,15 @@ export function TeamMemberSheet({
           </div>
 
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl md:text-2xl font-bold text-white truncate">
-              {employee.name}
-            </h2>
+            <h2 className="text-xl md:text-2xl font-bold text-white truncate">{employee.name}</h2>
             <p className="text-sm md:text-base text-white">{employee.role}</p>
             <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-              <Badge className={`text-xs ${roleColors[(employee.teamRole as TeamRole) || 'Operative']}`}>
+              <Badge
+                className={`text-xs ${roleColors[(employee.teamRole as TeamRole) || 'Operative']}`}
+              >
                 {employee.teamRole || employee.team_role || 'Operative'}
               </Badge>
-              <Badge
-                variant="outline"
-                className="text-xs border-white/20 text-white"
-              >
+              <Badge variant="outline" className="text-xs border-white/20 text-white">
                 {employee.availability}
               </Badge>
               {expiringSoonCerts.length > 0 && (
@@ -254,6 +278,19 @@ export function TeamMemberSheet({
             </div>
           </div>
         </div>
+
+        {/* Invited but not yet joined — resend the branded invite */}
+        {isInvited && (
+          <div className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3 flex items-center justify-between gap-3">
+            <p className="text-[12.5px] text-amber-200/90 leading-snug">
+              Invite sent{employee.email ? ` to ${employee.email}` : ''} — waiting for them to join.
+            </p>
+            <SecondaryButton onClick={handleResendInvite} disabled={resending} className="shrink-0">
+              <Mail className="h-4 w-4 mr-1.5" />
+              {resending ? 'Sending…' : 'Resend'}
+            </SecondaryButton>
+          </div>
+        )}
 
         {/* Quick action bar */}
         <div className="flex gap-2">
@@ -327,12 +364,17 @@ export function TeamMemberSheet({
               {/* Live on-site presence (clock-in derived) */}
               {presence && (
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-                  <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${presenceDot(presence.status)}`} />
+                  <span
+                    className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${presenceDot(presence.status)}`}
+                  />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-white truncate">
                       {presence.status}
                       {presenceJobTitle && (
-                        <span className="text-xs text-white font-normal"> · {presenceJobTitle}</span>
+                        <span className="text-xs text-white font-normal">
+                          {' '}
+                          · {presenceJobTitle}
+                        </span>
                       )}
                     </p>
                     <p className="text-xs text-white">
@@ -410,7 +452,6 @@ export function TeamMemberSheet({
                   </div>
                 </div>
               )}
-
             </TabsContent>
 
             {/* Jobs Tab */}
@@ -491,7 +532,10 @@ export function TeamMemberSheet({
                             </p>
                           </div>
                         </div>
-                        <Badge variant="outline" className="text-xs border-white/20 text-white capitalize">
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-white/20 text-white capitalize"
+                        >
                           {t.status || 'Pending'}
                         </Badge>
                       </div>
@@ -531,14 +575,23 @@ export function TeamMemberSheet({
                           <div className="min-w-0">
                             <p className="font-medium text-white truncate">
                               £{(Number(e.amount) || 0).toFixed(2)}
-                              <span className="text-xs text-white font-normal"> · {e.category}</span>
+                              <span className="text-xs text-white font-normal">
+                                {' '}
+                                · {e.category}
+                              </span>
                             </p>
                             <p className="text-xs text-white truncate">
-                              {e.description || (e.submitted_date ? format(parseISO(e.submitted_date), 'd MMM') : '')}
+                              {e.description ||
+                                (e.submitted_date
+                                  ? format(parseISO(e.submitted_date), 'd MMM')
+                                  : '')}
                             </p>
                           </div>
                         </div>
-                        <Badge variant="outline" className="text-xs border-white/20 text-white capitalize">
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-white/20 text-white capitalize"
+                        >
                           {e.status || 'Pending'}
                         </Badge>
                       </div>
@@ -578,7 +631,10 @@ export function TeamMemberSheet({
                           <div className="min-w-0">
                             <p className="font-medium text-white truncate capitalize">
                               {l.type}
-                              <span className="text-xs text-white font-normal"> · {l.totalDays}d</span>
+                              <span className="text-xs text-white font-normal">
+                                {' '}
+                                · {l.totalDays}d
+                              </span>
                             </p>
                             <p className="text-xs text-white truncate">
                               {l.startDate ? format(parseISO(l.startDate), 'd MMM') : ''}
@@ -588,7 +644,10 @@ export function TeamMemberSheet({
                             </p>
                           </div>
                         </div>
-                        <Badge variant="outline" className="text-xs border-white/20 text-white capitalize">
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-white/20 text-white capitalize"
+                        >
                           {l.status || 'Pending'}
                         </Badge>
                       </div>
@@ -623,9 +682,7 @@ export function TeamMemberSheet({
                           <IdCard className="h-5 w-5 text-elec-yellow" />
                         </div>
                         <div>
-                          <p className="font-medium text-white">
-                            {elecIdProfile.elec_id_number}
-                          </p>
+                          <p className="font-medium text-white">{elecIdProfile.elec_id_number}</p>
                           <div className="flex items-center gap-2 text-xs text-white">
                             <span className="capitalize">{elecIdProfile.ecs_card_type} Card</span>
                             {elecIdProfile.is_verified && (
@@ -694,7 +751,6 @@ export function TeamMemberSheet({
                 )}
               </div>
             </TabsContent>
-
           </div>
         </div>
       </Tabs>
@@ -732,7 +788,10 @@ export function TeamMemberSheet({
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="right" className="w-full sm:max-w-lg p-0 flex flex-col bg-[hsl(0_0%_8%)] border-l border-white/[0.06]">
+        <SheetContent
+          side="right"
+          className="w-full sm:max-w-lg p-0 flex flex-col bg-[hsl(0_0%_8%)] border-l border-white/[0.06]"
+        >
           <ProfileContent />
         </SheetContent>
       </Sheet>

@@ -15,6 +15,57 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
+const SITE_URL = 'https://elec-mate.com';
+const LOGO_URL = `${Deno.env.get('SUPABASE_URL')}/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png`;
+const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+
+const hexToken = () =>
+  Array.from(crypto.getRandomValues(new Uint8Array(24)))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+
+// Light-palette invite email — matches the welcome email (#F4F6F9 canvas, white
+// rounded card, #51606F body, #F3B70A gold accent). Mobile-responsive.
+function buildInviteHtml(companyName: string, firstName: string, acceptUrl: string): string {
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; padding:0; width:100%; background-color:#F4F6F9; }
+  @media screen and (max-width:480px){ .pad{ padding-left:24px !important; padding-right:24px !important; } .btn{ display:block !important; } }
+</style></head>
+<body style="margin:0;padding:0;background-color:#F4F6F9;font-family:${FONT};-webkit-font-smoothing:antialiased;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#F4F6F9;">
+    <tr><td align="center" style="padding:40px 16px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:520px;background-color:#FFFFFF;border-radius:18px;overflow:hidden;border:1px solid #E6E9EE;">
+        <tr><td align="left" style="padding:36px 36px 8px;" class="pad">
+          <img src="${LOGO_URL}" alt="Elec-Mate" width="56" height="56" style="display:block;border-radius:13px;border:1px solid #E6E9EE;">
+        </td></tr>
+        <tr><td align="left" style="padding:18px 36px 0;" class="pad">
+          <h1 style="margin:0 0 6px;font-size:22px;line-height:1.3;color:#1B2733;font-weight:700;">${companyName} added you to their team</h1>
+          <p style="margin:0 0 22px;font-size:15px;color:#51606F;line-height:1.62;">Hi ${firstName}, ${companyName} runs their jobs, timesheets and site paperwork on Elec-Mate — and they've added you to the team. Set up your account below and you're in.</p>
+        </td></tr>
+        <tr><td style="padding:0 36px 8px;" class="pad">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#EAF7EE;border:1px solid #BFE6CC;border-radius:14px;">
+            <tr><td style="padding:16px 20px;">
+              <p style="margin:0;font-size:14px;color:#1E5B34;line-height:1.55;"><strong>It's free for you.</strong> ${companyName} covers your access — nothing to pay, no card needed.</p>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td align="left" style="padding:22px 36px 6px;" class="pad">
+          <a href="${acceptUrl}" class="btn" style="background-color:#F3B70A;color:#1B2733;font-size:15px;font-weight:700;text-decoration:none;padding:14px 28px;border-radius:12px;display:inline-block;">Set up your account</a>
+        </td></tr>
+        <tr><td align="left" style="padding:14px 36px 4px;" class="pad">
+          <p style="margin:0 0 8px;font-size:13px;color:#8A97A6;line-height:1.5;">Once you're in, open <strong style="color:#51606F;">Worker Tools</strong> to see your jobs, clock in and out, and submit timesheets, leave and expenses.</p>
+        </td></tr>
+        <tr><td style="padding:18px 36px 30px;" class="pad">
+          <p style="margin:0;font-size:12px;color:#A6B0BC;line-height:1.55;">This invite is just for you and expires in 14 days. Questions? Reply to this email — it reaches Andrew, the founder.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -93,56 +144,37 @@ Deno.serve(async (req) => {
       .eq('user_id', user.id)
       .maybeSingle();
 
-    // Active team invite code, if one exists — covers the wrong-email case
-    const { data: invite } = await admin
-      .from('employer_invites')
-      .select('invite_code')
-      .eq('employer_id', user.id)
-      .eq('is_active', true)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+    // Mint a fresh single-use invite token for THIS person (retire any prior
+    // pending — one live invite per person). The link carries the token.
+    await admin
+      .from('employer_team_invites')
+      .update({ status: 'revoked' })
+      .eq('employee_id', employee.id)
+      .eq('status', 'pending');
+    const token = hexToken();
+    const { error: inviteError } = await admin.from('employer_team_invites').insert({
+      employer_id: user.id,
+      employee_id: employee.id,
+      email: employee.email.toLowerCase(),
+      token,
+    });
+    if (inviteError) {
+      console.error('send-team-welcome: invite mint failed', inviteError);
+      return new Response(JSON.stringify({ success: false, error: 'Could not create invite' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const acceptUrl = `${SITE_URL}/team/accept/${token}`;
 
     const companyName = company?.company_name?.trim() || 'Your employer';
     const firstName = (employee.name || '').split(' ')[0] || 'there';
-
-    const html = `
-      <div style="font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
-        <h2 style="color: #1a1a1a;">${companyName} has added you to their team on Elec-Mate</h2>
-        <p>Hi ${firstName},</p>
-        <p><strong>${companyName}</strong> uses Elec-Mate to run their jobs, timesheets and site paperwork — and they've added you to their team.</p>
-        <p style="background: #fff8e1; border-left: 4px solid #f5b800; padding: 12px 16px;">
-          <strong>One thing matters:</strong> sign in to Elec-Mate with <strong>this email address</strong>
-          (${employee.email}). Your account links to the team automatically the first time you do.
-        </p>
-        <p>Once you're in, open <strong>Worker Tools</strong> to:</p>
-        <ul>
-          <li>See the jobs you're assigned to</li>
-          <li>Clock in and out on site</li>
-          <li>Submit timesheets, leave and expenses</li>
-          <li>Report site issues straight to the office</li>
-        </ul>
-        <p style="margin: 24px 0;">
-          <a href="https://elec-mate.com/sign-in"
-             style="background: #f5b800; color: #1a1a1a; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-            Sign in to Elec-Mate
-          </a>
-        </p>
-        ${
-          invite?.invite_code
-            ? `<p style="color: #444; font-size: 14px;">Using a different email? No problem — sign in with any account, open <strong>Worker Tools</strong>, and enter the team code <strong style="letter-spacing: 2px;">${invite.invite_code}</strong>.</p>`
-            : ''
-        }
-        <p style="color: #666; font-size: 13px;">
-          New to Elec-Mate? Create your account with ${employee.email} and everything above applies.
-          Questions? Contact info@elec-mate.com.
-        </p>
-      </div>`;
+    const html = buildInviteHtml(companyName, firstName, acceptUrl);
 
     const result = await sendEmail({
-      from: `${companyName} via Elec-Mate <noreply@elec-mate.com>`,
+      from: `${companyName} via Elec-Mate <founder@elec-mate.com>`,
       to: [employee.email],
-      reply_to: company?.company_email || undefined,
+      replyTo: company?.company_email || undefined,
       subject: `${companyName} added you to their team on Elec-Mate`,
       html,
     });

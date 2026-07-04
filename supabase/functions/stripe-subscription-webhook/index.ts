@@ -634,6 +634,9 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1Tm6eF2RKw5t5RAm0nG7ujWw: 'employer', // £49.99/month (CURRENT employer base)
   price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (legacy — kept for existing subs)
   price_1Tm6qA2RKw5t5RAmitPj2yF9: 'employer_yearly', // £499.99/year (CURRENT employer base annual)
+  // £9.99/mo SEAT add-on — map to 'employer' so a multi-item employer sub is never
+  // mis-read as 'unknown'/downgraded if the seat item happens to be items.data[0].
+  price_1TkfWZ2RKw5t5RAmBPSZzc6X: 'employer',
 
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
   price_1SPK8c2RKw5t5RAmRGJxXfjc: 'employer', // £3.99/month founders offer (employer access)

@@ -93,17 +93,38 @@ export function EmployeesSection() {
     }
     return m;
   }, [workerLocations]);
-  const { data: activeSeatCount = 0 } = useQuery({
-    queryKey: ['employer-seat-count'],
+  const { data: seatInfo } = useQuery({
+    queryKey: ['employer-seat-summary'],
     queryFn: async () => {
-      const { count } = await supabase
-        .from('employer_seats')
-        .select('id', { count: 'exact', head: true })
-        .eq('status', 'active');
-      return count ?? 0;
+      const [{ count }, { data: auth }] = await Promise.all([
+        supabase.from('employer_seats').select('id', { count: 'exact', head: true }).eq('status', 'active'),
+        supabase.auth.getUser(),
+      ]);
+      let cap: number | null = null;
+      let comped = false;
+      if (auth?.user) {
+        const { data: prof } = await supabase
+          .from('profiles')
+          .select('employer_seat_cap, free_access_granted')
+          .eq('id', auth.user.id)
+          .maybeSingle();
+        cap = (prof as { employer_seat_cap?: number | null } | null)?.employer_seat_cap ?? null;
+        comped = (prof as { free_access_granted?: boolean } | null)?.free_access_granted === true;
+      }
+      return { active: count ?? 0, cap, comped };
     },
     staleTime: 60 * 1000,
   });
+  const activeSeatCount = seatInfo?.active ?? 0;
+  // Live seat summary — "3 of 5 seats · £X/mo" (or "free" for comped partners).
+  const seatSummary = (() => {
+    if (activeSeatCount === 0) return '';
+    const ofCap = seatInfo?.cap != null ? ` of ${seatInfo.cap}` : '';
+    const cost = seatInfo?.comped
+      ? ' · free on your plan'
+      : ` · £${(activeSeatCount * 9.99).toFixed(2)}/mo`;
+    return ` ${activeSeatCount}${ofCap} seat${activeSeatCount === 1 ? '' : 's'}${cost}.`;
+  })();
 
   const handleRefresh = useCallback(async () => {
     await refetch();
@@ -246,11 +267,7 @@ export function EmployeesSection() {
         <PageHero
           eyebrow="People"
           title="Team"
-          description={`Manage every operative, supervisor and PM on your books.${
-            activeSeatCount > 0
-              ? ` ${activeSeatCount} linked seat${activeSeatCount === 1 ? '' : 's'} on your plan.`
-              : ''
-          }`}
+          description={`Manage every operative, supervisor and PM on your books.${seatSummary}`}
           tone="blue"
         />
         <LoadingBlocks />
@@ -436,7 +453,9 @@ export function EmployeesSection() {
                     trailing={
                       <>
                         <Pill tone={ROLE_TONE[teamRole]}>{teamRole}</Pill>
-                        {isOnSite ? (
+                        {!employee.user_id && employee.status !== 'Archived' ? (
+                          <Pill tone="amber">Invited</Pill>
+                        ) : isOnSite ? (
                           <Pill tone={liveStatus === 'En Route' ? 'blue' : 'emerald'}>
                             {liveStatus}
                           </Pill>
@@ -577,6 +596,7 @@ export function EmployeesSection() {
             selectedEmployee
               ? {
                   id: selectedEmployee.id,
+                  userId: selectedEmployee.user_id,
                   name: selectedEmployee.name,
                   role: selectedEmployee.role,
                   teamRole: getTeamRole(selectedEmployee.team_role),

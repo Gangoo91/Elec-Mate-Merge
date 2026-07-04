@@ -4,6 +4,7 @@ export type PayType = 'hourly' | 'annual' | 'day_rate';
 
 export interface Employee {
   id: string;
+  user_id: string | null; // null = invited but not yet joined (pending seat)
   name: string;
   role: string;
   team_role: string;
@@ -115,6 +116,13 @@ export const updateEmployee = async (
   if (error) {
     console.error('Error updating employee:', error);
     return null;
+  }
+
+  // A status change (archive/unarchive) changes the active-seat count — resync
+  // the employer's Stripe seat quantity so they aren't billed for a removed
+  // worker (or under-billed on unarchive). Best-effort; dormant until launch.
+  if (Object.prototype.hasOwnProperty.call(updates, 'status')) {
+    supabase.functions.invoke('manage-employer-seats').catch(() => {});
   }
 
   return data;

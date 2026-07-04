@@ -257,9 +257,14 @@ export function AddEmployeeDialog({
       resetForm();
       setOpen(false);
     } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      const atCap = msg.includes('SEAT_CAP_REACHED');
+      const capNum = atCap ? msg.match(/limited to (\d+)/)?.[1] : null;
       toast({
-        title: 'Error',
-        description: 'Failed to add team member. Please try again.',
+        title: atCap ? 'Seat limit reached' : 'Error',
+        description: atCap
+          ? `Your plan is limited to ${capNum ?? 'your current'} team members. Remove someone, or contact us to add more seats.`
+          : 'Failed to add team member. Please try again.',
         variant: 'destructive',
       });
     } finally {
