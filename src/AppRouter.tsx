@@ -384,6 +384,8 @@ const AppRouter = () => {
               </LazyRoute>
             }
           />
+          {/* Legacy /sign-in path used in team-welcome emails — redirect to canonical */}
+          <Route path="/sign-in" element={<Navigate to="/auth/signin" replace />} />
           <Route
             path="/auth/signin"
             element={
