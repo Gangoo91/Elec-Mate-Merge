@@ -146,6 +146,77 @@ export function trackCheckoutStarted(props?: { tier?: string; billing?: string }
   });
 }
 
+/** Fired when the post-signup trial page renders — closes the signup →
+    checkout gap in the funnel (did they even see the offer, or bail before?). */
+export function trackPostSignupStepViewed(props: { step: string; tier?: string }): void {
+  send('post_signup_step_viewed', props);
+  sendVercel('post_signup_step_viewed', { step: props.step, tier: props.tier ?? null });
+}
+
+/** Fired on the payment-success page — the client-side end of the funnel. */
+export function trackCheckoutCompleted(props: { plan?: string; trial?: boolean }): void {
+  send('checkout_completed', props);
+  sendVercel('checkout_completed', { plan: props.plan ?? null, trial: props.trial ?? null });
+}
+
+/** Fired when a plan card CTA is tapped on the subscriptions page. */
+export function trackPlanSelected(props: { tier: string }): void {
+  send('plan_selected', props);
+  sendVercel('plan_selected', { tier: props.tier });
+}
+
+/** Fired when a public SEO page's in-content app CTA is clicked — measures
+    whether SEO traffic converts, which Search Console can't see. */
+export function trackSeoCtaClicked(props: { page: string; cta?: string }): void {
+  send('seo_cta_clicked', props);
+  sendVercel('seo_cta_clicked', { page: props.page, cta: props.cta ?? null });
+}
+
+/** Fired once when someone starts typing in the signup form — separates
+    "form scared them off" from "never engaged with the form at all". */
+export function trackSignupStarted(props?: { method?: string }): void {
+  send('signup_started', props);
+  sendVercel('signup_started', { method: props?.method ?? null });
+}
+
+/** Fired when an App Store / Play Store badge is clicked — the invisible half
+    of the funnel where visitors choose native install over web signup. */
+export function trackStoreBadgeClicked(props: {
+  store: 'app_store' | 'play_store';
+  page: string;
+}): void {
+  send('store_badge_clicked', props);
+  sendVercel('store_badge_clicked', { store: props.store, page: props.page });
+}
+
+/** Fired once per visit when a public SEO tool is actually used (not just
+    viewed) — ties content traffic to real engagement. */
+export function trackSeoToolUsed(props: { tool: string; page?: string }): void {
+  send('seo_tool_used', props);
+  sendVercel('seo_tool_used', { tool: props.tool, page: props.page ?? null });
+}
+
+// ─── Cancel flow (pairs with cancel_survey_responses rows) ─────────
+export function trackCancelFlowOpened(props?: { tier?: string }): void {
+  send('cancel_flow_opened', props);
+  sendVercel('cancel_flow_opened', { tier: props?.tier ?? null });
+}
+
+export function trackRetentionOfferShown(props: { offer: string }): void {
+  send('retention_offer_shown', props);
+  sendVercel('retention_offer_shown', { offer: props.offer });
+}
+
+export function trackRetentionOfferAccepted(props: { offer: string }): void {
+  send('retention_offer_accepted', props);
+  sendVercel('retention_offer_accepted', { offer: props.offer });
+}
+
+export function trackCancelConfirmed(props?: { reason?: string }): void {
+  send('cancel_confirmed', props);
+  sendVercel('cancel_confirmed', { reason: props?.reason ?? null });
+}
+
 // ─── AI usage ──────────────────────────────────────────────────────
 export function trackAiChatOpened(props: { agent: string; entrypoint?: string }): void {
   send('ai_chat_opened', props);

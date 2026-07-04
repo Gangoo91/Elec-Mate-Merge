@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { trackCheckoutCompleted } from '@/lib/analytics-events';
 import { downloadMateVCard } from '@/utils/mate-vcard';
 import { MATE_PHONE_DISPLAY, MATE_WHATSAPP_LINK } from '@/constants/mate';
 
@@ -284,6 +285,14 @@ const PaymentSuccess = () => {
   const [activationSlow, setActivationSlow] = useState(false);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const autoNavRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Funnel: client-side end of the acquisition funnel. Fires once per visit.
+  const trackedCompletionRef = useRef(false);
+  useEffect(() => {
+    if (trackedCompletionRef.current) return;
+    trackedCompletionRef.current = true;
+    trackCheckoutCompleted({ plan: planId, trial: isTrial });
+  }, [planId, isTrial]);
 
   const plan = planInfo[planId] || planInfo['electrician-monthly'];
   const liveNoun = plan.liveNoun ?? `${plan.name} `;

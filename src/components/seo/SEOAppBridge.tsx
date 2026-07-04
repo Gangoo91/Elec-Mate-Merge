@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, type LucideIcon } from 'lucide-react';
 import { StoreBadges } from '@/components/seo/StoreBadges';
+import { trackSeoCtaClicked } from '@/lib/analytics-events';
 
 interface SEOAppBridgeProps {
   title: string;
@@ -30,6 +31,7 @@ export function SEOAppBridge({
           <p className="text-sm text-white leading-relaxed mb-4">{description}</p>
           <Link
             to={ctaHref}
+            onClick={() => trackSeoCtaClicked({ page: window.location.pathname, cta: ctaText })}
             className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black text-sm font-semibold rounded-lg touch-manipulation transition-colors active:scale-[0.97]"
           >
             {ctaText}

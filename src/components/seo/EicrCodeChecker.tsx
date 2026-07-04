@@ -8,10 +8,11 @@
  * No login wall — top-of-class SEO pattern: ship the actual tool.
  * Mobile-first: h-11 touch targets, touch-manipulation, chip scroller.
  */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, X, ArrowRight, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { trackSeoToolUsed } from '@/lib/analytics-events';
 import {
   eicrObservations,
   eicrObservationCategories,
@@ -76,9 +77,7 @@ function matchesQuery(obs: EicrObservation, query: string): boolean {
 function SignupCTA() {
   return (
     <div className="rounded-2xl border border-yellow-500/25 bg-yellow-500/5 p-5 sm:p-6">
-      <p className="text-white font-semibold mb-1.5">
-        Writing this up on a real EICR?
-      </p>
+      <p className="text-white font-semibold mb-1.5">Writing this up on a real EICR?</p>
       <p className="text-sm text-white/70 leading-relaxed mb-4">
         Produce professional EICR reports with codes, photos and automatic unsatisfactory logic —
         try Elec-Mate free.
@@ -98,6 +97,16 @@ export default function EicrCodeChecker() {
   const [activeCode, setActiveCode] = useState<EicrCode | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+
+  // Fire once per visit on first real interaction (search or filter) — views
+  // alone don't prove the tool is used.
+  const usedRef = useRef(false);
+  useEffect(() => {
+    if (usedRef.current) return;
+    if (query.trim() === '' && activeCode === null && activeCategory === null) return;
+    usedRef.current = true;
+    trackSeoToolUsed({ tool: 'eicr_code_checker', page: window.location.pathname });
+  }, [query, activeCode, activeCategory]);
 
   const results = useMemo(() => {
     return eicrObservations.filter(

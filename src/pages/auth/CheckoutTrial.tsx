@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useUserCount } from '@/hooks/useUserCount';
 import { trackInitiateCheckout } from '@/lib/marketing-pixels';
-import { trackCheckoutStarted } from '@/lib/analytics-events';
+import { trackCheckoutStarted, trackPostSignupStepViewed } from '@/lib/analytics-events';
 import { fireServerCapi } from '@/lib/attribution';
 
 const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string; label: string }> = {
@@ -81,6 +81,15 @@ const CheckoutTrial = () => {
 
   const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
+
+  // Funnel: fires once per visit so the dashboard can distinguish "never saw
+  // the trial page" from "saw it and bailed" after signup.
+  const trackedViewRef = useRef(false);
+  useEffect(() => {
+    if (trackedViewRef.current) return;
+    trackedViewRef.current = true;
+    trackPostSignupStepViewed({ step: 'checkout_trial', tier: priceInfo.planId });
+  }, [priceInfo.planId]);
 
   const packagesReady = isInitialised && availablePackages.length > 0;
   const packagesLoading =

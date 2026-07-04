@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ import {
   trackCompleteRegistration,
   trackInitiateCheckout,
 } from '@/lib/marketing-pixels';
-import { trackSignupCompleted } from '@/lib/analytics-events';
+import { trackSignupCompleted, trackSignupStarted } from '@/lib/analytics-events';
 import {
   persistAttributionToProfile,
   fireServerCapi,
@@ -251,6 +251,7 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const signupStartedRef = useRef(false);
   const [profileForm, setProfileForm] = useState({ role: '' as string });
   const [consent, setConsent] = useState({
     termsAccepted: false,
@@ -743,7 +744,18 @@ const SignUp = () => {
                       )}
                     </AnimatePresence>
 
-                    <form onSubmit={handleAccountSubmit} className="flex-1 space-y-3">
+                    <form
+                      onSubmit={handleAccountSubmit}
+                      onFocusCapture={() => {
+                        // Fires once per visit on first field focus — separates
+                        // "form scared them off" from "never engaged at all".
+                        if (!signupStartedRef.current) {
+                          signupStartedRef.current = true;
+                          trackSignupStarted();
+                        }
+                      }}
+                      className="flex-1 space-y-3"
+                    >
                       <InputField
                         label="Full name"
                         value={fullName}

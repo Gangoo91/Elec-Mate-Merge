@@ -1,4 +1,5 @@
 import { APP_STORE_URL, PLAY_STORE_URL } from '@/constants/social-proof';
+import { trackStoreBadgeClicked } from '@/lib/analytics-events';
 
 interface StoreBadgesProps {
   className?: string;
@@ -21,6 +22,9 @@ export function StoreBadges({ className = '', size = 'md' }: StoreBadgesProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Download on the App Store"
+        onClick={() =>
+          trackStoreBadgeClicked({ store: 'app_store', page: window.location.pathname })
+        }
         className="transition-opacity hover:opacity-80 active:scale-[0.97]"
       >
         <img
@@ -35,6 +39,9 @@ export function StoreBadges({ className = '', size = 'md' }: StoreBadgesProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Get it on Google Play"
+        onClick={() =>
+          trackStoreBadgeClicked({ store: 'play_store', page: window.location.pathname })
+        }
         className="transition-opacity hover:opacity-80 active:scale-[0.97]"
       >
         <img

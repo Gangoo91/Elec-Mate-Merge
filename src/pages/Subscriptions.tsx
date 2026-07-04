@@ -21,6 +21,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { stripePriceData, nativePriceData, PlanDetails } from '@/data/stripePrices';
 import { cn } from '@/lib/utils';
 import { capturePaymentError, toError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
+import { trackPlanSelected } from '@/lib/analytics-events';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { storageGetSync, storageRemoveSync } from '@/utils/storage';
@@ -237,6 +238,7 @@ const Subscriptions = () => {
   const handleSubscribe = async (planId: string, priceId: string) => {
     try {
       setIsLoading((prev) => ({ ...prev, [planId]: true }));
+      trackPlanSelected({ tier: planId });
       addBreadcrumb('Checkout started', 'payment', { planId, priceId });
       const offerCode = storageGetSync('elec-mate-offer-code');
 

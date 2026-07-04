@@ -21,7 +21,7 @@
  * Used from /subscriptions in the "your subscription" card.
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, X, ArrowLeft, ArrowRight, Heart, MessageCircleHeart } from 'lucide-react';
 
@@ -33,15 +33,15 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import {
+  trackCancelFlowOpened,
+  trackRetentionOfferShown,
+  trackRetentionOfferAccepted,
+  trackCancelConfirmed,
+} from '@/lib/analytics-events';
 
 // ─── Types ──────────────────────────────────────────────────────────────
-type Reason =
-  | 'too_expensive'
-  | 'not_using'
-  | 'missing_feature'
-  | 'switching'
-  | 'bug'
-  | 'other';
+type Reason = 'too_expensive' | 'not_using' | 'missing_feature' | 'switching' | 'bug' | 'other';
 
 type Tier = 'apprentice' | 'electrician' | 'employer' | 'business_ai' | string;
 
@@ -154,6 +154,17 @@ export function CancelFlow({
   const safeName = firstName?.trim() || 'mate';
   const offer = offerForTier(tier);
 
+  // Funnel: pairs with cancel_survey_responses so intervention visibility
+  // (shown vs accepted) is finally measurable.
+  useEffect(() => {
+    if (isOpen) trackCancelFlowOpened({ tier });
+  }, [isOpen, tier]);
+  useEffect(() => {
+    if (step !== 2) return;
+    const founderRoute = reason === 'bug' || !offer.available;
+    trackRetentionOfferShown({ offer: founderRoute ? 'founder_message' : 'retention_discount' });
+  }, [step, reason, offer.available]);
+
   const resetAndClose = () => {
     onClose();
     // Give the close animation a beat before resetting internal state.
@@ -229,6 +240,7 @@ export function CancelFlow({
         description: `${data?.new_price ?? offer.newPrice}/month from your next bill.`,
       });
 
+      trackRetentionOfferAccepted({ offer: 'retention_discount' });
       onStayed?.();
       resetAndClose();
     } catch (err) {
@@ -246,7 +258,7 @@ export function CancelFlow({
   // ── Step 2 action B: message founder ─────────────────────────────────
   const handleMessageFounder = () => {
     const subject = encodeURIComponent(
-      reason === 'bug' ? "I'm hitting a bug" : "Quick one before I cancel"
+      reason === 'bug' ? "I'm hitting a bug" : 'Quick one before I cancel'
     );
     const body = encodeURIComponent(
       `Hi Andrew,\n\n${detail ? detail + '\n\n' : ''}—\nSent from the Elec-Mate cancel flow.`
@@ -260,6 +272,7 @@ export function CancelFlow({
         .update({ outcome: 'stayed', outcome_at: new Date().toISOString() })
         .eq('id', surveyId);
     }
+    trackRetentionOfferAccepted({ offer: 'founder_message' });
     onStayed?.();
     resetAndClose();
   };
@@ -294,6 +307,7 @@ export function CancelFlow({
         description: 'Your data is safe for 90 days if you change your mind.',
       });
 
+      trackCancelConfirmed({ reason: reason ?? undefined });
       onCancelled?.();
       resetAndClose();
     } catch (err) {
@@ -379,8 +393,7 @@ export function CancelFlow({
     }
 
     if (step === 2) {
-      const isFounderRoute =
-        reason === 'bug' || !offer.available;
+      const isFounderRoute = reason === 'bug' || !offer.available;
 
       if (isFounderRoute) {
         return (
@@ -433,8 +446,7 @@ export function CancelFlow({
                   <span className="text-base text-white/70">/month</span>
                 </div>
                 <p className="mt-2 text-[13px] text-white/55">
-                  Was{' '}
-                  <span className="line-through decoration-white/40">{offer.oldPrice}</span> ·
+                  Was <span className="line-through decoration-white/40">{offer.oldPrice}</span> ·
                   Save {offer.saving}
                 </p>
               </div>
@@ -688,9 +700,7 @@ function StepShell({
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-2 text-[14px] leading-[1.6] text-white/65 sm:text-[15px]">
-            {subtitle}
-          </p>
+          <p className="mt-2 text-[14px] leading-[1.6] text-white/65 sm:text-[15px]">{subtitle}</p>
         )}
       </div>
       {children}
@@ -698,13 +708,7 @@ function StepShell({
   );
 }
 
-function FooterRow({
-  children,
-  left,
-}: {
-  children: React.ReactNode;
-  left?: React.ReactNode;
-}) {
+function FooterRow({ children, left }: { children: React.ReactNode; left?: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="flex-shrink-0">{left ?? <span className="w-0" />}</div>
