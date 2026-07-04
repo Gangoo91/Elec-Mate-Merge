@@ -123,7 +123,7 @@ Deno.serve(async (req) => {
           <li>Report site issues straight to the office</li>
         </ul>
         <p style="margin: 24px 0;">
-          <a href="https://elec-mate.com/sign-in"
+          <a href="https://elec-mate.com/auth/signin"
              style="background: #f5b800; color: #1a1a1a; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
             Sign in to Elec-Mate
           </a>
