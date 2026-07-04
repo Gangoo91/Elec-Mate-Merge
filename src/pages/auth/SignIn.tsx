@@ -1,13 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, CheckCircle2, Eye, EyeOff, Loader2 } from 'lucide-react';
+import {
+  Check,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  Fingerprint,
+  Loader2,
+  ScanFace,
+} from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
 import { useAuth } from '@/contexts/AuthContext';
 import { useBiometricAuth } from '@/hooks/useBiometricAuth';
 import { useUserCount } from '@/hooks/useUserCount';
+import { useCookieConsent } from '@/components/CookieConsent';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
 
@@ -23,6 +32,8 @@ const SignIn = () => {
   const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
   const [isBiometricLoggingIn, setIsBiometricLoggingIn] = useState(false);
   const userCount = useUserCount();
+  // Cookie banner clearance — see container className below
+  const { hasConsented } = useCookieConsent();
 
   const pendingCredentials = useRef<{ email: string; password: string } | null>(null);
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -35,6 +46,23 @@ const SignIn = () => {
     const emailParam = searchParams.get('email');
     if (emailParam && !email) setEmail(emailParam);
   }, [searchParams, email]);
+
+  // Biometric-first for returning users: prompt Face ID / fingerprint as soon
+  // as the page opens, the way banking apps do. Fires once; cancelling simply
+  // leaves the user on the form with the biometric button still available.
+  const autoPromptedRef = useRef(false);
+  useEffect(() => {
+    if (
+      !autoPromptedRef.current &&
+      !biometric.isChecking &&
+      biometric.isAvailable &&
+      biometric.isEnabled
+    ) {
+      autoPromptedRef.current = true;
+      handleBiometricLogin();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [biometric.isChecking, biometric.isAvailable, biometric.isEnabled]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,7 +180,15 @@ const SignIn = () => {
         )}
       </AnimatePresence>
 
-      <div className="mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-6 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-[env(safe-area-inset-top)] lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-8">
+      <div
+        className={cn(
+          'mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-6 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-[env(safe-area-inset-top)] lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-8',
+          // The fixed cookie banner overlaps the primary CTA at the bottom on
+          // mobile until consent is answered — it intercepted the tap in
+          // testing. Clear it while the banner is up.
+          !hasConsented && 'pb-36'
+        )}
+      >
         <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
           <div>
             <Link to="/" className="flex items-center gap-3">
@@ -173,10 +209,9 @@ const SignIn = () => {
             </div>
           </div>
 
-          <div className="grid gap-5 border-t border-white/10 pt-6 text-sm leading-7 text-white/68">
-            <div>{userCount} electricians already live on Elec-Mate.</div>
-            <div>Secure sign-in with password, with biometric sign-in where available.</div>
-            <div>Need an account? Start a 7-day free trial with no charge for 7 days.</div>
+          <div className="grid gap-4 border-t border-white/10 pt-6 text-sm leading-7 text-white/68">
+            <div>{userCount} UK electricians already live on Elec-Mate.</div>
+            <div>Face ID and fingerprint sign-in on the mobile app.</div>
           </div>
         </div>
 
@@ -214,22 +249,40 @@ const SignIn = () => {
             </AnimatePresence>
 
             {biometric.isAvailable && biometric.isEnabled && (
-              <button
-                type="button"
-                onClick={handleBiometricLogin}
-                disabled={isBiometricLoggingIn || isSubmitting}
-                className="mt-6 h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] lg:mt-8"
-              >
-                {isBiometricLoggingIn ? 'Verifying...' : `Sign in with ${biometric.biometricType}`}
-              </button>
-            )}
+              <>
+                {/* Biometric is the primary action for returning users — the
+                    password form below is the fallback */}
+                <button
+                  type="button"
+                  onClick={handleBiometricLogin}
+                  disabled={isBiometricLoggingIn || isSubmitting}
+                  className="mt-6 flex h-14 w-full touch-manipulation items-center justify-center gap-2.5 rounded-2xl bg-yellow-500 px-5 text-[15px] font-semibold text-black transition-colors hover:bg-yellow-400 disabled:opacity-60 lg:mt-8"
+                >
+                  {isBiometricLoggingIn ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Verifying...
+                    </>
+                  ) : (
+                    <>
+                      {/face/i.test(biometric.biometricType) ? (
+                        <ScanFace className="h-5 w-5" />
+                      ) : (
+                        <Fingerprint className="h-5 w-5" />
+                      )}
+                      Sign in with {biometric.biometricType}
+                    </>
+                  )}
+                </button>
 
-            {biometric.isAvailable && biometric.isEnabled && (
-              <div className="my-5 flex items-center gap-3 lg:my-6">
-                <div className="h-px flex-1 bg-white/[0.10]" />
-                <span className="text-[13px] font-medium text-white">or</span>
-                <div className="h-px flex-1 bg-white/[0.10]" />
-              </div>
+                <div className="my-5 flex items-center gap-3 lg:my-6">
+                  <div className="h-px flex-1 bg-white/[0.10]" />
+                  <span className="text-[13px] font-medium text-white/60">
+                    or use your password
+                  </span>
+                  <div className="h-px flex-1 bg-white/[0.10]" />
+                </div>
+              </>
             )}
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4 lg:mt-8 lg:space-y-5">
@@ -238,12 +291,19 @@ const SignIn = () => {
                 <div className="relative mt-2">
                   <input
                     type="email"
+                    id="email"
+                    name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onFocus={() => setFocusedField('email')}
                     onBlur={() => setFocusedField(null)}
                     placeholder="you@example.com"
                     autoComplete="email"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    inputMode="email"
+                    enterKeyHint="next"
                     className={cn(
                       'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-11 text-[16px] text-white placeholder:text-white/38 outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
                       focusedField === 'email'
@@ -262,7 +322,7 @@ const SignIn = () => {
                   <label className="block text-[13px] font-medium text-white">Password</label>
                   <Link
                     to="/auth/forgot-password"
-                    className="text-[13px] font-medium text-yellow-400 transition-colors hover:text-yellow-300"
+                    className="-my-2 touch-manipulation py-2 text-[13px] font-medium text-yellow-400 transition-colors hover:text-yellow-300"
                   >
                     Forgot password
                   </Link>
@@ -270,12 +330,15 @@ const SignIn = () => {
                 <div className="relative mt-2">
                   <input
                     type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onFocus={() => setFocusedField('password')}
                     onBlur={() => setFocusedField(null)}
                     placeholder="Enter password"
                     autoComplete="current-password"
+                    enterKeyHint="go"
                     className={cn(
                       'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-12 text-[16px] text-white placeholder:text-white/38 outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
                       focusedField === 'password'
@@ -310,21 +373,17 @@ const SignIn = () => {
               </Button>
             </form>
 
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[12px] text-white lg:mt-8">
-              <span>
-                <span className="font-semibold text-yellow-400">{userCount}</span> electricians live
-              </span>
-              <span>No charge for 7 days on new accounts</span>
-            </div>
-
-            <div className="mt-4 text-center lg:mt-5 lg:text-left">
+            <div className="mt-7 border-t border-white/[0.08] pt-5 text-center lg:mt-8 lg:text-left">
               <Link
                 to="/auth/signup"
-                className="text-[14px] font-medium text-white transition-colors hover:text-yellow-400"
+                className="-m-2 inline-block touch-manipulation p-2 text-[14px] font-medium text-white transition-colors hover:text-yellow-400"
               >
-                Need an account?{' '}
-                <span className="font-semibold text-yellow-400">Start a 7-day free trial.</span>
+                New to Elec-Mate?{' '}
+                <span className="font-semibold text-yellow-400">Start free — £0 today.</span>
               </Link>
+              <p className="mt-1.5 text-[12px] text-white/55">
+                7 days free · cancel anytime · join {userCount} UK electricians
+              </p>
             </div>
           </div>
         </div>

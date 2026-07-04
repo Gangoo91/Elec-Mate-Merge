@@ -60,14 +60,20 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
     console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     event.preventDefault();
     sessionStorage.setItem('__chunkRetried', '1');
-    if ('caches' in window) {
-      caches
-        .keys()
-        .then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
-        .finally(() => window.location.reload());
-    } else {
-      window.location.reload();
-    }
+    // ELE-1273: unregister the service worker too — it's what serves the
+    // stale index.html full of dead chunk URLs. Clearing caches alone leaves
+    // the old SW in control and the next load can fail the same way.
+    const unregisterSWs =
+      'serviceWorker' in navigator
+        ? navigator.serviceWorker
+            .getRegistrations()
+            .then((regs) => Promise.all(regs.map((r) => r.unregister())))
+        : Promise.resolve([]);
+    const clearCaches =
+      'caches' in window
+        ? caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
+        : Promise.resolve([]);
+    Promise.allSettled([unregisterSWs, clearCaches]).finally(() => window.location.reload());
   }
 };
 

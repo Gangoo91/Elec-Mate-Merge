@@ -30,6 +30,7 @@ import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
+import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -365,32 +366,43 @@ export const InvoiceSendDropdown = ({
       const clientPhone = clientData?.phone;
 
       if (Capacitor.isNativePlatform()) {
-        const message = `📄 *Invoice ${freshInvoice.invoice_number}*
+        // ELE-1276: attach the actual PDF via the native share sheet — the
+        // signed S3 URL expires after an hour and looks unprofessional as
+        // raw text. Message carries no link; the file IS the document.
+        const nativeMessage = `*Invoice ${freshInvoice.invoice_number} — ${companyName}*
 
 Dear ${clientName},
 
-Please find your invoice for ${formatCurrency(totalAmount)}
-Due date: ${dueDate}
+Please find attached your invoice for ${formatCurrency(totalAmount)}, due ${dueDate}.
 
-📥 Download Invoice (PDF):
-${cacheBustedPdfUrl}
+Payment details are on the invoice. If you have any questions, just reply here.
 
-Payment details are included in the invoice.
-
-If you have any questions, please don't hesitate to contact me.
-
-Best regards,
+Many thanks,
 ${companyName}`;
 
-        let whatsappUrl: string;
-        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
-        } else {
-          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-        }
+        const shared = await sharePdfFileNative({
+          pdfUrl: cacheBustedPdfUrl,
+          filename: `Invoice-${freshInvoice.invoice_number || freshInvoice.id}.pdf`,
+          title: `Invoice ${freshInvoice.invoice_number}`,
+          text: nativeMessage,
+        });
 
-        await openExternalUrl(whatsappUrl);
+        if (!shared) {
+          // Fallback: legacy wa.me text with the download link — better than
+          // nothing if the PDF download or share sheet failed.
+          const fallbackMessage = `${nativeMessage}
+
+Download your invoice here:
+${cacheBustedPdfUrl}`;
+          let whatsappUrl: string;
+          if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+            const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+            whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(fallbackMessage)}`;
+          } else {
+            whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fallbackMessage)}`;
+          }
+          await openExternalUrl(whatsappUrl);
+        }
 
         toast({
           title: 'Sent via WhatsApp',
@@ -399,18 +411,15 @@ ${companyName}`;
         });
       } else {
         // Web: attach the actual PDF, never a link in the body
-        const webMessage = `📄 *Invoice ${freshInvoice.invoice_number}*
+        const webMessage = `*Invoice ${freshInvoice.invoice_number} — ${companyName}*
 
 Dear ${clientName},
 
-Please find your invoice for ${formatCurrency(totalAmount)}
-Due date: ${dueDate}
+Please find attached your invoice for ${formatCurrency(totalAmount)}, due ${dueDate}.
 
-Payment details are included in the invoice.
+Payment details are on the invoice. If you have any questions, just reply here.
 
-If you have any questions, please don't hesitate to contact me.
-
-Best regards,
+Many thanks,
 ${companyName}`;
 
         const result = await sharePdfBytesFromUrlToWhatsAppWeb({
@@ -622,23 +631,28 @@ ${companyName}`;
             <span className="text-xs text-white">Sends with PDF attachment</span>
           </div>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={handleShareWhatsApp}
-          disabled={isSharingWhatsApp}
-          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
-        >
-          <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-            {isSharingWhatsApp ? (
-              <Loader2 className="h-5 w-5 text-green-500 animate-spin" />
-            ) : (
-              <MessageCircle className="h-5 w-5 text-green-500" />
-            )}
-          </div>
-          <div className="flex flex-col">
-            <span className="font-semibold text-sm">Share via WhatsApp</span>
-            <span className="text-xs text-white">Send with PDF link</span>
-          </div>
-        </DropdownMenuItem>
+        {/* ELE-1276: only offer WhatsApp where the PDF can genuinely attach
+            (native app / mobile web). Desktop WhatsApp can't accept files via
+            URL scheme — hiding it beats sending clients a bare link. */}
+        {canShareFilesToWhatsApp() && (
+          <DropdownMenuItem
+            onClick={handleShareWhatsApp}
+            disabled={isSharingWhatsApp}
+            className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
+          >
+            <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+              {isSharingWhatsApp ? (
+                <Loader2 className="h-5 w-5 text-green-500 animate-spin" />
+              ) : (
+                <MessageCircle className="h-5 w-5 text-green-500" />
+              )}
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold text-sm">Share via WhatsApp</span>
+              <span className="text-xs text-white">Sends the PDF attached</span>
+            </div>
+          </DropdownMenuItem>
+        )}
 
         {/* Accounting Sync Section */}
         {!accountingLoading && (

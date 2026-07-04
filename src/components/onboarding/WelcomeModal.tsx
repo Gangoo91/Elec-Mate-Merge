@@ -3,220 +3,231 @@ import { useNavigate } from 'react-router-dom';
 import { storageSetSync } from '@/utils/storage';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { trackFeatureUse } from '@/components/ActivityTracker';
+import { cn } from '@/lib/utils';
 import {
-  Zap,
-  GraduationCap,
-  Wrench,
+  Bot,
   Building2,
   ChevronRight,
-  Sparkles,
-  BookOpen,
-  Calculator,
-  FileCheck,
-  Users,
-  Bot,
   Clock,
-  CheckCircle2,
+  Compass,
+  FileCheck,
+  GraduationCap,
+  ReceiptText,
+  Users,
+  Zap,
 } from 'lucide-react';
+
+/**
+ * First-run intent question. One tap drops the user into the flow they came
+ * for — a person who picked a goal activates at multiples of one who was
+ * given a feature tour. The chosen intent is logged to user_events so we can
+ * measure which first jobs convert.
+ *
+ * Every route here is a live, verified route — check the route files before
+ * changing any `to` value.
+ */
 
 interface WelcomeModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const roleContent = {
-  apprentice: {
-    icon: GraduationCap,
-    title: 'Welcome to Elec-Mate',
-    subtitle: 'Everything you need for your apprenticeship',
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/20',
-    borderColor: 'border-blue-500/30',
-    features: [
-      { icon: BookOpen, text: '20,000+ Practice Questions', desc: 'Master your theory exams' },
-      { icon: Calculator, text: '60+ Calculators', desc: 'Cable sizing, Zs, voltage drop & more' },
-      { icon: FileCheck, text: 'AM2 Preparation', desc: 'Mock tests and practical guides' },
-      { icon: Clock, text: 'OJT Tracking', desc: 'Log your on-the-job training hours' },
-    ],
-    cta: 'Start Learning',
-    ctaPath: '/study-centre/apprentice',
-  },
-  electrician: {
-    icon: Wrench,
-    title: 'Welcome to Elec-Mate',
-    subtitle: 'Tools and resources for professionals',
-    color: 'text-elec-yellow',
-    bgColor: 'bg-elec-yellow/20',
-    borderColor: 'border-elec-yellow/30',
-    features: [
-      {
-        icon: Bot,
-        text: '5 AI Specialist Agents',
-        desc: 'Cost, design, installs, maintenance & H&S',
-      },
-      { icon: FileCheck, text: 'Inspection Suite', desc: 'EICR, EIC, Minor Works certificates' },
-      { icon: Calculator, text: 'Pro Calculators', desc: 'All calculations at your fingertips' },
-      { icon: Sparkles, text: 'RAMS Generator', desc: 'AI-powered risk assessments' },
-    ],
-    cta: 'Explore Tools',
-    ctaPath: '/electrician',
-  },
-  employer: {
-    icon: Building2,
-    title: 'Welcome to Elec-Mate',
-    subtitle: 'Manage your team and jobs',
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-500/20',
-    borderColor: 'border-purple-500/30',
-    features: [
-      { icon: Users, text: 'Team GPS Tracking', desc: 'Real-time engineer locations' },
-      { icon: FileCheck, text: 'Job Pack Management', desc: 'Assign and track jobs' },
-      { icon: Clock, text: 'Timesheet System', desc: 'Automated time tracking' },
-      { icon: Sparkles, text: 'Safety Hub', desc: 'Compliance documentation' },
-    ],
-    cta: 'Setup Team',
-    ctaPath: '/employer',
-  },
-  visitor: {
-    icon: Zap,
-    title: 'Welcome to Elec-Mate',
-    subtitle: 'Tools for electrical professionals',
-    color: 'text-elec-yellow',
-    bgColor: 'bg-elec-yellow/20',
-    borderColor: 'border-elec-yellow/30',
-    features: [
-      { icon: BookOpen, text: 'Learning Resources', desc: 'Study materials and guides' },
-      { icon: Calculator, text: 'Calculators', desc: 'Essential electrical calculations' },
-      { icon: Bot, text: 'AI Assistant', desc: 'Get help with regulations' },
-      { icon: Sparkles, text: 'Much More', desc: 'Explore all our features' },
-    ],
-    cta: 'Get Started',
-    ctaPath: '/dashboard',
-  },
+interface IntentOption {
+  key: string;
+  icon: typeof Zap;
+  label: string;
+  desc: string;
+  to: string;
+}
+
+const INTENTS: Record<string, IntentOption[]> = {
+  electrician: [
+    {
+      key: 'certificate',
+      icon: FileCheck,
+      label: 'I’ve got a cert to do',
+      desc: 'EICR, EIC, Minor Works — start it now',
+      to: '/electrician/inspection-testing/new',
+    },
+    {
+      key: 'quote',
+      icon: ReceiptText,
+      label: 'I’ve got a quote to send',
+      desc: 'Build and send a branded quote',
+      to: '/electrician/quote-builder/create',
+    },
+    {
+      key: 'tools',
+      icon: Bot,
+      label: 'Show me the AI & calculators',
+      desc: 'Board scanner, cost engineer, 70+ calcs',
+      to: '/electrician',
+    },
+    {
+      key: 'browse',
+      icon: Compass,
+      label: 'Just having a look around',
+      desc: 'Start at the dashboard',
+      to: '/dashboard',
+    },
+  ],
+  apprentice: [
+    {
+      key: 'am2',
+      icon: Zap,
+      label: 'Preparing for my AM2',
+      desc: 'The simulator with a real MFT dial',
+      to: '/apprentice/am2-simulator',
+    },
+    {
+      key: 'revision',
+      icon: GraduationCap,
+      label: 'Revising for exams',
+      desc: 'Courses, quizzes and mock exams',
+      to: '/study-centre/apprentice',
+    },
+    {
+      key: 'ojt',
+      icon: Clock,
+      label: 'Logging OJT hours & portfolio',
+      desc: 'Off-the-job hours and evidence',
+      to: '/apprentice/ojt-hub',
+    },
+    {
+      key: 'browse',
+      icon: Compass,
+      label: 'Just having a look around',
+      desc: 'Start at the dashboard',
+      to: '/dashboard',
+    },
+  ],
+  employer: [
+    {
+      key: 'team',
+      icon: Users,
+      label: 'Set up my team',
+      desc: 'Add your sparks and assign work',
+      to: '/employer',
+    },
+    {
+      key: 'jobs',
+      icon: Building2,
+      label: 'Manage jobs & compliance',
+      desc: 'Job packs, timesheets, safety',
+      to: '/employer',
+    },
+    {
+      key: 'browse',
+      icon: Compass,
+      label: 'Just having a look around',
+      desc: 'Start at the dashboard',
+      to: '/dashboard',
+    },
+  ],
 };
 
 const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
   const { profile, user, updateProfile } = useAuth();
   const navigate = useNavigate();
-  const [isCompleting, setIsCompleting] = useState(false);
+  const [choosing, setChoosing] = useState<string | null>(null);
 
-  const role = (profile?.role || 'visitor') as keyof typeof roleContent;
-  const content = roleContent[role] || roleContent.visitor;
-  const Icon = content.icon;
+  const role = (profile?.role || 'electrician') as keyof typeof INTENTS;
+  const options = INTENTS[role] || INTENTS.electrician;
 
-  const handleGetStarted = async () => {
-    if (!user) return;
-
-    setIsCompleting(true);
-    try {
-      await updateProfile(user.id, { onboarding_completed: true });
-      storageSetSync('elec-mate-onboarding-done', 'true');
-      onClose();
-      navigate(content.ctaPath);
-    } catch (error) {
-      console.error('Error completing onboarding:', error);
-      storageSetSync('elec-mate-onboarding-done', 'true');
-      onClose();
-    } finally {
-      setIsCompleting(false);
+  const completeOnboarding = async () => {
+    storageSetSync('elec-mate-onboarding-done', 'true');
+    if (user) {
+      try {
+        await updateProfile(user.id, { onboarding_completed: true });
+      } catch (error) {
+        console.error('Error completing onboarding:', error);
+      }
     }
   };
 
-  const handleSkip = async () => {
-    storageSetSync('elec-mate-onboarding-done', 'true');
-    if (!user) {
-      onClose();
-      return;
+  const choose = async (option: IntentOption) => {
+    if (choosing) return;
+    setChoosing(option.key);
+    if (user) {
+      trackFeatureUse(user.id, 'onboarding_intent', { intent: option.key, role });
     }
+    await completeOnboarding();
+    onClose();
+    if (option.to !== '/dashboard') navigate(option.to);
+    setChoosing(null);
+  };
 
-    try {
-      await updateProfile(user.id, { onboarding_completed: true });
-    } catch (error) {
-      console.error('Error skipping onboarding:', error);
+  const handleSkip = async () => {
+    if (user) {
+      trackFeatureUse(user.id, 'onboarding_intent', { intent: 'dismissed', role });
     }
+    await completeOnboarding();
     onClose();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleSkip}>
-      <DialogContent className="max-w-md sm:max-w-lg md:max-w-xl p-0 gap-0 bg-neutral-900 border-white/10 overflow-hidden">
+      <DialogContent className="max-w-md gap-0 overflow-hidden border-white/10 bg-[#101010] p-0 sm:max-w-lg">
         <VisuallyHidden>
-          <DialogTitle>{content.title}</DialogTitle>
-          <DialogDescription>{content.subtitle}</DialogDescription>
+          <DialogTitle>What's on this week?</DialogTitle>
+          <DialogDescription>
+            Pick what you came to do and we'll take you straight there.
+          </DialogDescription>
         </VisuallyHidden>
-        {/* Header with gradient */}
-        <div className={`relative px-6 md:px-8 pt-8 md:pt-10 pb-6 md:pb-8 ${content.bgColor}`}>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-neutral-900" />
-          <div className="relative z-10 text-center">
-            <div
-              className={`inline-flex p-4 md:p-5 rounded-2xl ${content.bgColor} ${content.borderColor} border mb-4 md:mb-5`}
-            >
-              <Icon className={`h-10 w-10 md:h-12 md:w-12 ${content.color}`} />
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{content.title}</h2>
-            <p className="text-white md:text-lg">{content.subtitle}</p>
-          </div>
-        </div>
 
-        {/* Features */}
-        <div className="px-6 md:px-8 py-6 md:py-8 space-y-3 md:space-y-4">
-          <p className="text-xs md:text-sm font-medium text-white uppercase tracking-wider mb-4">
-            What you get with your 7-day free trial
+        {/* Header */}
+        <div className="relative px-6 pb-5 pt-8 text-center sm:px-8">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0"
+          />
+          <span className="inline-flex items-center gap-2 rounded-full border border-yellow-500/25 bg-yellow-500/[0.08] px-3 py-1 text-[11px] font-semibold text-yellow-400">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-yellow-400" />
+            Trial active — £0 today
+          </span>
+          <h2 className="mt-4 text-[1.6rem] font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-[1.8rem]">
+            What's on <span className="text-yellow-400">this week?</span>
+          </h2>
+          <p className="mx-auto mt-2 max-w-[24rem] text-[13.5px] leading-[1.6] text-white/65">
+            Pick one and we'll take you straight there — everything's unlocked.
           </p>
-          {content.features.map((feature, index) => {
-            const FeatureIcon = feature.icon;
-            return (
-              <div
-                key={index}
-                className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-white/[0.03] border border-white/5 transition-colors hover:border-white/10"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <div className={`p-2 md:p-2.5 rounded-lg ${content.bgColor}`}>
-                  <FeatureIcon className={`h-4 w-4 md:h-5 md:w-5 ${content.color}`} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-white text-sm md:text-base">{feature.text}</p>
-                  <p className="text-xs md:text-sm text-white">{feature.desc}</p>
-                </div>
-                <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-green-500 flex-shrink-0 mt-1" />
+        </div>
+
+        {/* Intent options */}
+        <div className="space-y-2.5 px-6 pb-4 sm:px-8">
+          {options.map((option) => (
+            <button
+              key={option.key}
+              onClick={() => choose(option)}
+              disabled={!!choosing}
+              className={cn(
+                'group flex w-full touch-manipulation items-center gap-3.5 rounded-2xl border p-4 text-left transition-all duration-150',
+                choosing === option.key
+                  ? 'border-yellow-400/60 bg-yellow-500/[0.10]'
+                  : 'border-white/[0.10] bg-white/[0.03] hover:border-yellow-400/40 hover:bg-white/[0.05] active:scale-[0.99]'
+              )}
+            >
+              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+                <option.icon className="h-5 w-5 text-yellow-400" />
               </div>
-            );
-          })}
+              <div className="min-w-0 flex-1">
+                <p className="text-[14.5px] font-semibold leading-tight text-white">
+                  {option.label}
+                </p>
+                <p className="mt-0.5 text-[12px] text-white/60">{option.desc}</p>
+              </div>
+              <ChevronRight className="h-4 w-4 flex-shrink-0 text-white/40 transition-colors group-hover:text-yellow-400" />
+            </button>
+          ))}
         </div>
 
-        {/* Trial info */}
-        <div className="px-6 md:px-8 py-3 md:py-4 bg-green-500/10 border-t border-b border-green-500/20">
-          <div className="flex items-center justify-center gap-2 text-sm md:text-base text-green-400">
-            <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
-            <span>7-day free trial active — no charge until day 8</span>
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div className="px-6 md:px-8 py-6 md:py-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] space-y-3">
-          <Button
-            onClick={handleGetStarted}
-            disabled={isCompleting}
-            className="w-full h-12 md:h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base md:text-lg touch-manipulation"
-          >
-            {isCompleting ? (
-              'Setting up...'
-            ) : (
-              <>
-                {content.cta}
-                <ChevronRight className="ml-2 h-5 w-5 md:h-6 md:w-6" />
-              </>
-            )}
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={handleSkip}
-            className="w-full h-11 text-white hover:text-white md:text-base touch-manipulation"
-          >
-            I'll explore on my own
-          </Button>
+        {/* Footer */}
+        <div className="px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-1 sm:px-8">
+          <p className="text-center text-[11px] text-white/45">
+            7 days free · no charge until day 8 · cancel anytime
+          </p>
         </div>
       </DialogContent>
     </Dialog>

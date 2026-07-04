@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, Menu, Star, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { StoreBadges } from '@/components/seo/StoreBadges';
@@ -11,17 +11,26 @@ import { useAuth } from '@/contexts/AuthContext';
 import { trackLandingCtaClicked, trackLandingSectionViewed } from '@/lib/analytics-events';
 import { usePublicStats } from '@/hooks/usePublicStats';
 import { useUserCount } from '@/hooks/useUserCount';
-import { LeadMagnetSection } from '@/components/landing/LeadMagnetSection';
-import { WaitlistSection } from '@/components/landing/WaitlistSection';
 import { ExitIntentModal } from '@/components/landing/ExitIntentModal';
+import { WaitlistSection } from '@/components/landing/WaitlistSection';
 import {
   Eyebrow,
   Pill,
   Dot,
-  HubCard,
   PrimaryButton,
   SecondaryButton,
 } from '@/components/college/primitives';
+
+/**
+ * Landing page v3 — rebuilt 2026-07-04 (ELE-1233).
+ *
+ * Funnel data drove every cut: 427 visitors → 11 CTA clicks (2.6%) but
+ * 11/11 clicks completed signup, and section-view counts showed visitors see
+ * ~2 sections before leaving. So: the product and the CTA live in the hero,
+ * proof comes second, pricing third, and everything that diluted the page
+ * (lead magnet, waitlist, mental health, site photos) is gone. Every CTA
+ * carries the "£0 today" framing that CheckoutTrial continues.
+ */
 
 const workflowSteps: {
   eyebrow: string;
@@ -79,47 +88,6 @@ const workflowSteps: {
   },
 ];
 
-const getAudienceCards = (
-  apprenticePrice: string,
-  electricianPrice: string
-): {
-  eyebrow: string;
-  title: string;
-  body: string;
-  features: string[];
-  price: string;
-  featured?: boolean;
-}[] => [
-  {
-    eyebrow: 'APPRENTICE',
-    title: 'Pass AM2 first time.',
-    body: 'The complete path from Level 2 to qualified — theory courses, the practical simulator, OJT hours, digital portfolio and an AI mentor that knows BS 7671. Built around the AM2.',
-    features: [
-      '46+ courses · 700+ lessons · 20,000+ exam questions (L2 · L3 · AM2)',
-      'AM2 Testing Simulator — Megger MFT dial + EIC schedule sign-off',
-      'Digital portfolio · OJT hours · tutor sign-off · AC coverage',
-      '"Ask Dave" AI mentor · 60+ on-job calculators · flashcards',
-    ],
-    price: apprenticePrice,
-  },
-  {
-    eyebrow: 'ELECTRICIAN',
-    title: 'Quote, certify, invoice, get paid.',
-    body: 'Everything you actually use on the tools, all in one app. Certificates, RAMS, calculators, AI agents — plus an AI Assistant in the sidebar that answers anything BS 7671 and Business Mate that does the admin for you.',
-    features: [
-      '19 BS 7671 cert types · A4:2026 ready · works offline',
-      'AI Assistant in the sidebar — ask anything, every answer cites BS 7671',
-      'Business Mate — creates projects, snags, quotes & emails on command',
-      'AI agents — Cost Engineer · Circuit Designer · Maintenance · Installer · H&S',
-      'AI Board Scanner · 70+ trade calculators · live BS 7671 reference',
-      'RAMS · site safety · method statements · CPD log',
-      'Business Hub — quotes, invoices, customers, projects, jobs, snagging',
-    ],
-    price: electricianPrice,
-    featured: true,
-  },
-];
-
 // 24px blur-up placeholder for the hero phone shot (~190 bytes inline) — paints
 // instantly behind the real image so it fades in rather than popping from nothing
 const HERO_THUMB =
@@ -131,10 +99,6 @@ const heroThumbStyle = {
 
 const appScreens = [
   {
-    src: '/images/landing/screen-dashboard.webp',
-    alt: 'Elec-Mate dashboard — quote pipeline, certificates and overdue invoices at a glance',
-  },
-  {
     src: '/images/landing/screen-certs.webp',
     alt: 'BS 7671 certificates in minutes — EICR, EIC and Minor Works pickers',
   },
@@ -143,20 +107,16 @@ const appScreens = [
     alt: 'Business Hub — paid, outstanding and overdue invoices in one place',
   },
   {
+    src: '/images/landing/screen-ai.webp',
+    alt: 'AI that understands electrical work — every answer cites the exact regulation',
+  },
+  {
     src: '/images/landing/screen-rams.webp',
     alt: 'RAMS generated in 2 minutes — AI handles the boilerplate',
   },
   {
-    src: '/images/landing/screen-design.webp',
-    alt: 'AI design consultation — circuit designer with cable sizing and CU layouts',
-  },
-  {
     src: '/images/landing/screen-calculators.webp',
     alt: 'Built-in electrical calculators — BS 7671 compliant professional tools',
-  },
-  {
-    src: '/images/landing/screen-ai.webp',
-    alt: 'AI that understands electrical work — every answer cites the exact regulation',
   },
   {
     src: '/images/landing/screen-study.webp',
@@ -164,39 +124,27 @@ const appScreens = [
   },
 ];
 
-const sitePhotos = [
-  {
-    src: '/images/site-photos/consumer-unit-eic.jpg',
-    alt: 'iPad showing EIC form below a live consumer unit',
-    title: 'EIC, on the wall.',
-    subtitle: 'iPad up. Form open. Cert signed before you leave the job.',
-  },
-  {
-    src: '/images/site-photos/ipad-mft-testing.jpg',
-    alt: 'iPad on a worktop next to a Megger MFT during testing',
-    title: 'A4:2026 readings, live.',
-    subtitle: 'Megger MFT into the new model schedule of tests.',
-  },
-  {
-    src: '/images/site-photos/macbook-cert-types.jpg',
-    alt: 'MacBook showing Elec-Mate certificate selector with Megger MFT',
-    title: 'Every cert. One click.',
-    subtitle: 'EICR · EIC · Minor Works · Testing Only · plus 15 more.',
-  },
-  {
-    src: '/images/site-photos/macbook-workshop-a4.jpg',
-    alt: 'MacBook on a workshop bench running schedule of tests',
-    title: 'Workshop or front room.',
-    subtitle: 'Same app. Every device. Every job.',
-  },
-];
-
+// Newest 5★ App Store reviews first — the top three render on the page
 const testimonials: {
   nickname: string;
   title: string;
   quote: string;
   date: string;
 }[] = [
+  {
+    nickname: 'Matt (FES)',
+    title: 'Great business tool',
+    quote:
+      'I was using trade-cert and was paying £18 a month for a testing cert app, then a few customers needed PAT software (another £60). Elec-Mate has testing software, PAT testing, quoting, invoicing, training, calendar — I went fully committed and paid up for the year. I love this app, can’t speak highly enough about it to other electricians.',
+    date: '10 Jun 2026',
+  },
+  {
+    nickname: 'Cam5303',
+    title: 'Brilliant software',
+    quote:
+      'If you are looking for a piece of software as an electrician or even apprentice with everything in one — ranging from calculators to EICs, or to freshen your memory up on something — be sure to check this out. Brilliant piece of kit, would totally recommend.',
+    date: '16 Jun 2026',
+  },
   {
     nickname: 'I.staffy',
     title: 'One App for Everything!',
@@ -231,48 +179,6 @@ const testimonials: {
     quote:
       "I've used the app and the web based version for a while now and it's well worth the investment. If you're an apprentice or experienced Spark give it a go, you won't be disappointed.",
     date: '12 Apr 2026',
-  },
-];
-
-const featurePillars: {
-  eyebrow: string;
-  title: string;
-  body: string;
-  bullets: string[];
-}[] = [
-  {
-    eyebrow: 'INSPECTION & TESTING',
-    title: 'Sign BS 7671 certs in minutes.',
-    body: 'Every cert, signed on site. AI board scanner reads the panel for you, guided test sequences keep results clean, client handouts print themselves.',
-    bullets: [
-      '19 cert types — EIC · EICR · PAT · Solar PV · EV · Fire Alarm',
-      'AI Board Scanner — photo in, circuits & ratings out',
-      'Guided dead & live test sequences with confidence scoring',
-      'A4:2026 ready · works offline · syncs when back online',
-    ],
-  },
-  {
-    eyebrow: 'BUSINESS HUB',
-    title: 'Run the business from your phone.',
-    body: 'Quotes, invoices, customers, projects and snagging — with live financials at a glance and Business Mate doing the admin in plain English.',
-    bullets: [
-      'Quotes · invoices · customers · projects · snagging',
-      'Live financials — paid, outstanding, overdue, win rate',
-      'Business Mate — "Add 3 snags for Oak Lane" or chase Mrs Smith',
-      'Voice dictation · 5-second undo · agentic actions',
-      'Day-rate, breakeven & take-home calculators',
-    ],
-  },
-  {
-    eyebrow: 'APPRENTICE HUB',
-    title: 'Pass AM2 the first time.',
-    body: 'Courses, mock exams, the AM2 simulator, OJT hours and a digital portfolio — plus an AI mentor on tap. Every step from Level 2 to qualified.',
-    bullets: [
-      'AM2 Testing Simulator — real MFT dial, EIC schedule, scoring',
-      '46+ courses · 20,000+ quiz questions (L2 · L3 · AM2 & upskilling)',
-      'Digital portfolio + OJT hours with tutor sign-off',
-      '"Ask Dave" AI mentor · 60+ calculators · flashcard streaks',
-    ],
   },
 ];
 
@@ -311,23 +217,16 @@ const exploreTools = [
   { to: '/training/electrical-apprentice', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
 ];
 
-const mentalHealthFeatures = [
-  { title: 'Mood tracking', desc: 'Check in daily, spot the bad patches early.' },
-  { title: 'Breathing exercises', desc: 'Two minutes to reset, even on site.' },
-  { title: 'Crisis resources', desc: 'The right help, one tap away — 24/7.' },
-  { title: 'Peer support', desc: 'Sparks who get it, not strangers.' },
-];
-
 const faqs = [
   {
     question: 'Do I pay anything to start?',
     answer:
-      'No. Seven days free, no charge until day 8. A card is needed to start the trial — it stops accidental sign-ups and rolls you straight into a paid account if you keep using it. Cancel any time before day 8 and you pay nothing.',
+      'No. £0 today — seven days free, no charge until day 8. You add a payment method to start the trial (card on the web, your Apple or Google account in the app) but nothing is taken. Cancel any time before day 8 and you pay nothing.',
   },
   {
     question: 'What happens to my certs and data if I cancel?',
     answer:
-      "They're yours. Export every certificate, quote and invoice as PDF any time. You keep read-only access to your account after cancelling, so nothing disappears.",
+      "They're yours. While you're subscribed you can export every certificate, quote and invoice as a PDF whenever you like — so export anything you need before your last day. If you cancel, nothing is deleted: your certs, quotes and invoices are all exactly where you left them if you come back.",
   },
   {
     question: 'Is it ready for BS 7671 Amendment 4:2026?',
@@ -361,41 +260,41 @@ const faqs = [
   },
 ];
 
+// Featured (Electrician) plan first — it's the majority audience, and on
+// mobile the first card is the only one guaranteed to be seen
 const getPricingPlans = (isNative: boolean) => [
-  {
-    name: 'Apprentice',
-    price: isNative ? '£6.99' : '£6.99',
-    yearly: isNative ? '£69.99' : '£69.99',
-    yearlySaving: isNative ? '£13.89' : '£11.89',
-    description: 'Everything to ace your training.',
-    features: [
-      '46+ courses (Level 2, 3, AM2 & upskilling)',
-      'EPA Simulator with AI grading',
-      'Inspection & Testing hub',
-      'AI Study Assistant',
-      'Portfolio & OJT tracking',
-      'Learning videos & calculators',
-    ],
-  },
   {
     name: 'Electrician',
     price: isNative ? '£19.99' : '£19.99',
     yearly: isNative ? '£199.99' : '£199.99',
     yearlySaving: isNative ? '£29.89' : '£25.89',
-    description: 'Your complete site companion.',
+    description: 'Quote, certify, invoice, get paid — the whole trade in one app.',
     features: [
       'Everything in Apprentice',
-      '5 AI specialists',
-      'Voice quotes & invoices',
-      '19 certificate types',
-      'Pre & post site visit reports',
-      'Photo documentation per job',
-      'Expenses & materials tracking',
+      '19 BS 7671 cert types · A4:2026 ready · works offline',
+      'AI Board Scanner — photo in, circuits out',
+      '5 AI specialists — Cost Engineer, Circuit Designer & more',
+      'Quotes, invoices, CIS, auto-chase & Stripe payments',
+      'RAMS, method statements & site safety',
+      '70+ trade calculators & live BS 7671 reference',
       'Elec-ID digital professional card',
-      '70+ electrical calculators',
-      'Stripe payments & Xero sync',
     ],
     featured: true,
+  },
+  {
+    name: 'Apprentice',
+    price: isNative ? '£6.99' : '£6.99',
+    yearly: isNative ? '£69.99' : '£69.99',
+    yearlySaving: isNative ? '£13.89' : '£11.89',
+    description: 'Everything from Level 2 to qualified — built around the AM2.',
+    features: [
+      '46+ courses (Level 2, 3, AM2 & upskilling)',
+      '20,000+ exam questions & flashcards',
+      'AM2 Testing Simulator with real MFT dial',
+      'Digital portfolio & OJT hours tracking',
+      '"Ask Dave" AI mentor — cites BS 7671',
+      '60+ on-job calculators',
+    ],
   },
 ];
 
@@ -408,10 +307,11 @@ const LandingPage = () => {
   const { user } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  // Sticky CTA only appears once the hero (and its own CTA) is scrolled away
+  // Sticky CTA appears as soon as the hero CTA scrolls away. Section-view data
+  // shows most visitors never scroll past section two — the button must follow.
   const [stickyVisible, setStickyVisible] = useState(false);
   useEffect(() => {
-    const onScroll = () => setStickyVisible(window.scrollY > 500);
+    const onScroll = () => setStickyVisible(window.scrollY > 380);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -443,33 +343,21 @@ const LandingPage = () => {
   const userCount = useUserCount({ realtime: false });
   const publicStats = usePublicStats();
   const navigate = useNavigate();
-  const goToSignup = (
-    section: 'nav' | 'nav_mobile' | 'hero' | 'workflow' | 'final_cta',
-    label?: string
-  ) => {
+  const goToSignup = (section: 'hero' | 'workflow' | 'final_cta', label?: string) => {
     trackLandingCtaClicked({ section, label });
     navigate('/auth/signup');
   };
   const isNative = Capacitor.isNativePlatform();
   const pricingPlans = useMemo(() => getPricingPlans(isNative), [isNative]);
-  const apprenticePrice = isNative ? '£6.99' : '£6.99';
-  const electricianPrice = isNative ? '£19.99' : '£19.99';
-  const audienceCards = useMemo(
-    () => getAudienceCards(apprenticePrice, electricianPrice),
-    [apprenticePrice, electricianPrice]
-  );
 
-  // Attribution capture moved to App.tsx (AttributionCapture component) so it
+  // Attribution capture lives in App.tsx (AttributionCapture component) so it
   // runs for users landing directly on /auth/signup or /r/:code from ads, not
   // just this page.
 
-  // Walkthrough redirect removed 2026-04-19 — was intercepting ~75% of landing
-  // traffic (1.3K /walkthrough vs 399 / in Vercel Analytics), blocking paid-ad
-  // conversion funnels and tanking Meta Pixel optimisation signal. Walkthrough
-  // route still exists for direct links; just not the default landing.
-
+  // True black base — the app-screen graphics are composed on #000, and on
+  // the slightly-lighter #0a0a0a they showed as floating rectangles
   return (
-    <div className="bg-[#0a0a0a] text-white">
+    <div className="bg-black text-white">
       <Helmet>
         <title>Elec-Mate | The Complete Platform for UK Electricians</title>
         <meta
@@ -509,6 +397,9 @@ const LandingPage = () => {
         <meta name="geo.region" content="GB" />
         <meta name="geo.placename" content="United Kingdom" />
         <link rel="canonical" href="https://www.elec-mate.com/" />
+        {/* Hero phone shot is the LCP element on mobile — fetch it before the
+            bundle finishes parsing */}
+        <link rel="preload" as="image" href="/images/landing/hero-dashboard.webp" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -529,10 +420,10 @@ const LandingPage = () => {
             featureList: [
               '46+ Electrical & Upskilling Courses',
               'BS 7671 AI Assistants',
-              '17+ Certificate Types',
+              '19 Certificate Types',
               'Voice Quotes & Invoices',
               'Stripe Payment Integration',
-              '50+ Electrical Calculators',
+              '70+ Electrical Calculators',
             ],
           })}
         </script>
@@ -590,7 +481,7 @@ const LandingPage = () => {
               Workflow
             </a>
             <a href="#features" className="text-[15px] text-white transition hover:text-white">
-              Platform
+              Inside the app
             </a>
             <a href="#pricing" className="text-[15px] text-white transition hover:text-white">
               Pricing
@@ -626,7 +517,7 @@ const LandingPage = () => {
                     to="/auth/signup"
                     onClick={() => trackLandingCtaClicked({ section: 'nav' })}
                   >
-                    Start free trial
+                    Start free — £0 today
                   </Link>
                 </Button>
               </>
@@ -651,7 +542,7 @@ const LandingPage = () => {
           }`}
         >
           <div>
-            <div className="border-t border-white/[0.08] bg-[#0a0a0a] px-5 py-5">
+            <div className="border-t border-white/[0.08] bg-black px-5 py-5">
               <div className="space-y-4">
                 <a
                   href="#workflow"
@@ -665,7 +556,7 @@ const LandingPage = () => {
                   onClick={() => setIsNavOpen(false)}
                   className="block select-none touch-manipulation py-1 text-base text-white"
                 >
-                  Platform
+                  Inside the app
                 </a>
                 <a
                   href="#pricing"
@@ -691,7 +582,7 @@ const LandingPage = () => {
                         to="/auth/signup"
                         onClick={() => trackLandingCtaClicked({ section: 'nav_mobile' })}
                       >
-                        Start 7-day free trial
+                        Start free — £0 today
                       </Link>
                     </Button>
                     <Button
@@ -709,46 +600,45 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* ========== HERO ========== */}
-      <section data-analytics-section="hero" className="relative px-5 pb-14 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-36">
+      {/* ========== HERO — product first ========== */}
+      <section
+        data-analytics-section="hero"
+        className="relative px-5 pb-12 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-16 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32"
+      >
         {/* initial={false} — hero must paint immediately (LCP); no hidden-until-JS flash */}
         <motion.div
           variants={fadeUp}
           initial={false}
           animate="visible"
           transition={{ duration: 0.55 }}
-          className="relative z-10 mx-auto max-w-[80rem] xl:grid xl:grid-cols-[minmax(0,1fr)_350px] xl:items-center xl:gap-20"
+          className="relative z-10 mx-auto max-w-[80rem] lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center lg:gap-16"
         >
           <div className="text-center lg:text-left">
-            <Eyebrow>01 · YOUR TRADE. YOUR APP.</Eyebrow>
-
-            <h1 className="mx-auto mt-4 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3.5rem] lg:mx-0 lg:max-w-[26ch] lg:text-[4.5rem]">
-              Quote. Design. Certify. Invoice. Get paid. Train. One app.
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-[44rem] text-base leading-[1.65] text-white/75 sm:mt-7 sm:text-lg lg:mx-0 lg:text-xl">
-              The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps.
-              Elec-Mate replaces all of it.
-            </p>
-
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+            <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
               <Pill tone="yellow">
                 <Dot tone="yellow" className="mr-1.5" />
-                {userCount} UK sparks
+                {userCount} UK electricians
               </Pill>
-              <Pill tone="yellow">{publicStats.certs} certs issued</Pill>
-              <Pill tone="yellow">{publicStats.quoted} quoted</Pill>
-              <Pill tone="yellow">★★★★★ on the App Store</Pill>
+              <Pill tone="yellow">{'★★★★★'} on the App Store</Pill>
             </div>
 
-            <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+            <h1 className="mx-auto mt-5 max-w-[16ch] text-[2.6rem] font-semibold leading-[1.04] tracking-tight text-white sm:text-[3.6rem] lg:mx-0 lg:text-[4.25rem]">
+              Certs done on site. <span className="text-elec-yellow">Invoices paid faster.</span>
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-[38rem] text-base leading-[1.65] text-white/75 sm:mt-6 sm:text-lg lg:mx-0">
+              Quote → job → cert → invoice → paid. The one app UK electricians run their whole
+              trade on — instead of paperwork, WhatsApp and four disconnected apps.
+            </p>
+
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
               <PrimaryButton
                 size="lg"
                 fullWidth
                 onClick={() => goToSignup('hero')}
                 className="sm:w-auto sm:px-8"
               >
-                Start 7-day free trial →
+                Start free — £0 today →
               </PrimaryButton>
               <SecondaryButton
                 size="lg"
@@ -758,46 +648,52 @@ const LandingPage = () => {
                 }
                 className="sm:w-auto sm:px-8"
               >
-                See the workflow
+                See how it works
               </SecondaryButton>
+            </div>
+
+            <p className="mt-3 text-[13px] text-white/65">
+              7 days free · cancel anytime · from £6.99/mo after
+            </p>
+
+            {/* Mobile/tablet — the product itself, straight after the CTA. The
+                section-view data says this is all most visitors ever see. No
+                border/shadow: the graphic is composed on the same black as the
+                page, so it sits IN it rather than on it. */}
+            <div className="mt-9 flex justify-center lg:hidden">
+              <img
+                src="/images/landing/hero-dashboard.webp"
+                alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
+                width={720}
+                height={1092}
+                fetchpriority="high"
+                style={heroThumbStyle}
+                className="w-[260px] sm:w-[300px]"
+              />
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <Pill tone="yellow">{publicStats.certs} certs issued</Pill>
+              <Pill tone="yellow">{publicStats.quoted} quoted</Pill>
             </div>
 
             <p className="mt-4 text-[13px] text-white/65">
               Already a member?{' '}
               <Link
                 to="/auth/signin"
-                className="font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors"
+                className="font-medium text-elec-yellow/90 transition-colors hover:text-elec-yellow"
               >
                 Sign in →
               </Link>
             </p>
 
-            <p className="mt-2 text-[13px] text-white/65">
-              From <span className="font-medium text-white">{apprenticePrice}/mo</span> · 7 days
-              free · no charge until day 8 · cancel anytime
-            </p>
-
-            <div className="mt-10 flex justify-center lg:justify-start">
+            <div className="mt-6 flex justify-center lg:justify-start">
               <StoreBadges className="justify-center lg:justify-start" size="md" />
-            </div>
-
-            {/* Mobile/tablet — the app itself, below the CTA block */}
-            <div className="mt-12 flex justify-center xl:hidden">
-              <img
-                src="/images/landing/hero-dashboard.webp"
-                alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
-                width={720}
-                height={1092}
-                loading="lazy"
-                decoding="async"
-                style={heroThumbStyle}
-                className="w-[260px] rounded-[1.8rem] border border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:w-[300px]"
-              />
             </div>
           </div>
 
           {/* Desktop — app preview, second grid column so it never overlaps the copy */}
-          <div className="hidden xl:block">
+          <div className="hidden lg:block">
             <img
               src="/images/landing/hero-dashboard.webp"
               alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
@@ -805,10 +701,47 @@ const LandingPage = () => {
               height={1092}
               fetchpriority="high"
               style={heroThumbStyle}
-              className="w-full rounded-[2rem] border border-white/[0.08] shadow-[0_32px_120px_rgba(0,0,0,0.55)]"
+              className="w-full"
             />
           </div>
         </motion.div>
+      </section>
+
+      {/* ========== PROOF — second thing every visitor sees ========== */}
+      <section
+        data-analytics-section="testimonials"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_600px] px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
+      >
+        <div className="mx-auto max-w-[80rem]">
+          <div className="text-center lg:text-left">
+            <Eyebrow>FROM THE APP STORE</Eyebrow>
+            <h2 className="mx-auto mt-3 max-w-[24ch] text-[1.9rem] font-semibold leading-[1.08] tracking-tight text-white sm:text-[2.5rem] lg:mx-0">
+              Sparks who switched, <span className="text-elec-yellow">in their own words.</span>
+            </h2>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {testimonials.slice(0, 3).map((t) => (
+              <figure
+                key={t.nickname}
+                className="flex flex-col rounded-[1.6rem] border border-white/[0.08] bg-white/[0.03] p-6"
+              >
+                <div className="flex items-center gap-1" aria-label="5 out of 5 stars">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="mt-3 text-[15px] font-semibold text-white">{t.title}</p>
+                <blockquote className="mt-2 flex-1 text-[13.5px] leading-[1.65] text-white/75">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-4 text-[12px] text-white/55">
+                  {t.nickname} · App Store · {t.date}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ========== WORKFLOW ========== */}
@@ -817,226 +750,87 @@ const LandingPage = () => {
         data-analytics-section="workflow"
         className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
       >
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <Eyebrow>02 · ONE WORKFLOW</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[20ch] text-[2rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            No app-switching.
-          </h2>
-          <p className="mx-auto mt-4 max-w-[44rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            Quote, design, stay compliant, do the work, certify, invoice, get paid and train —
-            without leaving Elec-Mate. Every step replaces a tool your trade is already paying for.
-          </p>
-
-          <div className="mt-8 sm:mt-10 lg:mt-12">
-            <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-4">
-              {workflowSteps.map((step, i) => (
-                <HubCard
-                  key={step.title}
-                  number={String(i + 1).padStart(2, '0')}
-                  eyebrow={step.eyebrow}
-                  title={step.title}
-                  description={step.description}
-                  meta={`Replaces: ${step.replaces}`}
-                  tone="yellow"
-                  size="sm"
-                  cta="Try free"
-                  onClick={() => goToSignup('workflow', step.eyebrow)}
-                />
-              ))}
-            </div>
+        <div className="mx-auto max-w-[80rem]">
+          <div className="text-center lg:text-left">
+            <Eyebrow>THE WORKFLOW</Eyebrow>
+            <h2 className="mx-auto mt-3 max-w-[24ch] text-[1.9rem] font-semibold leading-[1.08] tracking-tight text-white sm:text-[2.5rem] lg:mx-0">
+              One job, start to finish —{' '}
+              <span className="text-elec-yellow">without leaving the app.</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
+              Each step replaces a tool you're paying for (or a spreadsheet you're fighting with)
+              today.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* ========== TESTIMONIALS ========== */}
-      <section data-analytics-section="testimonials" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <Eyebrow>VERIFIED ON THE UK APP STORE</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            What real sparks <span className="text-elec-yellow">are saying.</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            Every five-star review pulled live from App Store Connect — UK territory, no edits, no
-            paid placements.
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-5">
-            {testimonials.map((item) => (
-              <figure
-                key={item.nickname}
-                className="relative flex flex-col overflow-hidden rounded-[1.4rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] p-6 text-left lg:p-7"
-              >
-                <div
-                  aria-hidden
-                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
-                />
-                <div
-                  className="flex gap-0.5 text-[14px] text-elec-yellow tracking-[0.05em]"
-                  aria-label="5 stars"
-                  role="img"
-                >
-                  <span aria-hidden>★★★★★</span>
-                </div>
-                <h3 className="mt-3 text-[15px] font-semibold leading-tight text-white sm:text-[16px]">
-                  {item.title}
-                </h3>
-                <blockquote className="mt-3 text-[13.5px] leading-[1.65] text-white/80 sm:text-[14px]">
-                  &ldquo;{item.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-5 flex items-center justify-between gap-3 border-t border-white/[0.06] pt-4 text-[12px]">
-                  <span className="font-medium text-white truncate">{item.nickname}</span>
-                  <span className="text-white/55 tabular-nums shrink-0">{item.date}</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== WHO IT IS FOR ========== */}
-      <section
-        id="features"
-        data-analytics-section="audience"
-        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24"
-      >
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <h2 className="mx-auto max-w-[22ch] text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            One platform,
-            <br />
-            <span className="text-yellow-400">every stage</span> of your career.
-          </h2>
-          <p className="mx-auto mt-6 max-w-[40rem] text-lg leading-[1.7] text-white lg:mx-0 lg:text-xl">
-            Whether you're studying for AM2 or running your own jobs, Elec-Mate grows with you —
-            from your first module to signing off your hundredth cert.
-          </p>
-
-          <div className="mx-auto mt-12 grid max-w-[60rem] grid-cols-1 gap-5 lg:mx-0 lg:mt-16 lg:max-w-none lg:grid-cols-2 lg:gap-6">
-            {audienceCards.map((item, idx) => (
-              <AudienceCard key={item.title} index={idx} {...item} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== IN ACTION — SITE PHOTOS ========== */}
-      <section data-analytics-section="site_photos" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <Eyebrow>IN THE TRADE</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            Real sparks. <span className="text-elec-yellow">Real sites.</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            On site every day — scanning boards, logging tests, signing off certificates, keeping
-            the job flowing.
-          </p>
-
-          <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-20 lg:grid-cols-4">
-            {sitePhotos.map((photo) => (
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-4">
+            {workflowSteps.map((step, index) => (
               <div
-                key={photo.title}
-                className="group relative overflow-hidden rounded-[1.4rem] border border-white/[0.08]"
+                key={step.title}
+                className="relative rounded-[1.6rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.045] to-white/[0.015] p-6"
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[3/4] w-full bg-white/[0.04] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                  <p className="text-[15px] font-semibold text-white">{photo.title}</p>
-                  <p className="mt-1 text-[12px] text-white">{photo.subtitle}</p>
-                </div>
+                <span
+                  aria-hidden
+                  className="text-[2.4rem] font-semibold leading-none tracking-tight text-elec-yellow/40 tabular-nums"
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <Eyebrow className="mt-3">{step.eyebrow}</Eyebrow>
+                <h3 className="mt-2 text-[17px] font-semibold tracking-tight text-white">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-[13px] leading-[1.6] text-white/70">{step.description}</p>
+                <p className="mt-4 border-t border-white/[0.06] pt-3 text-[11.5px] text-white/50">
+                  Replaces: {step.replaces}
+                </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
+            <PrimaryButton
+              size="lg"
+              fullWidth
+              onClick={() => goToSignup('workflow')}
+              className="sm:w-auto sm:px-8"
+            >
+              Run your next job through it — £0 today →
+            </PrimaryButton>
           </div>
         </div>
       </section>
 
       {/* ========== INSIDE THE APP ========== */}
-      <section data-analytics-section="inside_the_app" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <h2 className="mx-auto max-w-[22ch] text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            Inside <span className="text-yellow-400">the app.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-[42rem] text-lg leading-[1.7] text-white lg:mx-0 lg:text-xl">
-            Inspection & testing, business operations and an AI assistant — without leaving
-            Elec-Mate.
-          </p>
-
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-6">
-            {featurePillars.map((step, index) => (
-              <div
-                key={step.title}
-                className="group relative flex flex-col overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] p-7 text-left lg:p-9"
-              >
-                <div
-                  aria-hidden
-                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
-                />
-                <span
-                  aria-hidden
-                  className="text-[3.5rem] sm:text-[4rem] lg:text-[4.5rem] font-semibold leading-none tracking-tight text-white/[0.06] tabular-nums"
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <Eyebrow className="mt-6">{step.eyebrow}</Eyebrow>
-                <h3 className="mt-3 text-[1.5rem] sm:text-[1.65rem] lg:text-[1.85rem] font-semibold leading-[1.12] tracking-tight text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-4 text-[14px] sm:text-[15px] leading-[1.65] text-white/70">
-                  {step.body}
-                </p>
-                <div className="mt-7 space-y-3 border-t border-white/[0.06] pt-6">
-                  {step.bullets.map((bullet) => (
-                    <div
-                      key={bullet}
-                      className="flex items-start gap-3 text-[13px] sm:text-[13.5px] leading-[1.55] text-white/85"
-                    >
-                      <Dot tone="yellow" className="mt-[7px]" />
-                      <span>{bullet}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+      <section
+        id="features"
+        data-analytics-section="inside_the_app"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
+      >
+        <div className="mx-auto max-w-[80rem]">
+          <div className="text-center lg:text-left">
+            <Eyebrow>INSIDE THE APP</Eyebrow>
+            <h2 className="mx-auto mt-3 max-w-[24ch] text-[1.9rem] font-semibold leading-[1.08] tracking-tight text-white sm:text-[2.5rem] lg:mx-0">
+              Not mock-ups. <span className="text-elec-yellow">The actual app.</span>
+            </h2>
           </div>
 
-          {/* App screenshot gallery — swipe like the App Store */}
-          <div className="mt-12 -mx-5 lg:mt-16 lg:-mx-8">
-            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:px-8">
+          {/* The graphics are composed panels (baked headline + phone on #000):
+              no frames or captions — they sit directly in the black page */}
+          <div className="-mx-5 mt-10 snap-x snap-mandatory overflow-x-auto px-5 pb-4 lg:mx-0 lg:snap-none lg:px-0 [scrollbar-width:thin]">
+            <div className="flex gap-4 lg:grid lg:grid-cols-6">
               {appScreens.map((screen) => (
                 <img
                   key={screen.src}
                   src={screen.src}
                   alt={screen.alt}
-                  width={560}
-                  height={1212}
+                  width={720}
+                  height={1092}
                   loading="lazy"
                   decoding="async"
-                  className="w-[220px] flex-none snap-start rounded-[1.4rem] border border-white/[0.08] bg-white/[0.04] sm:w-[250px]"
+                  className="w-[230px] flex-shrink-0 snap-center lg:w-full"
                 />
               ))}
             </div>
-          </div>
-
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-90">
-            <img
-              src="/logos/stripe.svg"
-              alt="Stripe"
-              loading="lazy"
-              decoding="async"
-              className="h-7 w-auto lg:h-8"
-            />
-            <img src="/logos/xero.svg" alt="Xero" loading="lazy" className="h-7 w-auto lg:h-8" />
-            <img
-              src="/logos/quickbooks.svg"
-              alt="QuickBooks"
-              loading="lazy"
-              decoding="async"
-              className="h-7 w-auto lg:h-8"
-            />
           </div>
         </div>
       </section>
@@ -1045,76 +839,73 @@ const LandingPage = () => {
       <section
         id="pricing"
         data-analytics-section="pricing"
-        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_900px] scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
       >
-        <div className="mx-auto max-w-[80rem]">
-          <div className="mx-auto max-w-2xl text-center">
-            <Eyebrow>PRICING</Eyebrow>
-            <h2 className="mt-3 text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:text-[3.5rem]">
-              Simple, <span className="text-elec-yellow">honest</span> pricing.
+        <div className="mx-auto max-w-[64rem]">
+          <div className="text-center">
+            <Eyebrow className="text-center">PRICING</Eyebrow>
+            <h2 className="mx-auto mt-3 max-w-[24ch] text-[1.9rem] font-semibold leading-[1.08] tracking-tight text-white sm:text-[2.5rem]">
+              <span className="text-elec-yellow">£0 today.</span> Two plans after.
             </h2>
-            <p className="mt-4 text-[14px] leading-relaxed text-white/65 sm:text-[15px]">
-              7 days free. No charge until day 8. Cancel any time.
+            <p className="mx-auto mt-4 max-w-[38rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px]">
+              Everything unlocked for 7 days. First charge only if you keep it — cancel before day
+              8 in a couple of clicks and pay nothing.
             </p>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-[52rem] gap-5 sm:grid-cols-2 lg:mt-16 lg:gap-6">
+          <div className="mt-10 grid gap-5 lg:mt-12 lg:grid-cols-2 lg:gap-6">
             {pricingPlans.map((plan) => (
               <PricingCard key={plan.name} {...plan} />
             ))}
           </div>
 
-          <p className="mt-10 text-center text-[14px] text-white">
-            7-day free trial on all plans &middot; No charge until day 8 &middot; Cancel anytime
+          <p className="mt-6 text-center text-[12.5px] text-white/55">
+            Same price on web, iOS and Android · no hidden extras · cancel anytime
           </p>
         </div>
       </section>
 
       {/* ========== FAQ ========== */}
-      <section data-analytics-section="faq" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[52rem] text-center lg:text-left">
-          <Eyebrow>FAQ</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            Questions <span className="text-elec-yellow">before you sign up?</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-[40rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            The honest answers — no marketing spin.
-          </p>
+      <section
+        data-analytics-section="faq"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
+      >
+        <div className="mx-auto max-w-[52rem]">
+          <div className="text-center">
+            <Eyebrow className="text-center">QUESTIONS</Eyebrow>
+            <h2 className="mx-auto mt-3 max-w-[24ch] text-[1.9rem] font-semibold leading-[1.08] tracking-tight text-white sm:text-[2.5rem]">
+              The things sparks <span className="text-elec-yellow">actually ask.</span>
+            </h2>
+          </div>
 
-          <div className="mt-10 overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_9%)] sm:mt-12 lg:mt-14">
+          <div className="mt-10 space-y-3">
             {faqs.map((faq, index) => {
               const open = openFaqIndex === index;
               return (
                 <div
                   key={faq.question}
-                  className={`border-b border-white/[0.06] transition-colors last:border-b-0 ${
-                    open ? 'bg-white/[0.02]' : ''
-                  }`}
+                  className="overflow-hidden rounded-[1.4rem] border border-white/[0.08] bg-white/[0.03]"
                 >
                   <button
                     onClick={() => setOpenFaqIndex(open ? null : index)}
-                    className="flex w-full touch-manipulation select-none items-center justify-between gap-4 px-5 py-5 text-left active:bg-white/[0.03] sm:px-7 sm:py-6"
+                    className="flex w-full touch-manipulation items-center justify-between gap-4 px-5 py-4 text-left"
+                    aria-expanded={open}
                   >
-                    <span className="text-[15px] font-medium text-white sm:text-[16px]">
-                      {faq.question}
-                    </span>
+                    <span className="text-[15px] font-semibold text-white">{faq.question}</span>
                     <ChevronDown
-                      className={`h-5 w-5 flex-shrink-0 text-elec-yellow/80 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+                      className={`h-4 w-4 flex-shrink-0 text-yellow-400 transition-transform ${
+                        open ? 'rotate-180' : ''
+                      }`}
                     />
                   </button>
-                  {/* Always mounted; grid-rows animates height smoothly without JS measuring */}
                   <div
-                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                      open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+                      open ? 'max-h-[32rem] opacity-100' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <div className="overflow-hidden">
-                      <div className="px-5 pb-6 pt-1 sm:px-7">
-                        <p className="max-w-[60ch] text-[13.5px] leading-[1.7] text-white/75 sm:text-[14.5px]">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
+                    <p className="px-5 pb-5 text-[14px] leading-[1.7] text-white/75">
+                      {faq.answer}
+                    </p>
                   </div>
                 </div>
               );
@@ -1123,103 +914,77 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* ========== LEAD MAGNET — BS 7671 A4:2026 cheat sheet ========== */}
-      <div data-analytics-section="lead_magnet">
-        <LeadMagnetSection />
-      </div>
-
-      {/* ========== MENTAL HEALTH MATES ========== */}
-      <section data-analytics-section="mental_health" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-14 sm:pb-20 lg:px-8 lg:pb-24">
-        <div className="mx-auto max-w-[80rem]">
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-7 text-center sm:p-10 lg:p-12 lg:text-left">
-            <div
-              aria-hidden
-              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
-            />
-            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
-              <div>
-                <Eyebrow>BEYOND THE TOOLS</Eyebrow>
-                <h3 className="mt-3 text-[1.75rem] font-semibold leading-[1.1] tracking-tight text-white sm:text-[2.25rem]">
-                  Mental Health Mates.
-                </h3>
-                <p className="mx-auto mt-4 max-w-[44ch] text-[14px] leading-[1.7] text-white/75 sm:text-[15px] lg:mx-0">
-                  Construction has the highest suicide rate of any sector. We built a safe space
-                  inside Elec-Mate — because looking after yourself should be part of the trade.
-                </p>
-                <p className="mx-auto mt-4 max-w-[44ch] text-[13px] text-white/55 lg:mx-0">
-                  Included in every plan. No extra charge, no judgement.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.06] text-left sm:grid-cols-2">
-                {mentalHealthFeatures.map((feature) => (
-                  <div key={feature.title} className="bg-[hsl(0_0%_9%)] p-5 sm:p-6">
-                    <div className="flex items-center gap-2.5">
-                      <Dot tone="yellow" />
-                      <span className="text-[14px] font-semibold text-white sm:text-[15px]">
-                        {feature.title}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-[12.5px] leading-[1.6] text-white/65 sm:text-[13px]">
-                      {feature.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ========== FINAL CTA ========== */}
-      <section data-analytics-section="final_cta" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section
+        data-analytics-section="final_cta"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_600px] px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
+      >
         <div className="mx-auto max-w-[80rem]">
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-elec-yellow/[0.04] to-white/[0.01] px-6 py-16 text-center sm:px-12 sm:py-20 lg:rounded-[2.5rem] lg:px-16 lg:py-24">
+          {/* Pure black card — the app-screen graphic is composed on #000, so
+              anything lighter shows it as a floating rectangle */}
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-black lg:rounded-[2.5rem]">
             <div
               aria-hidden
               className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0 opacity-80"
             />
-            <Eyebrow className="text-center">READY?</Eyebrow>
-            <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3.25rem] lg:text-[4rem]">
-              Stop juggling apps. <span className="text-elec-yellow">Start running the job.</span>
-            </h2>
-            <p className="mx-auto mt-5 max-w-[42rem] text-[14px] leading-relaxed text-white/75 sm:text-[15px] lg:text-base">
-              Quote, certify, invoice and get paid — all in one. {userCount} UK sparks already in.
-              Run real work through it for seven days, no charge until day 8.
-            </p>
+            {/* Soft glow behind the phone so the card doesn't read as a void */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-24 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-1/2 rounded-full bg-elec-yellow/[0.07] blur-3xl lg:block"
+            />
 
-            <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-              <PrimaryButton
-                size="lg"
-                fullWidth
-                onClick={() => goToSignup('final_cta')}
-                className="sm:w-auto sm:px-8"
-              >
-                Start 7-day free trial →
-              </PrimaryButton>
-              <SecondaryButton
-                size="lg"
-                fullWidth
-                onClick={() =>
-                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })
-                }
-                className="sm:w-auto sm:px-8"
-              >
-                See pricing
-              </SecondaryButton>
-            </div>
+            <div className="relative grid items-center gap-10 px-6 py-14 sm:px-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14 lg:px-16 lg:py-16">
+              <div className="text-center lg:text-left">
+                <Eyebrow>READY?</Eyebrow>
+                <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.1rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.4rem]">
+                  Stop juggling apps.{' '}
+                  <span className="text-elec-yellow">Start running the job.</span>
+                </h2>
+                <p className="mx-auto mt-5 max-w-[42rem] text-[14px] leading-relaxed text-white/75 sm:text-[15px] lg:mx-0 lg:text-base">
+                  {userCount} UK electricians already run their trade through Elec-Mate. Put one
+                  real job through it this week — £0 today, first charge only if you keep it.
+                </p>
 
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[12.5px] text-white/65">
-              <span className="inline-flex items-center gap-1.5">
-                <Dot tone="yellow" /> {userCount} sparks already in
-              </span>
-              <span className="h-1 w-1 rounded-full bg-white/20" />
-              <span>7 days free</span>
-              <span className="h-1 w-1 rounded-full bg-white/20" />
-              <span>Cancel any time</span>
-            </div>
+                <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+                  <PrimaryButton
+                    size="lg"
+                    fullWidth
+                    onClick={() => goToSignup('final_cta')}
+                    className="sm:w-auto sm:px-8"
+                  >
+                    Start free — £0 today →
+                  </PrimaryButton>
+                </div>
 
-            <div className="mt-9 flex justify-center">
-              <StoreBadges className="justify-center" size="md" />
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[12.5px] text-white/65 lg:justify-start">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Dot tone="yellow" /> {userCount} already in
+                  </span>
+                  <span className="h-1 w-1 rounded-full bg-white/20" />
+                  <span>7 days free</span>
+                  <span className="h-1 w-1 rounded-full bg-white/20" />
+                  <span>Cancel any time</span>
+                </div>
+
+                <div className="mt-8 flex justify-center lg:justify-start">
+                  <StoreBadges className="justify-center lg:justify-start" size="md" />
+                </div>
+              </div>
+
+              {/* One last look at the product on the way out. No border/shadow —
+                  the graphic is composed on the same black as the card, so it
+                  sits IN the page rather than on it */}
+              <div className="hidden justify-center lg:flex">
+                <img
+                  src="/images/landing/screen-certs.webp"
+                  alt="Elec-Mate certificate picker on iPhone — EICR, EIC and Minor Works"
+                  width={720}
+                  height={1092}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-[300px]"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -1230,24 +995,23 @@ const LandingPage = () => {
         <WaitlistSection />
       </div>
 
-      {/* ========== FREE GUIDES (SEO LANDING PAGES) ========== */}
-      <section data-analytics-section="guides" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      {/* ========== FREE GUIDES (SEO INTERNAL LINKS) ========== */}
+      <section
+        data-analytics-section="guides"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_500px] px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
+      >
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>FREE GUIDES</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
+          <h2 className="mx-auto mt-3 max-w-[24ch] text-[1.9rem] font-semibold leading-[1.08] tracking-tight text-white sm:text-[2.5rem] lg:mx-0">
             Browse the guides. <span className="text-elec-yellow">No sign-up.</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            Quick-reference guides for UK electricians — bookmark them now, come back when you need
-            them.
-          </p>
 
-          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-4">
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
             {exploreTools.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="group touch-manipulation rounded-[1.4rem] border border-white/[0.08] bg-white/[0.03] p-5 transition-colors hover:border-yellow-500/30 hover:bg-yellow-500/[0.04] lg:p-6"
+                className="group touch-manipulation rounded-[1.4rem] border border-white/[0.08] bg-white/[0.03] p-5 transition-colors hover:border-yellow-500/30 hover:bg-yellow-500/[0.04]"
               >
                 <p className="text-[15px] font-semibold text-white transition-colors group-hover:text-yellow-400">
                   {link.label}
@@ -1261,7 +1025,10 @@ const LandingPage = () => {
       </section>
 
       {/* ========== FOOTER ========== */}
-      <footer data-analytics-section="footer" className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-32 pt-8 sm:pb-12 lg:px-8">
+      <footer
+        data-analytics-section="footer"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_500px] px-5 pb-32 pt-8 sm:pb-12 lg:px-8"
+      >
         <div className="mx-auto max-w-[80rem] border-t border-white/[0.08] pt-12">
           <div className="grid gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-[1.4fr_0.9fr_0.9fr_0.8fr]">
             <div>
@@ -1359,7 +1126,7 @@ const LandingPage = () => {
       {/* ========== STICKY MOBILE CTA ========== */}
       {!user && (
         <div
-          className={`fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-black/90 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-md transition-transform duration-300 sm:hidden ${
+          className={`fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-black/90 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md transition-transform duration-300 sm:hidden ${
             stickyVisible ? 'translate-y-0' : 'translate-y-full'
           }`}
         >
@@ -1368,10 +1135,13 @@ const LandingPage = () => {
             onClick={() => trackLandingCtaClicked({ section: 'sticky_mobile' })}
           >
             <Button className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black transition-transform hover:bg-yellow-400 active:scale-[0.98]">
-              Start 7-day free trial
+              Start free — £0 today
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
+          <p className="mt-1.5 text-center text-[11px] text-white/60">
+            7 days free · cancel anytime
+          </p>
         </div>
       )}
 
@@ -1384,97 +1154,6 @@ const LandingPage = () => {
 // ============================================================
 //  Sub-components
 // ============================================================
-
-const AudienceCard = ({
-  index,
-  eyebrow,
-  title,
-  body,
-  features,
-  price,
-  featured,
-}: {
-  index: number;
-  eyebrow: string;
-  title: string;
-  body: string;
-  features: string[];
-  price: string;
-  featured?: boolean;
-}) => {
-  const navigate = useNavigate();
-  return (
-    <div
-      className={`group relative flex flex-col overflow-hidden rounded-[1.8rem] border p-7 text-left lg:p-9 ${
-        featured
-          ? 'border-elec-yellow/25 bg-gradient-to-b from-elec-yellow/[0.04] to-white/[0.015]'
-          : 'border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015]'
-      }`}
-    >
-      <div
-        aria-hidden
-        className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 ${
-          featured ? 'via-elec-yellow/80' : 'via-elec-yellow/40'
-        } to-elec-yellow/0 opacity-80`}
-      />
-      {featured && (
-        <Pill tone="yellow" className="self-start">
-          <Dot tone="yellow" className="mr-1.5" />
-          Most popular
-        </Pill>
-      )}
-      <span
-        aria-hidden
-        className={`${
-          featured ? 'mt-4' : ''
-        } text-[3.5rem] sm:text-[4rem] lg:text-[4.5rem] font-semibold leading-none tracking-tight text-white/[0.06] tabular-nums`}
-      >
-        {String(index + 1).padStart(2, '0')}
-      </span>
-      <Eyebrow className="mt-6">{eyebrow}</Eyebrow>
-      <h3 className="mt-3 text-[1.5rem] sm:text-[1.65rem] lg:text-[1.85rem] font-semibold leading-[1.12] tracking-tight text-white">
-        {title}
-      </h3>
-      <p className="mt-4 text-[14px] sm:text-[15px] leading-[1.65] text-white/70">{body}</p>
-      <div className="mt-7 space-y-3 border-t border-white/[0.06] pt-6">
-        {features.map((feature) => (
-          <div
-            key={feature}
-            className="flex items-start gap-3 text-[13px] sm:text-[13.5px] leading-[1.55] text-white/85"
-          >
-            <Dot tone="yellow" className="mt-[7px]" />
-            <span>{feature}</span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-auto pt-7">
-        <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 border-t border-white/[0.06] pt-5">
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              from
-            </span>
-            <span className="text-[26px] font-semibold text-white tabular-nums leading-none">
-              {price}
-            </span>
-            <span className="text-[12px] text-white/55">/mo</span>
-          </div>
-          <PrimaryButton
-            size="sm"
-            onClick={() => {
-              trackLandingCtaClicked({ section: 'audience', label: eyebrow });
-              navigate('/auth/signup');
-            }}
-          >
-            Start free trial →
-          </PrimaryButton>
-        </div>
-        <p className="mt-3 text-[11.5px] text-white/55">
-          7 days free · cancel any time · no charge until day 8
-        </p>
-      </div>
-    </div>
-  );
-};
 
 const PricingCard = ({
   name,
@@ -1533,11 +1212,14 @@ const PricingCard = ({
             : 'border border-white/15 bg-white/[0.06] text-white hover:bg-white/[0.12]'
         }`}
       >
-        Start 7-day free trial
+        Start free — £0 today
       </Button>
     </Link>
+    <p className="mt-2.5 text-center text-[11.5px] text-white/55">
+      First charge after 7 days, only if you keep it
+    </p>
 
-    <div className="mt-7 space-y-3 border-t border-white/[0.08] pt-6">
+    <div className="mt-6 space-y-3 border-t border-white/[0.08] pt-6">
       {features.map((feature) => (
         <div key={feature} className="flex items-start gap-3 text-[14px] leading-[1.6] text-white">
           <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-yellow-400" />

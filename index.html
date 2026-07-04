@@ -96,22 +96,40 @@
           e.preventDefault && e.preventDefault();
           e.stopPropagation && e.stopPropagation();
           e.stopImmediatePropagation && e.stopImmediatePropagation();
+          // ELE-1273: also unregister the service worker — it serves the
+          // stale index.html with dead chunk URLs; cache-clear alone leaves
+          // it in control and the reload can fail the same way.
+          var cleanups = [];
+          if ('serviceWorker' in navigator) {
+            cleanups.push(
+              navigator.serviceWorker.getRegistrations().then(function (regs) {
+                return Promise.all(
+                  regs.map(function (r) {
+                    return r.unregister();
+                  })
+                );
+              })
+            );
+          }
           if ('caches' in window) {
-            caches
-              .keys()
-              .then(function (k) {
+            cleanups.push(
+              caches.keys().then(function (k) {
                 return Promise.all(
                   k.map(function (n) {
                     return caches.delete(n);
                   })
                 );
               })
-              .finally(function () {
-                location.reload();
-              });
-          } else {
-            location.reload();
+            );
           }
+          Promise.allSettled(cleanups).then(
+            function () {
+              location.reload();
+            },
+            function () {
+              location.reload();
+            }
+          );
           return true;
         }
       }

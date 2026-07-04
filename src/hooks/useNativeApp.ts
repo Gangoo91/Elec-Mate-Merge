@@ -216,12 +216,19 @@ export function useNativeApp() {
           document.body.classList.remove('keyboard-open');
         });
 
-        // Handle app state changes (background/foreground)
+        // Handle app state changes (background/foreground).
+        // Supabase's token-refresh timer is a JS timer that freezes while the
+        // OS suspends the WebView — the documented Capacitor pattern is to
+        // stop it on background and restart it on resume. startAutoRefresh()
+        // ticks immediately and refreshes ONLY if the token is near expiry.
+        // (Previously this called refreshSession() on every resume, force-
+        // rotating the refresh token each time and racing the SDK's own
+        // recovery refresh — each unnecessary rotation was another chance to
+        // trip refresh-token reuse detection and kill the session, which
+        // showed up as "signed out after a couple of minutes in background".)
         App.addListener('appStateChange', ({ isActive }) => {
           if (isActive) {
-            supabase.auth.refreshSession().catch(() => {
-              // Non-critical — session may already be valid
-            });
+            supabase.auth.startAutoRefresh();
 
             // Dispatch a custom event so OAuth components can detect app resume
             // reliably (window 'focus' events are unreliable on native)
@@ -231,6 +238,8 @@ export function useNativeApp() {
             PushNotifications.removeAllDeliveredNotifications().catch(() => {
               // Non-critical
             });
+          } else {
+            supabase.auth.stopAutoRefresh();
           }
         });
 

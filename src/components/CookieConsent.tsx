@@ -79,74 +79,52 @@ export const CookieConsent = () => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="fixed bottom-0 left-0 right-0 z-[9999] p-3 sm:p-4 md:p-6"
+        className="fixed bottom-0 left-0 right-0 z-[9999] p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-4"
       >
-        {/* Backdrop blur on mobile for better visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none sm:hidden" />
-
-        <div className="relative max-w-lg mx-auto">
-          {/* Main Card */}
-          <div className="bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/50 overflow-hidden">
-            {/* Drag handle - mobile only */}
-            <div className="flex justify-center pt-2 pb-1 sm:hidden">
-              <div className="w-8 h-1 rounded-full bg-white/20" />
-            </div>
-
-            {/* Header */}
-            <div className="px-4 sm:px-6 pt-2 sm:pt-5 pb-4">
-              {/* Icon and Title Row */}
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-yellow-400/20 to-amber-500/20 border border-yellow-400/20 flex items-center justify-center flex-shrink-0">
-                  <Cookie className="h-5 w-5 sm:h-5.5 sm:w-5.5 text-yellow-400" />
-                </div>
-                <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-white">
-                    Cookie Preferences
-                  </h3>
-                  <p className="text-xs text-white">Manage your privacy settings</p>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-sm text-white leading-relaxed mb-4">
-                We use cookies to enhance your experience and analyse platform usage.{' '}
+        <div className="relative mx-auto max-w-lg">
+          {/* Compact strip — visitors decide in seconds; the banner must not
+              own a third of the screen (it also sat exactly where the landing
+              page's sticky CTA lives). Equal-prominence accept/decline kept. */}
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#161616]/95 shadow-2xl shadow-black/50 backdrop-blur-xl">
+            <div className="px-4 pb-3.5 pt-3.5 sm:px-5">
+              <p className="text-[13px] leading-snug text-white/85">
+                <Cookie className="mr-1.5 inline h-3.5 w-3.5 text-yellow-400" aria-hidden />
+                We use cookies to improve the app and measure what works.{' '}
                 <Link
                   to="/cookies"
-                  className="text-yellow-400 hover:text-yellow-300 underline underline-offset-2"
+                  className="text-yellow-400 underline underline-offset-2 hover:text-yellow-300"
                 >
                   Cookie Policy
                 </Link>
               </p>
 
-              {/* Primary Actions */}
-              <div className="flex gap-2 mb-3">
+              <div className="mt-3 flex items-center gap-2">
                 <Button
                   onClick={handleAcceptAll}
-                  className="flex-1 h-12 sm:h-11 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-semibold rounded-xl touch-manipulation shadow-lg shadow-yellow-500/20"
+                  className="h-11 flex-1 touch-manipulation rounded-xl bg-yellow-500 text-[14px] font-semibold text-black hover:bg-yellow-400"
                 >
-                  Accept All
+                  Accept all
                 </Button>
                 <Button
                   onClick={handleRejectNonEssential}
                   variant="outline"
-                  className="flex-1 h-12 sm:h-11 border-white/20 bg-white/5 text-white hover:bg-white/10 rounded-xl touch-manipulation"
+                  className="h-11 flex-1 touch-manipulation rounded-xl border-white/20 bg-white/5 text-[14px] text-white hover:bg-white/10"
                 >
-                  Essential Only
+                  Essential only
                 </Button>
+                <button
+                  onClick={() => setShowDetails(!showDetails)}
+                  aria-label="Customise cookie preferences"
+                  aria-expanded={showDetails}
+                  className="flex h-11 w-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-xl border border-white/10 text-white/70 transition-colors hover:bg-white/5 hover:text-white"
+                >
+                  {showDetails ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </button>
               </div>
-
-              {/* Customise Toggle */}
-              <button
-                onClick={() => setShowDetails(!showDetails)}
-                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-white hover:text-white transition-colors touch-manipulation rounded-lg hover:bg-white/5 active:bg-white/10"
-              >
-                Customise
-                {showDetails ? (
-                  <ChevronUp className="h-4 w-4" />
-                ) : (
-                  <ChevronDown className="h-4 w-4" />
-                )}
-              </button>
             </div>
 
             {/* Detailed Preferences Panel */}

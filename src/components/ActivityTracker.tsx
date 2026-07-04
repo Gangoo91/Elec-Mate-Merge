@@ -11,12 +11,21 @@ const PAGE_VIEW_DEBOUNCE_MS = 2000;
 const lastPageView: Record<string, number> = {};
 
 export function ActivityTracker() {
-  const { user } = useAuth();
+  const { user, profile, isSubscribed } = useAuth();
   const location = useLocation();
   const sessionStartTime = useRef<number | null>(null);
   const heartbeatInterval = useRef<NodeJS.Timeout | null>(null);
   const sessionId = useRef<string | null>(null);
   const currentPath = useRef(location.pathname);
+
+  // Whether the user can get past the subscription gate. Without this flag,
+  // a user stuck at the TrialExpiredPaywall emits the same heartbeats and
+  // page views as a paying user — which made 98 locked-out trial users look
+  // like active freeloaders in the admin engagement data (ELE-1269).
+  const hasAccess =
+    isSubscribed || profile?.subscribed || profile?.free_access_granted || false;
+  const hasAccessRef = useRef(hasAccess);
+  hasAccessRef.current = hasAccess;
 
   // Track page views
   useEffect(() => {
@@ -41,7 +50,7 @@ export function ActivityTracker() {
           user_id: user.id,
           event_type: 'page_view',
           page_path: location.pathname,
-          event_data: { timestamp: new Date().toISOString() },
+          event_data: { timestamp: new Date().toISOString(), access: hasAccessRef.current },
         });
         console.debug('[Activity] Page view:', location.pathname);
       } catch {
@@ -68,6 +77,7 @@ export function ActivityTracker() {
           event_data: {
             session_id: sessionId.current,
             started_at: new Date().toISOString(),
+            access: hasAccessRef.current,
           },
         });
       } catch {
@@ -89,6 +99,7 @@ export function ActivityTracker() {
           event_data: {
             session_id: sessionId.current,
             duration_seconds: durationSeconds,
+            access: hasAccessRef.current,
           },
         });
       } catch {
@@ -116,6 +127,7 @@ export function ActivityTracker() {
               event_data: {
                 session_id: sessionId.current,
                 duration_seconds: durationSeconds,
+                access: hasAccessRef.current,
               },
             });
           } catch {
@@ -138,7 +150,7 @@ export function ActivityTracker() {
             user_id: user.id,
             event_type: 'tab_hidden',
             page_path: location.pathname,
-            event_data: { session_id: sessionId.current },
+            event_data: { session_id: sessionId.current, access: hasAccessRef.current },
           });
         } else {
           // User returned to tab
@@ -146,7 +158,7 @@ export function ActivityTracker() {
             user_id: user.id,
             event_type: 'tab_visible',
             page_path: location.pathname,
-            event_data: { session_id: sessionId.current },
+            event_data: { session_id: sessionId.current, access: hasAccessRef.current },
           });
         }
       } catch {
@@ -170,7 +182,7 @@ export function ActivityTracker() {
             user_id: user.id,
             event_type: 'login',
             page_path: location.pathname,
-            event_data: { timestamp: new Date().toISOString() },
+            event_data: { timestamp: new Date().toISOString(), access: hasAccessRef.current },
           });
           sessionStorage.setItem('last-login-track', user.id);
           console.debug('[Activity] Login tracked');

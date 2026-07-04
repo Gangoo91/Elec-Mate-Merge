@@ -61,19 +61,27 @@ const capacitorStorage: SupabaseStorageAdapter = {
   getItem(key: string): string | null {
     return cache.get(key) ?? null;
   },
-  setItem(key: string, value: string): void {
+  async setItem(key: string, value: string): Promise<void> {
     cache.set(key, value);
-    // Fire-and-forget persist to native storage
-    Preferences.set({ key, value }).catch((err) =>
-      console.warn('[capacitorStorage] setItem persist failed:', err)
-    );
+    // AWAIT the native write (GoTrue awaits setItem). Refresh tokens rotate on
+    // every refresh; with a fire-and-forget write, the OS could kill the app
+    // before the write landed, leaving the STALE refresh token on disk. The
+    // next launch then trips Supabase's refresh-token reuse detection and the
+    // whole session is revoked — users "signed out after a couple of minutes"
+    // (biometric auto-login masked it for anyone with Face ID enabled).
+    try {
+      await Preferences.set({ key, value });
+    } catch (err) {
+      console.warn('[capacitorStorage] setItem persist failed:', err);
+    }
   },
-  removeItem(key: string): void {
+  async removeItem(key: string): Promise<void> {
     cache.delete(key);
-    // Fire-and-forget remove from native storage
-    Preferences.remove({ key }).catch((err) =>
-      console.warn('[capacitorStorage] removeItem persist failed:', err)
-    );
+    try {
+      await Preferences.remove({ key });
+    } catch (err) {
+      console.warn('[capacitorStorage] removeItem persist failed:', err);
+    }
   },
 };
 

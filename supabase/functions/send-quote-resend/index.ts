@@ -347,6 +347,18 @@ const handler = async (req: Request): Promise<Response> => {
             binary += String.fromCharCode.apply(null, Array.from(chunk));
           }
           pdfBase64 = btoa(binary);
+          // ELE-1189 (ported from send-certificate-resend): Brevo rejects
+          // oversized attachments with "500 Invalid Request", failing the
+          // whole send. Cap the attachment; the email still carries the
+          // quote link so delivery never fails outright.
+          const MAX_BREVO_ATTACHMENT_BYTES = 10 * 1024 * 1024; // ~10 MB of base64
+          if (pdfBase64.length > MAX_BREVO_ATTACHMENT_BYTES) {
+            console.warn(
+              `PDF too large to attach (${pdfBase64.length} b64 bytes) — sending link only`
+            );
+            pdfBase64 = null;
+            return false;
+          }
           console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
           return true;
         } else {
@@ -474,7 +486,16 @@ const handler = async (req: Request): Promise<Response> => {
       console.log('PDF attached');
     }
 
-    const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
+    let { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
+
+    // ELE-1189 belt-and-braces (ported from send-certificate-resend): if the
+    // send failed while carrying an attachment, retry once without it — the
+    // email still carries the quote link, so the client can still get it.
+    if (emailError && emailOptions.attachments?.length) {
+      console.warn(`Send failed with attachment, retrying link-only: ${emailError.message}`);
+      delete emailOptions.attachments;
+      ({ data: emailData, error: emailError } = await resend.emails.send(emailOptions));
+    }
 
     if (emailError) {
       console.error('Resend API error:', emailError);

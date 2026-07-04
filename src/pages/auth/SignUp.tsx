@@ -4,14 +4,18 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
+  Bell,
   Check,
   CheckCircle2,
   ChevronLeft,
+  Database,
   Eye,
   EyeOff,
+  FileText,
   Gift,
   GraduationCap,
   Loader2,
+  ShieldCheck,
   Wrench,
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
@@ -22,18 +26,14 @@ import { storageSetSync, storageGetSync, storageRemoveSync } from '@/utils/stora
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
 import { isPasswordBreached } from '@/utils/passwordCheck';
-import {
-  trackLead,
-  trackCompleteRegistration,
-  trackInitiateCheckout,
-} from '@/lib/marketing-pixels';
+import { useCookieConsent } from '@/components/CookieConsent';
+import { trackLead, trackCompleteRegistration } from '@/lib/marketing-pixels';
 import { trackSignupCompleted, trackSignupStarted } from '@/lib/analytics-events';
 import {
   persistAttributionToProfile,
   fireServerCapi,
   getStoredAttribution,
 } from '@/lib/attribution';
-import { Capacitor } from '@capacitor/core';
 
 const PASSWORD_REQUIREMENTS = [
   { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
@@ -49,43 +49,25 @@ const STEP_LABELS = ['Account', 'Role', 'Trial'];
 
 const ROLE_OPTIONS = [
   {
-    value: 'electrician',
-    label: 'Electrician',
-    subtitle: 'Everything you need on and off site.',
-    icon: Wrench,
-    features: [
-      'Certificates, RAMS and reports',
-      'Quotes and invoices',
-      'AI tools and calculators',
-      'Job tracking and study tools',
-    ],
-    pricing: {
-      web: { monthly: '£19.99', yearly: '£199.99' },
-      inApp: { monthly: '£19.99', yearly: '£199.99' },
-    },
-  },
-  {
     value: 'apprentice',
     label: 'Apprentice',
-    subtitle: 'Your complete training companion.',
+    subtitle: 'Training, AM2 prep, portfolio and revision.',
     icon: GraduationCap,
-    features: [
-      'Level 2 and 3 courses',
-      'AM2 support and mock exams',
-      'Progress tracking and revision tools',
-      'Calculators and study resources',
-    ],
-    pricing: {
-      web: { monthly: '£6.99', yearly: '£69.99' },
-      inApp: { monthly: '£6.99', yearly: '£69.99' },
-    },
+    monthly: '£6.99',
+  },
+  {
+    value: 'electrician',
+    label: 'Electrician',
+    subtitle: 'Certs, quotes, invoices and every tool.',
+    icon: Wrench,
+    monthly: '£19.99',
   },
 ];
 
 /* ─── Shared sub-components ─── */
 
 const StepBar = ({ currentIndex }: { currentIndex: number }) => (
-  <div className="mb-5 lg:mb-7">
+  <div className="mx-auto mb-5 w-full max-w-[440px] lg:mb-7">
     <div className="flex gap-2">
       {STEPS.map((s, i) => (
         <div key={s} className="flex-1">
@@ -145,6 +127,8 @@ const InputField = ({
       <div className="relative">
         <input
           type={resolvedType}
+          id={field}
+          name={field}
           value={value}
           onChange={onChange}
           onFocus={() => setFocusedField(field)}
@@ -152,6 +136,10 @@ const InputField = ({
           placeholder={placeholder}
           autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'name'}
           autoCapitalize={type === 'email' || type === 'password' ? 'none' : 'words'}
+          autoCorrect={type === 'email' ? 'off' : undefined}
+          spellCheck={type === 'email' ? false : undefined}
+          inputMode={type === 'email' ? 'email' : undefined}
+          enterKeyHint="next"
           className={cn(
             'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-12 text-[16px] text-white placeholder:text-white outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
             focusedField === field
@@ -260,6 +248,8 @@ const SignUp = () => {
     dataProcessingAccepted: false,
   });
   const userCount = useUserCount();
+  // Cookie banner clearance — see container className below
+  const { hasConsented } = useCookieConsent();
 
   const { signUp, user, profile } = useAuth();
   const navigate = useNavigate();
@@ -526,67 +516,13 @@ const SignUp = () => {
       }
       storageRemoveSync('elec-mate-onboarding-data');
 
-      // Native (iOS / Android) still needs the CheckoutTrial interstitial to
-      // trigger the RevenueCat in-app purchase flow. Web users go straight to
-      // Stripe Checkout — no interstitial, no sidebar bypass.
-      const isNative = Capacitor.isNativePlatform();
-      if (!isNative && rp) {
-        try {
-          const offerCode = storageGetSync('elec-mate-offer-code');
-          const referralCode = storageGetSync('elec-mate-referral-code');
-          const { data: checkoutData, error: checkoutErr } = await supabase.functions.invoke(
-            'create-checkout',
-            {
-              body: {
-                priceId: rp.priceId,
-                mode: 'subscription',
-                planId: rp.planId,
-                offerCode,
-                referralCode,
-              },
-            }
-          );
-          if (checkoutErr) throw new Error(checkoutErr.message);
-          if (checkoutData?.url) {
-            const checkoutValue = rp.planId.startsWith('apprentice') ? 6.99 : 19.99;
-            const eventId = trackInitiateCheckout({
-              value: checkoutValue,
-              currency: 'GBP',
-              contentName: profileForm.role,
-              contentIds: [rp.priceId],
-            });
-            fireServerCapi({
-              event_name: 'InitiateCheckout',
-              event_id: eventId,
-              email,
-              user_id: userId,
-              value: checkoutValue,
-              currency: 'GBP',
-              content_name: profileForm.role,
-            });
-            if (offerCode) storageRemoveSync('elec-mate-offer-code');
-            if (referralCode) storageRemoveSync('elec-mate-referral-code');
-            window.location.replace(checkoutData.url);
-            return;
-          }
-          throw new Error('No checkout URL returned');
-        } catch (checkoutStartErr) {
-          // Fallback: if Stripe session creation fails, fall back to the
-          // CheckoutTrial page so the user has a retry surface.
-          storageRemoveSync('elec-mate-offer-code');
-          navigate('/checkout-trial', {
-            state: {
-              error:
-                checkoutStartErr instanceof Error
-                  ? checkoutStartErr.message
-                  : 'Could not start checkout',
-            },
-          });
-          return;
-        }
-      }
-
-      storageRemoveSync('elec-mate-offer-code');
+      // Both platforms land on the CheckoutTrial interstitial. Web previously
+      // auto-created a Stripe session here and bounced the user cold onto the
+      // card form — 54 of the 56 abandoners in the last 30 days never came
+      // back (ELE-1268/1270). Now every user sees the plan summary, "£0 today"
+      // and trial terms first; CheckoutTrial.startCheckout fires the identical
+      // create-checkout call (offer/referral codes and tracking included) on
+      // click. Native unchanged: the same page triggers the RevenueCat IAP.
       navigate('/checkout-trial');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -614,8 +550,25 @@ const SignUp = () => {
 
   return (
     <div className="min-h-[100svh] bg-black">
-      <div className="mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-6 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-[env(safe-area-inset-top)] lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-8">
-        <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
+      <div
+        className={cn(
+          'mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-6 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-[env(safe-area-inset-top)] lg:gap-12 lg:px-8',
+          // The role step becomes a full-width side-by-side chooser on desktop
+          // (no scrolling to see the second option); the other steps keep the
+          // marketing panel + narrow form layout.
+          step === 'profile' ? 'lg:grid-cols-1' : 'lg:grid-cols-[0.95fr_1.05fr]',
+          // The fixed cookie banner overlaps the Continue button at the bottom
+          // on mobile until consent is answered — it intercepted the tap in
+          // testing. Clear it while the banner is up.
+          !hasConsented && 'pb-36'
+        )}
+      >
+        <div
+          className={cn(
+            'hidden lg:flex-col lg:justify-between lg:py-10',
+            step !== 'profile' && 'lg:flex'
+          )}
+        >
           <div>
             <Link to="/" className="flex items-center gap-3">
               <img src="/logo.jpg" alt="Elec-Mate" className="h-11 w-11 rounded-xl object-cover" />
@@ -632,7 +585,7 @@ const SignUp = () => {
               </h1>
               <p className="mt-6 max-w-[26rem] text-lg leading-[1.65] text-white">
                 Create your account, pick your role, and start running real work through the
-                platform. No charge until day 8.
+                platform. £0 today — nothing is charged until day 8.
               </p>
             </div>
           </div>
@@ -645,7 +598,12 @@ const SignUp = () => {
         </div>
 
         <div className="flex flex-col justify-start py-3 lg:justify-center lg:py-10">
-          <div className="mx-auto flex w-full max-w-[440px] flex-1 flex-col">
+          <div
+            className={cn(
+              'mx-auto flex w-full flex-1 flex-col',
+              step === 'profile' ? 'max-w-[440px] lg:max-w-[960px]' : 'max-w-[440px]'
+            )}
+          >
             {/* Top bar: back + logo */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -720,12 +678,14 @@ const SignUp = () => {
                       Create your <span className="text-yellow-400">account.</span>
                     </h1>
                     <p className="mb-3 text-[14px] leading-[1.6] text-white lg:text-[15px]">
-                      Name, email, password — that's it. No charge for 7 days.
+                      Name, email, password — that's it.
                     </p>
-                    <div className="mb-5 flex items-center gap-2 text-[12px] text-white lg:mb-6 lg:text-[13px]">
-                      <span>No charge for 7 days</span>
+                    <div className="mb-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-white lg:mb-6 lg:text-[13px]">
+                      <span className="font-semibold text-yellow-400">£0 today</span>
                       <span className="h-1 w-1 rounded-full bg-white/30" />
-                      <span>{userCount} electricians live</span>
+                      <span>7 days free</span>
+                      <span className="h-1 w-1 rounded-full bg-white/30" />
+                      <span>{userCount} electricians in</span>
                     </div>
 
                     {/* Error */}
@@ -874,12 +834,13 @@ const SignUp = () => {
                     transition={{ duration: 0.2 }}
                     className="flex-1 flex flex-col"
                   >
-                    <div className="mb-7">
+                    <div className="mb-7 lg:mb-9 lg:text-center">
                       <h1 className="mb-3 text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.5rem]">
                         Which one <span className="text-yellow-400">sounds like you?</span>
                       </h1>
-                      <p className="text-[15px] leading-[1.7] text-white">
-                        This tunes the first version of the platform you land in.
+                      <p className="mx-auto max-w-[36rem] text-[15px] leading-[1.7] text-white">
+                        This tunes what you land in first. Both plans are £0 today — everything
+                        unlocked for 7 days.
                       </p>
                     </div>
 
@@ -898,7 +859,7 @@ const SignUp = () => {
                       )}
                     </AnimatePresence>
 
-                    <div className="flex-1 space-y-4">
+                    <div className="flex-1 space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-5 lg:space-y-0">
                       {ROLE_OPTIONS.map((option, index) => {
                         const selected = profileForm.role === option.value;
                         const Icon = option.icon;
@@ -911,28 +872,37 @@ const SignUp = () => {
                             transition={{ delay: 0.05 + index * 0.1 }}
                             onClick={() => setProfileForm({ ...profileForm, role: option.value })}
                             className={cn(
-                              'w-full touch-manipulation rounded-[1.8rem] border p-5 text-left transition-all duration-200 lg:p-6',
+                              'relative w-full touch-manipulation overflow-hidden rounded-[1.8rem] border p-5 text-left transition-all duration-200 lg:p-6',
                               selected
-                                ? 'border-yellow-400/60 bg-gradient-to-br from-yellow-500/[0.12] via-amber-500/[0.05] to-white/[0.02] shadow-[0_0_40px_rgba(250,204,21,0.1)]'
-                                : 'border-white/[0.12] bg-white/[0.03] hover:border-yellow-400/30 hover:bg-white/[0.04]'
+                                ? 'border-yellow-400/60 bg-gradient-to-br from-yellow-500/[0.14] via-amber-500/[0.06] to-white/[0.03] shadow-[0_0_40px_rgba(250,204,21,0.12)]'
+                                : 'border-white/[0.16] bg-gradient-to-b from-white/[0.07] to-white/[0.03] hover:border-yellow-400/40 hover:from-white/[0.09]'
                             )}
                           >
-                            <div className="flex items-start gap-4">
+                            <div
+                              aria-hidden
+                              className={cn(
+                                'absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0 transition-opacity',
+                                selected ? 'via-elec-yellow/80' : 'via-elec-yellow/30'
+                              )}
+                            />
+                            <div className="flex items-center gap-4">
                               <div
                                 className={cn(
-                                  'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border transition-colors',
+                                  'flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl border transition-colors',
                                   selected
                                     ? 'border-yellow-400/40 bg-yellow-500/[0.18]'
                                     : 'border-yellow-500/25 bg-yellow-500/[0.12]'
                                 )}
                               >
-                                <Icon className="h-5 w-5 text-yellow-400" />
+                                <Icon className="h-6 w-6 text-yellow-400" />
                               </div>
                               <div className="min-w-0 flex-1">
-                                <h3 className="text-[18px] font-bold tracking-[-0.01em] text-white">
+                                <h3 className="text-[19px] font-bold tracking-[-0.01em] text-white">
                                   {option.label}
                                 </h3>
-                                <p className="mt-1 text-[13px] text-white">{option.subtitle}</p>
+                                <p className="mt-0.5 text-[13px] leading-snug text-white/65">
+                                  {option.subtitle}
+                                </p>
                               </div>
                               <div
                                 className={cn(
@@ -950,76 +920,35 @@ const SignUp = () => {
 
                             <div
                               className={cn(
-                                'mt-5 space-y-2.5 border-t pt-4',
+                                'mt-5 flex items-baseline justify-between gap-3 border-t pt-4',
                                 selected ? 'border-yellow-400/20' : 'border-white/[0.08]'
                               )}
                             >
-                              {option.features.map((feature) => (
-                                <div
-                                  key={feature}
-                                  className="flex items-start gap-2.5 text-[13px] leading-[1.55] text-white"
-                                >
-                                  <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
-                                  <span>{feature}</span>
-                                </div>
-                              ))}
-                            </div>
-
-                            {/* Pricing — free trial + two tracks */}
-                            <div
-                              className={cn(
-                                'mt-4 rounded-2xl border px-4 py-3.5 space-y-2.5',
-                                selected
-                                  ? 'border-yellow-400/30 bg-yellow-400/[0.06]'
-                                  : 'border-white/[0.08] bg-white/[0.02]'
-                              )}
-                            >
-                              <div className="flex items-center gap-2">
-                                <Gift className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-                                <span className="text-[13px] font-semibold text-white">
-                                  7 days free · no charge until day 8 · cancel anytime
+                              <div className="flex items-baseline gap-1.5">
+                                <span className="text-[22px] font-bold leading-none text-white tabular-nums">
+                                  {option.monthly}
+                                </span>
+                                <span className="text-[12.5px] text-white/60">
+                                  /mo after your free week
                                 </span>
                               </div>
-                              <div className="grid grid-cols-2 gap-2">
-                                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2">
-                                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
-                                    Web
-                                  </div>
-                                  <div className="mt-0.5 flex items-baseline gap-1">
-                                    <span className="text-[15px] font-bold text-white tabular-nums">
-                                      {option.pricing.web.monthly}
-                                    </span>
-                                    <span className="text-[11px] text-white">/mo</span>
-                                  </div>
-                                  <div className="text-[10.5px] text-white">
-                                    or {option.pricing.web.yearly}/yr
-                                  </div>
-                                </div>
-                                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2">
-                                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
-                                    In-app
-                                  </div>
-                                  <div className="mt-0.5 flex items-baseline gap-1">
-                                    <span className="text-[15px] font-bold text-white tabular-nums">
-                                      {option.pricing.inApp.monthly}
-                                    </span>
-                                    <span className="text-[11px] text-white">/mo</span>
-                                  </div>
-                                  <div className="text-[10.5px] text-white">
-                                    or {option.pricing.inApp.yearly}/yr
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="text-[10.5px] text-white">
-                                Charged after your trial ends. Cancel anytime.
-                              </div>
+                              <span
+                                className={cn(
+                                  'rounded-full px-2.5 py-1 text-[11px] font-bold',
+                                  selected
+                                    ? 'bg-yellow-400 text-black'
+                                    : 'bg-yellow-500/[0.12] text-yellow-400'
+                                )}
+                              >
+                                £0 today
+                              </span>
                             </div>
                           </motion.button>
                         );
                       })}
                     </div>
 
-                    <div className="pt-5">
+                    <div className="mx-auto w-full pt-5 lg:max-w-[440px] lg:pt-7">
                       <Button
                         onClick={handleProfileSubmit}
                         disabled={!profileForm.role}
@@ -1031,7 +960,7 @@ const SignUp = () => {
                       {/* Trial note */}
                       <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-white">
                         <Gift className="h-3.5 w-3.5 text-yellow-400" />
-                        <span>No charge for 7 days · Cancel in a couple of clicks</span>
+                        <span>£0 today · Cancel in a couple of clicks</span>
                       </div>
                     </div>
                   </motion.div>
@@ -1052,8 +981,10 @@ const SignUp = () => {
                         One last <span className="text-yellow-400">thing.</span>
                       </h1>
                       <p className="text-[15px] leading-[1.7] text-white">
-                        Confirm the essentials, then add a card to start your free week — you won't
-                        be charged until day 8, and you can cancel any time before that.
+                        Confirm the essentials and your free week starts —{' '}
+                        <span className="font-semibold text-yellow-400">£0 today</span>, first
+                        charge on day 8 only if you keep it. Cancel any time before in a couple of
+                        clicks.
                       </p>
                     </div>
 
@@ -1104,30 +1035,35 @@ const SignUp = () => {
                       {[
                         {
                           key: 'termsAccepted',
+                          icon: FileText,
                           label: 'Terms of Service',
                           desc: 'Our rules for using the platform',
                           req: true,
                         },
                         {
                           key: 'privacyAccepted',
+                          icon: ShieldCheck,
                           label: 'Privacy Policy',
                           desc: 'How we protect your information',
                           req: true,
                         },
                         {
                           key: 'dataProcessingAccepted',
+                          icon: Database,
                           label: 'Data Processing (GDPR)',
                           desc: 'Required for UK data compliance',
                           req: true,
                         },
                         {
                           key: 'marketingOptIn',
+                          icon: Bell,
                           label: 'Updates & offers',
-                          desc: 'Tips, new features & occasional deals',
+                          desc: 'Tips, new features & occasional deals — optional',
                           req: false,
                         },
                       ].map((item, i) => {
                         const checked = consent[item.key as keyof typeof consent];
+                        const ItemIcon = item.icon;
                         return (
                           <motion.button
                             key={item.key}
@@ -1136,46 +1072,50 @@ const SignUp = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.03 + i * 0.05 }}
                             onClick={() => setConsent({ ...consent, [item.key]: !checked })}
+                            aria-pressed={!!checked}
                             className={cn(
-                              'w-full p-4 rounded-xl text-left flex items-center gap-3.5 transition-all duration-200 touch-manipulation border-2',
+                              'flex w-full touch-manipulation items-center gap-3.5 rounded-2xl border p-4 text-left transition-all duration-200',
                               checked
-                                ? 'bg-green-500/[0.06] border-green-500/25'
-                                : 'bg-white/[0.03] border-white/15 hover:border-elec-yellow/20'
+                                ? 'border-yellow-400/50 bg-gradient-to-br from-yellow-500/[0.10] to-white/[0.02]'
+                                : 'border-white/[0.12] bg-white/[0.03] hover:border-yellow-400/30 hover:bg-white/[0.04]'
                             )}
                           >
                             <div
-                              aria-hidden
                               className={cn(
-                                'flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-colors',
+                                'flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border transition-colors',
                                 checked
-                                  ? 'border-green-500 bg-green-500'
-                                  : 'border-white/25 bg-transparent'
+                                  ? 'border-yellow-400/40 bg-yellow-500/[0.18]'
+                                  : 'border-yellow-500/25 bg-yellow-500/[0.10]'
                               )}
                             >
-                              {checked && (
-                                <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
-                              )}
+                              <ItemIcon className="h-[18px] w-[18px] text-yellow-400" />
                             </div>
-                            <div className="flex-1 min-w-0">
-                              <span className="text-[14px] text-white font-medium block">
-                                {item.label}
-                              </span>
-                              <span className="text-[11px] text-white block mt-0.5">
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[14px] font-semibold text-white">
+                                  {item.label}
+                                </span>
+                                {item.req && !checked && (
+                                  <span className="rounded-full bg-elec-yellow/10 px-2 py-0.5 text-[10px] font-semibold text-elec-yellow">
+                                    Required
+                                  </span>
+                                )}
+                              </div>
+                              <span className="mt-0.5 block text-[11.5px] text-white/60">
                                 {item.desc}
                               </span>
                             </div>
-                            {item.req && (
-                              <span
-                                className={cn(
-                                  'text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0',
-                                  checked
-                                    ? 'bg-green-500/15 text-green-400'
-                                    : 'bg-elec-yellow/10 text-elec-yellow'
-                                )}
-                              >
-                                {checked ? '✓' : 'Required'}
-                              </span>
-                            )}
+                            <div
+                              aria-hidden
+                              className={cn(
+                                'flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full transition-all duration-150',
+                                checked
+                                  ? 'bg-yellow-400 shadow-[0_0_16px_rgba(250,204,21,0.4)]'
+                                  : 'border-2 border-white/25'
+                              )}
+                            >
+                              {checked && <Check className="h-4 w-4 text-black" strokeWidth={3} />}
+                            </div>
                           </motion.button>
                         );
                       })}
@@ -1198,7 +1138,7 @@ const SignUp = () => {
 
                       {/* Trial + trust note */}
                       <div className="mt-4 text-center text-[11px] text-white">
-                        7-day free trial · No charge for 7 days · Cancel in a couple of clicks
+                        £0 today · 7-day free trial · Cancel in a couple of clicks
                       </div>
                     </div>
                   </motion.div>

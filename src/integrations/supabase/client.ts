@@ -10,11 +10,40 @@ export const SUPABASE_PUBLISHABLE_KEY =
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
+// ELE-1273: supabase-js serialises token refresh across tabs via
+// navigator.locks with NO acquire timeout. When Chrome freezes a background
+// tab that holds the lock (common on low-RAM machines with many tabs open),
+// every other tab's queries wait on the lock forever — permanent skeletons
+// and mutations stuck mid-flight. The 30s fetch timeout below never fires
+// because the request is queued BEFORE fetch. Cap the wait at 5s, then
+// proceed without the lock: a concurrent refresh across tabs is tolerated by
+// Supabase's refresh-token reuse grace window; a deadlocked app is not.
+const lockWithTimeout = async <R>(
+  name: string,
+  _acquireTimeout: number,
+  fn: () => Promise<R>
+): Promise<R> => {
+  if (typeof navigator === 'undefined' || !navigator.locks) return fn();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    return await navigator.locks.request(name, { signal: controller.signal }, fn);
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      return fn();
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+};
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
     storage: authStorage,
     persistSession: true,
     autoRefreshToken: true,
+    lock: lockWithTimeout,
     // ELE-398: Prevent URL-based session detection on native — no auth tokens
     // arrive via URL hash on Capacitor. Without this, GoTrue checks the URL first,
     // finds nothing, and may interfere with storage-based session restoration.

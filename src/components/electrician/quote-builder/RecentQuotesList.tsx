@@ -19,6 +19,7 @@ import CertificateGenerationDialog from '@/components/inspection/CertificateGene
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
+import { sharePdfFileNative } from '@/utils/share-pdf-file-native';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -441,56 +442,59 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
       const clientPhone = clientData?.phone;
 
-      if (Capacitor.isNativePlatform()) {
-        const message = `📋 *Quote ${freshQuote.quote_number}*
+      const shareMessage = `*Quote ${freshQuote.quote_number} — ${companyName}*
 
 Dear ${clientName},
 
-Please find your quote for ${jobTitle}
+Thank you for the opportunity to quote for ${jobTitle}. The full quote is attached.
 
-💰 Total Amount: ${formatCurrency(totalAmount)}
+Total: ${formatCurrency(totalAmount)}
 Valid until: ${validityDate}
 
-📥 Download Quote (PDF):
-${pdfDownloadUrl}
+If you have any questions, just reply here.
 
-If you have any questions, please don't hesitate to contact us.
-
-Best regards,
+Many thanks,
 ${companyName}`;
 
-        let whatsappUrl: string;
-        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
-        } else {
-          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      if (Capacitor.isNativePlatform()) {
+        // ELE-1276: attach the actual PDF via the native share sheet — the
+        // signed S3 URL expires after an hour and looks unprofessional as
+        // raw text.
+        const shared = await sharePdfFileNative({
+          pdfUrl: pdfDownloadUrl,
+          filename: `Quote-${freshQuote.quote_number || freshQuote.id}.pdf`,
+          title: `Quote ${freshQuote.quote_number}`,
+          text: shareMessage,
+        });
+
+        if (!shared) {
+          // Fallback: legacy wa.me text with the download link.
+          const fallbackMessage = `${shareMessage}
+
+Download your quote here:
+${pdfDownloadUrl}`;
+          let whatsappUrl: string;
+          if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+            const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+            whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(fallbackMessage)}`;
+          } else {
+            whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fallbackMessage)}`;
+          }
+          await openExternalUrl(whatsappUrl);
         }
 
-        await openExternalUrl(whatsappUrl);
-
         toast({
-          title: 'Opening WhatsApp',
-          description: 'WhatsApp will open with your quote message',
+          title: shared ? 'Share sheet opened' : 'Opening WhatsApp',
+          description: shared
+            ? 'Your quote PDF is attached — pick WhatsApp to send it'
+            : 'WhatsApp will open with your quote message',
           variant: 'success',
         });
         return;
       }
 
       // Web: attach the actual PDF, never a link in the body
-      const webMessage = `📋 *Quote ${freshQuote.quote_number}*
-
-Dear ${clientName},
-
-Please find your quote for ${jobTitle}
-
-💰 Total Amount: ${formatCurrency(totalAmount)}
-Valid until: ${validityDate}
-
-If you have any questions, please don't hesitate to contact us.
-
-Best regards,
-${companyName}`;
+      const webMessage = shareMessage;
 
       const result = await sharePdfBytesFromUrlToWhatsAppWeb({
         pdfUrl: pdfDownloadUrl,
@@ -520,123 +524,62 @@ ${companyName}`;
     }
   };
 
+  // ELE-1277: email goes through send-quote-resend (server-side, PDF attached)
+  // — the old mailto: approach couldn't attach the PDF and put an expiring
+  // signed URL in the body instead.
   const handleShareEmail = async (quote: Quote) => {
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
+      const cleanTo = quote.client?.email?.trim();
+      if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
+        toast({
+          title: 'Invalid Client Email',
+          description:
+            'Client email address is invalid. Please correct it in the quote and try again.',
+          variant: 'destructive',
+        });
+        return;
+      }
 
-      const { data: freshQuote, error: fetchError } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('id', quote.id)
-        .eq('user_id', user.id)
-        .single();
-
-      if (fetchError || !freshQuote) throw new Error('Failed to fetch latest quote data');
-
-      const { data: companyData } = await supabase
-        .from('company_profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      const {
+      let {
         data: { session },
+        error: sessionError,
       } = await supabase.auth.getSession();
-      if (!session) throw new Error('User not authenticated');
+      if (sessionError || !session) {
+        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
+        if (refreshError || !refreshData.session) {
+          throw new Error('Please log in again to send quotes.');
+        }
+        session = refreshData.session;
+      }
 
       toast({
-        title: 'Generating PDF',
-        description: 'Please wait...',
+        title: 'Sending quote',
+        description: 'Generating the PDF and emailing it to your client…',
       });
 
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
-        'generate-pdf-monkey',
-        {
-          body: {
-            quote: freshQuote,
-            companyProfile: companyData,
-            invoice_mode: false,
-            force_regenerate: true,
-          },
-          headers: {
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('send-quote-resend', {
+        body: { quoteId: quote.id },
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
 
-      let pdfUrl = pdfData?.downloadUrl;
-      const documentId = pdfData?.documentId;
-
-      if (!pdfUrl && documentId) {
-        pdfUrl = (await pollPdfDownloadUrl(documentId, session.access_token)) || undefined;
+      if (error) {
+        let errorMessage = 'Failed to send quote';
+        if (typeof error === 'string') errorMessage = error;
+        else if (error.message) errorMessage = error.message;
+        throw new Error(errorMessage);
       }
-
-      if (pdfError || !pdfUrl) throw new Error('Failed to generate PDF');
-
-      if (documentId) {
-        const newVersion = (freshQuote.pdf_version || 0) + 1;
-        await supabase
-          .from('quotes')
-          .update({
-            pdf_document_id: documentId,
-            pdf_url: pdfUrl,
-            pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion,
-          })
-          .eq('id', quote.id);
-      }
-
-      // Don't modify signed URLs - it breaks AWS S3 signature
-      const pdfDownloadUrl = pdfUrl;
-
-      const clientData =
-        typeof freshQuote.client_data === 'string'
-          ? JSON.parse(freshQuote.client_data)
-          : freshQuote.client_data;
-      const clientEmail = clientData?.email || '';
-      const companyName = companyData?.company_name || 'Your Company';
-      const totalAmount = freshQuote.total || 0;
-      const validityDate = freshQuote.expiry_date
-        ? format(new Date(freshQuote.expiry_date), 'dd MMMM yyyy')
-        : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
-
-      const jobDetails =
-        typeof freshQuote.job_details === 'string'
-          ? JSON.parse(freshQuote.job_details)
-          : freshQuote.job_details;
-      const jobTitle = jobDetails?.title || 'Electrical Work';
-
-      const subject = `Quote ${freshQuote.quote_number} - ${jobTitle}`;
-      const body = `Dear ${clientData?.name || 'Valued Client'},
-
-Please find your quote for ${jobTitle}.
-
-Total Amount: ${formatCurrency(totalAmount)}
-Valid until: ${validityDate}
-
-Download your quote here:
-${pdfDownloadUrl}
-
-If you have any questions, please contact us.
-
-Best regards,
-${companyName}`;
-
-      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoLink;
+      if (data?.error) throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
+      if (!data?.success) throw new Error(data?.message || 'Unknown error sending quote');
 
       toast({
-        title: 'Opening Email',
-        description: 'Your email client will open with the quote',
+        title: 'Quote sent',
+        description: `Quote ${quote.quoteNumber} emailed to ${cleanTo}`,
         variant: 'success',
       });
     } catch (error: any) {
       toast({
         title: 'Error',
-        description: error.message || 'Failed to prepare email',
+        description: error.message || 'Failed to send quote',
         variant: 'destructive',
       });
     }

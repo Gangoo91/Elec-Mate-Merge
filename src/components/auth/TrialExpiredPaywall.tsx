@@ -1,7 +1,18 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
-import { Loader2, Lock } from 'lucide-react';
+import {
+  Bell,
+  Bot,
+  Calculator,
+  CreditCard,
+  FileCheck,
+  GraduationCap,
+  Loader2,
+  Lock,
+  ReceiptText,
+  Zap,
+} from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -33,12 +44,31 @@ const ROLE_TO_PRICE: Record<string, PriceInfo> = {
 };
 
 const FEATURES = [
-  'Certificates, quotes and invoices',
-  '5 AI specialists trained on BS 7671',
-  '50+ electrical calculators',
-  'Study Centre, 46+ courses and mock exams',
-  'RAMS, method statements and reports',
-  'Branded client-ready output',
+  {
+    icon: FileCheck,
+    title: 'Every BS 7671 certificate',
+    detail: 'EICR, EIC, Minor Works and 16 more — signed on site, A4:2026 ready.',
+  },
+  {
+    icon: ReceiptText,
+    title: 'Quotes and invoices',
+    detail: 'Branded, tracked and chased automatically — paid by card or Apple Pay.',
+  },
+  {
+    icon: Bot,
+    title: '5 AI specialists',
+    detail: 'Cost engineer, circuit designer, RAMS and more — trained on BS 7671.',
+  },
+  {
+    icon: Calculator,
+    title: '70+ electrical calculators',
+    detail: 'Cable sizing, volt drop, Zs, fault current — all BS 7671 compliant.',
+  },
+  {
+    icon: GraduationCap,
+    title: 'Full Study Centre',
+    detail: '46+ courses, mock exams and CPD tracking.',
+  },
 ];
 
 const TrialExpiredPaywall = () => {
@@ -123,13 +153,13 @@ const TrialExpiredPaywall = () => {
   }, [isStarting, isNative, navigate, priceInfo, user?.email, user?.id]);
 
   return (
-    <div className="relative min-h-[100svh] overflow-hidden bg-[#0a0a0a]">
+    <div className="relative min-h-[100svh] overflow-hidden bg-black">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-[8%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.18),transparent_60%)] blur-3xl" />
+        <div className="absolute left-1/2 top-[8%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.16),transparent_60%)] blur-3xl" />
       </div>
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-[520px] flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] sm:px-6">
+      <div className="relative mx-auto flex min-h-[100svh] max-w-[520px] flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] sm:px-6 lg:max-w-[1040px] lg:justify-center lg:px-8">
         {/* Logo */}
         <div className="flex justify-center">
           <div className="flex items-center gap-3">
@@ -140,8 +170,47 @@ const TrialExpiredPaywall = () => {
           </div>
         </div>
 
+        <div className="lg:mt-10 lg:grid lg:grid-cols-[1fr_460px] lg:items-center lg:gap-14">
+          {/* Desktop pitch column — everything they get, with detail */}
+          <div className="hidden lg:block">
+            <h1 className="text-[2.6rem] font-bold leading-[1.06] tracking-[-0.04em] text-white">
+              {trialEndedRecently ? (
+                <>
+                  Pick up <span className="text-yellow-400">where you left off.</span>
+                </>
+              ) : (
+                <>
+                  Everything's ready <span className="text-yellow-400">when you are.</span>
+                </>
+              )}
+            </h1>
+            <p className="mt-4 max-w-[28rem] text-[15px] leading-[1.7] text-white/70">
+              Your account and everything in it are exactly as you left them. Start the free week
+              and it all unlocks — £0 today, nothing charged for 7 days.
+            </p>
+
+            <div className="mt-8 space-y-4">
+              {FEATURES.map((feature) => (
+                <div key={feature.title} className="flex items-start gap-3.5">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+                    <feature.icon className="h-[18px] w-[18px] text-yellow-400" />
+                  </div>
+                  <div>
+                    <p className="text-[14.5px] font-semibold leading-tight text-white">
+                      {feature.title}
+                    </p>
+                    <p className="mt-0.5 text-[13px] leading-[1.55] text-white/65">
+                      {feature.detail}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
         {/* Hero card — price-first */}
-        <div className="mt-8 rounded-[2rem] border border-yellow-400/25 bg-gradient-to-b from-yellow-500/[0.06] via-white/[0.03] to-white/[0.01] p-6 text-center sm:p-8 shadow-[0_10px_40px_-12px_rgba(250,204,21,0.18)]">
+        <div className="mt-8 rounded-[2rem] border border-yellow-400/25 bg-gradient-to-b from-yellow-500/[0.06] via-white/[0.03] to-white/[0.01] p-6 text-center sm:p-8 shadow-[0_10px_40px_-12px_rgba(250,204,21,0.18)] lg:mt-0">
           {/* Trial pill */}
           <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400/40 bg-yellow-400/10 px-3 py-1">
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400 animate-pulse" />
@@ -171,8 +240,41 @@ const TrialExpiredPaywall = () => {
               : 'No charge for 7 days · No surprises · Cancel anytime'}
           </p>
 
+          {/* What happens when — makes "no charge for 7 days" concrete */}
+          <div className="mt-6 space-y-3 rounded-2xl border border-white/[0.08] bg-black/30 p-4 text-left">
+            {[
+              {
+                icon: Zap,
+                title: 'Today — everything unlocks',
+                detail: 'Full access. £0 charged.',
+              },
+              {
+                icon: Bell,
+                title: 'Before your trial ends',
+                detail: 'We remind you — no surprises.',
+              },
+              {
+                icon: CreditCard,
+                title: 'Day 8 — first payment',
+                detail: `${priceInfo.price}/month, only if you keep it.`,
+              },
+            ].map((step) => (
+              <div key={step.title} className="flex items-start gap-3">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-yellow-500/25 bg-yellow-500/[0.12]">
+                  <step.icon className="h-3.5 w-3.5 text-yellow-400" />
+                </div>
+                <div>
+                  <p className="text-[12.5px] font-semibold leading-tight text-white">
+                    {step.title}
+                  </p>
+                  <p className="mt-0.5 text-[11.5px] leading-snug text-white/65">{step.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {/* Primary CTA */}
-          <div className="mt-7">
+          <div className="mt-6">
             <Button
               onClick={startCheckout}
               disabled={isStarting}
@@ -217,46 +319,49 @@ const TrialExpiredPaywall = () => {
           )}
         </div>
 
-        {/* What you get back */}
-        <div className="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 text-left">
+        {/* What you get back — mobile only; desktop shows it in the left column */}
+        <div className="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 text-left lg:hidden">
           <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-yellow-400">
             What you unlock
           </p>
-          <div className="mt-4 space-y-2.5">
+          <div className="mt-4 space-y-3.5">
             {FEATURES.map((feature) => (
-              <div
-                key={feature}
-                className="flex items-start gap-2.5 text-[14px] leading-[1.5] text-white"
-              >
-                <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
-                <span>{feature}</span>
+              <div key={feature.title} className="flex items-start gap-3">
+                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-yellow-500/25 bg-yellow-500/[0.12]">
+                  <feature.icon className="h-4 w-4 text-yellow-400" />
+                </div>
+                <div>
+                  <p className="text-[13.5px] font-semibold leading-tight text-white">
+                    {feature.title}
+                  </p>
+                  <p className="mt-0.5 text-[12px] leading-[1.55] text-white/65">
+                    {feature.detail}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Plan switcher + Sign out */}
-        <div className="mt-5 flex items-center justify-between gap-3">
-          <button
-            onClick={() => navigate('/subscriptions')}
-            className="text-[13px] font-medium text-white underline underline-offset-4 decoration-white/40 hover:decoration-white touch-manipulation"
-          >
-            See all plans
-          </button>
+        {/* Sign out is the only exit — /subscriptions was a side door into the
+            app without a card, so no plan-switcher link here */}
+        <div className="mt-5 text-center">
           <button
             onClick={async () => {
               await signOut();
               window.location.replace('/');
             }}
-            className="text-[13px] font-medium text-white touch-manipulation"
+            className="-m-2 touch-manipulation p-2 text-[13px] font-medium text-white/70 transition-colors hover:text-white"
           >
             Sign out
           </button>
         </div>
 
-        <p className="mt-5 text-center text-[11px] text-white">
+        <p className="mt-4 text-center text-[11px] text-white">
           Secure checkout by Stripe · You won't be charged during your trial
         </p>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -135,17 +135,19 @@ serve(async (req) => {
     const isTrial = period_type === 'TRIAL';
 
     if (type === 'CANCELLATION') {
-      // CANCELLATION during trial = user turned off auto-renewal but still has access until trial_end
-      // CANCELLATION on paid = immediate loss of access at period end
+      // CANCELLATION = auto-renew turned off. Store semantics (Apple/Google):
+      // access continues until the period actually ends — EXPIRATION fires
+      // then and revokes. Applies to BOTH trial and paid periods. Previously
+      // paid cancellations were revoked immediately, locking users out of a
+      // period they had paid for (ELE-1269).
       subscriptionEnd = expiration_at_ms ? new Date(expiration_at_ms).toISOString() : null;
-      if (isTrial && expiration_at_ms && expiration_at_ms > Date.now()) {
-        // Trial cancelled but not expired yet — keep access, mark as cancelled trial
+      if (expiration_at_ms && expiration_at_ms > Date.now()) {
         subscribed = true;
-        isTrialCancelled = true;
+        isTrialCancelled = isTrial;
         subscriptionTier = resolveTierFromProduct(product_id, store);
-        console.log(`Trial cancellation — still has access until ${subscriptionEnd}`);
+        console.log(`Cancellation (${period_type}) — access continues until ${subscriptionEnd}`);
       } else {
-        // Paid cancellation or expired trial cancellation — revoke access
+        // Period already over — revoke access
         subscribed = false;
         isTrialCancelled = false;
       }
@@ -210,10 +212,32 @@ serve(async (req) => {
       if (!subscribed) {
         const { data: preProfile } = await supabase
           .from('profiles')
-          .select('business_ai_enabled')
+          .select('business_ai_enabled, subscribed, subscription_end')
           .eq('id', app_user_id)
           .single();
         previouslyHadBusinessAI = preProfile?.business_ai_enabled === true;
+
+        // Out-of-order guard: RevenueCat webhooks are not delivery-ordered. A
+        // late EXPIRATION/BILLING_ISSUE for an OLD period must not clobber a
+        // newer period we already know about (trial EXPIRATION arriving after
+        // the paid RENEWAL was processed marked ~12 paying users
+        // subscribed=false — ELE-1269). Only downgrade if the expiring period
+        // is the one we currently hold (or newer).
+        const currentEndMs = preProfile?.subscription_end
+          ? new Date(preProfile.subscription_end).getTime()
+          : 0;
+        if (
+          preProfile?.subscribed === true &&
+          expiration_at_ms &&
+          currentEndMs > expiration_at_ms
+        ) {
+          console.log(
+            `Skipping stale ${type} for ${app_user_id}: event period ends ${new Date(expiration_at_ms).toISOString()} but profile already holds a period ending ${preProfile.subscription_end}`
+          );
+          return new Response(JSON.stringify({ ok: true, skipped_stale: true }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
       }
 
       const { error } = await supabase.from('profiles').update(updateData).eq('id', app_user_id);

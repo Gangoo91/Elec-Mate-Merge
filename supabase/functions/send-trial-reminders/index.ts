@@ -175,6 +175,170 @@ function getWelcome24hEmail(firstName: string): EmailTemplate {
   };
 }
 
+/**
+ * Trial receipt — sent 24-48h before trial end, with the user's OWN numbers.
+ * Loss aversion converts better than feature lists: "look what you'd be
+ * giving up" beats "look what we have". Zero-activity trialists get a
+ * last-chance activation nudge instead.
+ */
+interface ReceiptStats {
+  certs: number;
+  quotes: number;
+  quotedTotal: number;
+  invoices: number;
+  quizzes: number;
+  questions: number;
+}
+
+function getReceiptEmail(
+  firstName: string,
+  stats: ReceiptStats,
+  role: string,
+  price: string
+): EmailTemplate {
+  const safeName = firstName?.trim() || 'mate';
+  const isApprentice = role === 'apprentice';
+  const hasActivity = isApprentice
+    ? stats.quizzes > 0
+    : stats.certs + stats.quotes + stats.invoices > 0;
+
+  const minutesSaved = stats.certs * 45 + stats.quotes * 20 + stats.invoices * 10;
+  const hoursSaved = Math.round((minutesSaved / 60) * 10) / 10;
+
+  const statLines = isApprentice
+    ? [
+        `${stats.quizzes} ${stats.quizzes === 1 ? 'quiz' : 'quizzes'} completed`,
+        `${stats.questions} exam questions answered`,
+      ]
+    : [
+        `${stats.certs} ${stats.certs === 1 ? 'certificate' : 'certificates'} created`,
+        `£${Math.round(stats.quotedTotal).toLocaleString('en-GB')} quoted`,
+        `roughly ${hoursSaved} hours of paperwork saved`,
+      ];
+
+  const statRows = statLines
+    .map(
+      (line) => `
+        <tr>
+          <td style="padding: 10px 16px; border-bottom: 1px solid #262626;">
+            <span style="color: #facc15; font-weight: 700;">✓</span>
+            <span style="margin-left: 10px; font-size: 15px; color: #ffffff;">${line}</span>
+          </td>
+        </tr>`
+    )
+    .join('');
+
+  const ctaUrl = hasActivity
+    ? 'https://www.elec-mate.com/dashboard?utm_source=email&utm_medium=lifecycle&utm_campaign=trial_receipt'
+    : isApprentice
+      ? 'https://www.elec-mate.com/study-centre/apprentice?utm_source=email&utm_medium=lifecycle&utm_campaign=trial_receipt'
+      : 'https://www.elec-mate.com/electrician/inspection-testing/new?utm_source=email&utm_medium=lifecycle&utm_campaign=trial_receipt';
+  const ctaHref = ctaUrl.replace(/&/g, '&amp;');
+
+  const subject = hasActivity
+    ? `Your first week on Elec-Mate, ${safeName} — the numbers`
+    : `Your trial ends tomorrow, ${safeName}`;
+
+  const intro = hasActivity
+    ? isApprentice
+      ? 'Your trial ends tomorrow, so here’s what your first week looked like:'
+      : 'Your trial ends tomorrow, so I pulled your numbers from the week:'
+    : isApprentice
+      ? 'Your trial ends tomorrow — there’s still time to sit one mock exam and see where you stand before it does.'
+      : 'Your trial ends tomorrow — there’s still time to put one real job through it and see what it saves you.';
+
+  const keepLine = hasActivity
+    ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before tomorrow and you pay nothing at all.`
+    : `If it’s not for you, cancel before tomorrow and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked.`;
+
+  return {
+    subject,
+    from: FOUNDER_FROM,
+    replyTo: FOUNDER_REPLY_TO,
+    text: [
+      `Hi ${safeName},`,
+      '',
+      intro,
+      '',
+      ...(hasActivity ? statLines.map((l) => `- ${l}`) : []),
+      '',
+      keepLine,
+      '',
+      ctaUrl,
+      '',
+      'Any questions, hit reply — it comes straight to me.',
+      '',
+      'Andrew',
+      'Founder, Elec-Mate',
+    ].join('\n'),
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${subject}</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #e4e4e7;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
+    <tr>
+      <td align="center" style="padding: 32px 16px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #111111; border-radius: 16px; overflow: hidden; border: 1px solid #262626;">
+          <tr>
+            <td style="padding: 32px 28px 12px; text-align: center;">
+              <img src="https://www.elec-mate.com/logo.jpg" alt="Elec-Mate" width="120" style="display: block; margin: 0 auto; max-width: 120px; height: auto; border: 0;" />
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 16px 28px 8px;">
+              <h1 style="margin: 0 0 20px; font-size: 26px; font-weight: 700; line-height: 1.2; color: #ffffff; letter-spacing: -0.01em;">
+                ${hasActivity ? `Your first week, ${safeName}.` : `Your trial ends tomorrow, ${safeName}.`}
+              </h1>
+              <p style="margin: 0 0 22px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+                ${intro}
+              </p>
+              ${
+                hasActivity
+                  ? `
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 0 0 24px; background-color: rgba(250, 204, 21, 0.05); border: 1px solid rgba(250, 204, 21, 0.2); border-radius: 12px; overflow: hidden;">
+                ${statRows}
+              </table>`
+                  : ''
+              }
+              <p style="margin: 0 0 26px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+                ${keepLine}
+              </p>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
+                <tr>
+                  <td align="center">
+                    <a href="${ctaHref}" style="display: inline-block; padding: 16px 32px; background-color: #facc15; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 12px; letter-spacing: -0.01em;">
+                      ${hasActivity ? 'Open my dashboard →' : isApprentice ? 'Start a mock exam →' : 'Start my first cert →'}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin: 0 0 4px; font-size: 16px; line-height: 1.65; color: #ffffff;">Andrew</p>
+              <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: #ffffff;">Founder, Elec-Mate</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 24px 28px 28px;">
+              <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #ffffff; text-align: center;">
+                You're getting this because your 7-day free trial of Elec-Mate is ending.<br>
+                <a href="https://www.elec-mate.com" style="color: #ffffff; text-decoration: underline;">elec-mate.com</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    `,
+  };
+}
+
 async function sendEmail(to: string, template: EmailTemplate): Promise<boolean> {
   // Brevo via _shared/mailer.ts shim. Resend was banned at domain level —
   // Brevo is the sole supported provider. Per-template from/replyTo still
@@ -209,6 +373,7 @@ serve(async (req) => {
     const now = new Date();
     const stats = {
       welcome24h: { found: 0, sent: 0 },
+      receipt48h: { found: 0, sent: 0 },
     };
 
     // Resolve auth emails for a list of profiles (profiles has no email column)
@@ -269,6 +434,77 @@ serve(async (req) => {
         });
         stats.welcome24h.sent++;
         console.log(`✅ Sent 24h activation email to ${user.email}`);
+      }
+    }
+
+    // 2. Receipt email — trialists whose trial ends in the next 24-48h.
+    //    Their own numbers (certs, £ quoted, hours saved) or a last-chance
+    //    activation nudge when they've made nothing yet.
+    const receiptStart = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+    const receiptEnd = new Date(now.getTime() + 48 * 60 * 60 * 1000);
+    const { data: receiptProfiles } = await supabase
+      .from('profiles')
+      .select(PROFILE_COLS + ', role, created_at')
+      .eq('subscribed', true)
+      .eq('is_trial', true)
+      .gt('trial_end', receiptStart.toISOString())
+      .lte('trial_end', receiptEnd.toISOString());
+
+    const receiptUsers = await withEmails((receiptProfiles ?? []) as never[]);
+    stats.receipt48h.found = receiptUsers.length;
+    for (const user of receiptUsers) {
+      if (await alreadySent(user.id, 'receipt_48h')) continue;
+
+      const u = user as typeof user & { role: string | null };
+      const isApprentice = u.role === 'apprentice';
+      const receipt: ReceiptStats = {
+        certs: 0,
+        quotes: 0,
+        quotedTotal: 0,
+        invoices: 0,
+        quizzes: 0,
+        questions: 0,
+      };
+
+      try {
+        if (isApprentice) {
+          const { data: quizRows } = await supabase
+            .from('quiz_results')
+            .select('total_questions')
+            .eq('user_id', user.id);
+          receipt.quizzes = quizRows?.length ?? 0;
+          receipt.questions = (quizRows ?? []).reduce(
+            (sum: number, r: { total_questions: number | null }) =>
+              sum + (r.total_questions ?? 0),
+            0
+          );
+        } else {
+          const [certsRes, quotesRes, invoicesRes] = await Promise.all([
+            supabase.from('reports').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+            supabase.from('quotes').select('total').eq('user_id', user.id),
+            supabase.from('invoices').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+          ]);
+          receipt.certs = certsRes.count ?? 0;
+          receipt.quotes = quotesRes.data?.length ?? 0;
+          receipt.quotedTotal = (quotesRes.data ?? []).reduce(
+            (sum: number, q: { total: number | string | null }) => sum + (Number(q.total) || 0),
+            0
+          );
+          receipt.invoices = invoicesRes.count ?? 0;
+        }
+      } catch (statsErr) {
+        console.error(`Receipt stats failed for ${user.id} (sending nudge variant):`, statsErr);
+      }
+
+      const firstName = user.full_name?.split(' ')[0] || 'there';
+      const price = isApprentice ? '£6.99' : '£19.99';
+      if (await sendEmail(user.email, getReceiptEmail(firstName, receipt, u.role ?? 'electrician', price))) {
+        await supabase.from('trial_emails_sent').insert({
+          user_id: user.id,
+          email_type: 'receipt_48h',
+        });
+        stats.receipt48h.sent++;
+        console.log(`✅ Sent trial receipt email to ${user.email}`);
       }
     }
 

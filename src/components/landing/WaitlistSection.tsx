@@ -15,6 +15,7 @@ interface AudienceConfig {
   eyebrow: string;
   title: string;
   blurb: string;
+  benefits: string[];
   orgLabel: string;
   orgPlaceholder: string;
   buttonLabel: string;
@@ -27,8 +28,12 @@ const AUDIENCES: AudienceConfig[] = [
     icon: Building2,
     eyebrow: 'FOR EMPLOYERS',
     title: 'Manage your team in one place.',
-    blurb:
-      'Track your sparks’ certs, jobs and apprentices, assign work, and keep compliance tidy. Join the early-access waitlist for the Employer hub.',
+    blurb: 'The Employer hub is coming. Join the early-access list and get in first.',
+    benefits: [
+      'Every spark’s certs and compliance at a glance',
+      'Assign jobs, track timesheets and expenses',
+      'Apprentice progress without chasing paper',
+    ],
     orgLabel: 'Company',
     orgPlaceholder: 'Your company',
     buttonLabel: 'Join the employer waitlist',
@@ -39,8 +44,12 @@ const AUDIENCES: AudienceConfig[] = [
     icon: GraduationCap,
     eyebrow: 'FOR COLLEGES',
     title: 'Run your cohort’s learning & OTJ.',
-    blurb:
-      'Give tutors and assessors a live view of every apprentice’s progress, portfolio and off-the-job hours. Join the early-access waitlist for the College hub.',
+    blurb: 'The College hub is coming. Join the early-access list and get in first.',
+    benefits: [
+      'Live view of every apprentice’s progress',
+      'Portfolios and off-the-job hours in one place',
+      'Tutor and assessor sign-off built in',
+    ],
     orgLabel: 'College',
     orgPlaceholder: 'Your college',
     buttonLabel: 'Join the college waitlist',
@@ -63,7 +72,13 @@ function WaitlistCard({ config }: { config: AudienceConfig }) {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValid || status === 'loading') return;
+    if (status === 'loading') return;
+    // Validate on submit rather than disabling the button — a greyed-out
+    // primary button reads as broken, not as "fill the form in first".
+    if (!isValid) {
+      setErrorMsg(`Add your name, work email and ${config.orgLabel.toLowerCase()} to join.`);
+      return;
+    }
     setStatus('loading');
     setErrorMsg(null);
 
@@ -106,21 +121,50 @@ function WaitlistCard({ config }: { config: AudienceConfig }) {
     }
   };
 
+  const inputClasses =
+    'h-12 touch-manipulation rounded-xl border-white/[0.12] bg-white/[0.04] text-[15px] text-white placeholder:text-white/45 transition-colors hover:border-white/[0.22] focus:border-yellow-400/70 focus:ring-2 focus:ring-yellow-400/20 focus-visible:ring-yellow-400/20';
+
   return (
-    <div className="flex flex-col rounded-[1.6rem] border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
-      <div className="flex items-center gap-3">
-        <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-elec-yellow/10 text-elec-yellow">
-          <Icon className="h-5 w-5" />
-        </span>
-        <span className="text-[11px] font-semibold tracking-[0.18em] text-elec-yellow">
-          {config.eyebrow}
+    <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] p-6 sm:p-8">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 opacity-80"
+      />
+      {/* Faint icon watermark for depth */}
+      <Icon
+        aria-hidden
+        className="pointer-events-none absolute -right-6 -top-6 h-32 w-32 text-elec-yellow/[0.05]"
+      />
+
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.12] text-elec-yellow">
+            <Icon className="h-5 w-5" />
+          </span>
+          <span className="text-[11px] font-semibold tracking-[0.18em] text-elec-yellow">
+            {config.eyebrow}
+          </span>
+        </div>
+        <span className="rounded-full border border-yellow-500/25 bg-yellow-500/[0.08] px-3 py-1 text-[11px] font-semibold text-yellow-400">
+          Early access
         </span>
       </div>
 
       <h3 className="mt-5 text-[1.4rem] font-semibold leading-[1.15] tracking-tight text-white sm:text-[1.6rem]">
         {config.title}
       </h3>
-      <p className="mt-3 text-[13.5px] leading-[1.7] text-white/70 sm:text-[14px]">{config.blurb}</p>
+      <p className="mt-2.5 text-[13.5px] leading-[1.7] text-white/70 sm:text-[14px]">
+        {config.blurb}
+      </p>
+
+      <div className="mt-5 space-y-2.5">
+        {config.benefits.map((benefit) => (
+          <div key={benefit} className="flex items-start gap-2.5">
+            <span className="mt-[7px] inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-elec-yellow" />
+            <span className="text-[13px] leading-[1.6] text-white/85">{benefit}</span>
+          </div>
+        ))}
+      </div>
 
       {status === 'success' ? (
         <div className="mt-6 flex items-center gap-3 rounded-2xl border border-green-500/30 bg-green-500/[0.08] p-4 text-green-300">
@@ -128,40 +172,42 @@ function WaitlistCard({ config }: { config: AudienceConfig }) {
           <p className="text-sm sm:text-[15px]">{config.success}</p>
         </div>
       ) : (
-        <form onSubmit={submit} className="mt-6 space-y-3">
-          <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
-            required
-            autoComplete="name"
-            className="h-12 text-base text-white touch-manipulation border-white/30 bg-white/[0.04] placeholder:text-white/50 focus:border-yellow-500 focus:ring-yellow-500"
-          />
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Work email"
-            required
-            autoComplete="email"
-            inputMode="email"
-            className="h-12 text-base text-white touch-manipulation border-white/30 bg-white/[0.04] placeholder:text-white/50 focus:border-yellow-500 focus:ring-yellow-500"
-          />
+        <form onSubmit={submit} className="mt-6 border-t border-white/[0.06] pt-5">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your name"
+              autoComplete="name"
+              className={inputClasses}
+            />
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Work email"
+              autoComplete="email"
+              inputMode="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              className={inputClasses}
+            />
+          </div>
           <Input
             type="text"
             value={organisation}
             onChange={(e) => setOrganisation(e.target.value)}
             placeholder={config.orgPlaceholder}
-            required
             autoComplete="organization"
             aria-label={config.orgLabel}
-            className="h-12 text-base text-white touch-manipulation border-white/30 bg-white/[0.04] placeholder:text-white/50 focus:border-yellow-500 focus:ring-yellow-500"
+            className={`mt-3 ${inputClasses}`}
           />
           <Button
             type="submit"
-            disabled={!isValid || status === 'loading'}
-            className="h-12 w-full touch-manipulation rounded-xl bg-yellow-400 px-6 text-base font-semibold text-black hover:bg-yellow-500 disabled:opacity-50"
+            disabled={status === 'loading'}
+            className="mt-4 h-12 w-full touch-manipulation rounded-xl bg-yellow-500 px-6 text-[15px] font-semibold text-black transition-transform hover:bg-yellow-400 active:scale-[0.98]"
           >
             {status === 'loading' ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -172,8 +218,8 @@ function WaitlistCard({ config }: { config: AudienceConfig }) {
               </>
             )}
           </Button>
-          {errorMsg && <p className="text-sm text-red-400">{errorMsg}</p>}
-          <p className="text-[12px] leading-[1.6] text-white/50">
+          {errorMsg && <p className="mt-2 text-[13px] text-red-400">{errorMsg}</p>}
+          <p className="mt-3 text-[12px] leading-[1.6] text-white/50">
             No spam — we’ll only email you about early access. Unsubscribe any time.
           </p>
         </form>

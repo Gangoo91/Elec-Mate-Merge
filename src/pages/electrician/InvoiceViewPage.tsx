@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { cn } from '@/lib/utils';
-import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send, CreditCard } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send, CreditCard } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useEffect, useState, useMemo, Fragment } from 'react';
@@ -611,16 +611,12 @@ const InvoiceViewPage = () => {
                 )}
               </div>
             </div>
-            {(invoice.client?.email || invoice.client?.phone) && (
+            {invoice.client?.phone && (
               <div className="flex gap-2 sm:flex-shrink-0">
-                {invoice.client?.email && (
-                  <a
-                    href={`mailto:${invoice.client.email}`}
-                    className="flex-1 sm:flex-initial h-10 sm:px-5 flex items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[12px] font-medium text-white touch-manipulation active:scale-[0.97] transition-all"
-                  >
-                    <Mail className="h-3.5 w-3.5 text-white/70" /> Email
-                  </a>
-                )}
+                {/* ELE-1277: no mailto Email button here — users read it as
+                    "email the invoice", but mailto can't attach the PDF and
+                    silently does nothing on desktops with no mail app. Sending
+                    the invoice lives in the send actions at the bottom. */}
                 {invoice.client?.phone && (
                   <a
                     href={`tel:${invoice.client.phone}`}

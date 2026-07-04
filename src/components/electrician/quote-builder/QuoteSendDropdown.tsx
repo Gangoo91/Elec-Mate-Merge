@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
+import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -411,61 +412,78 @@ export const QuoteSendDropdown = ({
       const clientPhone = clientData?.phone;
 
       if (Capacitor.isNativePlatform()) {
-        const message = `📋 *Quote ${freshQuote.quote_number}*
+        // ELE-1276: attach the actual PDF via the native share sheet — the
+        // signed S3 URL expires after an hour and looks unprofessional as
+        // raw text. The acceptance link is a PERMANENT public URL, so that
+        // stays in the message; only the expiring PDF link is replaced by
+        // the real file.
+        const nativeMessage = `*Quote ${freshQuote.quote_number} — ${companyName}*
 
 Dear ${clientName},
 
-Please find your quote for ${jobTitle}
+Thank you for the opportunity to quote for ${jobTitle}. The full quote is attached.
 
-💰 Total Amount: ${formatCurrency(totalAmount)}
+Total: ${formatCurrency(totalAmount)}
 Valid until: ${validityDate}
+${acceptanceLink ? `\nYou can review and accept online here:\n${acceptanceLink}\n` : ''}
+If you have any questions, just reply here.
 
-${acceptanceLink ? `✍️ Review & Accept Online:\n${acceptanceLink}\n\n` : ''}📥 Download Quote (PDF):
-${pdfDownloadUrl}
-
-If you have any questions, please don't hesitate to contact us.
-
-Best regards,
+Many thanks,
 ${companyName}`;
 
-        let whatsappUrl: string;
-        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
-        } else {
-          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-        }
-
-        // ELE-772 — Clear loading state BEFORE launching WhatsApp.
+        // ELE-772 — Clear loading state BEFORE launching the share sheet.
         setIsSharingWhatsApp(false);
 
+        const shared = await sharePdfFileNative({
+          pdfUrl: pdfDownloadUrl,
+          filename: `Quote-${freshQuote.quote_number || freshQuote.id}.pdf`,
+          title: `Quote ${freshQuote.quote_number}`,
+          text: nativeMessage,
+        });
+
+        if (!shared) {
+          // Fallback: legacy wa.me text with the download link — better than
+          // nothing if the PDF download or share sheet failed.
+          const fallbackMessage = `${nativeMessage}
+
+Download your quote here:
+${pdfDownloadUrl}`;
+          let whatsappUrl: string;
+          if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+            const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+            whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(fallbackMessage)}`;
+          } else {
+            whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fallbackMessage)}`;
+          }
+          await openExternalUrl(whatsappUrl);
+        }
+
         toast({
-          title: 'Opening WhatsApp',
-          description: 'WhatsApp will open with your quote message',
+          title: shared ? 'Share sheet opened' : 'Opening WhatsApp',
+          description: shared
+            ? 'Your quote PDF is attached — pick WhatsApp to send it'
+            : 'WhatsApp will open with your quote message',
           variant: 'success',
           duration: 3000,
         });
 
         onSuccess?.();
-
-        // Open WhatsApp (NOT the PDF directly). No state changes after this point.
-        await openExternalUrl(whatsappUrl);
         return;
       }
 
       // Web: attach the actual PDF, never a link in the body
-      const webMessage = `📋 *Quote ${freshQuote.quote_number}*
+      const webMessage = `*Quote ${freshQuote.quote_number} — ${companyName}*
 
 Dear ${clientName},
 
-Please find your quote for ${jobTitle}
+Thank you for the opportunity to quote for ${jobTitle}. The full quote is attached.
 
-💰 Total Amount: ${formatCurrency(totalAmount)}
+Total: ${formatCurrency(totalAmount)}
 Valid until: ${validityDate}
 
-${acceptanceLink ? `✍️ Review & Accept Online:\n${acceptanceLink}\n\n` : ''}If you have any questions, please don't hesitate to contact us.
+${acceptanceLink ? `You can review and accept online here:\n${acceptanceLink}\n\n` : ''}If you have any questions, just reply here.
 
-Best regards,
+Many thanks,
 ${companyName}`;
 
       const result = await sharePdfBytesFromUrlToWhatsAppWeb({
@@ -549,23 +567,28 @@ ${companyName}`;
             <span className="text-xs text-white">Sends with PDF attachment</span>
           </div>
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={handleShareWhatsApp}
-          disabled={isSharingWhatsApp}
-          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
-        >
-          <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-            {isSharingWhatsApp ? (
-              <Loader2 className="h-5 w-5 animate-spin text-green-500" />
-            ) : (
-              <MessageCircle className="h-5 w-5 text-green-500" />
-            )}
-          </div>
-          <div className="flex flex-col">
-            <span className="font-semibold text-sm">Share via WhatsApp</span>
-            <span className="text-xs text-white">Send with PDF link</span>
-          </div>
-        </DropdownMenuItem>
+        {/* ELE-1276: only offer WhatsApp where the PDF can genuinely attach
+            (native app / mobile web). Desktop WhatsApp can't accept files via
+            URL scheme — hiding it beats sending clients a bare link. */}
+        {canShareFilesToWhatsApp() && (
+          <DropdownMenuItem
+            onClick={handleShareWhatsApp}
+            disabled={isSharingWhatsApp}
+            className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
+          >
+            <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+              {isSharingWhatsApp ? (
+                <Loader2 className="h-5 w-5 animate-spin text-green-500" />
+              ) : (
+                <MessageCircle className="h-5 w-5 text-green-500" />
+              )}
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold text-sm">Share via WhatsApp</span>
+              <span className="text-xs text-white">Sends the PDF attached</span>
+            </div>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

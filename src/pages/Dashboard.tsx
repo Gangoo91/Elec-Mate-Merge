@@ -23,6 +23,7 @@ import { motion } from 'framer-motion';
 
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
 import TrialBanner from '@/components/dashboard/TrialBanner';
+import TrialReceiptCard from '@/components/dashboard/TrialReceiptCard';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
 
 import { VerdictHero } from '@/components/dashboard/editorial/VerdictHero';
@@ -144,6 +145,11 @@ const Dashboard = () => {
               </div>
             </motion.section>
           )}
+
+          {/* Trial receipt — their own numbers ("3 certs, £4,200 quoted")
+              while the trial runs; flips to an activation nudge when they
+              haven't made anything yet. */}
+          <TrialReceiptCard />
 
           {/* Editorial dashboard — single component so it can read the
               shared dashboard context the parent provider mounts. */}

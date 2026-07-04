@@ -4,8 +4,10 @@ import { Capacitor } from '@capacitor/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
+  Bell,
   Bot,
   Clock,
+  CreditCard,
   FileCheck,
   GraduationCap,
   Loader2,
@@ -24,20 +26,26 @@ import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useUserCount } from '@/hooks/useUserCount';
+import { useCookieConsent } from '@/components/CookieConsent';
 import { trackInitiateCheckout } from '@/lib/marketing-pixels';
 import { trackCheckoutStarted, trackPostSignupStepViewed } from '@/lib/analytics-events';
 import { fireServerCapi } from '@/lib/attribution';
 
-const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string; label: string }> = {
+const ROLE_TO_PRICE: Record<
+  string,
+  { planId: string; priceId: string; label: string; monthly: string }
+> = {
   electrician: {
     planId: 'electrician-monthly',
     priceId: 'price_1TnbOh2RKw5t5RAmsf2KcHT6',
     label: 'Electrician',
+    monthly: '£19.99',
   },
   apprentice: {
     planId: 'apprentice-monthly',
     priceId: 'price_1TnbOk2RKw5t5RAmiOCTkqS3',
     label: 'Apprentice',
+    monthly: '£6.99',
   },
 };
 
@@ -48,7 +56,6 @@ const FEATURES = [
   { icon: Bot, label: 'AI tools built around electrical work' },
   { icon: GraduationCap, label: 'Full Study Centre access' },
   { icon: Wrench, label: 'Every calculator and specialist tool' },
-  { icon: Zap, label: 'Unlimited usage during your trial' },
 ];
 
 const CheckoutTrial = () => {
@@ -60,6 +67,8 @@ const CheckoutTrial = () => {
   const [isRetrying, setIsRetrying] = useState(false);
   const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const userCount = useUserCount();
+  // Cookie banner clearance — see container className below
+  const { hasConsented } = useCookieConsent();
 
   const {
     isNative,
@@ -353,7 +362,14 @@ const CheckoutTrial = () => {
           'radial-gradient(ellipse 90% 55% at 50% 0%, rgba(250,204,21,0.07) 0%, transparent 58%), #0a0a0a',
       }}
     >
-      <div className="mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:px-8">
+      <div
+        className={cn(
+          'mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:px-8',
+          // The fixed cookie banner overlaps the trial CTA at the bottom on
+          // mobile until consent is answered — clear it while the banner is up.
+          !hasConsented && 'pb-36'
+        )}
+      >
         <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
           <div>
             <div className="flex items-center gap-3">
@@ -376,20 +392,32 @@ const CheckoutTrial = () => {
             </div>
           </div>
 
-          <div className="grid gap-4 text-[14px] leading-[1.7] text-white">
-            <div>Plan selected: {priceInfo.label}</div>
-            <div>Trial ends on {trialEndDate}</div>
-            <div>
-              {isNative
-                ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
-                : 'Secured by Stripe'}
+          <div className="border-t border-white/10 pt-6">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-yellow-400">
+              What your trial unlocks
+            </p>
+            <div className="mt-4 space-y-3.5">
+              {FEATURES.map((item) => (
+                <div key={item.label} className="flex items-center gap-3.5">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+                    <item.icon className="h-4 w-4 text-yellow-400" />
+                  </div>
+                  <span className="text-[14px] font-medium text-white">{item.label}</span>
+                </div>
+              ))}
             </div>
-            <div>{userCount} UK electricians already live on Elec-Mate.</div>
+            <div className="mt-6 grid gap-2 text-[13px] leading-[1.7] text-white/68">
+              <div>
+                Plan selected: <span className="text-white">{priceInfo.label}</span> ·{' '}
+                <span className="font-semibold text-yellow-400">£0 today</span>
+              </div>
+              <div>{userCount} UK electricians already live on Elec-Mate.</div>
+            </div>
           </div>
         </div>
 
         <div className="flex flex-col justify-center py-8 lg:py-10">
-          <div className="mx-auto w-full max-w-[440px]">
+          <div className="mx-auto w-full max-w-[440px] lg:max-w-[500px]">
             <div className="mb-10 flex items-center justify-center gap-3 lg:hidden">
               <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-xl object-cover" />
               <span className="text-[20px] font-bold tracking-tight text-white">
@@ -411,25 +439,54 @@ const CheckoutTrial = () => {
                 </h2>
                 <p className="mx-auto mt-4 max-w-[26rem] text-[15px] leading-[1.7] text-white">
                   {isNative
-                    ? `Full access to every feature. Payment is secured by ${platform === 'ios' ? 'Apple' : 'Google'}.`
-                    : 'Full access for 7 days. Your card is collected securely at checkout.'}
+                    ? `Everything unlocked for 7 days. Payment is secured by ${platform === 'ios' ? 'Apple' : 'Google'} — nothing is charged today.`
+                    : 'Everything unlocked for 7 days. Add your card at secure checkout — nothing is charged today.'}
                 </p>
               </div>
 
-              <div className="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
-                <div className="flex items-center gap-3.5">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
-                    <Shield className="h-5 w-5 text-yellow-400" />
-                  </div>
-                  <div>
-                    <p className="text-[14px] font-semibold text-white">
-                      You will not be charged for 7 days
-                    </p>
-                    <p className="mt-0.5 text-[12px] text-white">
-                      Trial ends on {trialEndDate}. Cancel in a couple of clicks before then.
-                    </p>
-                  </div>
+              <div className="mt-6 rounded-2xl border border-yellow-500/20 bg-yellow-500/[0.06] p-5 text-center">
+                <div className="flex items-end justify-center gap-2">
+                  <span className="text-[2.5rem] font-bold leading-none tracking-[-0.03em] text-white">
+                    £0
+                  </span>
+                  <span className="pb-1 text-[15px] font-semibold text-yellow-400">today</span>
                 </div>
+                <p className="mx-auto mt-2 max-w-[22rem] text-[13px] leading-[1.6] text-white">
+                  Then {priceInfo.monthly}/month from {trialEndDate}. Cancel before then and you pay
+                  nothing.
+                </p>
+              </div>
+
+              <div className="mt-5 space-y-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
+                {[
+                  {
+                    icon: Zap,
+                    title: 'Today — full access unlocked',
+                    detail: 'Every tool, certificate and course. £0 charged.',
+                  },
+                  {
+                    icon: Bell,
+                    title: 'Before your trial ends',
+                    detail: 'We remind you, so there are no surprises.',
+                  },
+                  {
+                    icon: CreditCard,
+                    title: `${trialEndDate} — first payment`,
+                    detail: `${priceInfo.monthly}/month, only if you decide to keep it.`,
+                  },
+                ].map((step) => (
+                  <div key={step.title} className="flex items-start gap-3.5">
+                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+                      <step.icon className="h-4 w-4 text-yellow-400" />
+                    </div>
+                    <div>
+                      <p className="text-[13px] font-semibold leading-tight text-white">
+                        {step.title}
+                      </p>
+                      <p className="mt-0.5 text-[12px] leading-[1.5] text-white">{step.detail}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <AnimatePresence>
@@ -482,7 +539,8 @@ const CheckoutTrial = () => {
                 </div>
               )}
 
-              <div className="mt-7 space-y-3">
+              {/* Features — mobile only; desktop shows them in the left panel */}
+              <div className="mt-7 space-y-3 lg:hidden">
                 {FEATURES.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -567,6 +625,12 @@ const CheckoutTrial = () => {
                   <span>Cancel anytime</span>
                   <span>No charge until {trialEndDate}</span>
                 </div>
+
+                <p className="mt-3 text-center text-[12px] leading-relaxed text-white">
+                  {isNative
+                    ? `Cancel anytime from your ${platform === 'ios' ? 'Apple' : 'Google'} subscription settings — it takes two taps.`
+                    : 'Cancel anytime from Settings → Subscription inside the app — two clicks, no phone calls.'}
+                </p>
 
                 <p className="mt-3 text-center text-[12px] text-white">
                   Joining <span className="font-semibold text-yellow-400">{userCount}</span> UK

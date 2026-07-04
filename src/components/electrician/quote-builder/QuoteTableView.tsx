@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
+import { canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
 import {
   DropdownMenu,
@@ -162,10 +163,12 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
 
                       <DropdownMenuSeparator />
 
-                      <DropdownMenuItem onClick={() => onShareWhatsApp(quote)}>
-                        <MessageCircle className="h-4 w-4 mr-2" />
-                        Send via WhatsApp
-                      </DropdownMenuItem>
+                      {canShareFilesToWhatsApp() && (
+                        <DropdownMenuItem onClick={() => onShareWhatsApp(quote)}>
+                          <MessageCircle className="h-4 w-4 mr-2" />
+                          Send via WhatsApp
+                        </DropdownMenuItem>
+                      )}
 
                       <DropdownMenuItem onClick={() => onShareEmail(quote)}>
                         <Mail className="h-4 w-4 mr-2" />
