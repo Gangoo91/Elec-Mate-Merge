@@ -367,7 +367,10 @@ export const InvoiceWizard = ({
         <section className={cn(step !== 2 && 'hidden')}>
           <InvoiceSettingsStep
             settings={invoiceBuilder.invoice.settings}
-            items={invoiceBuilder.invoice.items}
+            items={[
+              ...(invoiceBuilder.invoice.items || []),
+              ...(invoiceBuilder.invoice.additional_invoice_items || []),
+            ]}
             notes={invoiceBuilder.invoice.invoice_notes}
             onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
             onUpdateNotes={invoiceBuilder.setInvoiceNotes}

@@ -1674,7 +1674,7 @@ export const InvoiceItemsStep = ({
           <SheetHeader className="p-4 border-b border-white/[0.08]">
             <SheetTitle className="text-white text-left">{isDayMode ? 'Days on site' : 'Hours on site'}</SheetTitle>
           </SheetHeader>
-          <div className="p-4 space-y-4">
+          <div className="overflow-y-auto h-[calc(60vh-60px)] p-4 pb-8 space-y-4">
             {/* Custom hours/days input */}
             <div className="space-y-2">
               <label className="text-[13px] font-medium text-white block">
