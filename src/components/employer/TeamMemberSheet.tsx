@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Drawer, DrawerContent } from '@/components/ui/drawer';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Drawer, DrawerContent, DrawerTitle } from '@/components/ui/drawer';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -281,7 +281,7 @@ export function TeamMemberSheet({
 
         {/* Invited but not yet joined — resend the branded invite */}
         {isInvited && (
-          <div className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3 flex items-center justify-between gap-3">
+          <div className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3 mb-3 flex items-center justify-between gap-3">
             <p className="text-[12.5px] text-amber-200/90 leading-snug">
               Invite sent{employee.email ? ` to ${employee.email}` : ''} — waiting for them to join.
             </p>
@@ -361,6 +361,39 @@ export function TeamMemberSheet({
           <div className="p-4 md:p-6">
             {/* Details Tab */}
             <TabsContent value="details" className="mt-0 space-y-4">
+              {/* Snapshot — the three facts you glance at first */}
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  {
+                    label: 'Hourly rate',
+                    value: employee.hourlyRate ? `£${employee.hourlyRate}` : '—',
+                    gold: true,
+                  },
+                  {
+                    label: 'Team role',
+                    value: employee.teamRole || employee.team_role || 'Operative',
+                  },
+                  {
+                    label: 'Status',
+                    value: isInvited ? 'Invited' : employee.availability,
+                  },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-2.5 py-3 text-center min-w-0"
+                  >
+                    <p
+                      className={`text-[15px] font-bold truncate ${s.gold ? 'text-elec-yellow' : 'text-white'}`}
+                    >
+                      {s.value}
+                    </p>
+                    <p className="text-[10px] uppercase tracking-wide text-white/45 mt-0.5 truncate">
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
               {/* Live on-site presence (clock-in derived) */}
               {presence && (
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
@@ -377,7 +410,7 @@ export function TeamMemberSheet({
                         </span>
                       )}
                     </p>
-                    <p className="text-xs text-white">
+                    <p className="text-xs text-white/50">
                       {presenceSince
                         ? `since ${format(parseISO(presenceSince), 'EEE d MMM, HH:mm')}`
                         : 'no recent check-in'}
@@ -389,6 +422,9 @@ export function TeamMemberSheet({
 
               {/* Contact */}
               <div className="space-y-2">
+                <p className="text-[11px] uppercase tracking-wider text-white/40 font-medium px-0.5">
+                  Contact
+                </p>
                 <button
                   onClick={handleCall}
                   className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
@@ -398,7 +434,7 @@ export function TeamMemberSheet({
                   </div>
                   <div className="flex-1">
                     <p className="font-medium text-white">{employee.phone}</p>
-                    <p className="text-xs text-white">Mobile</p>
+                    <p className="text-xs text-white/50">Mobile</p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-white" />
                 </button>
@@ -412,7 +448,7 @@ export function TeamMemberSheet({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-white truncate">{employee.email}</p>
-                    <p className="text-xs text-white">Email</p>
+                    <p className="text-xs text-white/50">Email</p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-white" />
                 </button>
@@ -434,7 +470,7 @@ export function TeamMemberSheet({
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">{employee.emergencyContact.name}</p>
-                      <p className="text-xs text-white">
+                      <p className="text-xs text-white/50">
                         {employee.emergencyContact.relationship} • {employee.emergencyContact.phone}
                       </p>
                     </div>
@@ -443,13 +479,14 @@ export function TeamMemberSheet({
                 </div>
               )}
 
-              {/* Pay Rates */}
-              {!!employee.hourlyRate && (
-                <div className="grid grid-cols-1 gap-3">
-                  <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-center">
-                    <p className="text-2xl font-bold text-elec-yellow">£{employee.hourlyRate}</p>
-                    <p className="text-xs text-white">Hourly Rate</p>
-                  </div>
+              {/* Invited — set expectations and fill the space instead of a void */}
+              {isInvited && (
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_11%)] p-4">
+                  <p className="text-[13px] font-semibold text-white mb-1">Waiting to join</p>
+                  <p className="text-[12px] text-white/55 leading-relaxed">
+                    Once {employee.name.split(' ')[0] || 'they'} accept the invite, their assigned
+                    jobs, clocked hours, expenses and credentials appear here automatically.
+                  </p>
                 </div>
               )}
             </TabsContent>
@@ -495,7 +532,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Briefcase className="h-10 w-10 text-white mx-auto mb-2" />
+                  <Briefcase className="h-10 w-10 text-white/25 mx-auto mb-2" />
                   <p className="text-sm text-white">No active assignments</p>
                 </div>
               )}
@@ -527,7 +564,7 @@ export function TeamMemberSheet({
                             <p className="font-medium text-white truncate">
                               {t.total_hours != null ? `${t.total_hours}h` : '—'}
                             </p>
-                            <p className="text-xs text-white">
+                            <p className="text-xs text-white/50">
                               {t.date ? format(parseISO(t.date), 'EEE d MMM') : ''}
                             </p>
                           </div>
@@ -544,7 +581,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Clock className="h-10 w-10 text-white mx-auto mb-2" />
+                  <Clock className="h-10 w-10 text-white/25 mx-auto mb-2" />
                   <p className="text-sm text-white">No timesheets yet</p>
                 </div>
               )}
@@ -600,7 +637,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <PoundSterling className="h-10 w-10 text-white mx-auto mb-2" />
+                  <PoundSterling className="h-10 w-10 text-white/25 mx-auto mb-2" />
                   <p className="text-sm text-white">No expenses claimed</p>
                 </div>
               )}
@@ -656,7 +693,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Clock className="h-10 w-10 text-white mx-auto mb-2" />
+                  <Clock className="h-10 w-10 text-white/25 mx-auto mb-2" />
                   <p className="text-sm text-white">No leave requests</p>
                 </div>
               )}
@@ -683,7 +720,7 @@ export function TeamMemberSheet({
                         </div>
                         <div>
                           <p className="font-medium text-white">{elecIdProfile.elec_id_number}</p>
-                          <div className="flex items-center gap-2 text-xs text-white">
+                          <div className="flex items-center gap-2 text-xs text-white/50">
                             <span className="capitalize">{elecIdProfile.ecs_card_type} Card</span>
                             {elecIdProfile.is_verified && (
                               <Badge
@@ -707,9 +744,9 @@ export function TeamMemberSheet({
                     onClick={() => setCreateElecIdOpen(true)}
                     className="w-full p-4 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors text-center touch-manipulation"
                   >
-                    <IdCard className="h-8 w-8 text-white mx-auto mb-2" />
+                    <IdCard className="h-8 w-8 text-white/25 mx-auto mb-2" />
                     <p className="text-sm font-medium text-white">No Elec-ID Profile</p>
-                    <p className="text-xs text-white">Click to set up digital ID</p>
+                    <p className="text-xs text-white/50">Click to set up digital ID</p>
                   </button>
                 )}
               </div>
@@ -727,7 +764,7 @@ export function TeamMemberSheet({
                         <div className="flex items-start justify-between">
                           <div className="min-w-0 flex-1">
                             <p className="font-medium text-white truncate">{cert.name}</p>
-                            <p className="text-xs text-white">{cert.issuer}</p>
+                            <p className="text-xs text-white/50">{cert.issuer}</p>
                           </div>
                           <Badge
                             variant="outline"
@@ -745,7 +782,7 @@ export function TeamMemberSheet({
                   </div>
                 ) : (
                   <div className="text-center py-6">
-                    <Award className="h-8 w-8 text-white mx-auto mb-2" />
+                    <Award className="h-8 w-8 text-white/25 mx-auto mb-2" />
                     <p className="text-sm text-white">No certifications on file</p>
                   </div>
                 )}
@@ -771,6 +808,7 @@ export function TeamMemberSheet({
       <>
         <Drawer open={open} onOpenChange={onOpenChange}>
           <DrawerContent className="max-h-[92vh] flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
+            <DrawerTitle className="sr-only">{employee.name} — team member</DrawerTitle>
             <ProfileContent />
           </DrawerContent>
         </Drawer>
@@ -792,6 +830,7 @@ export function TeamMemberSheet({
           side="right"
           className="w-full sm:max-w-lg p-0 flex flex-col bg-[hsl(0_0%_8%)] border-l border-white/[0.06]"
         >
+          <SheetTitle className="sr-only">{employee.name} — team member</SheetTitle>
           <ProfileContent />
         </SheetContent>
       </Sheet>

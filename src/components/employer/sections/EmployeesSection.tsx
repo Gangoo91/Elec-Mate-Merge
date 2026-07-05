@@ -8,7 +8,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { AddEmployeeDialog } from '@/components/employer/dialogs/AddEmployeeDialog';
-import { TeamInviteSheet } from '@/components/employer/sheets/TeamInviteSheet';
 import { EditEmployeeDialog } from '@/components/employer/dialogs/EditEmployeeDialog';
 import { TeamMemberSheet } from '@/components/employer/TeamMemberSheet';
 import { AssignToJobDialog } from '@/components/employer/dialogs/AssignToJobDialog';
@@ -97,7 +96,10 @@ export function EmployeesSection() {
     queryKey: ['employer-seat-summary'],
     queryFn: async () => {
       const [{ count }, { data: auth }] = await Promise.all([
-        supabase.from('employer_seats').select('id', { count: 'exact', head: true }).eq('status', 'active'),
+        supabase
+          .from('employer_seats')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'active'),
         supabase.auth.getUser(),
       ]);
       let cap: number | null = null;
@@ -145,7 +147,6 @@ export function EmployeesSection() {
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [bulkAssignDialogOpen, setBulkAssignDialogOpen] = useState(false);
   const [addEmployeeDialogOpen, setAddEmployeeDialogOpen] = useState(false);
-  const [inviteSheetOpen, setInviteSheetOpen] = useState(false);
 
   const activeEmployees = useMemo(
     () => employees.filter((e) => e.status !== 'Archived'),
@@ -307,9 +308,6 @@ export function EmployeesSection() {
               <PrimaryButton onClick={() => setAddEmployeeDialogOpen(true)}>
                 Add team member
               </PrimaryButton>
-              <SecondaryButton onClick={() => setInviteSheetOpen(true)}>
-                Invite code
-              </SecondaryButton>
               <IconButton onClick={() => refetch()} aria-label="Refresh">
                 <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
               </IconButton>
@@ -444,7 +442,9 @@ export function EmployeesSection() {
                         )}
                         <Avatar
                           initials={employee.avatar_initials || getInitials(employee.name)}
-                          online={isOnSite || availability === 'Available' || availability === 'On Job'}
+                          online={
+                            isOnSite || availability === 'Available' || availability === 'On Job'
+                          }
                         />
                       </div>
                     }
@@ -558,8 +558,6 @@ export function EmployeesSection() {
             </div>
           </SheetContent>
         </Sheet>
-
-        <TeamInviteSheet open={inviteSheetOpen} onOpenChange={setInviteSheetOpen} />
 
         <Sheet open={bulkMessageOpen} onOpenChange={setBulkMessageOpen}>
           <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">

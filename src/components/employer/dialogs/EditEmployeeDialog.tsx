@@ -1,5 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ChangeEvent, type FormEvent } from 'react';
 import {
   ResponsiveFormModal,
   ResponsiveFormModalContent,
@@ -22,16 +22,6 @@ import { uploadEmployeePhoto } from '@/services/photoUploadService';
 import { toast } from '@/hooks/use-toast';
 import { UserCog, Trash2, Camera, Loader2, CreditCard } from 'lucide-react';
 import type { Employee, PayType } from '@/services/employeeService';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useElecIdProfileByEmployee } from '@/hooks/useElecId';
 import {
@@ -87,11 +77,14 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     hourlyRate: '25',
     annualSalary: '',
     dayRate: '',
+    overtimeMultiplier: '1.5',
+    overtimeThreshold: '8',
   });
 
   useEffect(() => {
     if (employee) {
-      const hourlyRate = employee.hourly_rate?.toString() || '25';
+      // No rate on record shows as blank — never prefill an invented number
+      const hourlyRate = employee.hourly_rate > 0 ? employee.hourly_rate.toString() : '';
       const annualSalary = employee.annual_salary?.toString() || '';
       let dayRate = '';
 
@@ -110,6 +103,8 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
         hourlyRate,
         annualSalary,
         dayRate,
+        overtimeMultiplier: (employee.overtime_multiplier ?? 1.5).toString(),
+        overtimeThreshold: (employee.overtime_threshold_hours ?? 8).toString(),
       });
       setPhotoUrl(employee.photo_url);
     }
@@ -131,7 +126,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     return null;
   };
 
-  const handlePhotoSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !employee) return;
 
@@ -183,7 +178,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!employee) return;
@@ -197,7 +192,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
       return;
     }
 
-    let hourlyRate = parseFloat(formData.hourlyRate) || 25;
+    // Blank/invalid = 0 = "no rate set" — the Timesheets page surfaces that
+    // honestly; stamping a default here would fabricate a payroll rate.
+    let hourlyRate = parseFloat(formData.hourlyRate) || 0;
     let annualSalary: number | null = null;
 
     if (formData.payType === 'annual' && formData.annualSalary) {
@@ -222,6 +219,14 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           hourly_rate: hourlyRate,
           annual_salary: annualSalary,
           pay_type: formData.payType,
+          // 0 is legitimate for both (0× = unpaid OT, 0h threshold = all-OT
+          // contracts) — only fall back when blank/unparseable, not falsy
+          overtime_multiplier: Number.isFinite(parseFloat(formData.overtimeMultiplier))
+            ? parseFloat(formData.overtimeMultiplier)
+            : 1.5,
+          overtime_threshold_hours: Number.isFinite(parseFloat(formData.overtimeThreshold))
+            ? parseFloat(formData.overtimeThreshold)
+            : 8,
         },
       });
 
@@ -487,69 +492,128 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     </>
                   )}
                   {calculateEquivalent() && (
-                    <p className="text-[11px] text-white">{calculateEquivalent()}</p>
+                    <p className="text-[11px] text-white/55">{calculateEquivalent()}</p>
                   )}
                 </div>
+
+                <FormGrid cols={2}>
+                  <div className="space-y-1.5">
+                    <label className={fieldLabelClass}>Overtime rate</label>
+                    <Select
+                      value={formData.overtimeMultiplier}
+                      onValueChange={(val) =>
+                        setFormData((prev) => ({ ...prev, overtimeMultiplier: val }))
+                      }
+                    >
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className={selectContentClass}>
+                        {/* A stored multiplier outside the presets (e.g. 1.4 via
+                            import) must still display — a blank select invites
+                            an accidental re-save at the wrong rate */}
+                        {!['1', '1.2', '1.25', '1.33', '1.5', '1.75', '2'].includes(
+                          formData.overtimeMultiplier
+                        ) && (
+                          <SelectItem value={formData.overtimeMultiplier}>
+                            {formData.overtimeMultiplier}× (custom)
+                          </SelectItem>
+                        )}
+                        <SelectItem value="1">Flat rate (1×)</SelectItem>
+                        <SelectItem value="1.2">1.2×</SelectItem>
+                        <SelectItem value="1.25">1.25×</SelectItem>
+                        <SelectItem value="1.33">Time & a third</SelectItem>
+                        <SelectItem value="1.5">Time & a half</SelectItem>
+                        <SelectItem value="1.75">1.75×</SelectItem>
+                        <SelectItem value="2">Double time</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className={fieldLabelClass}>OT after (hrs/day)</label>
+                    <Input
+                      type="number"
+                      inputMode="decimal"
+                      min="0"
+                      step="0.5"
+                      value={formData.overtimeThreshold}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, overtimeThreshold: e.target.value }))
+                      }
+                      className={inputClass}
+                    />
+                  </div>
+                </FormGrid>
               </FormCard>
             </form>
           </ResponsiveFormModalBody>
 
           <ResponsiveFormModalFooter>
-            <div className="flex gap-2 w-full">
-              <DestructiveButton onClick={() => setShowDeleteConfirm(true)} className="shrink-0">
-                <Trash2 className="h-4 w-4" />
-              </DestructiveButton>
-              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                type="submit"
-                onClick={() => {
-                  const form = document.getElementById(
-                    'edit-employee-form'
-                  ) as HTMLFormElement | null;
-                  form?.requestSubmit();
-                }}
-                disabled={updateEmployee.isPending}
-                fullWidth
-              >
-                {updateEmployee.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  'Save changes'
-                )}
-              </PrimaryButton>
-            </div>
+            {showDeleteConfirm ? (
+              /* Inline confirm — NOT a second modal (stacked modals freeze the page) */
+              <div className="w-full space-y-2.5">
+                <p className="text-[12.5px] text-white/70 leading-relaxed">
+                  Remove <span className="font-semibold text-white">{employee?.name}</span> from
+                  your team? This cancels any pending invite and takes back their seat — their
+                  records are kept.
+                </p>
+                <div className="flex gap-2 w-full">
+                  <SecondaryButton
+                    onClick={() => setShowDeleteConfirm(false)}
+                    disabled={updateEmployee.isPending}
+                    fullWidth
+                  >
+                    Keep on team
+                  </SecondaryButton>
+                  <DestructiveButton
+                    onClick={handleDelete}
+                    disabled={updateEmployee.isPending}
+                    fullWidth
+                  >
+                    {updateEmployee.isPending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Removing…
+                      </>
+                    ) : (
+                      'Remove'
+                    )}
+                  </DestructiveButton>
+                </div>
+              </div>
+            ) : (
+              <div className="flex gap-2 w-full">
+                <DestructiveButton onClick={() => setShowDeleteConfirm(true)} className="shrink-0">
+                  <Trash2 className="h-4 w-4" />
+                </DestructiveButton>
+                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  type="submit"
+                  onClick={() => {
+                    const form = document.getElementById(
+                      'edit-employee-form'
+                    ) as HTMLFormElement | null;
+                    form?.requestSubmit();
+                  }}
+                  disabled={updateEmployee.isPending}
+                  fullWidth
+                >
+                  {updateEmployee.isPending ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    'Save changes'
+                  )}
+                </PrimaryButton>
+              </div>
+            )}
           </ResponsiveFormModalFooter>
         </ResponsiveFormModalContent>
       </ResponsiveFormModal>
-
-      <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.08]">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Archive employee?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
-              This will archive {employee?.name}. They will no longer appear in active team lists
-              but their records will be preserved.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
-              disabled={updateEmployee.isPending}
-            >
-              {updateEmployee.isPending ? 'Archiving...' : 'Archive'}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }

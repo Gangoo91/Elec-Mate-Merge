@@ -1,16 +1,55 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Check, Briefcase, Clock, FileText, ShieldCheck } from 'lucide-react';
+import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import {
+  Loader2,
+  Check,
+  Briefcase,
+  Clock,
+  FileText,
+  ShieldCheck,
+  Eye,
+  EyeOff,
+  UserCheck,
+  AlertCircle,
+} from 'lucide-react';
+
+// The public accept page loads BEFORE any session exists. The shared supabase
+// client initialises auth (storage + a cross-tab lock) on mount, and firing an
+// rpc in that same tick can race and throw on a cold public page. So read the
+// invite over a plain fetch to the public RPC — no auth machinery in the path.
+async function publicRpc<T>(fn: string, args: Record<string, unknown>): Promise<T> {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+      Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(args),
+  });
+  if (!res.ok) throw new Error(`${fn} failed (${res.status})`);
+  return res.json() as Promise<T>;
+}
 
 /**
  * /team/accept/:token — branded team-invite acceptance.
- * New user: choose a password → account created (already confirmed) → linked.
- * Existing user: sign in → linked via accept_team_invite RPC.
+ *
+ * Handles every way a person can arrive:
+ *  • Already signed in as the invited email → one tap, no password.
+ *  • Signed in as someone else            → sign out & continue.
+ *  • Has an account, signed out           → sign in & join (+ forgot password).
+ *  • Brand new                            → create account & join.
+ *
  * Free for the worker; the employer covers the seat.
  */
 
-type InviteInfo = { company_name: string; employee_name: string; email: string };
+type InviteInfo = {
+  company_name: string;
+  employee_name: string;
+  email: string;
+  has_account: boolean;
+};
 
 const WORKER_TOOLS = '/electrician/worker-tools';
 
@@ -33,10 +72,13 @@ export default function TeamInviteAccept() {
   const [invite, setInvite] = useState<InviteInfo | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [mode, setMode] = useState<'new' | 'existing'>('new');
+  const [sessionEmail, setSessionEmail] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [resetSent, setResetSent] = useState(false);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -60,10 +102,12 @@ export default function TeamInviteAccept() {
         return;
       }
       try {
-        const { data, error } = await rpc('get_team_invite', { p_token: token });
+        const result = await publicRpc<{ error?: string } & Partial<InviteInfo>>(
+          'get_team_invite',
+          { p_token: token }
+        );
         if (!active) return;
-        const result = data as { error?: string } & Partial<InviteInfo>;
-        if (error || !result || result.error) {
+        if (!result || result.error) {
           const code = result?.error || 'not_found';
           setLoadError(
             code === 'expired'
@@ -77,10 +121,15 @@ export default function TeamInviteAccept() {
             company_name: result.company_name || 'Your employer',
             employee_name: result.employee_name || '',
             email: result.email!,
+            has_account: !!result.has_account,
           });
           setName(result.employee_name || '');
+          // Open in the right mode: people with an account go straight to sign-in.
+          setMode(result.has_account ? 'existing' : 'new');
         }
-      } catch {
+      } catch (e) {
+        // Surface the real cause — a silent catch is why this was hard to debug.
+        console.error('[team-invite] failed to load invite', e);
         if (active)
           setLoadError(
             "We couldn't load your invite. Check your connection and reopen the link from your email."
@@ -90,6 +139,16 @@ export default function TeamInviteAccept() {
         clearTimeout(timeout);
       }
     })();
+
+    // Best-effort: if they're already signed in, we can offer a one-tap join.
+    // Never blocks the load, never throws into the invite flow.
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (active && data.session?.user?.email)
+          setSessionEmail(data.session.user.email.toLowerCase());
+      })
+      .catch(() => {});
 
     return () => {
       active = false;
@@ -102,6 +161,39 @@ export default function TeamInviteAccept() {
     setTimeout(() => {
       window.location.href = WORKER_TOOLS;
     }, 1400);
+  };
+
+  const invitedEmail = invite?.email.toLowerCase() ?? '';
+  const signedInAsInvitee = !!sessionEmail && sessionEmail === invitedEmail;
+  const signedInAsSomeoneElse = !!sessionEmail && sessionEmail !== invitedEmail;
+
+  // Already signed in as the right person — link the roster row, no password.
+  const handleJoinAsCurrent = async () => {
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      const { data, error } = await rpc('accept_team_invite', { p_token: token });
+      const res = data as { success?: boolean; error?: string };
+      if (error || !res?.success) throw new Error(res?.error || 'Could not join the team.');
+      finish();
+    } catch (e) {
+      setFormError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleSwitchAccount = async () => {
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      await supabase.auth.signOut();
+    } catch {
+      /* ignore — we just want the password flow next */
+    }
+    setSessionEmail(null);
+    setMode(invite?.has_account ? 'existing' : 'new');
+    setSubmitting(false);
   };
 
   const handleCreate = async () => {
@@ -119,7 +211,7 @@ export default function TeamInviteAccept() {
       if (error || !res?.success) {
         if (res?.code === 'account_exists') {
           setMode('existing');
-          setFormError('You already have an account — sign in to join.');
+          setFormError('You already have an account — enter your password to sign in and join.');
           return;
         }
         throw new Error(res?.error || 'Could not create your account.');
@@ -162,8 +254,31 @@ export default function TeamInviteAccept() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!invite) return;
+    setFormError(null);
+    try {
+      await supabase.auth.resetPasswordForEmail(invite.email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+      });
+      setResetSent(true);
+    } catch {
+      // Don't reveal whether the account exists — always show the same message.
+      setResetSent(true);
+    }
+  };
+
+  const submit = () => {
+    if (signedInAsInvitee) handleJoinAsCurrent();
+    else if (mode === 'new') handleCreate();
+    else handleSignIn();
+  };
+
   return (
-    <div className="min-h-[100svh] bg-[#0a0e17] flex items-center justify-center px-4 py-10">
+    <div
+      className="min-h-[100svh] bg-[#0a0e17] flex items-center justify-center px-4 py-10"
+      style={{ paddingBottom: 'max(2.5rem, env(safe-area-inset-bottom))' }}
+    >
       <div className="w-full max-w-md">
         {loading ? (
           <div className="flex justify-center py-20">
@@ -217,78 +332,174 @@ export default function TeamInviteAccept() {
                   ))}
                 </div>
 
-                <div className="mt-6 space-y-3">
-                  <div>
-                    <label className="block text-[12px] text-white/50 mb-1.5">Your email</label>
-                    <input
-                      value={invite.email}
-                      readOnly
-                      className="w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 text-[14px] text-white/60"
-                    />
-                  </div>
+                {/* ---- Already signed in as the invited person: one tap ---- */}
+                {signedInAsInvitee ? (
+                  <div className="mt-6 space-y-3">
+                    <div className="rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 px-4 py-3 flex items-center gap-2.5">
+                      <UserCheck className="h-4 w-4 text-elec-yellow shrink-0" />
+                      <p className="text-[13px] text-white/85 leading-relaxed">
+                        Signed in as{' '}
+                        <span className="font-semibold text-white">{invite.email}</span> — one tap
+                        and you're on the team.
+                      </p>
+                    </div>
 
-                  {mode === 'new' && (
+                    {formError && (
+                      <p className="text-[12.5px] text-red-400 leading-relaxed">{formError}</p>
+                    )}
+
+                    <button
+                      onClick={handleJoinAsCurrent}
+                      disabled={submitting}
+                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                    >
+                      {submitting ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        `Join ${invite.company_name}`
+                      )}
+                    </button>
+                    <button
+                      onClick={handleSwitchAccount}
+                      disabled={submitting}
+                      className="w-full text-center text-[12.5px] text-white/55 hover:text-white/80 transition-colors py-1 touch-manipulation"
+                    >
+                      Not you? Use a different account
+                    </button>
+                  </div>
+                ) : signedInAsSomeoneElse ? (
+                  /* ---- Signed in as a different account ---- */
+                  <div className="mt-6 space-y-3">
+                    <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 px-4 py-3 flex items-start gap-2.5">
+                      <AlertCircle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                      <p className="text-[13px] text-amber-100/90 leading-relaxed">
+                        You're signed in as{' '}
+                        <span className="font-semibold text-white">{sessionEmail}</span>, but this
+                        invite is for{' '}
+                        <span className="font-semibold text-white">{invite.email}</span>.
+                      </p>
+                    </div>
+
+                    {formError && (
+                      <p className="text-[12.5px] text-red-400 leading-relaxed">{formError}</p>
+                    )}
+
+                    <button
+                      onClick={handleSwitchAccount}
+                      disabled={submitting}
+                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                    >
+                      {submitting ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        `Continue as ${invite.email}`
+                      )}
+                    </button>
+                  </div>
+                ) : (
+                  /* ---- Signed out: create or sign in ---- */
+                  <div className="mt-6 space-y-3">
                     <div>
-                      <label className="block text-[12px] text-white/50 mb-1.5">Your name</label>
+                      <label className="block text-[12px] text-white/50 mb-1.5">Your email</label>
                       <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Full name"
-                        className="w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 text-[14px] text-white focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
+                        value={invite.email}
+                        readOnly
+                        className="w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 text-[14px] text-white/60"
                       />
                     </div>
-                  )}
 
-                  <div>
-                    <label className="block text-[12px] text-white/50 mb-1.5">
-                      {mode === 'new' ? 'Choose a password' : 'Your password'}
-                    </label>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          if (mode === 'new') handleCreate();
-                          else handleSignIn();
-                        }
-                      }}
-                      placeholder={mode === 'new' ? 'At least 8 characters' : 'Password'}
-                      autoComplete={mode === 'new' ? 'new-password' : 'current-password'}
-                      className="w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 text-[14px] text-white focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
-                    />
-                  </div>
-
-                  {formError && (
-                    <p className="text-[12.5px] text-red-400 leading-relaxed">{formError}</p>
-                  )}
-
-                  <button
-                    onClick={mode === 'new' ? handleCreate : handleSignIn}
-                    disabled={submitting}
-                    className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
-                  >
-                    {submitting ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : mode === 'new' ? (
-                      'Create account & join'
-                    ) : (
-                      'Sign in & join'
+                    {mode === 'new' && (
+                      <div>
+                        <label className="block text-[12px] text-white/50 mb-1.5">Your name</label>
+                        <input
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Full name"
+                          className="w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 text-[14px] text-white focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
+                        />
+                      </div>
                     )}
-                  </button>
 
-                  <button
-                    onClick={() => {
-                      setMode(mode === 'new' ? 'existing' : 'new');
-                      setFormError(null);
-                    }}
-                    className="w-full text-center text-[12.5px] text-white/55 hover:text-white/80 transition-colors py-1"
-                  >
-                    {mode === 'new'
-                      ? 'Already have an Elec-Mate account? Sign in'
-                      : 'New to Elec-Mate? Create an account'}
-                  </button>
-                </div>
+                    <div>
+                      <label className="block text-[12px] text-white/50 mb-1.5">
+                        {mode === 'new' ? 'Choose a password' : 'Your password'}
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') submit();
+                          }}
+                          placeholder={mode === 'new' ? 'At least 8 characters' : 'Password'}
+                          autoComplete={mode === 'new' ? 'new-password' : 'current-password'}
+                          className="w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 pl-3.5 pr-11 text-[14px] text-white focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword((s) => !s)}
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                          className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 grid place-items-center text-white/40 hover:text-white/70 touch-manipulation"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
+                        </button>
+                      </div>
+                      {mode === 'existing' && (
+                        <div className="mt-1.5 text-right">
+                          {resetSent ? (
+                            <span className="text-[12px] text-emerald-300/90">
+                              Reset link sent to {invite.email}
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={handleForgotPassword}
+                              className="text-[12px] text-white/45 hover:text-white/75 transition-colors touch-manipulation"
+                            >
+                              Forgot password?
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {formError && (
+                      <p className="text-[12.5px] text-red-400 leading-relaxed">{formError}</p>
+                    )}
+
+                    <button
+                      onClick={submit}
+                      disabled={submitting}
+                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                    >
+                      {submitting ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : mode === 'new' ? (
+                        'Create account & join'
+                      ) : (
+                        'Sign in & join'
+                      )}
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setMode(mode === 'new' ? 'existing' : 'new');
+                        setFormError(null);
+                        setResetSent(false);
+                      }}
+                      className="w-full text-center text-[12.5px] text-white/55 hover:text-white/80 transition-colors py-1 touch-manipulation"
+                    >
+                      {mode === 'new'
+                        ? 'Already have an Elec-Mate account? Sign in'
+                        : 'New to Elec-Mate? Create an account'}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )
