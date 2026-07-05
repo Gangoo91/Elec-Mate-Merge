@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ArrowLeft, MoreHorizontal, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder, ShieldCheck } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder, ShieldCheck } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -221,6 +221,50 @@ const QuoteViewPage = () => {
       toast({ title: 'Reminder sent', description: data?.message || 'Follow-up sent to client' });
     } catch (err: any) { toast({ title: 'Failed to send reminder', variant: 'destructive' }); }
     finally { setIsSendingReminder(false); }
+  };
+
+  // ELE-1280: email the quote from the actions drawer — same server-side
+  // send-quote-resend flow as the Send button (PDF attached), so there is
+  // one email path everywhere. Users were missing the bottom Send button.
+  const handleEmailQuote = async () => {
+    if (!quote) return;
+    const cleanTo = quote.client?.email?.trim();
+    if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
+      toast({
+        title: 'No client email',
+        description: 'Add a valid client email to the quote first, then try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    try {
+      toast({
+        title: 'Sending quote',
+        description: `Generating the PDF and emailing it to ${cleanTo}…`,
+      });
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) throw new Error('Please log in again to send quotes.');
+      const { data, error } = await supabase.functions.invoke('send-quote-resend', {
+        body: { quoteId: quote.id },
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      if (error) throw new Error(typeof error === 'string' ? error : error.message || 'Failed to send quote');
+      if (data?.error) throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
+      if (!data?.success) throw new Error(data?.message || 'Unknown error sending quote');
+      toast({
+        title: 'Quote sent',
+        description: `Quote ${quote.quoteNumber} emailed to ${cleanTo}`,
+        variant: 'success',
+      });
+    } catch (err: any) {
+      toast({
+        title: 'Could not send quote',
+        description: err.message || 'Please try again',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleDuplicate = () => {
@@ -1035,6 +1079,21 @@ const QuoteViewPage = () => {
 
             {/* Action tiles — 2-up, 4-up on desktop */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+              {/* ELE-1280: email send lives in the drawer too — users missed
+                  the Send button at the bottom of the page. */}
+              <button
+                onClick={() => { setShowActionsSheet(false); handleEmailQuote(); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+              >
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <Mail className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Email to client</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">PDF attached, one tap</span>
+                </span>
+              </button>
+
               <button
                 onClick={() => { setShowActionsSheet(false); navigate(`/electrician/quote-builder/${quote.id}`); }}
                 className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"

@@ -524,13 +524,25 @@ const LandingPage = () => {
             )}
           </div>
 
-          <button
-            onClick={() => setIsNavOpen((open) => !open)}
-            className="flex h-10 w-10 touch-manipulation items-center justify-center rounded-lg text-white sm:hidden"
-            aria-label="Toggle navigation"
-          >
-            {isNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-1 sm:hidden">
+            {/* ELE-1278: visible Sign in on mobile — it only lived inside the
+                hamburger menu, so existing users couldn't find it. */}
+            {!user && (
+              <Link
+                to="/auth/signin"
+                className="flex h-10 touch-manipulation items-center rounded-lg px-3 text-[14px] font-medium text-white"
+              >
+                Sign in
+              </Link>
+            )}
+            <button
+              onClick={() => setIsNavOpen((open) => !open)}
+              className="flex h-10 w-10 touch-manipulation items-center justify-center rounded-lg text-white"
+              aria-label="Toggle navigation"
+            >
+              {isNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Always mounted; max-height animates the menu open/closed. (grid-rows

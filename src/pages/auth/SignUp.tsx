@@ -4,18 +4,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Bell,
   Check,
   CheckCircle2,
   ChevronLeft,
-  Database,
   Eye,
   EyeOff,
-  FileText,
   Gift,
   GraduationCap,
   Loader2,
-  ShieldCheck,
   Wrench,
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
@@ -516,6 +512,15 @@ const SignUp = () => {
       }
       storageRemoveSync('elec-mate-onboarding-data');
 
+      // ELE-1282: buyers arriving from a Stripe payment link have ALREADY
+      // paid — never route them to the trial checkout (they'd be asked to
+      // pay twice). check-subscription's orphan-adoption links their Stripe
+      // sub by email on first dashboard load.
+      if (searchParams.get('from') === 'payment') {
+        navigate('/dashboard', { replace: true });
+        return;
+      }
+
       // Both platforms land on the CheckoutTrial interstitial. Web previously
       // auto-created a Stripe session here and bounced the user cold onto the
       // card form — 54 of the 56 abandoners in the last 30 days never came
@@ -654,6 +659,23 @@ const SignUp = () => {
                     className="flex-1 flex flex-col"
                   >
                     {/* Banners */}
+                    {/* ELE-1282: arrival from a Stripe payment link — they've
+                        already paid; the account email must match the payment
+                        email for the subscription to link automatically. */}
+                    {searchParams.get('from') === 'payment' && (
+                      <div className="mb-5 flex items-center gap-3 rounded-2xl border border-green-500/25 bg-green-500/[0.08] px-4 py-3">
+                        <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-green-400" />
+                        <div>
+                          <p className="text-[13px] font-semibold text-green-400">
+                            Payment received — one last step
+                          </p>
+                          <p className="text-[12px] text-white">
+                            Create your account using the same email you paid with and your
+                            subscription connects automatically.
+                          </p>
+                        </div>
+                      </div>
+                    )}
                     {referralCode && !offerCode && (
                       <div className="mb-5 flex items-center gap-3 rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.08] px-4 py-3">
                         <Gift className="h-5 w-5 flex-shrink-0 text-yellow-400" />
@@ -976,15 +998,14 @@ const SignUp = () => {
                     transition={{ duration: 0.2 }}
                     className="flex-1 flex flex-col"
                   >
-                    <div className="mb-7">
-                      <h1 className="mb-3 text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.5rem]">
+                    <div className="mb-5 lg:mb-6">
+                      <h1 className="mb-2 text-[1.85rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.25rem]">
                         One last <span className="text-yellow-400">thing.</span>
                       </h1>
-                      <p className="text-[15px] leading-[1.7] text-white">
-                        Confirm the essentials and your free week starts —{' '}
+                      <p className="text-[14px] leading-[1.6] text-white/75">
+                        Four ticks and your free week starts —{' '}
                         <span className="font-semibold text-yellow-400">£0 today</span>, first
-                        charge on day 8 only if you keep it. Cancel any time before in a couple of
-                        clicks.
+                        charge on day 8 only if you keep it.
                       </p>
                     </div>
 
@@ -1025,45 +1046,40 @@ const SignUp = () => {
                             dataProcessingAccepted: true,
                           }))
                         }
-                        className="mb-5 h-12 w-full touch-manipulation rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.08] text-[14px] font-semibold text-yellow-400 transition-colors hover:bg-yellow-500/[0.12]"
+                        className="mb-4 h-11 w-full touch-manipulation rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.08] text-[14px] font-semibold text-yellow-400 transition-colors hover:bg-yellow-500/[0.12]"
                       >
                         Accept all required
                       </motion.button>
                     )}
 
-                    <div className="space-y-3 flex-1">
+                    <div className="space-y-2.5 flex-1">
                       {[
                         {
                           key: 'termsAccepted',
-                          icon: FileText,
                           label: 'Terms of Service',
                           desc: 'Our rules for using the platform',
                           req: true,
                         },
                         {
                           key: 'privacyAccepted',
-                          icon: ShieldCheck,
                           label: 'Privacy Policy',
                           desc: 'How we protect your information',
                           req: true,
                         },
                         {
                           key: 'dataProcessingAccepted',
-                          icon: Database,
                           label: 'Data Processing (GDPR)',
                           desc: 'Required for UK data compliance',
                           req: true,
                         },
                         {
                           key: 'marketingOptIn',
-                          icon: Bell,
                           label: 'Updates & offers',
-                          desc: 'Tips, new features & occasional deals — optional',
+                          desc: 'Occasional tips and new features — optional',
                           req: false,
                         },
                       ].map((item, i) => {
                         const checked = consent[item.key as keyof typeof consent];
-                        const ItemIcon = item.icon;
                         return (
                           <motion.button
                             key={item.key}
@@ -1074,21 +1090,24 @@ const SignUp = () => {
                             onClick={() => setConsent({ ...consent, [item.key]: !checked })}
                             aria-pressed={!!checked}
                             className={cn(
-                              'flex w-full touch-manipulation items-center gap-3.5 rounded-2xl border p-4 text-left transition-all duration-200',
+                              'flex w-full touch-manipulation items-center gap-3.5 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200',
                               checked
                                 ? 'border-yellow-400/50 bg-gradient-to-br from-yellow-500/[0.10] to-white/[0.02]'
-                                : 'border-white/[0.12] bg-white/[0.03] hover:border-yellow-400/30 hover:bg-white/[0.04]'
+                                : 'border-white/[0.14] bg-gradient-to-b from-white/[0.06] to-white/[0.03] hover:border-yellow-400/35'
                             )}
                           >
                             <div
+                              aria-hidden
                               className={cn(
-                                'flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border transition-colors',
+                                'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full transition-all duration-150',
                                 checked
-                                  ? 'border-yellow-400/40 bg-yellow-500/[0.18]'
-                                  : 'border-yellow-500/25 bg-yellow-500/[0.10]'
+                                  ? 'bg-yellow-400 shadow-[0_0_14px_rgba(250,204,21,0.4)]'
+                                  : 'border-2 border-white/30'
                               )}
                             >
-                              <ItemIcon className="h-[18px] w-[18px] text-yellow-400" />
+                              {checked && (
+                                <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />
+                              )}
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2">
@@ -1101,20 +1120,9 @@ const SignUp = () => {
                                   </span>
                                 )}
                               </div>
-                              <span className="mt-0.5 block text-[11.5px] text-white/60">
+                              <span className="mt-0.5 block text-[11.5px] leading-snug text-white/55">
                                 {item.desc}
                               </span>
-                            </div>
-                            <div
-                              aria-hidden
-                              className={cn(
-                                'flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full transition-all duration-150',
-                                checked
-                                  ? 'bg-yellow-400 shadow-[0_0_16px_rgba(250,204,21,0.4)]'
-                                  : 'border-2 border-white/25'
-                              )}
-                            >
-                              {checked && <Check className="h-4 w-4 text-black" strokeWidth={3} />}
                             </div>
                           </motion.button>
                         );

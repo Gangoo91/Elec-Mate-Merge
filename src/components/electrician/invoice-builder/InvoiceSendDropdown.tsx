@@ -608,27 +608,27 @@ ${companyName}`;
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"
-        className="w-64 bg-card/95 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl z-50 p-2"
+        className="w-72 bg-[#111214]/95 backdrop-blur-xl border border-white/[0.08] shadow-2xl rounded-2xl z-50 p-1.5"
         sideOffset={8}
       >
-        <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-2 uppercase tracking-wider">
-          Send Invoice
+        <DropdownMenuLabel className="text-[11px] font-semibold text-white/45 px-3 pt-2 pb-1 uppercase tracking-[0.08em]">
+          Send invoice
         </DropdownMenuLabel>
         <DropdownMenuItem
           onClick={handleSendEmail}
           disabled={isSendingEmail}
-          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-blue-500/10 touch-manipulation"
+          className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
         >
-          <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-            {isSendingEmail ? (
-              <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
-            ) : (
-              <Mail className="h-5 w-5 text-blue-500" />
-            )}
-          </div>
-          <div className="flex flex-col">
-            <span className="font-semibold text-sm">Send via Email</span>
-            <span className="text-xs text-white">Sends with PDF attachment</span>
+          {isSendingEmail ? (
+            <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
+          ) : (
+            <Mail className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
+          )}
+          <div className="flex min-w-0 flex-col">
+            <span className="text-[14px] font-semibold text-white leading-tight">Email to client</span>
+            <span className="text-[12px] text-white/50 leading-snug">
+              PDF attached, with payment link
+            </span>
           </div>
         </DropdownMenuItem>
         {/* ELE-1276: only offer WhatsApp where the PDF can genuinely attach
@@ -638,18 +638,20 @@ ${companyName}`;
           <DropdownMenuItem
             onClick={handleShareWhatsApp}
             disabled={isSharingWhatsApp}
-            className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
+            className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
           >
-            <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-              {isSharingWhatsApp ? (
-                <Loader2 className="h-5 w-5 text-green-500 animate-spin" />
-              ) : (
-                <MessageCircle className="h-5 w-5 text-green-500" />
-              )}
-            </div>
-            <div className="flex flex-col">
-              <span className="font-semibold text-sm">Share via WhatsApp</span>
-              <span className="text-xs text-white">Sends the PDF attached</span>
+            {isSharingWhatsApp ? (
+              <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
+            ) : (
+              <MessageCircle className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
+            )}
+            <div className="flex min-w-0 flex-col">
+              <span className="text-[14px] font-semibold text-white leading-tight">
+                Share on WhatsApp
+              </span>
+              <span className="text-[12px] text-white/50 leading-snug">
+                Opens WhatsApp with the PDF attached
+              </span>
             </div>
           </DropdownMenuItem>
         )}

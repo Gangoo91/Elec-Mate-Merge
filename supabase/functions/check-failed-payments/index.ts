@@ -107,10 +107,21 @@ serve(async (req: Request) => {
 
       const results = { attempted: 0, recovered: 0, declined: 0, skipped: 0 };
       const recoveredIds: string[] = [];
+      // Age cap: past ~30 days the card is dead and the user has churned —
+      // retrying forever gets 0% recovery, pings churned users' banking apps
+      // weekly, and looks like card-testing to Stripe Radar. (2026-07-05: a
+      // manual run attempted 42 invoices, 31 of them 31-137 days old, and
+      // recovered none. The 16 worst were voided the same night.)
+      const MAX_RETRY_AGE_DAYS = 30;
+      const oldestRetryable = Date.now() / 1000 - MAX_RETRY_AGE_DAYS * 24 * 60 * 60;
       for (const invoice of openInvoices.data) {
         // Subscription invoices only; skip anything already scheduled for
         // collection in the next hour (Stripe is about to retry it anyway).
         if (!invoice.subscription) {
+          results.skipped++;
+          continue;
+        }
+        if (invoice.created < oldestRetryable) {
           results.skipped++;
           continue;
         }

@@ -55,7 +55,11 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
     errorString.includes('loading css chunk') ||
     errorString.includes('failed to load module script') ||
     errorString.includes('mime type') ||
-    errorString.includes('text/html')
+    errorString.includes('text/html') ||
+    // Stale-deploy export mismatch: a cached entry chunk imports a renamed
+    // export from a freshly deployed module ("does not provide an export
+    // named 'p'"). Same root cause as a chunk 404 — reload with fresh assets.
+    errorString.includes('does not provide an export')
   ) {
     console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     event.preventDefault();
