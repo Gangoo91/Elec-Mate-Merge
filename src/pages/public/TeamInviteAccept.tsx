@@ -41,32 +41,59 @@ export default function TeamInviteAccept() {
 
   useEffect(() => {
     let active = true;
-    (async () => {
-      if (!token) return;
-      const { data, error } = await rpc('get_team_invite', { p_token: token });
+
+    // Safety net: never leave the spinner hanging. If the network stalls,
+    // surface a friendly, actionable error instead of an infinite loader.
+    const timeout = setTimeout(() => {
       if (!active) return;
-      const result = data as { error?: string } & Partial<InviteInfo>;
-      if (error || !result || result.error) {
-        const code = result?.error || 'not_found';
-        setLoadError(
-          code === 'expired'
-            ? 'This invite has expired. Ask your employer to resend it.'
-            : code === 'accepted'
-              ? "This invite has already been used. Just sign in and you're in."
-              : 'This invite link is not valid. Ask your employer to resend it.'
-        );
-      } else {
-        setInvite({
-          company_name: result.company_name!,
-          employee_name: result.employee_name!,
-          email: result.email!,
-        });
-        setName(result.employee_name || '');
-      }
+      setLoadError(
+        'This is taking longer than expected. Check your connection and reopen the link — or ask your employer to resend it.'
+      );
       setLoading(false);
+    }, 12000);
+
+    (async () => {
+      if (!token) {
+        setLoadError('This invite link is not valid. Ask your employer to resend it.');
+        setLoading(false);
+        clearTimeout(timeout);
+        return;
+      }
+      try {
+        const { data, error } = await rpc('get_team_invite', { p_token: token });
+        if (!active) return;
+        const result = data as { error?: string } & Partial<InviteInfo>;
+        if (error || !result || result.error) {
+          const code = result?.error || 'not_found';
+          setLoadError(
+            code === 'expired'
+              ? 'This invite has expired. Ask your employer to resend it.'
+              : code === 'accepted'
+                ? "This invite has already been used. Just sign in and you're in."
+                : 'This invite link is not valid. Ask your employer to resend it.'
+          );
+        } else {
+          setInvite({
+            company_name: result.company_name || 'Your employer',
+            employee_name: result.employee_name || '',
+            email: result.email!,
+          });
+          setName(result.employee_name || '');
+        }
+      } catch {
+        if (active)
+          setLoadError(
+            "We couldn't load your invite. Check your connection and reopen the link from your email."
+          );
+      } finally {
+        if (active) setLoading(false);
+        clearTimeout(timeout);
+      }
     })();
+
     return () => {
       active = false;
+      clearTimeout(timeout);
     };
   }, [token]);
 
@@ -145,6 +172,12 @@ export default function TeamInviteAccept() {
         ) : loadError ? (
           <div className="rounded-2xl border border-white/10 bg-[hsl(0_0%_10%)] p-8 text-center">
             <p className="text-white/90 text-[15px] leading-relaxed">{loadError}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-5 h-11 w-full rounded-xl bg-elec-yellow text-black font-semibold text-[14px] active:scale-[0.99] touch-manipulation"
+            >
+              Try again
+            </button>
           </div>
         ) : done ? (
           <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-10 text-center">
