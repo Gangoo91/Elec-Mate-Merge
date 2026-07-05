@@ -179,10 +179,10 @@ export const JobPacksSection = () => {
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Active', value: stats.inProgress },
-            { label: 'Awaiting Signature', value: stats.awaiting, tone: 'orange' },
-            { label: 'Signed', value: stats.draft, tone: 'emerald' },
-            { label: 'Completed', value: stats.complete, accent: true },
+            { label: 'Draft', value: stats.draft },
+            { label: 'Sent', value: stats.inProgress, tone: 'orange' },
+            { label: 'Signed off', value: stats.complete, tone: 'emerald' },
+            { label: 'Jobs to pack', value: stats.awaiting, accent: true },
           ]}
         />
 

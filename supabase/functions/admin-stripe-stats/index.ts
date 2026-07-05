@@ -161,16 +161,19 @@ serve(async (req) => {
         tier = PRICE_TIER_MAP[priceId].tier;
         monthlyAmount = PRICE_TIER_MAP[priceId].amount;
       } else {
-        if (priceAmount <= 5 || (interval === 'year' && priceAmount <= 50)) {
-          tier = 'founder';
-          monthlyAmount = interval === 'year' ? priceAmount / 12 : priceAmount;
-        } else if (priceAmount <= 10 || (interval === 'year' && priceAmount <= 100)) {
-          tier = 'electrician';
-          monthlyAmount = interval === 'year' ? priceAmount / 12 : priceAmount;
-        } else {
-          tier = 'employer';
-          monthlyAmount = interval === 'year' ? priceAmount / 12 : priceAmount;
-        }
+        // Unmapped price ID — do NOT guess the tier. The old amount-based
+        // heuristic predated the Jun 2026 price rise and would misbucket a
+        // £19.99 Electrician as "employer" and a £6.99 Apprentice as
+        // "electrician". MRR stays correct (we use the real amount); the
+        // tier is flagged 'unknown' so a new price ID shows up loudly in
+        // the admin panel instead of silently polluting a tier's numbers.
+        tier = 'unknown';
+        monthlyAmount = interval === 'year' ? priceAmount / 12 : priceAmount;
+        console.warn('[admin-stripe-stats] Unmapped Stripe price ID — add to PRICE_TIER_MAP', {
+          priceId,
+          priceAmount,
+          interval,
+        });
       }
 
       return {

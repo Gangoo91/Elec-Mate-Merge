@@ -9,11 +9,15 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
-// Standard prices by plan in GBP (matches Stripe prices)
+// Standard prices by plan in GBP — MUST match the current new-customer
+// Stripe prices (Jun 2026 rise: Electrician £19.99, Apprentice £6.99).
+// These were a year stale (£9.99/£4.99), which made the discount maths
+// (standard − offer) come out NEGATIVE for any offer priced above the old
+// base — producing inverted Stripe coupons (2026-07-05 audit).
 const STANDARD_PRICES: Record<string, { monthly: number; yearly: number }> = {
-  apprentice: { monthly: 4.99, yearly: 49.99 },
-  electrician: { monthly: 9.99, yearly: 99.99 },
-  employer: { monthly: 29.99, yearly: 299.99 },
+  apprentice: { monthly: 6.99, yearly: 69.99 },
+  electrician: { monthly: 19.99, yearly: 199.99 },
+  employer: { monthly: 49.99, yearly: 499.99 },
 };
 
 // Initialize Stripe
@@ -91,8 +95,15 @@ Deno.serve(async (req) => {
         const planId = offer.plan_id || 'electrician';
 
         // 1. Calculate discount amount (in pence) - use monthly price as base
-        const planPrices = STANDARD_PRICES[planId] || { monthly: 9.99, yearly: 99.99 };
+        const planPrices = STANDARD_PRICES[planId] || STANDARD_PRICES.electrician;
         const standardPrice = planPrices.monthly;
+        // Guard the maths: an offer priced at/above the standard price would
+        // create a zero or NEGATIVE Stripe coupon (a surcharge).
+        if (offer.price <= 0 || offer.price >= standardPrice) {
+          throw new Error(
+            `Offer price must be between £0.01 and £${(standardPrice - 0.01).toFixed(2)} (below the standard £${standardPrice.toFixed(2)}/mo for ${planId})`
+          );
+        }
         const discountAmount = Math.round((standardPrice - offer.price) * 100);
 
         let stripeCouponId: string | null = null;

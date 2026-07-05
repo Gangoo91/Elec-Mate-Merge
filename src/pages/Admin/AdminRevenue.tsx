@@ -140,11 +140,30 @@ export default function AdminRevenue() {
     },
   });
 
+  // Lifetime (£300 one-off) buyers — deliberately OUTSIDE MRR since nothing
+  // recurs, but the count matters: it's banked revenue and a loyalty cohort.
+  // Identified by the fulfilment convention: free_access_granted with a
+  // free_access_reason mentioning "lifetime".
+  const { data: lifetimeCount = 0 } = useQuery<number>({
+    queryKey: ['admin-lifetime-count'],
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from('profiles')
+        .select('id', { count: 'exact', head: true })
+        .eq('free_access_granted', true)
+        .ilike('free_access_reason', '%lifetime%');
+      if (error) throw error;
+      return count ?? 0;
+    },
+  });
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ['admin-stripe-live-stats'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-revenuecat-stats'] }),
+      queryClient.invalidateQueries({ queryKey: ['admin-lifetime-count'] }),
     ]);
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
@@ -272,6 +291,10 @@ export default function AdminRevenue() {
               {
                 label: 'Avg ARPU',
                 value: `£${arpu.toFixed(2)}`,
+              },
+              {
+                label: 'Lifetime (£300 one-off)',
+                value: <AnimatedCounter value={lifetimeCount} />,
               },
             ]}
             legend={[

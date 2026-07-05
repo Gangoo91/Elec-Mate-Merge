@@ -66,7 +66,7 @@ serve(async (req) => {
 
     const { data: profiles, error: profilesError } = await supabase
       .from('profiles')
-      .select('id, subscribed, subscription_tier, subscription_end, free_access_granted')
+      .select('id, subscribed, subscription_tier, subscription_end, subscription_source, free_access_granted')
       .in('subscription_source', ['app_store', 'play_store']);
 
     if (profilesError || !profiles) {
@@ -122,6 +122,20 @@ serve(async (req) => {
         });
       } else if (!active && p.subscribed) {
         revokes.push(p.id);
+      }
+
+      // Keep the store label honest: the native purchase handler hardcoded
+      // 'app_store' for both platforms until 2026-07-05, so Android users
+      // were invisible in every admin platform split. Prefer a real store
+      // sub over promotional grants when deciding the label.
+      const storeSub = rcSubs
+        .filter((s) => s.gives_access && (s.store === 'app_store' || s.store === 'play_store'))
+        .pop();
+      if (storeSub && storeSub.store !== (p as { subscription_source?: string }).subscription_source) {
+        await supabase
+          .from('profiles')
+          .update({ subscription_source: storeSub.store, updated_at: new Date().toISOString() })
+          .eq('id', p.id);
       }
 
       await new Promise((r) => setTimeout(r, 100));

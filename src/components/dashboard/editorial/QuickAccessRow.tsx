@@ -79,7 +79,9 @@ export function QuickAccessRow({ label = 'QUICK ACCESS' }: QuickAccessRowProps) 
         variants={itemVariants}
         className={cn(
           'relative grid gap-[2px] overflow-hidden rounded-2xl border border-white/[0.08] bg-black',
-          'grid-cols-1 sm:grid-cols-2',
+          // 2-up on mobile: four stacked 150px tiles was 600px of scrolling
+          // before the first real content — compact launcher, not a wall
+          'grid-cols-2',
           tiles.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'
         )}
       >
@@ -91,23 +93,25 @@ export function QuickAccessRow({ label = 'QUICK ACCESS' }: QuickAccessRowProps) 
             key={tile.path}
             type="button"
             onClick={() => navigate(tile.path)}
-            className="group relative flex min-h-[150px] touch-manipulation flex-col bg-[hsl(0_0%_10%)] p-5 text-left transition-colors hover:bg-[hsl(0_0%_15%)] sm:min-h-[164px] sm:p-6"
+            className="group relative flex min-h-[112px] touch-manipulation flex-col bg-[hsl(0_0%_10%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_15%)] sm:min-h-[164px] sm:p-6"
           >
             <div className="flex items-baseline gap-2">
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="hidden text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 sm:inline">
                 · {tile.eyebrow}
               </span>
             </div>
-            <h3 className="mt-3 text-xl font-semibold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:text-[22px]">
+            <h3 className="mt-2.5 text-[16px] font-semibold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:mt-3 sm:text-[22px]">
               {tile.title}
             </h3>
-            <p className="mt-1.5 text-[12.5px] leading-relaxed text-white/55">{tile.sub}</p>
+            <p className="mt-1 hidden text-[12.5px] leading-relaxed text-white/55 sm:block">
+              {tile.sub}
+            </p>
             <div className="flex-grow" />
-            <div className="mt-4 flex items-center justify-end border-t border-white/[0.05] pt-3">
-              <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow">
+            <div className="mt-3 flex items-center justify-end border-t border-white/[0.05] pt-2.5 sm:mt-4 sm:pt-3">
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow sm:text-[12.5px]">
                 Open
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </span>

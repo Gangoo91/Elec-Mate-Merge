@@ -550,7 +550,10 @@ export default function AdminElecIds() {
                   trailing={
                     <>
                       {profile.verification_tier && (
-                        <Pill tone={tierTone(profile.verification_tier)}>
+                        <Pill
+                          tone={tierTone(profile.verification_tier)}
+                          className="hidden sm:inline-flex"
+                        >
                           {profile.verification_tier}
                         </Pill>
                       )}

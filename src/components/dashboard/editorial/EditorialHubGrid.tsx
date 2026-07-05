@@ -185,7 +185,7 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
             <button
               key={hub.id}
               onClick={() => handleHubClick(hub)}
-              className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[220px] sm:min-h-[260px]"
+              className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[168px] sm:min-h-[260px]"
             >
               <div className="flex items-baseline justify-between gap-2">
                 <div className="flex items-baseline gap-2">
@@ -202,14 +202,14 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
                   </span>
                 )}
               </div>
-              <h3 className="mt-4 sm:mt-5 text-2xl sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
+              <h3 className="mt-3 sm:mt-5 text-[20px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
                 {hub.title}
               </h3>
-              <p className="mt-2.5 text-[13px] leading-relaxed text-white/60 max-w-[34ch]">
+              <p className="mt-2 text-[12.5px] sm:text-[13px] leading-relaxed text-white/60 max-w-[34ch]">
                 {hub.description}
               </p>
               <div className="flex-grow" />
-              <div className="mt-6 flex items-center justify-between gap-3 pt-4 border-t border-white/[0.05]">
+              <div className="mt-4 sm:mt-6 flex items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/[0.05]">
                 <span className="text-[11.5px] text-white/65 truncate tabular-nums">
                   {hub.meta(data)}
                 </span>

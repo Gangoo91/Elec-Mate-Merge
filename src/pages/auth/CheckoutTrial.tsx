@@ -241,7 +241,11 @@ const CheckoutTrial = () => {
           .update({
             subscribed: true,
             subscription_tier: tier,
-            subscription_source: 'app_store',
+            // Platform-correct source — this was hardcoded 'app_store' for BOTH
+            // platforms, which mislabelled every Android subscriber and made
+            // the admin platform split show Android = 0 (found 2026-07-05:
+            // RevenueCat had 5 active play_store subs, the DB had none).
+            subscription_source: Capacitor.getPlatform() === 'android' ? 'play_store' : 'app_store',
             updated_at: new Date().toISOString(),
           })
           .eq('id', user?.id);

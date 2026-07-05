@@ -657,8 +657,13 @@ export default function AdminIncompleteSignup() {
                     subtitle={user.email}
                     trailing={
                       <>
-                        <Pill tone={tone}>{user.role || 'unknown'}</Pill>
-                        <span className="text-[11px] text-white tabular-nums">{timeAgo}</span>
+                        <Pill tone={tone} className="hidden sm:inline-flex">
+                          {user.role || 'unknown'}
+                        </Pill>
+                        {/* Time is secondary — hide on mobile so the name wins */}
+                        <span className="hidden text-[11px] text-white tabular-nums sm:inline">
+                          {timeAgo}
+                        </span>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();

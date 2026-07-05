@@ -55,7 +55,10 @@ import {
   RefreshCw,
   Eye,
   Loader2,
+  LayoutGrid,
 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
 import {
   SheetShell,
@@ -466,14 +469,21 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               </>
             ) : (
               <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl">
-                  {['overview', 'documents', 'certs', 'briefing', 'distribute'].map((tab) => (
+                <TabsList className="w-full grid grid-cols-5 gap-1 h-auto p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl">
+                  {[
+                    { v: 'overview', label: 'Overview', Icon: LayoutGrid },
+                    { v: 'documents', label: 'Docs', Icon: FileText },
+                    { v: 'certs', label: 'Certs', Icon: Award },
+                    { v: 'briefing', label: 'Brief', Icon: BookOpen },
+                    { v: 'distribute', label: 'Send', Icon: Send },
+                  ].map(({ v, label, Icon }) => (
                     <TabsTrigger
-                      key={tab}
-                      value={tab}
-                      className="flex-1 h-10 touch-manipulation data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-xs sm:text-sm rounded-lg text-white capitalize"
+                      key={v}
+                      value={v}
+                      className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 h-12 sm:h-10 min-w-0 touch-manipulation data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg text-white"
                     >
-                      {tab === 'distribute' ? 'Send' : tab}
+                      <Icon className="h-4 w-4 shrink-0" />
+                      <span className="text-[10px] sm:text-xs font-medium truncate">{label}</span>
                     </TabsTrigger>
                   ))}
                 </TabsList>
@@ -908,10 +918,46 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                         })}
                       </FormCard>
 
-                      <SecondaryButton fullWidth>
-                        <RefreshCw className="h-4 w-4 mr-2" />
-                        Send reminder to pending
-                      </SecondaryButton>
+                      {assignedEmployees.some(
+                        (emp) =>
+                          !acknowledgements.find(
+                            (a) => a.employee_id === emp.id && !!a.acknowledged_at
+                          )
+                      ) && (
+                        <SecondaryButton
+                          fullWidth
+                          onClick={async () => {
+                            const pending = acknowledgements.filter((a) => !a.acknowledged_at);
+                            if (pending.length === 0) {
+                              toast({
+                                title: 'All signed',
+                                description: 'Everyone assigned has already signed this pack.',
+                              });
+                              return;
+                            }
+                            const results = await Promise.all(
+                              pending.map((a) =>
+                                supabase.rpc('chase_pack_signoff', { p_ack_id: a.id })
+                              )
+                            );
+                            const ok = results.filter(
+                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                              (r) => !r.error && !(r.data as any)?.error
+                            ).length;
+                            toast({
+                              title: ok > 0 ? 'Reminders sent' : 'Could not send reminders',
+                              description:
+                                ok > 0
+                                  ? `Nudged ${ok} worker${ok === 1 ? '' : 's'} still to sign.`
+                                  : 'Please try again.',
+                              variant: ok > 0 ? undefined : 'destructive',
+                            });
+                          }}
+                        >
+                          <RefreshCw className="h-4 w-4 mr-2" />
+                          Send reminder to all pending
+                        </SecondaryButton>
+                      )}
                     </>
                   ) : (
                     <>
@@ -984,10 +1030,19 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       <Sheet open={!!viewerDoc} onOpenChange={(o) => !o && setViewerDoc(null)}>
         <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <SheetShell title={viewerDoc?.title || 'Document'}>
-            <div className="px-5 sm:px-6 py-5">
-              <pre className="whitespace-pre-wrap break-words font-sans text-[13px] leading-relaxed text-white">
-                {viewerDoc?.content}
-              </pre>
+            <div
+              className="px-5 sm:px-6 py-5 overflow-x-auto text-[13px] leading-relaxed text-white/85
+                [&_h1]:text-lg [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-5 [&_h1]:mb-2 [&_h1]:first:mt-0
+                [&_h2]:text-[15px] [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-5 [&_h2]:mb-1.5
+                [&_h3]:text-[13.5px] [&_h3]:font-semibold [&_h3]:text-elec-yellow [&_h3]:mt-4 [&_h3]:mb-1
+                [&_p]:mb-2.5 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ul]:mb-3
+                [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_ol]:mb-3 [&_li]:leading-relaxed
+                [&_strong]:font-semibold [&_strong]:text-white [&_hr]:border-white/10 [&_hr]:my-4
+                [&_table]:w-full [&_table]:text-[12px] [&_table]:mb-3 [&_table]:border-collapse
+                [&_th]:border [&_th]:border-white/10 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:bg-white/[0.04] [&_th]:text-white
+                [&_td]:border [&_td]:border-white/10 [&_td]:px-2 [&_td]:py-1"
+            >
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{viewerDoc?.content || ''}</ReactMarkdown>
             </div>
           </SheetShell>
         </SheetContent>

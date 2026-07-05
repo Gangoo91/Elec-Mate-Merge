@@ -53,6 +53,7 @@ export const InspectorMessage = memo(
     variant = 'default',
   }: InspectorMessageProps) {
     const [copied, setCopied] = useState(false);
+    const [showWorking, setShowWorking] = useState(false);
     const isUser = message.role === 'user';
 
     const handleCopy = async () => {
@@ -108,8 +109,35 @@ export const InspectorMessage = memo(
 
     // Pull the verdict line off the top (e.g. "**Verdict:** 4mm² minimum CPC…").
     // Hidden while streaming the first tokens — pops in once the full first line arrives.
-    const { verdict, body: markdownBody } = extractVerdict(displayContent);
+    const { verdict, body: rawBody } = extractVerdict(displayContent);
     const inlineCtx = { onRegClick };
+
+    // On-site answer architecture: the number first, the working folded.
+    // "## Key figures" bullets render as a spec strip; "## Working" collapses
+    // behind a Show-working control. Both extractions run post-stream only —
+    // restructuring text mid-stream would make the answer jump around.
+    let keyFigures: { label: string; value: string; source?: string }[] = [];
+    let workingSection: string | null = null;
+    let markdownBody = rawBody;
+    if (!isStreaming) {
+      const figMatch = markdownBody.match(/^## Key figures\s*\n([\s\S]*?)(?=\n## |\s*$)/m);
+      if (figMatch) {
+        const parsed = figMatch[1]
+          .split('\n')
+          .map((line) => line.match(/^\s*[-*]\s*\*\*(.+?):?\*\*:?\s*(.+?)(?:\s+—\s+(.+))?\s*$/))
+          .filter(Boolean)
+          .map((m) => ({ label: m![1].trim(), value: m![2].trim(), source: m![3]?.trim() }));
+        if (parsed.length > 0) {
+          keyFigures = parsed.slice(0, 4);
+          markdownBody = markdownBody.replace(figMatch[0], '').trim();
+        }
+      }
+      const workMatch = markdownBody.match(/\n?## Working\s*\n([\s\S]*?)(?=\n## |\s*$)/);
+      if (workMatch && workMatch[1].trim().length > 0) {
+        workingSection = workMatch[1].trim();
+        markdownBody = markdownBody.replace(workMatch[0], '\n').trim();
+      }
+    }
 
     return (
       <div className="flex justify-start w-full text-left min-w-0">
@@ -143,6 +171,28 @@ export const InspectorMessage = memo(
                   <VerdictCallout>
                     {transformInlineChildren(verdict, inlineCtx, 'verdict')}
                   </VerdictCallout>
+                )}
+
+                {/* Key figures — the numbers a spark needs, scannable in one glance */}
+                {keyFigures.length > 0 && (
+                  <div className="not-prose my-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {keyFigures.map((f) => (
+                      <div
+                        key={f.label}
+                        className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3.5 py-3"
+                      >
+                        <div className="text-[17px] font-semibold leading-tight text-white tabular-nums">
+                          {f.value}
+                        </div>
+                        <div className="mt-1 text-[10.5px] font-medium uppercase tracking-[0.08em] text-white/45">
+                          {f.label}
+                        </div>
+                        {f.source && (
+                          <div className="mt-0.5 text-[10.5px] text-elec-yellow/70">{f.source}</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 )}
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -266,6 +316,48 @@ export const InspectorMessage = memo(
                   {markdownBody}
                 </ReactMarkdown>
 
+                {/* Working — folded by default; the number came first above */}
+                {workingSection && (
+                  <div className="not-prose my-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowWorking((v) => !v)}
+                      className="text-[12.5px] font-medium text-elec-yellow/80 hover:text-elec-yellow transition-colors touch-manipulation"
+                    >
+                      {showWorking ? 'Hide working' : 'Show working'}
+                    </button>
+                    {showWorking && (
+                      <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            p: ({ children }) => (
+                              <p className="text-[13.5px] leading-relaxed my-2 text-white/85">
+                                {transformInlineChildren(children, inlineCtx, 'wp')}
+                              </p>
+                            ),
+                            li: ({ children }) => (
+                              <li className="text-[13.5px] leading-relaxed text-white/85">
+                                {transformInlineChildren(children, inlineCtx, 'wli')}
+                              </li>
+                            ),
+                            code: ({ children }) => (
+                              <code className="bg-white/[0.06] text-elec-yellow px-1.5 py-0.5 rounded text-[12.5px] font-mono">
+                                {children}
+                              </code>
+                            ),
+                            strong: ({ children }) => (
+                              <strong className="font-semibold text-white">{children}</strong>
+                            ),
+                          }}
+                        >
+                          {workingSection}
+                        </ReactMarkdown>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Streaming cursor */}
                 <AnimatePresence>
                   {isStreaming && (
@@ -314,9 +406,18 @@ export const InspectorMessage = memo(
                   Regenerate
                 </button>
               )}
-              <span className="uppercase tracking-[0.18em] text-white">
-                Cited from BS 7671 A4:2026
-              </span>
+              {message.content.includes('⚠️ **Citation check:**') ? (
+                // Server-side verifier flagged a citation — mirror it here so
+                // the caution can't be missed at the end of a long answer.
+                <span className="uppercase tracking-[0.18em] text-amber-400/90">
+                  Check citations before relying on this
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 uppercase tracking-[0.18em] text-white">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400/90" />
+                  Citations verified · BS 7671 A4:2026
+                </span>
+              )}
             </div>
           )}
         </div>

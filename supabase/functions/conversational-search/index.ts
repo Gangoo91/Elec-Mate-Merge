@@ -28,6 +28,7 @@ import {
   formatFacetsForPrompt,
   A4_2026_EDITION_ID,
 } from '../_shared/bs7671-facet-retrieval.ts';
+import { verifyCitations } from '../_shared/bs7671-citation-verifier.ts';
 import {
   BS7671_TOOL_SCHEMAS,
   executeBS7671ToolCall,
@@ -157,12 +158,20 @@ You deliver the most thorough, helpful responses in the industry. Like having a 
 Every answer MUST begin with a one-line verdict on its own line, in this exact format:
 **Verdict:** <single-sentence bottom-line answer — the scannable headline result, ≤ 140 characters>
 
+If you need a tool, call it SILENTLY — output no text before or between tool calls (no "Let me check…" narration). Your first streamed text must be the Verdict line.
+
 Then, after a blank line, expand with detail using H2 section headers. The verdict is the "yes/no/number" a sparky can read in under 2 seconds without scrolling.
 
 Examples of good verdicts:
 - **Verdict:** Minimum CPC for a 32A radial is 4 mm² copper (Table 54.7).
 - **Verdict:** Yes — A4:2026 requires a 30 mA RCD on every final circuit up to 32A.
 - **Verdict:** Max Zs for a 32A Type B MCB is 1.44 Ω on a TN system (Table 41.3).
+
+When the answer contains computed or looked-up VALUES (sizes, Zs, currents, times, distances), add a "## Key figures" section directly after the verdict as a short bullet list, one figure per line, in this exact shape:
+- **<label>:** <value with unit> — <source, e.g. Table 41.3>
+Maximum 4 figures. Only include it when there are real numbers to show.
+
+Put any calculation derivation under a "## Working" section (after Key figures). On site, the number matters first — the working is for checking. Keep other explanatory sections as normal H2s.
 
 ## Writing Style
 - Conversational but authoritative — like chatting with a knowledgeable colleague.
@@ -490,6 +499,10 @@ async function streamAnthropic(
     const toolUses: Array<{ id: string; name: string; input: any }> = [];
     let pendingToolJson: Record<string, string> = {}; // id → partial JSON
     let currentBlock: { type?: string; tool_use_id?: string; tool_name?: string } = {};
+    // Text the model streams THIS iteration. Must be included in the
+    // continuation transcript after a tool call — omitting it made the model
+    // restate its opening (duplicated verdicts reached users and the cache).
+    let iterText = '';
 
     const reader = res.body?.getReader();
     if (!reader) throw new Error('No stream body from Anthropic');
@@ -537,6 +550,7 @@ async function streamAnthropic(
           case 'content_block_delta': {
             const delta = event.delta || {};
             if (delta.type === 'text_delta' && typeof delta.text === 'string') {
+              iterText += delta.text;
               onContent(delta.text);
             } else if (delta.type === 'input_json_delta' && currentBlock.tool_use_id) {
               pendingToolJson[currentBlock.tool_use_id] =
@@ -571,14 +585,19 @@ async function streamAnthropic(
       return;
     }
 
-    // Otherwise: assemble assistant message with the tool_use blocks, then run
-    // each tool and append tool_result, then loop for the follow-up answer.
-    const assistantContent: any[] = toolUses.map((t) => ({
-      type: 'tool_use',
-      id: t.id,
-      name: t.name,
-      input: t.input,
-    }));
+    // Otherwise: assemble assistant message with any text already streamed
+    // PLUS the tool_use blocks, then run each tool and append tool_result,
+    // then loop for the follow-up answer. The text block is essential — the
+    // model must see what it already said, or it starts the answer again.
+    const assistantContent: any[] = [
+      ...(iterText.trim().length > 0 ? [{ type: 'text', text: iterText }] : []),
+      ...toolUses.map((t) => ({
+        type: 'tool_use',
+        id: t.id,
+        name: t.name,
+        input: t.input,
+      })),
+    ];
     workingMessages = [...workingMessages, { role: 'assistant', content: assistantContent }];
 
     const toolResults: any[] = [];
@@ -790,7 +809,8 @@ serve(async (req: Request) => {
           const contextBlock = formatFacetsForPrompt(
             retrieval.primary,
             retrieval.related,
-            retrieval.practical ?? []
+            retrieval.practical ?? [],
+            retrieval.specialist ?? []
           );
 
           // ── Build messages for the model ──────────────────────────
@@ -894,9 +914,38 @@ serve(async (req: Request) => {
             }
           );
 
-          // Cache response (non-image only).
-          if (accumulated && !hasImage) {
-            setCachedResponse(supabase, queryHash, accumulated).catch(() => {});
+          // ELE-1260: machine-check every cited reg number against the
+          // A4:2026 corpus. Streamed text can't be un-said, so unverified
+          // citations get a visible correction appended — and the answer is
+          // NOT cached, so a bad answer never gets replayed to other users.
+          let citationClean = true;
+          if (accumulated) {
+            try {
+              const check = await verifyCitations(supabase, accumulated);
+              if (!check.clean) {
+                citationClean = false;
+                console.warn('[citation-check] unverified:', check.unverified);
+                safeEnqueue(
+                  contentFrame(
+                    `\n\n---\n⚠️ **Citation check:** I couldn't verify ${check.unverified
+                      .map((r) => `Reg ${r}`)
+                      .join(
+                        ', '
+                      )} against BS 7671:2018+A4:2026 — treat ${check.unverified.length === 1 ? 'that citation' : 'those citations'} with caution and check the standard directly.`
+                  )
+                );
+              }
+            } catch {
+              /* fail open — never block the answer on the checker */
+            }
+          }
+
+          // Cache response (non-image, citation-clean only). AWAITED — a
+          // fire-and-forget write here gets killed when the stream closes
+          // and the runtime tears the invocation down, so the cache never
+          // fills. The upsert is ~10ms; correctness beats the shave.
+          if (accumulated && !hasImage && citationClean) {
+            await setCachedResponse(supabase, queryHash, accumulated).catch(() => {});
           }
 
           controller.close();

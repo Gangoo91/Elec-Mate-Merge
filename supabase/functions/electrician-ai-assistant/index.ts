@@ -1,6 +1,15 @@
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/cors.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { understandBS7671Query } from '../_shared/bs7671-query-understanding.ts';
+import {
+  retrieveBS7671Facets,
+  A4_2026_EDITION_ID,
+} from '../_shared/bs7671-facet-retrieval.ts';
+import {
+  verifyCitations,
+  scrubUnverifiedCitations,
+} from '../_shared/bs7671-citation-verifier.ts';
 
 // Make sure we're accessing the right environment variable
 const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
@@ -184,7 +193,13 @@ serve(async (req) => {
       }
     }
 
-    // Fetch regulations from RAG if requested - Direct RPC call (no HTTP overhead)
+    // Fetch regulations from RAG if requested.
+    // ELE-1260: previously grounded on `bs7671_embeddings` (2,557 rows of
+    // superseded A3:2024) via search_regulations_intelligence_hybrid — an 18x
+    // smaller, out-of-date corpus whose coverage gaps let the model invent
+    // regulation numbers. Now uses the same verified A4:2026 facet retrieval
+    // (46.7k facets, exact + vector + BM25 + tables, RRF-merged) as the
+    // conversational Elec-AI.
     let ragRegulations: any[] = [];
     let ragMetadata: any = {};
     if (use_rag && prompt && !primary_image) {
@@ -195,66 +210,84 @@ serve(async (req) => {
         const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
         const supabase = createClient(supabaseUrl, supabaseKey);
 
-        console.log('🔍 Starting intelligence search for:', prompt?.substring(0, 50));
+        console.log('🔍 Starting A4 facet retrieval for:', prompt?.substring(0, 50));
 
-        // Direct RPC call to regulations intelligence (simplified architecture)
-        const intelligencePromise = supabase.rpc('search_regulations_intelligence_hybrid', {
-          query_text: prompt,
-          match_count: 8,
+        const understanding = understandBS7671Query(prompt);
+
+        // Query embedding for the vector branch. Null on failure is fine —
+        // exact-reg and BM25 branches still retrieve without it.
+        let queryEmbedding: number[] | null = null;
+        try {
+          const embRes = await Promise.race([
+            fetch('https://api.openai.com/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${openAIApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-large',
+                input: prompt,
+                dimensions: 3072,
+              }),
+            }),
+            new Promise<never>((_, reject) =>
+              setTimeout(() => reject(new Error('embedding timeout')), 2500)
+            ),
+          ]);
+          if (embRes.ok) {
+            const embJson = await embRes.json();
+            queryEmbedding = embJson.data?.[0]?.embedding ?? null;
+          }
+        } catch (embError) {
+          console.warn('Embedding generation failed (continuing lexical-only):', embError);
+        }
+
+        const retrieval = await retrieveBS7671Facets({
+          supabase,
+          understanding,
+          queryEmbedding,
+          editionId: A4_2026_EDITION_ID,
+          topK: 8,
+          deadlineMs: 1500,
         });
 
-        // Add 5-second timeout to prevent hanging
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Intelligence search timeout')), 5000)
-        );
+        // Map facet units onto the legacy response shape the frontend
+        // regulation panel expects (regulation_number/section/content/...).
+        const facetUnits = [
+          ...(retrieval.primary || []),
+          ...(retrieval.related || []),
+          ...(retrieval.practical || []),
+        ].slice(0, 10);
+        ragRegulations = facetUnits.map((u: any) => ({
+          id: u.id,
+          regulation_number: u.reg_number || u.section || '',
+          section: u.reg_title || u.section || u.primary_topic || '',
+          content: u.content,
+          amendment: u.edition_code || 'BS 7671:2018+A4:2026',
+          metadata: {
+            part: u.part,
+            chapter: u.chapter,
+            document_type: u.document_type,
+            facet_type: u.facet_type,
+            source: u.source,
+          },
+          similarity: typeof u.score === 'number' ? Math.min(u.score, 1) : 0.8,
+          primary_topic: u.primary_topic,
+          keywords: u.keywords,
+        }));
 
-        const { data: intelligenceResults, error: intelligenceError } = (await Promise.race([
-          intelligencePromise,
-          timeoutPromise,
-        ])) as any;
+        ragMetadata = {
+          search_method: 'a4_facet_rrf',
+          results_count: ragRegulations.length,
+          query_keywords: keywords,
+          search_time_ms: Date.now() - startTime,
+        };
 
-        if (intelligenceError) {
-          console.error('❌ Intelligence search failed:', intelligenceError);
-        } else if (intelligenceResults && intelligenceResults.length > 0) {
-          console.log('✅ Intelligence search found:', intelligenceResults.length, 'regulations');
-
-          // Enrich with full regulation content (parallel lookups for speed)
-          const enrichmentPromises = intelligenceResults.map(async (intel: any) => {
-            const { data: fullReg } = await supabase
-              .from('bs7671_embeddings')
-              .select('content, section, amendment, metadata')
-              .eq('id', intel.regulation_id)
-              .single();
-
-            return {
-              id: intel.regulation_id,
-              regulation_number: intel.regulation_number,
-              section: fullReg?.section || intel.section,
-              content: fullReg?.content || intel.content,
-              amendment: fullReg?.amendment,
-              metadata: fullReg?.metadata || {},
-              similarity: intel.hybrid_score || 0.8,
-              // Intelligence enrichments
-              primary_topic: intel.primary_topic,
-              keywords: intel.keywords,
-              category: intel.category,
-              practical_application: intel.practical_application,
-            };
-          });
-
-          ragRegulations = await Promise.all(enrichmentPromises);
-          ragMetadata = {
-            search_method: 'intelligence_hybrid',
-            results_count: ragRegulations.length,
-            query_keywords: keywords,
-            search_time_ms: Date.now() - startTime,
-          };
-
-          console.log('✅ Enrichment complete:', {
-            regulations_count: ragRegulations.length,
-            time_ms: Date.now() - startTime,
-          });
-        }
+        console.log('✅ A4 facet retrieval complete:', {
+          regulations_count: ragRegulations.length,
+          time_ms: Date.now() - startTime,
+        });
       } catch (ragError) {
         console.error('❌ RAG error:', ragError);
         // Continue without RAG if it fails
@@ -670,8 +703,10 @@ Always use British English (earth not ground, consumer unit not panel).`;
         // Validate that all FOUR fields exist (new format)
         const quick_answer = parsedResponse.quick_answer || '';
         const technical_answer = parsedResponse.technical_answer || '';
-        const regulations = parsedResponse.regulations || '';
-        const practical_guidance = parsedResponse.practical_guidance || '';
+        let regulations = parsedResponse.regulations || '';
+        let practical_guidance = parsedResponse.practical_guidance || '';
+        let quickAnswerOut = quick_answer;
+        let technicalOut = technical_answer;
 
         if (!quick_answer || !technical_answer || !regulations || !practical_guidance) {
           console.warn('Warning: Some fields are empty', {
@@ -682,10 +717,33 @@ Always use British English (earth not ground, consumer unit not panel).`;
           });
         }
 
+        // ELE-1260: machine-verify every cited reg number against the
+        // A4:2026 corpus. Invented citations get scrubbed to an honest
+        // marker — they never reach the user looking authoritative.
+        try {
+          const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+          const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+          const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+          const verifyClient = createClient(supabaseUrl, supabaseKey);
+          const combined = [quickAnswerOut, technicalOut, regulations, practical_guidance].join(
+            '\n'
+          );
+          const check = await verifyCitations(verifyClient, combined);
+          if (!check.clean) {
+            console.warn('⚠️ Unverified citations scrubbed:', check.unverified);
+            quickAnswerOut = scrubUnverifiedCitations(quickAnswerOut, check.unverified);
+            technicalOut = scrubUnverifiedCitations(technicalOut, check.unverified);
+            regulations = scrubUnverifiedCitations(regulations, check.unverified);
+            practical_guidance = scrubUnverifiedCitations(practical_guidance, check.unverified);
+          }
+        } catch (verifyError) {
+          console.warn('Citation verification failed open:', verifyError);
+        }
+
         return new Response(
           JSON.stringify({
-            quick_answer: quick_answer || 'No quick answer provided.',
-            technical_answer: technical_answer || 'No technical analysis provided.',
+            quick_answer: quickAnswerOut || 'No quick answer provided.',
+            technical_answer: technicalOut || 'No technical analysis provided.',
             regulations: regulations || 'No regulations specified.',
             practical_guidance: practical_guidance || 'No practical guidance available.',
             // RAG metadata hidden - trade secret

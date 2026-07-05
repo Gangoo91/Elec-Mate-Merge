@@ -160,8 +160,11 @@ Deno.serve(async (req) => {
       .eq('id', user.id)
       .single();
 
-    if (profileError || !callerProfile?.admin_role) {
-      throw new Error('Unauthorized: Admin access required');
+    if (profileError || callerProfile?.admin_role !== 'super_admin') {
+      // Granting or revoking permanent free access is founder-only — a
+      // standard admin_role must not be able to hand out (or remove)
+      // never-expiring subscriptions (2026-07-05 audit).
+      throw new Error('Unauthorized: Super admin access required');
     }
 
     // Get request body

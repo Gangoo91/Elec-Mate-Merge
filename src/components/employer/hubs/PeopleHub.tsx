@@ -1,7 +1,21 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { differenceInDays, formatDistanceToNow, parseISO } from 'date-fns';
-import { Loader2, Plus, RefreshCw, Send, Sparkles } from 'lucide-react';
+import {
+  BadgeCheck,
+  Briefcase,
+  Clock,
+  ClipboardCheck,
+  GraduationCap,
+  Loader2,
+  MessagesSquare,
+  RefreshCw,
+  Search,
+  Send,
+  Sparkles,
+  UserPlus,
+  Users,
+} from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import type { Section } from '@/pages/employer/EmployerDashboard';
@@ -27,8 +41,12 @@ import {
   SecondaryButton,
   LoadingBlocks,
   Divider,
+  Eyebrow,
+  toneChip,
+  toneWash,
   type Tone,
 } from '@/components/employer/editorial';
+import { cn } from '@/lib/utils';
 import { useActiveEmployees } from '@/hooks/useEmployees';
 import { useTalentPool } from '@/hooks/useTalentPool';
 import { useNewApplicationsCount } from '@/hooks/useVacancyApplications';
@@ -479,28 +497,27 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
 
       {/* Quick actions ─────────────────────────────────────── */}
       <div>
-        <div className="mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Quick actions
-        </div>
+        <Eyebrow className="mb-3">Quick actions</Eyebrow>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-[1.5px] bg-black border border-white/[0.06] rounded-2xl overflow-hidden">
           <QuickAction
             label="Invite member"
             sub="Add to your firm"
             tone="yellow"
-            icon={<Plus className="h-4 w-4" />}
+            icon={<UserPlus className="h-4 w-4" />}
             onClick={onOpenEmployees}
           />
           <QuickAction
             label="Post vacancy"
             sub="Hire someone new"
             tone="cyan"
-            icon={<Plus className="h-4 w-4" />}
+            icon={<Briefcase className="h-4 w-4" />}
             onClick={onOpenVacancies}
           />
           <QuickAction
             label="Approve timesheets"
             sub={pendingTimesheetCount > 0 ? `${pendingTimesheetCount} pending` : 'All approved'}
             tone={pendingTimesheetCount > 0 ? 'orange' : 'emerald'}
+            icon={<ClipboardCheck className="h-4 w-4" />}
             badge={pendingTimesheetCount > 0 ? pendingTimesheetCount : undefined}
             onClick={onOpenTimesheets}
           />
@@ -571,7 +588,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             meta={
               <span className="flex items-center gap-1.5">
                 <PulseDot tone="emerald" />
-                <span className="text-[11px] text-white">Live</span>
+                <span className="text-[11px] text-white/70">Live</span>
               </span>
             }
           />
@@ -582,7 +599,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
           ) : activity.length === 0 ? (
             <div className="px-5 py-10 text-center">
               <div className="text-[13px] text-white">Quiet so far today</div>
-              <div className="mt-1 text-[11.5px] text-white">
+              <div className="mt-1 text-[11.5px] text-white/55">
                 Clock-ins, applications and credential updates will land here.
               </div>
             </div>
@@ -595,7 +612,9 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
                   title={e.actor}
                   subtitle={e.detail}
                   trailing={
-                    <span className="text-[11px] text-white tabular-nums">{niceTime(e.when)}</span>
+                    <span className="text-[11px] text-white/45 tabular-nums">
+                      {niceTime(e.when)}
+                    </span>
                   }
                   accent={e.tone}
                 />
@@ -613,6 +632,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             tone="blue"
             number="01"
             eyebrow="Workforce"
+            icon={<Users className="h-4 w-4" />}
             title="Team"
             description="Operatives, supervisors and PMs on your books."
             meta={
@@ -627,6 +647,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             tone="emerald"
             number="02"
             eyebrow="Compliance"
+            icon={<BadgeCheck className="h-4 w-4" />}
             title="Credentials & Elec-IDs"
             description="Cards, qualifications and renewal dates in one place."
             meta={
@@ -642,6 +663,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             tone="amber"
             number="03"
             eyebrow="Hours"
+            icon={<Clock className="h-4 w-4" />}
             title="Timesheets"
             description="Approve hours, attendance and weekly submissions."
             meta={`${Math.round(totalHoursThisWeek)}h this week · ${pendingTimesheetCount} pending approval`}
@@ -657,6 +679,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             tone="purple"
             number="04"
             eyebrow="Messaging"
+            icon={<MessagesSquare className="h-4 w-4" />}
             title="Communications"
             description="Internal messages, broadcasts and team alerts."
             meta={
@@ -671,14 +694,15 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
         </HubGrid>
       </div>
 
-      {/* Recruitment ─────────────────────────────────────── */}
+      {/* Hiring & development ─────────────────────────────── */}
       <div className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Hiring" title="Recruitment" />
-        <HubGrid columns={2}>
+        <SectionHeader eyebrow="Hiring & training" title="Grow the team" />
+        <HubGrid columns={3}>
           <HubCard
             tone="blue"
             number="05"
             eyebrow="Talent"
+            icon={<Search className="h-4 w-4" />}
             title="Talent Pool"
             description="Browse vetted sparkies available for work right now."
             meta={
@@ -693,6 +717,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             tone="cyan"
             number="06"
             eyebrow="Vacancies"
+            icon={<Briefcase className="h-4 w-4" />}
             title="Job Vacancies"
             description="Post jobs and manage applications across your firm."
             meta={
@@ -708,19 +733,13 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             cta="Open"
             onClick={onOpenVacancies}
           />
-        </HubGrid>
-      </div>
-
-      {/* Development ──────────────────────────────────────── */}
-      <div className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Training" title="Development" />
-        <HubGrid columns={2}>
           <HubCard
             tone="emerald"
             number="07"
             eyebrow="Apprentices"
+            icon={<GraduationCap className="h-4 w-4" />}
             title="Apprentice Progress"
-            description="Live college progress for apprentices on your books — off-the-job hours, attendance and EPA."
+            description="Live college progress — off-the-job hours, attendance and EPA."
             meta={
               apprenticeCount > 0
                 ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'}${apprenticeReviewsOverdue > 0 ? ` · ${apprenticeReviewsOverdue} review${apprenticeReviewsOverdue === 1 ? '' : 's'} overdue` : ''}`
@@ -746,15 +765,15 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  AI Suggestion
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  Suggestion
                 </span>
                 <Pill tone="purple">Beta</Pill>
               </div>
               <div className="mt-1 text-[15px] font-semibold text-white leading-snug">
                 {aiNudge.title}
               </div>
-              <div className="mt-1 text-[12.5px] text-white">{aiNudge.body}</div>
+              <div className="mt-1 text-[12.5px] text-white/60">{aiNudge.body}</div>
               <div className="mt-4 flex items-center gap-2">
                 <PrimaryButton size="sm" onClick={aiNudge.onCta}>
                   {aiNudge.cta}
@@ -794,19 +813,29 @@ function QuickAction({
   return (
     <button
       onClick={onClick}
-      className="group relative h-full flex flex-col items-start justify-between bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors px-4 py-4 sm:py-5 text-left touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60"
+      className="group relative h-full flex flex-col items-start justify-between bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors px-4 py-4 sm:py-5 text-left touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60"
     >
-      <div className="flex items-center justify-between w-full">
-        {icon ? (
-          <span className="text-white">{icon}</span>
-        ) : (
-          <span className="h-4 w-4" aria-hidden />
+      <div
+        aria-hidden
+        className={cn(
+          'absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity',
+          toneWash[tone]
         )}
+      />
+      <div className="relative flex items-center justify-between w-full">
+        <span
+          className={cn(
+            'h-9 w-9 rounded-xl border flex items-center justify-center shrink-0 transition-transform group-hover:scale-105',
+            toneChip[tone]
+          )}
+        >
+          {icon ?? <span className="h-4 w-4" aria-hidden />}
+        </span>
         {badge !== undefined && badge > 0 && <Pill tone={tone}>{badge}</Pill>}
       </div>
-      <div className="mt-3">
+      <div className="relative mt-3">
         <div className="text-[14px] font-semibold text-white">{label}</div>
-        <div className="mt-0.5 text-[11.5px] text-white">{sub}</div>
+        <div className="mt-0.5 text-[11.5px] text-white/55">{sub}</div>
       </div>
     </button>
   );

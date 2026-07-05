@@ -30,6 +30,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabase } from '@/integrations/supabase/client';
 import { PayType } from '@/services/employeeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import { useQuery } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import {
   Field,
@@ -78,6 +79,25 @@ export function AddEmployeeDialog({
   const createEmployee = useCreateEmployee();
   const createElecId = useCreateElecIdProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Comped employers (e.g. build partners) get free seats — so the pricing copy
+  // must reflect their plan rather than the generic £9.99.
+  const { data: isComped = false } = useQuery({
+    queryKey: ['employer-comped-seats'],
+    queryFn: async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return false;
+      const { data } = await supabase
+        .from('profiles')
+        .select('free_access_granted')
+        .eq('id', user.id)
+        .maybeSingle();
+      return data?.free_access_granted === true;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
   const [internalOpen, setInternalOpen] = useState(false);
 
   const open = controlledOpen ?? internalOpen;
@@ -487,10 +507,26 @@ export function AddEmployeeDialog({
                   <div className="rounded-2xl border border-elec-yellow/25 bg-elec-yellow/[0.06] px-4 py-3.5 flex gap-3">
                     <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                     <div className="text-[12.5px] leading-relaxed text-white/80">
-                      <span className="font-medium text-white">How linking works:</span> they sign
-                      in with this email and connect to your team automatically. A linked team
-                      member adds <span className="font-medium text-white">£9.99/month</span> to
-                      your subscription — they pay nothing themselves.
+                      <span className="font-medium text-white">How linking works:</span> they set up
+                      their account (or sign in) with this email and join your team automatically.{' '}
+                      {isComped ? (
+                        <>
+                          Team members are{' '}
+                          <span className="font-medium text-white">free on your plan</span>.
+                        </>
+                      ) : (
+                        <>
+                          A linked team member adds{' '}
+                          <span className="font-medium text-white">£9.99/month</span> to your
+                          subscription — they pay nothing themselves.
+                        </>
+                      )}
+                      {!formData.email.trim() && (
+                        <span className="block mt-1.5 text-white/50">
+                          Add their email to send the invite — without it they can't be linked to
+                          the app.
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -751,7 +787,9 @@ export function AddEmployeeDialog({
                       {formData.email.trim() && (
                         <div className="flex justify-between">
                           <span className="text-white/60">Seat when they link</span>
-                          <span className="text-white tabular-nums">£9.99/month</span>
+                          <span className="text-white tabular-nums">
+                            {isComped ? 'Free on your plan' : '£9.99/month'}
+                          </span>
                         </div>
                       )}
                     </div>

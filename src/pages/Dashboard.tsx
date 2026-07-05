@@ -7,10 +7,11 @@
  *
  * Flow:
  *   ——   GREETING      — "Hello, Andrew." + verdict line + CTA pill
+ *   ——   RESUME        — pick up where you left off (draft cert/quote)
+ *   ——   QUICK ACCESS  — one-tap launchers for the daily tools
  *   01 · THIS MONTH    — calm monochrome stat strip (every cell clickable)
  *   02 · YOUR HUBS     — monochrome hub cards (incl. Mate teaser + Bring a Mate referral)
- *   03 · TODAY         — what to do today (overdue, drafts, expiring, etc.)
- *   04 · MOMENTUM      — newspaper-style closer
+ *   03 · MOMENTUM      — newspaper-style closer
  *
  * Single accent: elec-yellow on arrows / one stat cell when relevant.
  * No multi-colour tone gradients — restraint is the whole point.
@@ -24,10 +25,10 @@ import { motion } from 'framer-motion';
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
 import TrialBanner from '@/components/dashboard/TrialBanner';
 import TrialReceiptCard from '@/components/dashboard/TrialReceiptCard';
+import ResumeCard from '@/components/dashboard/editorial/ResumeCard';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
 
 import { VerdictHero } from '@/components/dashboard/editorial/VerdictHero';
-import { TodayQueue } from '@/components/dashboard/editorial/TodayQueue';
 import { HeadlineStats } from '@/components/dashboard/editorial/HeadlineStats';
 import { EditorialHubGrid } from '@/components/dashboard/editorial/EditorialHubGrid';
 import { MomentumStrip } from '@/components/dashboard/editorial/MomentumStrip';
@@ -179,16 +180,13 @@ export default Dashboard;
  * Verdict → Today → This Month → Hubs → Momentum.
  */
 function EditorialDashboard() {
-  const { eyebrow, greeting, verdict, cta, queueItems, isLoading, role } = useDashboardVerdict();
-
-  const todayLabel = role === 'apprentice' ? "TODAY'S TRAINING" : 'TODAY';
-  const todayEmpty =
-    role === 'apprentice'
-      ? 'Nothing scheduled — pick up where you left off in Study Centre.'
-      : "You're all caught up. Use the calm to push a quote out.";
+  const { eyebrow, greeting, verdict, cta, isLoading } = useDashboardVerdict();
 
   return (
-    <div className="space-y-12 sm:space-y-16">
+    // Cockpit order on every device: where was I (resume) → start something
+    // (quick access) → how's the month going. The verdict line in the hero
+    // carries "what needs me today"; the old Today queue duplicated it.
+    <div className="flex flex-col gap-12 sm:gap-16">
       <VerdictHero
         eyebrow={eyebrow}
         greeting={greeting}
@@ -196,11 +194,11 @@ function EditorialDashboard() {
         cta={cta}
         isLoading={isLoading}
       />
+      <ResumeCard />
       <QuickAccessRow />
       <HeadlineStats number="01" label="THIS MONTH" />
       <EditorialHubGrid number="02" label="YOUR HUBS" />
-      <TodayQueue number="03" label={todayLabel} items={queueItems} emptyMessage={todayEmpty} />
-      <MomentumStrip number="04" label="MOMENTUM" />
+      <MomentumStrip number="03" label="MOMENTUM" />
     </div>
   );
 }

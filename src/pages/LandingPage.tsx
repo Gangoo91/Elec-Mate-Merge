@@ -643,29 +643,28 @@ const LandingPage = () => {
               trade on — instead of paperwork, WhatsApp and four disconnected apps.
             </p>
 
-            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
-              <PrimaryButton
-                size="lg"
-                fullWidth
-                onClick={() => goToSignup('hero')}
-                className="sm:w-auto sm:px-8"
-              >
+            {/* Sign in sits directly UNDER the sign-up CTA (Andrew, 5 Jul) —
+                stacked at every breakpoint, not side by side */}
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:mx-auto sm:max-w-[320px] lg:mx-0">
+              <PrimaryButton size="lg" fullWidth onClick={() => goToSignup('hero')}>
                 Start free — £0 today →
               </PrimaryButton>
-              <SecondaryButton
-                size="lg"
-                fullWidth
-                onClick={() =>
-                  document.getElementById('workflow')?.scrollIntoView({ behavior: 'smooth' })
-                }
-                className="sm:w-auto sm:px-8"
-              >
-                See how it works
+              <SecondaryButton size="lg" fullWidth onClick={() => navigate('/auth/signin')}>
+                Sign in
               </SecondaryButton>
             </div>
 
             <p className="mt-3 text-[13px] text-white/65">
-              7 days free · cancel anytime · from £6.99/mo after
+              7 days free · cancel anytime · from £6.99/mo after ·{' '}
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById('workflow')?.scrollIntoView({ behavior: 'smooth' })
+                }
+                className="touch-manipulation font-medium text-elec-yellow/90 transition-colors hover:text-elec-yellow"
+              >
+                See how it works ↓
+              </button>
             </p>
 
             {/* Mobile/tablet — the product itself, straight after the CTA. The
@@ -689,15 +688,6 @@ const LandingPage = () => {
               <Pill tone="yellow">{publicStats.quoted} quoted</Pill>
             </div>
 
-            <p className="mt-4 text-[13px] text-white/65">
-              Already a member?{' '}
-              <Link
-                to="/auth/signin"
-                className="font-medium text-elec-yellow/90 transition-colors hover:text-elec-yellow"
-              >
-                Sign in →
-              </Link>
-            </p>
 
             <div className="mt-6 flex justify-center lg:justify-start">
               <StoreBadges className="justify-center lg:justify-start" size="md" />

@@ -126,10 +126,10 @@ export function HeadlineStats({ number = '01', label = 'THIS MONTH' }: HeadlineS
             typeof stat.value === 'number' || /^[\d.,+\-/%hkm£]+$/i.test(valueStr);
           const sizeClass =
             isNumericish || valueStr.length <= 4
-              ? 'text-4xl sm:text-5xl lg:text-[56px]'
+              ? 'text-[30px] sm:text-5xl lg:text-[56px]'
               : valueStr.length <= 8
-                ? 'text-3xl sm:text-4xl lg:text-5xl'
-                : 'text-2xl sm:text-3xl lg:text-4xl';
+                ? 'text-[24px] sm:text-4xl lg:text-5xl'
+                : 'text-[20px] sm:text-3xl lg:text-4xl';
 
           return (
             <button
@@ -137,7 +137,7 @@ export function HeadlineStats({ number = '01', label = 'THIS MONTH' }: HeadlineS
               type="button"
               onClick={() => navigate(stat.href)}
               className={cn(
-                'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
+                'group relative bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
                 'hover:bg-[hsl(0_0%_15%)] transition-colors',
                 stat.accent &&
                   'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
@@ -153,7 +153,7 @@ export function HeadlineStats({ number = '01', label = 'THIS MONTH' }: HeadlineS
               </div>
               <span
                 className={cn(
-                  'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                  'mt-2.5 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
                   sizeClass,
                   stat.accent ? 'text-elec-yellow' : 'text-white'
                 )}

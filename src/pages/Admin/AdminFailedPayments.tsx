@@ -627,7 +627,10 @@ export default function AdminFailedPayments() {
                         trailing={
                           <>
                             <Pill tone={tone}>{stage}</Pill>
-                            <span className="text-[11px] text-white tabular-nums">{timeAgo}</span>
+                            {/* Time is secondary — hide on mobile so the name wins */}
+                            <span className="hidden text-[11px] text-white tabular-nums sm:inline">
+                              {timeAgo}
+                            </span>
                           </>
                         }
                         onClick={() => {

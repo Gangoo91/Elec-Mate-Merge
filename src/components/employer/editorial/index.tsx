@@ -6,7 +6,8 @@
  */
 
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import * as React from 'react';
 import type { ReactNode } from 'react';
 
@@ -65,6 +66,48 @@ export const toneDot: Record<Tone, string> = {
   indigo: 'bg-indigo-400',
 };
 
+/** Diagonal gradient wash — gives cards a visible tone surface (not just a 1px hairline). */
+export const toneWash: Record<Tone, string> = {
+  blue: 'bg-gradient-to-br from-blue-500/[0.08] via-transparent to-transparent',
+  emerald: 'bg-gradient-to-br from-emerald-500/[0.08] via-transparent to-transparent',
+  amber: 'bg-gradient-to-br from-amber-500/[0.08] via-transparent to-transparent',
+  purple: 'bg-gradient-to-br from-purple-500/[0.08] via-transparent to-transparent',
+  yellow: 'bg-gradient-to-br from-elec-yellow/[0.08] via-transparent to-transparent',
+  green: 'bg-gradient-to-br from-green-500/[0.08] via-transparent to-transparent',
+  orange: 'bg-gradient-to-br from-orange-500/[0.08] via-transparent to-transparent',
+  red: 'bg-gradient-to-br from-red-500/[0.08] via-transparent to-transparent',
+  cyan: 'bg-gradient-to-br from-cyan-500/[0.08] via-transparent to-transparent',
+  indigo: 'bg-gradient-to-br from-indigo-500/[0.08] via-transparent to-transparent',
+};
+
+/** Icon chip — toned rounded square behind a lucide icon. */
+export const toneChip: Record<Tone, string> = {
+  blue: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
+  emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
+  amber: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
+  purple: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
+  yellow: 'bg-elec-yellow/10 border-elec-yellow/20 text-elec-yellow',
+  green: 'bg-green-500/10 border-green-500/20 text-green-400',
+  orange: 'bg-orange-500/10 border-orange-500/20 text-orange-400',
+  red: 'bg-red-500/10 border-red-500/20 text-red-400',
+  cyan: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400',
+  indigo: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400',
+};
+
+/** Soft radial bloom used behind page-hero titles so each hub carries its colour. */
+const toneGlow: Record<Tone, string> = {
+  blue: 'bg-blue-500/[0.14]',
+  emerald: 'bg-emerald-500/[0.14]',
+  amber: 'bg-amber-500/[0.14]',
+  purple: 'bg-purple-500/[0.14]',
+  yellow: 'bg-elec-yellow/[0.12]',
+  green: 'bg-green-500/[0.14]',
+  orange: 'bg-orange-500/[0.14]',
+  red: 'bg-red-500/[0.14]',
+  cyan: 'bg-cyan-500/[0.14]',
+  indigo: 'bg-indigo-500/[0.14]',
+};
+
 const pillTone: Record<Tone, string> = {
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -104,6 +147,25 @@ export const rowVariants = {
     transition: { type: 'spring' as const, stiffness: 340, damping: 28 },
   },
 };
+
+/* ────────────────────────────────────────────────────────
+   Count-up numeral — springs from 0 to the value on mount
+   and re-springs when live data changes.
+   ──────────────────────────────────────────────────────── */
+
+export function CountUp({ value, className }: { value: number; className?: string }) {
+  const spring = useSpring(0, { stiffness: 90, damping: 24 });
+  const display = useTransform(spring, (v) => Math.round(v).toLocaleString('en-GB'));
+  React.useEffect(() => {
+    spring.set(value);
+  }, [value, spring]);
+  return <motion.span className={className}>{display}</motion.span>;
+}
+
+/** Renders numbers with a count-up spring, passes anything else straight through. */
+function AnimatedValue({ value }: { value: ReactNode }) {
+  return typeof value === 'number' ? <CountUp value={value} /> : <>{value}</>;
+}
 
 /* ────────────────────────────────────────────────────────
    Atoms
@@ -152,28 +214,27 @@ export function Dot({ tone = 'yellow', className }: { tone?: Tone; className?: s
 
 export function PulseDot({ tone = 'green', className }: { tone?: Tone; className?: string }) {
   return (
-    <span
-      aria-hidden
-      className={cn(
-        'inline-block h-2 w-2 rounded-full shrink-0 animate-pulse',
-        toneDot[tone],
-        className
-      )}
-    />
+    <span aria-hidden className={cn('relative inline-flex h-2 w-2 shrink-0', className)}>
+      <span
+        className={cn(
+          'absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping',
+          toneDot[tone]
+        )}
+      />
+      <span className={cn('relative inline-flex h-2 w-2 rounded-full', toneDot[tone])} />
+    </span>
   );
 }
 
 export function Arrow({ className }: { className?: string }) {
   return (
-    <span
+    <ArrowRight
       aria-hidden
       className={cn(
-        'text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all',
+        'h-3.5 w-3.5 text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all',
         className
       )}
-    >
-      →
-    </span>
+    />
   );
 }
 
@@ -182,7 +243,7 @@ export function Divider({ label, className }: { label?: string; className?: stri
     <div className={cn('flex items-center gap-3 pt-2', className)}>
       <div className="h-px flex-1 bg-white/[0.06]" />
       {label && (
-        <span className="text-[10px] text-white font-semibold uppercase tracking-[0.2em]">
+        <span className="text-[10px] text-white/50 font-semibold uppercase tracking-[0.2em]">
           {label}
         </span>
       )}
@@ -222,21 +283,30 @@ export function PageHero({
       className="relative"
     >
       {tone && (
-        <div
-          className={cn(
-            'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70',
-            toneAccent[tone]
-          )}
-        />
+        <>
+          <div
+            className={cn(
+              'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70',
+              toneAccent[tone]
+            )}
+          />
+          <div
+            aria-hidden
+            className={cn(
+              'absolute -top-16 -left-20 h-56 w-72 rounded-full blur-3xl pointer-events-none',
+              toneGlow[tone]
+            )}
+          />
+        </>
       )}
-      <div className="pt-4 sm:pt-6 lg:pt-8 pb-3 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-6">
+      <div className="relative pt-4 sm:pt-6 lg:pt-8 pb-3 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 sm:gap-6">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2.5">
             {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
             {live && (
               <span className="inline-flex items-center gap-1.5">
                 <PulseDot tone={live.tone ?? 'green'} />
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   {live.label ?? 'Live'}
                 </span>
               </span>
@@ -246,7 +316,7 @@ export function PageHero({
             {title}
           </h1>
           {description && (
-            <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
+            <p className="mt-3 text-[13.5px] sm:text-[15px] text-white/60 max-w-2xl leading-relaxed">
               {description}
             </p>
           )}
@@ -330,6 +400,7 @@ export function HeroNumber({
           toneAccent[tone]
         )}
       />
+      <div aria-hidden className={cn('absolute inset-0 pointer-events-none', toneWash[tone])} />
       <div className="relative p-5 sm:p-7 lg:p-8">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2.5 min-w-0">
@@ -340,9 +411,9 @@ export function HeroNumber({
         </div>
         <div className="mt-5">
           <div className="text-[40px] sm:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-none tabular-nums">
-            {value}
+            <AnimatedValue value={value} />
           </div>
-          {caption && <div className="mt-2 text-[13px] text-white">{caption}</div>}
+          {caption && <div className="mt-2 text-[13px] text-white/60">{caption}</div>}
         </div>
         {columns && columns.length > 0 && (
           <div
@@ -360,9 +431,9 @@ export function HeroNumber({
                     col.tone ? toneText[col.tone] : 'text-white'
                   )}
                 >
-                  {col.value}
+                  <AnimatedValue value={col.value} />
                 </div>
-                <div className="mt-2 text-[10px] text-white uppercase tracking-[0.14em] font-medium">
+                <div className="mt-2 text-[10px] text-white/50 uppercase tracking-[0.14em] font-medium">
                   {col.label}
                 </div>
               </div>
@@ -374,7 +445,7 @@ export function HeroNumber({
             {legend.map((entry, i) => (
               <div key={`${entry.label}-${i}`} className="flex items-center gap-1.5">
                 <Dot tone={entry.tone ?? 'yellow'} />
-                <span className="text-[11px] text-white">{entry.label}</span>
+                <span className="text-[11px] text-white/60">{entry.label}</span>
                 <span
                   className={cn(
                     'text-[11px] font-semibold tabular-nums',
@@ -392,7 +463,7 @@ export function HeroNumber({
   );
 
   const base =
-    'group relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden';
+    'group relative bg-[hsl(0_0%_13%)] border border-white/[0.07] rounded-2xl overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.35)]';
 
   return onClick ? (
     <div
@@ -407,7 +478,7 @@ export function HeroNumber({
       }}
       className={cn(
         base,
-        'cursor-pointer hover:bg-[hsl(0_0%_14%)] transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
+        'cursor-pointer hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
       )}
     >
       {body}
@@ -477,9 +548,9 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
                 valueClass
               )}
             >
-              {stat.value}
+              <AnimatedValue value={stat.value} />
             </span>
-            {stat.sub && <span className="mt-2.5 text-[11px] text-white">{stat.sub}</span>}
+            {stat.sub && <span className="mt-2.5 text-[11px] text-white/45">{stat.sub}</span>}
             {stat.onClick && (
               <span className="mt-2 text-[11px] font-medium text-elec-yellow/0 group-hover:text-elec-yellow/90 transition-colors">
                 Open →
@@ -528,7 +599,7 @@ interface AlertRowProps {
 
 export function AlertRow({ title, subtitle, trailing, tone = 'orange', onClick }: AlertRowProps) {
   const base =
-    'group relative w-full flex items-center gap-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation transition-colors';
+    'group relative w-full flex items-center gap-4 bg-[hsl(0_0%_13%)] border border-white/[0.07] rounded-2xl overflow-hidden px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation transition-colors shadow-[0_6px_18px_rgba(0,0,0,0.30)]';
   const inner = (
     <>
       <div
@@ -537,10 +608,11 @@ export function AlertRow({ title, subtitle, trailing, tone = 'orange', onClick }
           toneAccent[tone]
         )}
       />
-      <Dot tone={tone} />
-      <div className="flex-1 min-w-0">
+      <div aria-hidden className={cn('absolute inset-0 pointer-events-none', toneWash[tone])} />
+      <Dot tone={tone} className="relative" />
+      <div className="relative flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-semibold text-white truncate">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[12px] text-white truncate">{subtitle}</div>}
+        {subtitle && <div className="mt-0.5 text-[12px] text-white/60 truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
       <Arrow className="shrink-0" />
@@ -667,16 +739,14 @@ export function ListRow({
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white/55 truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
-        <span
+        <ArrowRight
           aria-hidden
-          className="shrink-0 -mr-1 text-white/0 group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all text-[14px]"
-        >
-          →
-        </span>
+          className="shrink-0 -mr-1 h-3.5 w-3.5 text-white/0 group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all"
+        />
       )}
     </>
   );
@@ -775,6 +845,7 @@ interface HubCardProps {
   size?: 'md' | 'sm';
   badge?: ReactNode;
   cta?: string;
+  icon?: ReactNode;
 }
 
 export function HubCard({
@@ -788,6 +859,7 @@ export function HubCard({
   size = 'md',
   badge,
   cta = 'Open',
+  icon,
 }: HubCardProps) {
   const minH = size === 'sm' ? 'min-h-[140px] sm:min-h-[160px]' : 'min-h-[180px] sm:min-h-[220px]';
   const titleClass =
@@ -799,7 +871,7 @@ export function HubCard({
     <button
       onClick={onClick}
       className={cn(
-        'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col',
+        'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60',
         minH
       )}
     >
@@ -809,22 +881,46 @@ export function HubCard({
           toneAccent[tone]
         )}
       />
-      <div className="flex items-start justify-between gap-3">
-        <Eyebrow>
-          {number ? `${number} · ` : ''}
-          {eyebrow}
-        </Eyebrow>
+      <div
+        aria-hidden
+        className={cn(
+          'absolute inset-0 pointer-events-none opacity-70 group-hover:opacity-100 transition-opacity',
+          toneWash[tone]
+        )}
+      />
+      <div className="relative flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
+          {icon && (
+            <span
+              className={cn(
+                'h-9 w-9 rounded-xl border flex items-center justify-center shrink-0 transition-transform group-hover:scale-105',
+                toneChip[tone]
+              )}
+            >
+              {icon}
+            </span>
+          )}
+          <Eyebrow>
+            {number ? `${number} · ` : ''}
+            {eyebrow}
+          </Eyebrow>
+        </div>
         {badge && <span className="shrink-0">{badge}</span>}
       </div>
-      <h3 className={cn('mt-3 text-white tracking-tight leading-[1.1]', titleClass)}>{title}</h3>
+      <h3 className={cn('relative mt-3 text-white tracking-tight leading-[1.1]', titleClass)}>
+        {title}
+      </h3>
       {description && (
-        <p className="mt-2 text-[12.5px] leading-relaxed text-white max-w-[34ch]">{description}</p>
+        <p className="relative mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+          {description}
+        </p>
       )}
       <div className="flex-grow" />
-      <div className="mt-5 flex items-center justify-between pt-3.5 border-t border-white/[0.06]">
-        <span className="text-[11px] text-white truncate">{meta ?? ''}</span>
-        <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0 ml-3">
-          {cta} →
+      <div className="relative mt-5 flex items-center justify-between pt-3.5 border-t border-white/[0.06]">
+        <span className="text-[11px] text-white/45 truncate">{meta ?? ''}</span>
+        <span className="inline-flex items-center gap-1 text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow transition-colors shrink-0 ml-3">
+          {cta}
+          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
         </span>
       </div>
     </button>
@@ -892,15 +988,13 @@ export function GroupHeader({
           {count}
         </span>
       </div>
-      <span
+      <ChevronDown
         className={cn(
-          'text-white text-[13px] transition-transform duration-200',
+          'h-4 w-4 text-white/50 transition-transform duration-200',
           open && 'rotate-180'
         )}
         aria-hidden
-      >
-        ⌄
-      </span>
+      />
     </button>
   );
 }
@@ -931,7 +1025,7 @@ export function EmptyState({
     >
       <div className="text-base font-medium text-white">{title}</div>
       {description && (
-        <p className="mt-2 text-[12.5px] text-white max-w-md mx-auto leading-relaxed">
+        <p className="mt-2 text-[12.5px] text-white/55 max-w-md mx-auto leading-relaxed">
           {description}
         </p>
       )}
@@ -1095,7 +1189,7 @@ export function FilterBar({
                 key={tab.value}
                 onClick={() => onTabChange?.(tab.value)}
                 className={cn(
-                  'relative px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation'
+                  'group relative px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation'
                 )}
               >
                 {isActive && (
@@ -1105,13 +1199,18 @@ export function FilterBar({
                     className="absolute inset-0 bg-elec-yellow rounded-full"
                   />
                 )}
-                <span className={cn('relative z-10', isActive ? 'text-black' : 'text-white')}>
+                <span
+                  className={cn(
+                    'relative z-10 transition-colors',
+                    isActive ? 'text-black' : 'text-white/70 group-hover:text-white'
+                  )}
+                >
                   {tab.label}
                   {typeof tab.count === 'number' && (
                     <span
                       className={cn(
                         'ml-1.5 tabular-nums text-[11px]',
-                        isActive ? 'text-black/60' : 'text-white'
+                        isActive ? 'text-black/60' : 'text-white/45'
                       )}
                     >
                       {tab.count}
@@ -1151,7 +1250,7 @@ export function Kbd({ children, className }: { children: ReactNode; className?: 
   return (
     <span
       className={cn(
-        'inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[10px] font-mono font-medium text-white',
+        'inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 rounded-md bg-white/[0.06] border border-white/[0.08] text-[10px] font-mono font-medium text-white/50',
         className
       )}
     >
@@ -1229,7 +1328,7 @@ export function MetricTile({ label, value, sub, tone, accent, trend, onClick }: 
           </span>
         )}
       </div>
-      {sub && <span className="mt-2.5 text-[11px] text-white">{sub}</span>}
+      {sub && <span className="mt-2.5 text-[11px] text-white/45">{sub}</span>}
     </>
   );
 
@@ -1279,12 +1378,19 @@ export function QuickActionTile({ label, sub, tone = 'yellow', onClick }: QuickA
           toneAccent[tone]
         )}
       />
-      <div>
+      <div aria-hidden className={cn('absolute inset-0 pointer-events-none', toneWash[tone])} />
+      <div className="relative">
         <div className="text-[14px] font-semibold text-white">{label}</div>
-        {sub && <div className="mt-0.5 text-[11.5px] text-white">{sub}</div>}
+        {sub && <div className="mt-0.5 text-[11.5px] text-white/55">{sub}</div>}
       </div>
-      <span className={cn('mt-3 text-[12px] font-medium transition-colors', toneText[tone])}>
-        Open →
+      <span
+        className={cn(
+          'relative mt-3 inline-flex items-center gap-1 text-[12px] font-medium transition-colors',
+          toneText[tone]
+        )}
+      >
+        Open
+        <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
       </span>
     </motion.button>
   );
@@ -1612,7 +1718,7 @@ export function SheetShell({
       <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <div className="mt-1 text-[20px] font-semibold text-white leading-tight">{title}</div>
-        {description && <div className="mt-1.5 text-[12.5px] text-white">{description}</div>}
+        {description && <div className="mt-1.5 text-[12.5px] text-white/60">{description}</div>}
       </div>
       <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">{children}</div>
       {footer && (
@@ -1725,10 +1831,10 @@ export function ComplianceRing({
         </text>
       </svg>
       <div className="flex flex-col items-start">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
           {label}
         </span>
-        <span className="text-[12px] text-white">{clamped}% healthy</span>
+        <span className="text-[12px] text-white/70">{clamped}% healthy</span>
       </div>
     </div>
   );

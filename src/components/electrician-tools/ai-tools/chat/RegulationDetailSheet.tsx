@@ -18,6 +18,20 @@ interface Regulation {
   full_text: string | null;
 }
 
+/**
+ * The stored regulation text carries arbitrary line breaks from PDF
+ * extraction — sometimes one word per line, sometimes a break mid-sentence.
+ * Flatten all whitespace, then re-insert breaks only where the standard's
+ * structure genuinely starts: lettered/roman enumerations and NOTEs.
+ */
+function normaliseRegText(raw: string): string {
+  const flat = raw.replace(/\s+/g, ' ').trim();
+  return flat
+    .replace(/\s(?=NOTE\s?\d?\s?:)/g, '\n\n')
+    .replace(/\s(?=\([a-z]\)\s)/g, '\n')
+    .replace(/\s(?=\((?:i{1,3}|iv|v|vi{1,3}|ix|x)\)\s)/g, '\n');
+}
+
 interface CrossRef {
   id: string;
   target_reg_number: string;
@@ -278,7 +292,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                     )}
                     {s.full_text && (
                       <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed line-clamp-4">
-                        {s.full_text.trim()}
+                        {normaliseRegText(s.full_text)}
                       </p>
                     )}
                   </li>
@@ -296,7 +310,9 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                 </div>
                 <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-4 py-3">
                   <p className="text-[14px] leading-relaxed text-white whitespace-pre-wrap">
-                    {reg.full_text?.trim() || 'No text recorded for this regulation.'}
+                    {reg.full_text
+                      ? normaliseRegText(reg.full_text)
+                      : 'No text recorded for this regulation.'}
                   </p>
                 </div>
               </section>

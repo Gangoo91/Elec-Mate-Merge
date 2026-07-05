@@ -125,17 +125,37 @@ export default function AdminAnalytics() {
       const tierPricing: Record<string, number> = {
         apprentice: 6.99,
         electrician: 19.99,
-        employer: 29.99,
+        employer: 49.99,
       };
 
       const tiers = tierData || [];
       const totalRevenue = tiers.reduce(
-        (sum, t) => sum + (tierPricing[t.subscription_tier?.toLowerCase() || ''] || 9.99),
+        (sum, t) => sum + (tierPricing[t.subscription_tier?.toLowerCase() || ''] || 19.99),
         0
       );
-      const avgRevenue = tiers.length > 0 ? totalRevenue / tiers.length : 9.99;
+      const avgRevenue = tiers.length > 0 ? totalRevenue / tiers.length : 19.99;
       const currentMRR = totalRevenue;
-      const conversionRate = 0.3;
+
+      // REAL historical trial→paid conversion, not the hardcoded 30% this
+      // used to assume: of everyone whose trial has finished, how many are
+      // paying now. Feeds the projection with an observed rate.
+      const nowIso = new Date().toISOString();
+      const { count: finishedTrials } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .not('trial_end', 'is', null)
+        .lt('trial_end', nowIso);
+
+      const { count: convertedTrials } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .not('trial_end', 'is', null)
+        .lt('trial_end', nowIso)
+        .eq('subscribed', true)
+        .eq('is_trial', false);
+
+      const conversionRate =
+        finishedTrials && finishedTrials > 0 ? (convertedTrials || 0) / finishedTrials : 0;
       const projectedConversions = (trialCount || 0) * conversionRate;
       const projectedMRR = currentMRR + projectedConversions * avgRevenue;
 

@@ -136,6 +136,12 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
   const role = (profile?.role || 'electrician') as keyof typeof INTENTS;
   const options = INTENTS[role] || INTENTS.electrician;
 
+  // ELE-1248 — manually-granted users (comped/free access) are not on a trial;
+  // showing "Trial active / 7 days free" made them think they still had to
+  // start one. Trial copy only renders for users without a manual grant.
+  // `subscribed` can't be the gate: Stripe sets it true while trialing too.
+  const hasGrantedAccess = !!profile?.free_access_granted;
+
   const completeOnboarding = async () => {
     storageSetSync('elec-mate-onboarding-done', 'true');
     if (user) {
@@ -185,7 +191,7 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
           />
           <span className="inline-flex items-center gap-2 rounded-full border border-yellow-500/25 bg-yellow-500/[0.08] px-3 py-1 text-[11px] font-semibold text-yellow-400">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-yellow-400" />
-            Trial active — £0 today
+            {hasGrantedAccess ? 'Full access active' : 'Trial active — £0 today'}
           </span>
           <h2 className="mt-4 text-[1.6rem] font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-[1.8rem]">
             What's on <span className="text-yellow-400">this week?</span>
@@ -226,7 +232,9 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
         {/* Footer */}
         <div className="px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-1 sm:px-8">
           <p className="text-center text-[11px] text-white/45">
-            7 days free · no charge until day 8 · cancel anytime
+            {hasGrantedAccess
+              ? 'Your access is active — everything’s unlocked'
+              : '7 days free · no charge until day 8 · cancel anytime'}
           </p>
         </div>
       </DialogContent>

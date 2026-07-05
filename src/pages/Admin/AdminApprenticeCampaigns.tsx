@@ -545,8 +545,13 @@ export default function AdminApprenticeCampaigns() {
                   subtitle={`${EMAIL_VERSIONS[emailVersion].label}`}
                   trailing={
                     <div className="flex items-center gap-2">
-                      <Pill tone="blue">{offersSent} sent</Pill>
-                      <Pill tone="emerald">{conversions} converted</Pill>
+                      {/* Mobile shows the headline % only — three pills crush the title */}
+                      <Pill tone="blue" className="hidden sm:inline-flex">
+                        {offersSent} sent
+                      </Pill>
+                      <Pill tone="emerald" className="hidden sm:inline-flex">
+                        {conversions} converted
+                      </Pill>
                       <Pill tone="yellow">{conversionRate}%</Pill>
                     </div>
                   }

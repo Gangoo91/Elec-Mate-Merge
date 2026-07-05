@@ -841,7 +841,8 @@ export default function AdminDashboard() {
                   trailing={
                     <>
                       <Pill tone={status.tone}>{status.label}</Pill>
-                      <span className="text-[11px] text-white tabular-nums">
+                      {/* Time is secondary — hide on mobile so the name wins */}
+                      <span className="hidden text-[11px] text-white tabular-nums sm:inline">
                         {formatDistanceToNow(new Date(user.created_at), {
                           addSuffix: true,
                         }).replace('about ', '')}
@@ -951,7 +952,10 @@ export default function AdminDashboard() {
                                     {dormantDays}d quiet
                                   </Pill>
                                 )}
-                                <Pill tone="emerald">Paying</Pill>
+                                {/* Redundant on mobile — the whole section is paying users */}
+                                <Pill tone="emerald" className="hidden sm:inline-flex">
+                                  Paying
+                                </Pill>
                               </>
                             }
                             onClick={() => matched && setSelectedUser(matched)}
@@ -1228,7 +1232,8 @@ export default function AdminDashboard() {
                     trailing={
                       <>
                         <Pill tone={tier.tone}>{tier.label}</Pill>
-                        <Pill tone={isNewUser ? 'green' : 'blue'}>
+                        {/* Secondary on mobile — the name wins */}
+                        <Pill tone={isNewUser ? 'green' : 'blue'} className="hidden sm:inline-flex">
                           {isNewUser ? 'New' : 'Return'}
                         </Pill>
                       </>

@@ -1120,10 +1120,18 @@ export default function AdminTrials() {
         }
         trailing={
           <div className="flex items-center gap-2">
-            <Pill tone={engagementTone}>
+            {/* Mobile: compact score + status dot — two full pills plus the
+                button left ~80px for the person's name at 390px wide */}
+            <Pill tone={engagementTone} className="hidden sm:inline-flex">
               {engagementLabel} {user.engagement_score || 0}
             </Pill>
-            <Pill tone={statusTone}>{statusText}</Pill>
+            <Pill tone={engagementTone} className="sm:hidden">
+              {user.engagement_score || 0}
+            </Pill>
+            <Pill tone={statusTone} className="hidden sm:inline-flex">
+              {statusText}
+            </Pill>
+            <Dot tone={statusTone} className="sm:hidden" />
             {!user.subscribed && (
               <button
                 onClick={(e) => {

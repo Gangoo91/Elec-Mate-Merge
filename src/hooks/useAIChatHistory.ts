@@ -71,9 +71,12 @@ export function useAIChatHistory(scope: string = 'assistant') {
     fetchSessions();
   }, [fetchSessions]);
 
-  // Save to localStorage as fallback
+  // Save to localStorage as fallback. The sessionId rides along so resuming
+  // a local chat continues the SAME server session instead of forking a
+  // duplicate (pre-fix: sessionId was dropped, every device restore created
+  // a new server row — ELE-584).
   const saveToLocalStorage = useCallback(
-    (messages: Message[]) => {
+    (messages: Message[], sessionId?: string | null) => {
       try {
         if (messages.length === 0) {
           storageRemoveSync(storageKey);
@@ -81,7 +84,11 @@ export function useAIChatHistory(scope: string = 'assistant') {
         }
         storageSetSync(
           storageKey,
-          JSON.stringify({ messages, timestamp: new Date().toISOString() })
+          JSON.stringify({
+            messages,
+            sessionId: sessionId ?? null,
+            timestamp: new Date().toISOString(),
+          })
         );
       } catch (e) {
         console.warn('Failed to save to localStorage:', e);
@@ -96,12 +103,31 @@ export function useAIChatHistory(scope: string = 'assistant') {
       const stored = storageGetSync(storageKey);
       if (!stored) return [];
 
-      const { messages, timestamp } = JSON.parse(stored);
+      const { messages, sessionId, timestamp } = JSON.parse(stored);
       const hoursSinceStored = (Date.now() - new Date(timestamp).getTime()) / (1000 * 60 * 60);
       if (hoursSinceStored > STORAGE_EXPIRY_HOURS) {
         storageRemoveSync(storageKey);
         return [];
       }
+
+      // The stored timestamp refreshes on every save, so simply reopening the
+      // page kept month-old chats alive forever. Judge staleness by when the
+      // conversation itself last moved: no message in 48h → start fresh (it
+      // stays available in History).
+      const newestMessageAt = Math.max(
+        0,
+        ...(messages || []).map((m: Message) =>
+          m.timestamp ? new Date(m.timestamp).getTime() : 0
+        )
+      );
+      if (newestMessageAt > 0 && Date.now() - newestMessageAt > 48 * 60 * 60 * 1000) {
+        storageRemoveSync(storageKey);
+        return [];
+      }
+
+      // Rebind to the server session this chat belongs to, so continuing it
+      // updates that session rather than creating a duplicate.
+      if (sessionId) setCurrentSessionId(sessionId);
 
       return messages.map((m: Message) => ({
         ...m,
@@ -111,6 +137,45 @@ export function useAIChatHistory(scope: string = 'assistant') {
       return [];
     }
   }, [storageKey]);
+
+  /**
+   * Cross-device resume (ELE-584): the local cache only exists on the device
+   * that held the conversation. When it's empty (new device, iOS storage
+   * purge, reinstall), pick up the user's most recent server session from
+   * the last 48h so the chat follows them instead of starting cold.
+   */
+  const resumeLatestSession = useCallback(async (): Promise<Message[]> => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
+
+      const cutoff = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+      const { data, error } = await supabase
+        .from('ai_chat_history' as any)
+        .select('id, messages, updated_at')
+        .eq('user_id', user.id)
+        .eq('agent', scope)
+        .is('archived_at', null)
+        .gte('updated_at', cutoff)
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (error || !data) return [];
+
+      setCurrentSessionId((data as any).id);
+      const rawMessages = (data as any).messages || [];
+      return rawMessages.map((m: any) => ({
+        ...m,
+        timestamp: m.timestamp ? new Date(m.timestamp) : undefined,
+      }));
+    } catch (e) {
+      console.warn('Failed to resume latest session:', e);
+      return [];
+    }
+  }, [scope]);
 
   // Auto-title from first user message
   const generateTitle = useCallback((messages: Message[]): string => {
@@ -123,8 +188,8 @@ export function useAIChatHistory(scope: string = 'assistant') {
   // Save session to Supabase (upsert by currentSessionId)
   const saveSession = useCallback(
     async (messages: Message[]): Promise<string> => {
-      // Always save to localStorage as fallback
-      saveToLocalStorage(messages);
+      // Always save to localStorage as fallback (with the session binding)
+      saveToLocalStorage(messages, currentSessionId);
 
       if (messages.length === 0) return currentSessionId || '';
 
@@ -317,5 +382,6 @@ export function useAIChatHistory(scope: string = 'assistant') {
     startNewSession,
     fetchSessions,
     loadFromLocalStorage,
+    resumeLatestSession,
   };
 }

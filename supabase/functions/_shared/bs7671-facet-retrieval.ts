@@ -55,7 +55,9 @@ export interface FacetContextUnit {
     | 'table'
     | 'figure'
     | 'cross_ref'
-    | 'practical';
+    | 'practical'
+    | 'safety'
+    | 'employer';
   /** Primary rank from the source (1 = best). Used for RRF. */
   rank: number;
   /** Raw score from the source (if any). */
@@ -97,12 +99,17 @@ export interface FacetRetrievalResult {
   primary: FacetContextUnit[];
   related: FacetContextUnit[];
   practical: FacetContextUnit[];
+  /** Safety (RAMS/H&S) + employer (building regs/CDM/commercial) corpus hits.
+      Only corpora meeting the fast-vector bar (halfvec 3072 + HNSW, same
+      embedding space as the query) qualify for this bucket. */
+  specialist: FacetContextUnit[];
   stats: {
     exact_ms: number;
     vector_ms: number;
     bm25_ms: number;
     table_ms: number;
     practical_ms: number;
+    specialist_ms: number;
     total_ms: number;
     total_candidates: number;
     deadline_exceeded: boolean;
@@ -429,6 +436,62 @@ async function fetchTablesAndFigures(
  * Cap is intentionally smaller (8) so practical context never dominates
  * the BS 7671 regulatory results — it complements them.
  */
+/**
+ * Safety corpus branch (safety_facets — RAMS, hazards, control measures,
+ * PPE, method-statement practice). Qualifies for the fast path: halfvec
+ * 3072 + HNSW, same embedding space as the query — the shared query
+ * embedding is reused, so this branch costs one indexed probe.
+ */
+async function fetchSafetyFacets(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
+  const { supabase, understanding, queryEmbedding } = opts;
+  if (!queryEmbedding || queryEmbedding.length === 0) return [];
+
+  const { data, error } = await supabase.rpc('search_safety_facets_v2', {
+    p_query_text: understanding.original,
+    p_query_embedding: queryEmbedding,
+    p_match_count: 4,
+  });
+  if (error || !data) return [];
+
+  return (data as any[]).map((row, i) => ({
+    id: `safety-${row.id}`,
+    source: 'safety' as const,
+    rank: i + 1,
+    score: typeof row.rrf_score === 'number' ? row.rrf_score : undefined,
+    primary_topic: row.primary_topic || undefined,
+    facet_type: row.facet_type || undefined,
+    document_type: row.document_type || 'safety',
+    content: row.content || '',
+    keywords: row.keywords || undefined,
+  }));
+}
+
+/**
+ * Employer knowledge branch (building regs, CDM 2015, commercial practice —
+ * authoritative-source corpus). Same fast-vector qualification as safety.
+ */
+async function fetchEmployerKnowledge(opts: FacetRetrievalOptions): Promise<FacetContextUnit[]> {
+  const { supabase, understanding, queryEmbedding } = opts;
+  if (!queryEmbedding || queryEmbedding.length === 0) return [];
+
+  const { data, error } = await supabase.rpc('search_employer_knowledge', {
+    query_embedding: queryEmbedding,
+    query_text: understanding.original,
+    match_count: 3,
+  });
+  if (error || !data) return [];
+
+  return (data as any[]).map((row, i) => ({
+    id: `employer-${row.id}`,
+    source: 'employer' as const,
+    rank: i + 1,
+    score: typeof row.rrf_score === 'number' ? row.rrf_score : row.similarity,
+    primary_topic: row.title || row.primary_topic || undefined,
+    document_type: row.domain || 'employer',
+    content: row.content || '',
+  }));
+}
+
 async function fetchPracticalIntelligence(
   opts: FacetRetrievalOptions
 ): Promise<FacetContextUnit[]> {
@@ -666,40 +729,59 @@ export async function retrieveBS7671Facets(
     bm25: Date.now(),
     table: Date.now(),
     practical: Date.now(),
+    specialist: Date.now(),
   };
 
-  // Kick off all branches in parallel — including the new practical_work
-  // branch which queries the separate corpus and is RRF-merged into primary.
-  const [exactResults, vectorResults, bm25Results, tableResults, practicalResults] =
-    await Promise.all([
-      deadlinePromise(fetchExactRegulations(opts), 'exact').then((v) => {
-        t.exact = Date.now() - t.exact;
-        return v as FacetContextUnit[];
-      }),
-      deadlinePromise(fetchVectorMatches(opts), 'vector').then((v) => {
-        t.vector = Date.now() - t.vector;
-        return v as FacetContextUnit[];
-      }),
-      deadlinePromise(fetchFullTextMatches(opts), 'bm25').then((v) => {
-        t.bm25 = Date.now() - t.bm25;
-        return v as FacetContextUnit[];
-      }),
-      deadlinePromise(fetchTablesAndFigures(opts), 'table').then((v) => {
-        t.table = Date.now() - t.table;
-        return v as FacetContextUnit[];
-      }),
-      deadlinePromise(fetchPracticalIntelligence(opts), 'practical').then((v) => {
-        t.practical = Date.now() - t.practical;
-        return v as FacetContextUnit[];
-      }),
-    ]);
+  // Kick off all branches in parallel — including the practical_work branch
+  // and the specialist corpora (safety + employer). Only fast-vector corpora
+  // (halfvec 3072 + HNSW, shared embedding space) may join this fan-out.
+  const [
+    exactResults,
+    vectorResults,
+    bm25Results,
+    tableResults,
+    practicalResults,
+    safetyResults,
+    employerResults,
+  ] = await Promise.all([
+    deadlinePromise(fetchExactRegulations(opts), 'exact').then((v) => {
+      t.exact = Date.now() - t.exact;
+      return v as FacetContextUnit[];
+    }),
+    deadlinePromise(fetchVectorMatches(opts), 'vector').then((v) => {
+      t.vector = Date.now() - t.vector;
+      return v as FacetContextUnit[];
+    }),
+    deadlinePromise(fetchFullTextMatches(opts), 'bm25').then((v) => {
+      t.bm25 = Date.now() - t.bm25;
+      return v as FacetContextUnit[];
+    }),
+    deadlinePromise(fetchTablesAndFigures(opts), 'table').then((v) => {
+      t.table = Date.now() - t.table;
+      return v as FacetContextUnit[];
+    }),
+    deadlinePromise(fetchPracticalIntelligence(opts), 'practical').then((v) => {
+      t.practical = Date.now() - t.practical;
+      return v as FacetContextUnit[];
+    }),
+    deadlinePromise(fetchSafetyFacets(opts), 'safety').then((v) => {
+      t.specialist = Date.now() - t.specialist;
+      return v as FacetContextUnit[];
+    }),
+    deadlinePromise(fetchEmployerKnowledge(opts), 'employer').then(
+      (v) => v as FacetContextUnit[]
+    ),
+  ]);
+
+  const specialistResults = [...safetyResults, ...employerResults];
 
   const total_candidates =
     exactResults.length +
     vectorResults.length +
     bm25Results.length +
     tableResults.length +
-    practicalResults.length;
+    practicalResults.length +
+    specialistResults.length;
 
   // Practical results are kept as a SEPARATE bucket (returned in `practical`)
   // AND fused into the primary list at a lower weight, so the regulatory
@@ -730,12 +812,14 @@ export async function retrieveBS7671Facets(
     primary,
     related,
     practical: practicalResults.slice(0, 5), // separate bucket so caller can render distinctly
+    specialist: specialistResults.slice(0, 5),
     stats: {
       exact_ms: t.exact,
       vector_ms: t.vector,
       bm25_ms: t.bm25,
       table_ms: t.table,
       practical_ms: t.practical,
+      specialist_ms: t.specialist,
       total_ms,
       total_candidates,
       deadline_exceeded: total_ms > deadlineMs * 1.3,
@@ -750,9 +834,16 @@ export async function retrieveBS7671Facets(
 export function formatFacetsForPrompt(
   primary: FacetContextUnit[],
   related: FacetContextUnit[],
-  practical: FacetContextUnit[] = []
+  practical: FacetContextUnit[] = [],
+  specialist: FacetContextUnit[] = []
 ): string {
-  if (primary.length === 0 && related.length === 0 && practical.length === 0) return '';
+  if (
+    primary.length === 0 &&
+    related.length === 0 &&
+    practical.length === 0 &&
+    specialist.length === 0
+  )
+    return '';
   const lines: string[] = [];
 
   const bookLabel = (docType?: string): string => {
@@ -829,6 +920,34 @@ export function formatFacetsForPrompt(
 
       const detail = detailParts.length ? `\n   ${detailParts.join(' · ')}` : '';
       lines.push(`P${i + 1}. ${eqLine}${topic} ${typeTag}${detail}`);
+    });
+  }
+
+  // Specialist corpora — safety (RAMS/H&S practice) and employer (building
+  // regs / CDM / commercial). Clearly labelled so the model attributes them
+  // correctly and never passes them off as BS 7671 text.
+  const safetyUnits = specialist.filter((u) => u.source === 'safety');
+  const employerUnits = specialist.filter((u) => u.source === 'employer');
+
+  if (safetyUnits.length > 0) {
+    lines.push('');
+    lines.push('[SITE SAFETY & RAMS CONTEXT — HSE/industry practice, not BS 7671 text]');
+    safetyUnits.forEach((u, i) => {
+      const topic = (u.primary_topic || '').trim();
+      const tag = u.facet_type ? ` (${u.facet_type})` : '';
+      lines.push(`S${i + 1}. ${topic}${tag}: ${(u.content || '').trim().slice(0, 600)}`);
+    });
+  }
+
+  if (employerUnits.length > 0) {
+    lines.push('');
+    lines.push(
+      '[BUILDING REGS / CDM / COMMERCIAL CONTEXT — cite the named source document, not BS 7671]'
+    );
+    employerUnits.forEach((u, i) => {
+      const topic = (u.primary_topic || '').trim();
+      const doc = u.document_type && u.document_type !== 'employer' ? ` [${u.document_type}]` : '';
+      lines.push(`E${i + 1}. ${topic}${doc}: ${(u.content || '').trim().slice(0, 600)}`);
     });
   }
 

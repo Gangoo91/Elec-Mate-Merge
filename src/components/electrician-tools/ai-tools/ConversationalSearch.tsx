@@ -22,6 +22,9 @@ import {
   RegulationDetailSheet,
   SaveToJobSheet,
 } from './chat';
+import { SourcesRail } from './chat/SourcesRail';
+import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -34,11 +37,17 @@ interface Message {
   imageUrls?: string[];
   /** Regulation numbers cited in this answer (populated post-stream). */
   citedRegulations?: string[];
+  /** Thumbs feedback given on this answer (persists with history). */
+  feedback?: 'positive' | 'negative';
 }
 
 const MAX_IMAGES_PER_MESSAGE = 5;
 
-const STREAM_STAGES = ['Understanding…', 'Retrieving regulations…', 'Answering…'] as const;
+const STREAM_STAGES = [
+  'Reading your question…',
+  'Searching 46,000+ regulation facets…',
+  'Writing your answer…',
+] as const;
 
 import {
   SUPABASE_URL,
@@ -90,6 +99,22 @@ export default function ConversationalSearch() {
   const chatHistory = useAIChatHistory();
   const [messages, setMessages] = useState<Message[]>(() => chatHistory.loadFromLocalStorage());
   const [hasRestoredSession, setHasRestoredSession] = useState(false);
+
+  // ELE-584: cross-device resume. The local cache only exists on the device
+  // that held the chat — on a fresh device (or after an iOS storage purge)
+  // pick up the latest server session so the conversation follows the user.
+  const attemptedResumeRef = useRef(false);
+  useEffect(() => {
+    if (attemptedResumeRef.current) return;
+    attemptedResumeRef.current = true;
+    if (messages.length > 0) return; // device already has the conversation
+    chatHistory.resumeLatestSession().then((resumed) => {
+      if (resumed.length === 0) return;
+      // Never clobber anything the user started typing/streaming meanwhile.
+      setMessages((prev) => (prev.length === 0 ? resumed : prev));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
@@ -453,12 +478,25 @@ export default function ConversationalSearch() {
                 const parsed = JSON.parse(data);
 
                 // Optional status event, eg `{ type: 'status', stage: '…' }`.
+                // Rendered as a human line that shows the machinery working —
+                // perceived speed and perceived rigour in one stroke.
                 if (parsed?.type === 'status' && typeof parsed.stage === 'string') {
                   if (stageTimerRef.current) {
                     clearInterval(stageTimerRef.current);
                     stageTimerRef.current = null;
                   }
-                  setStreamStatus(parsed.stage);
+                  const stageLabels: Record<string, string> = {
+                    understanding: 'Reading your question…',
+                    retrieving: 'Searching 46,000+ regulation facets…',
+                    ranking:
+                      typeof parsed.candidates === 'number' && parsed.candidates > 0
+                        ? `Ranking ${parsed.candidates} sources…`
+                        : 'Ranking sources…',
+                    answering: 'Writing your answer…',
+                    tool_call: 'Running a BS 7671 lookup…',
+                    cache_hit: '',
+                  };
+                  setStreamStatus(stageLabels[parsed.stage] ?? parsed.stage);
                   continue;
                 }
 
@@ -589,6 +627,49 @@ export default function ConversationalSearch() {
     }
     setRegulationSheet({ open: true, regulationNumber: first });
   }, []);
+
+  // ELE-1264: thumbs feedback finally writes somewhere. Every rating lands in
+  // ai_interaction_feedback (which the weekly analyze-feedback cron reads),
+  // so wrong answers surface while people are still customers — not via the
+  // cancellation form on their way out.
+  const handleFeedback = useCallback(
+    async (idx: number, rating: 'positive' | 'negative') => {
+      const message = messages[idx];
+      if (!message || message.role !== 'assistant' || message.feedback) return;
+
+      // Optimistic UI — persists with chat history.
+      setMessages((prev) => prev.map((m, i) => (i === idx ? { ...m, feedback: rating } : m)));
+
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) return;
+
+        // The question is the nearest preceding user message.
+        const question =
+          [...messages.slice(0, idx)].reverse().find((m) => m.role === 'user')?.content || '';
+
+        await supabase.from('ai_interaction_feedback').insert({
+          user_id: user.id,
+          agent_name: 'elec-ai-conversational',
+          question: question.slice(0, 2000),
+          ai_response: message.content.slice(0, 8000),
+          user_rating: rating === 'positive' ? 5 : 1,
+          feedback_type: `thumbs_${rating}`,
+        });
+
+        if (rating === 'negative') {
+          toast.message('Thanks — flagged for review', {
+            description: 'Wrong or unhelpful answers get looked at directly.',
+          });
+        }
+      } catch (err) {
+        console.warn('[feedback] insert failed (non-fatal):', err);
+      }
+    },
+    [messages]
+  );
 
   const handleInlineRegClick = useCallback(
     (regNumber: string) => {
@@ -722,18 +803,24 @@ export default function ConversationalSearch() {
               )}
             </div>
           )}
-          <WelcomeScreen onSelectQuery={handleGuardedSelectQuery} />
+          <WelcomeScreen
+            onSelectQuery={handleGuardedSelectQuery}
+            recentSessions={chatHistory.sessions}
+            onResumeSession={handleLoadSession}
+          />
         </ChatMessagesArea>
       )}
 
-      {/* Active state */}
+      {/* Active state — two-pane on xl: chat + persistent sources rail so
+          the evidence for the current answer stays in view on desktop. */}
       {messages.length > 0 && (
         <ChatMessagesArea
           messagesEndRef={messagesEndRef}
           onScroll={handleScrollPosition}
           className="px-3 sm:px-6 lg:px-10"
         >
-          <div className="mx-auto max-w-4xl lg:max-w-5xl xl:max-w-6xl py-4 sm:py-6 space-y-6 sm:space-y-8">
+          <div className="mx-auto flex max-w-4xl lg:max-w-5xl xl:max-w-7xl gap-0 py-4 sm:py-6">
+            <div className="min-w-0 flex-1 space-y-6 sm:space-y-8 xl:pr-8">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
                 const isCurrentlyStreaming =
@@ -837,10 +924,52 @@ export default function ConversationalSearch() {
                             onRegClick={handleInlineRegClick}
                           />
 
-                          {/* Streaming status chip */}
+                          {/* Streaming machinery line — quiet, human, alive */}
                           {isCurrentlyStreaming && streamStatus && (
-                            <div className="text-[11px] uppercase tracking-[0.22em] text-white">
+                            <div className="flex items-center gap-2 text-[12.5px] text-white/60">
+                              <span className="relative flex h-1.5 w-1.5">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/60" />
+                                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                              </span>
                               {streamStatus}
+                            </div>
+                          )}
+
+                          {/* ELE-1264: thumbs feedback — writes to
+                              ai_interaction_feedback so wrong answers surface
+                              while people are still customers. */}
+                          {!isCurrentlyStreaming && (
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => handleFeedback(idx, 'positive')}
+                                disabled={!!message.feedback}
+                                aria-label="Good answer"
+                                className={cn(
+                                  'flex h-9 w-9 touch-manipulation items-center justify-center rounded-lg transition-colors',
+                                  message.feedback === 'positive'
+                                    ? 'text-elec-yellow'
+                                    : 'text-white/35 hover:text-white/70 hover:bg-white/[0.05]',
+                                  message.feedback === 'negative' && 'opacity-30'
+                                )}
+                              >
+                                <ThumbsUp className="h-4 w-4" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleFeedback(idx, 'negative')}
+                                disabled={!!message.feedback}
+                                aria-label="Wrong or unhelpful answer"
+                                className={cn(
+                                  'flex h-9 w-9 touch-manipulation items-center justify-center rounded-lg transition-colors',
+                                  message.feedback === 'negative'
+                                    ? 'text-red-400'
+                                    : 'text-white/35 hover:text-white/70 hover:bg-white/[0.05]',
+                                  message.feedback === 'positive' && 'opacity-30'
+                                )}
+                              >
+                                <ThumbsDown className="h-4 w-4" />
+                              </button>
                             </div>
                           )}
 
@@ -866,7 +995,19 @@ export default function ConversationalSearch() {
               })}
             </AnimatePresence>
 
-            <AnimatePresence>{isSearching && <SearchingSkeleton />}</AnimatePresence>
+              <AnimatePresence>{isSearching && <SearchingSkeleton />}</AnimatePresence>
+            </div>
+
+            <SourcesRail
+              regNumbers={
+                [...messages]
+                  .reverse()
+                  .find((m) => m.role === 'assistant' && m.citedRegulations?.length)
+                  ?.citedRegulations ?? []
+              }
+              onOpenReg={(regNumber) => setRegulationSheet({ open: true, regulationNumber: regNumber })}
+              isStreaming={isStreaming}
+            />
           </div>
         </ChatMessagesArea>
       )}
