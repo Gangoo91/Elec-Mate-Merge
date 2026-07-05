@@ -1285,17 +1285,17 @@ serve(async (req) => {
 
                       // In-app notification for referrer
                       const creditFormatted = `£${(creditPence / 100).toFixed(2)}`;
-                      await supabase.from('notifications').insert({
+                      await supabase.from('user_notifications').insert({
                         user_id: profile.referred_by,
                         type: 'referral_reward',
                         title: 'Referral Reward!',
                         message: `Your mate just subscribed! ${creditFormatted} credit has been applied to your account.`,
-                        data: {
+                        metadata: {
                           referral_id: referralRow.id,
                           credit_pence: creditPence,
                           referred_user_id: userId,
                         },
-                        read: false,
+                        is_read: false,
                       });
                     } catch (balanceErr: unknown) {
                       logger.warn('Failed to apply Stripe balance credit (non-fatal)', {
@@ -1433,13 +1433,14 @@ serve(async (req) => {
               }
 
               // Also create in-app notification
-              await supabase.from('notifications').insert({
+              await supabase.from('user_notifications').insert({
                 user_id: userId,
                 type: 'subscription_welcome',
                 title: 'Welcome to ElecMate!',
                 message: `Your ${tierName} subscription is now active. Enjoy full access to all features!`,
-                data: { tier, tierName },
-                read: false,
+                link: '/dashboard',
+                metadata: { tier, tierName },
+                is_read: false,
               });
 
               // Fire Meta CAPI event (Subscribe or StartTrial) + PostHog event
@@ -1500,13 +1501,13 @@ serve(async (req) => {
           const previousStatus = (event.data.previous_attributes as { status?: string } | undefined)
             ?.status;
           if (previousStatus && previousStatus !== subscription.status) {
-            await supabase.from('notifications').insert({
+            await supabase.from('user_notifications').insert({
               user_id: userId,
               type: 'subscription_status',
               title: 'Subscription Updated',
               message: `Your subscription status changed from ${previousStatus} to ${subscription.status}.`,
-              data: { status: subscription.status, tier },
-              read: false,
+              metadata: { status: subscription.status, tier },
+              is_read: false,
             });
           }
         }
@@ -1677,14 +1678,15 @@ serve(async (req) => {
           }
 
           // Notify user
-          await supabase.from('notifications').insert({
+          await supabase.from('user_notifications').insert({
             user_id: userId,
             type: 'subscription_cancelled',
             title: 'Subscription Ended',
             message:
               'Your subscription has ended. Subscribe again to regain access to premium features.',
-            data: {},
-            read: false,
+            link: '/subscriptions',
+            metadata: {},
+            is_read: false,
           });
         }
 
@@ -1843,14 +1845,15 @@ serve(async (req) => {
           });
 
           // Create a payment recovered notification
-          await supabase.from('notifications').insert({
+          await supabase.from('user_notifications').insert({
             user_id: userId,
             type: 'payment_recovered',
             title: 'Payment Successful',
             message:
               'Your subscription payment has been processed successfully. Thank you for updating your payment details!',
-            data: { invoice_id: invoice.id },
-            read: false,
+            link: '/subscriptions',
+            metadata: { invoice_id: invoice.id },
+            is_read: false,
           });
         }
 
@@ -1873,14 +1876,15 @@ serve(async (req) => {
               .eq('fee_status', 'invoiced');
             logger.warn('Finder fee payment failed', { hireId, invoiceId: invoice.id });
             if (employerId) {
-              await supabase.from('notifications').insert({
+              await supabase.from('user_notifications').insert({
                 user_id: employerId,
                 type: 'finder_fee_failed',
                 title: "Finder's fee payment failed",
                 message:
                   "We couldn't collect the finder's fee for your recent hire. Please update your payment method.",
-                data: { invoice_id: invoice.id, hire_record_id: hireId },
-                read: false,
+                link: '/subscriptions',
+                metadata: { invoice_id: invoice.id, hire_record_id: hireId },
+                is_read: false,
               });
             }
           }
@@ -1913,17 +1917,18 @@ serve(async (req) => {
 
         // Don't immediately revoke access - Stripe will retry
         // But notify the user
-        await supabase.from('notifications').insert({
+        await supabase.from('user_notifications').insert({
           user_id: userId,
           type: 'payment_failed',
           title: 'Payment Failed',
           message:
             'Your subscription payment failed. Please update your payment method to avoid losing access.',
-          data: {
+          link: '/subscriptions',
+          metadata: {
             invoice_id: invoice.id,
             amount: invoice.amount_due / 100,
           },
-          read: false,
+          is_read: false,
         });
 
         // --- Dunning email sequence: Email 1 (immediate) ---

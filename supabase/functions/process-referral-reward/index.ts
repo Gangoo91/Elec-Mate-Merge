@@ -221,17 +221,17 @@ serve(async (req) => {
 
       // 9. In-app notification for referrer
       const creditFormatted = `£${(creditPence / 100).toFixed(2)}`;
-      await supabase.from('notifications').insert({
+      await supabase.from('user_notifications').insert({
         user_id: profile.referred_by,
         type: 'referral_reward',
         title: 'Referral Reward!',
         message: `Your mate just subscribed! ${creditFormatted} credit has been applied to your account.`,
-        data: {
+        metadata: {
           referral_id: referralRow.id,
           credit_pence: creditPence,
           referred_user_id,
         },
-        read: false,
+        is_read: false,
       });
 
       console.log('[process-referral-reward] Complete. Referrer credited:', creditFormatted);

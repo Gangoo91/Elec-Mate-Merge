@@ -514,17 +514,17 @@ serve(async (req) => {
           // Optionally notify electrician of failed payment
           const electricianUserId = paymentIntent.metadata?.electrician_user_id;
           if (electricianUserId) {
-            await supabase.from('notifications').insert({
+            await supabase.from('user_notifications').insert({
               user_id: electricianUserId,
               type: 'payment_failed',
               title: 'Payment Failed',
               message: `A card payment attempt for invoice ${paymentIntent.metadata?.invoice_number} failed.`,
-              data: {
+              metadata: {
                 invoice_id: invoiceId,
                 invoice_number: paymentIntent.metadata?.invoice_number,
                 error: paymentIntent.last_payment_error?.message || 'Unknown error',
               },
-              read: false,
+              is_read: false,
             });
           }
         }

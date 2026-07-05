@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import RecordingIndicator from '../apprentice/timer/RecordingIndicator';
 import UserProfileDropdown from '../auth/UserProfileDropdown';
+import NotificationBell from './NotificationBell';
 import { CommandPalette } from '../search/CommandPalette';
 import AppTipsSheet from './AppTipsSheet';
 import { useRef, useEffect, useState } from 'react';
@@ -248,6 +249,9 @@ const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
             >
               <Search className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-white" />
             </Button>
+          </motion.div>
+          <motion.div whileTap={{ scale: 0.92 }}>
+            <NotificationBell />
           </motion.div>
           <div className="ml-0.5">
             <UserProfileDropdown />
