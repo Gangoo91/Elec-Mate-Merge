@@ -357,6 +357,27 @@ serve(async (req) => {
               if (error) console.warn('push_notification_log (payment) failed:', error);
             });
 
+          // In-app bell (user_notifications) so "your client paid" shows in the
+          // notification centre, not only as a device push.
+          await supabase
+            .from('user_notifications')
+            .insert({
+              user_id: electricianUserId,
+              type: 'invoice_paid',
+              title: payTitle,
+              message: payBody,
+              link: `/electrician/invoices/${invoiceId}`,
+              metadata: {
+                invoice_id: invoiceId,
+                invoice_number: invoiceNumber,
+                amount: paymentAmount,
+              },
+              is_read: false,
+            })
+            .then(({ error }) => {
+              if (error) console.warn('user_notifications (payment) failed:', error);
+            });
+
           fetch(
             `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`,
             {
