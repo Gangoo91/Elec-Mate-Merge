@@ -1287,6 +1287,24 @@ export type Database = {
         };
         Relationships: [];
       };
+      ai_embedding_cache: {
+        Row: {
+          created_at: string;
+          embedding: Json;
+          query_hash: string;
+        };
+        Insert: {
+          created_at?: string;
+          embedding: Json;
+          query_hash: string;
+        };
+        Update: {
+          created_at?: string;
+          embedding?: Json;
+          query_hash?: string;
+        };
+        Relationships: [];
+      };
       ai_interaction_feedback: {
         Row: {
           agent_name: string;
@@ -1395,6 +1413,24 @@ export type Database = {
           token_count_input?: number | null;
           token_count_output?: number | null;
           user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      ai_response_cache: {
+        Row: {
+          created_at: string;
+          query_hash: string;
+          response: string;
+        };
+        Insert: {
+          created_at?: string;
+          query_hash: string;
+          response: string;
+        };
+        Update: {
+          created_at?: string;
+          query_hash?: string;
+          response?: string;
         };
         Relationships: [];
       };
@@ -3482,6 +3518,18 @@ export type Database = {
             referencedColumns: ['id'];
           },
         ];
+      };
+      bs7671_known_reg_numbers: {
+        Row: {
+          reg_number: string;
+        };
+        Insert: {
+          reg_number: string;
+        };
+        Update: {
+          reg_number?: string;
+        };
+        Relationships: [];
       };
       bs7671_page_summaries: {
         Row: {
@@ -10322,11 +10370,13 @@ export type Database = {
           logo_data_url: string | null;
           logo_size: string | null;
           logo_url: string | null;
+          markup: number | null;
           notification_email: string | null;
           office_address: string | null;
           office_lat: number | null;
           office_lng: number | null;
           overhead_percentage: number | null;
+          owner_is_qs: boolean;
           payment_terms: string | null;
           preferred_payment_method: string | null;
           primary_color: string | null;
@@ -10386,11 +10436,13 @@ export type Database = {
           logo_data_url?: string | null;
           logo_size?: string | null;
           logo_url?: string | null;
+          markup?: number | null;
           notification_email?: string | null;
           office_address?: string | null;
           office_lat?: number | null;
           office_lng?: number | null;
           overhead_percentage?: number | null;
+          owner_is_qs?: boolean;
           payment_terms?: string | null;
           preferred_payment_method?: string | null;
           primary_color?: string | null;
@@ -10450,11 +10502,13 @@ export type Database = {
           logo_data_url?: string | null;
           logo_size?: string | null;
           logo_url?: string | null;
+          markup?: number | null;
           notification_email?: string | null;
           office_address?: string | null;
           office_lat?: number | null;
           office_lng?: number | null;
           overhead_percentage?: number | null;
+          owner_is_qs?: boolean;
           payment_terms?: string | null;
           preferred_payment_method?: string | null;
           primary_color?: string | null;
@@ -12873,31 +12927,46 @@ export type Database = {
         Row: {
           created_at: string;
           employer_id: string;
+          failed_at: string | null;
           fee_amount: number | null;
           fee_status: string | null;
           hired_at: string;
           id: string;
+          invoiced_at: string | null;
           job_type: string | null;
+          paid_at: string | null;
+          refunded_at: string | null;
+          stripe_invoice_id: string | null;
           worker_profile_id: string;
         };
         Insert: {
           created_at?: string;
           employer_id: string;
+          failed_at?: string | null;
           fee_amount?: number | null;
           fee_status?: string | null;
           hired_at?: string;
           id?: string;
+          invoiced_at?: string | null;
           job_type?: string | null;
+          paid_at?: string | null;
+          refunded_at?: string | null;
+          stripe_invoice_id?: string | null;
           worker_profile_id: string;
         };
         Update: {
           created_at?: string;
           employer_id?: string;
+          failed_at?: string | null;
           fee_amount?: number | null;
           fee_status?: string | null;
           hired_at?: string;
           id?: string;
+          invoiced_at?: string | null;
           job_type?: string | null;
+          paid_at?: string | null;
+          refunded_at?: string | null;
+          stripe_invoice_id?: string | null;
           worker_profile_id?: string;
         };
         Relationships: [
@@ -13591,6 +13660,51 @@ export type Database = {
           },
         ];
       };
+      employer_clients: {
+        Row: {
+          address: string | null;
+          contact_name: string | null;
+          created_at: string;
+          email: string | null;
+          employer_id: string;
+          id: string;
+          last_activity_at: string | null;
+          name: string;
+          notes: string | null;
+          phone: string | null;
+          tags: string[];
+          updated_at: string;
+        };
+        Insert: {
+          address?: string | null;
+          contact_name?: string | null;
+          created_at?: string;
+          email?: string | null;
+          employer_id?: string;
+          id?: string;
+          last_activity_at?: string | null;
+          name: string;
+          notes?: string | null;
+          phone?: string | null;
+          tags?: string[];
+          updated_at?: string;
+        };
+        Update: {
+          address?: string | null;
+          contact_name?: string | null;
+          created_at?: string;
+          email?: string | null;
+          employer_id?: string;
+          id?: string;
+          last_activity_at?: string | null;
+          name?: string;
+          notes?: string | null;
+          phone?: string | null;
+          tags?: string[];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       employer_communication_recipients: {
         Row: {
           acknowledged_at: string | null;
@@ -14198,6 +14312,7 @@ export type Database = {
           employer_id: string | null;
           hourly_rate: number;
           id: string;
+          is_principal_qs: boolean;
           join_date: string | null;
           name: string;
           pay_type: string;
@@ -14219,6 +14334,7 @@ export type Database = {
           employer_id?: string | null;
           hourly_rate?: number;
           id?: string;
+          is_principal_qs?: boolean;
           join_date?: string | null;
           name: string;
           pay_type?: string;
@@ -14240,6 +14356,7 @@ export type Database = {
           employer_id?: string | null;
           hourly_rate?: number;
           id?: string;
+          is_principal_qs?: boolean;
           join_date?: string | null;
           name?: string;
           pay_type?: string;
@@ -14533,6 +14650,7 @@ export type Database = {
           cis_rate: number;
           client: string;
           client_email: string | null;
+          client_id: string | null;
           client_phone: string | null;
           created_at: string;
           due_date: string | null;
@@ -14559,6 +14677,7 @@ export type Database = {
           cis_rate?: number;
           client: string;
           client_email?: string | null;
+          client_id?: string | null;
           client_phone?: string | null;
           created_at?: string;
           due_date?: string | null;
@@ -14585,6 +14704,7 @@ export type Database = {
           cis_rate?: number;
           client?: string;
           client_email?: string | null;
+          client_id?: string | null;
           client_phone?: string | null;
           created_at?: string;
           due_date?: string | null;
@@ -14605,6 +14725,13 @@ export type Database = {
           vat_rate?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: 'employer_invoices_client_id_fkey';
+            columns: ['client_id'];
+            isOneToOne: false;
+            referencedRelation: 'employer_clients';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'employer_invoices_employer_id_fkey';
             columns: ['employer_id'];
@@ -15131,6 +15258,7 @@ export type Database = {
           archived_at: string | null;
           client: string;
           client_email: string | null;
+          client_id: string | null;
           client_phone: string | null;
           cover_photo_url: string | null;
           created_at: string;
@@ -15155,6 +15283,7 @@ export type Database = {
           archived_at?: string | null;
           client: string;
           client_email?: string | null;
+          client_id?: string | null;
           client_phone?: string | null;
           cover_photo_url?: string | null;
           created_at?: string;
@@ -15179,6 +15308,7 @@ export type Database = {
           archived_at?: string | null;
           client?: string;
           client_email?: string | null;
+          client_id?: string | null;
           client_phone?: string | null;
           cover_photo_url?: string | null;
           created_at?: string;
@@ -15198,6 +15328,50 @@ export type Database = {
           user_id?: string | null;
           value?: number | null;
           workers_count?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'employer_jobs_client_id_fkey';
+            columns: ['client_id'];
+            isOneToOne: false;
+            referencedRelation: 'employer_clients';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      employer_knowledge: {
+        Row: {
+          content: string;
+          created_at: string;
+          domain: string | null;
+          embedding: unknown;
+          fts: unknown;
+          id: string;
+          metadata: Json;
+          source: string | null;
+          topic: string | null;
+        };
+        Insert: {
+          content: string;
+          created_at?: string;
+          domain?: string | null;
+          embedding?: unknown;
+          fts?: unknown;
+          id?: string;
+          metadata?: Json;
+          source?: string | null;
+          topic?: string | null;
+        };
+        Update: {
+          content?: string;
+          created_at?: string;
+          domain?: string | null;
+          embedding?: unknown;
+          fts?: unknown;
+          id?: string;
+          metadata?: Json;
+          source?: string | null;
+          topic?: string | null;
         };
         Relationships: [];
       };
@@ -15776,6 +15950,7 @@ export type Database = {
           client: string;
           client_address: string | null;
           client_email: string | null;
+          client_id: string | null;
           client_phone: string | null;
           created_at: string;
           created_by: string | null;
@@ -15805,6 +15980,7 @@ export type Database = {
           client: string;
           client_address?: string | null;
           client_email?: string | null;
+          client_id?: string | null;
           client_phone?: string | null;
           created_at?: string;
           created_by?: string | null;
@@ -15834,6 +16010,7 @@ export type Database = {
           client?: string;
           client_address?: string | null;
           client_email?: string | null;
+          client_id?: string | null;
           client_phone?: string | null;
           created_at?: string;
           created_by?: string | null;
@@ -15857,6 +16034,13 @@ export type Database = {
           vat_rate?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: 'employer_quotes_client_id_fkey';
+            columns: ['client_id'];
+            isOneToOne: false;
+            referencedRelation: 'employer_clients';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'employer_quotes_created_by_id_fkey';
             columns: ['created_by_id'];
@@ -15902,7 +16086,7 @@ export type Database = {
           id: string;
           revoked_at: string | null;
           status: string;
-          user_id: string;
+          user_id: string | null;
         };
         Insert: {
           created_at?: string;
@@ -15911,7 +16095,7 @@ export type Database = {
           id?: string;
           revoked_at?: string | null;
           status?: string;
-          user_id: string;
+          user_id?: string | null;
         };
         Update: {
           created_at?: string;
@@ -15920,7 +16104,7 @@ export type Database = {
           id?: string;
           revoked_at?: string | null;
           status?: string;
-          user_id?: string;
+          user_id?: string | null;
         };
         Relationships: [
           {
@@ -16083,6 +16267,59 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'v_assessor_workload';
             referencedColumns: ['assessor_id'];
+          },
+        ];
+      };
+      employer_team_invites: {
+        Row: {
+          accepted_at: string | null;
+          accepted_by: string | null;
+          created_at: string;
+          email: string;
+          employee_id: string;
+          employer_id: string;
+          expires_at: string;
+          id: string;
+          last_sent_at: string;
+          sent_count: number;
+          status: string;
+          token: string;
+        };
+        Insert: {
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          created_at?: string;
+          email: string;
+          employee_id: string;
+          employer_id?: string;
+          expires_at?: string;
+          id?: string;
+          last_sent_at?: string;
+          sent_count?: number;
+          status?: string;
+          token: string;
+        };
+        Update: {
+          accepted_at?: string | null;
+          accepted_by?: string | null;
+          created_at?: string;
+          email?: string;
+          employee_id?: string;
+          employer_id?: string;
+          expires_at?: string;
+          id?: string;
+          last_sent_at?: string;
+          sent_count?: number;
+          status?: string;
+          token?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'employer_team_invites_employee_id_fkey';
+            columns: ['employee_id'];
+            isOneToOne: false;
+            referencedRelation: 'employer_employees';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -16427,8 +16664,8 @@ export type Database = {
           id: string;
           job_id: string | null;
           last_updated: string;
-          lat: number;
-          lng: number;
+          lat: number | null;
+          lng: number | null;
           status: string;
         };
         Insert: {
@@ -16440,8 +16677,8 @@ export type Database = {
           id?: string;
           job_id?: string | null;
           last_updated?: string;
-          lat: number;
-          lng: number;
+          lat?: number | null;
+          lng?: number | null;
           status?: string;
         };
         Update: {
@@ -16453,8 +16690,8 @@ export type Database = {
           id?: string;
           job_id?: string | null;
           last_updated?: string;
-          lat?: number;
-          lng?: number;
+          lat?: number | null;
+          lng?: number | null;
           status?: string;
         };
         Relationships: [
@@ -17577,6 +17814,7 @@ export type Database = {
           pdf_url: string | null;
           project_id: string | null;
           property_address: string | null;
+          report_id: string | null;
           rooms: Json;
           status: string | null;
           thumbnail_url: string | null;
@@ -17593,6 +17831,7 @@ export type Database = {
           pdf_url?: string | null;
           project_id?: string | null;
           property_address?: string | null;
+          report_id?: string | null;
           rooms?: Json;
           status?: string | null;
           thumbnail_url?: string | null;
@@ -17609,6 +17848,7 @@ export type Database = {
           pdf_url?: string | null;
           project_id?: string | null;
           property_address?: string | null;
+          report_id?: string | null;
           rooms?: Json;
           status?: string | null;
           thumbnail_url?: string | null;
@@ -17622,6 +17862,13 @@ export type Database = {
             columns: ['project_id'];
             isOneToOne: false;
             referencedRelation: 'spark_projects';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'floor_plans_report_id_fkey';
+            columns: ['report_id'];
+            isOneToOne: false;
+            referencedRelation: 'reports';
             referencedColumns: ['id'];
           },
         ];
@@ -20771,6 +21018,57 @@ export type Database = {
           view_count?: number | null;
         };
         Relationships: [];
+      };
+      lifetime_purchases: {
+        Row: {
+          amount_pence: number | null;
+          created_at: string | null;
+          email: string | null;
+          fulfilled_at: string | null;
+          id: string;
+          notes: string | null;
+          status: string;
+          stripe_session_id: string;
+          user_id: string | null;
+        };
+        Insert: {
+          amount_pence?: number | null;
+          created_at?: string | null;
+          email?: string | null;
+          fulfilled_at?: string | null;
+          id?: string;
+          notes?: string | null;
+          status?: string;
+          stripe_session_id: string;
+          user_id?: string | null;
+        };
+        Update: {
+          amount_pence?: number | null;
+          created_at?: string | null;
+          email?: string | null;
+          fulfilled_at?: string | null;
+          id?: string;
+          notes?: string | null;
+          status?: string;
+          stripe_session_id?: string;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'lifetime_purchases_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'lifetime_purchases_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'v_assessor_workload';
+            referencedColumns: ['assessor_id'];
+          },
+        ];
       };
       live_course_cache: {
         Row: {
@@ -27051,6 +27349,7 @@ export type Database = {
           ecs_card_type: string | null;
           elec_id_enabled: boolean | null;
           elec_id_number: string | null;
+          employer_seat_cap: number | null;
           fbclid: string | null;
           first_touch_at: string | null;
           founder_at: string | null;
@@ -27152,6 +27451,7 @@ export type Database = {
           ecs_card_type?: string | null;
           elec_id_enabled?: boolean | null;
           elec_id_number?: string | null;
+          employer_seat_cap?: number | null;
           fbclid?: string | null;
           first_touch_at?: string | null;
           founder_at?: string | null;
@@ -27253,6 +27553,7 @@ export type Database = {
           ecs_card_type?: string | null;
           elec_id_enabled?: boolean | null;
           elec_id_number?: string | null;
+          employer_seat_cap?: number | null;
           fbclid?: string | null;
           first_touch_at?: string | null;
           founder_at?: string | null;
@@ -29545,6 +29846,50 @@ export type Database = {
         };
         Relationships: [];
       };
+      report_qs_review_comments: {
+        Row: {
+          author_id: string;
+          author_name: string | null;
+          body: string;
+          created_at: string;
+          id: string;
+          resolved: boolean;
+          review_id: string;
+          target: string;
+          target_label: string | null;
+        };
+        Insert: {
+          author_id?: string;
+          author_name?: string | null;
+          body: string;
+          created_at?: string;
+          id?: string;
+          resolved?: boolean;
+          review_id: string;
+          target?: string;
+          target_label?: string | null;
+        };
+        Update: {
+          author_id?: string;
+          author_name?: string | null;
+          body?: string;
+          created_at?: string;
+          id?: string;
+          resolved?: boolean;
+          review_id?: string;
+          target?: string;
+          target_label?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'report_qs_review_comments_review_id_fkey';
+            columns: ['review_id'];
+            isOneToOne: false;
+            referencedRelation: 'report_qs_reviews';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       report_qs_reviews: {
         Row: {
           created_at: string;
@@ -29563,6 +29908,7 @@ export type Database = {
           reviewed_by: string | null;
           reviewer_employee_id: string | null;
           reviewer_name: string | null;
+          self_certified: boolean;
           status: string;
           submitted_at: string;
           submitted_note: string | null;
@@ -29585,6 +29931,7 @@ export type Database = {
           reviewed_by?: string | null;
           reviewer_employee_id?: string | null;
           reviewer_name?: string | null;
+          self_certified?: boolean;
           status?: string;
           submitted_at?: string;
           submitted_note?: string | null;
@@ -29607,6 +29954,7 @@ export type Database = {
           reviewed_by?: string | null;
           reviewer_employee_id?: string | null;
           reviewer_name?: string | null;
+          self_certified?: boolean;
           status?: string;
           submitted_at?: string;
           submitted_note?: string | null;
@@ -32232,6 +32580,7 @@ export type Database = {
           property_postcode: string | null;
           property_type: string | null;
           quote_id: string | null;
+          scheduled_at: string | null;
           status: string | null;
           updated_at: string | null;
           user_id: string;
@@ -32252,6 +32601,7 @@ export type Database = {
           property_postcode?: string | null;
           property_type?: string | null;
           quote_id?: string | null;
+          scheduled_at?: string | null;
           status?: string | null;
           updated_at?: string | null;
           user_id: string;
@@ -32272,6 +32622,7 @@ export type Database = {
           property_postcode?: string | null;
           property_type?: string | null;
           quote_id?: string | null;
+          scheduled_at?: string | null;
           status?: string | null;
           updated_at?: string | null;
           user_id?: string;
@@ -32299,6 +32650,7 @@ export type Database = {
           mileage_miles: number | null;
           mileage_rate: number | null;
           mileage_to: string | null;
+          project_id: string | null;
           receipt_url: string | null;
           synced_to_accounting: boolean | null;
           tax_deductible: boolean | null;
@@ -32319,6 +32671,7 @@ export type Database = {
           mileage_miles?: number | null;
           mileage_rate?: number | null;
           mileage_to?: string | null;
+          project_id?: string | null;
           receipt_url?: string | null;
           synced_to_accounting?: boolean | null;
           tax_deductible?: boolean | null;
@@ -32339,6 +32692,7 @@ export type Database = {
           mileage_miles?: number | null;
           mileage_rate?: number | null;
           mileage_to?: string | null;
+          project_id?: string | null;
           receipt_url?: string | null;
           synced_to_accounting?: boolean | null;
           tax_deductible?: boolean | null;
@@ -32347,7 +32701,15 @@ export type Database = {
           vat_amount?: number | null;
           vendor?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'sole_trader_expenses_project_id_fkey';
+            columns: ['project_id'];
+            isOneToOne: false;
+            referencedRelation: 'spark_projects';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       sow_sessions: {
         Row: {
@@ -36511,6 +36873,45 @@ export type Database = {
         };
         Relationships: [];
       };
+      user_notifications: {
+        Row: {
+          created_at: string;
+          id: string;
+          is_read: boolean;
+          link: string | null;
+          message: string;
+          metadata: Json;
+          read_at: string | null;
+          title: string;
+          type: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          is_read?: boolean;
+          link?: string | null;
+          message: string;
+          metadata?: Json;
+          read_at?: string | null;
+          title: string;
+          type: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          is_read?: boolean;
+          link?: string | null;
+          message?: string;
+          metadata?: Json;
+          read_at?: string | null;
+          title?: string;
+          type?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       user_otj_programmes: {
         Row: {
           created_at: string;
@@ -36824,6 +37225,33 @@ export type Database = {
           updated_at?: string | null;
           user_id?: string;
           value?: Json | null;
+        };
+        Relationships: [];
+      };
+      user_signatures: {
+        Row: {
+          created_at: string;
+          id: string;
+          is_default: boolean;
+          name: string;
+          signature_data: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          is_default?: boolean;
+          name?: string;
+          signature_data: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          is_default?: boolean;
+          name?: string;
+          signature_data?: string;
+          user_id?: string;
         };
         Relationships: [];
       };
@@ -37573,6 +38001,30 @@ export type Database = {
           is_crisis?: boolean | null;
           title?: string;
           url?: string | null;
+        };
+        Relationships: [];
+      };
+      wholesaler_contacts: {
+        Row: {
+          created_at: string;
+          email: string;
+          id: string;
+          name: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          id?: string;
+          name?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          id?: string;
+          name?: string | null;
+          user_id?: string;
         };
         Relationships: [];
       };
@@ -38877,6 +39329,7 @@ export type Database = {
         };
         Returns: boolean;
       };
+      accept_team_invite: { Args: { p_token: string }; Returns: Json };
       acknowledge_safeguarding_concern: {
         Args: { p_concern_id: string };
         Returns: string;
@@ -39080,6 +39533,7 @@ export type Database = {
         Args: { max_facets?: number; min_facets?: number };
         Returns: number;
       };
+      create_team_invite: { Args: { p_employee_id: string }; Returns: Json };
       current_user_is_eqa: { Args: never; Returns: boolean };
       decide_ac_signoff: {
         Args: { p_notes?: string; p_proposal_id: string; p_status: string };
@@ -39087,6 +39541,10 @@ export type Database = {
       };
       decide_employer_quote: {
         Args: { p_decision: string; p_signed_name?: string; p_token: string };
+        Returns: Json;
+      };
+      decline_signature_request: {
+        Args: { p_ip?: string; p_notes?: string; p_token: string };
         Returns: Json;
       };
       disable_failed_payments_cron: { Args: never; Returns: Json };
@@ -39146,7 +39604,19 @@ export type Database = {
       };
       generate_invoice_number: { Args: never; Returns: string };
       generate_standalone_invoice_number: { Args: never; Returns: string };
+      get_active_user_metrics: { Args: never; Returns: Json };
       get_admin_users: { Args: never; Returns: Json };
+      get_at_risk_subscribers: {
+        Args: { p_days?: number; p_limit?: number };
+        Returns: {
+          days_quiet: number;
+          full_name: string;
+          last_active: string;
+          subscription_source: string;
+          subscription_tier: string;
+          user_id: string;
+        }[];
+      };
       get_attempt_review: { Args: { p_attempt_id: string }; Returns: Json };
       get_auth_user_email_by_id: { Args: { user_id: string }; Returns: Json };
       get_auth_user_emails: { Args: never; Returns: Json };
@@ -39255,6 +39725,46 @@ export type Database = {
           total: number;
         }[];
       };
+      get_employer_apprentice_college_progress: {
+        Args: never;
+        Returns: {
+          attendance_percent: number;
+          college_name: string;
+          course_name: string;
+          epa_status: string;
+          last_review_date: string;
+          name: string;
+          otj_on_track: boolean;
+          otj_required_hours: number;
+          otj_verified_hours: number;
+          progress_percent: number;
+          review_overdue: boolean;
+          student_user_id: string;
+        }[];
+      };
+      get_employer_client_summaries: {
+        Args: never;
+        Returns: {
+          active_job_count: number;
+          address: string;
+          contact_name: string;
+          created_at: string;
+          email: string;
+          id: string;
+          invoice_count: number;
+          job_count: number;
+          last_activity_at: string;
+          name: string;
+          notes: string;
+          open_quote_value: number;
+          outstanding: number;
+          phone: string;
+          quote_count: number;
+          tags: string[];
+          total_invoiced: number;
+          total_paid: number;
+        }[];
+      };
       get_employer_invoice_by_token: {
         Args: { p_token: string };
         Returns: Json;
@@ -39290,6 +39800,26 @@ export type Database = {
       get_job_ad_companies: {
         Args: { p_employer_ids: string[] };
         Returns: Json;
+      };
+      get_lifetime_engagement: {
+        Args: { p_user_ids: string[] };
+        Returns: {
+          active_days: number;
+          feature_use_count: number;
+          last_activity: string;
+          login_count: number;
+          page_view_count: number;
+          total_seconds_tracked: number;
+          unique_pages_visited: number;
+          user_id: string;
+        }[];
+      };
+      get_lifetime_offer_recipients: {
+        Args: { p_audience?: string };
+        Returns: {
+          email: string;
+          first_name: string;
+        }[];
       };
       get_my_college_team: { Args: never; Returns: Json };
       get_my_company_profile: {
@@ -39327,11 +39857,13 @@ export type Database = {
           logo_data_url: string | null;
           logo_size: string | null;
           logo_url: string | null;
+          markup: number | null;
           notification_email: string | null;
           office_address: string | null;
           office_lat: number | null;
           office_lng: number | null;
           overhead_percentage: number | null;
+          owner_is_qs: boolean;
           payment_terms: string | null;
           preferred_payment_method: string | null;
           primary_color: string | null;
@@ -39580,6 +40112,7 @@ export type Database = {
         Args: never;
         Returns: {
           profiles_count: number;
+          quotes_total: number;
           reports_count: number;
         }[];
       };
@@ -39791,6 +40324,8 @@ export type Database = {
             }[];
           };
       get_referral_stats: { Args: { p_user_id: string }; Returns: Json };
+      get_retention_curve: { Args: never; Returns: Json };
+      get_role_kpis: { Args: never; Returns: Json };
       get_safety_sign_token: { Args: { token_param: string }; Returns: Json };
       get_shared_portfolio: {
         Args: { share_token: string };
@@ -39855,6 +40390,7 @@ export type Database = {
         }[];
       };
       get_talent_pool: { Args: never; Returns: Json };
+      get_team_invite: { Args: { p_token: string }; Returns: Json };
       get_tender_sync_config: { Args: never; Returns: Json };
       get_verification_by_token: { Args: { p_token: string }; Returns: Json };
       has_active_worker_seat: { Args: never; Returns: boolean };
@@ -39914,6 +40450,7 @@ export type Database = {
       is_assigned_to_job: { Args: { p_job_id: string }; Returns: boolean };
       is_college_staff: { Args: { p_user_id: string }; Returns: boolean };
       is_owner_of_quote: { Args: { q_id: string }; Returns: boolean };
+      is_principal_qs_for: { Args: { p_employer_id: string }; Returns: boolean };
       is_qs_issue_blocked: { Args: { p_report_uuid: string }; Returns: boolean };
       is_qs_reviewer_for: { Args: { p_employer_id: string }; Returns: boolean };
       is_staff_at_students_college: {
@@ -40093,6 +40630,16 @@ export type Database = {
           similarity: number;
         }[];
       };
+      match_marketplace_products: {
+        Args: { item_queries: string[]; per_item?: number };
+        Returns: {
+          category: string;
+          current_price: number;
+          name: string;
+          query_text: string;
+          rank: number;
+        }[];
+      };
       match_qualification_acs: {
         Args: {
           max_results?: number;
@@ -40158,6 +40705,7 @@ export type Database = {
         Returns: Json;
       };
       my_employee_ids: { Args: never; Returns: string[] };
+      my_employer_ids: { Args: never; Returns: string[] };
       my_pack_ids: { Args: never; Returns: string[] };
       normalize_compliance_statuses: {
         Args: never;
@@ -40707,6 +41255,23 @@ export type Database = {
           quality_score: number;
           table_refs: string[];
           worked_examples: Json[];
+        }[];
+      };
+      search_employer_knowledge: {
+        Args: {
+          filter_domain?: string;
+          match_count?: number;
+          query_embedding: unknown;
+          query_text?: string;
+          rrf_k?: number;
+        };
+        Returns: {
+          content: string;
+          domain: string;
+          id: string;
+          similarity: number;
+          source: string;
+          topic: string;
         }[];
       };
       search_health_safety: {
@@ -41370,6 +41935,16 @@ export type Database = {
         Returns: string;
       };
       user_id_for_email: { Args: { p_email: string }; Returns: string };
+      worker_notify: {
+        Args: {
+          p_data?: Json;
+          p_message: string;
+          p_title: string;
+          p_type: string;
+          p_user_id: string;
+        };
+        Returns: undefined;
+      };
     };
     Enums: {
       app_role: 'admin' | 'moderator' | 'user';
