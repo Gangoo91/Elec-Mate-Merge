@@ -258,9 +258,12 @@ export default function TeamInviteAccept() {
     if (!invite) return;
     setFormError(null);
     try {
-      await supabase.auth.resetPasswordForEmail(invite.email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
-      });
+      // Use the app's BRANDED reset. send-password-reset builds the recovery
+      // link itself (https://elec-mate.com/auth/reset-password?token_hash=…),
+      // so it's Elec-Mate branded AND immune to the Supabase Site-URL fallback
+      // that was dumping people on localhost. NOT supabase.auth.resetPassword
+      // ForEmail, whose default email is Supabase-branded.
+      await supabase.functions.invoke('send-password-reset', { body: { email: invite.email } });
       setResetSent(true);
     } catch {
       // Don't reveal whether the account exists — always show the same message.
