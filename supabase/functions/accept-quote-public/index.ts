@@ -231,6 +231,23 @@ const handler = async (req: Request): Promise<Response> => {
         if (error) console.warn('push_notification_log insert failed:', error);
       });
 
+    // 1b) In-app bell (user_notifications) so the accepted quote shows in the
+    //     notification centre, not only as a device push.
+    await supabase
+      .from('user_notifications')
+      .insert({
+        user_id: quote.user_id,
+        type: 'quote_accepted',
+        title: pushTitle,
+        message: pushBody,
+        link: `/electrician/quote-builder/${quote.id}`,
+        metadata: { quote_id: quote.id, quote_number: quote.quote_number },
+        is_read: false,
+      })
+      .then(({ error }) => {
+        if (error) console.warn('user_notifications insert failed:', error);
+      });
+
     // 2) Device push — direct fetch with explicit service-role auth.
     //    `supabase.functions.invoke` from inside an edge fn doesn't
     //    forward auth reliably and was silently 401'ing.
@@ -281,9 +298,7 @@ const handler = async (req: Request): Promise<Response> => {
         // share one availability source. Pre-fill comes from
         // get_public_quote_for_booking RPC; the booking links back to
         // the quote via the quote_id query string.
-        bookingUrl: depositRequired
-          ? null
-          : `${APP_URL}/book/${quote.user_id}?quote=${quote.id}`,
+        bookingUrl: depositRequired ? null : `${APP_URL}/book/${quote.user_id}?quote=${quote.id}`,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
