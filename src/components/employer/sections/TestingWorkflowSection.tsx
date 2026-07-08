@@ -80,7 +80,7 @@ import {
   textareaClass,
   type Tone,
 } from '@/components/employer/editorial';
-import { SignatureInput } from '@/components/signature/SignatureInput';
+import SignatureInput from '@/components/signature/SignatureInput';
 
 const resultTone: Record<TestResult, Tone> = {
   Pending: 'amber',

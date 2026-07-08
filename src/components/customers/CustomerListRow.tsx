@@ -121,7 +121,9 @@ export const CustomerListRow = ({
         }
       }}
       className={cn(
-        'group relative cursor-pointer overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
+        // flex-col + h-full so cards in the desktop 2-col grid are equal
+        // height regardless of tags/pills — footer pins to the bottom
+        'group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
         selected
           ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
           : isDuplicate
@@ -136,7 +138,7 @@ export const CustomerListRow = ({
       />
 
       {/* Top row: avatar + name + cert pill */}
-      <div className="flex items-start gap-3">
+      <div className="mb-4 flex items-start gap-3">
         {/* Selection checkbox (selection mode only) */}
         {selectionMode && (
           <div
@@ -248,8 +250,8 @@ export const CustomerListRow = ({
         </div>
       </div>
 
-      {/* Footer row: last activity + quick actions */}
-      <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
+      {/* Footer row: last activity + quick actions — pinned to the card base */}
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
         <span className="text-[11.5px] font-medium uppercase tracking-[0.06em] text-white/55">
           {formatLastActivity(customer.lastActivityAt)}
         </span>

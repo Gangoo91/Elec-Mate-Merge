@@ -938,6 +938,7 @@ export default function CustomersPage() {
                         variants={itemVariants}
                         layout
                         exit={{ opacity: 0, scale: 0.95 }}
+                        className="h-full"
                       >
                         <CustomerListRow
                           customer={customer}

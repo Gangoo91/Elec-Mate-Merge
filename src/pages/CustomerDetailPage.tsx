@@ -269,10 +269,19 @@ export default function CustomerDetailPage() {
     run();
   }, [customerId]);
 
+  // Pop back to the list rather than pushing a fresh /customers entry —
+  // pushing meant the browser back button replayed this detail page instead
+  // of leaving the CRM. Falls back to a replace for deep links.
+  const backToList = () => {
+    const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0;
+    if (idx > 0) navigate(-1);
+    else navigate('/customers', { replace: true });
+  };
+
   const handleDelete = async () => {
     if (customerId) {
       const success = await deleteCustomer(customerId);
-      if (success) navigate('/customers');
+      if (success) navigate('/customers', { replace: true });
     }
     setShowDeleteConfirm(false);
   };
@@ -320,7 +329,7 @@ export default function CustomerDetailPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate('/customers')}
+                onClick={backToList}
                 className="h-9 w-9 rounded-lg text-white hover:bg-white/10 hover:text-white touch-manipulation active:scale-[0.98]"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -335,7 +344,7 @@ export default function CustomerDetailPage() {
             <p className="mb-2 text-lg font-semibold text-white">Customer not found</p>
             <p className="mb-5 text-sm text-white/65">This customer may have been deleted.</p>
             <Button
-              onClick={() => navigate('/customers')}
+              onClick={() => navigate('/customers', { replace: true })}
               className="h-11 w-full rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
             >
               Back to customers
@@ -360,7 +369,7 @@ export default function CustomerDetailPage() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate('/customers')}
+              onClick={backToList}
               className="h-9 w-9 shrink-0 rounded-lg text-white hover:bg-white/10 hover:text-white touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
