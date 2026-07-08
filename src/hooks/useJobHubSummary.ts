@@ -16,9 +16,17 @@ export interface JobHubSummary {
     quote_number: string | null;
     id: string;
   } | null;
+  quotes: { id: string; quote_number: string | null; status: string | null; value: number }[];
   invoiced: number;
   paid: number;
   invoice_count: number;
+  invoices: {
+    id: string;
+    invoice_number: string | null;
+    status: string | null;
+    amount: number;
+    paid: boolean;
+  }[];
   labour_hours: number;
   labour_cost: number;
   tests_total: number;

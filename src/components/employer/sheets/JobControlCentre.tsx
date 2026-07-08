@@ -80,6 +80,47 @@ function SignalPill({
   );
 }
 
+function DocRow({
+  Icon,
+  number,
+  status,
+  amount,
+  paid,
+  kind,
+}: {
+  Icon: typeof FileText;
+  number: string | null;
+  status: string | null;
+  amount: number;
+  paid?: boolean;
+  kind: string;
+}) {
+  const label = (paid ? 'Paid' : status || 'Draft').toString();
+  const low = label.toLowerCase();
+  const known = ['paid', 'overdue', 'unpaid', 'sent', 'draft'];
+  return (
+    <div className="flex items-center gap-2.5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+      <Icon className="h-3.5 w-3.5 text-white/45 shrink-0" />
+      <span className="text-[12.5px] text-white/85 truncate min-w-0 flex-1">{number || kind}</span>
+      <span
+        className={cn(
+          'rounded-md px-1.5 py-0.5 text-[10px] font-medium capitalize shrink-0',
+          low.includes('paid') && 'bg-emerald-500/12 text-emerald-300',
+          (low.includes('overdue') || low.includes('unpaid')) && 'bg-red-500/12 text-red-300',
+          low.includes('sent') && 'bg-blue-500/12 text-blue-300',
+          low.includes('draft') && 'bg-white/[0.06] text-white/50',
+          !known.some((s) => low.includes(s)) && 'bg-white/[0.06] text-white/60'
+        )}
+      >
+        {label}
+      </span>
+      <span className="text-[12.5px] font-semibold text-white tabular-nums shrink-0">
+        {fmt(amount)}
+      </span>
+    </div>
+  );
+}
+
 export function JobControlCentre({
   jobId,
   jobTitle,
@@ -179,6 +220,38 @@ export function JobControlCentre({
             )}
           </div>
         </div>
+
+        {/* Linked documents — exactly which quotes/invoices belong to this job */}
+        {((data.quotes?.length ?? 0) > 0 || (data.invoices?.length ?? 0) > 0) && (
+          <div>
+            <p className="text-[10.5px] uppercase tracking-[0.16em] text-white/40 font-semibold mb-2">
+              Linked documents
+            </p>
+            <div className="space-y-1.5">
+              {(data.quotes ?? []).map((q) => (
+                <DocRow
+                  key={q.id}
+                  Icon={FileText}
+                  number={q.quote_number}
+                  status={q.status}
+                  amount={q.value}
+                  kind="Quote"
+                />
+              ))}
+              {(data.invoices ?? []).map((inv) => (
+                <DocRow
+                  key={inv.id}
+                  Icon={Receipt}
+                  number={inv.invoice_number}
+                  status={inv.status}
+                  amount={inv.amount}
+                  paid={inv.paid}
+                  kind="Invoice"
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Labour + budget */}
         <div className="grid grid-cols-2 gap-3 pt-1">
