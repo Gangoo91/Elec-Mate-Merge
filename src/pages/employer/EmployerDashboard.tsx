@@ -518,6 +518,13 @@ const EmployerDashboard = () => {
     previousSectionRef.current = activeSection;
   }, [activeSection]);
 
+  // A new section is a fresh page — land at the top. Sections swap via the
+  // ?section= param (the /employer pathname never changes), so the global
+  // pathname-keyed ScrollToTop doesn't fire for hub navigation.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [activeSection]);
+
   // ⌘K / Ctrl-K opens the command palette from anywhere in the hub.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
