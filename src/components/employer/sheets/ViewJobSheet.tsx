@@ -31,11 +31,13 @@ import { JobTasksPanel } from '@/components/employer/JobTasksPanel';
 import { JobActivityFeed } from '@/components/employer/JobActivityFeed';
 import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import { toast } from '@/hooks/use-toast';
+import { useSearchParams } from 'react-router-dom';
 import { useUpdateJob, useDeleteJob, useArchiveJob, useSetJobAsTemplate } from '@/hooks/useJobs';
 import { useJobAssignments, useRemoveWorkerFromJob } from '@/hooks/useJobAssignments';
 import { useLogJobActivity } from '@/hooks/useJobComments';
 import { Job, JobStatus } from '@/services/jobService';
 import { JobAttentionPanel } from '@/components/employer/sheets/JobAttentionPanel';
+import { JobControlCentre } from '@/components/employer/sheets/JobControlCentre';
 import {
   MapPin,
   Calendar,
@@ -51,7 +53,7 @@ import {
   FileText,
   Clock,
   Camera,
-  FolderOpen,
+  AlertTriangle,
   UserPlus,
   Loader2,
   Copy,
@@ -100,6 +102,14 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const setAsTemplate = useSetJobAsTemplate();
   const removeWorker = useRemoveWorkerFromJob();
   const logActivity = useLogJobActivity();
+  const [, setSearchParams] = useSearchParams();
+
+  // Quick-links jump to the relevant hub section (and close this sheet) instead
+  // of a dead toast. The employer hub routes sections via the ?section= param.
+  const goToSection = (section: string) => {
+    onOpenChange(false);
+    setSearchParams({ section });
+  };
 
   const [title, setTitle] = useState('');
   const [client, setClient] = useState('');
@@ -412,6 +422,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               </FormCard>
 
               <JobAttentionPanel jobId={job.id} />
+
+              <JobControlCentre jobId={job.id} jobTitle={job.title} jobClient={job.client} />
 
               <FormCard eyebrow="Status & value">
                 <FormGrid cols={2}>
@@ -763,47 +775,21 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
 
               <FormCard eyebrow="Quick links">
                 <FormGrid cols={2}>
-                  <SecondaryButton
-                    onClick={() =>
-                      toast({ title: 'Job pack', description: 'Job pack generation coming soon' })
-                    }
-                    fullWidth
-                  >
+                  <SecondaryButton onClick={() => goToSection('jobpacks')} fullWidth>
                     <FileText className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Job pack
+                    Job packs
                   </SecondaryButton>
-                  <SecondaryButton
-                    onClick={() =>
-                      toast({
-                        title: 'Timesheets',
-                        description: 'View timesheets in the Timesheets section',
-                      })
-                    }
-                    fullWidth
-                  >
+                  <SecondaryButton onClick={() => goToSection('timesheets')} fullWidth>
                     <Clock className="h-4 w-4 mr-1 text-elec-yellow" />
                     Timesheets
                   </SecondaryButton>
-                  <SecondaryButton
-                    onClick={() =>
-                      toast({
-                        title: 'Photos',
-                        description: 'View photos in the Photo Gallery section',
-                      })
-                    }
-                    fullWidth
-                  >
+                  <SecondaryButton onClick={() => goToSection('photogallery')} fullWidth>
                     <Camera className="h-4 w-4 mr-1 text-elec-yellow" />
                     Photos
                   </SecondaryButton>
-                  <SecondaryButton
-                    onClick={() =>
-                      toast({ title: 'Documents', description: 'Document management coming soon' })
-                    }
-                    fullWidth
-                  >
-                    <FolderOpen className="h-4 w-4 mr-1 text-elec-yellow" />
-                    Documents
+                  <SecondaryButton onClick={() => goToSection('issues')} fullWidth>
+                    <AlertTriangle className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Issues
                   </SecondaryButton>
                 </FormGrid>
               </FormCard>

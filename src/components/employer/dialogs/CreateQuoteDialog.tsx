@@ -65,6 +65,8 @@ interface CreateQuoteDialogProps {
   onOpenChange: (open: boolean) => void;
   prefillClient?: string;
   prefillAmount?: number;
+  /** When raised from a job, links the quote to it. */
+  jobId?: string;
 }
 
 const LABOUR_PRESETS = [
@@ -79,6 +81,7 @@ export function CreateQuoteDialog({
   onOpenChange,
   prefillClient,
   prefillAmount,
+  jobId,
 }: CreateQuoteDialogProps) {
   const [step, setStep] = useState(1);
   const [client, setClient] = useState(prefillClient || '');
@@ -126,9 +129,9 @@ export function CreateQuoteDialog({
         setDescription(data.expandedDescription);
         toast.success('Description expanded');
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error expanding description:', err);
-      toast.error(err.message || 'Failed to expand description');
+      toast.error((err instanceof Error ? err.message : '') || 'Failed to expand description');
     } finally {
       setIsExpandingDescription(false);
     }
@@ -324,7 +327,7 @@ export function CreateQuoteDialog({
     setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
   };
 
-  const addFromPriceBook = (item: any) => {
+  const addFromPriceBook = (item: { name: string; unit: string; sell_price: number | string }) => {
     const lineItem: LineItem = {
       id: crypto.randomUUID(),
       description: item.name,
@@ -384,7 +387,7 @@ export function CreateQuoteDialog({
       status: sendImmediately ? 'Sent' : 'Draft',
       sent_date: sendImmediately ? new Date().toISOString().split('T')[0] : null,
       valid_until: validUntil.toISOString().split('T')[0],
-      job_id: null,
+      job_id: jobId ?? null,
       created_by: 'Admin',
       line_items: allLineItems,
       notes,
@@ -395,6 +398,9 @@ export function CreateQuoteDialog({
       subtotal,
       vat_amount: vatAmount,
       cis_amount: cisAmount,
+      // Quote type omits the finance fields (subtotal/vat/cis/job_id); the real
+      // fix is completing that shared type, not casting here.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
 
     // Auto-link into the CRM so the client record builds itself (non-fatal).
@@ -993,7 +999,9 @@ export function CreateQuoteDialog({
                 {cisAmount > 0 && (
                   <>
                     <div className="flex justify-between">
-                      <span className="text-[12px] text-white">Less CIS ({cisRate}% of labour)</span>
+                      <span className="text-[12px] text-white">
+                        Less CIS ({cisRate}% of labour)
+                      </span>
                       <span className="text-[12px] text-red-400 tabular-nums">
                         −£{cisAmount.toFixed(2)}
                       </span>

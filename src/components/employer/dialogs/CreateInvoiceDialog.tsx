@@ -57,12 +57,23 @@ interface CreateInvoiceDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   fromQuote?: Quote;
+  /** When raised from a job, links the invoice to it and prefills client/project. */
+  jobId?: string;
+  jobTitle?: string;
+  prefillClient?: string;
 }
 
-export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInvoiceDialogProps) {
+export function CreateInvoiceDialog({
+  open,
+  onOpenChange,
+  fromQuote,
+  jobId,
+  jobTitle,
+  prefillClient,
+}: CreateInvoiceDialogProps) {
   const [step, setStep] = useState(1);
-  const [client, setClient] = useState('');
-  const [project, setProject] = useState('');
+  const [client, setClient] = useState(prefillClient || '');
+  const [project, setProject] = useState(jobTitle || '');
   const [paymentTerms, setPaymentTerms] = useState('30');
   const [vatRate, setVatRate] = useState('20');
   const [reverseCharge, setReverseCharge] = useState(false);
@@ -97,7 +108,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       setCisRate(String(fromQuote.cis_rate ?? 20));
       if (Array.isArray(fromQuote.line_items)) {
         setLineItems(
-          fromQuote.line_items.map((item: any) => ({
+          fromQuote.line_items.map((item: Partial<LineItem>) => ({
             id: crypto.randomUUID(),
             description: item.description,
             quantity: item.quantity,
@@ -186,7 +197,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       setCisRate(String(quote.cis_rate ?? 20));
       if (Array.isArray(quote.line_items)) {
         setLineItems(
-          quote.line_items.map((item: any) => ({
+          quote.line_items.map((item: Partial<LineItem>) => ({
             id: crypto.randomUUID(),
             description: item.description,
             quantity: item.quantity,
@@ -254,7 +265,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       status: sendImmediately ? 'Pending' : 'Draft',
       due_date: dueDate.toISOString().split('T')[0],
       paid_date: null,
-      job_id: null,
+      job_id: jobId ?? null,
       quote_id: selectedQuoteId,
       line_items: lineItems,
       notes,
@@ -311,7 +322,10 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]">
+      <SheetContent
+        side="bottom"
+        className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
+      >
         <div className="flex flex-col h-full">
           {/* Drag indicator */}
           <div className="pt-2.5 pb-1 flex justify-center">
@@ -607,7 +621,11 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                         </button>
                       ))}
                     </div>
-                    <SecondaryButton onClick={addLineItem} disabled={!newItem.description} fullWidth>
+                    <SecondaryButton
+                      onClick={addLineItem}
+                      disabled={!newItem.description}
+                      fullWidth
+                    >
                       <Plus className="h-4 w-4 mr-2" />
                       Add Item
                     </SecondaryButton>
@@ -713,9 +731,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                           <div className="flex-1 min-w-0">
                             <span className="text-[12.5px] text-white mr-2">{idx + 1}.</span>
                             <span className="text-[12.5px] text-white">{item.description}</span>
-                            <span className="text-[11px] text-white ml-2">
-                              × {item.quantity}
-                            </span>
+                            <span className="text-[11px] text-white ml-2">× {item.quantity}</span>
                           </div>
                           <span className="font-medium text-white shrink-0 tabular-nums">
                             £{item.total.toFixed(2)}
