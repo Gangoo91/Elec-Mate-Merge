@@ -3,21 +3,15 @@ import { useNavigate, Link } from 'react-router-dom';
 import { storageSetJSONSync } from '@/utils/storage';
 import {
   ArrowLeft,
-  BookOpen,
   Search,
   Plus,
-  Package,
   Pencil,
   Clock,
-  Zap,
-  Layers,
   ChevronDown,
   ChevronUp,
-  ChevronRight,
   Trash2,
   X,
   Check,
-  Receipt,
   FileText,
   Upload,
   ClipboardPaste,
@@ -75,18 +69,10 @@ interface PricedItem { item: MaterialsListItem; listId: string; listName: string
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.03 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } } };
 
-const CAT_STYLES: Record<string, { color: string; bg: string; border: string }> = {
-  Cable: { color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
-  Accessories: { color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
-  Tools: { color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
-  Safety: { color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-  General: { color: 'text-elec-yellow', bg: 'bg-elec-yellow/10', border: 'border-elec-yellow/20' },
-};
-
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 export default function PriceBook() {
-  const { lists, updateItemDetails, addItem, createList } = useMaterialsLists();
+  const { lists, updateItemDetails, addItem, createList, removeItem } = useMaterialsLists();
   const { settings, updateMarkup, calcSellPrice } = usePriceBookSettings();
   const { bundles, createBundle, deleteBundle, bundleTotal } = usePriceBookBundles();
   const { items: stockItems } = useInventoryStorage();
@@ -462,10 +448,7 @@ export default function PriceBook() {
               <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
                 <ArrowLeft className="h-5 w-5" />
               </Button>
-              <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                  <BookOpen className="h-4 w-4 text-blue-400" />
-                </div>
+              <div className="flex-1 min-w-0">
                 <h1 className="text-base font-semibold text-white">Price Book</h1>
               </div>
               {tab === 'Items' && (
@@ -540,16 +523,11 @@ export default function PriceBook() {
               {/* Rate Card link */}
               <motion.div variants={itemVariants}>
                 <Link to="/electrician/rate-card" className="group card-surface-interactive p-3.5 flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all block">
-                  <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 group-hover:scale-110 transition-transform">
-                    <Receipt className="h-4 w-4 text-elec-yellow" />
-                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-white group-hover:text-elec-yellow transition-colors">Rate Card</p>
-                    <p className="text-[10px] text-white">Labour & call-out prices for quotes</p>
+                    <p className="text-[11px] text-white/60 mt-0.5">Labour & call-out prices for quotes</p>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all">
-                    <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
-                  </div>
+                  <span className="text-[13px] font-medium text-elec-yellow group-hover:translate-x-0.5 transition-transform">→</span>
                 </Link>
               </motion.div>
 
@@ -571,9 +549,6 @@ export default function PriceBook() {
               {/* Items */}
               {filtered.length === 0 ? (
                 <motion.div variants={itemVariants} className="text-center py-10">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                    <Package className="h-8 w-8 text-blue-400" />
-                  </div>
                   <h2 className="text-base font-semibold text-white mb-1">{pricedItems.length === 0 ? 'No priced items yet' : 'No matching items'}</h2>
                   <p className="text-white text-xs mb-5 max-w-xs mx-auto">{pricedItems.length === 0 ? 'Add prices to your materials lists, or add your first item.' : 'Try a different search or category.'}</p>
                   {pricedItems.length === 0 && (
@@ -591,20 +566,16 @@ export default function PriceBook() {
                     const days = daysOld(p.item.price_updated_at);
                     const stale = (days ?? 0) >= STALE_DAYS;
                     const cat = deriveCategory(p.item.name);
-                    const style = CAT_STYLES[cat] || CAT_STYLES.General;
                     return (
                       <motion.div key={`${p.listId}-${p.item.id}`} variants={itemVariants}>
                         <div className={cn('group card-surface-interactive overflow-hidden', stale && 'ring-1 ring-amber-500/30')}>
-                          {/* Accent line */}
-                          <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-20 group-hover:opacity-70 transition-opacity', stale ? 'from-amber-500 to-orange-400' : 'from-blue-500 via-blue-400 to-cyan-400')} />
-
                           <div className="relative z-10 p-4">
                             <div className="flex items-start gap-3">
-                              <div className={cn('p-2 rounded-xl flex-shrink-0', style.bg, style.border)}>
-                                <Package className={cn('h-4 w-4', style.color)} />
-                              </div>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-white line-clamp-2">{p.item.name}</p>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50">{cat}</span>
+                                </div>
+                                <p className="text-sm font-semibold text-white line-clamp-2 mt-1">{p.item.name}</p>
                                 <div className="flex items-center gap-2 mt-1 flex-wrap">
                                   {p.item.supplier && (
                                     <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">{p.item.supplier}</span>
@@ -664,10 +635,7 @@ export default function PriceBook() {
             <>
               {bundles.length === 0 ? (
                 <motion.div variants={itemVariants} className="text-center py-10">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                    <Layers className="h-8 w-8 text-purple-400" />
-                  </div>
-                  <h2 className="text-base font-semibold text-white mb-1">No Bundles Yet</h2>
+                  <h2 className="text-base font-semibold text-white mb-1">No bundles yet</h2>
                   <p className="text-white text-xs mb-5 max-w-xs mx-auto">
                     Group materials + labour into reusable bundles. E.g. "Consumer unit swap" with CU, MCBs, cabling, and labour.
                   </p>
@@ -683,12 +651,8 @@ export default function PriceBook() {
                     const expanded = expandedBundle === bundle.id;
                     return (
                       <motion.div key={bundle.id} variants={itemVariants} className="card-surface-interactive overflow-hidden">
-                        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-violet-400 to-indigo-400 opacity-20" />
                         <button className="w-full relative z-10 p-4 text-left touch-manipulation" onClick={() => setExpandedBundle(expanded ? null : bundle.id)}>
                           <div className="flex items-start gap-3">
-                            <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 flex-shrink-0">
-                              <Layers className="h-5 w-5 text-purple-400" />
-                            </div>
                             <div className="flex-1 min-w-0">
                               <p className="text-base font-semibold text-white">{bundle.name}</p>
                               {bundle.description && <p className="text-[11px] text-white mt-0.5 line-clamp-1">{bundle.description}</p>}
@@ -782,6 +746,18 @@ export default function PriceBook() {
               )}
             </div>
             <Button onClick={handleSaveEdit} className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">Save Changes</Button>
+            <button
+              onClick={async () => {
+                if (!editSheet) return;
+                await removeItem(editSheet.listId, editSheet.item.id);
+                toast({ title: 'Item removed from price book' });
+                setEditSheet(null);
+              }}
+              className="w-full h-11 rounded-xl text-sm font-medium text-red-400 bg-red-400/10 flex items-center justify-center gap-1.5 touch-manipulation active:bg-red-400/20"
+            >
+              <Trash2 className="h-4 w-4" />
+              Remove item
+            </button>
           </div>
         </SheetContent>
       </Sheet>
@@ -820,12 +796,7 @@ export default function PriceBook() {
           <div className="flex flex-col h-full">
             <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06] flex-shrink-0">
               <div className="flex items-center justify-between">
-                <SheetTitle className="flex items-center gap-2 text-white">
-                  <div className="p-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                    <Layers className="h-4 w-4 text-purple-400" />
-                  </div>
-                  Create Bundle
-                </SheetTitle>
+                <SheetTitle className="text-white">Create Bundle</SheetTitle>
                 <button onClick={resetBundleSheet} className="h-11 w-11 rounded-full flex items-center justify-center text-white active:bg-white/10 touch-manipulation"><X className="h-5 w-5" /></button>
               </div>
             </SheetHeader>
@@ -858,13 +829,13 @@ export default function PriceBook() {
                 {bundleItems.map((item) => (
                   <div key={item.id} className="card-surface-interactive p-3.5">
                     <div className="flex items-center gap-2 mb-2.5">
-                      <div className={cn('p-1.5 rounded-lg flex-shrink-0', item.category === 'labour' ? 'bg-blue-500/10 border border-blue-500/20' : 'bg-elec-yellow/10 border border-elec-yellow/20')}>
-                        {item.category === 'labour' ? <Clock className="h-3 w-3 text-blue-400" /> : <Package className="h-3 w-3 text-elec-yellow" />}
-                      </div>
+                      <span className={cn('text-[9px] font-semibold uppercase tracking-[0.14em] flex-shrink-0 w-14', item.category === 'labour' ? 'text-elec-yellow' : 'text-white/50')}>
+                        {item.category === 'labour' ? 'Labour' : 'Material'}
+                      </span>
                       <Input value={item.name} onChange={(e) => updateBundleItemField(item.id, 'name', e.target.value)} className="h-8 flex-1 bg-white/[0.03] border-white/[0.08] text-white text-xs touch-manipulation" />
                       <button onClick={() => removeBundleItem(item.id)} className="h-7 w-7 rounded-full flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation flex-shrink-0"><X className="h-3.5 w-3.5" /></button>
                     </div>
-                    <div className="flex items-center gap-2 pl-8">
+                    <div className="flex items-center gap-2 pl-16">
                       <div className="flex items-center gap-1.5 bg-white/[0.03] rounded-lg border border-white/[0.06] px-2 py-1">
                         <span className="text-[10px] text-white">Qty</span>
                         <Input type="text" inputMode="decimal" value={item.quantity} onChange={(e) => updateBundleItemField(item.id, 'quantity', e.target.value)} className="h-6 w-10 text-center bg-transparent border-0 text-white text-xs p-0 focus:ring-0" />
@@ -880,16 +851,10 @@ export default function PriceBook() {
                 ))}
 
                 {/* Add buttons */}
-                <div className="grid grid-cols-2 gap-2">
-                  <button onClick={addBundleLabourLine} className="card-surface-interactive p-3 flex items-center gap-2 touch-manipulation active:scale-[0.98] transition-all">
-                    <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20"><Clock className="h-3.5 w-3.5 text-blue-400" /></div>
-                    <span className="text-xs font-medium text-white">Add Labour</span>
-                  </button>
-                  <button onClick={() => {/* scroll to price book picker below */}} className="card-surface-interactive p-3 flex items-center gap-2 touch-manipulation active:scale-[0.98] transition-all">
-                    <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20"><Package className="h-3.5 w-3.5 text-elec-yellow" /></div>
-                    <span className="text-xs font-medium text-white">Add Material</span>
-                  </button>
-                </div>
+                <button onClick={addBundleLabourLine} className="w-full card-surface-interactive p-3 flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all">
+                  <Plus className="h-3.5 w-3.5 text-elec-yellow" />
+                  <span className="text-xs font-medium text-white">Add labour line</span>
+                </button>
               </div>
 
               {/* Price book picker */}
@@ -897,20 +862,13 @@ export default function PriceBook() {
                 <div className="space-y-2">
                   <h3 className="text-xs font-medium text-white uppercase tracking-wider">From Price Book</h3>
                   <div className="space-y-1.5 max-h-56 overflow-y-auto">
-                    {pricedItems.map((p) => {
-                      const cat = deriveCategory(p.item.name);
-                      const style = CAT_STYLES[cat] || CAT_STYLES.General;
-                      return (
-                        <button key={`${p.listId}-${p.item.id}`} onClick={() => addBundleItemFromPriceBook(p)} className="w-full card-surface p-3 flex items-center gap-2.5 text-left touch-manipulation active:scale-[0.98] transition-all">
-                          <div className={cn('p-1.5 rounded-lg flex-shrink-0', style.bg, style.border)}>
-                            <Package className={cn('h-3 w-3', style.color)} />
-                          </div>
-                          <span className="text-xs text-white line-clamp-1 flex-1">{p.item.name}</span>
-                          <span className="text-xs text-elec-yellow font-semibold flex-shrink-0">{formatGBP(getSellPrice(p.item))}</span>
-                          <Plus className="h-3.5 w-3.5 text-white flex-shrink-0" />
-                        </button>
-                      );
-                    })}
+                    {pricedItems.map((p) => (
+                      <button key={`${p.listId}-${p.item.id}`} onClick={() => addBundleItemFromPriceBook(p)} className="w-full card-surface p-3 flex items-center gap-2.5 text-left touch-manipulation active:scale-[0.98] transition-all">
+                        <span className="text-xs text-white line-clamp-1 flex-1">{p.item.name}</span>
+                        <span className="text-xs text-elec-yellow font-semibold flex-shrink-0">{formatGBP(getSellPrice(p.item))}</span>
+                        <Plus className="h-3.5 w-3.5 text-white flex-shrink-0" />
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
@@ -929,12 +887,7 @@ export default function PriceBook() {
       <Sheet open={importSheetOpen} onOpenChange={(open) => { if (!open) { setImportSheetOpen(false); setImportText(''); setImportParsed([]); } }}>
         <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto">
           <SheetHeader>
-            <SheetTitle className="flex items-center gap-2 text-white">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                <Upload className="h-4 w-4 text-emerald-400" />
-              </div>
-              Import Price List
-            </SheetTitle>
+            <SheetTitle className="text-white">Import Price List</SheetTitle>
           </SheetHeader>
           <div className="mt-4 space-y-4 pb-6">
             <p className="text-xs text-white leading-relaxed">
@@ -944,11 +897,9 @@ export default function PriceBook() {
             {/* File upload */}
             <div className="grid grid-cols-2 gap-2">
               <label className="group card-surface-interactive p-3 flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-all cursor-pointer">
-                <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                  <Upload className="h-3.5 w-3.5 text-emerald-400" />
-                </div>
+                <Upload className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-xs font-medium text-white group-hover:text-emerald-300 transition-colors block">Upload File</span>
+                  <span className="text-xs font-medium text-white block">Upload File</span>
                   <span className="text-[10px] text-white">.csv, .xlsx, .docx</span>
                 </div>
                 <input
@@ -959,9 +910,7 @@ export default function PriceBook() {
                 />
               </label>
               <div className="card-surface p-3 flex items-center gap-2.5">
-                <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                  <ClipboardPaste className="h-3.5 w-3.5 text-blue-400" />
-                </div>
+                <ClipboardPaste className="h-4 w-4 text-white/60 flex-shrink-0" />
                 <div className="min-w-0">
                   <span className="text-xs font-medium text-white block">Or Paste Below</span>
                   <span className="text-[10px] text-white">From spreadsheet</span>

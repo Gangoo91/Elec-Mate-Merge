@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { LinkDocumentSheet } from './LinkDocumentSheet';
 
 interface CustomerQuotesCardProps {
   customerId: string;
@@ -11,7 +12,7 @@ interface CustomerQuotesCardProps {
 interface QuoteRow {
   id: string;
   quote_number: string;
-  title?: string;
+  job_details?: { title?: string } | null;
   total: number;
   status: string;
   created_at: string;
@@ -21,16 +22,19 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
   const navigate = useNavigate();
   const [quotes, setQuotes] = useState<QuoteRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [linkSheetOpen, setLinkSheetOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
         const { data, error } = await supabase
           .from('quotes')
-          .select('id, quote_number, total, status, created_at')
+          .select('id, quote_number, job_details, total, status, created_at')
           .eq('customer_id', customerId)
           .order('created_at', { ascending: false })
-          .limit(5);
+          .limit(50);
 
         if (error) throw error;
         setQuotes(data || []);
@@ -42,7 +46,7 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
     };
 
     fetchQuotes();
-  }, [customerId]);
+  }, [customerId, refreshKey]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-GB', {
@@ -75,16 +79,24 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
     <div className="card-surface-interactive rounded-2xl overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
         <h3 className="text-sm font-bold text-white">Quotes</h3>
-        <button
-          onClick={() =>
-            navigate('/electrician/quotes/new', {
-              state: { prefillCustomer: customerName, customerId },
-            })
-          }
-          className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
-        >
-          + New
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setLinkSheetOpen(true)}
+            className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+          >
+            Link existing
+          </button>
+          <button
+            onClick={() =>
+              navigate('/electrician/quotes/new', {
+                state: { prefillCustomer: customerName, customerId },
+              })
+            }
+            className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+          >
+            + New
+          </button>
+        </div>
       </div>
       <div className="p-4">
         {isLoading ? (
@@ -93,7 +105,7 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
           </div>
         ) : quotes.length > 0 ? (
           <div className="space-y-2">
-            {quotes.map((quote) => (
+            {(showAll ? quotes : quotes.slice(0, 5)).map((quote) => (
               <div
                 key={quote.id}
                 onClick={() => navigate(`/electrician/quotes?quoteId=${quote.id}`)}
@@ -101,7 +113,7 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
               >
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm text-white truncate">
-                    {quote.quote_number || quote.title || 'Quote'}
+                    {quote.quote_number || quote.job_details?.title || 'Quote'}
                   </p>
                   <p className="text-xs text-white">{formatCurrency(quote.total)}</p>
                 </div>
@@ -115,6 +127,14 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
                 </div>
               </div>
             ))}
+            {quotes.length > 5 && (
+              <button
+                onClick={() => setShowAll((v) => !v)}
+                className="w-full py-2.5 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+              >
+                {showAll ? 'Show fewer' : `View all (${quotes.length})`}
+              </button>
+            )}
           </div>
         ) : (
           <p className="text-sm text-white text-center py-4">
@@ -122,6 +142,15 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
           </p>
         )}
       </div>
+
+      <LinkDocumentSheet
+        open={linkSheetOpen}
+        onOpenChange={setLinkSheetOpen}
+        customerId={customerId}
+        customerName={customerName}
+        mode="quotes"
+        onLinked={() => setRefreshKey((k) => k + 1)}
+      />
     </div>
   );
 };

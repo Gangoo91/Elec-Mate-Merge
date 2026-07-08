@@ -58,7 +58,9 @@ async function notifyAvailableElectricians(vacancy: Vacancy) {
   }
 }
 
-export type EmploymentType = 'Full-time' | 'Part-time' | 'Contract' | 'Temporary';
+// 'Apprenticeship' was always accepted by the wizard schema and built-in
+// template but missing here — the gap was papered over with `as any` casts
+export type EmploymentType = 'Full-time' | 'Part-time' | 'Contract' | 'Temporary' | 'Apprenticeship';
 export type VacancyStatus = 'Open' | 'Closed' | 'Filled' | 'Draft';
 
 export interface Vacancy {
@@ -74,6 +76,12 @@ export interface Vacancy {
   requirements: string[];
   benefits: string[];
   closing_date: string | null;
+  work_arrangement: string | null;
+  experience_level: string | null;
+  postcode: string | null;
+  schedule: string | null;
+  start_date: string | null;
+  nice_to_have: string[];
   views: number;
   applications_count: number;
   created_at: string;
@@ -409,6 +417,21 @@ export const updateApplicationStatus = async (
   }
 
   return data;
+};
+
+/** Push a status notification directly — for flows where the status was set
+ *  server-side (hire_applicant RPC) so the update-path's changed-status guard
+ *  would otherwise skip the "You're Hired!" push entirely. */
+export const notifyApplicantOfStatus = async (
+  applicationId: string,
+  status: VacancyApplication['status']
+): Promise<void> => {
+  const { data: app } = await supabase
+    .from('employer_vacancy_applications')
+    .select('status, applicant_profile_id, vacancy:employer_vacancies(title)')
+    .eq('id', applicationId)
+    .single();
+  if (app) await notifyApplicantStatusChange(applicationId, app, status);
 };
 
 // Helper to notify applicant of status change

@@ -47,6 +47,8 @@ export interface PayrollEntry {
   regularHours: number;
   overtimeHours: number;
   hourlyRate: number;
+  /** Worker's overtime pay multiplier (1 = flat rate, 1.5 = time and a half). */
+  overtimeMultiplier: number;
   grossPay: number;
   jobBreakdown: Array<{
     jobId: string;

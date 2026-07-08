@@ -1420,17 +1420,17 @@ export type Database = {
         Row: {
           created_at: string;
           query_hash: string;
-          response: string;
+          response: Json;
         };
         Insert: {
           created_at?: string;
           query_hash: string;
-          response: string;
+          response: Json;
         };
         Update: {
           created_at?: string;
           query_hash?: string;
-          response?: string;
+          response?: Json;
         };
         Relationships: [];
       };
@@ -13752,10 +13752,13 @@ export type Database = {
           attachments: Json | null;
           content: string;
           created_at: string;
+          employer_acknowledged_at: string | null;
+          employer_read_at: string | null;
           expires_at: string | null;
           id: string;
           is_pinned: boolean;
           priority: string;
+          requires_acknowledgement: boolean;
           sender_id: string | null;
           target_audience: string;
           target_employee_ids: string[] | null;
@@ -13766,10 +13769,13 @@ export type Database = {
           attachments?: Json | null;
           content: string;
           created_at?: string;
+          employer_acknowledged_at?: string | null;
+          employer_read_at?: string | null;
           expires_at?: string | null;
           id?: string;
           is_pinned?: boolean;
           priority?: string;
+          requires_acknowledgement?: boolean;
           sender_id?: string | null;
           target_audience?: string;
           target_employee_ids?: string[] | null;
@@ -13780,10 +13786,13 @@ export type Database = {
           attachments?: Json | null;
           content?: string;
           created_at?: string;
+          employer_acknowledged_at?: string | null;
+          employer_read_at?: string | null;
           expires_at?: string | null;
           id?: string;
           is_pinned?: boolean;
           priority?: string;
+          requires_acknowledgement?: boolean;
           sender_id?: string | null;
           target_audience?: string;
           target_employee_ids?: string[] | null;
@@ -14315,6 +14324,8 @@ export type Database = {
           is_principal_qs: boolean;
           join_date: string | null;
           name: string;
+          overtime_multiplier: number;
+          overtime_threshold_hours: number;
           pay_type: string;
           phone: string | null;
           photo_url: string | null;
@@ -14337,6 +14348,8 @@ export type Database = {
           is_principal_qs?: boolean;
           join_date?: string | null;
           name: string;
+          overtime_multiplier?: number;
+          overtime_threshold_hours?: number;
           pay_type?: string;
           phone?: string | null;
           photo_url?: string | null;
@@ -14359,6 +14372,8 @@ export type Database = {
           is_principal_qs?: boolean;
           join_date?: string | null;
           name?: string;
+          overtime_multiplier?: number;
+          overtime_threshold_hours?: number;
           pay_type?: string;
           phone?: string | null;
           photo_url?: string | null;
@@ -16414,21 +16429,27 @@ export type Database = {
           created_at: string | null;
           description: string | null;
           employer_id: string | null;
+          experience_level: string | null;
           id: string;
           location: string;
           moderated_at: string | null;
           moderated_by: string | null;
           moderation_notes: string | null;
           moderation_status: string | null;
+          nice_to_have: string[];
+          postcode: string | null;
           requirements: string[] | null;
           salary_max: number | null;
           salary_min: number | null;
           salary_period: string | null;
+          schedule: string | null;
+          start_date: string | null;
           status: string | null;
           title: string;
           type: string | null;
           updated_at: string | null;
           views: number | null;
+          work_arrangement: string | null;
         };
         Insert: {
           applications_count?: number;
@@ -16437,21 +16458,27 @@ export type Database = {
           created_at?: string | null;
           description?: string | null;
           employer_id?: string | null;
+          experience_level?: string | null;
           id?: string;
           location: string;
           moderated_at?: string | null;
           moderated_by?: string | null;
           moderation_notes?: string | null;
           moderation_status?: string | null;
+          nice_to_have?: string[];
+          postcode?: string | null;
           requirements?: string[] | null;
           salary_max?: number | null;
           salary_min?: number | null;
           salary_period?: string | null;
+          schedule?: string | null;
+          start_date?: string | null;
           status?: string | null;
           title: string;
           type?: string | null;
           updated_at?: string | null;
           views?: number | null;
+          work_arrangement?: string | null;
         };
         Update: {
           applications_count?: number;
@@ -16460,21 +16487,27 @@ export type Database = {
           created_at?: string | null;
           description?: string | null;
           employer_id?: string | null;
+          experience_level?: string | null;
           id?: string;
           location?: string;
           moderated_at?: string | null;
           moderated_by?: string | null;
           moderation_notes?: string | null;
           moderation_status?: string | null;
+          nice_to_have?: string[];
+          postcode?: string | null;
           requirements?: string[] | null;
           salary_max?: number | null;
           salary_min?: number | null;
           salary_period?: string | null;
+          schedule?: string | null;
+          start_date?: string | null;
           status?: string | null;
           title?: string;
           type?: string | null;
           updated_at?: string | null;
           views?: number | null;
+          work_arrangement?: string | null;
         };
         Relationships: [
           {
@@ -39801,6 +39834,7 @@ export type Database = {
         Args: { p_employer_ids: string[] };
         Returns: Json;
       };
+      get_job_hub_summary: { Args: { p_job_id: string }; Returns: Json };
       get_lifetime_engagement: {
         Args: { p_user_ids: string[] };
         Returns: {

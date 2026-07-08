@@ -79,7 +79,7 @@ export const createTimesheet = async (
 export const updateTimesheet = async (
   id: string,
   updates: Partial<Timesheet>
-): Promise<Timesheet | null> => {
+): Promise<Timesheet> => {
   const { data, error } = await supabase
     .from('employer_timesheets')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -89,57 +89,103 @@ export const updateTimesheet = async (
 
   if (error) {
     console.error('Error updating timesheet:', error);
-    return null;
+    throw error;
   }
 
   return data;
 };
 
-export const approveTimesheet = async (id: string, approvedBy: string): Promise<boolean> => {
-  const { error } = await supabase
+/** Resolves the signed-in admin for the approval audit trail. Session is read
+ *  locally (no network); the display name comes from profiles — the source of
+ *  truth for names (auth metadata goes stale when a user renames themselves). */
+const getApprover = async (): Promise<{ id: string | null; name: string }> => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user = session?.user;
+  if (!user) return { id: null, name: 'Admin' };
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', user.id)
+    .maybeSingle();
+  const name =
+    profile?.full_name ||
+    (user.user_metadata?.full_name as string | undefined) ||
+    user.email ||
+    'Admin';
+  return { id: user.id, name };
+};
+
+const approvalPayload = (approver: { id: string | null; name: string }) => ({
+  status: 'Approved',
+  approved_by: approver.name,
+  approved_by_id: approver.id,
+  approved_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+});
+
+export const approveTimesheet = async (id: string): Promise<void> => {
+  const approver = await getApprover();
+  // .select() so an RLS denial (0 rows updated, no error) surfaces as a failure
+  // instead of a silent no-op behind a success toast. Status-guarded so an
+  // already-decided row can't be re-stamped (protects the audit trail).
+  const { data, error } = await supabase
     .from('employer_timesheets')
-    .update({
-      status: 'Approved',
-      approved_by: approvedBy,
-      approved_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', id);
+    .update(approvalPayload(approver))
+    .eq('id', id)
+    .eq('status', 'Pending')
+    .select('id');
 
   if (error) {
     console.error('Error approving timesheet:', error);
-    return false;
+    throw error;
   }
-
-  return true;
+  if (!data || data.length === 0) {
+    throw new Error('Timesheet was not approved — it may already be decided, or you lack permission');
+  }
 };
 
-export const rejectTimesheet = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
+const rejectionPayload = () => ({
+  status: 'Rejected',
+  // A rejected row must not carry a live approval stamp
+  approved_by: null,
+  approved_by_id: null,
+  approved_at: null,
+  updated_at: new Date().toISOString(),
+});
+
+export const rejectTimesheet = async (id: string): Promise<void> => {
+  const { data, error } = await supabase
     .from('employer_timesheets')
-    .update({
-      status: 'Rejected',
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', id);
+    .update(rejectionPayload())
+    .eq('id', id)
+    .eq('status', 'Pending')
+    .select('id');
 
   if (error) {
     console.error('Error rejecting timesheet:', error);
-    return false;
+    throw error;
   }
-
-  return true;
+  if (!data || data.length === 0) {
+    throw new Error('Timesheet was not rejected — it may already be decided, or you lack permission');
+  }
 };
 
-export const deleteTimesheet = async (id: string): Promise<boolean> => {
-  const { error } = await supabase.from('employer_timesheets').delete().eq('id', id);
+export const deleteTimesheet = async (id: string): Promise<void> => {
+  const { data, error } = await supabase
+    .from('employer_timesheets')
+    .delete()
+    .eq('id', id)
+    .select('id');
 
   if (error) {
     console.error('Error deleting timesheet:', error);
-    return false;
+    throw error;
   }
-
-  return true;
+  if (!data || data.length === 0) {
+    throw new Error('Timesheet was not deleted — it may have been removed or you lack permission');
+  }
 };
 
 // React Query hooks
@@ -195,8 +241,7 @@ export const useApproveTimesheet = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, approvedBy }: { id: string; approvedBy: string }) =>
-      approveTimesheet(id, approvedBy),
+    mutationFn: ({ id }: { id: string }) => approveTimesheet(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timesheets'] });
     },
@@ -218,11 +263,28 @@ export const useBatchApproveTimesheets = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ ids, approvedBy }: { ids: string[]; approvedBy: string }) => {
-      const results = await Promise.all(ids.map((id) => approveTimesheet(id, approvedBy)));
-      return results.every((r) => r);
+    mutationFn: async ({ ids }: { ids: string[] }) => {
+      // One approver lookup + ONE update for the whole batch — not N round-trips.
+      // Pending-only: already-decided rows are skipped, never re-stamped.
+      const approver = await getApprover();
+      const { data, error } = await supabase
+        .from('employer_timesheets')
+        .update(approvalPayload(approver))
+        .in('id', ids)
+        .eq('status', 'Pending')
+        .select('id');
+
+      if (error) throw error;
+      const updated = data?.length ?? 0;
+      if (updated < ids.length) {
+        throw new Error(
+          `${ids.length - updated} of ${ids.length} were already decided or could not be approved`
+        );
+      }
+      return updated;
     },
-    onSuccess: () => {
+    onSettled: () => {
+      // Settled, not success — partial batches still need the list refreshed
       queryClient.invalidateQueries({ queryKey: ['timesheets'] });
     },
   });
@@ -233,10 +295,23 @@ export const useBatchRejectTimesheets = () => {
 
   return useMutation({
     mutationFn: async (ids: string[]) => {
-      const results = await Promise.all(ids.map((id) => rejectTimesheet(id)));
-      return results.every((r) => r);
+      const { data, error } = await supabase
+        .from('employer_timesheets')
+        .update(rejectionPayload())
+        .in('id', ids)
+        .eq('status', 'Pending')
+        .select('id');
+
+      if (error) throw error;
+      const updated = data?.length ?? 0;
+      if (updated < ids.length) {
+        throw new Error(
+          `${ids.length - updated} of ${ids.length} were already decided or could not be rejected`
+        );
+      }
+      return updated;
     },
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['timesheets'] });
     },
   });

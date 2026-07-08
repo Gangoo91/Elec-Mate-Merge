@@ -91,7 +91,8 @@ function useTodaysActivity() {
       const events: ActivityEvent[] = [];
 
       // Each fetch is wrapped — a failure on one table doesn't kill the feed.
-      const safeQuery = async <T,>(fn: () => Promise<{ data: T | null }>) => {
+      // PromiseLike, not Promise: supabase query builders are thenables.
+      const safeQuery = async <T,>(fn: () => PromiseLike<{ data: T | null }>) => {
         try {
           const { data } = await fn();
           return data ?? null;
@@ -109,18 +110,26 @@ function useTodaysActivity() {
             .order('applied_at', { ascending: false })
             .limit(5)
         ),
-        safeQuery(() =>
-          supabase
+        safeQuery(async () => {
+          // Inner-join + employer scope — profiles are platform-visible for
+          // hiring, so an unscoped query fed OTHER companies' credential
+          // updates into this employer's activity feed
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (!user) return { data: null };
+          return supabase
             .from('employer_elec_id_profiles')
-            .select('id, updated_at')
+            .select('id, updated_at, employee:employer_employees!inner(name, employer_id)')
+            .eq('employee.employer_id', user.id)
             .gte('updated_at', since)
             .order('updated_at', { ascending: false })
-            .limit(5)
-        ),
+            .limit(5);
+        }),
         safeQuery(() =>
           supabase
             .from('employer_worker_locations')
-            .select('id, status, last_updated')
+            .select('id, status, last_updated, employee:employer_employees(name)')
             .gte('last_updated', since)
             .order('last_updated', { ascending: false })
             .limit(5)
@@ -142,14 +151,17 @@ function useTodaysActivity() {
         });
       }
 
+      // Real names — the flagship hub feed reading "Team member" everywhere
+      // looked like placeholder data
       for (const p of (profilesData ?? []) as Array<{
         id: string;
         updated_at: string;
+        employee?: { name?: string | null } | null;
       }>) {
         events.push({
           id: `cred-${p.id}`,
           kind: 'credential',
-          actor: 'Team member',
+          actor: p.employee?.name || 'Team member',
           detail: 'Credentials updated',
           when: p.updated_at,
           tone: 'emerald',
@@ -160,6 +172,7 @@ function useTodaysActivity() {
         id: string;
         status: string;
         last_updated: string;
+        employee?: { name?: string | null } | null;
       }>) {
         const detail =
           l.status === 'On Site'
@@ -170,7 +183,7 @@ function useTodaysActivity() {
         events.push({
           id: `loc-${l.id}`,
           kind: 'clock',
-          actor: 'Team member',
+          actor: l.employee?.name || 'Team member',
           detail,
           when: l.last_updated,
           tone: l.status === 'On Site' ? 'emerald' : 'amber',

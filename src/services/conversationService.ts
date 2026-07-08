@@ -615,6 +615,28 @@ export const searchAllMessages = async (
 // Vacancy Invitations
 // =====================================================
 
+/** All invitations THIS employer has sent — powers the "Invited · Viewed ·
+ *  Applied" outcome pills in the Talent Pool, closing the invite loop. */
+export const getMyInvitations = async (): Promise<VacancyInvitation[]> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from('employer_vacancy_invitations')
+    .select('*')
+    .eq('invited_by', user.id)
+    .order('sent_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching sent invitations:', error);
+    throw error;
+  }
+
+  return data || [];
+};
+
 export const getInvitationsForProfile = async (profileId: string): Promise<VacancyInvitation[]> => {
   const { data, error } = await supabase
     .from('employer_vacancy_invitations')
@@ -686,6 +708,40 @@ export const createInvitation = async (params: {
     console.error('Error creating invitation:', error);
     throw error;
   }
+
+  // Tell the electrician — invites used to depend on them happening to browse
+  // the jobs list. Fire-and-forget: a failed push never blocks the invite.
+  // (No DB trigger exists for this table — verified live 2026-07-08.)
+  void (async () => {
+    try {
+      // user_id lives on the linked employer_employees row, not the profile
+      const [{ data: profile }, { data: vacancy }] = await Promise.all([
+        supabase
+          .from('employer_elec_id_profiles')
+          .select('employee:employer_employees(user_id)')
+          .eq('id', params.electrician_profile_id)
+          .maybeSingle(),
+        supabase
+          .from('employer_vacancies')
+          .select('title')
+          .eq('id', params.vacancy_id)
+          .maybeSingle(),
+      ]);
+      const workerUserId = (profile?.employee as { user_id?: string | null } | null)?.user_id;
+      if (!workerUserId) return;
+      await supabase.functions.invoke('send-push-notification', {
+        body: {
+          userId: workerUserId,
+          title: '📩 Invited to apply',
+          body: `An employer has invited you to apply for ${vacancy?.title || 'a role'}`,
+          type: 'vacancy',
+          data: { vacancyId: params.vacancy_id, invitationId: data.id },
+        },
+      });
+    } catch (pushError) {
+      console.error('Invitation push failed:', pushError);
+    }
+  })();
 
   return data;
 };

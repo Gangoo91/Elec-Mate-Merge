@@ -10,9 +10,6 @@ import {
 } from 'lucide-react';
 import { unlinkCustomerFromReport } from '@/utils/customerHelper';
 import { toast } from 'sonner';
-import { CustomerQuotesCard } from './CustomerQuotesCard';
-import { CustomerInvoicesCard } from './CustomerInvoicesCard';
-import { CustomerPaymentStatsCard } from './CustomerPaymentStatsCard';
 import { CustomerSiteVisitsCard } from './CustomerSiteVisitsCard';
 import { CustomerRAMSCard } from './CustomerRAMSCard';
 import { CustomerDesignConsultationCard } from './CustomerDesignConsultationCard';
@@ -133,12 +130,9 @@ export const CustomerOverviewTab = ({
         </div>
       )}
 
-      {/* Payment Reliability */}
-      <CustomerPaymentStatsCard customerId={customer.id} />
-
       {/* Certificates */}
       <div className="space-y-2">
-        <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Certificates</h3>
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45 px-0.5">Certificates</h3>
         {reportsLoading ? (
           <div className="card-surface p-8 flex items-center justify-center">
             <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
@@ -170,7 +164,7 @@ export const CustomerOverviewTab = ({
 
                     {/* Address */}
                     <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
-                      {report.address || 'No address'}
+                      {report.installation_address || 'No address'}
                     </h3>
 
                     {/* Bottom row */}
@@ -205,27 +199,20 @@ export const CustomerOverviewTab = ({
 
       {/* Tasks */}
       <div className="space-y-2">
-        <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Tasks</h3>
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45 px-0.5">Tasks</h3>
         <CustomerTasksCard customerId={customer.id} customerName={customer.name} />
-      </div>
-
-      {/* Quotes & Invoices */}
-      <div className="space-y-2">
-        <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Financials</h3>
-        <CustomerQuotesCard customerId={customer.id} customerName={customer.name} />
-        <CustomerInvoicesCard customerId={customer.id} customerName={customer.name} />
       </div>
 
       {/* Site Work */}
       <div className="space-y-2">
-        <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">On Site</h3>
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45 px-0.5">On Site</h3>
         <CustomerSiteVisitsCard customerId={customer.id} />
         <CustomerRAMSCard customerId={customer.id} />
       </div>
 
       {/* AI Consultations */}
       <div className="space-y-2">
-        <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">AI Consultations</h3>
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45 px-0.5">AI Consultations</h3>
         <CustomerDesignConsultationCard customerId={customer.id} />
       </div>
     </div>

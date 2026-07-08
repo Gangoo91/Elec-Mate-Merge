@@ -62,8 +62,7 @@ export const useCreateEmployee = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (employee: Omit<Employee, 'id' | 'created_at' | 'updated_at'>) =>
-      createEmployee(employee),
+    mutationFn: (employee: Parameters<typeof createEmployee>[0]) => createEmployee(employee),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: EMPLOYEES_KEY });
     },

@@ -13,6 +13,8 @@ import {
   getRecipientsForCommunication,
   markAsRead,
   acknowledgeMessage,
+  setEmployerReadState,
+  acknowledgeAsEmployer,
   getUnreadCount,
   getCommunicationStats,
   Communication,
@@ -29,13 +31,17 @@ export const useCommunications = (activeOnly = false) => {
   useEffect(() => {
     const channel = supabase
       .channel(realtimeChannelName('communications-changes'))
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'communications' }, () => {
-        queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
-        queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
-      })
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'communication_recipients' },
+        { event: '*', schema: 'public', table: 'employer_communications' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
+          queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_communication_recipients' },
         () => {
           queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
           queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
@@ -89,8 +95,34 @@ export const useCreateCommunication = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (communication: Omit<Communication, 'id' | 'created_at'>) =>
+    mutationFn: (communication: Parameters<typeof createCommunication>[0]) =>
       createCommunication(communication),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
+    },
+  });
+};
+
+/** Persisted employer read state (swipe-right / mark read / open). */
+export const useSetEmployerReadState = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, read }: { id: string; read: boolean }) => setEmployerReadState(id, read),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });
+    },
+  });
+};
+
+/** Persisted employer sign-off on mandatory reading. */
+export const useAcknowledgeAsEmployer = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => acknowledgeAsEmployer(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: COMMUNICATIONS_KEY });
       queryClient.invalidateQueries({ queryKey: COMMUNICATION_STATS_KEY });

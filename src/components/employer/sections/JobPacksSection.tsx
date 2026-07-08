@@ -122,7 +122,7 @@ export const JobPacksSection = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const r = data as any;
       if (error || r?.error) throw new Error(r?.error || error?.message);
-      queryClient.invalidateQueries({ queryKey: ['jobPacks'] });
+      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
 
       toast({
         title: 'Job Pack Sent',

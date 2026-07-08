@@ -234,8 +234,9 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
         phone: result.employee?.phone ?? null,
         avatar_initials: avatarInitials,
         photo_url: null,
-        // DB defaults apply for pay; employer edits these on the roster
-        hourly_rate: 25,
+        // 0 = "no rate set" — the employer sets real pay on the roster;
+        // stamping a default here would fabricate a payroll rate
+        hourly_rate: 0,
         annual_salary: null,
         pay_type: 'hourly',
         join_date: new Date().toISOString().split('T')[0],

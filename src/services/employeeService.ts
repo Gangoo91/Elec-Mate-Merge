@@ -16,6 +16,10 @@ export interface Employee {
   hourly_rate: number;
   annual_salary: number | null;
   pay_type: PayType;
+  /** Pay multiplier for overtime hours — 1 = flat rate, 1.2, 1.5… Defaults 1.5. */
+  overtime_multiplier: number;
+  /** Daily hours above which time counts as overtime. Defaults 8. */
+  overtime_threshold_hours: number;
   join_date: string | null;
   certifications_count: number;
   active_jobs_count: number;
@@ -60,9 +64,14 @@ export const getEmployeeById = async (id: string): Promise<Employee | null> => {
   return data;
 };
 
-export const createEmployee = async (
-  employee: Omit<Employee, 'id' | 'created_at' | 'updated_at'>
-): Promise<Employee> => {
+// Overtime terms are optional on create — the DB defaults them (1.5× over 8h/day)
+type NewEmployee = Omit<
+  Employee,
+  'id' | 'created_at' | 'updated_at' | 'overtime_multiplier' | 'overtime_threshold_hours'
+> &
+  Partial<Pick<Employee, 'overtime_multiplier' | 'overtime_threshold_hours'>>;
+
+export const createEmployee = async (employee: NewEmployee): Promise<Employee> => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -105,7 +114,7 @@ export const createEmployee = async (
 export const updateEmployee = async (
   id: string,
   updates: Partial<Employee>
-): Promise<Employee | null> => {
+): Promise<Employee> => {
   const { data, error } = await supabase
     .from('employer_employees')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -115,7 +124,7 @@ export const updateEmployee = async (
 
   if (error) {
     console.error('Error updating employee:', error);
-    return null;
+    throw error;
   }
 
   // A status change (archive/unarchive) changes the active-seat count — resync
@@ -138,11 +147,14 @@ export const getActiveEmployees = async (): Promise<Employee[]> => {
   } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
+  // Historical rows carried mixed casing; the data is now normalised with a
+  // CHECK constraint, but ilike stays as defence — a casing regression would
+  // silently empty every picker fed by this query.
   const { data, error } = await supabase
     .from('employer_employees')
     .select('*')
     .eq('employer_id', user.id)
-    .eq('status', 'active')
+    .ilike('status', 'active')
     .order('name');
 
   if (error) {

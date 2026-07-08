@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from '@/hooks/use-toast';
@@ -145,8 +146,15 @@ export const ElecIDSection = () => {
     [profiles]
   );
 
-  const expiredItems = allTraining.filter((t) => t.status === 'Expired');
-  const warningItems = allTraining.filter((t) => t.status === 'Warning');
+  // Scoped to the worker whose panel is open — this list renders inside a
+  // single worker's detail view, so showing the whole fleet's expiring
+  // training there misattributed other people's problems to this worker
+  const expiredItems = allTraining.filter(
+    (t) => t.status === 'Expired' && t.workerId === effectiveSelectedProfile?.employee_id
+  );
+  const warningItems = allTraining.filter(
+    (t) => t.status === 'Warning' && t.workerId === effectiveSelectedProfile?.employee_id
+  );
 
   const totalCount = profiles?.length ?? 0;
   const verifiedCount = profiles?.filter((p) => p.is_verified).length ?? 0;
@@ -198,9 +206,17 @@ export const ElecIDSection = () => {
   const handleVerifyCredentials = async () => {
     if (!effectiveSelectedProfile) return;
     try {
+      // Record WHO verified — a shared Elec-ID is only credible to a main
+      // contractor if the verification carries a real identity
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const { data: adminProfile } = user
+        ? await supabase.from('profiles').select('full_name').eq('id', user.id).maybeSingle()
+        : { data: null };
       await verifyProfile.mutateAsync({
         id: effectiveSelectedProfile.id,
-        verifiedBy: 'Employer Admin',
+        verifiedBy: adminProfile?.full_name || user?.email || 'Employer Admin',
       });
       toast({
         title: 'Credentials verified',
@@ -262,8 +278,20 @@ export const ElecIDSection = () => {
       role: effectiveSelectedProfile.employee?.role || 'Electrician',
       photo: effectiveSelectedProfile.employee?.photo_url,
       bio: effectiveSelectedProfile.bio || '',
-      yearsExperience: 0,
-      ecsCardType: effectiveSelectedProfile.ecs_card_type || 'Gold Card',
+      // Real number from work history — every worker showing "0 years" was a
+      // credibility hole on a shareable credential
+      yearsExperience: (() => {
+        const starts = (effectiveSelectedProfile.work_history ?? [])
+          .map((w: { start_date?: string | null }) => w.start_date)
+          .filter(Boolean) as string[];
+        if (starts.length === 0) return 0;
+        const earliest = starts.sort()[0];
+        return Math.max(
+          0,
+          Math.floor((Date.now() - new Date(earliest).getTime()) / (365.25 * 24 * 3600 * 1000))
+        );
+      })(),
+      ecsCardType: effectiveSelectedProfile.ecs_card_type || 'Not recorded',
       ecsCardNumber: effectiveSelectedProfile.ecs_card_number || '',
       ecsExpiry: effectiveSelectedProfile.ecs_expiry_date || '',
       ecsStatus,
@@ -571,7 +599,10 @@ export const ElecIDSection = () => {
                 filteredProfiles.map((profile) => {
                   const ecsStatus = getEcsStatus(profile.ecs_expiry_date);
                   const tone = statusToneMap[ecsStatus] ?? 'emerald';
-                  const cardType = (profile.ecs_card_type || 'Gold').split(' ')[0];
+                  // Never display a card type that was never recorded
+                  const cardType = profile.ecs_card_type
+                    ? profile.ecs_card_type.split(' ')[0]
+                    : 'No ECS card recorded';
                   const expiresLabel = profile.ecs_expiry_date
                     ? `expires ${formatDate(profile.ecs_expiry_date)}`
                     : 'no expiry on record';
@@ -707,23 +738,24 @@ export const ElecIDSection = () => {
                     onClick={async () => {
                       setBulkCreating(true);
                       try {
-                        for (const emp of employeesWithoutElecId) {
-                          const cardType = emp.role?.toLowerCase().includes('apprentice')
-                            ? 'white'
-                            : emp.role?.toLowerCase().includes('supervisor') ||
-                                emp.role?.toLowerCase().includes('manager')
-                              ? 'black'
-                              : emp.role?.toLowerCase().includes('labourer')
-                                ? 'green'
-                                : 'gold';
-                          await createElecIdProfile.mutateAsync({
-                            employee_id: emp.id,
-                            ecs_card_type: cardType,
-                          });
+                        // ECS card type is a real-world credential — never guess
+                        // it from a job title. Create profiles empty; the actual
+                        // card gets recorded per worker. allSettled so one
+                        // failure doesn't strand a half-created batch silently.
+                        const results = await Promise.allSettled(
+                          employeesWithoutElecId.map((emp) =>
+                            createElecIdProfile.mutateAsync({ employee_id: emp.id })
+                          )
+                        );
+                        const failed = results.filter((r) => r.status === 'rejected').length;
+                        if (failed > 0) {
+                          throw new Error(
+                            `${failed} of ${employeesWithoutElecId.length} could not be created`
+                          );
                         }
                         toast({
                           title: 'Elec-IDs created',
-                          description: `Created Elec-ID profiles for ${employeesWithoutElecId.length} employees`,
+                          description: `Created ${employeesWithoutElecId.length} profiles — add each worker's real ECS card details next`,
                         });
                         setCreateElecIdSheetOpen(false);
                       } catch (error) {

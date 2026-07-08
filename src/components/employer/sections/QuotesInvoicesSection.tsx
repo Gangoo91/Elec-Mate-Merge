@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import {
@@ -148,6 +149,32 @@ export function QuotesInvoicesSection() {
 
   const { data: quotes = [], isLoading: quotesLoading } = useQuotes();
   const { data: invoices = [], isLoading: invoicesLoading } = useInvoices();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deep-link: ?quote=<id> / ?invoice=<id> opens that record directly
+  // (e.g. from a client's linked list).
+  useEffect(() => {
+    const qid = searchParams.get('quote');
+    const iid = searchParams.get('invoice');
+    if (!qid && !iid) return;
+    if (qid && quotes.length) {
+      const q = quotes.find((x) => x.id === qid);
+      if (q) setSelectedQuote(q);
+    }
+    if (iid && invoices.length) {
+      const inv = invoices.find((x) => x.id === iid);
+      if (inv) setSelectedInvoice(inv);
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('quote');
+        next.delete('invoice');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, quotes, invoices, setSearchParams]);
   const sendQuoteMutation = useSendQuote();
   const markPaidMutation = useMarkInvoicePaid();
   const isMobile = useIsMobile();

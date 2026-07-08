@@ -1,7 +1,13 @@
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
 // Types matching the database schema
 export type RateType = 'hourly' | 'daily' | 'weekly' | 'yearly';
+
+/** Boundary conversion: generated Rows carry plain strings/nullables where the
+ *  app narrows to unions and non-null (validated by writers/UI). Cast once at
+ *  the query edge rather than implicitly at every return. */
+const toElecIdProfile = (row: unknown): ElecIdProfile => row as ElecIdProfile;
 
 export interface ElecIdProfile {
   id: string;
@@ -137,13 +143,15 @@ export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
         .order('date_achieved', { ascending: false }),
     ]);
 
-  return profiles.map((profile) => ({
-    ...profile,
-    skills: skills?.filter((s) => s.profile_id === profile.id) || [],
-    work_history: workHistory?.filter((w) => w.profile_id === profile.id) || [],
-    training: training?.filter((t) => t.profile_id === profile.id) || [],
-    qualifications: qualifications?.filter((q) => q.profile_id === profile.id) || [],
-  }));
+  return profiles.map((profile) =>
+    toElecIdProfile({
+      ...profile,
+      skills: skills?.filter((s) => s.profile_id === profile.id) || [],
+      work_history: workHistory?.filter((w) => w.profile_id === profile.id) || [],
+      training: training?.filter((t) => t.profile_id === profile.id) || [],
+      qualifications: qualifications?.filter((q) => q.profile_id === profile.id) || [],
+    })
+  );
 };
 
 // Fetch single profile by employee ID
@@ -184,13 +192,13 @@ export const getElecIdProfileByEmployeeId = async (
         .order('date_achieved', { ascending: false }),
     ]);
 
-  return {
+  return toElecIdProfile({
     ...profile,
     skills: skills || [],
     work_history: workHistory || [],
     training: training || [],
     qualifications: qualifications || [],
-  };
+  });
 };
 
 // Lookup profile by Elec-ID number (for scanning)
@@ -237,20 +245,20 @@ export const getElecIdProfileByNumber = async (
     .update({ profile_views: (profile.profile_views || 0) + 1 })
     .eq('id', profile.id);
 
-  return {
+  return toElecIdProfile({
     ...profile,
     skills: skills || [],
     work_history: workHistory || [],
     training: training || [],
     qualifications: qualifications || [],
-  };
+  });
 };
 
 // Create a new profile
 export const createElecIdProfile = async (data: {
   employee_id: string;
   elec_id_number?: string;
-  ecs_card_type?: string;
+  ecs_card_type?: string | null;
   ecs_card_number?: string;
   ecs_expiry_date?: string;
   bio?: string;
@@ -264,12 +272,20 @@ export const createElecIdProfile = async (data: {
 
   const { data: profile, error } = await supabase
     .from('employer_elec_id_profiles')
-    .insert({ ...data, elec_id_number: elecIdNumber })
+    // ecs_card_type has a DB default of 'gold' — omitting it stamps a
+    // fabricated Gold Card on the credential. Explicit null = "not recorded".
+    .insert({ ...data, elec_id_number: elecIdNumber, ecs_card_type: data.ecs_card_type ?? null })
     .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .single();
 
   if (error) throw error;
-  return { ...profile, skills: [], work_history: [], training: [], qualifications: [] };
+  return toElecIdProfile({
+    ...profile,
+    skills: [],
+    work_history: [],
+    training: [],
+    qualifications: [],
+  });
 };
 
 // Update profile
@@ -279,13 +295,15 @@ export const updateElecIdProfile = async (
 ): Promise<ElecIdProfile> => {
   const { data, error } = await supabase
     .from('employer_elec_id_profiles')
-    .update(updates)
+    .update(
+      updates as unknown as Database['public']['Tables']['employer_elec_id_profiles']['Update']
+    )
     .eq('id', id)
     .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .single();
 
   if (error) throw error;
-  return data;
+  return toElecIdProfile(data);
 };
 
 // Verify profile credentials
@@ -305,7 +323,7 @@ export const verifyElecIdProfile = async (
     .single();
 
   if (error) throw error;
-  return data;
+  return toElecIdProfile(data);
 };
 
 // Generate shareable link — inserts a real, resolvable share-link row (the
@@ -533,6 +551,8 @@ export interface UserCV {
   updated_at: string;
 }
 
+const toUserCV = (row: unknown): UserCV => row as UserCV;
+
 // Get all CVs for the current user
 export const getUserCVs = async (): Promise<UserCV[]> => {
   const {
@@ -547,7 +567,7 @@ export const getUserCVs = async (): Promise<UserCV[]> => {
     .order('updated_at', { ascending: false });
 
   if (error) throw error;
-  return data || [];
+  return (data || []).map(toUserCV);
 };
 
 // Get a specific CV by ID
@@ -555,7 +575,7 @@ export const getCVById = async (cvId: string): Promise<UserCV | null> => {
   const { data, error } = await supabase.from('user_cvs').select('*').eq('id', cvId).maybeSingle();
 
   if (error) throw error;
-  return data;
+  return data ? toUserCV(data) : null;
 };
 
 // Get user's primary CV
@@ -573,7 +593,7 @@ export const getPrimaryCV = async (): Promise<UserCV | null> => {
     .maybeSingle();
 
   if (error) throw error;
-  return data;
+  return data ? toUserCV(data) : null;
 };
 
 // Save a new CV
@@ -594,7 +614,7 @@ export const saveCV = async (cvData: {
     .insert({
       user_id: user.id,
       template_id: cvData.template_id,
-      cv_data: cvData.cv_data,
+      cv_data: cvData.cv_data as Database['public']['Tables']['user_cvs']['Insert']['cv_data'],
       title: cvData.title || 'My CV',
       is_primary: cvData.is_primary ?? false,
       pdf_url: cvData.pdf_url,
@@ -603,7 +623,7 @@ export const saveCV = async (cvData: {
     .single();
 
   if (error) throw error;
-  return data;
+  return toUserCV(data);
 };
 
 // Update an existing CV
@@ -619,13 +639,13 @@ export const updateCV = async (
 ): Promise<UserCV> => {
   const { data, error } = await supabase
     .from('user_cvs')
-    .update(updates)
+    .update(updates as unknown as Database['public']['Tables']['user_cvs']['Update'])
     .eq('id', cvId)
     .select()
     .single();
 
   if (error) throw error;
-  return data;
+  return toUserCV(data);
 };
 
 // Delete a CV

@@ -89,7 +89,7 @@ export default function TeamInviteAccept() {
     const timeout = setTimeout(() => {
       if (!active) return;
       setLoadError(
-        'This is taking longer than expected. Check your connection and reopen the link — or ask your employer to resend it.'
+        'This is taking longer than expected. If you opened this from your email app, copy the link into Safari or Chrome — or check your connection and try again.'
       );
       setLoading(false);
     }, 12000);

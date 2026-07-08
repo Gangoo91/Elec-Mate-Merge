@@ -112,22 +112,26 @@ export const checkInWorker = async (
   return updateWorkerLocation(employeeId, lat, lng, 'On Site', jobId);
 };
 
-export const checkOutWorker = async (locationId: string): Promise<boolean> => {
-  const { error } = await supabase
+export const checkOutWorker = async (locationId: string): Promise<void> => {
+  // .select() so an RLS denial (0 rows updated, no error) surfaces as a failure
+  // instead of a silent no-op behind a "checked out" toast.
+  const { data, error } = await supabase
     .from('employer_worker_locations')
     .update({
       checked_out_at: new Date().toISOString(),
       status: 'Off Duty' as WorkerStatus,
       last_updated: new Date().toISOString(),
     })
-    .eq('id', locationId);
+    .eq('id', locationId)
+    .select('id');
 
   if (error) {
     console.error('Error checking out worker:', error);
-    return false;
+    throw error;
   }
-
-  return true;
+  if (!data || data.length === 0) {
+    throw new Error('Check-out was not recorded — you may lack permission to update this worker');
+  }
 };
 
 export const getWorkerLocationsByJob = async (

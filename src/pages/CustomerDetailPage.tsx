@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { CustomerOverviewTab } from '@/components/customers/CustomerOverviewTab';
+import { CustomerFinancialsTab } from '@/components/customers/CustomerFinancialsTab';
 import { CustomerPropertiesTab } from '@/components/customers/CustomerPropertiesTab';
 import { CustomerTimelineTab } from '@/components/customers/CustomerTimelineTab';
 import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
@@ -235,7 +236,9 @@ export default function CustomerDetailPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showQuickNote, setShowQuickNote] = useState(false);
   const [showStartCertificate, setShowStartCertificate] = useState(false);
-  const [activeSection, setActiveSection] = useState<'work' | 'properties' | 'timeline'>('work');
+  const [activeSection, setActiveSection] = useState<
+    'work' | 'financials' | 'properties' | 'timeline'
+  >('work');
   const [stats, setStats] = useState<{
     quoteCount: number;
     invoiceCount: number;
@@ -806,6 +809,7 @@ export default function CustomerDetailPage() {
             {(
               [
                 { key: 'work' as const, label: 'Work history' },
+                { key: 'financials' as const, label: 'Financials' },
                 {
                   key: 'properties' as const,
                   label: `Properties (${customer.propertyCount || 0})`,
@@ -842,6 +846,7 @@ export default function CustomerDetailPage() {
                 onRefresh={refetch}
               />
             )}
+            {activeSection === 'financials' && <CustomerFinancialsTab customer={customer} />}
             {activeSection === 'properties' && (
               <CustomerPropertiesTab customerId={customer.id} onRefresh={refetch} />
             )}

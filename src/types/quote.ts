@@ -189,6 +189,8 @@ export interface Quote {
   linked_certificate_pdf_url?: string;
   // Project linking
   project_id?: string;
+  // CRM linking — customers.id this quote/invoice belongs to
+  customer_id?: string | null;
   // External accounting sync fields
   external_invoice_id?: string;
   external_invoice_provider?: string;

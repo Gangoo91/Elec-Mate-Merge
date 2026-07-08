@@ -24,6 +24,7 @@ import {
   useArchiveJob,
   useSetJobAsTemplate,
 } from '@/hooks/useJobs';
+import type { JobStatus } from '@/services/jobService';
 import { useAllJobLabelAssignments, JobLabel } from '@/hooks/useJobLabels';
 import { useAllJobChecklistSummaries } from '@/hooks/useJobChecklists';
 import { JobLabelStrips } from '@/components/employer/JobLabelPicker';
@@ -71,15 +72,6 @@ const stages: StageDef[] = [
   { id: 'Complete', label: 'Complete', tone: 'emerald' },
 ];
 
-const stageToStatusMap: Record<string, { status: string; progress: number }> = {
-  Quoted: { status: 'Pending', progress: 0 },
-  Confirmed: { status: 'On Hold', progress: 0 },
-  Scheduled: { status: 'Active', progress: 0 },
-  'In Progress': { status: 'Active', progress: 25 },
-  Testing: { status: 'Active', progress: 90 },
-  Complete: { status: 'Completed', progress: 100 },
-};
-
 // Moving columns must not destroy real progress: keep the job's own number
 // when it already satisfies the target column, only nudge to the boundary
 // when it doesn't.
@@ -96,14 +88,28 @@ const progressForStage = (stageId: string, current: number): number => {
   }
 };
 
-const getStageFromJob = (job: { status: string; progress: number }): string => {
+const STAGE_IDS = stages.map((s) => s.id);
+
+const getStageFromJob = (job: {
+  board_stage?: string | null;
+  status: string;
+  progress: number;
+}): string => {
+  // Board position is its own column now — use it when the job has been placed.
+  if (job.board_stage && STAGE_IDS.includes(job.board_stage)) return job.board_stage;
+  // Legacy fallback for jobs never moved on the board.
   if (job.status === 'Completed') return 'Complete';
   if (job.status === 'Pending') return 'Quoted';
-  if (job.status === 'On Hold') return 'Confirmed';
   if (job.progress >= 90) return 'Testing';
   if (job.progress > 0) return 'In Progress';
   return 'Scheduled';
 };
+
+// The lifecycle status a board stage implies. Confirmed/Scheduled/In Progress/
+// Testing are all live work → 'Active' (never 'On Hold', the old corruption);
+// Quoted = not yet won; Complete = done.
+const statusForStage = (stageId: string): JobStatus =>
+  stageId === 'Complete' ? 'Completed' : stageId === 'Quoted' ? 'Pending' : 'Active';
 
 const getStageTone = (stageId: string): Tone =>
   stages.find((s) => s.id === stageId)?.tone ?? 'yellow';
@@ -175,6 +181,13 @@ export function JobBoardSection() {
   const getStageValue = (stageId: string) =>
     getJobsForStage(stageId).reduce((sum, job) => sum + (job.value || 0), 0);
 
+  // Compact money that doesn't lie: £600 stays £600, £1.5k, £12k.
+  const fmtCompact = (n: number) => {
+    if (!n) return '£0';
+    if (n >= 1000) return `£${(n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '')}k`;
+    return `£${Math.round(n)}`;
+  };
+
   const handleDragStart = (jobId: string) => setDraggedJob(jobId);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -190,14 +203,13 @@ export function JobBoardSection() {
       return;
     }
 
-    const { status } = stageToStatusMap[stageId];
     const draggedJobRow = jobs.find((j) => j.id === draggedJob);
     const progress = progressForStage(stageId, draggedJobRow?.progress ?? 0);
 
     try {
       await updateJob.mutateAsync({
         id: draggedJob,
-        updates: { status: status as any, progress },
+        updates: { board_stage: stageId, status: statusForStage(stageId), progress },
       });
       toast.success(`Moved to ${stageId}`);
     } catch (error) {
@@ -218,15 +230,16 @@ export function JobBoardSection() {
   const handleQuickAdd = async (stageId: string) => {
     if (!quickAddTitle.trim() || !quickAddClient.trim()) return;
 
-    const { status, progress } = stageToStatusMap[stageId];
+    const progress = progressForStage(stageId, 0);
 
     try {
       await createJob.mutateAsync({
         title: quickAddTitle.trim(),
         client: quickAddClient.trim(),
         location: 'TBC',
-        status: status as any,
+        status: statusForStage(stageId),
         progress,
+        board_stage: stageId,
         value: 0,
         workers_count: 0,
         lat: null,
@@ -245,15 +258,16 @@ export function JobBoardSection() {
   };
 
   const handleMobileQuickAdd = async (title: string, stageId: string) => {
-    const { status, progress } = stageToStatusMap[stageId];
+    const progress = progressForStage(stageId, 0);
 
     try {
       await createJob.mutateAsync({
         title: title.trim(),
         client: 'TBC',
         location: 'TBC',
-        status: status as any,
+        status: statusForStage(stageId),
         progress,
+        board_stage: stageId,
         value: 0,
         workers_count: 0,
         lat: null,
@@ -278,13 +292,12 @@ export function JobBoardSection() {
   };
 
   const handleMoveJob = async (jobId: string, stageId: string) => {
-    const { status } = stageToStatusMap[stageId];
     const movingJob = jobs.find((j) => j.id === jobId);
     const progress = progressForStage(stageId, movingJob?.progress ?? 0);
     try {
       await updateJob.mutateAsync({
         id: jobId,
-        updates: { status: status as any, progress },
+        updates: { board_stage: stageId, status: statusForStage(stageId), progress },
       });
       toast.success(`Moved to ${stageId}`);
     } catch (error) {
@@ -324,7 +337,7 @@ export function JobBoardSection() {
       id: job.id,
       title: job.title,
       subtitle: job.client,
-      value: job.value ? `£${(job.value / 1000).toFixed(0)}k` : undefined,
+      value: job.value ? fmtCompact(job.value) : undefined,
       progress: job.progress,
       stage: job.stage,
       location: job.location,
@@ -465,18 +478,7 @@ export function JobBoardSection() {
               items={mobileKanbanItems}
               stages={mobileStages}
               onItemClick={handleJobClick}
-              onStageChange={async (itemId, newStage) => {
-                const { status, progress } = stageToStatusMap[newStage];
-                try {
-                  await updateJob.mutateAsync({
-                    id: itemId,
-                    updates: { status: status as any, progress },
-                  });
-                  toast.success(`Moved to ${newStage}`);
-                } catch (error) {
-                  toast.error('Failed to move job');
-                }
-              }}
+              onStageChange={(itemId, newStage) => handleMoveJob(itemId, newStage)}
               onArchive={handleArchiveJob}
               onQuickAdd={handleMobileQuickAdd}
             />
@@ -515,7 +517,7 @@ export function JobBoardSection() {
                         <div className="flex items-center gap-2">
                           <Pill tone={stage.tone}>{stageJobs.length}</Pill>
                           <span className="text-[11px] tabular-nums text-white">
-                            £{(stageValue / 1000).toFixed(0)}k
+                            {fmtCompact(stageValue)}
                           </span>
                         </div>
                       }
@@ -570,7 +572,7 @@ export function JobBoardSection() {
                                     <span className="truncate">{job.client}</span>
                                     <span className="text-white">·</span>
                                     <span className="tabular-nums text-white">
-                                      £{((job.value || 0) / 1000).toFixed(0)}k
+                                      {fmtCompact(job.value || 0)}
                                     </span>
                                   </span>
                                 }
@@ -711,7 +713,7 @@ export function JobBoardSection() {
 
       {totalJobs > 0 && (
         <div className="text-[11px] text-white text-center tabular-nums">
-          {totalJobs} jobs · £{(pipelineValue / 1000).toFixed(0)}k pipeline
+          {totalJobs} jobs · {fmtCompact(pipelineValue)} pipeline
         </div>
       )}
 

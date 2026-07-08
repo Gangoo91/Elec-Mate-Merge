@@ -47,9 +47,16 @@ interface AddJobDialogProps {
   trigger?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** When created from a client, pre-fills + auto-links the job to them. */
+  prefillClient?: string;
 }
 
-export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: AddJobDialogProps) {
+export function AddJobDialog({
+  trigger,
+  open: controlledOpen,
+  onOpenChange,
+  prefillClient,
+}: AddJobDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
@@ -68,6 +75,11 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
     workersCount: '1',
     description: '',
   });
+
+  // Created from a client → pre-fill their name (the insert auto-links to the CRM).
+  useEffect(() => {
+    if (open && prefillClient) setFormData((prev) => ({ ...prev, client: prefillClient }));
+  }, [open, prefillClient]);
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();

@@ -64,12 +64,17 @@ export function ResumeCard() {
     enabled: !!user?.id && profile?.role !== 'apprentice',
     staleTime: 60_000,
     queryFn: async () => {
+      // "Left off" means recently — a months-old draft isn't in flight, and
+      // surfacing it forever made the card feel stuck (ELE-1290)
+      const recencyCutoff = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+
       const [certRes, quoteRes] = await Promise.all([
         supabase
           .from('reports')
           .select('id, report_type, client_name, installation_address, updated_at')
           .eq('user_id', user!.id)
           .in('status', RESUMABLE_STATUSES)
+          .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
           .limit(1),
         supabase
@@ -77,6 +82,7 @@ export function ResumeCard() {
           .select('id, total, status, updated_at, quote_number, client_data')
           .eq('user_id', user!.id)
           .eq('status', 'draft')
+          .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
           .limit(1),
       ]);

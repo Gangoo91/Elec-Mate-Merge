@@ -84,15 +84,21 @@ export function VacancyFormWizard({
 
   const { handleSubmit, trigger, reset, watch, setValue, formState } = methods;
 
-  // Load draft from localStorage on mount
+  // Rehydrate whenever the wizard OPENS — it stays mounted in the section, so
+  // defaultValues only ever ran once; without this, tapping Edit on a vacancy
+  // showed stale/blank values and Publish could overwrite it with them.
   useEffect(() => {
-    if (!editData && !duplicateData) {
-      const draft = storageGetJSONSync<Partial<VacancyFormData> | null>(DRAFT_STORAGE_KEY, null);
-      if (draft) {
-        reset({ ...defaultVacancyValues, ...draft });
-      }
+    if (!open) return;
+    if (editData || duplicateData) {
+      reset({ ...defaultVacancyValues, ...(editData || duplicateData) });
+      setCurrentStep(0);
+      return;
     }
-  }, [editData, duplicateData, reset]);
+    const draft = storageGetJSONSync<Partial<VacancyFormData> | null>(DRAFT_STORAGE_KEY, null);
+    if (draft) {
+      reset({ ...defaultVacancyValues, ...draft });
+    }
+  }, [open, editData, duplicateData, reset]);
 
   // Auto-save draft every 30 seconds
   useEffect(() => {
@@ -164,7 +170,7 @@ export function VacancyFormWizard({
         haptic.success();
         toast({ title: 'Vacancy updated', description: 'Your job vacancy has been updated.' });
       } else {
-        await createVacancy.mutateAsync(data as any);
+        await createVacancy.mutateAsync({ formData: data });
         haptic.success();
         toast({ title: 'Vacancy published', description: 'Your job vacancy is now live!' });
         clearDraft();
@@ -183,14 +189,46 @@ export function VacancyFormWizard({
     }
   };
 
-  // Handle save as draft
-  const handleSaveDraft = () => {
+  // Handle save as draft — a REAL row with status 'Draft', visible in the
+  // Drafts tab on every device. Needs at least a title; falls back to the
+  // local autosave when there's nothing worth persisting yet.
+  const handleSaveDraft = async () => {
+    // Editing an existing vacancy: "save as draft" would silently write the
+    // edits to the NEW-vacancy localStorage key and change nothing on the
+    // vacancy itself — refuse with an honest message instead.
+    if (isEditing) {
+      toast({
+        title: 'This vacancy already exists',
+        description: 'Use Update to save your changes to it.',
+      });
+      return;
+    }
     setIsSavingDraft(true);
     const values = methods.getValues();
-    storageSetSync(DRAFT_STORAGE_KEY, JSON.stringify(values));
-    setLastSaved(new Date());
-    setTimeout(() => setIsSavingDraft(false), 500);
-    toast({ title: 'Draft saved', description: 'Your vacancy has been saved as a draft.' });
+    try {
+      if (!isEditing && values.title?.trim()) {
+        await createVacancy.mutateAsync({ formData: values, asDraft: true });
+        clearDraft();
+        toast({
+          title: 'Draft saved',
+          description: 'Find it in the Drafts tab — publish when ready.',
+        });
+        onOpenChange(false);
+        reset(defaultVacancyValues);
+        setCurrentStep(0);
+      } else {
+        storageSetSync(DRAFT_STORAGE_KEY, JSON.stringify(values));
+        setLastSaved(new Date());
+        toast({ title: 'Draft saved on this device' });
+      }
+    } catch {
+      // DB draft failed — keep the local copy so nothing is lost
+      storageSetSync(DRAFT_STORAGE_KEY, JSON.stringify(values));
+      setLastSaved(new Date());
+      toast({ title: 'Saved locally', description: 'Could not reach the server.' });
+    } finally {
+      setIsSavingDraft(false);
+    }
   };
 
   // Handle template selection
@@ -200,11 +238,15 @@ export function VacancyFormWizard({
     toast({ title: 'Template loaded', description: 'Template has been applied to the form.' });
   };
 
-  // Handle close
+  // Handle close — quietly autosave to localStorage only (crash recovery).
+  // Closing must never create DB drafts or clobber anything with a toast.
   const handleClose = () => {
-    // Save draft before closing if not editing
     if (!isEditing) {
-      handleSaveDraft();
+      const values = methods.getValues();
+      if (values.title?.trim() || values.description?.trim()) {
+        storageSetSync(DRAFT_STORAGE_KEY, JSON.stringify(values));
+        setLastSaved(new Date());
+      }
     }
     onOpenChange(false);
   };
@@ -423,7 +465,7 @@ export function VacancyFormWizard({
                   <SecondaryButton
                     type="button"
                     onClick={handleSaveDraft}
-                    className="hidden sm:inline-flex"
+                    className="inline-flex"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     Save Draft

@@ -58,6 +58,7 @@ import {
   PrimaryButton,
   selectTriggerClass,
   selectContentClass,
+  textareaClass,
   type Tone,
 } from '@/components/employer/editorial';
 
@@ -66,7 +67,11 @@ const STATUS_TONE: Record<string, Tone> = {
   'En Route': 'blue',
   Office: 'amber',
   'On Leave': 'red',
+  'Off Duty': 'purple',
 };
+
+/** A location update older than this is presented as history, not live. */
+const STALE_AFTER_HOURS = 12;
 
 export function WorkerTrackingSection() {
   const isMobile = useIsMobile();
@@ -113,25 +118,40 @@ export function WorkerTrackingSection() {
     window.location.href = `tel:${phone}`;
   };
 
-  const handleMessage = async (employeeId: string, employeeName: string) => {
-    const content = window.prompt(`Message to ${employeeName}:`);
-    if (!content?.trim()) return;
+  // Proper composer sheet — window.prompt broke in WebViews and had no
+  // native feel; the worker receives this through the comms pipeline
+  const [messageTarget, setMessageTarget] = useState<{ id: string; name: string } | null>(null);
+  const [messageText, setMessageText] = useState('');
+  const [isSending, setIsSending] = useState(false);
+
+  const handleMessage = (employeeId: string, employeeName: string) => {
+    setMessageText('');
+    setMessageTarget({ id: employeeId, name: employeeName });
+  };
+
+  const sendWorkerMessage = async () => {
+    if (!messageTarget || !messageText.trim()) return;
+    setIsSending(true);
     try {
       await createCommunication({
         sender_id: null,
         type: 'message',
-        title: `Message for ${employeeName}`,
-        content: content.trim(),
+        title: `Message for ${messageTarget.name}`,
+        content: messageText.trim(),
         priority: 'normal',
         target_audience: 'specific',
-        target_employee_ids: [employeeId],
+        target_employee_ids: [messageTarget.id],
         attachments: null,
         is_pinned: false,
         expires_at: null,
       });
-      toast({ title: 'Message sent', description: `Sent to ${employeeName}.` });
+      toast({ title: 'Message sent', description: `Sent to ${messageTarget.name}.` });
+      setMessageTarget(null);
+      setMessageText('');
     } catch {
       toast({ title: 'Send failed', variant: 'destructive' });
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -142,25 +162,40 @@ export function WorkerTrackingSection() {
     }
 
     try {
-      let lat = 53.4808;
-      let lng = -2.2426;
+      // A remote check-in records where the WORKER is — the job site — never
+      // the admin's own device GPS (an office check-in would pin the worker at
+      // head office). Job coordinates win; admin GPS is only a last resort for
+      // jobs with no coordinates on record.
+      let lat: number | null = null;
+      let lng: number | null = null;
 
       const selectedJobData = jobsData.find((j) => j.id === selectedJob);
-      if (selectedJobData?.lat && selectedJobData?.lng) {
+      // != null, not truthiness — longitude 0 is the Greenwich meridian, which
+      // runs through east London; a real coordinate, not a missing one
+      if (selectedJobData?.lat != null && selectedJobData?.lng != null) {
         lat = selectedJobData.lat;
         lng = selectedJobData.lng;
+      } else {
+        try {
+          const position = await getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 60000,
+          });
+          lat = position.latitude;
+          lng = position.longitude;
+        } catch {
+          // No job coords and no GPS — refuse to invent a position
+        }
       }
 
-      try {
-        const position = await getCurrentPosition({
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 60000,
+      if (lat === null || lng === null) {
+        toast({
+          title: 'No location available',
+          description: 'Add an address to the job, or ask the worker to check in from their phone.',
+          variant: 'destructive',
         });
-        lat = position.latitude;
-        lng = position.longitude;
-      } catch {
-        // GPS unavailable, fall back to job location or default
+        return;
       }
 
       await checkInMutation.mutateAsync({
@@ -188,6 +223,19 @@ export function WorkerTrackingSection() {
     }
   };
 
+  // The map must tell the same truth as the list — stale rows demote there too,
+  // so a fortnight-old position can't render as a live green marker.
+  const mapLocations = useMemo(
+    () =>
+      workerLocations.map((loc) => {
+        const isStale =
+          !loc.last_updated ||
+          Date.now() - new Date(loc.last_updated).getTime() > STALE_AFTER_HOURS * 60 * 60 * 1000;
+        return isStale ? { ...loc, status: 'Off Duty' as typeof loc.status } : loc;
+      }),
+    [workerLocations]
+  );
+
   const workerCheckIns = useMemo(() => {
     const locationMap = new Map(workerLocations.map((loc) => [loc.employee_id, loc]));
 
@@ -195,17 +243,34 @@ export function WorkerTrackingSection() {
       const location = locationMap.get(emp.id);
       const jobData = location?.jobs as { title?: string } | null | undefined;
 
+      // A days-old "On Site" row is history, not a live position — presenting
+      // it as live (with a time-only stamp implying today) was the page's
+      // biggest lie. Stale rows demote to Off Duty with a dated "last seen".
+      const lastUpdatedMs = location?.last_updated ? new Date(location.last_updated).getTime() : 0;
+      const isStale = !!location && Date.now() - lastUpdatedMs > STALE_AFTER_HOURS * 60 * 60 * 1000;
+      const liveStatus = isStale
+        ? 'Off Duty'
+        : location?.status || (emp.status === 'On Leave' ? 'On Leave' : 'Office');
+      const stamp = location?.checked_in_at || location?.last_updated;
+
       return {
         id: emp.id,
         employeeId: emp.id,
         employeeName: emp.name,
-        status: location?.status || (emp.status === 'On Leave' ? 'On Leave' : 'Office'),
+        status: liveStatus,
+        isStale,
         jobTitle: jobData?.title || null,
-        checkInTime: location?.checked_in_at
-          ? new Date(location.checked_in_at).toLocaleTimeString('en-GB', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })
+        checkInTime: stamp
+          ? isStale
+            ? `Last seen ${new Date(stamp).toLocaleDateString('en-GB', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+              })}`
+            : new Date(stamp).toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })
           : null,
         avatar: emp.avatar_initials,
         role: emp.team_role,
@@ -223,6 +288,7 @@ export function WorkerTrackingSection() {
       enRoute: workerCheckIns.filter((c) => c.status === 'En Route').length,
       office: workerCheckIns.filter((c) => c.status === 'Office').length,
       onLeave: workerCheckIns.filter((c) => c.status === 'On Leave').length,
+      offDuty: workerCheckIns.filter((c) => c.status === 'Off Duty').length,
     }),
     [workerCheckIns]
   );
@@ -237,6 +303,7 @@ export function WorkerTrackingSection() {
         (activeTab === 'onsite' && c.status === 'On Site') ||
         (activeTab === 'enroute' && c.status === 'En Route') ||
         (activeTab === 'office' && c.status === 'Office') ||
+        (activeTab === 'offduty' && c.status === 'Off Duty') ||
         (activeTab === 'onleave' && c.status === 'On Leave');
       return matchesSearch && matchesTab;
     });
@@ -279,30 +346,27 @@ export function WorkerTrackingSection() {
                 <IconButton
                   onClick={() => setViewMode('list')}
                   aria-label="List view"
-                  className={viewMode === 'list' ? 'bg-elec-yellow text-black border-elec-yellow' : ''}
+                  className={
+                    viewMode === 'list' ? 'bg-elec-yellow text-black border-elec-yellow' : ''
+                  }
                 >
                   <List className="h-4 w-4" />
                 </IconButton>
                 <IconButton
                   onClick={() => setViewMode('map')}
                   aria-label="Map view"
-                  className={viewMode === 'map' ? 'bg-elec-yellow text-black border-elec-yellow' : ''}
+                  className={
+                    viewMode === 'map' ? 'bg-elec-yellow text-black border-elec-yellow' : ''
+                  }
                 >
                   <MapIcon className="h-4 w-4" />
                 </IconButton>
               </>
             )}
-            <IconButton
-              onClick={() => setIsCheckInOpen(true)}
-              aria-label="Check in worker"
-            >
+            <IconButton onClick={() => setIsCheckInOpen(true)} aria-label="Check in worker">
               <UserPlus className="h-4 w-4" />
             </IconButton>
-            <IconButton
-              onClick={handleRefresh}
-              disabled={locationsLoading}
-              aria-label="Refresh"
-            >
+            <IconButton onClick={handleRefresh} disabled={locationsLoading} aria-label="Refresh">
               <RefreshCw className={locationsLoading ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
             </IconButton>
           </>
@@ -314,8 +378,13 @@ export function WorkerTrackingSection() {
         stats={[
           { label: 'On site', value: statusCounts.onSite, tone: 'emerald' },
           { label: 'Travelling', value: statusCounts.enRoute, tone: 'blue' },
-          { label: 'Off-duty', value: statusCounts.office + statusCounts.onLeave, tone: 'amber' },
-          { label: 'Alerts', value: 0, tone: 'red' },
+          { label: 'Office', value: statusCounts.office, tone: 'amber' },
+          {
+            label: 'Off duty / leave',
+            value: statusCounts.offDuty + statusCounts.onLeave,
+            tone: 'purple',
+            sub: statusCounts.onLeave > 0 ? `${statusCounts.onLeave} on leave` : undefined,
+          },
         ]}
       />
 
@@ -337,7 +406,7 @@ export function WorkerTrackingSection() {
               <div className="p-4 sm:p-5">
                 <GoogleMapsProvider>
                   <LiveWorkerMap
-                    workerLocations={workerLocations}
+                    workerLocations={mapLocations}
                     jobs={jobsData}
                     officeLocation={officeLocation}
                     onRefresh={handleRefresh}
@@ -357,6 +426,7 @@ export function WorkerTrackingSection() {
                   { value: 'onsite', label: 'On site', count: statusCounts.onSite },
                   { value: 'enroute', label: 'Travelling', count: statusCounts.enRoute },
                   { value: 'office', label: 'Office', count: statusCounts.office },
+                  { value: 'offduty', label: 'Off duty', count: statusCounts.offDuty },
                   { value: 'onleave', label: 'On leave', count: statusCounts.onLeave },
                 ]}
                 activeTab={activeTab}
@@ -381,9 +451,7 @@ export function WorkerTrackingSection() {
                           ? 'Try clearing filters to see all workers.'
                           : 'Add employees to start tracking their locations.'
                       }
-                      action={
-                        searchQuery || activeTab !== 'all' ? 'Clear filters' : undefined
-                      }
+                      action={searchQuery || activeTab !== 'all' ? 'Clear filters' : undefined}
                       onAction={
                         searchQuery || activeTab !== 'all'
                           ? () => {
@@ -403,7 +471,9 @@ export function WorkerTrackingSection() {
                         checkIn.role,
                         checkIn.jobTitle,
                         checkIn.checkInTime
-                          ? `Checked in ${checkIn.checkInTime}`
+                          ? checkIn.isStale
+                            ? checkIn.checkInTime // already reads "Last seen Tue 15 Jan"
+                            : `Checked in ${checkIn.checkInTime}`
                           : 'No check-in today',
                       ].filter(Boolean);
 
@@ -425,43 +495,48 @@ export function WorkerTrackingSection() {
                               <span className="hidden sm:inline text-[11px] text-white tabular-nums">
                                 {lastSeen}
                               </span>
-                              {!isMobile && checkIn.phone && (
+                              {/* Actions on BOTH form factors — a phone is where
+                                  calling a worker matters most; these were
+                                  desktop-only, leaving mobile rows dead ends */}
+                              {checkIn.phone && (
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleCall(checkIn.phone!);
                                   }}
-                                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
+                                  className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
                                   aria-label={`Call ${checkIn.employeeName}`}
                                 >
                                   <Phone className="h-4 w-4" />
                                 </button>
                               )}
-                              {!isMobile && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleMessage(checkIn.employeeId, checkIn.employeeName);
-                                  }}
-                                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
-                                  aria-label={`Message ${checkIn.employeeName}`}
-                                >
-                                  <MessageSquare className="h-4 w-4" />
-                                </button>
-                              )}
-                              {!isMobile && checkIn.locationId && checkIn.status === 'On Site' && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleCheckOut(checkIn.locationId!, checkIn.employeeName);
-                                  }}
-                                  disabled={checkOutMutation.isPending}
-                                  className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium flex items-center gap-1.5 hover:bg-white/[0.08] touch-manipulation disabled:opacity-50"
-                                >
-                                  <LogOut className="h-3.5 w-3.5" />
-                                  Check out
-                                </button>
-                              )}
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleMessage(checkIn.employeeId, checkIn.employeeName);
+                                }}
+                                className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
+                                aria-label={`Message ${checkIn.employeeName}`}
+                              >
+                                <MessageSquare className="h-4 w-4" />
+                              </button>
+                              {/* Stale rows demote to Off Duty but the DB row is
+                                  still open — keep check-out available so the
+                                  forgotten shift can actually be closed */}
+                              {checkIn.locationId &&
+                                (checkIn.status === 'On Site' || checkIn.isStale) && (
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleCheckOut(checkIn.locationId!, checkIn.employeeName);
+                                    }}
+                                    disabled={checkOutMutation.isPending}
+                                    className="h-11 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium flex items-center gap-1.5 hover:bg-white/[0.08] touch-manipulation disabled:opacity-50"
+                                  >
+                                    <LogOut className="h-3.5 w-3.5" />
+                                    Check out
+                                  </button>
+                                )}
                             </>
                           }
                         />
@@ -568,13 +643,50 @@ export function WorkerTrackingSection() {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Message composer — replaces window.prompt */}
+      <Sheet open={!!messageTarget} onOpenChange={(open) => !open && setMessageTarget(null)}>
+        <SheetContent
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-auto rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] p-0'
+              : 'w-full sm:max-w-md bg-[hsl(0_0%_10%)] border-l border-white/[0.06] p-0'
+          }
+        >
+          <SheetHeader className="px-5 py-4 border-b border-white/[0.06] text-left">
+            <SheetTitle className="text-white text-[15px] font-semibold">
+              Message {messageTarget?.name}
+            </SheetTitle>
+            <SheetDescription className="text-white/55 text-[12px]">
+              Lands in their Worker Tools comms with a push notification.
+            </SheetDescription>
+          </SheetHeader>
+          <div className="p-5 space-y-4">
+            <textarea
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              placeholder="Type your message…"
+              rows={4}
+              autoFocus
+              className={textareaClass}
+            />
+            <PrimaryButton
+              onClick={sendWorkerMessage}
+              disabled={!messageText.trim() || isSending}
+              fullWidth
+            >
+              {isSending ? <RefreshCw className="h-4 w-4 animate-spin mr-2" /> : null}
+              Send message
+            </PrimaryButton>
+          </div>
+        </SheetContent>
+      </Sheet>
     </PageFrame>
   );
 
   return isMobile ? (
-    <PullToRefresh onRefresh={handleRefresh} className="h-full">
-      {content}
-    </PullToRefresh>
+    <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh>
   ) : (
     content
   );

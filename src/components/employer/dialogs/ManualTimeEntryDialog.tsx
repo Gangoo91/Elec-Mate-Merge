@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ReactNode, type FormEvent } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -32,7 +32,7 @@ import {
 } from '@/components/employer/editorial';
 
 interface ManualTimeEntryDialogProps {
-  trigger?: React.ReactNode;
+  trigger?: ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -59,7 +59,7 @@ export function ManualTimeEntryDialog({
     breakMins: '60',
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (
@@ -175,25 +175,31 @@ export function ManualTimeEntryDialog({
   }, [open, voiceContext, activeEmployees, activeJobs]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      {trigger !== null && (
-        <DialogTrigger asChild>
-          {trigger || (
-            <SecondaryButton size="sm">
-              <Plus className="h-4 w-4 mr-1.5" />
-              Add entry
-            </SecondaryButton>
-          )}
-        </DialogTrigger>
-      )}
-      <DialogContent className="max-w-[95vw] sm:max-w-md p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    // Drawer (bottom sheet) on mobile, centred dialog on desktop — a
+    // multi-field form in a centred modal broke the native-app mandate
+    <ResponsiveFormModal
+      open={open}
+      onOpenChange={setOpen}
+      trigger={
+        trigger !== null
+          ? trigger || (
+              <SecondaryButton size="sm">
+                <Plus className="h-4 w-4 mr-1.5" />
+                Add entry
+              </SecondaryButton>
+            )
+          : undefined
+      }
+    >
+      <ResponsiveFormModalContent className="sm:max-w-md">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="flex items-center gap-2 text-white">
             <Clock className="h-5 w-5 text-elec-yellow" />
             Add manual time entry
-          </DialogTitle>
-        </DialogHeader>
-        <form id="time-entry-form" onSubmit={handleSubmit} className="space-y-4">
+          </ResponsiveFormModalTitle>
+        </ResponsiveFormModalHeader>
+        <ResponsiveFormModalBody>
+          <form id="time-entry-form" onSubmit={handleSubmit} className="space-y-4">
           <FormCard eyebrow="Entry">
             <Field label="Employee" required>
               <Select
@@ -289,8 +295,9 @@ export function ManualTimeEntryDialog({
               )}
             </PrimaryButton>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+          </form>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

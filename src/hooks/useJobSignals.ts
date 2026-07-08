@@ -15,9 +15,17 @@ export interface JobSignals {
   incidents: number;
   overdueInvoices: number;
   expiringCerts: number;
+  invoiced: number;
+  paid: number;
 }
 
-const EMPTY: JobSignals = { incidents: 0, overdueInvoices: 0, expiringCerts: 0 };
+const EMPTY: JobSignals = {
+  incidents: 0,
+  overdueInvoices: 0,
+  expiringCerts: 0,
+  invoiced: 0,
+  paid: 0,
+};
 
 export function useJobSignals() {
   return useQuery<Map<string, JobSignals>>({
@@ -37,7 +45,7 @@ export function useJobSignals() {
 
       const [incidentsRes, invoicesRes, certsRes] = await Promise.all([
         supabase.from('employer_incidents').select('job_id, status'),
-        supabase.from('employer_invoices').select('job_id, status, due_date'),
+        supabase.from('employer_invoices').select('job_id, status, due_date, amount, paid_date'),
         supabase
           .from('employer_certifications')
           .select('employee_id, expiry_date')
@@ -51,8 +59,15 @@ export function useJobSignals() {
         if (!/resolved|closed/i.test(i.status ?? '')) bump(i.job_id, 'incidents');
       }
 
-      // Overdue, unpaid invoices tied to a job
+      // Invoiced/paid totals + overdue count, tied to a job
       for (const inv of invoicesRes.data ?? []) {
+        if (inv.job_id) {
+          const s = map.get(inv.job_id) ?? { ...EMPTY };
+          const amt = Number(inv.amount) || 0;
+          s.invoiced += amt;
+          if (inv.paid_date) s.paid += amt;
+          map.set(inv.job_id, s);
+        }
         if (inv.due_date && inv.due_date < today && !/paid|cancel/i.test(inv.status ?? '')) {
           bump(inv.job_id, 'overdueInvoices');
         }

@@ -25,6 +25,7 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Trash2, Save, Loader2 } from 'lucide-react';
 import type { Vehicle, VehicleStatus, VehicleType, UpdateVehicleInput } from '@/hooks/useFleet';
+import { useJobs } from '@/hooks/useJobs';
 import {
   SheetShell,
   FormCard,
@@ -80,10 +81,13 @@ export function EditVehicleSheet({
   const [nextService, setNextService] = useState('');
   const [trackerFitted, setTrackerFitted] = useState(false);
   const [notes, setNotes] = useState('');
+  const [jobId, setJobId] = useState('');
+  const { data: jobs = [] } = useJobs();
 
   useEffect(() => {
     if (vehicle) {
       setRegistration(vehicle.registration);
+      setJobId(vehicle.job_id || '');
       setMake(vehicle.make || '');
       setModel(vehicle.model || '');
       setColour(vehicle.colour || '');
@@ -113,6 +117,7 @@ export function EditVehicleSheet({
       year: year ? parseInt(year) : undefined,
       vehicle_type: vehicleType || undefined,
       assigned_to: assignedTo || undefined,
+      job_id: jobId || null,
       status,
       mileage: parseInt(mileage) || 0,
       mot_expiry: motExpiry || undefined,
@@ -265,6 +270,21 @@ export function EditVehicleSheet({
                   placeholder="Driver name"
                   className={inputClass}
                 />
+              </Field>
+              <Field label="On job">
+                <Select value={jobId || 'none'} onValueChange={(v) => setJobId(v === 'none' ? '' : v)}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Not assigned" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="none">Not assigned</SelectItem>
+                    {jobs.map((j) => (
+                      <SelectItem key={j.id} value={j.id}>
+                        {j.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </Field>
               <Field label="Status">
                 <Select value={status} onValueChange={(v) => setStatus(v as VehicleStatus)}>

@@ -1,5 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { GraduationCap, RefreshCw } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { format, parseISO } from 'date-fns';
 import {
   PageFrame,
   PageHero,
@@ -14,6 +17,7 @@ import {
   IconButton,
   EmptyState,
   LoadingBlocks,
+  SheetShell,
   type Tone,
 } from '@/components/employer/editorial';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
@@ -40,9 +44,14 @@ const epaTone = (status: string | null): Tone => {
 };
 
 export function ApprenticeProgressSection() {
+  const isMobile = useIsMobile();
   const { data, isLoading, isError, refetch, isFetching } = useApprenticeProgress();
 
   const rows = useMemo(() => data ?? [], [data]);
+  // Store the row itself, not an id — the bridge RPC can return the same
+  // person twice (linked to two employer_employees rows), so ids don't
+  // uniquely identify a row.
+  const [selected, setSelected] = useState<(typeof rows)[number] | null>(null);
 
   const stats = useMemo(() => {
     const total = rows.length;
@@ -110,7 +119,7 @@ export function ApprenticeProgressSection() {
                   : 0;
                 return (
                   <ListRow
-                    key={r.studentUserId}
+                    key={`${r.studentUserId}-${rows.indexOf(r)}`}
                     accent={r.reviewOverdue ? 'red' : r.otjOnTrack ? 'emerald' : 'amber'}
                     lead={<Avatar initials={getInitials(r.name)} />}
                     title={r.name}
@@ -119,15 +128,28 @@ export function ApprenticeProgressSection() {
                       'College apprentice'
                     }
                     trailing={
+                      // Mobile shows ONE signal (the worst) + the ring — three
+                      // pills crushed the name at 375px; the sheet has the rest
                       <div className="flex items-center gap-2">
-                        <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
-                          {r.otjVerifiedHours}/{r.otjRequiredHours}h OTJ
-                        </Pill>
-                        {r.epaStatus && <Pill tone={epaTone(r.epaStatus)}>{r.epaStatus}</Pill>}
-                        {r.reviewOverdue && <Pill tone="red">Review due</Pill>}
+                        <span className="hidden sm:flex items-center gap-2">
+                          <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
+                            {r.otjVerifiedHours}/{r.otjRequiredHours}h OTJ
+                          </Pill>
+                          {r.epaStatus && <Pill tone={epaTone(r.epaStatus)}>{r.epaStatus}</Pill>}
+                        </span>
+                        {r.reviewOverdue ? (
+                          <Pill tone="red">Review due</Pill>
+                        ) : (
+                          <span className="sm:hidden">
+                            <Pill tone={r.otjOnTrack ? 'emerald' : 'amber'}>
+                              {r.otjOnTrack ? 'On track' : 'Behind'}
+                            </Pill>
+                          </span>
+                        )}
                         <ComplianceRing score={r.progressPercent} size={40} label="Progress" />
                       </div>
                     }
+                    onClick={() => setSelected(r)}
                   />
                 );
               })}
@@ -135,6 +157,80 @@ export function ApprenticeProgressSection() {
           </ListCard>
         </>
       )}
+
+      {/* Apprentice detail — the RPC already returns everything an employer
+          acts on; the rows were dead ends before this sheet */}
+      <Sheet open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
+        <SheetContent
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-[80vh] p-0 rounded-t-2xl overflow-hidden'
+              : 'w-full sm:max-w-md p-0 overflow-hidden'
+          }
+        >
+          {selected && (
+            <SheetShell
+              eyebrow={
+                [selected.courseName, selected.collegeName].filter(Boolean).join(' · ') ||
+                'College apprentice'
+              }
+              title={selected.name}
+            >
+              <StatStrip
+                columns={2}
+                stats={[
+                  {
+                    value: `${selected.otjVerifiedHours}/${selected.otjRequiredHours}h`,
+                    label: 'Off-the-job hours',
+                    tone: selected.otjOnTrack ? 'emerald' : 'amber',
+                    sub: selected.otjOnTrack ? 'On track' : 'Behind pro-rata target',
+                  },
+                  {
+                    value: `${selected.attendancePercent}%`,
+                    label: 'Attendance',
+                    tone: selected.attendancePercent >= 90 ? 'emerald' : 'amber',
+                  },
+                  {
+                    value: `${selected.progressPercent}%`,
+                    label: 'Course progress',
+                    tone: 'blue',
+                  },
+                  {
+                    value: selected.epaStatus || 'Not started',
+                    label: 'EPA status',
+                    tone: epaTone(selected.epaStatus),
+                  },
+                ]}
+              />
+              <ListCard>
+                <ListCardHeader tone="emerald" title="Progress reviews" />
+                <ListBody>
+                  <ListRow
+                    title={
+                      selected.lastReviewDate
+                        ? `Last review ${format(parseISO(selected.lastReviewDate), 'd MMM yyyy')}`
+                        : 'No review recorded'
+                    }
+                    subtitle={
+                      selected.reviewOverdue
+                        ? 'Overdue — 12-weekly reviews are an apprenticeship funding requirement'
+                        : 'Next review inside the 12-week window'
+                    }
+                    trailing={
+                      selected.reviewOverdue ? (
+                        <Pill tone="red">Overdue</Pill>
+                      ) : (
+                        <Pill tone="emerald">Up to date</Pill>
+                      )
+                    }
+                  />
+                </ListBody>
+              </ListCard>
+            </SheetShell>
+          )}
+        </SheetContent>
+      </Sheet>
     </PageFrame>
   );
 }

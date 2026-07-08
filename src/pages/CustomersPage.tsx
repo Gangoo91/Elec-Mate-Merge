@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
+import { MergeDuplicatesSheet } from '@/components/customers/MergeDuplicatesSheet';
 import { CustomerImportDialog } from '@/components/customers/customers/CustomerImportDialog';
 import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
@@ -90,6 +91,7 @@ export default function CustomersPage() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [showFollowUpOnly, setShowFollowUpOnly] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<'lead' | 'active' | 'inactive' | null>(null);
   const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [mapSelectedId, setMapSelectedId] = useState<string | null>(null);
@@ -110,6 +112,7 @@ export default function CustomersPage() {
     deleteCustomer,
     exportCustomers,
     refreshCustomers,
+    mergeCustomers,
   } = useCustomers({ sortField, sortDirection, searchTerm: debouncedSearch });
 
   const [invoiceData, setInvoiceData] = useState<
@@ -156,6 +159,19 @@ export default function CustomersPage() {
       if (rate > 80) map.set(custId, 'good');
       else if (rate >= 50) map.set(custId, 'fair');
       else map.set(custId, 'poor');
+    }
+    return map;
+  }, [invoiceData]);
+
+  // Who owes money right now — any unpaid invoice past its due date (24h grace)
+  const overdueMap = useMemo(() => {
+    const map = new Map<string, boolean>();
+    const graceCutoff = Date.now() - 24 * 60 * 60 * 1000;
+    for (const inv of invoiceData) {
+      if (!inv.customer_id || inv.invoice_status === 'paid') continue;
+      if (inv.invoice_due_date && new Date(inv.invoice_due_date).getTime() < graceCutoff) {
+        map.set(inv.customer_id, true);
+      }
     }
     return map;
   }, [invoiceData]);
@@ -260,9 +276,10 @@ export default function CustomersPage() {
       if (activeTagFilter) {
         if (!c.tags || !c.tags.includes(activeTagFilter)) return false;
       }
+      if (statusFilter && (c.status || 'active') !== statusFilter) return false;
       return true;
     });
-  }, [customers, showFollowUpOnly, activeTagFilter]);
+  }, [customers, showFollowUpOnly, activeTagFilter, statusFilter]);
 
   // Tag aggregation — collect all tags + counts across loaded customers.
   const tagCounts = useMemo(() => {
@@ -319,6 +336,38 @@ export default function CustomersPage() {
     for (const arr of emailMap.values()) if (arr.length > 1) arr.forEach((id) => dupes.add(id));
     return dupes;
   }, [customers]);
+
+  // Duplicate groups with the customers attached — feeds the merge sheet
+  const duplicateGroups = useMemo(() => {
+    const byId = new Map(customers.map((c) => [c.id, c]));
+    const groupMap = new Map<string, Set<string>>();
+    for (const c of customers) {
+      if (c.phone) {
+        const key = c.phone.replace(/[^\d]/g, '').replace(/^44/, '0').slice(-10);
+        if (key.length >= 9) {
+          const set = groupMap.get(key) || new Set<string>();
+          set.add(c.id);
+          groupMap.set(key, set);
+        }
+      }
+      if (c.email) {
+        const key = c.email.trim().toLowerCase();
+        const set = groupMap.get(key) || new Set<string>();
+        set.add(c.id);
+        groupMap.set(key, set);
+      }
+    }
+    return Array.from(groupMap.entries())
+      .filter(([, ids]) => ids.size > 1)
+      .map(([matchedOn, ids]) => ({
+        matchedOn,
+        customers: Array.from(ids)
+          .map((id) => byId.get(id))
+          .filter((c): c is Customer => !!c)
+          .sort((a, b) => (b.certificateCount || 0) - (a.certificateCount || 0)),
+      }));
+  }, [customers]);
+  const [showMergeSheet, setShowMergeSheet] = useState(false);
 
   // Bulk select handlers
   const enterSelectionMode = (seedId?: string) => {
@@ -560,6 +609,30 @@ export default function CustomersPage() {
                     </button>
                   ))}
                 </div>
+                {/* Status filter */}
+                <div className="flex h-9 items-center gap-0.5 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-0.5">
+                  {(
+                    [
+                      { value: null, label: 'All' },
+                      { value: 'lead', label: 'Leads' },
+                      { value: 'active', label: 'Active' },
+                      { value: 'inactive', label: 'Inactive' },
+                    ] as const
+                  ).map((opt) => (
+                    <button
+                      key={opt.label}
+                      onClick={() => setStatusFilter(opt.value)}
+                      className={cn(
+                        'h-8 rounded-full px-3 text-[12px] font-medium transition-colors touch-manipulation',
+                        statusFilter === opt.value
+                          ? 'bg-elec-yellow text-black'
+                          : 'text-white/65 hover:text-white'
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
                 <button
                   onClick={() => setShowFollowUpOnly((v) => !v)}
                   className={cn(
@@ -772,16 +845,24 @@ export default function CustomersPage() {
                       {duplicateIds.size} customers share a phone or email
                     </div>
                     <div className="mt-0.5 text-[12.5px] text-white/65">
-                      Cards marked with amber borders below. Tap to open and merge manually.
+                      Review each pair and merge them — certs, quotes and properties move across.
                     </div>
                   </div>
                 </div>
-                <button
-                  onClick={() => setDuplicatesDismissed(true)}
-                  className="flex h-8 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
-                >
-                  Dismiss
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setShowMergeSheet(true)}
+                    className="flex h-8 items-center rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
+                  >
+                    Review &amp; merge
+                  </button>
+                  <button
+                    onClick={() => setDuplicatesDismissed(true)}
+                    className="flex h-8 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                  >
+                    Dismiss
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}
@@ -865,6 +946,7 @@ export default function CustomersPage() {
                           onStartCertificate={(c) => setCertificateCustomer(c)}
                           onQuickNote={(c) => setQuickNoteCustomer(c)}
                           paymentReliability={reliabilityMap.get(customer.id) || null}
+                          hasOverdue={overdueMap.get(customer.id) || false}
                           selectionMode={selectionMode}
                           selected={selectedIds.has(customer.id)}
                           onToggleSelect={toggleSelect}
@@ -922,6 +1004,12 @@ export default function CustomersPage() {
         }}
         customer={editingCustomer ?? (vCardSeed as Customer | null)}
         onSave={handleSaveCustomer}
+      />
+      <MergeDuplicatesSheet
+        open={showMergeSheet}
+        onOpenChange={setShowMergeSheet}
+        groups={duplicateGroups}
+        onMerge={mergeCustomers}
       />
       <CustomerImportDialog
         open={showImportDialog}

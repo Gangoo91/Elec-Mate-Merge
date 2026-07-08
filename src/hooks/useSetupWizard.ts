@@ -39,8 +39,11 @@ export function useSetupWizard() {
         const fileExt = data.logoFile.name.split('.').pop();
         const fileName = `${user.id}/logo-${Date.now()}.${fileExt}`;
 
+        // 'company-branding' is the live logo bucket (owner-folder RLS). The
+        // previous 'company-logos' bucket never existed, so wizard logos
+        // silently failed to persist.
         const { error: uploadError } = await supabase.storage
-          .from('company-logos')
+          .from('company-branding')
           .upload(fileName, data.logoFile, {
             cacheControl: '3600',
             upsert: true,
@@ -49,7 +52,7 @@ export function useSetupWizard() {
         if (!uploadError) {
           const {
             data: { publicUrl },
-          } = supabase.storage.from('company-logos').getPublicUrl(fileName);
+          } = supabase.storage.from('company-branding').getPublicUrl(fileName);
           logoUrl = publicUrl;
         }
       }

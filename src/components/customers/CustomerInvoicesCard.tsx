@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { LinkDocumentSheet } from './LinkDocumentSheet';
 
 interface CustomerInvoicesCardProps {
   customerId: string;
@@ -22,6 +23,9 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
   const navigate = useNavigate();
   const [invoices, setInvoices] = useState<InvoiceRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [linkSheetOpen, setLinkSheetOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -34,7 +38,7 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
           .eq('customer_id', customerId)
           .eq('invoice_raised', true)
           .order('invoice_date', { ascending: false })
-          .limit(5);
+          .limit(50);
 
         if (error) throw error;
         setInvoices((data as InvoiceRow[]) || []);
@@ -46,7 +50,7 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
     };
 
     fetchInvoices();
-  }, [customerId]);
+  }, [customerId, refreshKey]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-GB', {
@@ -87,16 +91,24 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
     <div className="card-surface-interactive rounded-2xl overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
         <h3 className="text-sm font-bold text-white">Invoices</h3>
-        <button
-          onClick={() =>
-            navigate('/electrician/quotes/new', {
-              state: { prefillCustomer: customerName, customerId, createInvoice: true },
-            })
-          }
-          className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
-        >
-          + New
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setLinkSheetOpen(true)}
+            className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+          >
+            Link existing
+          </button>
+          <button
+            onClick={() =>
+              navigate('/electrician/quotes/new', {
+                state: { prefillCustomer: customerName, customerId, createInvoice: true },
+              })
+            }
+            className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+          >
+            + New
+          </button>
+        </div>
       </div>
       <div className="p-4">
         {isLoading ? (
@@ -105,7 +117,7 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
           </div>
         ) : invoices.length > 0 ? (
           <div className="space-y-2">
-            {invoices.map((invoice) => (
+            {(showAll ? invoices : invoices.slice(0, 5)).map((invoice) => (
               <div
                 key={invoice.id}
                 onClick={() => navigate(`/electrician/quotes?quoteId=${invoice.id}`)}
@@ -127,6 +139,14 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
                 </div>
               </div>
             ))}
+            {invoices.length > 5 && (
+              <button
+                onClick={() => setShowAll((v) => !v)}
+                className="w-full py-2.5 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+              >
+                {showAll ? 'Show fewer' : `View all (${invoices.length})`}
+              </button>
+            )}
           </div>
         ) : (
           <p className="text-sm text-white text-center py-4">
@@ -134,6 +154,15 @@ export const CustomerInvoicesCard = ({ customerId, customerName }: CustomerInvoi
           </p>
         )}
       </div>
+
+      <LinkDocumentSheet
+        open={linkSheetOpen}
+        onOpenChange={setLinkSheetOpen}
+        customerId={customerId}
+        customerName={customerName}
+        mode="invoices"
+        onLinked={() => setRefreshKey((k) => k + 1)}
+      />
     </div>
   );
 };

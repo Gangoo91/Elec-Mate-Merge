@@ -20,6 +20,10 @@ export function InAppBrowserDetector() {
       { pattern: /Twitter/i, name: 'Twitter' },
       { pattern: /Snapchat/i, name: 'Snapchat' },
       { pattern: /TikTok/i, name: 'TikTok' },
+      // Gmail's in-app WebView (GSA = Google app shell on iOS) can silently
+      // stall fetch calls — and invite links arrive by email, so this is the
+      // browser invitees actually open them in (ELE-1286)
+      { pattern: /GSA\/|Gmail/i, name: 'Gmail' },
     ];
 
     for (const browser of inAppBrowsers) {

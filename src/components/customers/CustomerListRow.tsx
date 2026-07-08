@@ -12,6 +12,8 @@ interface CustomerListRowProps {
   onStartCertificate: (customer: Customer) => void;
   onQuickNote: (customer: Customer) => void;
   paymentReliability?: ReliabilityLevel | null;
+  /** Any unpaid invoice past its due date — the "who owes me" signal */
+  hasOverdue?: boolean;
   // Selection mode
   selectionMode?: boolean;
   selected?: boolean;
@@ -65,6 +67,7 @@ const getActivityTone = (lastActivityAt?: string): ActivityTone => {
 export const CustomerListRow = ({
   customer,
   paymentReliability,
+  hasOverdue = false,
   selectionMode = false,
   selected = false,
   onToggleSelect,
@@ -179,7 +182,9 @@ export const CustomerListRow = ({
             {customer.name}
           </h3>
           <p className="mt-1 truncate text-[12.5px] text-white/65">
-            {customer.phone || customer.email || customer.address || 'No contact info'}
+            {[customer.companyName, customer.phone || customer.email || customer.address]
+              .filter(Boolean)
+              .join(' · ') || 'No contact info'}
           </p>
           {customer.tags && customer.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
@@ -215,6 +220,14 @@ export const CustomerListRow = ({
 
         {/* Right side pills */}
         <div className="flex shrink-0 flex-col items-end gap-1.5">
+          {hasOverdue && (
+            <Pill tone="red">
+              <Dot tone="red" className="mr-1.5" />
+              Overdue invoice
+            </Pill>
+          )}
+          {customer.status === 'lead' && <Pill tone="blue">Lead</Pill>}
+          {customer.status === 'inactive' && <Pill tone="grey">Inactive</Pill>}
           {isDuplicate && (
             <Pill tone="amber">
               <Dot tone="amber" className="mr-1.5" />

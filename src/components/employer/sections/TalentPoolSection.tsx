@@ -1,4 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getMyInvitations } from '@/services/conversationService';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SparkProfileSheet } from '@/components/employer/SparkProfileSheet';
 import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
@@ -75,6 +77,28 @@ const tierToneFor = (tier: string | undefined): Tone => {
 };
 
 export function TalentPoolSection() {
+  // Invite outcomes — which invitations converted (viewed/applied/declined)
+  const { data: sentInvitations = [] } = useQuery({
+    queryKey: ['my-vacancy-invitations'],
+    queryFn: getMyInvitations,
+    staleTime: 60_000,
+  });
+  const invitationsByProfile = useMemo(() => {
+    // Terminal outcomes (applied/declined) beat a newer 'pending' — re-inviting
+    // someone who already applied must not hide the conversion signal. Expired
+    // invites carry no signal at all.
+    const rank: Record<string, number> = { applied: 3, declined: 2, viewed: 1, pending: 0 };
+    const byProfile = new Map<string, string>();
+    for (const inv of sentInvitations) {
+      if (inv.status === 'expired') continue;
+      const current = byProfile.get(inv.electrician_profile_id);
+      if (current === undefined || (rank[inv.status] ?? 0) > (rank[current] ?? 0)) {
+        byProfile.set(inv.electrician_profile_id, inv.status);
+      }
+    }
+    return byProfile;
+  }, [sentInvitations]);
+
   // Saved list persists per device
   const [savedCandidates, setSavedCandidates] = useState<string[]>(() => {
     try {
@@ -510,12 +534,40 @@ export function TalentPoolSection() {
                             onClick={() => handleOpenProfile(worker)}
                             className="text-left min-w-0 touch-manipulation"
                           >
-                            <p className="font-semibold text-white truncate flex items-center gap-1.5">
-                              {worker.name}
+                            <p className="font-semibold text-white flex items-center gap-1.5 min-w-0">
+                              {/* Name truncates; pills never clip — the outcome
+                                  pill is the signal this row exists to show */}
+                              <span className="truncate">{worker.name}</span>
                               {worker.isVerified && (
                                 <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                               )}
-                              {isSaved && <Pill tone="amber">Saved</Pill>}
+                              {isSaved && (
+                                <Pill tone="amber" className="shrink-0">
+                                  Saved
+                                </Pill>
+                              )}
+                              {(() => {
+                                // Invite outcome — did the invitation convert?
+                                const inv = invitationsByProfile.get(worker.profileId);
+                                if (!inv) return null;
+                                return inv === 'applied' ? (
+                                  <Pill tone="emerald" className="shrink-0">
+                                    Applied
+                                  </Pill>
+                                ) : inv === 'viewed' ? (
+                                  <Pill tone="blue" className="shrink-0">
+                                    Invite viewed
+                                  </Pill>
+                                ) : inv === 'declined' ? (
+                                  <Pill tone="red" className="shrink-0">
+                                    Declined
+                                  </Pill>
+                                ) : (
+                                  <Pill tone="cyan" className="shrink-0">
+                                    Invited
+                                  </Pill>
+                                );
+                              })()}
                             </p>
                             <p className="text-[12.5px] text-white truncate">
                               {worker.jobTitle || 'Electrician'}

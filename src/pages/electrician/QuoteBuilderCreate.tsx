@@ -86,6 +86,7 @@ const QuoteBuilderCreate = () => {
   const [projectContext, setProjectContext] = useState<{
     client?: { name: string; email?: string; phone?: string; address: string; postcode: string };
     jobDetails?: { title: string; description: string; location: string };
+    customerId?: string;
   } | null>(null);
 
   // Read projectId from URL — when coming from a project page
@@ -98,6 +99,17 @@ const QuoteBuilderCreate = () => {
     ?.duplicateFrom;
   const duplicateSourceNumber = (location.state as { duplicateSourceNumber?: string } | null)
     ?.duplicateSourceNumber;
+
+  // Customer source — passed via navigate state from the customer record's
+  // Quotes/Invoices cards (ELE-1291). Carrying customer_id through the wizard
+  // is what links the saved quote back to the customer.
+  const stateCustomerId = (location.state as { customerId?: string } | null)?.customerId;
+  const statePrefillCustomer = (location.state as { prefillCustomer?: string } | null)
+    ?.prefillCustomer;
+  const [customerContext, setCustomerContext] = useState<{
+    customerId: string;
+    client?: { name: string; email?: string; phone?: string; address: string; postcode: string };
+  } | null>(null);
 
   // Load cost data, certificate data, or site visit data from sessionStorage
   useEffect(() => {
@@ -152,6 +164,48 @@ const QuoteBuilderCreate = () => {
       }
     }
 
+    // If launched from a customer record, fetch the customer so the client
+    // step starts pre-filled and the quote saves linked to them
+    if (
+      stateCustomerId &&
+      !projectId &&
+      !costSessionId &&
+      !certificateSessionId &&
+      !siteVisitSessionId &&
+      !materialsSessionId
+    ) {
+      (async () => {
+        try {
+          const { data: customer } = await supabase
+            .from('customers')
+            .select('id, name, email, phone, address')
+            .eq('id', stateCustomerId)
+            .single();
+
+          if (customer) {
+            setCustomerContext({
+              customerId: customer.id,
+              client: {
+                name: customer.name || statePrefillCustomer || '',
+                email: customer.email || '',
+                phone: customer.phone || '',
+                address: customer.address || '',
+                postcode: '',
+              },
+            });
+          } else {
+            setCustomerContext({ customerId: stateCustomerId });
+          }
+        } catch {
+          // Still link the quote even if the prefill fetch failed
+          setCustomerContext({ customerId: stateCustomerId });
+        } finally {
+          setIsLoadingContext(false);
+        }
+      })();
+      return;
+    }
+
     // If projectId is present and no other context was loaded, fetch project details
     if (
       projectId &&
@@ -188,6 +242,8 @@ const QuoteBuilderCreate = () => {
                 description: project.description || '',
                 location: project.location || '',
               },
+              // Carry the project's customer through so the quote links to them
+              ...(project.customer_id && { customerId: project.customer_id }),
             });
           }
         } catch (err) {
@@ -336,6 +392,20 @@ const QuoteBuilderCreate = () => {
             <p className="text-[12px] text-white mt-0.5">Client &amp; job details pre-filled</p>
           </motion.div>
         )}
+        {customerContext && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-teal-500/[0.06] border border-teal-500/15"
+          >
+            <p className="text-[13px] font-semibold text-teal-400">
+              Quote for {customerContext.client?.name || statePrefillCustomer || 'customer'}
+            </p>
+            <p className="text-[12px] text-white mt-0.5">
+              This quote will appear on their customer record.
+            </p>
+          </motion.div>
+        )}
         {materialsContext && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -388,8 +458,16 @@ const QuoteBuilderCreate = () => {
                         ...(projectContext?.jobDetails && {
                           jobDetails: projectContext.jobDetails,
                         }),
+                        ...(projectContext?.customerId && {
+                          customer_id: projectContext.customerId,
+                        }),
                       }
-                    : undefined
+                    : customerContext
+                      ? {
+                          customer_id: customerContext.customerId,
+                          ...(customerContext.client && { client: customerContext.client }),
+                        }
+                      : undefined
               }
               initialCostData={costContext}
               initialCertificateData={certificateContext}

@@ -115,6 +115,9 @@ export const useQuoteStorage = () => {
       linked_certificate_type: row.linked_certificate_type,
       linked_certificate_reference: row.linked_certificate_reference,
       linked_certificate_pdf_url: row.linked_certificate_pdf_url,
+      // Project + CRM links — must round-trip here or saveQuote nulls them on edit
+      project_id: row.project_id,
+      customer_id: row.customer_id,
     }),
     []
   );
@@ -354,6 +357,39 @@ export const useQuoteStorage = () => {
           return false;
         }
 
+        // CRM link. Quotes created from a customer record carry customer_id
+        // already; otherwise match the client to an existing customer so the
+        // quote/invoice shows up on their record (only on an unambiguous match).
+        let customerId = quote.customer_id ?? null;
+        // Escape ilike wildcards so a stray % or _ in typed values stays literal
+        const escapeLike = (s: string) => s.replace(/[\\%_]/g, '\\$&');
+        const clientEmail = quote.client?.email?.trim();
+        const clientName = quote.client?.name?.trim();
+        if (!customerId && (clientEmail || clientName)) {
+          try {
+            if (clientEmail) {
+              const { data: byEmail } = await supabase
+                .from('customers')
+                .select('id')
+                .eq('user_id', user.id)
+                .ilike('email', escapeLike(clientEmail))
+                .limit(2);
+              if (byEmail?.length === 1) customerId = byEmail[0].id;
+            }
+            if (!customerId && clientName) {
+              const { data: byName } = await supabase
+                .from('customers')
+                .select('id')
+                .eq('user_id', user.id)
+                .ilike('name', escapeLike(clientName))
+                .limit(2);
+              if (byName?.length === 1) customerId = byName[0].id;
+            }
+          } catch {
+            // Auto-link is best-effort — never block the save on it
+          }
+        }
+
         const quoteData = {
           id: quote.id,
           user_id: user.id,
@@ -396,6 +432,8 @@ export const useQuoteStorage = () => {
           linked_certificate_pdf_url: quote.linked_certificate_pdf_url || null,
           // Project linking
           project_id: quote.project_id || null,
+          // CRM linking
+          customer_id: customerId,
         };
 
         let { error } = await supabase.from('quotes').upsert(quoteData, { onConflict: 'id' });

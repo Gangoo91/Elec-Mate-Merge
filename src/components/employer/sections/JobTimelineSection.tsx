@@ -73,14 +73,16 @@ export function JobTimelineSection() {
   }, [periodOffset, rangeDays]);
 
   const activeJobs = jobs
-    .filter((j) => j.status === 'Active' || j.status === 'Pending')
+    .filter((j) => ['active', 'pending'].includes((j.status || '').toLowerCase()))
+    // Only jobs with a real start date belong on the timeline — never invent dates.
+    .filter((j) => !!j.start_date)
     .map((job) => ({
       ...job,
-      stage: job.status === 'Active' ? 'In Progress' : 'Scheduled',
+      stage: (job.status || '').toLowerCase() === 'active' ? 'In Progress' : 'Scheduled',
       assignedWorkers: job.workers_count || 0,
-      startDate: job.start_date || new Date().toISOString(),
-      endDate:
-        job.end_date || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      startDate: job.start_date as string,
+      // Open-ended job (no end date) shows as a single-day marker, not a fake span.
+      endDate: job.end_date || (job.start_date as string),
     }));
 
   const formatRangeDate = (date: Date) =>
@@ -123,8 +125,11 @@ export function JobTimelineSection() {
 
   const jobsThisPeriod = activeJobs.filter((job) => getJobPosition(job) !== null);
 
-  const onScheduleCount = jobsThisPeriod.filter((j) => (j.progress ?? 0) >= 50).length;
-  const slippingCount = jobsThisPeriod.length - onScheduleCount;
+  // Honest slippage: a job is slipping when today is past its end date but it's
+  // still active — not a progress-percentage guess.
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const slippingCount = jobsThisPeriod.filter((j) => j.endDate.slice(0, 10) < todayStr).length;
+  const onScheduleCount = jobsThisPeriod.length - slippingCount;
 
 
   const handleJobClick = (job: (typeof activeJobs)[0]) => {

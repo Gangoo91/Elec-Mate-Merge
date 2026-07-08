@@ -56,6 +56,7 @@ function buildInviteHtml(companyName: string, firstName: string, acceptUrl: stri
         </td></tr>
         <tr><td align="left" style="padding:14px 36px 4px;" class="pad">
           <p style="margin:0 0 8px;font-size:13px;color:#8A97A6;line-height:1.5;">Once you're in, open <strong style="color:#51606F;">Worker Tools</strong> to see your jobs, clock in and out, and submit timesheets, leave and expenses.</p>
+          <p style="margin:0 0 8px;font-size:13px;color:#8A97A6;line-height:1.5;">Tip: for the smoothest setup, open the link in Safari or Chrome rather than your email app's built-in browser.</p>
         </td></tr>
         <tr><td style="padding:18px 36px 30px;" class="pad">
           <p style="margin:0;font-size:12px;color:#A6B0BC;line-height:1.55;">This invite is just for you and expires in 14 days. Questions? Reply to this email — it reaches Andrew, the founder.</p>

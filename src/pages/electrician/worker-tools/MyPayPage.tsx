@@ -16,6 +16,7 @@
  *  - Keeps the loading state and all source data hooks/derivations unchanged.
  */
 import { useMemo, useState } from 'react';
+import { labourCost } from '@/utils/payCalculations';
 import {
   startOfWeek,
   endOfWeek,
@@ -92,6 +93,23 @@ export default function MyPayPage() {
 
   const rate = Number(employee?.hourly_rate) || 0;
 
+  // The worker's own overtime terms — the SAME maths the employer's payroll
+  // export runs (shared payCalculations), so the number here matches the
+  // payslip instead of quietly under-reporting OT weeks at flat rate.
+  const otTerms = useMemo(() => {
+    const rawMultiplier = Number(
+      (employee as { overtime_multiplier?: number } | null | undefined)?.overtime_multiplier
+    );
+    const rawThreshold = Number(
+      (employee as { overtime_threshold_hours?: number } | null | undefined)
+        ?.overtime_threshold_hours
+    );
+    return {
+      multiplier: Number.isFinite(rawMultiplier) ? rawMultiplier : 1.5,
+      threshold: Number.isFinite(rawThreshold) ? rawThreshold : 8,
+    };
+  }, [employee]);
+
   // Day-rate workers are not paid by the hour, so an hourly-derived money figure
   // would be misleading. Suppress/relabel the monetary estimate for them; the
   // hourly path is unchanged.
@@ -135,19 +153,26 @@ export default function MyPayPage() {
       .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
       .slice(0, 10);
 
+    // Overtime-aware pay via the shared calculator — hours over the worker's
+    // daily threshold pay at their multiplier, exactly like the payroll export
+    const toEntries = (rows: typeof timesheets, iv?: { start: Date; end: Date }) =>
+      rows
+        .filter((t) => (iv ? inInterval(t, iv) : true))
+        .map((t) => ({ date: t.date || '', totalHours: Number(t.total_hours) || 0 }));
+
     return {
       weekHours,
-      weekPay: weekHours * rate,
+      weekPay: labourCost(toEntries(approved, weekIv), rate, otTerms),
       monthHours,
-      monthPay: monthHours * rate,
+      monthPay: labourCost(toEntries(approved, monthIv), rate, otTerms),
       pendingHours,
-      pendingPay: pendingHours * rate,
+      pendingPay: labourCost(toEntries(pending), rate, otTerms),
       expensesOwed,
       owedExpenses,
       periodApproved,
       recent,
     };
-  }, [timesheets, expenses, rate, period]);
+  }, [timesheets, expenses, rate, period, otTerms]);
 
   if (isLoading) {
     return (
@@ -178,7 +203,7 @@ export default function MyPayPage() {
         caption={
           isDayRate
             ? 'Hours worked this week (on a day rate)'
-            : `${pay.weekHours.toFixed(1)}h approved × ${rate > 0 ? `${gbp(rate)}/hr` : 'rate not set'}`
+            : `${pay.weekHours.toFixed(1)}h approved at ${rate > 0 ? `${gbp(rate)}/hr` : 'rate not set'}, incl. any overtime uplift`
         }
         tone={isDayRate ? 'amber' : 'yellow'}
         columns={[
@@ -257,30 +282,60 @@ export default function MyPayPage() {
               </div>
               {shifts.length > 0 ? (
                 <ListBody>
-                  {shifts.map((t) => {
-                    const hours = Number(t.total_hours) || 0;
-                    const rel = relative(t.date);
-                    return (
-                      <ListRow
-                        key={t.id}
-                        title={t.date ? format(parseISO(t.date), 'EEE d MMM yyyy') : '—'}
-                        subtitle={
-                          isDayRate
-                            ? `${hours.toFixed(1)}h worked${rel ? ` · ${rel}` : ''}`
-                            : `${hours.toFixed(1)}h × ${gbp(rate)}${rel ? ` · ${rel}` : ''}`
-                        }
-                        trailing={
-                          isDayRate ? (
-                            <span className="text-[12px] font-medium text-white/45">Day rate</span>
-                          ) : (
-                            <span className="text-[14px] font-semibold text-white tabular-nums">
-                              {gbp(hours * rate)}
-                            </span>
-                          )
-                        }
-                      />
+                  {(() => {
+                    // Per-day OT split so the rows SUM to the OT-aware headline
+                    // (a shift's uplift is a property of its day, not the row —
+                    // days with multiple shifts share the day's gross pro-rata)
+                    const dayHours = new Map<string, number>();
+                    shifts.forEach((t) =>
+                      dayHours.set(
+                        t.date || '',
+                        (dayHours.get(t.date || '') ?? 0) + (Number(t.total_hours) || 0)
+                      )
                     );
-                  })}
+                    const dayGross = new Map<string, { gross: number; ot: number }>();
+                    dayHours.forEach((h, d) => {
+                      const overtime = Math.max(h - otTerms.threshold, 0);
+                      dayGross.set(d, {
+                        gross:
+                          Math.min(h, otTerms.threshold) * rate +
+                          overtime * rate * otTerms.multiplier,
+                        ot: overtime,
+                      });
+                    });
+
+                    return shifts.map((t) => {
+                      const hours = Number(t.total_hours) || 0;
+                      const rel = relative(t.date);
+                      const day = dayGross.get(t.date || '');
+                      const totalDayHours = dayHours.get(t.date || '') ?? hours;
+                      const rowPay =
+                        day && totalDayHours > 0 ? (hours / totalDayHours) * day.gross : 0;
+                      const hasOt = (day?.ot ?? 0) > 0;
+                      return (
+                        <ListRow
+                          key={t.id}
+                          title={t.date ? format(parseISO(t.date), 'EEE d MMM yyyy') : '—'}
+                          subtitle={
+                            isDayRate
+                              ? `${hours.toFixed(1)}h worked${rel ? ` · ${rel}` : ''}`
+                              : `${hours.toFixed(1)}h at ${gbp(rate)}${hasOt ? ' incl. OT uplift' : ''}${rel ? ` · ${rel}` : ''}`
+                          }
+                          trailing={
+                            isDayRate ? (
+                              <span className="text-[12px] font-medium text-white/45">
+                                Day rate
+                              </span>
+                            ) : (
+                              <span className="text-[14px] font-semibold text-white tabular-nums">
+                                {gbp(rowPay)}
+                              </span>
+                            )
+                          }
+                        />
+                      );
+                    });
+                  })()}
                 </ListBody>
               ) : (
                 <div className="p-4 sm:p-5">

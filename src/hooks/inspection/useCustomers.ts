@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+export type CustomerStatus = 'lead' | 'active' | 'inactive';
+
 export interface Customer {
   id: string;
   name: string;
@@ -10,6 +12,8 @@ export interface Customer {
   address?: string;
   notes?: string;
   tags?: string[];
+  status?: CustomerStatus;
+  companyName?: string;
   createdAt: string;
   updatedAt: string;
   // CRM stats
@@ -104,6 +108,8 @@ export const useCustomers = (options?: UseCustomersOptions) => {
             address: c.address || undefined,
             notes: c.notes || undefined,
             tags: (c as { tags?: string[] }).tags || [],
+            status: ((c as { status?: string }).status as CustomerStatus) || 'active',
+            companyName: (c as { company_name?: string }).company_name || undefined,
             createdAt: c.created_at,
             updatedAt: c.updated_at,
             certificateCount: c.certificate_count || 0,
@@ -215,6 +221,8 @@ export const useCustomers = (options?: UseCustomersOptions) => {
           address: customer.address,
           notes: customer.notes,
           tags: customer.tags || [],
+          status: customer.status || 'active',
+          company_name: customer.companyName?.trim() || null,
         })
         .select()
         .single();
@@ -253,11 +261,15 @@ export const useCustomers = (options?: UseCustomersOptions) => {
     >
   ) => {
     try {
+      // companyName is camelCase in the app but company_name in the DB —
+      // strip it from the spread and remap
+      const { companyName, ...rest } = updates;
       const normalisedUpdates = {
-        ...updates,
+        ...rest,
         ...(updates.email !== undefined
           ? { email: updates.email?.trim().toLowerCase() || null }
           : {}),
+        ...(companyName !== undefined ? { company_name: companyName?.trim() || null } : {}),
         updated_at: new Date().toISOString(),
       };
 

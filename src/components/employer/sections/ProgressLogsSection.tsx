@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef, type ChangeEvent } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -30,6 +30,7 @@ import { useJobs } from '@/hooks/useJobs';
 
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { toast } from '@/hooks/use-toast';
+import { uploadJobPhotos } from '@/utils/uploadJobPhotos';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
@@ -113,6 +114,45 @@ export function ProgressLogsSection() {
   });
   const [newWorkItem, setNewWorkItem] = useState('');
   const [newMaterial, setNewMaterial] = useState({ item: '', quantity: '', cost: 0 });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
+
+  const handlePhotoSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    setUploadingPhotos(true);
+    try {
+      const { urls, failed } = await uploadJobPhotos(files, 'progress-logs');
+      if (urls.length) {
+        setFormData((prev) => ({ ...prev, photos: [...(prev.photos || []), ...urls] }));
+      }
+      if (failed.length) {
+        toast({
+          title: `${failed.length} photo${failed.length === 1 ? '' : 's'} skipped`,
+          description: failed.map((f) => `${f.name} — ${f.reason}`).join(', '),
+          variant: 'destructive',
+        });
+      } else {
+        toast({ title: `${urls.length} photo${urls.length === 1 ? '' : 's'} added` });
+      }
+    } catch {
+      toast({
+        title: 'Upload failed',
+        description: 'Could not upload photos. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setUploadingPhotos(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const removePhoto = (url: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      photos: (prev.photos || []).filter((p) => p !== url),
+    }));
+  };
 
   const { data: progressLogs = [], isLoading, error, refetch } = useProgressLogs();
   const { data: stats } = useProgressLogStats();
@@ -204,6 +244,8 @@ export function ProgressLogsSection() {
         materials_used: materialsText,
         issues_encountered: formData.issues_encountered || null,
         delays: formData.delays || null,
+        notes: formData.notes || null,
+        photos: formData.photos || [],
       } as CreateProgressLogInput);
       setShowCreateSheet(false);
       resetForm();
@@ -640,6 +682,50 @@ export function ProgressLogsSection() {
                   className={`${textareaClass} min-h-[80px]`}
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Photos</Label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  onChange={handlePhotoSelect}
+                  className="hidden"
+                />
+                <div className="flex flex-wrap gap-2">
+                  {(formData.photos || []).map((url) => (
+                    <div
+                      key={url}
+                      className="relative h-16 w-16 rounded-lg overflow-hidden border border-white/10"
+                    >
+                      <img src={url} alt="Site" className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(url)}
+                        className="absolute top-0.5 right-0.5 h-5 w-5 rounded-full bg-black/70 grid place-items-center text-white touch-manipulation"
+                        aria-label="Remove photo"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingPhotos}
+                    className="h-16 w-16 rounded-lg border border-dashed border-white/20 grid place-items-center text-white/50 hover:text-white/80 hover:border-white/40 disabled:opacity-50 touch-manipulation"
+                    aria-label="Add photos"
+                  >
+                    {uploadingPhotos ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <Camera className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="px-5 py-4 border-t border-white/[0.06]">
@@ -703,8 +789,8 @@ export function ProgressLogsSection() {
                       tone: 'amber',
                     },
                     {
-                      label: 'Workers',
-                      value: selectedLog.workers_on_site ?? 0,
+                      label: 'Weather',
+                      value: selectedLog.weather ?? '—',
                       tone: 'blue',
                     },
                     {

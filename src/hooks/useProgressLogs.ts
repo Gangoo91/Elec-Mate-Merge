@@ -2,12 +2,21 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+export type WeatherCondition =
+  | 'Clear'
+  | 'Cloudy'
+  | 'Partly Cloudy'
+  | 'Rain'
+  | 'Heavy Rain'
+  | 'Snow'
+  | 'Wind';
+
 export interface ProgressLog {
   id: string;
   user_id: string;
   job_id: string;
   date: string;
-  weather?: string;
+  weather?: WeatherCondition;
   temperature?: string;
   workers_on_site: number;
   work_completed?: string;
@@ -16,6 +25,7 @@ export interface ProgressLog {
   issues_encountered?: string;
   delays?: string;
   visitor_log?: string;
+  notes?: string;
   photos: string[];
   signed_off: boolean;
   signed_off_by?: string;

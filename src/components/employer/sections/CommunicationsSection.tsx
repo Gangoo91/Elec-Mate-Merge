@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -39,7 +39,19 @@ import {
   useCreateCommunication,
   usePinCommunication,
   useDeleteCommunication,
+  useSetEmployerReadState,
+  useAcknowledgeAsEmployer,
 } from '@/hooks/useCommunications';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { useActiveEmployees } from '@/hooks/useEmployees';
 import {
   Communication,
@@ -103,10 +115,10 @@ const typeLabels: Record<string, string> = {
 };
 
 const getDisplayType = (comm: Communication): string => {
-  if (comm.priority === 'urgent' || comm.priority === 'high') {
-    if (comm.type === 'alert') return 'Safety Warning';
-    return 'Mandatory Reading';
-  }
+  if (comm.type === 'alert') return 'Safety Warning';
+  // Real flag, not inferred from priority — ticking "High priority" on a
+  // broadcast must not silently turn it into a sign-off demand
+  if (comm.requires_acknowledgement) return 'Mandatory Reading';
   return typeMapping[comm.type] || 'Team Broadcast';
 };
 
@@ -130,8 +142,30 @@ export const CommunicationsSection = () => {
   const [recipientsMessageId, setRecipientsMessageId] = useState<string | null>(null);
   const { data: recipients = [] } = useCommunicationRecipients(recipientsMessageId || '');
 
-  const [localReadIds, setLocalReadIds] = useState<Set<string>>(new Set());
-  const [localAcknowledgedIds, setLocalAcknowledgedIds] = useState<Set<string>>(new Set());
+  // Read/ack state is PERSISTED on the row (employer_read_at /
+  // employer_acknowledged_at) — these overlays only bridge the gap between a
+  // tap and the refetch so the UI feels instant.
+  const [readOverrides, setReadOverrides] = useState<Map<string, boolean>>(new Map());
+  const [ackOverrides, setAckOverrides] = useState<Set<string>>(new Set());
+  const setEmployerRead = useSetEmployerReadState();
+  const acknowledgeEmployer = useAcknowledgeAsEmployer();
+
+  const localReadIds = useMemo(() => {
+    const ids = new Set<string>();
+    communications.forEach((c) => {
+      const override = readOverrides.get(c.id);
+      if (override ?? !!c.employer_read_at) ids.add(c.id);
+    });
+    return ids;
+  }, [communications, readOverrides]);
+
+  const localAcknowledgedIds = useMemo(() => {
+    const ids = new Set<string>();
+    communications.forEach((c) => {
+      if (ackOverrides.has(c.id) || !!c.employer_acknowledged_at) ids.add(c.id);
+    });
+    return ids;
+  }, [communications, ackOverrides]);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('inbox');
@@ -216,7 +250,7 @@ export const CommunicationsSection = () => {
       total: stats?.totalAnnouncements ?? communications.length,
       unread: stats?.unreadCount ?? communications.filter((c) => !localReadIds.has(c.id)).length,
       mandatoryPending: communications.filter(
-        (c) => (c.priority === 'urgent' || c.priority === 'high') && !localAcknowledgedIds.has(c.id)
+        (c) => c.requires_acknowledgement && !localAcknowledgedIds.has(c.id)
       ).length,
       safetyWarnings: communications.filter((c) => c.type === 'alert').length,
     }),
@@ -239,22 +273,53 @@ export const CommunicationsSection = () => {
     [pinCommunication]
   );
 
-  const toggleRead = useCallback((id: string) => {
-    setLocalReadIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-        toast({ title: 'Marked unread' });
-      } else {
-        next.add(id);
-        toast({ title: 'Marked read' });
-      }
-      return next;
-    });
+  const toggleRead = useCallback(
+    (id: string) => {
+      const next = !localReadIds.has(id);
+      setReadOverrides((prev) => new Map(prev).set(id, next));
+      setEmployerRead.mutate(
+        { id, read: next },
+        {
+          onSuccess: () => toast({ title: next ? 'Marked read' : 'Marked unread' }),
+          onError: () => {
+            // Revert the optimistic overlay — the write didn't land
+            setReadOverrides((prev) => new Map(prev).set(id, !next));
+            toast({
+              title: 'Error',
+              description: 'Read state was not saved',
+              variant: 'destructive',
+            });
+          },
+        }
+      );
+    },
+    [localReadIds, setEmployerRead]
+  );
+
+  /** Mark read on open — silent, no toast, no-op if already read. */
+  const markReadOnOpen = useCallback(
+    (comm: Communication) => {
+      if (localReadIds.has(comm.id)) return;
+      setReadOverrides((prev) => new Map(prev).set(comm.id, true));
+      setEmployerRead.mutate(
+        { id: comm.id, read: true },
+        { onError: () => setReadOverrides((prev) => new Map(prev).set(comm.id, false)) }
+      );
+    },
+    [localReadIds, setEmployerRead]
+  );
+
+  // Deleting removes a company-wide announcement AND its recipient read
+  // receipts for the whole team — always confirm first.
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+
+  const deleteMessage = useCallback((id: string) => {
+    setConfirmDeleteId(id);
   }, []);
 
-  const deleteMessage = useCallback(
+  const performDelete = useCallback(
     async (id: string) => {
+      setConfirmDeleteId(null);
       try {
         await deleteCommunication.mutateAsync(id);
         setShowDetail(false);
@@ -266,11 +331,57 @@ export const CommunicationsSection = () => {
     [deleteCommunication]
   );
 
-  const signOff = useCallback((id: string) => {
-    setLocalAcknowledgedIds((prev) => new Set([...prev, id]));
-    setLocalReadIds((prev) => new Set([...prev, id]));
-    toast({ title: 'Signed off', description: 'Acknowledged' });
-  }, []);
+  const signOff = useCallback(
+    (id: string) => {
+      setAckOverrides((prev) => new Set([...prev, id]));
+      setReadOverrides((prev) => new Map(prev).set(id, true));
+      acknowledgeEmployer.mutate(id, {
+        onSuccess: () => toast({ title: 'Signed off', description: 'Acknowledged and recorded' }),
+        onError: () => {
+          setAckOverrides((prev) => {
+            const next = new Set(prev);
+            next.delete(id);
+            return next;
+          });
+          toast({
+            title: 'Error',
+            description: 'Sign-off was not saved',
+            variant: 'destructive',
+          });
+        },
+      });
+    },
+    [acknowledgeEmployer]
+  );
+
+  // Chase outstanding sign-offs: a targeted reminder to exactly the people who
+  // haven't acknowledged — the DB push triggers deliver it to their phones
+  const nudgeUnsigned = useCallback(
+    async (message: Communication, unsignedIds: string[]) => {
+      if (unsignedIds.length === 0) return;
+      try {
+        await createCommunication.mutateAsync({
+          type: 'message',
+          title: `Reminder: sign "${message.title}"`,
+          content: `"${message.title}" requires your acknowledgement — please open it in your comms and sign it off.`,
+          priority: 'high',
+          target_audience: 'specific',
+          target_employee_ids: unsignedIds,
+          is_pinned: false,
+          expires_at: null,
+          sender_id: null,
+          attachments: null,
+        });
+        toast({
+          title: 'Nudge sent',
+          description: `Reminded ${unsignedIds.length} team member${unsignedIds.length === 1 ? '' : 's'} to sign.`,
+        });
+      } catch {
+        toast({ title: 'Nudge failed', variant: 'destructive' });
+      }
+    },
+    [createCommunication]
+  );
 
   const handleReply = useCallback(async () => {
     if (!selectedMessage || !replyContent.trim()) return;
@@ -308,20 +419,23 @@ export const CommunicationsSection = () => {
     }
   }, [selectedMessage, replyContent, createCommunication]);
 
-  const openMessage = useCallback((comm: Communication) => {
-    setSelectedMessage(comm);
-    setRecipientsMessageId(comm.id);
-    setShowDetail(true);
-    setLocalReadIds((prev) => new Set([...prev, comm.id]));
-  }, []);
+  const openMessage = useCallback(
+    (comm: Communication) => {
+      setSelectedMessage(comm);
+      setRecipientsMessageId(comm.id);
+      setShowDetail(true);
+      markReadOnOpen(comm);
+    },
+    [markReadOnOpen]
+  );
 
-  const handleTouchStart = (e: React.TouchEvent, id: string) => {
+  const handleTouchStart = (e: ReactTouchEvent, id: string) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     setSwipingId(id);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const handleTouchMove = (e: ReactTouchEvent) => {
     if (!swipingId) return;
 
     const diffX = e.touches[0].clientX - touchStartX.current;
@@ -388,6 +502,9 @@ export const CommunicationsSection = () => {
         expires_at: null,
         sender_id: null,
         attachments: null,
+        // Explicit flag — a high-priority broadcast is NOT a sign-off demand;
+        // only the Mandatory Reading compose type requires acknowledgement
+        requires_acknowledgement: selectedType === 'Mandatory Reading',
       });
 
       toast({
@@ -412,8 +529,11 @@ export const CommunicationsSection = () => {
   };
 
   const handleUseTemplate = (template: (typeof templates)[0]) => {
+    // Title and type only — never pre-fill placeholder prose as real content
+    // (one tap + Send used to broadcast "Important safety notice regarding..."
+    // to the whole roster). Content stays empty, and Send requires content.
     setSelectedType(template.type);
-    setMessageContent(template.preview);
+    setMessageContent('');
     setMessageTitle(template.name);
   };
 
@@ -468,6 +588,8 @@ export const CommunicationsSection = () => {
       </span>
     );
 
+    const isSwipingThis = swipingId === comm.id;
+
     return (
       <div
         key={comm.id}
@@ -476,9 +598,27 @@ export const CommunicationsSection = () => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
+        {/* Action layers behind the swiping row \u2014 without these the gestures
+            were invisible (row slid over blank card background) */}
+        {isSwipingThis && swipeOffset > 8 && (
+          <div className="absolute inset-y-0 left-0 w-1/2 bg-emerald-500/20 flex items-center pl-5">
+            <span className="flex items-center gap-2 text-emerald-400 text-[12px] font-semibold">
+              {isRead ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {isRead ? 'Unread' : 'Read'}
+            </span>
+          </div>
+        )}
+        {isSwipingThis && swipeOffset < -8 && (
+          <div className="absolute inset-y-0 right-0 w-1/2 bg-red-500/20 flex items-center justify-end pr-5">
+            <span className="flex items-center gap-2 text-red-400 text-[12px] font-semibold">
+              Delete
+              <Trash2 className="h-4 w-4" />
+            </span>
+          </div>
+        )}
         <div
           className="relative transition-transform duration-200 ease-out"
-          style={{ transform: swipingId === comm.id ? `translateX(${swipeOffset}px)` : undefined }}
+          style={{ transform: isSwipingThis ? `translateX(${swipeOffset}px)` : undefined }}
         >
           <ListRow
             accent={!isRead ? 'yellow' : undefined}
@@ -489,7 +629,34 @@ export const CommunicationsSection = () => {
             }
             title={titleNode}
             subtitle={`${typeLabels[displayType] ?? displayType} \u00B7 ${comm.content.slice(0, 80)}`}
-            trailing={trailing}
+            trailing={
+              <>
+                {trailing}
+                {/* Desktop has no swipe \u2014 the same actions as visible buttons */}
+                <span className="hidden sm:flex items-center gap-1">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleRead(comm.id);
+                    }}
+                    className="h-9 w-9 rounded-full text-white/50 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors touch-manipulation"
+                    aria-label={isRead ? 'Mark unread' : 'Mark read'}
+                  >
+                    {isRead ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteMessage(comm.id);
+                    }}
+                    className="h-9 w-9 rounded-full text-white/50 hover:text-red-400 hover:bg-red-500/[0.08] flex items-center justify-center transition-colors touch-manipulation"
+                    aria-label="Delete message"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </span>
+              </>
+            }
             onClick={() => openMessage(comm)}
           />
         </div>
@@ -535,7 +702,8 @@ export const CommunicationsSection = () => {
         columns={4}
         stats={[
           { label: 'Unread', value: displayStats.unread, tone: 'yellow' },
-          { label: 'Briefs', value: displayStats.total, tone: 'purple' },
+          // "Messages", not "Briefs" — the count is every message of any type
+          { label: 'Messages', value: displayStats.total, tone: 'purple' },
           { label: 'Safety', value: displayStats.safetyWarnings, tone: 'blue' },
           { label: 'To sign', value: displayStats.mandatoryPending, tone: 'emerald' },
         ]}
@@ -621,7 +789,35 @@ export const CommunicationsSection = () => {
         openReply={() => setShowReplySheet(true)}
         pinPending={pinCommunication.isPending}
         deletePending={deleteCommunication.isPending}
+        onNudgeUnsigned={(ids) => selectedMessage && nudgeUnsigned(selectedMessage, ids)}
+        nudgePending={createCommunication.isPending}
       />
+
+      <AlertDialog
+        open={confirmDeleteId !== null}
+        onOpenChange={(open) => !open && setConfirmDeleteId(null)}
+      >
+        <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md bg-[hsl(0_0%_10%)] border-white/[0.1] rounded-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete this message?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/60">
+              It disappears for the whole team, along with their read receipts. This can't be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-full border-white/[0.1] bg-white/[0.06] text-white hover:bg-white/[0.1] hover:text-white touch-manipulation">
+              Keep it
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => confirmDeleteId && performDelete(confirmDeleteId)}
+              className="rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/25 touch-manipulation"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <ComposeSheet
         open={showCompose}
@@ -679,6 +875,8 @@ interface MessageDetailSheetProps {
   openReply: () => void;
   pinPending: boolean;
   deletePending: boolean;
+  onNudgeUnsigned: (unsignedEmployeeIds: string[]) => void;
+  nudgePending: boolean;
 }
 
 const MessageDetailSheet = ({
@@ -695,7 +893,11 @@ const MessageDetailSheet = ({
   openReply,
   pinPending,
   deletePending,
+  onNudgeUnsigned,
+  nudgePending,
 }: MessageDetailSheetProps) => {
+  // Hook before the early return — rules of hooks
+  const isMobile = useIsMobile();
   if (!selectedMessage) return null;
 
   const displayType = getDisplayType(selectedMessage);
@@ -711,12 +913,18 @@ const MessageDetailSheet = ({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
-        side="bottom"
-        className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        side={isMobile ? 'bottom' : 'right'}
+        className={
+          isMobile
+            ? 'h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_10%)] border-white/[0.06]'
+            : 'w-full sm:max-w-xl p-0 bg-[hsl(0_0%_10%)] border-l border-white/[0.06]'
+        }
       >
-        <div className="flex justify-center pt-3 pb-2">
-          <div className="w-10 h-1 rounded-full bg-white/20" />
-        </div>
+        {isMobile && (
+          <div className="flex justify-center pt-3 pb-2">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
+          </div>
+        )}
 
         <div className="px-5 pb-4 border-b border-white/[0.06]">
           <div className="flex items-center gap-2 flex-wrap">
@@ -734,7 +942,7 @@ const MessageDetailSheet = ({
           </div>
         </div>
 
-        <ScrollArea className="h-[calc(95vh-220px)]">
+        <ScrollArea className={isMobile ? 'h-[calc(95vh-220px)]' : 'h-[calc(100vh-220px)]'}>
           <div className="p-5 space-y-5">
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
               <p className="text-[14px] text-white leading-relaxed whitespace-pre-wrap">
@@ -794,6 +1002,25 @@ const MessageDetailSheet = ({
                     </div>
                   }
                 />
+                {displayType === 'Mandatory Reading' &&
+                  recipients.some((r) => !r.acknowledged_at) && (
+                    <div className="px-5 py-3 border-b border-white/[0.06]">
+                      <SecondaryButton
+                        fullWidth
+                        disabled={nudgePending}
+                        onClick={() =>
+                          onNudgeUnsigned(
+                            recipients.filter((r) => !r.acknowledged_at).map((r) => r.employee_id)
+                          )
+                        }
+                      >
+                        <Send className="h-4 w-4 mr-2" />
+                        {nudgePending
+                          ? 'Sending…'
+                          : `Nudge ${recipients.filter((r) => !r.acknowledged_at).length} unsigned`}
+                      </SecondaryButton>
+                    </div>
+                  )}
                 <ListBody>
                   {recipients.map((recipient) => (
                     <ListRow

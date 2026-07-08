@@ -54,7 +54,8 @@ import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
-import { Vacancy, VacancyApplication } from '@/services/vacancyService';
+import { Vacancy, VacancyApplication, notifyApplicantOfStatus } from '@/services/vacancyService';
+import { useIsMobile } from '@/hooks/use-mobile';
 import type { Conversation } from '@/services/conversationService';
 
 type StatusFilter =
@@ -118,6 +119,7 @@ function formatDate(value: string) {
 }
 
 export function JobVacanciesSection() {
+  const isMobile = useIsMobile();
   const queryClient = useQueryClient();
   const { data: vacancies = [], isLoading: vacanciesLoading } = useVacancies();
   const { data: applications = [], isLoading: applicationsLoading } = useVacancyApplications();
@@ -311,8 +313,10 @@ export function JobVacanciesSection() {
           .catch(() => {});
       }
 
-      // Notify the worker through the existing pipeline
-      await updateApplicationStatus.mutateAsync({ id: app.id, status: 'Hired' }).catch(() => {});
+      // The RPC already set status='Hired' server-side, so the update path's
+      // changed-status guard would skip the push — send it directly instead.
+      // Fire-and-forget: a failed notification must never block the hire.
+      notifyApplicantOfStatus(app.id, 'Hired').catch(() => {});
 
       toast({
         title: 'Hired & onboarded',
@@ -333,11 +337,33 @@ export function JobVacanciesSection() {
   };
 
   const handleToggleVacancy = async (vacancy: Vacancy) => {
+    // Publishing puts the ad on the PUBLIC job board and pushes to every
+    // available electrician — a title-only draft must finish in the wizard
+    // (which enforces the full validation) before it can go live.
+    if (
+      vacancy.status === 'Draft' &&
+      (!vacancy.location?.trim() || !vacancy.description?.trim())
+    ) {
+      toast({
+        title: 'Draft needs finishing',
+        description: 'Add a location and description before publishing — opening the editor.',
+      });
+      handleEditVacancy(vacancy);
+      return;
+    }
     try {
       await toggleVacancyStatus.mutateAsync({ id: vacancy.id, currentStatus: vacancy.status });
       toast({
-        title: vacancy.status === 'Open' ? 'Vacancy closed' : 'Vacancy reopened',
-        description: `${vacancy.title} is now ${vacancy.status === 'Open' ? 'closed' : 'open'}.`,
+        title:
+          vacancy.status === 'Open'
+            ? 'Vacancy closed'
+            : vacancy.status === 'Draft'
+              ? 'Vacancy published'
+              : 'Vacancy reopened',
+        description:
+          vacancy.status === 'Draft'
+            ? `${vacancy.title} is now live and taking applications.`
+            : `${vacancy.title} is now ${vacancy.status === 'Open' ? 'closed' : 'open'}.`,
       });
     } catch {
       toast({
@@ -571,9 +597,11 @@ export function JobVacanciesSection() {
                 searchPlaceholder="Search candidates…"
               />
 
-              <div className="flex flex-wrap items-center gap-2">
+              {/* 2-col grid on mobile (fixed widths made a ragged 3-line wrap
+                  at 375px), single row from sm up */}
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-2">
                 <Select value={tierFilter} onValueChange={(v) => setTierFilter(v as TierFilter)}>
-                  <SelectTrigger className={`${selectTriggerClass} w-[150px]`}>
+                  <SelectTrigger className={`${selectTriggerClass} w-full sm:w-[150px]`}>
                     <SelectValue placeholder="Tier" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -585,7 +613,7 @@ export function JobVacanciesSection() {
                 </Select>
 
                 <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
-                  <SelectTrigger className={`${selectTriggerClass} w-[170px]`}>
+                  <SelectTrigger className={`${selectTriggerClass} w-full sm:w-[170px]`}>
                     <SelectValue placeholder="Vacancy" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -599,7 +627,7 @@ export function JobVacanciesSection() {
                 </Select>
 
                 <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                  <SelectTrigger className={`${selectTriggerClass} w-[140px]`}>
+                  <SelectTrigger className={`${selectTriggerClass} w-full sm:w-[140px]`}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -611,7 +639,7 @@ export function JobVacanciesSection() {
 
                 <button
                   onClick={toggleSelectionMode}
-                  className={`h-10 px-4 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation ${
+                  className={`h-11 px-4 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation ${
                     selectionMode
                       ? 'bg-elec-yellow text-black border-elec-yellow'
                       : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
@@ -665,19 +693,26 @@ export function JobVacanciesSection() {
                                 </Pill>
                               )}
                               <Pill tone={tone}>{app.status}</Pill>
+                              {/* 44px hit area via negative-margin padding; the
+                                  visible circle stays compact */}
                               {selectionMode && (
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleSelectionChange(app.id, !isSelected);
                                   }}
-                                  className={`h-7 w-7 rounded-full border flex items-center justify-center text-[12px] font-semibold touch-manipulation ${
-                                    isSelected
-                                      ? 'bg-elec-yellow text-black border-elec-yellow'
-                                      : 'bg-transparent text-white border-white/[0.2]'
-                                  }`}
+                                  className="p-2 -m-2 touch-manipulation"
+                                  aria-label={isSelected ? 'Deselect candidate' : 'Select candidate'}
                                 >
-                                  {isSelected ? '✓' : ''}
+                                  <span
+                                    className={`h-7 w-7 rounded-full border flex items-center justify-center text-[12px] font-semibold ${
+                                      isSelected
+                                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                                        : 'bg-transparent text-white border-white/[0.2]'
+                                    }`}
+                                  >
+                                    {isSelected ? '✓' : ''}
+                                  </span>
                                 </button>
                               )}
                             </>
@@ -720,7 +755,12 @@ export function JobVacanciesSection() {
                 title: editingVacancy.title,
                 type: editingVacancy.type as any,
                 location: editingVacancy.location,
-                workArrangement: 'On-site',
+                workArrangement: (editingVacancy.work_arrangement || 'On-site') as any,
+                experienceLevel: (editingVacancy.experience_level || 'Mid') as any,
+                postcode: editingVacancy.postcode || '',
+                schedule: editingVacancy.schedule || '',
+                startDate: editingVacancy.start_date || '',
+                niceToHave: editingVacancy.nice_to_have || [],
                 salaryMin: editingVacancy.salary_min || undefined,
                 salaryMax: editingVacancy.salary_max || undefined,
                 salaryPeriod: (editingVacancy.salary_period?.includes('year')
@@ -736,7 +776,6 @@ export function JobVacanciesSection() {
                           : 'year') as any,
                 benefits: editingVacancy.benefits || [],
                 requirements: editingVacancy.requirements || [],
-                experienceLevel: 'Mid',
                 description: editingVacancy.description || '',
                 closingDate: editingVacancy.closing_date || '',
               }
@@ -748,7 +787,12 @@ export function JobVacanciesSection() {
                 title: `${duplicatingVacancy.title} (Copy)`,
                 type: duplicatingVacancy.type as any,
                 location: duplicatingVacancy.location,
-                workArrangement: 'On-site',
+                workArrangement: (duplicatingVacancy.work_arrangement || 'On-site') as any,
+                experienceLevel: (duplicatingVacancy.experience_level || 'Mid') as any,
+                postcode: duplicatingVacancy.postcode || '',
+                schedule: duplicatingVacancy.schedule || '',
+                startDate: '',
+                niceToHave: duplicatingVacancy.nice_to_have || [],
                 salaryMin: duplicatingVacancy.salary_min || undefined,
                 salaryMax: duplicatingVacancy.salary_max || undefined,
                 salaryPeriod: (duplicatingVacancy.salary_period?.includes('year')
@@ -764,7 +808,6 @@ export function JobVacanciesSection() {
                           : 'year') as any,
                 benefits: duplicatingVacancy.benefits || [],
                 requirements: duplicatingVacancy.requirements || [],
-                experienceLevel: 'Mid',
                 description: duplicatingVacancy.description || '',
                 closingDate: '',
               }
@@ -777,8 +820,12 @@ export function JobVacanciesSection() {
         onOpenChange={(open) => !open && setViewingVacancy(null)}
       >
         <SheetContent
-          side="bottom"
-          className="h-[88vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] p-0 overflow-hidden"
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-[88vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] p-0 overflow-hidden'
+              : 'w-full sm:max-w-xl bg-[hsl(0_0%_10%)] border-l border-white/[0.06] p-0 overflow-hidden'
+          }
         >
           {viewingVacancy && (
             <div className="flex flex-col h-full">
@@ -892,23 +939,47 @@ export function JobVacanciesSection() {
                 >
                   Duplicate
                 </SecondaryButton>
-                <SecondaryButton
-                  onClick={() => {
-                    handleToggleVacancy(viewingVacancy);
-                    setViewingVacancy(null);
-                  }}
-                >
-                  {viewingVacancy.status === 'Open' ? 'Pause' : 'Reopen'}
-                </SecondaryButton>
-                <PrimaryButton
-                  onClick={() => {
-                    handleEditVacancy(viewingVacancy);
-                    setViewingVacancy(null);
-                  }}
-                  className="ml-auto"
-                >
-                  Edit vacancy
-                </PrimaryButton>
+                {viewingVacancy.status === 'Draft' ? (
+                  <>
+                    <SecondaryButton
+                      onClick={() => {
+                        handleEditVacancy(viewingVacancy);
+                        setViewingVacancy(null);
+                      }}
+                    >
+                      Edit
+                    </SecondaryButton>
+                    <PrimaryButton
+                      onClick={() => {
+                        handleToggleVacancy(viewingVacancy);
+                        setViewingVacancy(null);
+                      }}
+                      className="ml-auto"
+                    >
+                      Publish
+                    </PrimaryButton>
+                  </>
+                ) : (
+                  <>
+                    <SecondaryButton
+                      onClick={() => {
+                        handleToggleVacancy(viewingVacancy);
+                        setViewingVacancy(null);
+                      }}
+                    >
+                      {viewingVacancy.status === 'Open' ? 'Pause' : 'Reopen'}
+                    </SecondaryButton>
+                    <PrimaryButton
+                      onClick={() => {
+                        handleEditVacancy(viewingVacancy);
+                        setViewingVacancy(null);
+                      }}
+                      className="ml-auto"
+                    >
+                      Edit vacancy
+                    </PrimaryButton>
+                  </>
+                )}
               </SheetFooter>
             </div>
           )}
@@ -920,8 +991,12 @@ export function JobVacanciesSection() {
         onOpenChange={(open) => !open && setViewingApplication(null)}
       >
         <SheetContent
-          side="bottom"
-          className="h-[85vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] p-0 overflow-hidden"
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-[85vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] p-0 overflow-hidden'
+              : 'w-full sm:max-w-xl bg-[hsl(0_0%_10%)] border-l border-white/[0.06] p-0 overflow-hidden'
+          }
         >
           {viewingApplication && (
             <div className="flex flex-col h-full">
@@ -958,6 +1033,24 @@ export function JobVacanciesSection() {
                           subtitle="Phone"
                         />
                       )}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {/* The one document the candidate explicitly submitted — it was
+                    sitting in the DB unreachable from the hire decision */}
+                {viewingApplication.cv_url && (
+                  <ListCard>
+                    <ListCardHeader tone="cyan" title="CV" />
+                    <ListBody>
+                      <ListRow
+                        title="Attached CV"
+                        subtitle="Submitted with this application"
+                        trailing={<Pill tone="cyan">View</Pill>}
+                        onClick={() =>
+                          window.open(viewingApplication.cv_url!, '_blank', 'noopener,noreferrer')
+                        }
+                      />
                     </ListBody>
                   </ListCard>
                 )}

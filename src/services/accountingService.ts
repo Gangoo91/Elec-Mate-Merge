@@ -127,7 +127,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
 
   const rows = entries.map((e) => {
     const regularPay = e.regularHours * e.hourlyRate;
-    const overtimePay = e.overtimeHours * e.hourlyRate * 1.5;
+    const overtimePay = e.overtimeHours * e.hourlyRate * e.overtimeMultiplier;
 
     return [
       e.employeeId,
@@ -137,7 +137,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
       e.regularHours.toFixed(2),
       e.overtimeHours.toFixed(2),
       e.hourlyRate.toFixed(2),
-      (e.hourlyRate * 1.5).toFixed(2),
+      (e.hourlyRate * e.overtimeMultiplier).toFixed(2),
       regularPay.toFixed(2),
       overtimePay.toFixed(2),
       e.grossPay.toFixed(2),

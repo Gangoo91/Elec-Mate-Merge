@@ -1,10 +1,11 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef, type ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Loader2, Trash2, CheckCircle, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Loader2, Trash2, CheckCircle, AlertTriangle, Camera, X } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { uploadJobPhotos } from '@/utils/uploadJobPhotos';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { format, formatDistanceToNow } from 'date-fns';
 import {
@@ -121,6 +122,8 @@ export function JobIssuesSection() {
   const [showResolveSheet, setShowResolveSheet] = useState(false);
   const [resolveIssueId, setResolveIssueId] = useState<string | null>(null);
   const [resolutionNotes, setResolutionNotes] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<Partial<CreateJobIssueInput>>({
@@ -154,7 +157,8 @@ export function JobIssuesSection() {
   };
 
   const handleConfirmResolve = async () => {
-    if (resolveIssueId) {
+    if (!resolveIssueId) return;
+    try {
       await updateJobIssueStatus.mutateAsync({
         id: resolveIssueId,
         status: 'Resolved',
@@ -163,11 +167,17 @@ export function JobIssuesSection() {
       setShowResolveSheet(false);
       setResolveIssueId(null);
       setResolutionNotes('');
+    } catch {
+      // hook surfaces the error toast; keep the sheet open so they can retry
     }
   };
 
   const handleStatusChange = async (issueId: string, status: IssueStatus) => {
-    await updateJobIssueStatus.mutateAsync({ id: issueId, status });
+    try {
+      await updateJobIssueStatus.mutateAsync({ id: issueId, status });
+    } catch {
+      // hook surfaces the error toast
+    }
   };
 
   const handleCreate = async () => {
@@ -189,10 +199,50 @@ export function JobIssuesSection() {
   };
 
   const handleDelete = async () => {
-    if (deleteConfirmId) {
+    if (!deleteConfirmId) return;
+    try {
       await deleteJobIssue.mutateAsync(deleteConfirmId);
       setDeleteConfirmId(null);
+    } catch {
+      // hook surfaces the error toast; keep the confirm open so they can retry
     }
+  };
+
+  const handlePhotoSelect = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    setUploadingPhotos(true);
+    try {
+      const { urls, failed } = await uploadJobPhotos(files, 'issues');
+      if (urls.length) {
+        setFormData((prev) => ({ ...prev, photos: [...(prev.photos || []), ...urls] }));
+      }
+      if (failed.length) {
+        toast({
+          title: `${failed.length} photo${failed.length === 1 ? '' : 's'} skipped`,
+          description: failed.map((f) => `${f.name} — ${f.reason}`).join(', '),
+          variant: 'destructive',
+        });
+      } else {
+        toast({ title: `${urls.length} photo${urls.length === 1 ? '' : 's'} added` });
+      }
+    } catch {
+      toast({
+        title: 'Upload failed',
+        description: 'Could not upload photos. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setUploadingPhotos(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const removePhoto = (url: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      photos: (prev.photos || []).filter((p) => p !== url),
+    }));
   };
 
   const resetForm = () => {
@@ -513,6 +563,50 @@ className={inputClass}
 className={`${textareaClass} min-h-[100px]`}
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label className="text-white text-[12px]">Photos</Label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  multiple
+                  onChange={handlePhotoSelect}
+                  className="hidden"
+                />
+                <div className="flex flex-wrap gap-2">
+                  {(formData.photos || []).map((url) => (
+                    <div
+                      key={url}
+                      className="relative h-16 w-16 rounded-lg overflow-hidden border border-white/10"
+                    >
+                      <img src={url} alt="Issue" className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(url)}
+                        className="absolute top-0.5 right-0.5 h-5 w-5 rounded-full bg-black/70 grid place-items-center text-white touch-manipulation"
+                        aria-label="Remove photo"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingPhotos}
+                    className="h-16 w-16 rounded-lg border border-dashed border-white/20 grid place-items-center text-white/50 hover:text-white/80 hover:border-white/40 disabled:opacity-50 touch-manipulation"
+                    aria-label="Add photos"
+                  >
+                    {uploadingPhotos ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <Camera className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="p-4 border-t border-white/[0.06]">
@@ -667,6 +761,25 @@ className={`${textareaClass} min-h-[120px]`}
                     <p className="text-[13px] text-white leading-relaxed">
                       {selectedIssue.description}
                     </p>
+                  </div>
+                )}
+
+                {selectedIssue.photos && selectedIssue.photos.length > 0 && (
+                  <div className="space-y-2">
+                    <Divider label="Photos" />
+                    <div className="grid grid-cols-3 gap-2">
+                      {selectedIssue.photos.map((url) => (
+                        <a
+                          key={url}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block aspect-square rounded-lg overflow-hidden border border-white/10 touch-manipulation"
+                        >
+                          <img src={url} alt="Issue" className="h-full w-full object-cover" />
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 )}
 

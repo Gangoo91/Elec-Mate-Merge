@@ -1,5 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
+import {
+  splitDailyOvertime,
+  grossPay,
+  labourCost,
+  DEFAULT_OVERTIME_TERMS,
+  type OvertimeTerms,
+} from '@/utils/payCalculations';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -64,6 +72,7 @@ import {
   Avatar,
   Pill,
   Dot,
+  PulseDot,
   Eyebrow,
   EmptyState,
   LoadingBlocks,
@@ -90,6 +99,8 @@ interface DisplayTimesheet {
   totalHours: number;
   status: string;
   notes?: string;
+  /** Open clock-in (no clock_out yet) — on the clock right now, not approvable. */
+  isLive: boolean;
 }
 
 const formatTimeFromISO = (isoString: string | null): string => {
@@ -124,20 +135,33 @@ interface AccountingConnection {
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
+// 'intuit' deliberately absent — it produced a byte-identical file to
+// QuickBooks (same company, same format) and read as two integrations.
 const ACCOUNTING_PROVIDERS: { id: AccountingProvider; name: string }[] = [
   { id: 'xero', name: 'Xero' },
   { id: 'sage', name: 'Sage' },
   { id: 'quickbooks', name: 'QuickBooks' },
-  { id: 'intuit', name: 'Intuit' },
   { id: 'csv', name: 'CSV Export' },
 ];
 
 export const TimesheetsSection = () => {
+  const isMobile = useIsMobile();
   const { data: rawTimesheets = [], isLoading: timesheetsLoading, refetch: refetchTimesheets } = useTimesheets();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
   const { data: jobs = [], isLoading: jobsLoading } = useActiveJobs();
 
-  const { isClockedIn, clockState, duration, clockIn, clockOut, isClockingOut } = useClockState();
+  const {
+    isClockedIn,
+    clockState,
+    duration,
+    clockIn,
+    clockOut,
+    isClockingOut,
+    isOnBreak,
+    breakMinutes,
+    startBreak,
+    endBreak,
+  } = useClockState();
 
   const approveTimesheetMutation = useApproveTimesheet();
   const rejectTimesheetMutation = useRejectTimesheet();
@@ -181,6 +205,7 @@ export const TimesheetsSection = () => {
         totalHours: ts.total_hours || 0,
         status: ts.status,
         notes: ts.notes || undefined,
+        isLive: !!ts.clock_in && !ts.clock_out,
       };
     });
   }, [rawTimesheets, employees, jobs]);
@@ -217,36 +242,107 @@ export const TimesheetsSection = () => {
     return matchesSearch && matchesEmployee && matchesStatus && matchesDay && matchesTab;
   });
 
-  const getHourlyRate = (employeeId: string): number => {
-    const emp = employees.find((e) => e.id === employeeId);
-    return emp?.hourly_rate || 25;
-  };
-
-  const calculateLabourCost = (employeeId: string, hours: number): number => {
-    return getHourlyRate(employeeId) * hours;
-  };
-
-  const totalHours = weekTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
-  const approvedHours = weekTimesheets
-    .filter((ts) => ts.status === 'Approved')
-    .reduce((sum, ts) => sum + ts.totalHours, 0);
-  const pendingCount = weekTimesheets.filter((ts) => ts.status === 'Pending').length;
-  const totalLabourCost = weekTimesheets.reduce(
-    (sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours),
-    0
+  // O(1) employee lookups — these run inside per-row loops on a section that
+  // re-renders every second while someone is on the clock.
+  const employeesById = useMemo(
+    () => new Map(employees.map((e) => [e.id, e])),
+    [employees]
   );
-  const approvedLabourCost = weekTimesheets
-    .filter((ts) => ts.status === 'Approved')
-    .reduce((sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours), 0);
 
-  const overtimeHours = weekTimesheets.reduce(
-    (sum, ts) => sum + Math.max(ts.totalHours - 8, 0),
-    0
+  // hourly_rate is canonical for every pay_type — AddEmployeeDialog derives it
+  // on write (annual ÷ 2080, day rate ÷ 8). No rate on record = null; £ figures
+  // must never invent a number for those workers.
+  const getHourlyRate = useCallback(
+    (employeeId: string): number | null => {
+      const emp = employeesById.get(employeeId);
+      return emp && emp.hourly_rate > 0 ? emp.hourly_rate : null;
+    },
+    [employeesById]
   );
-  const overtimeCost = weekTimesheets.reduce((sum, ts) => {
-    const ot = Math.max(ts.totalHours - 8, 0);
-    return sum + calculateLabourCost(ts.employeeId, ot);
-  }, 0);
+
+  const calculateLabourCost = useCallback(
+    (employeeId: string, hours: number): number => (getHourlyRate(employeeId) ?? 0) * hours,
+    [getHourlyRate]
+  );
+
+  // Per-worker overtime terms — firms pay 1×, 1.2×, 1.5×… over differing
+  // daily thresholds, so both live on the employee record.
+  const getOvertimeTerms = useCallback(
+    (employeeId: string): OvertimeTerms => {
+      const emp = employeesById.get(employeeId);
+      return {
+        multiplier: emp?.overtime_multiplier ?? DEFAULT_OVERTIME_TERMS.multiplier,
+        threshold: emp?.overtime_threshold_hours ?? DEFAULT_OVERTIME_TERMS.threshold,
+      };
+    },
+    [employeesById]
+  );
+
+  // Live (open) entries carry no hours yet — keep them out of the numbers.
+  const settledTimesheets = useMemo(() => weekTimesheets.filter((ts) => !ts.isLive), [weekTimesheets]);
+  const liveCount = weekTimesheets.length - settledTimesheets.length;
+
+  const workersWithoutRate = useMemo(() => {
+    const ids = new Set(settledTimesheets.map((ts) => ts.employeeId));
+    return [...ids].filter((id) => getHourlyRate(id) === null).length;
+  }, [settledTimesheets, getHourlyRate]);
+
+  // Overtime-aware cost of a set of entries — the SAME maths the payroll
+  // export uses, so the dashboard and the CSV can never disagree.
+  const costOfEntries = useCallback(
+    (entries: DisplayTimesheet[]): number => {
+      const byEmployee = new Map<string, DisplayTimesheet[]>();
+      entries.forEach((ts) => {
+        const list = byEmployee.get(ts.employeeId) ?? [];
+        list.push(ts);
+        byEmployee.set(ts.employeeId, list);
+      });
+      let total = 0;
+      byEmployee.forEach((list, employeeId) => {
+        total += labourCost(list, getHourlyRate(employeeId) ?? 0, getOvertimeTerms(employeeId));
+      });
+      return total;
+    },
+    [getHourlyRate, getOvertimeTerms]
+  );
+
+  const {
+    totalHours,
+    approvedHours,
+    pendingCount,
+    totalLabourCost,
+    approvedLabourCost,
+    overtimeHours,
+    overtimeCost,
+  } = useMemo(() => {
+    const approved = settledTimesheets.filter((ts) => ts.status === 'Approved');
+
+    // Per-day, per-worker overtime at each worker's own terms
+    const byEmployee = new Map<string, DisplayTimesheet[]>();
+    settledTimesheets.forEach((ts) => {
+      const list = byEmployee.get(ts.employeeId) ?? [];
+      list.push(ts);
+      byEmployee.set(ts.employeeId, list);
+    });
+    let otHours = 0;
+    let otCost = 0;
+    byEmployee.forEach((list, employeeId) => {
+      const terms = getOvertimeTerms(employeeId);
+      const { overtimeHours: ot } = splitDailyOvertime(list, terms.threshold);
+      otHours += ot;
+      otCost += (getHourlyRate(employeeId) ?? 0) * ot * terms.multiplier;
+    });
+
+    return {
+      totalHours: settledTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0),
+      approvedHours: approved.reduce((sum, ts) => sum + ts.totalHours, 0),
+      pendingCount: settledTimesheets.filter((ts) => ts.status === 'Pending').length,
+      totalLabourCost: costOfEntries(settledTimesheets),
+      approvedLabourCost: costOfEntries(approved),
+      overtimeHours: otHours,
+      overtimeCost: otCost,
+    };
+  }, [settledTimesheets, costOfEntries, getHourlyRate, getOvertimeTerms]);
 
   const { data: teamLeave = [] } = useTeamLeaveRequests();
   const onLeaveToday = useMemo(() => {
@@ -276,78 +372,79 @@ export const TimesheetsSection = () => {
 
   const maxDailyHours = Math.max(...dailyBreakdown.map((d) => d.hours), 8);
 
-  const employeeBreakdown = employees
-    .map((emp) => {
-      const empTimesheets = weekTimesheets.filter((ts) => ts.employeeId === emp.id);
-      const hours = empTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
-      const cost = calculateLabourCost(emp.id, hours);
-      const overtime = empTimesheets.reduce(
-        (sum, ts) => sum + Math.max(ts.totalHours - 8, 0),
-        0
-      );
-      const days = new Set(empTimesheets.map((ts) => ts.date)).size;
-      const pending = empTimesheets.filter((ts) => ts.status === 'Pending').length;
-      const approved = empTimesheets.filter((ts) => ts.status === 'Approved').length;
-      return {
-        ...emp,
-        totalHours: hours,
-        entries: empTimesheets.length,
-        cost,
-        overtime,
-        days,
-        pending,
-        approved,
-      };
-    })
-    .filter((e) => e.entries > 0);
+  const employeeBreakdown = useMemo(
+    () =>
+      employees
+        .map((emp) => {
+          // Maths from settled entries only — but a worker whose ONLY entry is a
+          // live clock-in must still appear (their "On the clock" row renders
+          // under this breakdown), so inclusion counts every week entry.
+          const allRows = weekTimesheets.filter((ts) => ts.employeeId === emp.id);
+          const empTimesheets = allRows.filter((ts) => !ts.isLive);
+          const hours = empTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
+          const terms = getOvertimeTerms(emp.id);
+          const { overtimeHours: overtime } = splitDailyOvertime(empTimesheets, terms.threshold);
+          const cost = labourCost(empTimesheets, getHourlyRate(emp.id) ?? 0, terms);
+          const days = new Set(empTimesheets.map((ts) => ts.date)).size;
+          const pending = empTimesheets.filter((ts) => ts.status === 'Pending').length;
+          const approved = empTimesheets.filter((ts) => ts.status === 'Approved').length;
+          return {
+            ...emp,
+            totalHours: hours,
+            entries: allRows.length,
+            cost,
+            overtime,
+            days,
+            pending,
+            approved,
+          };
+        })
+        .filter((e) => e.entries > 0),
+    [employees, weekTimesheets, getOvertimeTerms, getHourlyRate]
+  );
 
   const generatePayrollEntries = (): PayrollEntry[] => {
-    const approvedTimesheets = weekTimesheets.filter((ts) => ts.status === 'Approved');
-    const employeeMap = new Map<string, PayrollEntry>();
+    const approvedTimesheets = settledTimesheets.filter((ts) => ts.status === 'Approved');
 
+    // Group per employee, then split regular vs overtime per DAY (over 8h/day),
+    // so the export's Overtime Hours column carries real numbers instead of 0.00.
+    const byEmployee = new Map<string, DisplayTimesheet[]>();
     approvedTimesheets.forEach((ts) => {
-      const existing = employeeMap.get(ts.employeeId);
-      const hourlyRate = getHourlyRate(ts.employeeId);
-      const pay = ts.totalHours * hourlyRate;
-
-      if (existing) {
-        existing.regularHours += ts.totalHours;
-        existing.grossPay += pay;
-        const jobEntry = existing.jobBreakdown.find((j) => j.jobId === ts.jobId);
-        if (jobEntry) {
-          jobEntry.hours += ts.totalHours;
-          jobEntry.cost += pay;
-        } else {
-          existing.jobBreakdown.push({
-            jobId: ts.jobId,
-            jobTitle: ts.jobTitle,
-            hours: ts.totalHours,
-            cost: pay,
-          });
-        }
-      } else {
-        employeeMap.set(ts.employeeId, {
-          employeeId: ts.employeeId,
-          employeeName: ts.employeeName,
-          regularHours: ts.totalHours,
-          overtimeHours: 0,
-          hourlyRate,
-          grossPay: pay,
-          periodStart: format(currentWeekStart, 'yyyy-MM-dd'),
-          periodEnd: format(currentWeekEnd, 'yyyy-MM-dd'),
-          jobBreakdown: [
-            {
-              jobId: ts.jobId,
-              jobTitle: ts.jobTitle,
-              hours: ts.totalHours,
-              cost: pay,
-            },
-          ],
-        });
-      }
+      const list = byEmployee.get(ts.employeeId) ?? [];
+      list.push(ts);
+      byEmployee.set(ts.employeeId, list);
     });
 
-    return Array.from(employeeMap.values());
+    return [...byEmployee.entries()].map(([employeeId, entries]) => {
+      const hourlyRate = getHourlyRate(employeeId) ?? 0;
+      const { multiplier, threshold } = getOvertimeTerms(employeeId);
+      const { regularHours, overtimeHours } = splitDailyOvertime(entries, threshold);
+
+      const jobBreakdown: PayrollEntry['jobBreakdown'] = [];
+      entries.forEach((ts) => {
+        const jobEntry = jobBreakdown.find((j) => j.jobId === ts.jobId);
+        const cost = ts.totalHours * hourlyRate;
+        if (jobEntry) {
+          jobEntry.hours += ts.totalHours;
+          jobEntry.cost += cost;
+        } else {
+          jobBreakdown.push({ jobId: ts.jobId, jobTitle: ts.jobTitle, hours: ts.totalHours, cost });
+        }
+      });
+
+      return {
+        employeeId,
+        employeeName: entries[0].employeeName,
+        regularHours,
+        overtimeHours,
+        hourlyRate,
+        overtimeMultiplier: multiplier,
+        grossPay: grossPay(regularHours, overtimeHours, hourlyRate, multiplier),
+        periodStart: format(currentWeekStart, 'yyyy-MM-dd'),
+        periodEnd: format(currentWeekEnd, 'yyyy-MM-dd'),
+        jobBreakdown,
+      };
+    });
   };
 
   const handleClockIn = () => {
@@ -368,18 +465,20 @@ export const TimesheetsSection = () => {
   };
 
   const handleClockOut = async () => {
-    await clockOut(0);
+    // Break minutes tracked by the hook (Break button) are applied automatically
+    await clockOut();
   };
 
   const handleApprove = (id: string) => {
     approveTimesheetMutation.mutate(
-      { id, approvedBy: 'Admin' },
+      { id },
       {
         onSuccess: () => {
           toast.success('Timesheet approved');
           setDetailTimesheet(null);
         },
-        onError: () => toast.error('Failed to approve timesheet'),
+        onError: (err) =>
+          toast.error(err instanceof Error ? err.message : 'Failed to approve timesheet'),
       }
     );
   };
@@ -390,32 +489,35 @@ export const TimesheetsSection = () => {
         toast.success('Timesheet rejected');
         setDetailTimesheet(null);
       },
-      onError: () => toast.error('Failed to reject timesheet'),
+      onError: (err) =>
+        toast.error(err instanceof Error ? err.message : 'Failed to reject timesheet'),
     });
   };
 
   const handleBatchApprove = () => {
     batchApproveMutation.mutate(
-      { ids: selectedTimesheetIds, approvedBy: 'Admin' },
+      { ids: selectedTimesheetIds },
       {
-        onSuccess: () => {
-          toast.success(`${selectedTimesheetIds.length} timesheets approved`);
+        onSuccess: (count) => {
+          toast.success(`${count} timesheet${count === 1 ? '' : 's'} approved`);
           setSelectedTimesheetIds([]);
           setIsSelectMode(false);
         },
-        onError: () => toast.error('Failed to approve timesheets'),
+        onError: (err) =>
+          toast.error(err instanceof Error ? err.message : 'Failed to approve timesheets'),
       }
     );
   };
 
   const handleBatchReject = () => {
     batchRejectMutation.mutate(selectedTimesheetIds, {
-      onSuccess: () => {
-        toast.success(`${selectedTimesheetIds.length} timesheets rejected`);
+      onSuccess: (count) => {
+        toast.success(`${count} timesheet${count === 1 ? '' : 's'} rejected`);
         setSelectedTimesheetIds([]);
         setIsSelectMode(false);
       },
-      onError: () => toast.error('Failed to reject timesheets'),
+      onError: (err) =>
+        toast.error(err instanceof Error ? err.message : 'Failed to reject timesheets'),
     });
   };
 
@@ -426,8 +528,9 @@ export const TimesheetsSection = () => {
   };
 
   const selectAllPending = () => {
+    // Live (open) entries aren't approvable — someone is still on the clock
     const pendingIds = filteredTimesheets
-      .filter((ts) => ts.status === 'Pending')
+      .filter((ts) => ts.status === 'Pending' && !ts.isLive)
       .map((ts) => ts.id);
     setSelectedTimesheetIds(pendingIds);
   };
@@ -436,6 +539,15 @@ export const TimesheetsSection = () => {
     const entries = generatePayrollEntries();
     if (entries.length === 0) {
       toast.error('No approved timesheets to export');
+      return;
+    }
+    // Never ship £0.00 pay lines into accounting software — a missing rate
+    // must be fixed on the team record, not laundered through an export.
+    const noRate = entries.filter((e) => e.hourlyRate <= 0);
+    if (noRate.length > 0) {
+      toast.error(
+        `${noRate.map((e) => e.employeeName).join(', ')} ${noRate.length === 1 ? 'has' : 'have'} no hourly rate set — add rates in Team before exporting payroll`
+      );
       return;
     }
     downloadExportCSV(
@@ -447,8 +559,8 @@ export const TimesheetsSection = () => {
     toast.success(`Timesheet data exported for ${getProviderName(provider)}`);
   };
 
-  const refresh = () => {
-    refetchTimesheets();
+  const refresh = async () => {
+    await refetchTimesheets();
     toast.success('Timesheets refreshed');
   };
 
@@ -505,7 +617,7 @@ export const TimesheetsSection = () => {
                 label: 'Hours this week',
                 value: totalHours.toFixed(1),
                 tone: 'amber',
-                sub: `${approvedHours.toFixed(1)} approved`,
+                sub: `${approvedHours.toFixed(1)} approved${liveCount > 0 ? ` · ${liveCount} on the clock` : ''}`,
               },
               {
                 label: 'Pending approval',
@@ -524,7 +636,10 @@ export const TimesheetsSection = () => {
                 value: `£${Math.round(overtimeCost).toLocaleString()}`,
                 tone: 'emerald',
                 accent: true,
-                sub: `${overtimeHours.toFixed(1)}h above 8h/day`,
+                sub:
+                  workersWithoutRate > 0
+                    ? `${overtimeHours.toFixed(1)}h OT · ${workersWithoutRate} no rate set`
+                    : `${overtimeHours.toFixed(1)}h at each worker's OT rate`,
               },
             ]}
           />
@@ -673,9 +788,17 @@ export const TimesheetsSection = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <SecondaryButton disabled fullWidth>
+                    <SecondaryButton
+                      onClick={isOnBreak ? endBreak : startBreak}
+                      fullWidth
+                      className={isOnBreak ? 'border-amber-500/40 text-amber-400' : undefined}
+                    >
                       <Coffee className="h-4 w-4 mr-2" />
-                      Break
+                      {isOnBreak
+                        ? `End break${breakMinutes > 0 ? ` · ${breakMinutes}m` : ''}`
+                        : breakMinutes > 0
+                          ? `Break · ${breakMinutes}m taken`
+                          : 'Break'}
                     </SecondaryButton>
                     <PrimaryButton
                       onClick={handleClockOut}
@@ -854,14 +977,17 @@ export const TimesheetsSection = () => {
                         />
                         <ListBody>
                           {empRows.map((ts) => {
-                            const labourCost = calculateLabourCost(ts.employeeId, ts.totalHours);
+                            // Base-rate value of this single entry. OT premium is a
+                            // per-DAY concept, so it lives on the worker's header £,
+                            // not on individual rows — hence "base" in the label.
+                            const rowBaseCost = calculateLabourCost(ts.employeeId, ts.totalHours);
                             const isSelected = selectedTimesheetIds.includes(ts.id);
                             return (
                               <ListRow
                                 key={ts.id}
-                                accent={statusTone(ts.status)}
+                                accent={ts.isLive ? 'emerald' : statusTone(ts.status)}
                                 lead={
-                                  isSelectMode ? (
+                                  isSelectMode && !ts.isLive && ts.status === 'Pending' ? (
                                     <Checkbox
                                       checked={isSelected}
                                       onCheckedChange={() => toggleTimesheetSelection(ts.id)}
@@ -872,30 +998,40 @@ export const TimesheetsSection = () => {
                                 title={
                                   <span className="flex items-center gap-2 text-white">
                                     <span className="font-mono tabular-nums text-[13px]">
-                                      {ts.clockIn}–{ts.clockOut}
+                                      {ts.isLive ? `${ts.clockIn}–now` : `${ts.clockIn}–${ts.clockOut}`}
                                     </span>
-                                    <span className="text-white/30">·</span>
-                                    <span className="font-semibold tabular-nums">
-                                      {ts.totalHours.toFixed(1)}h
-                                    </span>
+                                    {!ts.isLive && (
+                                      <>
+                                        <span className="text-white/30">·</span>
+                                        <span className="font-semibold tabular-nums">
+                                          {ts.totalHours.toFixed(1)}h
+                                        </span>
+                                      </>
+                                    )}
                                   </span>
                                 }
                                 subtitle={
-                                  <span className="text-white">
+                                  <span className="text-white/55">
                                     {format(parseISO(ts.date), 'EEE, d MMM')} · {ts.jobTitle}
                                   </span>
                                 }
                                 trailing={
-                                  <>
-                                    <span className="hidden sm:inline text-[12px] tabular-nums text-white">
-                                      £{Math.round(labourCost).toLocaleString()}
-                                    </span>
-                                    <Pill tone={statusTone(ts.status)}>{ts.status}</Pill>
-                                  </>
+                                  ts.isLive ? (
+                                    <Pill tone="emerald">On the clock</Pill>
+                                  ) : (
+                                    <>
+                                      <span className="hidden sm:inline text-[12px] tabular-nums text-white/60">
+                                        £{Math.round(rowBaseCost).toLocaleString()} base
+                                      </span>
+                                      <Pill tone={statusTone(ts.status)}>{ts.status}</Pill>
+                                    </>
+                                  )
                                 }
                                 onClick={
                                   isSelectMode
-                                    ? () => toggleTimesheetSelection(ts.id)
+                                    ? ts.isLive || ts.status !== 'Pending'
+                                      ? undefined
+                                      : () => toggleTimesheetSelection(ts.id)
                                     : () => setDetailTimesheet(ts)
                                 }
                               />
@@ -936,8 +1072,12 @@ export const TimesheetsSection = () => {
       {/* Filters sheet */}
       <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
         <SheetContent
-          side="bottom"
-          className="h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06]"
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06]'
+              : 'w-full sm:max-w-md p-0 bg-[hsl(0_0%_10%)] border-l border-white/[0.06]'
+          }
         >
           <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
             <SheetTitle className="text-white text-[15px] font-semibold">Filters</SheetTitle>
@@ -987,8 +1127,12 @@ export const TimesheetsSection = () => {
       {/* Export sheet */}
       <Sheet open={isExportOpen} onOpenChange={setIsExportOpen}>
         <SheetContent
-          side="bottom"
-          className="h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto"
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto'
+              : 'w-full sm:max-w-md p-0 bg-[hsl(0_0%_10%)] border-l border-white/[0.06] overflow-y-auto'
+          }
         >
           <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
             <SheetTitle className="text-white text-[15px] font-semibold">
@@ -1047,8 +1191,12 @@ export const TimesheetsSection = () => {
         onOpenChange={(open) => !open && setDetailTimesheet(null)}
       >
         <SheetContent
-          side="bottom"
-          className="h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto"
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto'
+              : 'w-full sm:max-w-md p-0 bg-[hsl(0_0%_10%)] border-l border-white/[0.06] overflow-y-auto'
+          }
         >
           {detailTimesheet && (
             <>
@@ -1068,13 +1216,14 @@ export const TimesheetsSection = () => {
                       tone: 'amber',
                     },
                     {
-                      label: 'Cost',
+                      label: 'Base cost',
                       value: `£${Math.round(
                         calculateLabourCost(
                           detailTimesheet.employeeId,
                           detailTimesheet.totalHours
                         )
                       ).toLocaleString()}`,
+                      sub: 'Excl. any OT uplift',
                       tone: 'amber',
                       accent: true,
                     },
@@ -1133,7 +1282,10 @@ export const TimesheetsSection = () => {
                       title="Hourly rate"
                       trailing={
                         <span className="text-[13px] text-white tabular-nums">
-                          £{getHourlyRate(detailTimesheet.employeeId)}/hr
+                          {(() => {
+                            const rate = getHourlyRate(detailTimesheet.employeeId);
+                            return rate !== null ? `£${rate.toFixed(2)}/hr` : 'No rate set';
+                          })()}
                         </span>
                       }
                     />
@@ -1146,7 +1298,14 @@ export const TimesheetsSection = () => {
                   </ListBody>
                 </ListCard>
 
-                {detailTimesheet.status === 'Pending' && (
+                {detailTimesheet.isLive ? (
+                  <div className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] px-4 py-3.5">
+                    <PulseDot tone="emerald" />
+                    <span className="text-[13px] text-emerald-400 font-medium">
+                      Still on the clock — approve once they've clocked out
+                    </span>
+                  </div>
+                ) : detailTimesheet.status === 'Pending' ? (
                   <div className="flex gap-2">
                     <SecondaryButton
                       onClick={() => handleReject(detailTimesheet.id)}
@@ -1163,7 +1322,7 @@ export const TimesheetsSection = () => {
                       Approve
                     </PrimaryButton>
                   </div>
-                )}
+                ) : null}
               </div>
             </>
           )}

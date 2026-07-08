@@ -36,6 +36,7 @@ export interface JobTest {
   photos: string[];
   verified_by?: string;
   verified_at?: string;
+  verified_signature?: string | null;
   created_at: string;
   updated_at: string;
   // Joined data
@@ -401,8 +402,10 @@ export function useRecordTestResult() {
         updated_at: new Date().toISOString(),
       };
 
-      if (reading) updates.reading = reading;
-      if (notes) updates.notes = notes;
+      // Use !== undefined so an explicit empty string clears a stale reading/
+      // note (e.g. correcting a Pass to a Fail); only skip when not provided.
+      if (reading !== undefined) updates.reading = reading;
+      if (notes !== undefined) updates.notes = notes;
 
       const { data, error } = await supabase
         .from('job_tests')
@@ -444,7 +447,13 @@ export function useVerifyJobTest() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (id: string): Promise<JobTest> => {
+    mutationFn: async ({
+      id,
+      signature,
+    }: {
+      id: string;
+      signature?: string | null;
+    }): Promise<JobTest> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -455,6 +464,7 @@ export function useVerifyJobTest() {
         .update({
           verified_by: user.id,
           verified_at: new Date().toISOString(),
+          verified_signature: signature ?? null,
           updated_at: new Date().toISOString(),
         })
         .eq('id', id)

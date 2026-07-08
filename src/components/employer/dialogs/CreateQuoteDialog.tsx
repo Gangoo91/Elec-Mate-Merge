@@ -64,6 +64,9 @@ interface CreateQuoteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   prefillClient?: string;
+  prefillEmail?: string;
+  prefillPhone?: string;
+  prefillAddress?: string;
   prefillAmount?: number;
   /** When raised from a job, links the quote to it. */
   jobId?: string;
@@ -80,6 +83,9 @@ export function CreateQuoteDialog({
   open,
   onOpenChange,
   prefillClient,
+  prefillEmail,
+  prefillPhone,
+  prefillAddress,
   prefillAmount,
   jobId,
 }: CreateQuoteDialogProps) {
@@ -139,6 +145,9 @@ export function CreateQuoteDialog({
 
   useEffect(() => {
     if (prefillClient) setClient(prefillClient);
+    if (prefillEmail) setClientEmail(prefillEmail);
+    if (prefillPhone) setClientPhone(prefillPhone);
+    if (prefillAddress) setClientAddress(prefillAddress);
     if (prefillAmount) {
       setLineItems([
         {
@@ -151,7 +160,7 @@ export function CreateQuoteDialog({
         },
       ]);
     }
-  }, [prefillClient, prefillAmount]);
+  }, [prefillClient, prefillEmail, prefillPhone, prefillAddress, prefillAmount]);
 
   const voiceContext = useOptionalVoiceFormContext();
 

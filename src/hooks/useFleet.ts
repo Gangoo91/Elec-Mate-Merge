@@ -25,12 +25,17 @@ export interface Vehicle {
   status: VehicleStatus;
   tracker_fitted: boolean;
   notes?: string;
+  job_id?: string | null;
   created_at: string;
   updated_at: string;
   // Joined data
   driver?: {
     id: string;
     name: string;
+  };
+  job?: {
+    id: string;
+    title: string;
   };
 }
 
@@ -56,7 +61,7 @@ export interface FuelLog {
 
 export type CreateVehicleInput = Omit<
   Vehicle,
-  'id' | 'user_id' | 'created_at' | 'updated_at' | 'driver'
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'driver' | 'job'
 >;
 export type UpdateVehicleInput = Partial<CreateVehicleInput>;
 export type CreateFuelLogInput = Omit<FuelLog, 'id' | 'user_id' | 'created_at' | 'vehicle'>;
@@ -76,7 +81,8 @@ export function useVehicles() {
         .select(
           `
           *,
-          driver:employer_employees(id, name)
+          driver:employer_employees(id, name),
+          job:employer_jobs(id, title)
         `
         )
         .eq('user_id', user.id)
@@ -330,12 +336,22 @@ export function useCreateFuelLog() {
 
       if (error) throw error;
 
-      // Update vehicle mileage if provided
+      // Advance the odometer only if this reading is higher — a back-dated log
+      // or a typo must never rewind mileage. Surface failures, don't swallow.
       if (input.mileage) {
-        await supabase
+        const { data: veh } = await supabase
           .from('vehicles')
-          .update({ mileage: input.mileage, updated_at: new Date().toISOString() })
-          .eq('id', input.vehicle_id);
+          .select('mileage')
+          .eq('id', input.vehicle_id)
+          .single();
+        const current = Number(veh?.mileage) || 0;
+        if (input.mileage > current) {
+          const { error: milErr } = await supabase
+            .from('vehicles')
+            .update({ mileage: input.mileage, updated_at: new Date().toISOString() })
+            .eq('id', input.vehicle_id);
+          if (milErr) throw milErr;
+        }
       }
 
       return data as FuelLog;

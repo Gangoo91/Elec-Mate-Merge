@@ -333,9 +333,12 @@ export function FleetSection() {
               const motLabel = v.mot_expiry ? `MOT ${formatShortDate(v.mot_expiry)}` : 'MOT —';
               const subtitle = [
                 v.assigned_to || 'Unassigned',
+                v.job?.title ? `On: ${v.job.title}` : null,
                 `${v.mileage.toLocaleString()} mi`,
                 motLabel,
-              ].join(' · ');
+              ]
+                .filter(Boolean)
+                .join(' · ');
               const makeModel = [v.make, v.model].filter(Boolean).join(' ') || 'Vehicle';
               return (
                 <ListRow

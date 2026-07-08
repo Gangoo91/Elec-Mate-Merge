@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { RefreshCw, Plus, Filter } from 'lucide-react';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
@@ -105,6 +106,26 @@ export function JobsSection() {
   const [showFilterSheet, setShowFilterSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>('all');
   const { data: jobs = [], isLoading, refetch, isRefetching } = useJobs();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deep-link: ?job=<id> opens that job directly (e.g. from a client's job list).
+  useEffect(() => {
+    const jobId = searchParams.get('job');
+    if (!jobId || jobs.length === 0) return;
+    const match = jobs.find((j) => j.id === jobId);
+    if (match) {
+      setSelectedJob(match);
+      setShowJobSheet(true);
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('job');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, jobs, setSearchParams]);
   const { data: jobSignals } = useJobSignals();
 
   const handleRefresh = useCallback(async () => {
@@ -361,6 +382,12 @@ export function JobsSection() {
                         )}
                         {sig && sig.overdueInvoices > 0 && <Pill tone="red">Invoice overdue</Pill>}
                         {sig && sig.expiringCerts > 0 && <Pill tone="amber">Cert expiring</Pill>}
+                        {sig && sig.invoiced > 0 && sig.invoiced - sig.paid > 0.5 && (
+                          <Pill tone="amber">{formatMoney(sig.invoiced - sig.paid)} due</Pill>
+                        )}
+                        {sig && sig.invoiced > 0 && sig.invoiced - sig.paid <= 0.5 && (
+                          <Pill tone="emerald">Paid</Pill>
+                        )}
                         {typeof job.progress === 'number' && job.progress > 0 && (
                           <span className="text-[11px] tabular-nums text-white">
                             {job.progress}%

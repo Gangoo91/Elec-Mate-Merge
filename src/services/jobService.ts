@@ -47,6 +47,8 @@ export interface Job {
   archived_at?: string | null;
   is_template?: boolean;
   cover_photo_url?: string | null;
+  /** Kanban column on the Job Board — decoupled from lifecycle `status`. */
+  board_stage?: string | null;
   position?: number;
 }
 

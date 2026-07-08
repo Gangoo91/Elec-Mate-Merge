@@ -49,7 +49,6 @@ import {
   Calendar,
   Clock,
   RefreshCw,
-  Camera,
   Loader2,
   Trash2,
   Power,
@@ -237,7 +236,7 @@ export function ClientPortalSection() {
         <PageHero
           eyebrow="Operations"
           title="Client Portal"
-          description="White-label portal — clients see their jobs, photos, certs and pay links."
+          description="White-label portal — clients see their jobs, progress and photos."
           tone="purple"
           actions={heroActions}
         />
@@ -248,10 +247,8 @@ export function ClientPortalSection() {
 
   const activeClientsCount = (portalLinks || []).filter((l) => l.is_active).length;
   const portalViews = stats?.totalViews || 0;
-  const unpaidJobs = activeJobs.filter(
-    (j) => j.status === 'Active' || j.status === 'Completed'
-  ).length;
-  const paidViaPortal = stats?.recentlyViewed || 0;
+  const jobsShared = (portalLinks || []).length;
+  const liveJobs = activeJobs.length;
 
   const openPortalDetail = (jobId: string) => {
     setSelectedJobId(jobId);
@@ -347,21 +344,31 @@ export function ClientPortalSection() {
           </ListCard>
         )}
 
-        {portalSettings.showPhotos && (
-          <div>
-            <Eyebrow>Progress photos</Eyebrow>
-            <div className="mt-3 flex gap-2 flex-wrap">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="w-16 h-16 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] flex items-center justify-center"
-                >
-                  <Camera className="h-5 w-5 text-white" />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {portalSettings.showPhotos &&
+          (() => {
+            const jobPhotos = jobLogs.flatMap((l) => l.photos || []);
+            return (
+              <div>
+                <Eyebrow>Progress photos</Eyebrow>
+                {jobPhotos.length > 0 ? (
+                  <div className="mt-3 flex gap-2 flex-wrap">
+                    {jobPhotos.slice(0, 8).map((url) => (
+                      <div
+                        key={url}
+                        className="w-16 h-16 rounded-xl overflow-hidden border border-white/[0.06]"
+                      >
+                        <img src={url} alt="Progress" className="h-full w-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-3 text-[13px] text-white/40">
+                    No photos shared on this job yet.
+                  </p>
+                )}
+              </div>
+            );
+          })()}
 
         {portalSettings.allowMessages && (
           <PrimaryButton
@@ -386,7 +393,7 @@ export function ClientPortalSection() {
       <PageHero
         eyebrow="Operations"
         title="Client Portal"
-        description="White-label portal — clients see their jobs, photos, certs and pay links."
+        description="White-label portal — clients see their jobs, progress and photos."
         tone="purple"
         actions={heroActions}
       />
@@ -395,11 +402,11 @@ export function ClientPortalSection() {
         columns={4}
         stats={[
           { label: 'Active clients', value: activeClientsCount, tone: 'purple' },
-          { label: 'Portal views 30d', value: portalViews, tone: 'blue' },
-          { label: 'Unpaid jobs', value: unpaidJobs, tone: 'amber' },
+          { label: 'Portal views', value: portalViews, tone: 'blue' },
+          { label: 'Jobs shared', value: jobsShared, tone: 'amber' },
           {
-            label: 'Paid via portal',
-            value: paidViaPortal,
+            label: 'Live jobs',
+            value: liveJobs,
             tone: 'emerald',
             accent: true,
           },
@@ -698,7 +705,7 @@ export function ClientPortalSection() {
               ) : (
                 <EmptyState
                   title="No portal link for this job"
-                  description="Generate a unique link so this client can view progress, photos, certs and invoices."
+                  description="Generate a unique link so this client can view job progress and photos."
                   action={createPortalLink.isPending ? 'Creating…' : 'Create portal link'}
                   onAction={createPortalLink.isPending ? undefined : handleCreateLink}
                 />

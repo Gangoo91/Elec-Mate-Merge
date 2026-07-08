@@ -20,12 +20,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Customer } from '@/hooks/useCustomers';
+import { Customer, CustomerStatus } from '@/hooks/inspection/useCustomers';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const customerSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
+  companyName: z
+    .string()
+    .max(100, 'Company name must be less than 100 characters')
+    .optional()
+    .or(z.literal('')),
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
   phone: z.string().max(20, 'Phone must be less than 20 characters').optional().or(z.literal('')),
   address: z
@@ -41,7 +47,13 @@ const customerSchema = z.object({
 });
 
 type CustomerFormData = z.infer<typeof customerSchema>;
-type SubmitPayload = CustomerFormData & { tags: string[] };
+type SubmitPayload = CustomerFormData & { tags: string[]; status: CustomerStatus };
+
+const STATUS_OPTIONS: { value: CustomerStatus; label: string; hint: string }[] = [
+  { value: 'lead', label: 'Lead', hint: 'Quoted or enquiring — not won yet' },
+  { value: 'active', label: 'Active', hint: 'Current or recent customer' },
+  { value: 'inactive', label: 'Inactive', hint: 'No longer working with them' },
+];
 
 interface CustomerFormProps {
   open: boolean;
@@ -169,6 +181,8 @@ const FormContent = ({
   onOpenChange,
   tags,
   setTags,
+  status,
+  setStatus,
 }: {
   customer?: Customer | null;
   register: ReturnType<typeof useForm<CustomerFormData>>['register'];
@@ -179,6 +193,8 @@ const FormContent = ({
   onOpenChange: (open: boolean) => void;
   tags: string[];
   setTags: (next: string[]) => void;
+  status: CustomerStatus;
+  setStatus: (next: CustomerStatus) => void;
 }) => (
   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
     {/* Name */}
@@ -189,10 +205,47 @@ const FormContent = ({
       <Input
         id="name"
         {...register('name')}
-        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
         placeholder="Enter customer name"
       />
       {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
+    </div>
+
+    {/* Company name — for commercial customers, agents, landlords */}
+    <div className="space-y-2">
+      <Label htmlFor="companyName" className="text-sm font-medium text-foreground">
+        Company <span className="text-white/40 font-normal">(optional)</span>
+      </Label>
+      <Input
+        id="companyName"
+        {...register('companyName')}
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+        placeholder="e.g. Smith Lettings Ltd"
+      />
+      {errors.companyName && <p className="text-sm text-red-400">{errors.companyName.message}</p>}
+    </div>
+
+    {/* Status */}
+    <div className="space-y-2">
+      <Label className="text-sm font-medium text-foreground">Status</Label>
+      <div className="flex p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        {STATUS_OPTIONS.map((opt) => (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => setStatus(opt.value)}
+            className={cn(
+              'flex-1 h-10 text-sm font-medium rounded-lg transition-all touch-manipulation',
+              status === opt.value ? 'bg-elec-yellow text-black' : 'text-white'
+            )}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-[12px] text-white/50">
+        {STATUS_OPTIONS.find((o) => o.value === status)?.hint}
+      </p>
     </div>
 
     {/* Email */}
@@ -204,7 +257,7 @@ const FormContent = ({
         id="email"
         type="email"
         {...register('email')}
-        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
         placeholder="customer@example.com"
       />
       {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
@@ -218,7 +271,7 @@ const FormContent = ({
       <Input
         id="phone"
         {...register('phone')}
-        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
         placeholder="01234 567890"
       />
       {errors.phone && <p className="text-sm text-red-400">{errors.phone.message}</p>}
@@ -232,7 +285,7 @@ const FormContent = ({
       <Textarea
         id="address"
         {...register('address')}
-        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
+        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
         placeholder="Enter full address"
         rows={3}
       />
@@ -253,7 +306,7 @@ const FormContent = ({
       <Textarea
         id="notes"
         {...register('notes')}
-        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
+        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
         placeholder="Add any additional notes…"
         rows={3}
       />
@@ -274,7 +327,7 @@ const FormContent = ({
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="h-12 w-full rounded-xl border-0 bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-indigo-700 sm:h-11 sm:w-auto"
+        className="h-12 w-full rounded-xl border-0 bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 sm:h-11 sm:w-auto"
       >
         {isSubmitting ? 'Saving…' : customer ? 'Update customer' : 'Add customer'}
       </Button>
@@ -285,6 +338,7 @@ const FormContent = ({
 export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerFormProps) => {
   const isMobile = useMediaQuery('(max-width: 640px)');
   const [tags, setTags] = useState<string[]>([]);
+  const [status, setStatus] = useState<CustomerStatus>('active');
 
   const {
     register,
@@ -307,12 +361,14 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
     if (open) {
       reset({
         name: customer?.name || '',
+        companyName: customer?.companyName || '',
         email: customer?.email || '',
         phone: customer?.phone || '',
         address: customer?.address || '',
         notes: customer?.notes || '',
       });
       setTags(customer?.tags ? [...customer.tags] : []);
+      setStatus(customer?.status || 'active');
     }
   }, [open, customer, reset]);
 
@@ -324,11 +380,13 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
 
     const sanitizedData: SubmitPayload = {
       name: sanitizeTextInput(data.name),
+      companyName: data.companyName ? sanitizeTextInput(data.companyName) : '',
       email: data.email ? sanitizeEmail(data.email) : '',
       phone: data.phone ? sanitizePhone(data.phone) : '',
       address: data.address ? sanitizeTextInput(data.address) : '',
       notes: data.notes ? sanitizeTextInput(data.notes) : '',
       tags,
+      status,
     };
 
     await onSave(sanitizedData);
@@ -370,6 +428,8 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
               onOpenChange={onOpenChange}
               tags={tags}
               setTags={setTags}
+              status={status}
+              setStatus={setStatus}
             />
           </div>
         </SheetContent>
@@ -397,6 +457,8 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
             onOpenChange={onOpenChange}
             tags={tags}
             setTags={setTags}
+            status={status}
+            setStatus={setStatus}
           />
         </div>
       </DialogContent>

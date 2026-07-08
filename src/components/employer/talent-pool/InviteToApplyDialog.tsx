@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -93,6 +94,8 @@ export function InviteToApplyDialog({
     fetchData();
   }, [open, user, electrician]);
 
+  const queryClient = useQueryClient();
+
   const handleSendInvite = async () => {
     if (!electrician || !selectedVacancy || !user) return;
 
@@ -105,6 +108,9 @@ export function InviteToApplyDialog({
         invited_by: user.id,
         message: message.trim() || undefined,
       });
+
+      // The pool's "Invited" outcome pill reads this cache — show it instantly
+      queryClient.invalidateQueries({ queryKey: ['my-vacancy-invitations'] });
 
       const vacancy = vacancies.find((v) => v.id === selectedVacancy);
       toast({

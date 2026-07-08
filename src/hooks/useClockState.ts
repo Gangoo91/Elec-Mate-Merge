@@ -24,13 +24,70 @@ interface ClockState {
   clockInTime: string; // ISO timestamp
 }
 
+/** Break bookkeeping lives beside the pointer in localStorage — the open DB row
+ *  has no on-break column, so an in-progress break doesn't survive a device
+ *  switch (accumulated minutes written at clock-out do). Keyed to the shift's
+ *  timesheetId so a stale break from an abandoned shift can never be deducted
+ *  from a later one. */
+interface BreakState {
+  timesheetId: string | null; // shift this break state belongs to
+  startedAt: string | null; // ISO — set while on a break
+  accumMinutes: number; // completed breaks so far this shift
+}
+
 const CLOCK_POINTER_KEY = 'employer_clock_pointer';
+const BREAK_STATE_KEY = 'employer_clock_breaks';
+const EMPTY_BREAKS: BreakState = { timesheetId: null, startedAt: null, accumMinutes: 0 };
 
 export const useClockState = () => {
   const [clockState, setClockState] = useState<ClockState | null>(null);
+  const [breakState, setBreakState] = useState<BreakState>(() => {
+    const stored = storageGetJSONSync<BreakState>(BREAK_STATE_KEY, EMPTY_BREAKS);
+    // Legacy shape (no timesheetId) or empty — treat as no breaks
+    return stored?.timesheetId ? stored : EMPTY_BREAKS;
+  });
   const [duration, setDuration] = useState<string>('00:00:00');
   const [isWorking, setIsWorking] = useState(false);
   const queryClient = useQueryClient();
+
+  const persistBreaks = useCallback((next: BreakState) => {
+    setBreakState(next);
+    storageSetJSONSync(BREAK_STATE_KEY, next);
+  }, []);
+
+  /** Break minutes for the CURRENT shift only — foreign/stale state counts 0. */
+  const liveBreakMinutes = (state: BreakState, timesheetId: string | null): number => {
+    if (!timesheetId || state.timesheetId !== timesheetId) return 0;
+    return (
+      state.accumMinutes +
+      (state.startedAt
+        ? Math.max(0, (Date.now() - new Date(state.startedAt).getTime()) / 60000)
+        : 0)
+    );
+  };
+
+  const startBreak = useCallback(() => {
+    if (!clockState) return;
+    // If the stored state belongs to another shift, start fresh for this one
+    const base =
+      breakState.timesheetId === clockState.timesheetId ? breakState : EMPTY_BREAKS;
+    persistBreaks({
+      ...base,
+      timesheetId: clockState.timesheetId,
+      startedAt: new Date().toISOString(),
+    });
+    toast.info('Break started');
+  }, [breakState, clockState, persistBreaks]);
+
+  const endBreak = useCallback(() => {
+    if (!clockState || !breakState.startedAt) return;
+    persistBreaks({
+      timesheetId: clockState.timesheetId,
+      startedAt: null,
+      accumMinutes: Math.round(liveBreakMinutes(breakState, clockState.timesheetId)),
+    });
+    toast.info('Back on the clock');
+  }, [breakState, clockState, persistBreaks]);
 
   // Restore an open entry on mount: pointer first, then own open row
   useEffect(() => {
@@ -38,9 +95,19 @@ export const useClockState = () => {
     (async () => {
       const pointer = storageGetJSONSync<{ timesheetId: string } | null>(CLOCK_POINTER_KEY, null);
 
-      const restoreRow = async (query: ReturnType<typeof buildOpenRowQuery>) => {
-        const { data } = await query;
-        if (cancelled || !data) return false;
+      // Distinguish the three outcomes: only a CONFIRMED missing row may drop
+      // the pointer. A fetch error or an unmount mid-query (StrictMode double
+      // mount) must leave it intact for the next mount to restore.
+      const restoreRow = async (
+        query: ReturnType<typeof buildOpenRowQuery>
+      ): Promise<'restored' | 'not-found' | 'aborted'> => {
+        const { data, error } = await query;
+        if (error) {
+          console.error('Failed to restore open clock-in:', error);
+          return 'aborted';
+        }
+        if (cancelled) return 'aborted';
+        if (!data) return 'not-found';
         setClockState({
           timesheetId: data.id,
           employeeId: data.employee_id,
@@ -51,7 +118,7 @@ export const useClockState = () => {
           jobTitle: (data.job as any)?.title || '',
           clockInTime: data.clock_in || data.created_at,
         });
-        return true;
+        return 'restored';
       };
 
       const buildOpenRowQuery = (timesheetId?: string) => {
@@ -67,8 +134,9 @@ export const useClockState = () => {
       };
 
       if (pointer?.timesheetId) {
-        const restored = await restoreRow(buildOpenRowQuery(pointer.timesheetId));
-        if (restored) return;
+        const outcome = await restoreRow(buildOpenRowQuery(pointer.timesheetId));
+        if (outcome === 'restored' || outcome === 'aborted') return;
+        // Confirmed gone (approved/removed while away) — release the pointer
         storageRemoveSync(CLOCK_POINTER_KEY);
       }
 
@@ -165,6 +233,8 @@ export const useClockState = () => {
           clockInTime,
         };
         storageSetJSONSync(CLOCK_POINTER_KEY, { timesheetId: data.id });
+        // Fresh shift, fresh break ledger — discard anything from an old shift
+        persistBreaks(EMPTY_BREAKS);
         setClockState(newState);
         toast.success(`Clocked in to ${jobTitle}`);
         return true;
@@ -181,61 +251,97 @@ export const useClockState = () => {
         setIsWorking(false);
       }
     },
-    []
+    [persistBreaks]
   );
 
   const clockOut = useCallback(
-    async (breakMinutes: number = 0) => {
+    async (breakMinutesOverride?: number) => {
       if (!clockState) {
         toast.error('Not currently clocked in');
         return false;
       }
 
+      // Re-read localStorage at settle time — another tab/instance may have
+      // tracked breaks for this shift; in-memory state only sees its own writes.
+      const storedBreaks = storageGetJSONSync<BreakState>(BREAK_STATE_KEY, EMPTY_BREAKS);
+      const breakMinutes = Math.round(
+        breakMinutesOverride ?? liveBreakMinutes(storedBreaks ?? EMPTY_BREAKS, clockState.timesheetId)
+      );
       const clockOutTime = new Date().toISOString();
       const diffMs = new Date(clockOutTime).getTime() - new Date(clockState.clockInTime).getTime();
       const totalHours = Math.max(0, diffMs / (1000 * 60 * 60) - breakMinutes / 60);
 
       setIsWorking(true);
       try {
-        const { error } = await supabase
+        // Guard on status: if the row was approved/rejected while open, don't
+        // silently rewrite an already-signed-off record.
+        const { data, error } = await supabase
           .from('employer_timesheets')
           .update({
             clock_out: clockOutTime,
             break_minutes: breakMinutes,
             total_hours: parseFloat(totalHours.toFixed(2)),
           })
-          .eq('id', clockState.timesheetId);
+          .eq('id', clockState.timesheetId)
+          .eq('status', 'Pending')
+          .select('id');
 
         if (error) throw error;
 
+        if (!data || data.length === 0) {
+          // The row was approved/rejected/removed while open. The shift can't be
+          // closed any more — release the local state so the user isn't trapped
+          // in a clocked-in loop, and say what happened.
+          storageRemoveSync(CLOCK_POINTER_KEY);
+          persistBreaks(EMPTY_BREAKS);
+          setClockState(null);
+          queryClient.invalidateQueries({ queryKey: ['timesheets'] });
+          toast.error(
+            'This entry was approved or removed while open — clock-out time not recorded. Check the timesheet list.'
+          );
+          return false;
+        }
+
         storageRemoveSync(CLOCK_POINTER_KEY);
+        persistBreaks(EMPTY_BREAKS);
         setClockState(null);
         queryClient.invalidateQueries({ queryKey: ['timesheets'] });
         queryClient.invalidateQueries({ queryKey: ['todays-hours'] });
-        toast.success(`Clocked out. ${totalHours.toFixed(1)} hours logged.`);
+        toast.success(
+          `Clocked out. ${totalHours.toFixed(1)} hours logged${breakMinutes > 0 ? ` (${breakMinutes}m break)` : ''}.`
+        );
         return true;
       } catch (error) {
+        // Network/DB error — keep local state so a retry can succeed
         console.error('Failed to clock out:', error);
-        toast.error('Failed to save timesheet');
+        toast.error(error instanceof Error ? error.message : 'Failed to save timesheet');
         return false;
       } finally {
         setIsWorking(false);
       }
     },
-    [clockState, queryClient]
+    [clockState, persistBreaks, queryClient]
   );
 
   const cancelClockIn = useCallback(async () => {
     if (!clockState) return;
     try {
-      await supabase.from('employer_timesheets').delete().eq('id', clockState.timesheetId);
+      // Only delete a still-open Pending row — never a record that was
+      // approved/rejected while this device thought the shift was open.
+      await supabase
+        .from('employer_timesheets')
+        .delete()
+        .eq('id', clockState.timesheetId)
+        .eq('status', 'Pending')
+        .is('clock_out', null);
     } catch (error) {
       console.error('Failed to remove open clock-in row:', error);
     }
     storageRemoveSync(CLOCK_POINTER_KEY);
+    persistBreaks(EMPTY_BREAKS);
     setClockState(null);
     toast.info('Clock in cancelled');
-  }, [clockState]);
+  }, [clockState, persistBreaks]);
 
   return {
     isClockedIn: !!clockState,
@@ -245,5 +351,10 @@ export const useClockState = () => {
     clockOut,
     cancelClockIn,
     isClockingOut: isWorking,
+    isOnBreak:
+      !!breakState.startedAt && breakState.timesheetId === (clockState?.timesheetId ?? null),
+    breakMinutes: Math.round(liveBreakMinutes(breakState, clockState?.timesheetId ?? null)),
+    startBreak,
+    endBreak,
   };
 };

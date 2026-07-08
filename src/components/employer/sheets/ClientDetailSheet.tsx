@@ -27,6 +27,10 @@ import { Phone, Mail, FileText, Briefcase, Pencil, Trash2 } from 'lucide-react';
 import type { EmployerClientSummary } from '@/services/employerClientService';
 import { daysOverdue } from '@/utils/invoiceAging';
 import { useClientLinkedRecords, useUpdateClient, useDeleteClient } from '@/hooks/useEmployerClients';
+import { useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
+import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
+import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 
 const fmt = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
@@ -54,7 +58,32 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
   const deleteClient = useDeleteClient();
   const [editing, setEditing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [showQuote, setShowQuote] = useState(false);
+  const [showJob, setShowJob] = useState(false);
   const [draft, setDraft] = useState({ contact_name: '', email: '', phone: '', address: '', notes: '' });
+  const queryClient = useQueryClient();
+  const [, setSearchParams] = useSearchParams();
+
+  // Open a specific linked record via its section deep-link, closing this sheet.
+  const openJob = (jobId: string) => {
+    setSearchParams({ section: 'jobs', job: jobId });
+    onOpenChange(false);
+  };
+  const openQuote = (id: string) => {
+    setSearchParams({ section: 'quotes', quote: id });
+    onOpenChange(false);
+  };
+  const openInvoice = (id: string) => {
+    setSearchParams({ section: 'quotes', invoice: id });
+    onOpenChange(false);
+  };
+
+  // Creating a quote/job from the client pre-fills + auto-links it; on close,
+  // refresh the client's linked lists so the new record shows immediately.
+  const closeAndRefresh = (setter: (v: boolean) => void) => (o: boolean) => {
+    setter(o);
+    if (!o) queryClient.invalidateQueries({ queryKey: ['employer-clients'] });
+  };
 
   if (!client) return null;
 
@@ -90,6 +119,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
   };
 
   return (
+    <>
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
         <SheetShell
@@ -130,11 +160,11 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                 <Mail className="h-4 w-4 mr-1.5" />
                 Email
               </SecondaryButton>
-              <SecondaryButton onClick={() => onNavigate('quotes')} fullWidth>
+              <SecondaryButton onClick={() => setShowQuote(true)} fullWidth>
                 <FileText className="h-4 w-4 mr-1.5" />
                 New quote
               </SecondaryButton>
-              <SecondaryButton onClick={() => onNavigate('jobs')} fullWidth>
+              <SecondaryButton onClick={() => setShowJob(true)} fullWidth>
                 <Briefcase className="h-4 w-4 mr-1.5" />
                 New job
               </SecondaryButton>
@@ -225,6 +255,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                       linked.quotes.slice(0, 6).map((q) => (
                         <ListRow
                           key={q.id}
+                          onClick={() => openQuote(q.id)}
                           title={q.quote_number || q.job_title || 'Quote'}
                           subtitle={fmtDate(q.created_at)}
                           trailing={
@@ -261,6 +292,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                         return (
                           <ListRow
                             key={inv.id}
+                            onClick={() => openInvoice(inv.id)}
                             title={inv.invoice_number || 'Invoice'}
                             subtitle={
                               over > 0
@@ -303,6 +335,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                       linked.jobs.slice(0, 6).map((j) => (
                         <ListRow
                           key={j.id}
+                          onClick={() => openJob(j.id)}
                           title={j.title}
                           subtitle={j.start_date ? fmtDate(j.start_date) : undefined}
                           trailing={
@@ -366,5 +399,20 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
         </SheetShell>
       </SheetContent>
     </Sheet>
+
+      <CreateQuoteDialog
+        open={showQuote}
+        onOpenChange={closeAndRefresh(setShowQuote)}
+        prefillClient={client.name}
+        prefillEmail={client.email || undefined}
+        prefillPhone={client.phone || undefined}
+        prefillAddress={client.address || undefined}
+      />
+      <AddJobDialog
+        open={showJob}
+        onOpenChange={closeAndRefresh(setShowJob)}
+        prefillClient={client.name}
+      />
+    </>
   );
 }

@@ -743,9 +743,11 @@ export function ListRow({
       </div>
       {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
+        // Faintly visible at rest — on touch there is no hover, and a tappable
+        // row must not look identical to a static one
         <ArrowRight
           aria-hidden
-          className="shrink-0 -mr-1 h-3.5 w-3.5 text-white/0 group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all"
+          className="shrink-0 -mr-1 h-3.5 w-3.5 text-white/25 group-hover:text-elec-yellow group-hover:translate-x-0 -translate-x-1 transition-all"
         />
       )}
     </>
@@ -1109,7 +1111,7 @@ export function IconButton({
       disabled={disabled}
       aria-label={ariaLabel}
       className={cn(
-        'h-10 w-10 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation',
+        'h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation',
         className
       )}
     >
@@ -1189,7 +1191,7 @@ export function FilterBar({
                 key={tab.value}
                 onClick={() => onTabChange?.(tab.value)}
                 className={cn(
-                  'group relative px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation'
+                  'group relative px-3.5 py-2.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation'
                 )}
               >
                 {isActive && (
@@ -1231,7 +1233,7 @@ export function FilterBar({
               value={search ?? ''}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="h-10 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
+              className="h-11 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
             />
             <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">/</Kbd>
           </div>

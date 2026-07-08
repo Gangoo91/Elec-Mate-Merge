@@ -80,6 +80,7 @@ import {
   textareaClass,
   type Tone,
 } from '@/components/employer/editorial';
+import { SignatureInput } from '@/components/signature/SignatureInput';
 
 const resultTone: Record<TestResult, Tone> = {
   Pending: 'amber',
@@ -130,6 +131,8 @@ export function TestingWorkflowSection() {
   const createJobTest = useCreateJobTest();
   const recordTestResult = useRecordTestResult();
   const verifyJobTest = useVerifyJobTest();
+  const [signOffMode, setSignOffMode] = useState(false);
+  const [signature, setSignature] = useState<string | null>(null);
   const deleteJobTest = useDeleteJobTest();
 
   const handleRefresh = useCallback(async () => {
@@ -164,7 +167,13 @@ export function TestingWorkflowSection() {
   };
 
   const handleVerify = async (testId: string) => {
-    await verifyJobTest.mutateAsync(testId);
+    try {
+      await verifyJobTest.mutateAsync({ id: testId, signature });
+      setSignOffMode(false);
+      setSignature(null);
+    } catch {
+      // hook surfaces the error toast; keep the pad open to retry
+    }
   };
 
   const handleCreate = async () => {
@@ -300,14 +309,14 @@ export function TestingWorkflowSection() {
           {
             label: 'Failed',
             value: failCount,
-            tone: 'blue',
+            tone: 'red',
             sub: 'Failed — needs rework',
             onClick: () => setResultFilter(resultFilter === 'Fail' ? 'all' : 'Fail'),
           },
           {
             label: 'Passed',
             value: passCount,
-            tone: 'amber',
+            tone: 'emerald',
             sub: 'Verify to close',
             onClick: () => setResultFilter(resultFilter === 'Pass' ? 'all' : 'Pass'),
           },
@@ -728,21 +737,47 @@ export function TestingWorkflowSection() {
                       Record result
                     </PrimaryButton>
                   )}
-                  {selectedTest.result !== 'Pending' && !selectedTest.verified_at && (
-                    <PrimaryButton
-                      onClick={() => handleVerify(selectedTest.id)}
-                      disabled={verifyJobTest.isPending}
-                      fullWidth
-                      size="lg"
-                    >
-                      {verifyJobTest.isPending ? (
-                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                      ) : (
+                  {selectedTest.result !== 'Pending' &&
+                    !selectedTest.verified_at &&
+                    (signOffMode ? (
+                      <div className="space-y-3">
+                        <p className="text-[12px] text-white/60">
+                          Sign to attest this result — recorded against your name.
+                        </p>
+                        <SignatureInput value={signature || undefined} onChange={setSignature} />
+                        <div className="grid grid-cols-2 gap-2">
+                          <SecondaryButton
+                            onClick={() => {
+                              setSignOffMode(false);
+                              setSignature(null);
+                            }}
+                            fullWidth
+                          >
+                            Cancel
+                          </SecondaryButton>
+                          <PrimaryButton
+                            onClick={() => handleVerify(selectedTest.id)}
+                            disabled={!signature || verifyJobTest.isPending}
+                            fullWidth
+                          >
+                            {verifyJobTest.isPending ? (
+                              <Loader2 className="h-5 w-5 animate-spin" />
+                            ) : (
+                              'Confirm sign-off'
+                            )}
+                          </PrimaryButton>
+                        </div>
+                      </div>
+                    ) : (
+                      <PrimaryButton
+                        onClick={() => setSignOffMode(true)}
+                        fullWidth
+                        size="lg"
+                      >
                         <Award className="h-5 w-5 mr-2" />
-                      )}
-                      Verify result
-                    </PrimaryButton>
-                  )}
+                        Sign off result
+                      </PrimaryButton>
+                    ))}
                   <DestructiveButton
                     onClick={() => {
                       setDeleteConfirmId(selectedTest.id);
@@ -831,14 +866,23 @@ export function TestingWorkflowSection() {
               )}
 
               {selectedTest.verified_at && (
-                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 flex items-center gap-3">
-                  <Award className="h-5 w-5 text-emerald-400 shrink-0" />
-                  <div className="min-w-0">
-                    <div className="text-[13px] font-semibold text-white">Verified</div>
-                    <div className="text-[11.5px] text-white">
-                      {format(new Date(selectedTest.verified_at), "dd MMM yyyy 'at' HH:mm")}
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
+                  <div className="flex items-center gap-3">
+                    <Award className="h-5 w-5 text-emerald-400 shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-[13px] font-semibold text-white">Signed off</div>
+                      <div className="text-[11.5px] text-white/70">
+                        {format(new Date(selectedTest.verified_at), "dd MMM yyyy 'at' HH:mm")}
+                      </div>
                     </div>
                   </div>
+                  {selectedTest.verified_signature?.startsWith('data:image') && (
+                    <img
+                      src={selectedTest.verified_signature}
+                      alt="Sign-off signature"
+                      className="mt-3 h-16 rounded-lg bg-white p-1 object-contain"
+                    />
+                  )}
                 </div>
               )}
             </SheetShell>

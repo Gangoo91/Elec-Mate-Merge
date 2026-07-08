@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
+import { uploadJobPhotos } from '@/utils/uploadJobPhotos';
 import { useToast } from '@/hooks/use-toast';
 import {
   useJobIssuesByType,
@@ -140,42 +141,26 @@ export const QualitySection = () => {
   }, [activeTab, filteredSnags, openSnags, reviewSnags, resolvedSnags]);
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
     setUploadingPhoto(true);
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const uploadedUrls: string[] = [];
-
-      for (const file of Array.from(files)) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${user.id}/snags/${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('visual-uploads')
-          .upload(fileName, file);
-
-        if (uploadError) throw uploadError;
-
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
-
-        uploadedUrls.push(publicUrl);
+      const { urls, failed } = await uploadJobPhotos(files, 'snags');
+      if (urls.length) setSnagPhotos((prev) => [...prev, ...urls]);
+      if (failed.length) {
+        toast({
+          title: `${failed.length} photo${failed.length === 1 ? '' : 's'} skipped`,
+          description: failed.map((f) => `${f.name} — ${f.reason}`).join(', '),
+          variant: 'destructive',
+        });
+      } else {
+        toast({ title: `${urls.length} photo${urls.length === 1 ? '' : 's'} added` });
       }
-
-      setSnagPhotos((prev) => [...prev, ...uploadedUrls]);
-      toast({ title: 'Photo uploaded', description: `${uploadedUrls.length} photo(s) added` });
-    } catch (err) {
-      console.error('Photo upload error:', err);
+    } catch {
       toast({
         title: 'Upload failed',
-        description: 'Could not upload photo',
+        description: 'Could not upload photos. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -191,32 +176,36 @@ export const QualitySection = () => {
   const handleCreateSnag = async () => {
     if (!selectedJobId || !snagTitle) return;
 
-    await createIssue.mutateAsync({
-      job_id: selectedJobId,
-      title: snagTitle,
-      description: snagDescription,
-      issue_type: 'Snag' as IssueType,
-      severity: snagSeverity,
-      status: 'Open',
-      location: snagLocation,
-      photos: snagPhotos,
-    });
-
-    setSelectedJobId('');
-    setSnagTitle('');
-    setSnagDescription('');
-    setSnagSeverity('Medium');
-    setSnagLocation('');
-    setSnagPhotos([]);
-    setShowNewSnag(false);
+    try {
+      await createIssue.mutateAsync({
+        job_id: selectedJobId,
+        title: snagTitle,
+        description: snagDescription,
+        issue_type: 'Snag' as IssueType,
+        severity: snagSeverity,
+        status: 'Open',
+        location: snagLocation,
+        photos: snagPhotos,
+      });
+      setSelectedJobId('');
+      setSnagTitle('');
+      setSnagDescription('');
+      setSnagSeverity('Medium');
+      setSnagLocation('');
+      setSnagPhotos([]);
+      setShowNewSnag(false);
+    } catch {
+      // hook surfaces the error toast; keep the form so nothing is lost
+    }
   };
 
   const handleResolve = async (issue: JobIssue) => {
-    await updateStatus.mutateAsync({
-      id: issue.id,
-      status: 'Resolved',
-    });
-    setSelectedIssue(null);
+    try {
+      await updateStatus.mutateAsync({ id: issue.id, status: 'Resolved' });
+      setSelectedIssue(null);
+    } catch {
+      // hook surfaces the error toast; keep the sheet open to retry
+    }
   };
 
   if (error) {

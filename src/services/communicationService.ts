@@ -1,8 +1,16 @@
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
 export type CommunicationType = 'announcement' | 'message' | 'alert';
 export type CommunicationPriority = 'low' | 'normal' | 'high' | 'urgent';
 export type TargetAudience = 'all' | 'managers' | 'specific';
+
+type CommunicationRow = Database['public']['Tables']['employer_communications']['Row'];
+
+/** One boundary conversion: the generated Row carries plain strings where the
+ *  app uses unions (type/priority/audience — constrained by the compose UI and
+ *  DB writers). Narrow here once instead of implicit casts at every return. */
+const toCommunication = (row: CommunicationRow): Communication => row as unknown as Communication;
 
 export interface Communication {
   id: string;
@@ -17,6 +25,11 @@ export interface Communication {
   is_pinned: boolean;
   expires_at: string | null;
   created_at: string;
+  /** Employer-side receipts — persisted, not session state. */
+  employer_read_at: string | null;
+  employer_acknowledged_at: string | null;
+  /** True mandatory-reading flag — set at compose, never inferred from priority. */
+  requires_acknowledgement: boolean;
   // Joined data
   sender?: {
     name: string;
@@ -54,7 +67,7 @@ export const getCommunications = async (): Promise<Communication[]> => {
     throw error;
   }
 
-  return data || [];
+  return (data || []).map(toCommunication);
 };
 
 export const getActiveCommunications = async (): Promise<Communication[]> => {
@@ -72,7 +85,7 @@ export const getActiveCommunications = async (): Promise<Communication[]> => {
     throw error;
   }
 
-  return data || [];
+  return (data || []).map(toCommunication);
 };
 
 export const getCommunicationById = async (id: string): Promise<Communication | null> => {
@@ -87,11 +100,26 @@ export const getCommunicationById = async (id: string): Promise<Communication | 
     return null;
   }
 
-  return data;
+  return data ? toCommunication(data) : null;
 };
 
+// Receipts are set by the system, not the composer; requires_acknowledgement
+// defaults false (only the Mandatory Reading compose path sets it). Joined
+// display fields (sender/read_count/total_recipients) are not DB columns.
+type NewCommunication = Omit<
+  Communication,
+  | 'id'
+  | 'created_at'
+  | 'employer_read_at'
+  | 'employer_acknowledged_at'
+  | 'requires_acknowledgement'
+  | 'sender'
+  | 'read_count'
+  | 'total_recipients'
+> & { requires_acknowledgement?: boolean };
+
 export const createCommunication = async (
-  communication: Omit<Communication, 'id' | 'created_at'>
+  communication: NewCommunication
 ): Promise<Communication> => {
   // RLS requires sender_id = auth.uid() — stamp it here so no call site can
   // forget (null fails the INSERT policy with 42501)
@@ -100,9 +128,29 @@ export const createCommunication = async (
   } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
+  // Explicit column list — never spread app objects into an insert
   const { data, error } = await supabase
     .from('employer_communications')
-    .insert({ ...communication, sender_id: user.id })
+    .insert({
+      type: communication.type,
+      title: communication.title,
+      content: communication.content,
+      priority: communication.priority,
+      target_audience: communication.target_audience,
+      target_employee_ids: communication.target_employee_ids,
+      attachments: (communication.attachments ?? null) as CommunicationRow['attachments'],
+      is_pinned: communication.is_pinned,
+      expires_at: communication.expires_at,
+      sender_id: user.id,
+      requires_acknowledgement: communication.requires_acknowledgement ?? false,
+      // Your own message starts read — and your own mandatory post doesn't
+      // need YOUR signature (the team's signatures are tracked per recipient),
+      // so it must not sit in your "To sign" count forever
+      employer_read_at: new Date().toISOString(),
+      employer_acknowledged_at: communication.requires_acknowledgement
+        ? new Date().toISOString()
+        : null,
+    })
     .select()
     .single();
 
@@ -111,21 +159,21 @@ export const createCommunication = async (
     throw error;
   }
 
-  // If targeting all or specific employees, create recipient records
-  if (data) {
-    await createRecipientsForCommunication(data);
-  }
+  const created = toCommunication(data);
 
-  return data;
+  // If targeting all or specific employees, create recipient records
+  await createRecipientsForCommunication(created);
+
+  return created;
 };
 
 export const updateCommunication = async (
   id: string,
-  updates: Partial<Communication>
+  updates: Partial<NewCommunication>
 ): Promise<Communication | null> => {
   const { data, error } = await supabase
     .from('employer_communications')
-    .update(updates)
+    .update(updates as unknown as Database['public']['Tables']['employer_communications']['Update'])
     .eq('id', id)
     .select()
     .single();
@@ -135,32 +183,41 @@ export const updateCommunication = async (
     return null;
   }
 
-  return data;
+  return data ? toCommunication(data) : null;
 };
 
-export const deleteCommunication = async (id: string): Promise<boolean> => {
-  const { error } = await supabase.from('employer_communications').delete().eq('id', id);
+export const deleteCommunication = async (id: string): Promise<void> => {
+  // .select() so an RLS denial (0 rows deleted, no error) surfaces as a failure
+  // instead of a silent no-op behind a success toast.
+  const { data, error } = await supabase
+    .from('employer_communications')
+    .delete()
+    .eq('id', id)
+    .select('id');
 
   if (error) {
     console.error('Error deleting communication:', error);
-    return false;
+    throw error;
   }
-
-  return true;
+  if (!data || data.length === 0) {
+    throw new Error('Message was not deleted — it may have been removed or you lack permission');
+  }
 };
 
-export const pinCommunication = async (id: string, isPinned: boolean): Promise<boolean> => {
-  const { error } = await supabase
+export const pinCommunication = async (id: string, isPinned: boolean): Promise<void> => {
+  const { data, error } = await supabase
     .from('employer_communications')
     .update({ is_pinned: isPinned })
-    .eq('id', id);
+    .eq('id', id)
+    .select('id');
 
   if (error) {
     console.error('Error pinning communication:', error);
-    return false;
+    throw error;
   }
-
-  return true;
+  if (!data || data.length === 0) {
+    throw new Error('Message was not updated — it may have been removed or you lack permission');
+  }
 };
 
 // Recipients
@@ -286,21 +343,59 @@ export const getUnreadCount = async (employeeId: string): Promise<number> => {
 };
 
 // Stats
+/** Set the employer's own read state on a message (persisted on the row). */
+export const setEmployerReadState = async (id: string, read: boolean): Promise<void> => {
+  const { data, error } = await supabase
+    .from('employer_communications')
+    .update({ employer_read_at: read ? new Date().toISOString() : null })
+    .eq('id', id)
+    .select('id');
+
+  if (error) {
+    console.error('Error updating read state:', error);
+    throw error;
+  }
+  if (!data || data.length === 0) {
+    throw new Error('Message was not updated — it may have been removed or you lack permission');
+  }
+};
+
+/** Employer sign-off on mandatory reading — a persisted acknowledgement record. */
+export const acknowledgeAsEmployer = async (id: string): Promise<void> => {
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from('employer_communications')
+    .update({ employer_acknowledged_at: now, employer_read_at: now })
+    .eq('id', id)
+    .select('id');
+
+  if (error) {
+    console.error('Error acknowledging message:', error);
+    throw error;
+  }
+  if (!data || data.length === 0) {
+    throw new Error('Message was not updated — it may have been removed or you lack permission');
+  }
+};
+
 export const getCommunicationStats = async (): Promise<{
   totalAnnouncements: number;
   unreadCount: number;
   pinnedCount: number;
 }> => {
-  const [announcementsResult, pinnedResult] = await Promise.all([
-    supabase.from('employer_communications').select('id', { count: 'exact' }),
-    supabase.from('employer_communications').select('id', { count: 'exact' }).eq('is_pinned', true),
+  const [announcementsResult, pinnedResult, unreadResult] = await Promise.all([
+    supabase.from('employer_communications').select('id', { count: 'exact', head: true }),
+    supabase
+      .from('employer_communications')
+      .select('id', { count: 'exact', head: true })
+      .eq('is_pinned', true),
+    // The EMPLOYER's unread — their own persisted receipts. (The old query
+    // summed every worker's unread recipient rows across all messages.)
+    supabase
+      .from('employer_communications')
+      .select('id', { count: 'exact', head: true })
+      .is('employer_read_at', null),
   ]);
-
-  // Get unread count for current context (would need employee ID in real app)
-  const unreadResult = await supabase
-    .from('employer_communication_recipients')
-    .select('id', { count: 'exact' })
-    .is('read_at', null);
 
   return {
     totalAnnouncements: announcementsResult.count || 0,

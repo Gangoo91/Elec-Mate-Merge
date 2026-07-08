@@ -69,13 +69,21 @@ export const useCreateVacancy = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (formData: VacancyFormData) => {
+    // asDraft saves a real DB draft (visible on every device, publish later) —
+    // the old localStorage-only draft path lost work across devices
+    mutationFn: ({
+      formData,
+      asDraft = false,
+    }: {
+      formData: VacancyFormData;
+      asDraft?: boolean;
+    }) => {
       // Transform camelCase form data to snake_case database format
       const vacancy = {
         title: formData.title,
         location: formData.location,
         type: formData.type as Vacancy['type'],
-        status: 'Open' as VacancyStatus,
+        status: (asDraft ? 'Draft' : 'Open') as VacancyStatus,
         salary_min: formData.salaryMin || null,
         salary_max: formData.salaryMax || null,
         salary_period: formData.salaryPeriod || 'year',
@@ -83,6 +91,12 @@ export const useCreateVacancy = () => {
         requirements: formData.requirements || [],
         benefits: formData.benefits || [],
         closing_date: formData.closingDate || null,
+        work_arrangement: formData.workArrangement || null,
+        experience_level: formData.experienceLevel || null,
+        postcode: formData.postcode || null,
+        schedule: formData.schedule || null,
+        start_date: formData.startDate || null,
+        nice_to_have: formData.niceToHave || [],
       };
       return createVacancy(vacancy);
     },
@@ -111,6 +125,14 @@ export const useUpdateVacancy = () => {
       if (updates.requirements !== undefined) dbUpdates.requirements = updates.requirements;
       if (updates.benefits !== undefined) dbUpdates.benefits = updates.benefits;
       if (updates.closingDate !== undefined) dbUpdates.closing_date = updates.closingDate || null;
+      if (updates.workArrangement !== undefined)
+        dbUpdates.work_arrangement = updates.workArrangement || null;
+      if (updates.experienceLevel !== undefined)
+        dbUpdates.experience_level = updates.experienceLevel || null;
+      if (updates.postcode !== undefined) dbUpdates.postcode = updates.postcode || null;
+      if (updates.schedule !== undefined) dbUpdates.schedule = updates.schedule || null;
+      if (updates.startDate !== undefined) dbUpdates.start_date = updates.startDate || null;
+      if (updates.niceToHave !== undefined) dbUpdates.nice_to_have = updates.niceToHave;
 
       return updateVacancy(id, dbUpdates);
     },
