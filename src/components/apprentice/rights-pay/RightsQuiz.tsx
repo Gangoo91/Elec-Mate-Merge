@@ -51,7 +51,7 @@ const RightsQuiz = () => {
       options: ['£8.00', '£7.55', '£6.40', '£10.85'],
       correct: 0,
       explanation:
-        'The apprentice minimum wage rises to £8.00 per hour from 1 April 2026 (up from £7.55). After the first year, if aged 19+, the National Living Wage of £12.71 applies.',
+        'The apprentice minimum wage rises to £8.00 per hour from 1 April 2026 (up from £7.55). After the first year, the age-band rate applies — £10.85 for 18-20s, or the £12.71 National Living Wage if aged 21+.',
     },
     {
       question: 'Can your employer deduct the cost of training from your wages?',
@@ -78,11 +78,11 @@ const RightsQuiz = () => {
         'You have the legal right to refuse unsafe work under the Health and Safety at Work Act 1974 and the Electricity at Work Regulations 1989. Working live without proper procedures is a criminal offence.',
     },
     {
-      question: 'How much Statutory Sick Pay (SSP) are you entitled to per week (2025/26)?',
-      options: ['£96.35', '£109.40', '£130.00', '£118.75'],
+      question: 'How much Statutory Sick Pay (SSP) are you entitled to per week (2026/27)?',
+      options: ['£96.35', '£109.40', '£130.00', '£123.25'],
       correct: 3,
       explanation:
-        'SSP is £118.75 per week in 2025/26, rising to £123.25 from April 2026. You are eligible after 3 consecutive days of sickness (paid from day 4).',
+        'SSP is £123.25 per week for 2026/27 (or 80% of your average weekly earnings if lower). From 6 April 2026 it is paid from the first day of sickness — the old three waiting days and minimum earnings requirement were abolished.',
     },
     {
       question: 'Who should you report apprenticeship quality or funding concerns to?',
@@ -97,11 +97,11 @@ const RightsQuiz = () => {
         'The ESFA oversees apprenticeship quality and funding. They handle complaints about training providers and employers. Contact them at 0370 267 0001 or through GOV.UK.',
     },
     {
-      question: 'After your first year as an apprentice aged 19+, what is the minimum wage you should receive from April 2026?',
+      question: 'After your first year as an apprentice aged 21+, what is the minimum wage you should receive from April 2026?',
       options: ['£8.00', '£12.71', '£10.85', '£15.00'],
       correct: 1,
       explanation:
-        'After the first year of your apprenticeship, if you are aged 19 or over, you are entitled to the National Living Wage — £12.71 per hour from April 2026. Many employers pay more than this.',
+        'After the first year of your apprenticeship, if you are aged 21 or over, you are entitled to the National Living Wage — £12.71 per hour from 1 April 2026 (18-20 year olds get £10.85). Many employers pay more than this.',
     },
     {
       question: 'What does the GS38 guidance note cover?',

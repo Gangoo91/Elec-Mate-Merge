@@ -9,10 +9,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useState } from 'react';
+import { UK_MINIMUM_WAGE } from '@/data/ukRates';
 
 const PayCalculator = () => {
   const [hoursPerWeek, setHoursPerWeek] = useState<string>('37.5');
-  const [hourlyRate, setHourlyRate] = useState<string>('7.55');
+  const [hourlyRate, setHourlyRate] = useState<string>(UK_MINIMUM_WAGE.apprentice.toFixed(2));
   const [apprenticeYear, setApprenticeYear] = useState<string>('first');
   const [hasStudentLoan, setHasStudentLoan] = useState<boolean>(false);
   const [pensionContribution, setPensionContribution] = useState<string>('3');
@@ -111,13 +112,13 @@ const PayCalculator = () => {
   const getMinimumWageForYear = (year: string) => {
     switch (year) {
       case 'first':
-        return '7.55';
+        return UK_MINIMUM_WAGE.apprentice.toFixed(2);
       case 'second':
-        return '12.21';
+        return UK_MINIMUM_WAGE.nlw21Plus.toFixed(2);
       case 'qualified':
         return '15.00';
       default:
-        return '7.55';
+        return UK_MINIMUM_WAGE.apprentice.toFixed(2);
     }
   };
 
@@ -140,8 +141,12 @@ const PayCalculator = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="first">Year 1 / Under 19 (£7.55/hr current)</SelectItem>
-                  <SelectItem value="second">Year 2+ aged 21+ (£12.21/hr current)</SelectItem>
+                  <SelectItem value="first">
+                    Year 1 / Under 19 (£{UK_MINIMUM_WAGE.apprentice.toFixed(2)}/hr minimum)
+                  </SelectItem>
+                  <SelectItem value="second">
+                    Year 2+ aged 21+ (£{UK_MINIMUM_WAGE.nlw21Plus.toFixed(2)}/hr minimum)
+                  </SelectItem>
                   <SelectItem value="qualified">Newly Qualified</SelectItem>
                 </SelectContent>
               </Select>

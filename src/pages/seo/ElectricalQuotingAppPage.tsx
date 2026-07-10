@@ -515,6 +515,13 @@ export default function ElectricalQuotingAppPage() {
               subscription — no switching between apps, no duplicate data entry, no lost
               information.
             </p>
+            <p>
+              Weighing up your options? See how Elec-Mate stacks up in our{' '}
+              <SEOInternalLink href="/compare/best-quoting-app-electricians">
+                best quoting app for electricians
+              </SEOInternalLink>{' '}
+              comparison.
+            </p>
           </div>
         </div>
       </section>

@@ -4,6 +4,35 @@ import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+
+/** Every routed /training/* page — keeps the hub linking the full library. */
+const ALL_TRAINING_PAGES = [
+  { path: '/training/asbestos-awareness', title: 'Asbestos Awareness' },
+  { path: '/training/bs-7671-amendment-3-course', title: 'BS 7671 Amendment Course' },
+  { path: '/training/cdm-regulations-course', title: 'CDM Regulations' },
+  { path: '/training/confined-spaces', title: 'Confined Spaces' },
+  { path: '/training/coshh', title: 'COSHH' },
+  { path: '/training/cscs-card', title: 'CSCS Card' },
+  { path: '/training/data-cabling', title: 'Data Cabling' },
+  { path: '/training/domestic-installer', title: 'Domestic Installer' },
+  { path: '/training/electrical-science-fundamentals', title: 'Electrical Science Fundamentals' },
+  { path: '/training/energy-efficiency', title: 'Energy Efficiency' },
+  { path: '/training/environmental-sustainability', title: 'Environmental Sustainability' },
+  { path: '/training/ev-charger-installation', title: 'EV Charger Installation' },
+  { path: '/training/fire-alarm-systems', title: 'Fire Alarm Systems' },
+  { path: '/training/fire-safety', title: 'Fire Safety' },
+  { path: '/training/first-aid-electrical', title: 'First Aid (Electrical)' },
+  { path: '/training/hnc-electrical', title: 'HNC Electrical' },
+  { path: '/training/instrumentation-course', title: 'Instrumentation' },
+  { path: '/training/leadership-on-site', title: 'Leadership on Site' },
+  { path: '/training/mental-health-awareness', title: 'Mental Health Awareness' },
+  { path: '/training/mewp-course', title: 'MEWP (IPAF)' },
+  { path: '/training/renewable-energy', title: 'Renewable Energy' },
+  { path: '/training/scaffolding-awareness', title: 'Scaffolding Awareness' },
+  { path: '/training/smart-home-automation', title: 'Smart Home Automation' },
+  { path: '/training/working-at-height', title: 'Working at Height' },
+  { path: '/training/workplace-safety-course', title: 'Workplace Safety' },
+];
 import {
   BookOpen,
   Brain,
@@ -498,6 +527,27 @@ export default function TrainingHubPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="all-courses" className="py-12 px-5 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">All training courses</h2>
+          <p className="text-white/60 text-[14px] mb-6">
+            Every course page in the training library, A to Z.
+          </p>
+          <ul className="columns-2 md:columns-3 lg:columns-4 gap-x-6">
+            {ALL_TRAINING_PAGES.map((course) => (
+              <li key={course.path} className="break-inside-avoid">
+                <Link
+                  to={course.path}
+                  className="block py-1 text-[13px] leading-snug text-white/70 hover:text-yellow-300 transition-colors touch-manipulation"
+                >
+                  {course.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

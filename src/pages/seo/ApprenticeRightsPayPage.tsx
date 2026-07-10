@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The National Minimum Wage for apprentices aged under 19 (or in the first year of the apprenticeship at any age) is currently £7.55 per hour (April 2025 rate). After you turn 19 and have completed the first year, you are entitled to the NMW for your age group — which is significantly higher.',
+  'The National Minimum Wage for apprentices aged under 19 (or in the first year of the apprenticeship at any age) is £8.00 per hour from 1 April 2026. After you turn 19 and have completed the first year, you are entitled to the NMW for your age group — which is significantly higher.',
   'You are entitled to at least 20 days of paid annual leave plus 8 bank holidays (5.6 weeks total for full-time workers). Your employer cannot reduce this because you are an apprentice.',
   'Your employer must pay you for your college or training days. These are paid working hours and count towards your contracted hours. If your employer deducts pay for college attendance, they are breaking the law.',
   'Apprentices have the same employment rights as any other employee — protection against unfair dismissal (after two years), redundancy pay, protection against discrimination, and the right to a safe working environment.',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What is the apprentice minimum wage in 2026?',
     answer:
-      'The apprentice rate of the National Minimum Wage is set annually by the government, typically changing in April. From April 2025, the apprentice rate is £7.55 per hour. This rate applies to apprentices aged under 19 and to apprentices aged 19 or over who are in the first year of their apprenticeship. After you turn 19 and have completed your first year, you are entitled to the higher NMW rate for your age group. For 2025, those rates are: £10.00 per hour for ages 18 to 20, £12.21 per hour for ages 21 and over. The 2026 rates will be announced in the Autumn Budget and typically take effect the following April. Many electrical employers pay above the minimum wage, particularly JIB-graded companies, which have their own pay scales for apprentices at each year of the programme.',
+      'The apprentice rate of the National Minimum Wage is set annually by the government, typically changing in April. From 1 April 2026, the apprentice rate is £8.00 per hour. This rate applies to apprentices aged under 19 and to apprentices aged 19 or over who are in the first year of their apprenticeship. After you turn 19 and have completed your first year, you are entitled to the higher NMW rate for your age group. From 1 April 2026, those rates are: £10.85 per hour for ages 18 to 20, £12.71 per hour for ages 21 and over. The rates are reviewed each year and any change typically takes effect the following April. Many electrical employers pay above the minimum wage, particularly JIB-graded companies, which have their own pay scales for apprentices at each stage of the programme.',
   },
   {
     question: 'Does my employer have to pay me for college days?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Am I entitled to sick pay as an apprentice?',
     answer:
-      'Yes. You are entitled to Statutory Sick Pay (SSP) on the same basis as any other employee. To qualify, you must earn at least the lower earnings limit (currently £123 per week), have been ill for at least 4 consecutive days (including non-working days), and have notified your employer as required. SSP is currently £116.75 per week and is paid for up to 28 weeks. Some employers offer enhanced sick pay above the statutory minimum — check your employment contract. If you are off sick for an extended period, your training provider should work with you and your employer to adjust your training plan. Your apprenticeship can be extended to account for significant periods of absence.',
+      'Yes. You are entitled to Statutory Sick Pay (SSP) on the same basis as any other employee. From 6 April 2026 the rules changed significantly: there is no longer a minimum earnings requirement (the lower earnings limit was abolished), and SSP is paid from the first day of sickness rather than the fourth — you just need to notify your employer as required. SSP for 2026/27 is £123.25 per week, or 80% of your average weekly earnings if that is lower, and is paid for up to 28 weeks. Some employers offer enhanced sick pay above the statutory minimum — check your employment contract. If you are off sick for an extended period, your training provider should work with you and your employer to adjust your training plan. Your apprenticeship can be extended to account for significant periods of absence.',
   },
 ];
 
@@ -152,7 +152,7 @@ const sections = [
               Who it applies to
             </span>
             <span className="text-xs font-semibold uppercase tracking-wide text-white/60 text-right">
-              Rate (from April 2025)
+              Rate (from 1 April 2026)
             </span>
           </div>
           <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10 bg-yellow-900/20">
@@ -162,7 +162,7 @@ const sections = [
                 Under 19, or 19+ in the first year of the apprenticeship
               </p>
             </div>
-            <span className="font-bold text-yellow-400 text-lg tabular-nums">£7.55/hr</span>
+            <span className="font-bold text-yellow-400 text-lg tabular-nums">£8.00/hr</span>
           </div>
           <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4 border-b border-white/10">
             <div>
@@ -171,7 +171,7 @@ const sections = [
                 After you turn 19 and complete the first year
               </p>
             </div>
-            <span className="font-bold text-white text-lg tabular-nums">£10.00/hr</span>
+            <span className="font-bold text-white text-lg tabular-nums">£10.85/hr</span>
           </div>
           <div className="grid grid-cols-[1fr_auto] gap-x-4 items-center px-5 py-4">
             <div>
@@ -180,7 +180,7 @@ const sections = [
                 After you turn 21 and complete the first year
               </p>
             </div>
-            <span className="font-bold text-white text-lg tabular-nums">£12.21/hr</span>
+            <span className="font-bold text-white text-lg tabular-nums">£12.71/hr</span>
           </div>
         </div>
         <p>
@@ -338,15 +338,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SSP rate:</strong> Currently £116.75 per week (2025/26 rate), paid from the
-                fourth consecutive day of illness
+                <strong>SSP rate:</strong> £123.25 per week (2026/27 rate), or 80% of your average
+                weekly earnings if that is lower — paid from the first day of sickness (the old
+                three waiting days were abolished from 6 April 2026)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifying earnings:</strong> You must earn at least £123 per week (before
-                tax) to qualify for SSP
+                <strong>Qualifying earnings:</strong> From 6 April 2026 there is no minimum
+                earnings requirement — the old lower earnings limit was abolished by the Employment
+                Rights Act reforms, so all employees qualify
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -662,7 +664,7 @@ export default function ApprenticeRightsPayPage() {
       answerBox={{
         question: 'What rights and pay is a UK electrical apprentice entitled to?',
         answer:
-          'A UK apprentice must be paid at least the National Minimum Wage (the apprentice rate is £7.55/hour from April 2025), with college and off-the-job training days paid as normal working time. You also get 5.6 weeks (28 days including bank holidays) of paid holiday, Statutory Sick Pay, Working Time Regulations break and rest rights, and full protection from discrimination under the Equality Act 2010.',
+          'A UK apprentice must be paid at least the National Minimum Wage (the apprentice rate is £8.00/hour from 1 April 2026), with college and off-the-job training days paid as normal working time. You also get 5.6 weeks (28 days including bank holidays) of paid holiday, Statutory Sick Pay, Working Time Regulations break and rest rights, and full protection from discrimination under the Equality Act 2010.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

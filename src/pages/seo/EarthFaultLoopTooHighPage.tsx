@@ -235,7 +235,11 @@ const sections = [
         <p>
           If your reading is over the figure for your device, work through the common causes below —
           start by measuring Ze at the origin to split the problem between the supply (Ze) and your
-          circuit (R1+R2).
+          circuit (R1+R2). If you need the maths from first principles, see our full{' '}
+          <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
+            earth fault loop impedance calculation
+          </SEOInternalLink>{' '}
+          guide.
         </p>
       </>
     ),
@@ -541,7 +545,15 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/earth-fault-loop-impedance-calculation',
+    title: 'Earth Fault Loop Impedance Calculation',
+    description:
+      'The Zs = Ze + (R1+R2) formula step by step — temperature correction, maximum values and worked examples.',
+    icon: Calculator,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'How to test IR and interpret results — the other critical dead test on the sequence.',

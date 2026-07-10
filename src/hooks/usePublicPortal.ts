@@ -28,6 +28,23 @@ export interface PortalPermissions {
   showAfterPhotos: boolean;
   showCompletionPhotos: boolean;
   showIssuePhotos: boolean;
+  showInvoices: boolean;
+}
+
+export interface PortalInvoice {
+  id: string;
+  number: string | null;
+  amount: number;
+  status: string | null;
+  due_date: string | null;
+  paid: boolean;
+}
+
+export interface PortalInvoicesData {
+  show: boolean;
+  invoices: PortalInvoice[];
+  bank_details: string | null;
+  payment_link: string | null;
 }
 
 export interface ProgressLog {
@@ -207,6 +224,34 @@ export function usePortalMessages(token: string | undefined) {
     enabled: !!token,
     staleTime: 1000 * 30, // 30 seconds for messages
     refetchInterval: 1000 * 30, // Poll every 30 seconds
+  });
+}
+
+// Fetch the job's invoices + how-to-pay (gated on the showInvoices permission)
+export function usePortalInvoices(token: string | undefined) {
+  return useQuery({
+    queryKey: ['portal-invoices', token],
+    queryFn: async (): Promise<PortalInvoicesData> => {
+      const empty: PortalInvoicesData = {
+        show: false,
+        invoices: [],
+        bank_details: null,
+        payment_link: null,
+      };
+      if (!token) return empty;
+      const rpc = supabase.rpc as unknown as (
+        fn: string,
+        args?: Record<string, unknown>
+      ) => Promise<{ data: unknown; error: unknown }>;
+      const { data, error } = await rpc('get_portal_invoices', { p_token: token });
+      if (error) {
+        console.error('Error fetching portal invoices:', error);
+        return empty;
+      }
+      return (data as PortalInvoicesData) ?? empty;
+    },
+    enabled: !!token,
+    staleTime: 1000 * 60 * 2,
   });
 }
 

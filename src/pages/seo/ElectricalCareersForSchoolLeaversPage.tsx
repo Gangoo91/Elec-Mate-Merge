@@ -42,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'You do not need a degree to become an electrician. The standard route is a Level 3 apprenticeship lasting 3-4 years, combining on-the-job training with college study.',
   'Most employers ask for GCSEs (or equivalent) at grade 4 or above in Maths, English, and a Science. Some accept functional skills qualifications instead.',
-  'Apprentice electricians in England earn at least the apprentice minimum wage (currently £7.55/hour from April 2025), but many employers pay more — typically £14,000 to £20,000 in the first year, rising each year.',
+  'Apprentice electricians in England earn at least the apprentice minimum wage (£8.00/hour from 1 April 2026), but many employers pay more — typically £15,000 to £20,000 in the first year, rising each year.',
   'A qualified electrician in the UK earns £30,000 to £45,000 employed, or £40,000 to £70,000+ self-employed. Specialist areas like EV charging, solar PV, and data centres command higher rates.',
   'Elec-Mate includes a full Study Centre with structured courses for Level 2 and Level 3 apprentices — covering electrical theory, BS 7671 regulations, and practical skills. Study on your phone between jobs.',
 ];
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'How much do apprentice electricians earn?',
     answer:
-      'Apprentice electricians are entitled to at least the apprentice minimum wage, which is currently £7.55 per hour (from April 2025). However, many employers pay significantly more, especially after the first year. The JIB (Joint Industry Board) recommends higher training allowances for electrical apprentices. Typical apprentice pay ranges are: Year 1: £14,000-£18,000, Year 2: £16,000-£20,000, Year 3: £18,000-£24,000, Year 4: £22,000-£28,000. London and the South East tend to pay higher rates. Some employers also provide a van, tools, or a tool allowance. Remember that as an apprentice, you are earning while others your age are paying for university — and you will have no student debt when you qualify.',
+      'Apprentice electricians are entitled to at least the apprentice minimum wage, which is £8.00 per hour from 1 April 2026. However, many employers pay significantly more, especially after the first year. The JIB (Joint Industry Board) sets higher graded rates for electrical apprentices — £8.16 to £14.03 per hour by stage in 2026. Typical apprentice pay ranges are: Year 1: £15,000-£18,000, Year 2: £16,000-£21,000, Year 3: £19,000-£25,000, Year 4: £22,000-£28,000. London and the South East tend to pay higher rates. Some employers also provide a van, tools, or a tool allowance. Remember that as an apprentice, you are earning while others your age are paying for university — and you will have no student debt when you qualify.',
   },
   {
     question: 'What does an electrician actually do day-to-day?',

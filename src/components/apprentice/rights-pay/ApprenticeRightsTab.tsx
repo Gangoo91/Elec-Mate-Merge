@@ -49,7 +49,7 @@ const ApprenticeRightsTab = () => {
       items: [
         'Written apprenticeship agreement within 2 months of starting (legally required document)',
         'Protection against unfair dismissal after 2 years continuous employment',
-        'Statutory sick pay (SSP) after 4 consecutive days of illness (£118.75 per week in 2025/26, rising to £123.25 from April 2026)',
+        'Statutory sick pay (SSP) from the first day of illness (£123.25 per week for 2026/27, or 80% of average weekly earnings if lower — the waiting days and minimum earnings requirement were abolished from 6 April 2026)',
         'Maternity/paternity leave and pay entitlements (including shared parental leave options)',
         'Right to join a trade union and participate in union activities during working hours',
         'Protection from discrimination based on age, gender, race, religion, disability, sexual orientation',
@@ -62,7 +62,7 @@ const ApprenticeRightsTab = () => {
     {
       category: 'Financial rights & protections',
       items: [
-        'Apprentice minimum wage £7.55/hour (2025/26), rising to £8.00/hour from 1 April 2026. After first year, if aged 21+, National Living Wage applies — £12.21 current, £12.71 from April 2026',
+        'Apprentice minimum wage £8.00/hour from 1 April 2026. After first year, the age-band rate applies — £10.85 for 18-20s, or the £12.71 National Living Wage if aged 21+',
         'Regular, predictable pay schedule (weekly/monthly as specified in your contract)',
         'Detailed itemised payslips showing gross pay, deductions, tax, NI contributions, and net pay',
         'No unlawful deductions from wages without your written consent',

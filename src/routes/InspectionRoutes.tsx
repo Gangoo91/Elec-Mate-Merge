@@ -30,6 +30,8 @@ const PATTestingCertificate = lazy(() => import('@/pages/inspection/PATTestingCe
 
 // BESS Certificate
 const BESSCertificate = lazy(() => import('@/pages/inspection/BESSCertificate'));
+// Heat Pump Commissioning Certificate (MCS MIS 3005)
+const HeatPumpCertificate = lazy(() => import('@/pages/inspection/HeatPumpCertificate'));
 // Lightning Protection Certificate
 const LightningProtectionCertificate = lazy(
   () => import('@/pages/inspection/LightningProtectionCertificate')
@@ -113,6 +115,8 @@ export default function InspectionRoutes() {
         {/* Battery Energy Storage System (BESS) */}
         <Route path="bess/new" element={<BESSCertificate />} />
         <Route path="bess/:id" element={<BESSCertificate />} />
+        <Route path="heat-pump/new" element={<HeatPumpCertificate />} />
+        <Route path="heat-pump/:id" element={<HeatPumpCertificate />} />
 
         {/* Lightning Protection (BS EN 62305) */}
         <Route path="lightning-protection/new" element={<LightningProtectionCertificate />} />

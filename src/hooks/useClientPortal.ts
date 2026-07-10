@@ -13,6 +13,7 @@ export interface PortalPermissions {
   showAfterPhotos: boolean;
   showCompletionPhotos: boolean;
   showIssuePhotos: boolean;
+  showInvoices: boolean;
 }
 
 export interface ClientPortalLink {
@@ -68,6 +69,7 @@ const defaultPermissions: PortalPermissions = {
   showAfterPhotos: true,
   showCompletionPhotos: true,
   showIssuePhotos: false,
+  showInvoices: false,
 };
 
 // Fetch all portal links for the current user

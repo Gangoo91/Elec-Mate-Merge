@@ -95,6 +95,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
+    href: '/compare/best-quoting-app-electricians',
+    title: 'Best Quoting App for Electricians',
+    description:
+      'Side-by-side comparison of the quoting apps UK electricians actually use — features, pricing, verdict.',
+    icon: PoundSterling,
+    category: 'Comparison',
+  },
+  {
     href: '/guides/cash-flow-management-electricians',
     title: 'Cash Flow Management',
     description: 'Invoicing terms, deposit strategy, and staged payments for electricians.',

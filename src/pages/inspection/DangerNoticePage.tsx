@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
 import { formatDangerNoticePayload } from '@/utils/danger-notice-formatter';
+import { DangerNoticeSignoffCard } from '@/components/certificates/DangerNoticeSignoffCard';
 
 // --- Constants ---
 
@@ -703,6 +704,16 @@ export default function DangerNoticePage() {
             </div>
           )}
         </div>
+
+        {/* Remote sign-off — email the dutyholder a signing link with read
+            receipts and a 12h auto-refusal (ELE-1288/1289). Saved notices only. */}
+        {existingReportId && (
+          <DangerNoticeSignoffCard
+            reportRef={existingReportId}
+            defaultEmail={data.clientEmail}
+            defaultName={data.clientName}
+          />
+        )}
 
         {/* Bottom actions */}
         <div className="space-y-2 pt-2">

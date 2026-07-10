@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   CheckCircle2,
   CircleDot,
+  Calculator,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -81,6 +82,14 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/earth-fault-loop-impedance-calculation',
+    title: 'Earth Fault Loop Impedance Calculation',
+    description:
+      'The Zs = Ze + (R1+R2) formula step by step — temperature correction, maximum values and worked examples.',
+    icon: Calculator,
+    category: 'Guide',
+  },
   {
     href: '/insulation-resistance-testing-guide',
     title: 'Insulation Resistance Testing Guide',
@@ -248,7 +257,11 @@ const sections = [
                 value obtained from the continuity tests: Zs = Ze + (r1 + r2). This is used for
                 RCD-protected circuits and where live testing is not practicable. The calculated
                 value must be corrected to account for conductor temperature as described in BS 7671
-                Appendix 3 (Reg 411.4.203).
+                Appendix 3 (Reg 411.4.203). Our{' '}
+                <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
+                  earth fault loop impedance calculation guide
+                </SEOInternalLink>{' '}
+                works through the full method with worked examples.
               </span>
             </li>
             <li className="flex items-start gap-3">

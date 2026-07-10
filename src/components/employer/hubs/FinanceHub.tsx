@@ -32,7 +32,9 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
   const pendingInvoices = invoices.filter((i) => i.status === 'Pending');
   const overdueInvoices = invoices.filter((i) => i.status === 'Overdue');
   const pendingQuotes = quotes.filter((q) => q.status === 'Sent');
-  const pendingOrders = materialOrders.filter((o) => o.status !== 'Delivered');
+  const pendingOrders = materialOrders.filter(
+    (o) => !['Received', 'Cancelled'].includes(o.status)
+  );
 
   const revenue = invoices
     .filter((i) => i.status === 'Paid')
@@ -125,8 +127,8 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
         <HubCard
           number="05"
           eyebrow="Materials"
-          title="Procurement"
-          description="Material orders, suppliers and delivery tracking."
+          title="Purchase orders"
+          description="Raise POs, track suppliers and deliveries."
           meta={pendingOrders.length > 0 ? `${pendingOrders.length} open orders` : 'No open orders'}
           tone="cyan"
           onClick={() => onNavigate('procurement')}

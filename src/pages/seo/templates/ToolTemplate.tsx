@@ -254,9 +254,9 @@ export default function ToolTemplate({
           {index === Math.min(Math.floor(sections.length / 2), sections.length - 2) &&
             sections.length >= 3 && (
               <SEOAppBridge
-                title="Try Elec-Mate free for 7 days"
-                description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £6.99/mo."
-                ctaText="Start free trial"
+                title="The calculators live where your certs and quotes are"
+                description="Run the calc, fill the certificate, and price the job in the same app — 70+ calculators, 16 certificate types, quoting with AI cost estimation. From £6.99/mo."
+                ctaText="Start free 7-day trial"
                 icon={Zap}
               />
             )}

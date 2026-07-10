@@ -9,54 +9,112 @@
     {
       "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, s-maxage=60, stale-while-revalidate=300" }
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=60, stale-while-revalidate=300"
+        }
       ]
     },
     {
       "source": "/sw.js",
-      "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
     },
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/.well-known/ai-plugin.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/json" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
       "source": "/openapi.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "X-Robots-Tag", "value": "index, follow, max-snippet:-1" }
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=300"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow, max-snippet:-1"
+        }
       ]
     },
     {
       "source": "/api/public/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        },
         {
           "key": "Cache-Control",
           "value": "public, s-maxage=3600, max-age=300, stale-while-revalidate=86400"
         },
-        { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "X-Elec-Mate", "value": "https://www.elec-mate.com" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        },
+        {
+          "key": "X-Elec-Mate",
+          "value": "https://www.elec-mate.com"
+        }
       ]
     },
     {
       "source": "/.well-known/llm-facts.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=300"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
         {
           "key": "X-Robots-Tag",
           "value": "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -66,19 +124,43 @@
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "X-Robots-Tag", "value": "index, follow, max-snippet:-1" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=300"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow, max-snippet:-1"
+        }
       ]
     },
     {
       "source": "/llms-full.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "X-Robots-Tag", "value": "index, follow, max-snippet:-1" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=300"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow, max-snippet:-1"
+        }
       ]
     },
     {
@@ -93,21 +175,159 @@
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     },
     {
       "source": "/llms-full.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     }
   ],
   "redirects": [
+    {
+      "source": "/training/first-aid-electrical-electrical",
+      "destination": "/training/first-aid-electrical",
+      "permanent": true
+    },
+    {
+      "source": "/training/electrical-science-fundamentals-fundamentals",
+      "destination": "/training/electrical-science-fundamentals",
+      "permanent": true
+    },
+    {
+      "source": "/guides/unsatisfactory-eicr-what-next-what-next",
+      "destination": "/guides/unsatisfactory-eicr-what-next",
+      "permanent": true
+    },
+    {
+      "source": "/guides/smoke-alarm-regulations-uk-2022",
+      "destination": "/guides/smoke-alarm-regulations-uk",
+      "permanent": true
+    },
+    {
+      "source": "/guides/pat-testing-guide-uk-cost",
+      "destination": "/guides/pat-testing-guide-uk",
+      "permanent": true
+    },
+    {
+      "source": "/guides/guides/single-phase-vs-three-phase",
+      "destination": "/guides/single-phase-vs-three-phase",
+      "permanent": true
+    },
+    {
+      "source": "/guides/guides/electrical-design-guide",
+      "destination": "/guides/electrical-design-guide",
+      "permanent": true
+    },
+    {
+      "source": "/guides/guides/data-cabling-installation-cost",
+      "destination": "/guides/data-cabling-installation-cost",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrical-apprenticeship-guide-employer-guide",
+      "destination": "/guides/electrical-apprenticeship-guide",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrical-apprenticeship-guide-cost",
+      "destination": "/guides/electrical-apprenticeship-guide",
+      "permanent": true
+    },
+    {
+      "source": "/guides/earth-fault-loop-impedance-explained-too-high",
+      "destination": "/guides/earth-fault-loop-impedance-explained",
+      "permanent": true
+    },
+    {
+      "source": "/guides/contractor-vs-employee-electrician-electrician",
+      "destination": "/guides/contractor-vs-employee-electrician",
+      "permanent": true
+    },
+    {
+      "source": "/guides/chapter-42-thermal-effects-protection",
+      "destination": "/guides",
+      "permanent": true
+    },
+    {
+      "source": "/tools/earth-fault-loop-impedance-calculator",
+      "destination": "/tools/earth-loop-impedance-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/faq",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/emergency-lighting-certificate-guide",
+      "destination": "/guides/emergency-lighting-certificate-guide",
+      "permanent": true
+    },
+    {
+      "source": "/apprentice-training-training",
+      "destination": "/apprentice-training",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrical-training-courses-uk",
+      "destination": "/training",
+      "permanent": true
+    },
+    {
+      "source": "/guides/voltage-drop",
+      "destination": "/guides/voltage-drop-limits-bs-7671",
+      "permanent": true
+    },
+    {
+      "source": "/guides/electrical-career-progression",
+      "destination": "/guides/electrician-career-progression",
+      "permanent": true
+    },
+    {
+      "source": "/guides/how-to-become-electrician-uk",
+      "destination": "/guides/how-to-become-an-electrician",
+      "permanent": true
+    },
+    {
+      "source": "/guides/emergency-lighting-fault-finding",
+      "destination": "/emergency-lighting-fault-finding",
+      "permanent": true
+    },
+    {
+      "source": "/rewire-cost-leeds",
+      "destination": "/guides/full-rewire-cost-guide",
+      "permanent": true
+    },
+    {
+      "source": "/guides/business",
+      "destination": "/guides",
+      "permanent": true
+    },
     {
       "source": "/guides/insulation-resistance-testing",
       "destination": "/guides/insulation-resistance-testing-bs7671",
@@ -133,7 +353,11 @@
       "destination": "/guides/pricing-electrical-work-per-point",
       "permanent": true
     },
-    { "source": "/ai-cost-engineer", "destination": "/tools/ai-cost-engineer", "permanent": true },
+    {
+      "source": "/ai-cost-engineer",
+      "destination": "/tools/ai-cost-engineer",
+      "permanent": true
+    },
     {
       "source": "/ai-electrician-tools",
       "destination": "/tools/ai-electrician",
@@ -164,7 +388,11 @@
       "destination": "/tools/best-electrician-app-uk",
       "permanent": true
     },
-    { "source": "/bms-course", "destination": "/training/bms-course", "permanent": true },
+    {
+      "source": "/bms-course",
+      "destination": "/training/bms-course",
+      "permanent": true
+    },
     {
       "source": "/cash-flow-planner",
       "destination": "/tools/cash-flow-planner",
@@ -215,7 +443,11 @@
       "destination": "/tools/emergency-lighting-certificate",
       "permanent": true
     },
-    { "source": "/epa-preparation", "destination": "/training/epa-preparation", "permanent": true },
+    {
+      "source": "/epa-preparation",
+      "destination": "/training/epa-preparation",
+      "permanent": true
+    },
     {
       "source": "/guides/bs7671-observation-codes",
       "destination": "/bs7671-observation-codes",
@@ -281,8 +513,16 @@
       "destination": "/guides/part-p-building-regulations",
       "permanent": true
     },
-    { "source": "/pat-testing", "destination": "/tools/pat-testing", "permanent": true },
-    { "source": "/rams-generator", "destination": "/tools/rams-generator", "permanent": true },
+    {
+      "source": "/pat-testing",
+      "destination": "/tools/pat-testing",
+      "permanent": true
+    },
+    {
+      "source": "/rams-generator",
+      "destination": "/tools/rams-generator",
+      "permanent": true
+    },
     {
       "source": "/rcd-testing-guide",
       "destination": "/tools/rcd-testing-guide",
@@ -298,7 +538,11 @@
       "destination": "/ai-circuit-designer",
       "permanent": true
     },
-    { "source": "/tools/eic-certificate", "destination": "/eic-certificate", "permanent": true },
+    {
+      "source": "/tools/eic-certificate",
+      "destination": "/eic-certificate",
+      "permanent": true
+    },
     {
       "source": "/tools/ev-charger-certificate",
       "destination": "/ev-charger-certificate",
@@ -309,8 +553,16 @@
       "destination": "/fire-alarm-certificate",
       "permanent": true
     },
-    { "source": "/training/ipaf-training", "destination": "/ipaf-training", "permanent": true },
-    { "source": "/training/pasma-training", "destination": "/pasma-training", "permanent": true },
+    {
+      "source": "/training/ipaf-training",
+      "destination": "/ipaf-training",
+      "permanent": true
+    },
+    {
+      "source": "/training/pasma-training",
+      "destination": "/pasma-training",
+      "permanent": true
+    },
     {
       "source": "/consumer-unit-types-guide",
       "destination": "/guides/consumer-unit-types",
@@ -563,11 +815,26 @@
     }
   ],
   "rewrites": [
-    { "source": "/privacy", "destination": "/" },
-    { "source": "/terms", "destination": "/" },
-    { "source": "/cookies", "destination": "/" },
-    { "source": "/acceptable-use", "destination": "/" },
-    { "source": "/support", "destination": "/" },
+    {
+      "source": "/privacy",
+      "destination": "/"
+    },
+    {
+      "source": "/terms",
+      "destination": "/"
+    },
+    {
+      "source": "/cookies",
+      "destination": "/"
+    },
+    {
+      "source": "/acceptable-use",
+      "destination": "/"
+    },
+    {
+      "source": "/support",
+      "destination": "/"
+    },
     {
       "source": "/((?!assets/|api/|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap.*\\.xml|\\.well-known/|.+\\.[a-zA-Z0-9]+$).*)",
       "destination": "/"

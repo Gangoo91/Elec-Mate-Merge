@@ -252,6 +252,47 @@ export default function AdminFailedPayments() {
     },
   });
 
+  // Manually fire the same job the Friday "payday retry" cron runs
+  // (friday-payday-retry → check-failed-payments): re-runs the failed-payment
+  // sweep on demand instead of waiting for Friday 07:30.
+  const paydayCronMutation = useMutation({
+    mutationFn: async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/check-failed-payments`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({ mode: 'payday_retry' }),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Payday retry failed');
+      }
+
+      return res.json();
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(
+        `Payday retry ran: ${data.emailsSent ?? 0} email${data.emailsSent === 1 ? '' : 's'} sent (${data.total ?? 0} checked, ${data.skipped ?? 0} skipped)`
+      );
+      queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
+    },
+    onError: (err: Error) => {
+      haptic.error();
+      toast.error(err.message);
+    },
+  });
+
   const sendPersonalMessageMutation = useMutation({
     mutationFn: async ({
       recordId,
@@ -510,6 +551,28 @@ export default function AdminFailedPayments() {
           tone="red"
           actions={
             <>
+              <button
+                onClick={() => {
+                  if (
+                    !window.confirm(
+                      'Run the payday retry now? This fires the same job as the Friday cron — re-attempts every failed payment from the last 30 days.'
+                    )
+                  )
+                    return;
+                  haptic.medium();
+                  paydayCronMutation.mutate();
+                }}
+                disabled={paydayCronMutation.isPending}
+                className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation whitespace-nowrap inline-flex items-center gap-2"
+              >
+                {paydayCronMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Running…
+                  </>
+                ) : (
+                  'Run Payday Retry'
+                )}
+              </button>
               <IconButton
                 onClick={exportCSV}
                 aria-label="Export CSV"

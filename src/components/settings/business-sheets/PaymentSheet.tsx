@@ -44,6 +44,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
     accountNumber: '',
     sortCode: '',
   });
+  const [paymentLink, setPaymentLink] = useState('');
   const [stripeStatus, setStripeStatus] = useState<StripeConnectStatus | null>(null);
   const [stripeLoading, setStripeLoading] = useState(true);
   const [connecting, setConnecting] = useState(false);
@@ -63,6 +64,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
       accountNumber: profile.bank_details?.accountNumber || '',
       sortCode: profile.bank_details?.sortCode || '',
     });
+    setPaymentLink((profile as { portal_payment_link?: string }).portal_payment_link || '');
     hydratedForOpenRef.current = true;
   }, [profile, open]);
 
@@ -141,7 +143,10 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const success = await onSave({ bank_details: bankDetails });
+      const success = await onSave({
+        bank_details: bankDetails,
+        portal_payment_link: paymentLink || null,
+      });
       if (success) {
         toast.success('Payment details saved');
         onOpenChange(false);
@@ -288,6 +293,21 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                     inputMode="numeric"
                   />
                 </div>
+              </div>
+              <div className="space-y-1.5 mt-4">
+                <Label className="text-white font-medium text-[13px]">
+                  Pay-online link <span className="text-white/40 font-normal">(optional)</span>
+                </Label>
+                <Input
+                  value={paymentLink}
+                  onChange={(e) => setPaymentLink(e.target.value)}
+                  placeholder="https://pay.yourfirm.com/…"
+                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  inputMode="url"
+                />
+                <p className="text-[11px] text-white/40">
+                  Shown to clients on the portal as a "Pay online" button, alongside your bank details.
+                </p>
               </div>
             </div>
           </div>

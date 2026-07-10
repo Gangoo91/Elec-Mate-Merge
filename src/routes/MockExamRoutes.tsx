@@ -35,6 +35,9 @@ const EighteenthEditionMockExamPage = lazy(
   () => import('@/pages/mock-exams/EighteenthEditionMockExamPage')
 );
 const C2391MockExamPage = lazy(() => import('@/pages/mock-exams/C2391MockExamPage'));
+const C239151PeriodicMockExamPage = lazy(
+  () => import('@/pages/mock-exams/C239151PeriodicMockExamPage')
+);
 const AM2OnlineMockExamPage = lazy(() => import('@/pages/mock-exams/AM2OnlineMockExamPage'));
 
 // Upskilling / specialist electrical
@@ -126,6 +129,7 @@ const MockExamRoutes = () => (
     {/* Electrical exams */}
     <Route path="18th-edition-bs-7671" element={wrap(EighteenthEditionMockExamPage)} />
     <Route path="2391-inspection-testing" element={wrap(C2391MockExamPage)} />
+    <Route path="2391-51-periodic-inspection" element={wrap(C239151PeriodicMockExamPage)} />
     <Route path="am2-online-knowledge-test" element={wrap(AM2OnlineMockExamPage)} />
 
     {/* Upskilling / specialist electrical */}

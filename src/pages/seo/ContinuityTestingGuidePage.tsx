@@ -2,7 +2,15 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import { FileCheck2, Zap, AlertTriangle, ShieldCheck, CheckCircle2, CircleDot } from 'lucide-react';
+import {
+  FileCheck2,
+  Zap,
+  AlertTriangle,
+  ShieldCheck,
+  CheckCircle2,
+  CircleDot,
+  Calculator,
+} from 'lucide-react';
 
 // -------------------------------------------------------------------
 // Data
@@ -74,6 +82,14 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/earth-fault-loop-impedance-calculation',
+    title: 'Earth Fault Loop Impedance Calculation',
+    description:
+      'The Zs = Ze + (R1+R2) formula step by step — temperature correction, maximum values and worked examples.',
+    icon: Calculator,
+    category: 'Guide',
+  },
   {
     href: '/insulation-resistance-testing-guide',
     title: 'Insulation Resistance Testing Guide',
@@ -317,8 +333,12 @@ const sections = [
               <span>
                 <strong>r2</strong>: Resistance of the CPC from the consumer unit to the furthest
                 point. This is the most critical value. Combined with Ze, it gives Zs without
-                applying live voltage: Zs = Ze + (r1 + r2). This calculated Zs must not exceed the
-                maximum Zs for the protective device. GN3 (Reg 2.15) uses the notation{' '}
+                applying live voltage: Zs = Ze + (r1 + r2) — see our{' '}
+                <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
+                  earth fault loop impedance calculation guide
+                </SEOInternalLink>{' '}
+                for the full method. This calculated Zs must not exceed the maximum Zs for the
+                protective device. GN3 (Reg 2.15) uses the notation{' '}
                 <strong>Rz</strong> for the same value — the resistance of the CPC measured from the
                 distribution board to each utilisation point — and records it on the Schedule of
                 Test Results as Rz. The two notations refer to the same measurement.

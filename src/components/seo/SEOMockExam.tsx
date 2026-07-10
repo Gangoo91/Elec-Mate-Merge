@@ -199,6 +199,21 @@ export function SEOMockExam({
           console.warn('[seo_mock_attempts insert failed]', error.message);
         }
       });
+    // Per-question aggregates (counters only, no PII) — powers the
+    // "questions electricians actually fail" first-party data content.
+    const shownIds = questions.map((q) => q.id);
+    const wrongIds = questions.filter((q, i) => answers[i] !== q.correctAnswer).map((q) => q.id);
+    void supabase
+      .rpc('log_mock_question_results', {
+        p_exam_slug: examSlug,
+        p_shown_ids: shownIds,
+        p_wrong_ids: wrongIds,
+      })
+      .then(({ error }) => {
+        if (error && import.meta.env.DEV) {
+          console.warn('[log_mock_question_results failed]', error.message);
+        }
+      });
   }, [startedAt, questions, answers, passThreshold, location.pathname, examName]);
 
   useEffect(() => {
@@ -752,7 +767,7 @@ export function SEOMockExam({
             </ol>
           </section>
 
-          {/* Conversion — "Like what you see? Come to Elec-Mate." */}
+          {/* Conversion — personalised to the result they just scored. */}
           {signupCta && (
             <section
               aria-labelledby="convert-heading"
@@ -762,20 +777,38 @@ export function SEOMockExam({
                 id="convert-heading"
                 className="text-white text-[18px] sm:text-[20px] font-bold leading-tight"
               >
-                Like what you see? The full app goes further.
+                {passed
+                  ? `${percent}% today — now make sure it holds on exam day.`
+                  : `${percent}% today. The full app is built to get you to a pass.`}
               </h2>
               <ul className="mt-4 space-y-2.5 text-[14px] text-white/85">
-                <li className="flex items-start gap-2.5">
-                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                  <span>Full question bank, not just the rotation you see here</span>
-                </li>
+                {weakAreas.length > 0 ? (
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
+                    <span>
+                      Practice sets built from your weak topics —{' '}
+                      <span className="text-white font-medium">
+                        {weakAreas
+                          .slice(0, 2)
+                          .map((c) => c.name)
+                          .join(', ')}
+                      </span>{' '}
+                      — until they stop costing you marks
+                    </span>
+                  </li>
+                ) : (
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
+                    <span>Full question bank, not just the rotation you see here</span>
+                  </li>
+                )}
                 <li className="flex items-start gap-2.5">
                   <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
                   <span>AI explanation on every wrong answer, grounded in BS 7671</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                  <span>Progress tracking across attempts + weak-topic deep dives</span>
+                  <span>Progress tracking across attempts, so retakes here become scores there</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span className="text-yellow-400 mt-0.5 shrink-0">→</span>

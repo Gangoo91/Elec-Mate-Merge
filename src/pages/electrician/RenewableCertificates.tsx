@@ -52,8 +52,8 @@ const INSTALL_CERTS: Tile[] = [
     id: 'heat-pump',
     standard: 'MCS · MIS 3005',
     title: 'Heat Pump',
-    description: 'ASHP electrical supply & certificate',
-    comingSoon: true,
+    description: 'ASHP/GSHP commissioning certificate',
+    to: '/electrician/inspection-testing/heat-pump/new',
     accent: 'bg-orange-500',
   },
 ];

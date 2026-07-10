@@ -18,6 +18,7 @@ import {
 } from '@/components/employer/editorial';
 import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
 import { useEmployerOverview, type RadarItem } from '@/hooks/useEmployerOverview';
+import { useLeads } from '@/hooks/useLeads';
 import { useVacancyStats } from '@/hooks/useVacancies';
 import { useQsReviewQueue } from '@/hooks/useQsReviewQueue';
 import { useJobSignals } from '@/hooks/useJobSignals';
@@ -41,6 +42,7 @@ const gbp = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: OverviewSectionProps) {
   const { stats, isLoading, refetch } = useEmployerDashboardStats();
   const { data: radar, refetch: refetchRadar } = useEmployerOverview();
+  const { data: leads = [] } = useLeads();
   const { data: vacancyStats } = useVacancyStats();
   // QS certificates awaiting this user's sign-off (empty unless they're a QS).
   const { data: qsPending = [] } = useQsReviewQueue('pending');
@@ -64,6 +66,15 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   const pendingQsReviews = qsPending.length;
   const jobsNeedingAttention = jobSignals?.size ?? 0;
 
+  // Sales pipeline from the new Leads area, surfaced in the command centre.
+  const openLeads = leads.filter((l) => l.stage !== 'Won' && l.stage !== 'Lost');
+  const leadPipeline = openLeads.reduce((s, l) => s + (Number(l.estimated_value) || 0), 0);
+  const leadsDecided = leads.filter((l) => l.stage === 'Won' || l.stage === 'Lost').length;
+  const leadWinRate =
+    leadsDecided > 0
+      ? Math.round((leads.filter((l) => l.stage === 'Won').length / leadsDecided) * 100)
+      : 0;
+
   // Today: jobs in progress now + workers currently on site.
   const todayIso = new Date().toISOString().slice(0, 10);
   const todaysJobs = jobs.filter(
@@ -79,6 +90,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   const onOpenFinance = () => onNavigate('financehub');
   const onOpenSafety = () => onNavigate('safetyhub');
   const onOpenSmartDocs = () => onNavigate('smartdocs');
+  const onOpenClients = () => onNavigate('clientshub');
   const onOpenAlerts = () => onNavigate('elecid');
 
   const refreshAll = () => {
@@ -286,6 +298,35 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
         </div>
       )}
 
+      {leads.length > 0 && (
+        <div className="space-y-4">
+          <SectionHeader eyebrow="Pipeline" title="Sales" />
+          <StatStrip
+            columns={3}
+            stats={[
+              {
+                label: 'Open leads',
+                value: openLeads.length,
+                tone: 'cyan',
+                onClick: () => onNavigate('leads'),
+              },
+              {
+                label: 'Pipeline',
+                value: gbp(leadPipeline),
+                tone: 'blue',
+                onClick: () => onNavigate('leads'),
+              },
+              {
+                label: 'Win rate',
+                value: `${leadWinRate}%`,
+                tone: leadWinRate >= 50 ? 'emerald' : 'amber',
+                onClick: () => onNavigate('clientshub'),
+              },
+            ]}
+          />
+        </div>
+      )}
+
       {attentionItems.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-end justify-between gap-4">
@@ -377,6 +418,15 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
           />
           <HubCard
             number="04"
+            eyebrow="Clients"
+            title="Clients"
+            description="Customers, pipeline and portal"
+            tone="yellow"
+            cta="Open"
+            onClick={onOpenClients}
+          />
+          <HubCard
+            number="05"
             eyebrow="HR & Safety"
             title="HR & Safety"
             description="RAMS and compliance"
@@ -386,7 +436,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
             onClick={onOpenSafety}
           />
           <HubCard
-            number="05"
+            number="06"
             eyebrow="Smart Docs"
             title="Smart Docs"
             description="Generate RAMS, designs and quotes instantly"

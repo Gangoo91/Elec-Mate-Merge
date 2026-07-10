@@ -28,6 +28,7 @@ export type ReportType =
   | 'g98-commissioning'
   | 'g99-commissioning'
   | 'smoke-co-alarm'
+  | 'heat-pump'
   | 'testing-only';
 
 export interface CloudReport {
@@ -364,6 +365,9 @@ export const reportCloud = {
           return 'completed';
         // Smoke & CO Alarm
         if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
+        // Heat Pump (MCS MIS 3005) commissioning
+        if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
+          return 'completed';
         // Testing Only
         if (reportType === 'testing-only' && data.testerSignature) return 'completed';
         // Disconnection Certificate
@@ -535,6 +539,8 @@ export const reportCloud = {
         if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
         if (reportType === 'testing-only' && data.testerSignature) return 'completed';
         if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
+          return 'completed';
+        if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
           return 'completed';
         const hasContent =
           data.clientName ||

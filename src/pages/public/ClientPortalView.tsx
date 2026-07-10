@@ -5,6 +5,7 @@ import {
   usePortalProgressLogs,
   usePortalPhotos,
   usePortalMessages,
+  usePortalInvoices,
   useSendPortalMessage,
 } from '@/hooks/usePublicPortal';
 import { Button } from '@/components/ui/button';
@@ -41,6 +42,7 @@ export default function ClientPortalView() {
   const { data: progressLogs = [] } = usePortalProgressLogs(token);
   const { data: photos = [] } = usePortalPhotos(token);
   const { data: messages = [] } = usePortalMessages(token);
+  const { data: invoicesData } = usePortalInvoices(token);
   const sendMessage = useSendPortalMessage(token);
 
   const handleSendMessage = async () => {
@@ -175,6 +177,83 @@ export default function ClientPortalView() {
                 />
               </div>
             </div>
+          </section>
+        )}
+
+        {/* Invoices Section */}
+        {invoicesData?.show && invoicesData.invoices.length > 0 && (
+          <section className="bg-card rounded-xl border border-border p-4">
+            <h3 className="font-semibold text-foreground flex items-center gap-2 mb-3">
+              <FileText className="h-5 w-5 text-emerald-500" />
+              Invoices
+            </h3>
+            <div className="space-y-2">
+              {invoicesData.invoices.map((inv) => {
+                const overdue =
+                  !inv.paid &&
+                  !!inv.due_date &&
+                  inv.due_date < new Date().toISOString().slice(0, 10);
+                return (
+                  <div
+                    key={inv.id}
+                    className="flex items-center justify-between gap-2 rounded-lg border border-border bg-muted/30 px-3 py-2.5"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {inv.number || 'Invoice'}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {inv.paid
+                          ? 'Paid — thank you'
+                          : inv.due_date
+                            ? overdue
+                              ? `Overdue · was due ${formatDate(inv.due_date)}`
+                              : `Due ${formatDate(inv.due_date)}`
+                            : 'Due on receipt'}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-sm font-semibold text-foreground tabular-nums">
+                        £{Number(inv.amount).toLocaleString('en-GB')}
+                      </span>
+                      <Badge
+                        className={
+                          inv.paid
+                            ? 'bg-green-500/15 text-green-600'
+                            : overdue
+                              ? 'bg-red-500/15 text-red-600'
+                              : 'bg-amber-500/15 text-amber-600'
+                        }
+                      >
+                        {inv.paid ? 'Paid' : overdue ? 'Overdue' : 'Unpaid'}
+                      </Badge>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {(invoicesData.bank_details || invoicesData.payment_link) &&
+              invoicesData.invoices.some((i) => !i.paid) && (
+                <div className="mt-3 rounded-lg border border-border bg-muted/20 p-3">
+                  <p className="text-xs font-semibold text-foreground mb-1.5">How to pay</p>
+                  {invoicesData.bank_details && (
+                    <p className="text-xs text-muted-foreground whitespace-pre-line">
+                      {invoicesData.bank_details}
+                    </p>
+                  )}
+                  {invoicesData.payment_link && (
+                    <a
+                      href={invoicesData.payment_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center justify-center h-11 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium touch-manipulation"
+                    >
+                      Pay online
+                    </a>
+                  )}
+                </div>
+              )}
           </section>
         )}
 

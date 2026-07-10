@@ -81,6 +81,15 @@ const specialistCerts: CertDef[] = [
 
   },
   {
+    id: 'heat-pump',
+    title: 'Heat Pump',
+    description: 'ASHP/GSHP commissioning',
+    standard: 'MCS · MIS 3005',
+    useRouter: true,
+    accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
+
+  },
+  {
     id: 'pat-testing',
     title: 'PAT Testing',
     description: 'Portable appliance testing',

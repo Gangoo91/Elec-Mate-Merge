@@ -22,24 +22,66 @@ import {
   type Tone,
 } from '@/components/employer/editorial';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { useMaterialOrders, useSuppliers, useUpdateOrderStatus } from '@/hooks/useFinance';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  useMaterialOrders,
+  useSuppliers,
+  useUpdateOrderStatus,
+  useUpdateSupplier,
+} from '@/hooks/useFinance';
 import { useCompanyTools, useToolStats } from '@/hooks/useCompanyTools';
+import { useJobs } from '@/hooks/useJobs';
 import { CreateOrderDialog } from '@/components/employer/dialogs/CreateOrderDialog';
 import { CreateSupplierDialog } from '@/components/employer/dialogs/CreateSupplierDialog';
+import { generatePoPdf } from '@/utils/generatePoPdf';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import type { MaterialOrder, Supplier } from '@/services/financeService';
 
 type TabValue = 'all' | 'orders' | 'suppliers' | 'pat';
 
+// Starter set for the empty state — the big UK electrical merchants. Opt-in,
+// per-employer (not a global seed); the owner fills in account no. + discount.
+const COMMON_MERCHANTS = [
+  { name: 'Edmundson Electrical' },
+  { name: 'CEF (City Electrical Factors)' },
+  { name: 'Rexel UK' },
+  { name: 'YESSS Electrical' },
+  { name: 'Screwfix' },
+  { name: 'Denmans Electrical' },
+];
+
 const orderStatusTone = (status: string): Tone => {
   switch (status) {
-    case 'Delivered':
+    case 'Received':
       return 'emerald';
-    case 'In Transit':
+    case 'Part-received':
       return 'cyan';
-    case 'Processing':
-      return 'amber';
-    default:
+    case 'Confirmed':
       return 'blue';
+    case 'Sent':
+      return 'amber';
+    case 'Cancelled':
+      return 'red';
+    default:
+      return 'purple'; // Draft
+  }
+};
+
+// The next lifecycle step for a PO (null = terminal). Slice 1 replaces the
+// Draft→Sent step with a real "send PDF + email to supplier" action.
+const nextOrderStatus = (status: string): { to: string; label: string } | null => {
+  switch (status) {
+    case 'Draft':
+      return { to: 'Sent', label: 'Mark as sent' };
+    case 'Sent':
+      return { to: 'Confirmed', label: 'Mark confirmed' };
+    case 'Confirmed':
+      return { to: 'Received', label: 'Mark received' };
+    case 'Part-received':
+      return { to: 'Received', label: 'Mark fully received' };
+    default:
+      return null;
   }
 };
 
@@ -85,24 +127,30 @@ export function ProcurementSection() {
   const [showSupplierDialog, setShowSupplierDialog] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<MaterialOrder | null>(null);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
+  const [editSupplier, setEditSupplier] = useState<Supplier | null>(null);
 
   const queryClient = useQueryClient();
   const { data: materialOrders = [], isLoading: ordersLoading } = useMaterialOrders();
   const { data: suppliers = [], isLoading: suppliersLoading } = useSuppliers();
   const { data: companyTools = [], isLoading: toolsLoading } = useCompanyTools();
+  const { data: jobs = [] } = useJobs();
   const toolStats = useToolStats();
+  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title : undefined);
   const updateOrderStatusMutation = useUpdateOrderStatus();
 
   const isLoading = ordersLoading || suppliersLoading || toolsLoading;
+  const todayStr = new Date().toISOString().split('T')[0];
 
   const stats = useMemo(() => {
-    const openOrders = materialOrders.filter(
-      (o) => o.status === 'Processing' || o.status === 'In Transit'
-    ).length;
+    const awaiting = (o: MaterialOrder) =>
+      ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
+    const openOrders = materialOrders.filter(awaiting).length;
     const arrivingToday = materialOrders.filter(
-      (o) => o.status === 'In Transit' && isToday(o.delivery_date)
+      (o) => awaiting(o) && isToday(o.expected_date)
     ).length;
-    const lowStock = toolStats.toolsOverdue + toolStats.toolsDue;
+    const late = materialOrders.filter(
+      (o) => awaiting(o) && o.expected_date && o.expected_date < todayStr
+    ).length;
     const now = new Date();
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - 30);
@@ -115,10 +163,10 @@ export function ProcurementSection() {
     return {
       openOrders,
       arrivingToday,
-      lowStock,
+      late,
       spend30: Math.round(spend30),
     };
-  }, [materialOrders, toolStats]);
+  }, [materialOrders, todayStr]);
 
   const refresh = () => {
     queryClient.invalidateQueries({ queryKey: ['material_orders'] });
@@ -126,12 +174,98 @@ export function ProcurementSection() {
     queryClient.invalidateQueries({ queryKey: ['company_tools'] });
   };
 
+  const [sendingPo, setSendingPo] = useState(false);
+  const [emailDraft, setEmailDraft] = useState('');
+  const updateSupplierMutation = useUpdateSupplier();
+  const supplierForOrder = (o: MaterialOrder | null) =>
+    o ? suppliers.find((s) => s.id === o.supplier_id) : undefined;
+
+  const saveSupplierEmail = async (supplierId: string) => {
+    const email = emailDraft.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      toast.error('Enter a valid email.');
+      return;
+    }
+    try {
+      await updateSupplierMutation.mutateAsync({ id: supplierId, updates: { email } });
+      setEmailDraft('');
+    } catch {
+      /* hook surfaces the error */
+    }
+  };
+
+  const previewPo = async (order: MaterialOrder) => {
+    try {
+      const { doc, filename } = await generatePoPdf(order, supplierForOrder(order));
+      await saveOrSharePdf(doc, filename); // native-safe (Filesystem+Share on native, download on web)
+    } catch {
+      toast.error('Could not generate the PO PDF.');
+    }
+  };
+
+  const sendPoToSupplier = async (order: MaterialOrder) => {
+    const supplier = supplierForOrder(order);
+    if (!supplier?.email) {
+      toast.error('Add an email to this supplier first, then send.');
+      return;
+    }
+    setSendingPo(true);
+    try {
+      const { base64, filename } = await generatePoPdf(order, supplier);
+      const { error } = await supabase.functions.invoke('send-finance-document', {
+        body: {
+          type: 'purchase_order',
+          documentId: order.id,
+          recipientEmail: supplier.email,
+          recipientName: supplier.contact_name || supplier.name,
+          attachmentBase64: base64,
+          attachmentName: filename,
+        },
+      });
+      if (error) throw error;
+      queryClient.invalidateQueries({ queryKey: ['material_orders'] });
+      setSelectedOrder(null);
+      toast.success(`PO sent to ${supplier.name}.`);
+    } catch {
+      toast.error('Could not send the PO — try again.');
+    } finally {
+      setSendingPo(false);
+    }
+  };
+
+  const [addingMerchants, setAddingMerchants] = useState(false);
+  const addCommonMerchants = async () => {
+    setAddingMerchants(true);
+    const existing = new Set(suppliers.map((s) => s.name.toLowerCase()));
+    const rows = COMMON_MERCHANTS.filter((m) => !existing.has(m.name.toLowerCase())).map((m) => ({
+      name: m.name,
+      category: 'Wholesaler', // matches the edit dialog's category options
+      credit_limit: 0,
+      balance: 0,
+      delivery_days: 1,
+      discount_percent: 0,
+    }));
+    if (rows.length === 0) {
+      setAddingMerchants(false);
+      toast.info('Those merchants are already in your list.');
+      return;
+    }
+    const { error } = await supabase.from('employer_suppliers').insert(rows);
+    setAddingMerchants(false);
+    if (error) {
+      toast.error('Could not add merchants — try again.');
+      return;
+    }
+    queryClient.invalidateQueries({ queryKey: ['suppliers'] });
+    toast.success(`Added ${rows.length} merchant${rows.length === 1 ? '' : 's'} — set your account numbers and discounts.`);
+  };
+
   const q = search.trim().toLowerCase();
 
   const filteredOrders = useMemo(() => {
     return materialOrders.filter((o) => {
       if (!q) return true;
-      const supplierName = (o as MaterialOrder & { suppliers?: { name?: string } }).suppliers?.name ?? '';
+      const supplierName = o.supplier?.name ?? '';
       const haystack = `${o.order_number} ${supplierName} ${o.status}`.toLowerCase();
       return haystack.includes(q);
     });
@@ -159,7 +293,7 @@ export function ProcurementSection() {
 
   const heroActions = (
     <>
-      <PrimaryButton onClick={() => setShowOrderDialog(true)}>New order</PrimaryButton>
+      <PrimaryButton onClick={() => setShowOrderDialog(true)}>Raise PO</PrimaryButton>
       <IconButton onClick={refresh} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
@@ -171,8 +305,8 @@ export function ProcurementSection() {
       <PageFrame>
         <PageHero
           eyebrow="Money"
-          title="Procurement"
-          description="Orders, suppliers and PAT & calibration logs."
+          title="Purchase orders"
+          description="Raise POs, manage suppliers, and track PAT & calibration."
           tone="cyan"
           actions={heroActions}
         />
@@ -181,15 +315,26 @@ export function ProcurementSection() {
     );
   }
 
-  const selectedOrderItems = (selectedOrder?.items as Array<{ qty: number; name: string; price: number }>) ?? [];
+  const selectedOrderItems =
+    (selectedOrder?.items as Array<{
+      qty: number;
+      name: string;
+      unit_cost: number;
+      unit?: string | null;
+    }>) ?? [];
+  const nextStep = selectedOrder ? nextOrderStatus(selectedOrder.status) : null;
+  const canCancelPo =
+    !!selectedOrder && !['Received', 'Cancelled'].includes(selectedOrder.status);
+  const orderSupplier = supplierForOrder(selectedOrder);
+  const supplierNeedsEmail = !!orderSupplier && !orderSupplier.email;
 
   return (
     <>
       <PageFrame>
         <PageHero
           eyebrow="Money"
-          title="Procurement"
-          description="Orders, suppliers and PAT & calibration logs."
+          title="Purchase orders"
+          description="Raise POs, manage suppliers, and track PAT & calibration."
           tone="cyan"
           actions={heroActions}
         />
@@ -197,9 +342,9 @@ export function ProcurementSection() {
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Open orders', value: stats.openOrders, tone: 'cyan' },
+            { label: 'Awaiting delivery', value: stats.openOrders, tone: 'cyan' },
             { label: 'Arriving today', value: stats.arrivingToday, tone: 'blue' },
-            { label: 'PAT due', value: stats.lowStock, tone: 'orange' },
+            { label: 'Late', value: stats.late, tone: stats.late > 0 ? 'red' : 'emerald' },
             { label: 'Spend 30d £', value: stats.spend30.toLocaleString(), accent: true },
           ]}
         />
@@ -207,7 +352,7 @@ export function ProcurementSection() {
         <FilterBar
           tabs={[
             { value: 'all', label: 'All' },
-            { value: 'orders', label: 'Orders', count: filteredOrders.length },
+            { value: 'orders', label: 'Purchase orders', count: filteredOrders.length },
             { value: 'suppliers', label: 'Suppliers', count: filteredSuppliers.length },
             { value: 'pat', label: 'PAT & calibration', count: filteredTools.length },
           ]}
@@ -227,29 +372,38 @@ export function ProcurementSection() {
           <ListCard>
             <ListCardHeader
               tone="cyan"
-              title="Orders"
+              title="Purchase orders"
               meta={<Pill tone="cyan">{filteredOrders.length}</Pill>}
-              action="New order"
+              action="Raise PO"
               onAction={() => setShowOrderDialog(true)}
             />
             {filteredOrders.length === 0 ? (
               <div className="p-5 sm:p-6">
                 <EmptyState
-                  title="No orders"
-                  description={q ? 'No orders match your search.' : 'Raise your first material order to track deliveries and spend.'}
-                  action={q ? undefined : 'New order'}
+                  title="No purchase orders"
+                  description={q ? 'No POs match your search.' : 'Raise your first purchase order to send to a supplier and track spend against the job.'}
+                  action={q ? undefined : 'Raise PO'}
                   onAction={q ? undefined : () => setShowOrderDialog(true)}
                 />
               </div>
             ) : (
               <ListBody>
                 {filteredOrders.map((o) => {
-                  const supplierName =
-                    (o as MaterialOrder & { suppliers?: { name?: string } }).suppliers?.name ?? 'Unknown supplier';
+                  const supplierName = o.supplier?.name ?? 'Unknown supplier';
                   const items = (o.items as Array<unknown>) ?? [];
                   const itemCount = items.length;
-                  const eta = o.delivery_date ? formatDate(o.delivery_date) : '—';
-                  const subtitle = `${itemCount} item${itemCount === 1 ? '' : 's'} · £${Number(o.total).toFixed(2)} · ETA ${eta}`;
+                  const awaiting = ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
+                  const isLate =
+                    awaiting && !!o.expected_date && o.expected_date < todayStr;
+                  const timing =
+                    o.status === 'Received'
+                      ? `Received ${formatDate(o.delivery_date)}`
+                      : o.expected_date
+                        ? `ETA ${formatDate(o.expected_date)}`
+                        : 'No ETA set';
+                  const jobTitle = jobTitleFor(o.job_id);
+                  const primaryLabel = jobTitle || `${itemCount} item${itemCount === 1 ? '' : 's'}`;
+                  const subtitle = `${primaryLabel} · £${Number(o.total).toFixed(2)} · ${timing}`;
                   return (
                     <ListRow
                       key={o.id}
@@ -261,7 +415,12 @@ export function ProcurementSection() {
                         </span>
                       }
                       subtitle={subtitle}
-                      trailing={<Pill tone={orderStatusTone(o.status)}>{o.status}</Pill>}
+                      trailing={
+                        <span className="flex items-center gap-1.5">
+                          {isLate && <Pill tone="red">Late</Pill>}
+                          <Pill tone={orderStatusTone(o.status)}>{o.status}</Pill>
+                        </span>
+                      }
                       onClick={() => setSelectedOrder(o)}
                     />
                   );
@@ -281,13 +440,23 @@ export function ProcurementSection() {
               onAction={() => setShowSupplierDialog(true)}
             />
             {filteredSuppliers.length === 0 ? (
-              <div className="p-5 sm:p-6">
+              <div className="p-5 sm:p-6 space-y-4">
                 <EmptyState
                   title="No suppliers"
                   description={q ? 'No suppliers match your search.' : 'Add a supplier to start raising orders.'}
                   action={q ? undefined : 'Add supplier'}
                   onAction={q ? undefined : () => setShowSupplierDialog(true)}
                 />
+                {!q && (
+                  <div className="text-center">
+                    <SecondaryButton onClick={addCommonMerchants} disabled={addingMerchants}>
+                      {addingMerchants ? 'Adding…' : 'Quick-add UK merchants'}
+                    </SecondaryButton>
+                    <p className="mt-2 text-[11px] text-white/45">
+                      Adds Edmundson, CEF, Rexel, YESSS, Screwfix &amp; Denmans — edit account no. and discount after.
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
               <ListBody>
@@ -359,61 +528,68 @@ export function ProcurementSection() {
         )}
       </PageFrame>
 
-      <Sheet open={!!selectedOrder} onOpenChange={(open) => !open && setSelectedOrder(null)}>
+      <Sheet
+        open={!!selectedOrder}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedOrder(null);
+            setEmailDraft('');
+          }
+        }}
+      >
         <SheetContent
           side="bottom"
           className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
         >
           {selectedOrder && (
             <SheetShell
-              eyebrow="Money"
-              title={`Order ${selectedOrder.order_number}`}
+              eyebrow="Purchase order"
+              title={selectedOrder.order_number}
               description={
                 <span className="flex items-center gap-2 pt-1">
                   <Pill tone={orderStatusTone(selectedOrder.status)}>{selectedOrder.status}</Pill>
                   <span className="text-[12px] text-white">
-                    {(selectedOrder as MaterialOrder & { suppliers?: { name?: string } }).suppliers?.name ?? 'Unknown supplier'}
+                    {selectedOrder.supplier?.name ?? 'Unknown supplier'}
                   </span>
                 </span>
               }
               footer={
-                selectedOrder.status === 'Delivered' ||
-                selectedOrder.status === 'Cancelled' ? undefined : (
-                  <div className="flex gap-2">
-                    {selectedOrder.status === 'Processing' && (
-                      <SecondaryButton
+                <div className="flex gap-2">
+                  <SecondaryButton onClick={() => previewPo(selectedOrder)} fullWidth>
+                    Preview PO
+                  </SecondaryButton>
+                  {selectedOrder.status === 'Draft' ? (
+                    <PrimaryButton
+                      onClick={() => sendPoToSupplier(selectedOrder)}
+                      disabled={sendingPo}
+                      fullWidth
+                    >
+                      {sendingPo ? 'Sending…' : 'Send to supplier'}
+                    </PrimaryButton>
+                  ) : (
+                    nextStep && (
+                      <PrimaryButton
                         onClick={() => {
-                          updateOrderStatusMutation.mutate({
-                            id: selectedOrder.id,
-                            status: 'In Transit',
-                          });
+                          updateOrderStatusMutation.mutate(
+                            {
+                              id: selectedOrder.id,
+                              status: nextStep.to,
+                              deliveryDate:
+                                nextStep.to === 'Received'
+                                  ? new Date().toISOString().split('T')[0]
+                                  : undefined,
+                            },
+                            { onSuccess: () => setSelectedOrder(null) }
+                          );
                         }}
                         disabled={updateOrderStatusMutation.isPending}
                         fullWidth
                       >
-                        Mark in transit
-                      </SecondaryButton>
-                    )}
-                    <PrimaryButton
-                      onClick={() => {
-                        updateOrderStatusMutation.mutate(
-                          {
-                            id: selectedOrder.id,
-                            status: 'Delivered',
-                            deliveryDate: new Date().toISOString().split('T')[0],
-                          },
-                          {
-                            onSuccess: () => setSelectedOrder(null),
-                          }
-                        );
-                      }}
-                      disabled={updateOrderStatusMutation.isPending}
-                      fullWidth
-                    >
-                      {updateOrderStatusMutation.isPending ? 'Marking…' : 'Mark as delivered'}
-                    </PrimaryButton>
-                  </div>
-                )
+                        {updateOrderStatusMutation.isPending ? 'Updating…' : nextStep.label}
+                      </PrimaryButton>
+                    )
+                  )}
+                </div>
               }
             >
               <StatStrip
@@ -422,8 +598,13 @@ export function ProcurementSection() {
                   { label: 'Total £', value: Number(selectedOrder.total).toFixed(2), accent: true },
                   { label: 'Items', value: selectedOrderItems.length, tone: 'cyan' },
                   {
-                    label: 'ETA',
-                    value: selectedOrder.delivery_date ? formatDate(selectedOrder.delivery_date) : '—',
+                    label: selectedOrder.status === 'Received' ? 'Received' : 'ETA',
+                    value:
+                      selectedOrder.status === 'Received'
+                        ? formatDate(selectedOrder.delivery_date)
+                        : selectedOrder.expected_date
+                          ? formatDate(selectedOrder.expected_date)
+                          : '—',
                     tone: 'blue',
                   },
                 ]}
@@ -441,25 +622,69 @@ export function ProcurementSection() {
                       <ListRow
                         key={`${item.name}-${idx}`}
                         title={item.name}
-                        subtitle={`Qty ${item.qty} · £${Number(item.price).toFixed(2)} ea`}
+                        subtitle={`Qty ${item.qty} · £${Number(item.unit_cost).toFixed(2)} ea${item.unit ? ` / ${item.unit}` : ''}`}
                         trailing={
                           <span className="text-[14px] font-semibold text-white tabular-nums">
-                            £{(Number(item.qty) * Number(item.price)).toFixed(2)}
+                            £{(Number(item.qty) * Number(item.unit_cost)).toFixed(2)}
                           </span>
                         }
                       />
                     ))}
                   </ListBody>
                 )}
+                <div className="px-5 sm:px-6 py-3 space-y-1.5 border-t border-white/[0.06]">
+                  <div className="flex items-center justify-between text-[13px] text-white/70">
+                    <span>Subtotal</span>
+                    <span className="tabular-nums">£{Number(selectedOrder.subtotal ?? 0).toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[13px] text-white/70">
+                    <span>VAT ({Number(selectedOrder.vat_rate ?? 0)}%)</span>
+                    <span className="tabular-nums">£{Number(selectedOrder.vat_amount ?? 0).toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-1 border-t border-white/[0.06]">
+                    <span className="text-[13px] font-medium text-white">Total</span>
+                    <span className="text-[15px] font-semibold text-elec-yellow tabular-nums">
+                      £{Number(selectedOrder.total).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
               </ListCard>
 
               <ListCard>
                 <ListCardHeader title="Details" />
                 <ListBody>
+                  {jobTitleFor(selectedOrder.job_id) && (
+                    <ListRow
+                      title="Job"
+                      trailing={
+                        <span className="text-white text-[13px] text-right max-w-[220px] truncate">
+                          {jobTitleFor(selectedOrder.job_id)}
+                        </span>
+                      }
+                    />
+                  )}
                   <ListRow title="Order date" trailing={<span className="text-white text-[13px]">{formatDate(selectedOrder.order_date)}</span>} />
-                  <ListRow title="Ordered by" trailing={<span className="text-white text-[13px]">{selectedOrder.ordered_by || '—'}</span>} />
                   <ListRow
-                    title="Delivery date"
+                    title="Expected"
+                    trailing={
+                      <span className="text-white text-[13px]">
+                        {selectedOrder.expected_date ? formatDate(selectedOrder.expected_date) : '—'}
+                      </span>
+                    }
+                  />
+                  <ListRow title="Delivery" trailing={<span className="text-white text-[13px]">{selectedOrder.delivery_mode || 'Deliver to site'}</span>} />
+                  {selectedOrder.delivery_address && (
+                    <ListRow
+                      title="Address"
+                      trailing={<span className="text-white text-[13px] text-right max-w-[220px]">{selectedOrder.delivery_address}</span>}
+                    />
+                  )}
+                  <ListRow title="Ordered by" trailing={<span className="text-white text-[13px]">{selectedOrder.ordered_by || '—'}</span>} />
+                  {selectedOrder.sent_to_email && (
+                    <ListRow title="Sent to" trailing={<span className="text-white text-[13px] truncate max-w-[200px]">{selectedOrder.sent_to_email}</span>} />
+                  )}
+                  <ListRow
+                    title="Received date"
                     trailing={<span className="text-white text-[13px]">{selectedOrder.delivery_date ? formatDate(selectedOrder.delivery_date) : '—'}</span>}
                   />
                 </ListBody>
@@ -472,6 +697,49 @@ export function ProcurementSection() {
                     {selectedOrder.notes}
                   </div>
                 </ListCard>
+              )}
+
+              {selectedOrder.status === 'Draft' && supplierNeedsEmail && orderSupplier && (
+                <ListCard>
+                  <ListCardHeader tone="amber" title="Supplier email needed" />
+                  <div className="px-5 sm:px-6 py-4 space-y-2.5">
+                    <p className="text-[12.5px] text-white/60 leading-relaxed">
+                      {orderSupplier.name} has no email yet. Add one to send the PO — it'll be saved to the supplier.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <input
+                        type="email"
+                        inputMode="email"
+                        value={emailDraft}
+                        onChange={(e) => setEmailDraft(e.target.value)}
+                        placeholder="orders@supplier.co.uk"
+                        className="flex-1 h-11 rounded-xl bg-white/[0.05] border border-white/[0.1] px-3.5 text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow touch-manipulation"
+                      />
+                      <SecondaryButton
+                        onClick={() => saveSupplierEmail(orderSupplier.id)}
+                        disabled={updateSupplierMutation.isPending}
+                      >
+                        {updateSupplierMutation.isPending ? 'Saving…' : 'Save email'}
+                      </SecondaryButton>
+                    </div>
+                  </div>
+                </ListCard>
+              )}
+
+              {canCancelPo && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    updateOrderStatusMutation.mutate(
+                      { id: selectedOrder.id, status: 'Cancelled' },
+                      { onSuccess: () => setSelectedOrder(null) }
+                    )
+                  }
+                  disabled={updateOrderStatusMutation.isPending}
+                  className="w-full h-11 rounded-xl text-[13px] text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation disabled:opacity-50"
+                >
+                  Cancel this PO
+                </button>
               )}
             </SheetShell>
           )}
@@ -552,14 +820,39 @@ export function ProcurementSection() {
                 </ListCard>
               )}
 
+              <SecondaryButton
+                onClick={() => {
+                  const s = selectedSupplier;
+                  setSelectedSupplier(null);
+                  setEditSupplier(s);
+                  setShowSupplierDialog(true);
+                }}
+                fullWidth
+              >
+                Edit details
+              </SecondaryButton>
+
               <Divider />
             </SheetShell>
           )}
         </SheetContent>
       </Sheet>
 
-      <CreateOrderDialog open={showOrderDialog} onOpenChange={setShowOrderDialog} />
-      <CreateSupplierDialog open={showSupplierDialog} onOpenChange={setShowSupplierDialog} />
+      <CreateOrderDialog
+        open={showOrderDialog}
+        onOpenChange={setShowOrderDialog}
+        onCreated={(order, send) => {
+          if (send) sendPoToSupplier(order);
+        }}
+      />
+      <CreateSupplierDialog
+        open={showSupplierDialog}
+        supplier={editSupplier}
+        onOpenChange={(o) => {
+          setShowSupplierDialog(o);
+          if (!o) setEditSupplier(null);
+        }}
+      />
     </>
   );
 }

@@ -117,6 +117,7 @@ export function ClientPortalSection() {
     showAfterPhotos: true,
     showCompletionPhotos: true,
     showIssuePhotos: false,
+    showInvoices: false,
   };
 
   const getPortalUrl = () => {
@@ -593,6 +594,7 @@ export function ClientPortalSection() {
                         { key: 'showPhotos', label: 'Show photos' },
                         { key: 'showTimeline', label: 'Show timeline' },
                         { key: 'showIssues', label: 'Show issues' },
+                        { key: 'showInvoices', label: 'Show invoices & how to pay' },
                         { key: 'allowMessages', label: 'Allow messages' },
                       ].map(({ key, label }) => (
                         <ListRow

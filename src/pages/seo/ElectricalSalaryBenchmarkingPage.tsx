@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'How much does an electrical apprentice earn in Year 1?',
     answer:
-      'The JIB recommends Year 1 apprentice pay at 40% of the Approved Electrician rate. At a £20.00/hour AE rate, Year 1 apprentices earn approximately £8.00/hour. This is above the National Minimum Wage for apprentices (£7.55/hour from April 2025) but below the NMW for those aged 21+. The JIB scale rises to 50% in Year 2, 65% in Year 3, and 75% in Year 4. Actual pay varies by employer — many firms in tight labour markets pay above the JIB recommended scale to attract and retain apprentices.',
+      'Under the JIB Industrial Determination, the Stage 1 apprentice rate from 5 January 2026 is £8.16 per hour at national standard rates (£9.14 in the JIB London area). This is just above the National Minimum Wage for apprentices (£8.00/hour from 1 April 2026) but below the NMW for those aged 21+. The JIB scale rises to £10.60 per hour at Stage 2, £13.05 at Stage 3, and £14.03 at Stage 4. Actual pay varies by employer — many firms in tight labour markets pay above the JIB rates to attract and retain apprentices.',
   },
   {
     question: 'Do JIB rates apply to self-employed electricians?',
@@ -191,33 +191,33 @@ const sections = [
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 1 — 40% of AE rate</strong> — approximately £8.00/hour (2026). Legal
-                minimum (NMW apprentice rate from April 2025) is £7.55/hour; most JIB employers pay
-                at or above the JIB recommended rate. Annual equivalent: approximately £15,600.
+                <strong>Stage 1 (Year 1) — £8.16/hour</strong> (£9.14 in the JIB London area). The
+                legal minimum (NMW apprentice rate from 1 April 2026) is £8.00/hour; JIB employers
+                pay the determination rate or above. Annual equivalent: approximately £15,900.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 2 — 50% of AE rate</strong> — approximately £10.00/hour. From Year 2,
-                if the apprentice is 19 or older, the NMW for their age band applies instead if
-                higher. Annual equivalent: approximately £19,500.
+                <strong>Stage 2 (Year 2) — £10.60/hour</strong> (£11.88 London). From Year 2, if the
+                apprentice is 19 or older, the NMW for their age band applies instead if higher.
+                Annual equivalent: approximately £20,700.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 3 — 65% of AE rate</strong> — approximately £13.00/hour. The apprentice
-                is now capable of undertaking most standard installation tasks under supervision.
-                Annual equivalent: approximately £25,350.
+                <strong>Stage 3 (Year 3) — £13.05/hour</strong> (£14.62 London). The apprentice is
+                now capable of undertaking most standard installation tasks under supervision.
+                Annual equivalent: approximately £25,450.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 4 — 75% of AE rate</strong> — approximately £15.00/hour. Final
+                <strong>Stage 4 (Year 4) — £14.03/hour</strong> (£15.72 London). Final
                 apprenticeship year — the apprentice is preparing for their end-point assessment
-                (EPA). Annual equivalent: approximately £29,250.
+                (EPA). Annual equivalent: approximately £27,350.
               </span>
             </li>
           </ul>

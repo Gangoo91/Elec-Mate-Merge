@@ -9,7 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useCreateSupplier } from '@/hooks/useFinance';
+import { useCreateSupplier, useUpdateSupplier } from '@/hooks/useFinance';
+import type { Supplier } from '@/services/financeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import {
   SheetShell,
@@ -27,6 +28,8 @@ import {
 interface CreateSupplierDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** When provided, the dialog edits this supplier instead of creating a new one. */
+  supplier?: Supplier | null;
 }
 
 const CATEGORIES = [
@@ -39,7 +42,8 @@ const CATEGORIES = [
   'Other',
 ];
 
-export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialogProps) {
+export function CreateSupplierDialog({ open, onOpenChange, supplier }: CreateSupplierDialogProps) {
+  const isEdit = !!supplier;
   const [name, setName] = useState('');
   const [category, setCategory] = useState('Wholesaler');
   const [accountNumber, setAccountNumber] = useState('');
@@ -53,16 +57,36 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
   const [notes, setNotes] = useState('');
 
   const createSupplierMutation = useCreateSupplier();
+  const updateSupplierMutation = useUpdateSupplier();
+  const saving = createSupplierMutation.isPending || updateSupplierMutation.isPending;
+
+  // Prefill when opening in edit mode; reset to blank when opening to create.
+  useEffect(() => {
+    if (!open) return;
+    if (supplier) {
+      setName(supplier.name ?? '');
+      setCategory(supplier.category || 'Wholesaler');
+      setAccountNumber(supplier.account_number ?? '');
+      setCreditLimit(supplier.credit_limit ? String(supplier.credit_limit) : '');
+      setContactName(supplier.contact_name ?? '');
+      setPhone(supplier.phone ?? '');
+      setEmail(supplier.email ?? '');
+      setAddress(supplier.address ?? '');
+      setDeliveryDays(String(supplier.delivery_days ?? 1));
+      setDiscountPercent(String(supplier.discount_percent ?? 0));
+      setNotes(supplier.notes ?? '');
+    } else {
+      resetForm();
+    }
+  }, [open, supplier]);
 
   const handleSubmit = async () => {
     if (!name.trim()) return;
 
-    await createSupplierMutation.mutateAsync({
+    const payload = {
       name: name.trim(),
       category,
       account_number: accountNumber || null,
-      credit_limit: Number(creditLimit) || 0,
-      balance: 0,
       contact_name: contactName || null,
       phone: phone || null,
       email: email || null,
@@ -70,7 +94,20 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
       delivery_days: Number(deliveryDays),
       discount_percent: Number(discountPercent),
       notes: notes || null,
-    });
+    };
+
+    if (isEdit && supplier) {
+      await updateSupplierMutation.mutateAsync({
+        id: supplier.id,
+        updates: { ...payload, credit_limit: Number(creditLimit) || 0 },
+      });
+    } else {
+      await createSupplierMutation.mutateAsync({
+        ...payload,
+        credit_limit: Number(creditLimit) || 0,
+        balance: 0,
+      });
+    }
 
     resetForm();
     onOpenChange(false);
@@ -164,19 +201,19 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
       <SheetContent side="bottom" className="h-[90vh] p-0 overflow-hidden">
         <SheetShell
           eyebrow="Suppliers"
-          title="Add supplier"
-          description="Register a new supplier account with contact and delivery details."
+          title={isEdit ? 'Edit supplier' : 'Add supplier'}
+          description={
+            isEdit
+              ? 'Update account number, discount and contact details.'
+              : 'Register a new supplier account with contact and delivery details.'
+          }
           footer={
             <>
               <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                 Cancel
               </SecondaryButton>
-              <PrimaryButton
-                onClick={handleSubmit}
-                disabled={!name.trim() || createSupplierMutation.isPending}
-                fullWidth
-              >
-                Add supplier
+              <PrimaryButton onClick={handleSubmit} disabled={!name.trim() || saving} fullWidth>
+                {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Add supplier'}
               </PrimaryButton>
             </>
           }

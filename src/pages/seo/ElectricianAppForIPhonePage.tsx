@@ -90,7 +90,11 @@ export default function ElectricianAppForiPhonePage() {
                 <SEOInternalLink href="/tools/best-electrician-app-uk">
                   best electrician app guide
                 </SEOInternalLink>
-                .
+                . On Android instead? See the{' '}
+                <SEOInternalLink href="/compare/electrician-app-android">
+                  best electrician app for Android
+                </SEOInternalLink>{' '}
+                comparison.
               </p>
             </>
           ),

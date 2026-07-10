@@ -155,6 +155,127 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('User authenticated:', user.id);
 
     // ========================================================================
+    // STEP 2.5: Danger Notice sign-off mode (ELE-1288/1289)
+    // Emails the dutyholder a signing link instead of a certificate PDF.
+    // Lives here rather than in its own function — edge function slots are
+    // scarce and this is the certificate-domain platform mailer already.
+    // ========================================================================
+    if (body.dangerSignoffId) {
+      const { data: signoff } = await supabaseClient
+        .from('danger_notice_signoffs')
+        .select(
+          'id, share_token, recipient_email, recipient_name, response_deadline, report_id, user_id'
+        )
+        .eq('id', String(body.dangerSignoffId))
+        .single();
+
+      if (!signoff) {
+        return new Response(JSON.stringify({ error: 'Signoff not found' }), {
+          status: 404,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const { data: dnReport } = await supabaseClient
+        .from('reports')
+        .select('certificate_number, installation_address, pdf_url')
+        .eq('id', signoff.report_id)
+        .single();
+
+      // The signing page shows the notice PDF — without one the dutyholder
+      // has nothing to read, so refuse to send until it's generated
+      if (!dnReport?.pdf_url) {
+        return new Response(JSON.stringify({ error: 'notice_pdf_missing' }), {
+          status: 422,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const { data: dnCompany } = await supabaseClient
+        .from('company_profiles')
+        .select('company_name, company_email')
+        .eq('user_id', signoff.user_id)
+        .maybeSingle();
+
+      const dnCompanyName = dnCompany?.company_name?.trim() || 'Your electrician';
+      const dnAddress = dnReport.installation_address || 'the electrical installation';
+      const dnReference = dnReport.certificate_number || '';
+      const signUrl = `https://www.elec-mate.com/danger-notice/sign/${signoff.share_token}`;
+      // Deno runs in UTC — render the deadline in UK local time or it reads
+      // an hour early to everyone during BST
+      const dnDeadline = new Date(signoff.response_deadline).toLocaleString('en-GB', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/London',
+      });
+      const dnFirstName = (signoff.recipient_name || '').trim().split(' ')[0] || 'there';
+
+      const dnFont =
+        "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+      const dnHtml = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; padding:0; width:100%; background-color:#F4F6F9; }
+  @media screen and (max-width:480px){ .pad{ padding-left:24px !important; padding-right:24px !important; } .btn{ display:block !important; } }
+</style></head>
+<body style="margin:0;padding:0;background-color:#F4F6F9;font-family:${dnFont};">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F4F6F9;">
+    <tr><td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:16px;overflow:hidden;">
+        <tr><td style="background:#B91C1C;padding:18px 36px;" class="pad">
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#ffffff;">Electrical Danger Notice</p>
+        </td></tr>
+        <tr><td align="left" style="padding:30px 36px 6px;" class="pad">
+          <h1 style="margin:0 0 14px;font-size:21px;line-height:1.3;color:#1B2733;">A danger notice has been issued for ${dnAddress}</h1>
+          <p style="margin:0 0 16px;font-size:15px;color:#51606F;line-height:1.62;">Hi ${dnFirstName}, ${dnCompanyName} has identified an electrical danger at this installation and issued a formal notice${dnReference ? ` (ref ${dnReference})` : ''}. Please open it, read it, and confirm receipt by signing — it takes under a minute.</p>
+          <p style="margin:0 0 22px;font-size:14px;color:#B91C1C;line-height:1.6;font-weight:600;">If no response is received by ${dnDeadline}, the notice will be recorded as refused.</p>
+        </td></tr>
+        <tr><td align="left" style="padding:0 36px 8px;" class="pad">
+          <a href="${signUrl}" class="btn" style="background-color:#B91C1C;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;padding:14px 28px;border-radius:12px;display:inline-block;">View &amp; sign the notice</a>
+        </td></tr>
+        <tr><td align="left" style="padding:14px 36px 4px;" class="pad">
+          <p style="margin:0 0 8px;font-size:13px;color:#8A97A6;line-height:1.5;">Your response is timestamped and recorded as evidence that you were notified. For the smoothest experience, open the link in Safari or Chrome.</p>
+        </td></tr>
+        <tr><td style="padding:18px 36px 30px;" class="pad">
+          <p style="margin:0;font-size:12px;color:#A6B0BC;line-height:1.55;">Sent via Elec-Mate on behalf of ${dnCompanyName}. If you believe you received this in error, reply to this email.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+      const dnSender = clientFacingSender({
+        companyName: dnCompanyName,
+        companyEmail: dnCompany?.company_email,
+      });
+
+      const { error: dnSendError } = await resend.emails.send({
+        from: dnSender.from,
+        replyTo: dnSender.replyTo,
+        to: [signoff.recipient_email],
+        subject: `Danger Notice — ${dnAddress} — response required`,
+        html: dnHtml,
+        text: htmlToPlainText(dnHtml),
+      });
+
+      if (dnSendError) {
+        console.error('Danger signoff email failed:', dnSendError);
+        return new Response(JSON.stringify({ error: 'Failed to send' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      console.log(`Danger signoff link sent to ${signoff.recipient_email}`);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // ========================================================================
     // STEP 3: Parse and validate request
     // ========================================================================
     const reportId = body.reportId;

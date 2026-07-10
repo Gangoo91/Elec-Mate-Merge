@@ -85,12 +85,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/training/electrical-science-fundamentals-fundamentals</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/training/energy-efficiency</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -122,12 +116,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/training/fire-safety</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/training/first-aid-electrical-electrical</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

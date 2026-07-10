@@ -74,6 +74,16 @@ const ClientsSection = lazy(() =>
     default: m.ClientsSection,
   }))
 );
+const LeadsSection = lazy(() =>
+  import('@/components/employer/sections/LeadsSection').then((m) => ({
+    default: m.LeadsSection,
+  }))
+);
+const QuotePageSection = lazy(() =>
+  import('@/components/employer/sections/QuotePageSection').then((m) => ({
+    default: m.QuotePageSection,
+  }))
+);
 const TenderSection = lazy(() =>
   import('@/components/employer/sections/TenderSection').then((m) => ({ default: m.TenderSection }))
 );
@@ -237,6 +247,9 @@ const SafetyHub = lazy(() =>
 const SmartDocsHub = lazy(() =>
   import('@/components/employer/hubs/SmartDocsHub').then((m) => ({ default: m.SmartDocsHub }))
 );
+const ClientsHub = lazy(() =>
+  import('@/components/employer/hubs/ClientsHub').then((m) => ({ default: m.ClientsHub }))
+);
 
 export type Section =
   | 'overview'
@@ -273,6 +286,7 @@ export type Section =
   | 'financehub'
   | 'jobshub'
   | 'safetyhub'
+  | 'clientshub'
   | 'rams'
   | 'incidents'
   | 'policies'
@@ -287,6 +301,8 @@ export type Section =
   | 'aibriefingpack'
   | 'aiquote'
   | 'clients'
+  | 'leads'
+  | 'quotepage'
   | 'qsreviews';
 
 const getParentSection = (section: Section): Section => {
@@ -316,7 +332,10 @@ const getParentSection = (section: Section): Section => {
     testing: 'jobshub',
     quality: 'jobshub',
     qsreviews: 'jobshub',
-    clientportal: 'jobshub',
+    clientportal: 'clientshub',
+    clients: 'clientshub',
+    leads: 'clientshub',
+    quotepage: 'clientshub',
     fleet: 'jobshub',
     photogallery: 'jobshub',
     safety: 'safetyhub',
@@ -337,6 +356,7 @@ const getParentSection = (section: Section): Section => {
     jobshub: 'overview',
     safetyhub: 'overview',
     smartdocs: 'overview',
+    clientshub: 'overview',
     overview: 'overview',
     settings: 'overview',
   };
@@ -345,7 +365,8 @@ const getParentSection = (section: Section): Section => {
 
 const getSectionDepth = (section: Section): number => {
   if (section === 'overview') return 0;
-  if (['peoplehub', 'financehub', 'jobshub', 'safetyhub', 'smartdocs'].includes(section)) return 1;
+  if (['peoplehub', 'financehub', 'jobshub', 'safetyhub', 'smartdocs', 'clientshub'].includes(section))
+    return 1;
   return 2;
 };
 
@@ -423,7 +444,7 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   testing: { eyebrow: 'Jobs', title: 'Testing Workflow', queryKeys: ['testingWorkflow'] },
   quality: { eyebrow: 'Jobs', title: 'Quality & Snags', queryKeys: ['quality', 'snags'] },
   qsreviews: { eyebrow: 'Jobs', title: 'QS Reviews', queryKeys: ['qsReviews'] },
-  clientportal: { eyebrow: 'Jobs', title: 'Client Portal' },
+  clientportal: { eyebrow: 'Clients', title: 'Client Portal' },
   fleet: { eyebrow: 'Jobs', title: 'Fleet', queryKeys: ['fleet', 'vehicles'] },
   photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['photos'] },
   safetyhub: {
@@ -440,6 +461,10 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   briefings: { eyebrow: 'Safety', title: 'Briefings', queryKeys: ['briefings'] },
   compliance: { eyebrow: 'Safety', title: 'Compliance', queryKeys: ['compliance'] },
   smartdocs: { eyebrow: 'Hub', title: 'Smart Docs' },
+  clientshub: { eyebrow: 'Hub', title: 'Clients' },
+  clients: { eyebrow: 'Clients', title: 'Clients' },
+  leads: { eyebrow: 'Clients', title: 'Leads' },
+  quotepage: { eyebrow: 'Clients', title: 'Quote Page' },
   aidesignspec: { eyebrow: 'Smart Docs', title: 'Design Spec' },
   airams: { eyebrow: 'Smart Docs', title: 'RAMS' },
   aimethodstatement: { eyebrow: 'Smart Docs', title: 'Method Statement' },
@@ -667,6 +692,13 @@ const EmployerDashboard = () => {
       'client-portal': 'clientportal',
       clientportal: 'clientportal',
       'client portal': 'clientportal',
+      'quote-page': 'quotepage',
+      quotepage: 'quotepage',
+      'quote page': 'quotepage',
+      'get quotes': 'quotepage',
+      'get a quote': 'quotepage',
+      'lead page': 'quotepage',
+      'lead capture': 'quotepage',
       fleet: 'fleet',
       vehicles: 'fleet',
       vans: 'fleet',
@@ -760,6 +792,8 @@ const EmployerDashboard = () => {
         return <FinanceHub onNavigate={handleNavigate} />;
       case 'jobshub':
         return <JobsHub onNavigate={handleNavigate} />;
+      case 'clientshub':
+        return <ClientsHub onNavigate={handleNavigate} />;
       case 'safetyhub':
         return <SafetyHub onNavigate={handleNavigate} />;
       case 'talentpool':
@@ -774,6 +808,10 @@ const EmployerDashboard = () => {
         return <ExpensesSection />;
       case 'clients':
         return <ClientsSection onNavigate={handleNavigate} />;
+      case 'leads':
+        return <LeadsSection />;
+      case 'quotepage':
+        return <QuotePageSection />;
       case 'signatures':
         return <SignaturesSection />;
       case 'pricebook':

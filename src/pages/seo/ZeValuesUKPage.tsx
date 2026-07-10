@@ -90,6 +90,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
+    href: '/guides/earth-fault-loop-impedance-calculation',
+    title: 'Earth Fault Loop Impedance Calculation',
+    description:
+      'The Zs = Ze + (R1+R2) formula step by step — temperature correction, maximum values and worked examples.',
+    icon: Calculator,
+    category: 'Guide',
+  },
+  {
     href: '/guides/maximum-zs-values-bs-7671',
     title: 'Maximum Zs Values BS 7671',
     description:
@@ -159,8 +167,11 @@ const sections = [
           <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">
             Zs measurement
           </SEOInternalLink>{' '}
-          in the installation. Since Zs = Ze + (R1+R2), a high Ze means less headroom for the
-          circuit's own impedance (R1+R2) within the{' '}
+          in the installation. Since Zs = Ze + (R1+R2) — worked through in full in our{' '}
+          <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">
+            earth fault loop impedance calculation
+          </SEOInternalLink>{' '}
+          guide — a high Ze means less headroom for the circuit's own impedance (R1+R2) within the{' '}
           <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
             maximum permitted Zs
           </SEOInternalLink>

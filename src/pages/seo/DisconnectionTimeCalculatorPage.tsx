@@ -451,6 +451,14 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
+          href: '/guides/earth-fault-loop-impedance-calculation',
+          title: 'Earth Fault Loop Impedance Calculation',
+          description:
+            'The Zs = Ze + (R1+R2) formula step by step — temperature correction, maximum values and worked examples.',
+          icon: Calculator,
+          category: 'Guides',
+        },
+        {
           href: '/tools/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:

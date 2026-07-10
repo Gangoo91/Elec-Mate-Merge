@@ -302,15 +302,15 @@ const EditorialToolGrid = ({
   if (cards.length === 0) return null;
 
   const colClass =
-    columns === 'two' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+    columns === 'two' ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-3';
 
   // Pad the final row with non-interactive filler cells so the rounded grid
   // never shows the bleed-through grey from `bg-white/[0.12]` between gaps.
-  // Filler count is computed at the largest breakpoint (3 cols) since that
-  // is where empty trailing cells become visible. At narrower breakpoints
-  // (1/2 cols) the cards reflow and the filler is harmless.
-  const largestColCount = columns === 'two' ? 2 : 3;
-  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
+  // The grid is 2-up on mobile and (for 'three') 3-up on lg, so the filler
+  // count differs per breakpoint — render each set scoped to its width.
+  const lgColCount = columns === 'two' ? 2 : 3;
+  const lgFillerCount = (lgColCount - (cards.length % lgColCount)) % lgColCount;
+  const mobileFillerCount = cards.length % 2;
 
   return (
     <motion.section
@@ -328,7 +328,7 @@ const EditorialToolGrid = ({
       <motion.div
         variants={itemVariants}
         className={cn(
-          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
+          'relative grid auto-rows-[185px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
           colClass
         )}
       >
@@ -342,7 +342,7 @@ const EditorialToolGrid = ({
               if (card.onClick) card.onClick();
               else if (card.to) navigate(card.to);
             }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
           >
             <div className="flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-2">
@@ -360,17 +360,17 @@ const EditorialToolGrid = ({
               )}
             </div>
 
-            <h3 className="mt-3 sm:mt-4 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+            <h3 className="mt-2.5 sm:mt-4 text-[16px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
               {card.title}
             </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+            <p className="mt-1.5 text-[11.5px] sm:text-[12.5px] leading-snug sm:leading-relaxed text-white/60 max-w-[34ch] line-clamp-2 sm:line-clamp-none">
               {card.description}
             </p>
 
             <div className="flex-grow" />
 
             <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 truncate tabular-nums">
+              <span className="hidden sm:inline text-[11px] text-white/55 truncate tabular-nums">
                 {card.meta ?? 'Open'}
               </span>
               <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
@@ -383,8 +383,11 @@ const EditorialToolGrid = ({
 
         {/* Trailing filler cells — match active-cell bg so the row looks
             complete instead of revealing the white/0.12 grid background. */}
-        {Array.from({ length: fillerCount }).map((_, i) => (
-          <div key={`filler-${i}`} aria-hidden className="hidden lg:block bg-[hsl(0_0%_10%)]" />
+        {Array.from({ length: lgFillerCount }).map((_, i) => (
+          <div key={`filler-lg-${i}`} aria-hidden className="hidden lg:block bg-[hsl(0_0%_10%)]" />
+        ))}
+        {Array.from({ length: mobileFillerCount }).map((_, i) => (
+          <div key={`filler-m-${i}`} aria-hidden className="block lg:hidden bg-[hsl(0_0%_10%)]" />
         ))}
       </motion.div>
     </motion.section>
@@ -565,7 +568,10 @@ const BusinessHub = () => {
       title: 'Tasks',
       description: 'To-dos, reminders and follow-ups.',
       to: '/electrician/tasks',
-      meta: 'Open list',
+      meta: (() => {
+        const open = tasks.filter((t) => t.status !== 'completed').length;
+        return open > 0 ? `${open} open` : 'All clear';
+      })(),
     },
     {
       id: 'calendar',
@@ -589,14 +595,19 @@ const BusinessHub = () => {
     },
   ];
 
-  const financials: ToolCard[] = [
+  const money: ToolCard[] = [
     {
       id: 'quotes',
       eyebrow: 'Quotes',
       title: 'Quotes',
       description: 'Build, send and track quotes.',
       to: '/electrician/quotes',
-      meta: 'Open quotes',
+      meta: (() => {
+        const awaiting = quotes.filter(
+          (q) => q.status === 'sent' && q.acceptance_status !== 'accepted'
+        ).length;
+        return awaiting > 0 ? `${awaiting} awaiting reply` : 'Open quotes';
+      })(),
     },
     {
       id: 'invoices',
@@ -613,20 +624,24 @@ const BusinessHub = () => {
       alert: overdueAmount > 0,
     },
     {
+      id: 'expenses',
+      eyebrow: 'Expenses',
+      title: 'Expenses',
+      description: 'Receipts, mileage and reimbursables.',
+      to: '/electrician/expenses',
+      meta: 'Log an expense',
+    },
+  ];
+
+
+  const people: ToolCard[] = [
+    {
       id: 'customers',
       eyebrow: 'Clients',
       title: 'Customers',
       description: 'Client records and job history.',
       to: '/customers',
-      meta: 'Open list',
-    },
-    {
-      id: 'projects',
-      eyebrow: 'Projects',
-      title: 'Projects',
-      description: 'Group jobs, tasks and snags.',
-      to: '/electrician/projects',
-      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a project',
+      meta: customers.length > 0 ? `${customers.length} on file` : 'Add your first',
     },
     {
       id: 'booking-link',
@@ -639,6 +654,15 @@ const BusinessHub = () => {
   ];
 
   const onTheJob: ToolCard[] = [
+    {
+      id: 'projects',
+      eyebrow: 'Projects',
+      title: 'Projects',
+      description: 'Group jobs, tasks and snags.',
+      to: '/electrician/projects',
+      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a project',
+    },
+
     {
       id: 'site-visits',
       eyebrow: 'Visits',
@@ -676,14 +700,6 @@ const BusinessHub = () => {
   ];
 
   const moneyAndStock: ToolCard[] = [
-    {
-      id: 'expenses',
-      eyebrow: 'Expenses',
-      title: 'Expenses',
-      description: 'Receipts, mileage and reimbursables.',
-      to: '/electrician/expenses',
-      meta: 'Log an expense',
-    },
     {
       id: 'materials',
       eyebrow: 'Stock',
@@ -878,20 +894,22 @@ const BusinessHub = () => {
 
         <EditorialToolGrid number="02" label="YOUR DAY" cards={yourDay} columns="three" />
 
-        <EditorialToolGrid number="03" label="FINANCIALS" cards={financials} columns="three" />
+        <EditorialToolGrid number="03" label="MONEY" cards={money} columns="three" />
 
-        <EditorialToolGrid number="04" label="ON THE JOB" cards={onTheJob} columns="three" />
+        <EditorialToolGrid number="04" label="PEOPLE" cards={people} columns="two" />
+
+        <EditorialToolGrid number="05" label="ON THE JOB" cards={onTheJob} columns="three" />
 
         <EditorialToolGrid
-          number="05"
-          label="MONEY & STOCK"
+          number="06"
+          label="PRICING & STOCK"
           cards={moneyAndStock}
           columns="three"
         />
 
-        <EditorialToolGrid number="06" label="GROW" cards={grow} columns="two" />
+        <EditorialToolGrid number="07" label="GROW" cards={grow} columns="two" />
 
-        {/* 07 · INSIGHTS — live quote/invoice analytics, no collapsible */}
+        {/* 08 · INSIGHTS — live quote/invoice analytics, no collapsible */}
         <motion.section
           variants={containerVariants}
           initial="hidden"
@@ -899,7 +917,7 @@ const BusinessHub = () => {
           className="space-y-4"
         >
           <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <Eyebrow>07 · INSIGHTS</Eyebrow>
+            <Eyebrow>08 · INSIGHTS</Eyebrow>
             <span className="text-[11px] text-white/55 tabular-nums">
               {formatCurrency(revenue)} revenue
             </span>

@@ -1,5 +1,5 @@
 /**
- * mockExamCatalog — single source of truth for the 36 free mock exams + hub.
+ * mockExamCatalog — single source of truth for the 37 free mock exams + hub.
  *
  * Used by PublicMockExamPage to render "Related mock exams" at the bottom
  * of each page (cross-linking improves user dwell time + internal authority
@@ -41,6 +41,12 @@ export const MOCK_EXAM_CATALOG: MockExamCatalogEntry[] = [
     title: 'C&G 2391 Inspection & Testing',
     group: 'electrical',
     qCount: 300,
+  },
+  {
+    slug: '2391-51-periodic-inspection',
+    title: 'C&G 2391-51 Periodic Inspection',
+    group: 'electrical',
+    qCount: 296,
   },
   {
     slug: 'am2-online-knowledge-test',

@@ -50,7 +50,6 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
   const onOpenIssues = () => onNavigate('issues');
   const onOpenTesting = () => onNavigate('testing');
   const onOpenQuality = () => onNavigate('quality');
-  const onOpenClientPortal = () => onNavigate('clientportal');
   const onOpenFleet = () => onNavigate('fleet');
   const onOpenPhotoGallery = () => onNavigate('photogallery');
   const onOpenJobPacks = () => onNavigate('jobpacks');
@@ -177,16 +176,6 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
           />
           <HubCard
             number="11"
-            eyebrow="Customer"
-            title="Client Portal"
-            description="What your clients see — progress, invoices and certs."
-            tone="purple"
-            meta="Shared view"
-            cta="Open"
-            onClick={onOpenClientPortal}
-          />
-          <HubCard
-            number="12"
             eyebrow="Vehicles"
             title="Fleet"
             description="Vans, MOTs, services and vehicle-to-job assignments."
@@ -196,7 +185,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             onClick={onOpenFleet}
           />
           <HubCard
-            number="13"
+            number="12"
             eyebrow="Evidence"
             title="Photo Gallery"
             description="Every photo captured on every job, organised by project."

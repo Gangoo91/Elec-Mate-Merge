@@ -114,6 +114,7 @@ const TYPE_GROUPS: { label: string; types: { value: string; label: string }[] }[
       { value: 'ev-charging', label: 'EV' },
       { value: 'solar-pv', label: 'Solar PV' },
       { value: 'bess', label: 'BESS' },
+      { value: 'heat-pump', label: 'Heat Pump' },
     ],
   },
   {

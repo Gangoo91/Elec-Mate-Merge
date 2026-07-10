@@ -193,11 +193,12 @@ const sections = [
           </ul>
         </div>
         <p>
-          Apprentice pay starts at the National Minimum Wage for apprentices (£7.55 per hour in
-          2026) in year 1, rising to the National Minimum Wage for the apprentice's age in year 2+.
-          Many employers pay above the minimum — a year 3 or 4 apprentice in a London commercial
-          contractor might earn £18,000 to £22,000. On completing AM2, the apprentice applies for
-          the JIB ECS Gold Card and becomes a fully qualified Approved Electrician.
+          Apprentice pay starts at the National Minimum Wage for apprentices (£8.00 per hour from 1
+          April 2026) in year 1, rising to the National Minimum Wage for the apprentice's age in
+          year 2+. Many employers pay above the minimum — a stage 3 or 4 apprentice on JIB London
+          rates (£14.62 to £15.72 per hour) earns roughly £28,500 to £30,500 a year. On completing
+          AM2, the apprentice applies for the JIB ECS Gold Card and becomes a fully qualified
+          electrician.
         </p>
       </>
     ),

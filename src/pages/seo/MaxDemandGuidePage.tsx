@@ -17,6 +17,7 @@ const tocItems = [
   { id: 'what-is-max-demand', label: 'What Is Max Demand?' },
   { id: 'why-it-matters', label: 'Why Max Demand Matters' },
   { id: 'diversity-factors', label: 'Diversity Factors by Circuit Type' },
+  { id: 'what-is-admd', label: 'What Is ADMD?' },
   { id: 'worked-example-domestic', label: 'Worked Example: Domestic' },
   { id: 'worked-example-commercial', label: 'Worked Example: Commercial' },
   { id: 'typical-values', label: 'Table of Typical Values' },
@@ -36,6 +37,11 @@ const keyTakeaways = [
 ];
 
 const faqs = [
+  {
+    question: 'What does ADMD mean in electricity supply?',
+    answer:
+      'ADMD stands for After Diversity Maximum Demand. It is the average peak demand each dwelling is assumed to contribute to the electricity network once diversity across a large group of dwellings has been accounted for — because different households peak at different times, the per-dwelling figure falls as the number of dwellings rises. Distribution network operators (DNOs) use ADMD to size the cables, transformers and substations serving streets and new developments. For a gas-heated home on a large development, DNOs typically plan around 1.5 to 3 kVA per dwelling, and roughly 5 to 10 kVA for electrically heated homes; heat pumps and EV charging push the figure higher still. ADMD is a network-planning figure — it is different from the BS 7671 Regulation 311.1 maximum demand assessment, which looks at the realistic peak load of a single installation.',
+  },
   {
     question: 'What is the difference between max demand and total connected load?',
     answer:
@@ -278,6 +284,60 @@ const sections = [
           installations, diversity is typically assessed on a case-by-case basis using load
           profiles, power monitoring data, or industry-specific guidance. The IET Guidance Note 1
           (Selection and Erection) provides further commentary on applying diversity in practice.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: 'what-is-admd',
+    heading: 'What Is ADMD? (After Diversity Maximum Demand)',
+    content: (
+      <>
+        <p>
+          ADMD (After Diversity Maximum Demand) is the average peak demand that each dwelling is
+          assumed to contribute to the electricity network once diversity across a large group of
+          dwellings has been taken into account. It is the figure a distribution network operator
+          (DNO) uses to size the cables, transformers and substations that serve a street or a
+          whole development — not the demand of any one house on its own.
+        </p>
+        <p>
+          The key difference from the BS 7671 max demand assessment is scale. The assessment under
+          Regulation 311.1 looks at a single installation: what is the realistic peak load of this
+          one property? ADMD looks across many installations at once. Because different households
+          hit their peaks at different times, the more dwellings a network serves, the lower the
+          per-dwelling figure becomes — a single house may be assessed at 60 A or more, yet on a
+          development of a hundred homes the DNO may plan on only a few kilowatts per dwelling.
+        </p>
+        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
+          <ul className="space-y-4 text-white">
+            <li className="flex items-start gap-3">
+              <span>
+                <strong>Who uses it</strong>: DNOs and network designers, when planning supplies to
+                new developments or assessing whether the local network can accept additional load.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span>
+                <strong>Typical values</strong>: for a gas-heated home on a large development, DNOs
+                typically plan around 1.5 to 3 kVA per dwelling, rising to roughly 5 to 10 kVA for
+                electrically heated homes. Heat pumps and EV charging push the figure higher still —
+                each DNO publishes its own design figures, so always confirm with the local DNO.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span>
+                <strong>When electricians meet it</strong>: EV charge point notifications, supply
+                upgrade requests (looped supplies, fuse upgrades) and new-build connection
+                applications — the DNO assesses your installation's load against the ADMD
+                assumptions built into the local network.
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p>
+          In practice: use the BS 7671 diversity method on this page to assess a single
+          installation, and be aware that the DNO is working to ADMD figures when you ask for a
+          bigger supply or notify a new high-demand load.
         </p>
       </>
     ),

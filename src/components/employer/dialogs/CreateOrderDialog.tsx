@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Truck, Store } from 'lucide-react';
 import {
   useCreateMaterialOrder,
   useNextOrderNumber,
@@ -18,6 +18,7 @@ import {
 } from '@/hooks/useFinance';
 import { useJobs } from '@/hooks/useJobs';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import type { PriceBookItem, MaterialOrder } from '@/services/financeService';
 import {
   SheetShell,
   FormCard,
@@ -34,15 +35,33 @@ import {
 interface OrderItem {
   id: string;
   name: string;
+  sku: string | null;
+  unit: string | null;
   qty: number;
-  price: number;
+  price: number; // buy/cost price
 }
+
+type DeliveryMode = 'Deliver to site' | 'Collection';
+
+// Sensible default "required by": 2 working days out — one fewer decision.
+const defaultExpectedDate = (): string => {
+  const d = new Date();
+  let added = 0;
+  while (added < 2) {
+    d.setDate(d.getDate() + 1);
+    const day = d.getDay();
+    if (day !== 0 && day !== 6) added++;
+  }
+  return d.toISOString().split('T')[0];
+};
 
 interface CreateOrderDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   prefillSupplier?: string;
   prefillItem?: string;
+  /** Called after a PO is created; `send` is true when the owner chose "Save & send". */
+  onCreated?: (order: MaterialOrder, send: boolean) => void;
 }
 
 export function CreateOrderDialog({
@@ -50,12 +69,17 @@ export function CreateOrderDialog({
   onOpenChange,
   prefillSupplier,
   prefillItem,
+  onCreated,
 }: CreateOrderDialogProps) {
   const [supplierId, setSupplierId] = useState(prefillSupplier || '');
   const [jobId, setJobId] = useState<string | null>(null);
   const [notes, setNotes] = useState('');
   const [items, setItems] = useState<OrderItem[]>([]);
   const [newItem, setNewItem] = useState({ name: prefillItem || '', qty: 1, price: 0 });
+  const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>('Deliver to site');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [expectedDate, setExpectedDate] = useState(defaultExpectedDate);
+  const [vatRate, setVatRate] = useState(20);
 
   const { data: orderNumber } = useNextOrderNumber();
   const { data: suppliers = [] } = useSuppliers();
@@ -64,16 +88,26 @@ export function CreateOrderDialog({
   const createOrderMutation = useCreateMaterialOrder();
 
   const activeJobs = jobs.filter((j) => j.status === 'Active');
-  const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
+  const subtotal = items.reduce((sum, item) => sum + item.qty * item.price, 0);
+  const vatAmount = subtotal * (vatRate / 100);
+  const total = subtotal + vatAmount;
 
   const voiceContext = useOptionalVoiceFormContext();
+
+  // Deliver-to-site defaults to the linked job's site address.
+  useEffect(() => {
+    if (deliveryMode !== 'Deliver to site' || !jobId) return;
+    const job = jobs.find((j) => j.id === jobId);
+    if (job?.location && !deliveryAddress.trim()) setDeliveryAddress(job.location);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobId, deliveryMode]);
 
   useEffect(() => {
     if (!open || !voiceContext) return;
 
     voiceContext.registerForm({
       formId: 'create-order',
-      formName: 'Create Order',
+      formName: 'Raise Purchase Order',
       fields: [
         { name: 'supplier', label: 'Supplier', type: 'text', required: true },
         { name: 'job', label: 'Linked Job', type: 'text' },
@@ -83,18 +117,20 @@ export function CreateOrderDialog({
       onFillField: (field, value) => {
         const strValue = String(value);
         switch (field) {
-          case 'supplier':
+          case 'supplier': {
             const sup = suppliers.find((s) =>
               s.name.toLowerCase().includes(strValue.toLowerCase())
             );
             if (sup) setSupplierId(sup.id);
             break;
-          case 'job':
+          }
+          case 'job': {
             const job = activeJobs.find((j) =>
               j.title.toLowerCase().includes(strValue.toLowerCase())
             );
             if (job) setJobId(job.id);
             break;
+          }
           case 'notes':
             setNotes(strValue);
             break;
@@ -107,13 +143,15 @@ export function CreateOrderDialog({
             {
               id: crypto.randomUUID(),
               name: String(params.name || 'Item'),
+              sku: null,
+              unit: null,
               qty: Number(params.qty) || 1,
               price: Number(params.price) || 0,
             },
           ]);
         }
       },
-      onSubmit: handleSubmit,
+      onSubmit: () => handleSubmit(false),
       onCancel: () => {
         resetForm();
         onOpenChange(false);
@@ -121,6 +159,7 @@ export function CreateOrderDialog({
     });
 
     return () => voiceContext.unregisterForm('create-order');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, voiceContext, suppliers, activeJobs]);
 
   const addItem = () => {
@@ -130,6 +169,8 @@ export function CreateOrderDialog({
       {
         id: crypto.randomUUID(),
         name: newItem.name,
+        sku: null,
+        unit: null,
         qty: newItem.qty,
         price: newItem.price,
       },
@@ -137,12 +178,14 @@ export function CreateOrderDialog({
     setNewItem({ name: '', qty: 1, price: 0 });
   };
 
-  const addFromPriceBook = (pbItem: any) => {
+  const addFromPriceBook = (pbItem: PriceBookItem) => {
     setItems([
       ...items,
       {
         id: crypto.randomUUID(),
         name: pbItem.name,
+        sku: pbItem.sku ?? null,
+        unit: pbItem.unit ?? null,
         qty: 1,
         price: Number(pbItem.buy_price),
       },
@@ -157,24 +200,42 @@ export function CreateOrderDialog({
     setItems(items.map((item) => (item.id === id ? { ...item, qty } : item)));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (send = false) => {
     if (!supplierId || items.length === 0) return;
 
-    await createOrderMutation.mutateAsync({
-      order_number: orderNumber || `ORD-${new Date().getFullYear()}-001`,
+    const created = await createOrderMutation.mutateAsync({
+      order_number: orderNumber || `PO-${new Date().getFullYear()}-0001`,
       supplier_id: supplierId,
       job_id: jobId,
-      items: items,
+      items: items.map((i) => ({
+        name: i.name,
+        sku: i.sku,
+        unit: i.unit,
+        qty: i.qty,
+        unit_cost: i.price,
+        received_qty: 0,
+      })),
+      subtotal,
+      vat_rate: vatRate,
+      vat_amount: vatAmount,
       total,
-      status: 'Processing',
+      status: 'Draft',
+      delivery_mode: deliveryMode,
+      delivery_address: deliveryMode === 'Deliver to site' ? deliveryAddress || null : null,
       order_date: new Date().toISOString().split('T')[0],
+      expected_date: expectedDate || null,
       delivery_date: null,
       ordered_by: 'Admin',
+      sent_at: null,
+      sent_to_email: null,
+      confirmed_at: null,
+      pdf_url: null,
       notes: notes || null,
     });
 
     resetForm();
     onOpenChange(false);
+    if (created) onCreated?.(created, send);
   };
 
   const resetForm = () => {
@@ -183,6 +244,10 @@ export function CreateOrderDialog({
     setNotes('');
     setItems([]);
     setNewItem({ name: '', qty: 1, price: 0 });
+    setDeliveryMode('Deliver to site');
+    setDeliveryAddress('');
+    setExpectedDate(defaultExpectedDate());
+    setVatRate(20);
   };
 
   const selectedSupplier = suppliers.find((s) => s.id === supplierId);
@@ -191,22 +256,41 @@ export function CreateOrderDialog({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[95vh] p-0 overflow-hidden">
         <SheetShell
-          eyebrow="New order"
-          title="Place materials order"
+          eyebrow="Purchase order"
+          title="Raise a purchase order"
           description={orderNumber ? `${orderNumber} · Draft` : 'Draft'}
           footer={
-            <>
-              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
-                Cancel
-              </SecondaryButton>
-              <PrimaryButton
-                onClick={handleSubmit}
-                disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
-                fullWidth
-              >
-                Place order · £{total.toFixed(2)}
-              </PrimaryButton>
-            </>
+            selectedSupplier?.email ? (
+              <>
+                <SecondaryButton
+                  onClick={() => handleSubmit(false)}
+                  disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
+                  fullWidth
+                >
+                  Save draft
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={() => handleSubmit(true)}
+                  disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
+                  fullWidth
+                >
+                  {createOrderMutation.isPending ? 'Saving…' : `Save & send · £${total.toFixed(2)}`}
+                </PrimaryButton>
+              </>
+            ) : (
+              <>
+                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={() => handleSubmit(false)}
+                  disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
+                  fullWidth
+                >
+                  {createOrderMutation.isPending ? 'Saving…' : `Save draft · £${total.toFixed(2)}`}
+                </PrimaryButton>
+              </>
+            )
           }
         >
           <FormCard eyebrow="Supplier & job">
@@ -253,11 +337,61 @@ export function CreateOrderDialog({
                   ))}
                 </SelectContent>
               </Select>
+              {jobId && (
+                <p className="mt-1.5 text-[11px] text-elec-yellow/80">
+                  Cost is committed against this job the moment you send it.
+                </p>
+              )}
+            </Field>
+          </FormCard>
+
+          <FormCard eyebrow="Delivery">
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setDeliveryMode('Deliver to site')}
+                className={`h-11 rounded-xl border text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors ${
+                  deliveryMode === 'Deliver to site'
+                    ? 'border-elec-yellow/50 bg-elec-yellow/10 text-white'
+                    : 'border-white/[0.1] bg-white/[0.04] text-white/70'
+                }`}
+              >
+                <Truck className="h-4 w-4" /> Deliver to site
+              </button>
+              <button
+                type="button"
+                onClick={() => setDeliveryMode('Collection')}
+                className={`h-11 rounded-xl border text-[13px] font-medium inline-flex items-center justify-center gap-2 touch-manipulation transition-colors ${
+                  deliveryMode === 'Collection'
+                    ? 'border-elec-yellow/50 bg-elec-yellow/10 text-white'
+                    : 'border-white/[0.1] bg-white/[0.04] text-white/70'
+                }`}
+              >
+                <Store className="h-4 w-4" /> Collection
+              </button>
+            </div>
+            {deliveryMode === 'Deliver to site' && (
+              <Field label="Delivery address">
+                <Textarea
+                  placeholder="Where should it be delivered?"
+                  value={deliveryAddress}
+                  onChange={(e) => setDeliveryAddress(e.target.value)}
+                  className={`${textareaClass} min-h-[64px]`}
+                />
+              </Field>
+            )}
+            <Field label="Expected date" hint="When you need it — powers delivery tracking.">
+              <Input
+                type="date"
+                value={expectedDate}
+                onChange={(e) => setExpectedDate(e.target.value)}
+                className={inputClass}
+              />
             </Field>
           </FormCard>
 
           {items.length > 0 && (
-            <FormCard eyebrow="Order items">
+            <FormCard eyebrow="Line items">
               <div className="space-y-2">
                 {items.map((item) => (
                   <div
@@ -276,6 +410,7 @@ export function CreateOrderDialog({
                         />
                         <span className="text-[11px] text-white">
                           × £{item.price.toFixed(2)}
+                          {item.unit ? ` / ${item.unit}` : ''}
                         </span>
                       </div>
                     </div>
@@ -335,7 +470,7 @@ export function CreateOrderDialog({
                   className={inputClass}
                 />
               </Field>
-              <Field label="Unit price (£)">
+              <Field label="Unit cost (£)">
                 <Input
                   type="number"
                   value={newItem.price}
@@ -363,13 +498,34 @@ export function CreateOrderDialog({
             </Field>
           </FormCard>
 
-          <div className="flex items-center justify-between px-1 pt-2">
-            <span className="text-[11px] text-white uppercase tracking-[0.14em] font-medium">
-              Order total
-            </span>
-            <span className="text-[22px] font-semibold text-elec-yellow tabular-nums">
-              £{total.toFixed(2)}
-            </span>
+          <div className="space-y-1.5 px-1 pt-2">
+            <div className="flex items-center justify-between text-[13px] text-white/70">
+              <span>Subtotal</span>
+              <span className="tabular-nums">£{subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex items-center justify-between text-[13px] text-white/70">
+              <span className="inline-flex items-center gap-2">
+                VAT
+                <select
+                  value={vatRate}
+                  onChange={(e) => setVatRate(Number(e.target.value))}
+                  className="h-7 rounded-lg bg-white/[0.05] border border-white/[0.1] text-white text-[12px] px-1.5 touch-manipulation"
+                >
+                  <option value={20}>20%</option>
+                  <option value={5}>5%</option>
+                  <option value={0}>0%</option>
+                </select>
+              </span>
+              <span className="tabular-nums">£{vatAmount.toFixed(2)}</span>
+            </div>
+            <div className="flex items-center justify-between pt-1.5 border-t border-white/[0.08]">
+              <span className="text-[11px] text-white uppercase tracking-[0.14em] font-medium">
+                PO total
+              </span>
+              <span className="text-[22px] font-semibold text-elec-yellow tabular-nums">
+                £{total.toFixed(2)}
+              </span>
+            </div>
           </div>
         </SheetShell>
       </SheetContent>

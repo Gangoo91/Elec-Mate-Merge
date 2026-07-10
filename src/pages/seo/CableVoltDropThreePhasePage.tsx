@@ -641,8 +641,8 @@ const sections = [
 export default function CableVoltDropThreePhasePage() {
   return (
     <ToolTemplate
-      title="3 Phase Cable Voltage Drop Calculator (Free, BS 7671)"
-      description="Free 3-phase voltage drop calculator: √3 (1.732) factor, balanced + unbalanced loads, SWA + multicore. 5% power + 3% lighting limits — instant pass/fail."
+      title="3 Phase Voltage Drop Formula + Calculator (BS 7671)"
+      description="3-phase voltage drop formula: VD = mV/A/m × Ib × L ÷ 1000 — √3 (1.732) is already in the BS 7671 tables. Free calculator, instant pass/fail vs 5% + 3% limits."
       datePublished="2025-06-15"
       dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}

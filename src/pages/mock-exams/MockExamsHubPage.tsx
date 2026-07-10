@@ -1,7 +1,7 @@
 /**
  * MockExamsHubPage — /mock-exams index.
  *
- * Lists all 36 free mock exams grouped by category. Designed as a share-target
+ * Lists all 37 free mock exams grouped by category. Designed as a share-target
  * (clean URL, branded card grid) for Facebook trade groups + apprentice chats.
  */
 import { Link } from 'react-router-dom';
@@ -297,7 +297,7 @@ export default function MockExamsHubPage() {
   useSEO({
     title: 'Free UK Mock Exams for Electricians + Tradespeople',
     description:
-      '7,800+ free practice questions across 36 mock exams: CSCS, 18th Edition, 2391, AM2, PAT testing, EV charging, fire alarm, Level 2 + 3. No sign-up to try.',
+      '7,800+ free practice questions across 37 mock exams: CSCS, 18th Edition, 2391, AM2, PAT testing, EV charging, fire alarm, Level 2 + 3. No sign-up to try.',
     type: 'website',
     breadcrumbs: [
       { name: 'Home', url: '/' },
@@ -307,7 +307,7 @@ export default function MockExamsHubPage() {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: 'Free UK Mock Exams Hub',
-      description: `${TOTAL_QUESTIONS}+ free practice questions across 36 mock exams.`,
+      description: `${TOTAL_QUESTIONS}+ free practice questions across 37 mock exams.`,
       url: 'https://www.elec-mate.com/mock-exams',
       isAccessibleForFree: true,
       inLanguage: 'en-GB',

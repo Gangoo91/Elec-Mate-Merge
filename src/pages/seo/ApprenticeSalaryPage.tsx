@@ -32,8 +32,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The national apprentice minimum wage in 2026 is £7.55 per hour for apprentices under 19 or in their first year, rising to the age-appropriate national minimum wage rate from year 2 onwards. However, many electrical employers pay above this minimum.',
-  'JIB/ECS graded rates are significantly higher than the legal minimum. JIB Stage 1 apprentice rates typically start around £8.00 to £9.50 per hour depending on the region and employer, making the electrical trade one of the better-paid apprenticeship pathways.',
+  'The national apprentice minimum wage is £8.00 per hour from 1 April 2026 for apprentices under 19 or in their first year, rising to the age-appropriate national minimum wage rate from year 2 onwards. However, many electrical employers pay above this minimum.',
+  'JIB/ECS graded rates are significantly higher than the legal minimum. The JIB Stage 1 apprentice rate for 2026 is £8.16 per hour nationally (£9.14 in London), rising through the stages to £14.03 (£15.72 in London) at Stage 4 — making the electrical trade one of the better-paid apprenticeship pathways.',
   'Pay increases each year of the apprenticeship as you gain experience and pass qualifications. By year 3 or 4, apprentice wages typically reach £12.00 to £16.00 per hour, reflecting your growing contribution on site.',
   'After qualifying with the AM2, Level 3 diploma, and 18th Edition, starting salaries for newly qualified electricians range from £25,000 to £32,000 depending on location and employer. Experienced electricians and self-employed sparks can earn £40,000 to £55,000 or more.',
   'Elec-Mate helps apprentices earn more faster by accelerating qualification. Flashcards with spaced repetition, 20,000+ practice questions, and mock exams help you pass first time and progress through pay grades without delays from resits.',
@@ -43,7 +43,7 @@ const faqs = [
   {
     question: 'What is the apprentice electrician minimum wage in 2026?',
     answer:
-      'The national apprentice minimum wage rate in 2026 is £7.55 per hour. This rate applies to apprentices aged under 19, or to apprentices aged 19 and over who are in the first year of their apprenticeship. From the second year onwards (if you are aged 19 or over), you are entitled to the national minimum wage rate for your age group. For 2025/26, the rates are: £10.00 for ages 18 to 20, and the National Living Wage of £12.21 for ages 21 and over. However, these are legal minimums — many electrical employers, particularly those operating under JIB/ECS graded rates, pay significantly above these figures. The apprentice rate is reviewed every April by the Low Pay Commission, so check the current rates if you are reading this after April 2026.',
+      'The national apprentice minimum wage rate is £8.00 per hour from 1 April 2026. This rate applies to apprentices aged under 19, or to apprentices aged 19 and over who are in the first year of their apprenticeship. From the second year onwards (if you are aged 19 or over), you are entitled to the national minimum wage rate for your age group. From 1 April 2026, the rates are: £10.85 for ages 18 to 20, and the National Living Wage of £12.71 for ages 21 and over. However, these are legal minimums — many electrical employers, particularly those operating under JIB/ECS graded rates, pay significantly above these figures. The rates are reviewed every April following Low Pay Commission recommendations, so check the current figures if you are reading this after April 2027.',
   },
   {
     question: 'Do I get paid for college days during my apprenticeship?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Is the apprentice electrician salary the same across the UK?',
     answer:
-      'No, apprentice electrician pay varies significantly across the UK. London and the South East typically offer the highest rates due to higher living costs and strong demand for electricians. JIB rates include London and South East weighting allowances. Outside London, rates are generally lower but so are living costs. Scotland and Wales have similar rates to the English Midlands and North. Northern Ireland operates under separate employment legislation but follows broadly similar apprenticeship structures. As a general guide, a first-year apprentice in London might earn £10.00 to £12.00 per hour, while the same role in a rural area might pay £7.50 to £9.00 per hour. The difference narrows as you qualify — a qualified electrician in most parts of the UK can earn a comfortable living regardless of location, and self-employed electricians can choose to travel to higher-paying areas for specific projects.',
+      'No, apprentice electrician pay varies significantly across the UK. London and the South East typically offer the highest rates due to higher living costs and strong demand for electricians. JIB rates include London and South East weighting allowances. Outside London, rates are generally lower but so are living costs. Scotland and Wales have similar rates to the English Midlands and North. Northern Ireland operates under separate employment legislation but follows broadly similar apprenticeship structures. As a general guide, a first-year apprentice with a JIB-registered employer in London earns £9.14 per hour (the 2026 JIB London Stage 1 rate), while the statutory floor elsewhere is £8.00 per hour — with many regional employers paying somewhere between the two. The difference narrows as you qualify — a qualified electrician in most parts of the UK can earn a comfortable living regardless of location, and self-employed electricians can choose to travel to higher-paying areas for specific projects.',
   },
   {
     question: 'Does the 18th Edition exam now cover the A4:2026 changes?',
@@ -87,7 +87,7 @@ const relatedPages = [
     href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description:
-      'Apprentice electrician pay UK 2026: £7.55/hr Year 1, then £10.00-£12.21/hr by age. JIB Stage 1-4 rates £8-£15/hr explained for apprentices + employers.',
+      'Apprentice electrician pay UK 2026: £8.00/hr minimum Year 1, then £10.85-£12.71/hr by age. JIB Stage 1-4 rates £8.16-£14.03/hr explained for apprentices + employers.',
     icon: GraduationCap,
     category: 'Guide',
   },
@@ -140,18 +140,18 @@ const sections = [
           rates are as follows.
         </p>
         <p>
-          <strong>Year 1 (or under 19):</strong> The apprentice rate is £7.55 per hour. This applies
-          to all apprentices under 19 regardless of which year they are in, and to apprentices aged
-          19 and over who are in their first year. On a standard 37.5-hour week, this works out at
-          approximately £283 per week before deductions, or roughly £14,723 per year.
+          <strong>Year 1 (or under 19):</strong> The apprentice rate is £8.00 per hour from 1 April
+          2026. This applies to all apprentices under 19 regardless of which year they are in, and
+          to apprentices aged 19 and over who are in their first year. On a standard 37.5-hour week,
+          this works out at £300 per week before deductions, or roughly £15,600 per year.
         </p>
         <p>
           <strong>Year 2 onwards (aged 19 or over):</strong> From the second year of the
           apprenticeship, if you are aged 19 or over, you are entitled to the national minimum wage
-          for your age group rather than the apprentice rate. For 2025/26, this is £10.00 per hour
-          for ages 18 to 20, and the National Living Wage of £12.21 for ages 21 and over. This means
-          a 21-year-old in year 2 of their apprenticeship on a 37.5-hour week earns a minimum of
-          approximately £458 per week, or around £23,810 per year.
+          for your age group rather than the apprentice rate. From 1 April 2026, this is £10.85 per
+          hour for ages 18 to 20, and the National Living Wage of £12.71 for ages 21 and over. This
+          means a 21-year-old in year 2 of their apprenticeship on a 37.5-hour week earns a minimum
+          of approximately £477 per week, or around £24,785 per year.
         </p>
         <p>
           These are legal minimums. Many electrical employers pay above these rates, particularly
@@ -175,33 +175,30 @@ const sections = [
         </p>
         <p>
           JIB apprentice rates are structured in stages that correspond to your progress through the
-          apprenticeship. Stage 1 (first year) typically starts at around £8.00 to £9.50 per hour
-          depending on the region. Stage 2 (second year) rises to approximately £10.00 to £12.50 per
-          hour. Stage 3 (third year) reaches £12.50 to £15.00 per hour. Stage 4 (fourth year, where
-          applicable) can reach £14.00 to £16.50 per hour. These are approximate ranges — exact
-          figures are published annually by the JIB and vary by region.
+          apprenticeship. Under the JIB Industrial Determination, from 5 January 2026 the national
+          standard rates are: Stage 1 £8.16 per hour, Stage 2 £10.60, Stage 3 £13.05, and Stage 4
+          £14.03. Work falling within the JIB London rate area pays more: £9.14, £11.88, £14.62 and
+          £15.72 respectively. Stage rises are linked to passing your qualifications as well as time
+          served.
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-1">
-            JIB apprentice stage rates (indicative, 2026)
-          </h3>
+          <h3 className="font-bold text-white text-lg mb-1">JIB apprentice stage rates (2026)</h3>
           <p className="text-white/70 text-xs mb-4">
-            Indicative hourly ranges — the JIB publishes exact rates each year and they vary by
-            region (London and the South East carry a weighting). Confirm current figures with the
-            JIB or your employer.
+            National standard hourly rates from the JIB Industrial Determination, effective 5
+            January 2026. Work in the JIB London rate area pays a higher rate (shown in brackets).
           </p>
           <div className="grid grid-cols-3 gap-2 text-sm">
             <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Stage</div>
             <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">Year</div>
             <div className="p-2 rounded bg-white/[0.08] text-center font-bold text-white">
-              Indicative £/hr
+              £/hr (London)
             </div>
             {(
               [
-                ['Stage 1', 'Year 1', '£8.00 – £9.50'],
-                ['Stage 2', 'Year 2', '£10.00 – £12.50'],
-                ['Stage 3', 'Year 3', '£12.50 – £15.00'],
-                ['Stage 4', 'Year 4', '£14.00 – £16.50'],
+                ['Stage 1', 'Year 1', '£8.16 (£9.14)'],
+                ['Stage 2', 'Year 2', '£10.60 (£11.88)'],
+                ['Stage 3', 'Year 3', '£13.05 (£14.62)'],
+                ['Stage 4', 'Year 4', '£14.03 (£15.72)'],
               ] as Array<[string, string, string]>
             ).map(([stage, year, rate]) => (
               <Fragment key={stage}>
@@ -214,8 +211,8 @@ const sections = [
             ))}
           </div>
           <p className="text-white/70 text-xs mt-4">
-            JIB rates sit well above the statutory apprentice minimum of £7.55/hr, and stage rises
-            are linked to passing qualifications as well as time served.
+            JIB rates sit above the statutory apprentice minimum of £8.00/hr, and stage rises are
+            linked to passing qualifications as well as time served.
           </p>
         </div>
         <p>
@@ -246,20 +243,20 @@ const sections = [
           stages.
         </p>
         <p>
-          <strong>Year 1 at minimum rate (£7.55/hr, 37.5-hour week):</strong> Gross weekly pay of
-          approximately £283. At this level you are unlikely to pay income tax (the personal
-          allowance for 2025/26 is £12,570), and National Insurance contributions are minimal. Your
-          take-home will be close to your gross — approximately £270 to £283 per week.
+          <strong>Year 1 at minimum rate (£8.00/hr, 37.5-hour week):</strong> Gross weekly pay of
+          £300. At this level you are unlikely to pay income tax (the personal allowance is
+          £12,570), and National Insurance contributions are minimal. Your take-home will be close
+          to your gross — approximately £285 to £300 per week.
         </p>
         <p>
-          <strong>Year 1 at JIB rate (approximately £9.00/hr):</strong> Gross weekly pay of
-          approximately £337. After minimal tax and NI deductions, take-home is approximately £310
-          to £330 per week. This is a meaningful difference from the minimum rate and illustrates
+          <strong>Year 1 at the JIB London rate (£9.14/hr):</strong> Gross weekly pay of
+          approximately £343. After minimal tax and NI deductions, take-home is approximately £320
+          to £340 per week. This is a meaningful difference from the minimum rate and illustrates
           why JIB employers are attractive.
         </p>
         <p>
-          <strong>Year 3 at JIB rate (approximately £13.50/hr):</strong> Gross weekly pay of
-          approximately £506. After tax and NI, take-home is approximately £430 to £460 per week. By
+          <strong>Year 3 at the JIB Stage 3 rate (£13.05/hr):</strong> Gross weekly pay of
+          approximately £489. After tax and NI, take-home is approximately £430 to £460 per week. By
           this stage you are earning a reasonable wage and contributing meaningfully on site.
         </p>
         <p>
@@ -310,8 +307,8 @@ const sections = [
           and money — both the resit fee and the delayed pay increase.
         </p>
         <SEOAppBridge
-          title="Apprentice Electrician Salary UK 2026 (Hourly & Yearly)"
-          description="How much does an apprentice electrician earn in the UK? 2026 pay by year and region, what affects it, and what you can earn once qualified."
+          title="Apprentice Electrician Salary 2026: Year 1–4 + JIB Rates"
+          description="Apprentice electrician pay by year: £8.00/hr minimum, JIB Stage 1–4 rates £8.16–£14.03 (London £9.14–£15.72), weekly take-home examples + what you earn once qualified."
           icon={TrendingUp}
         />
       </>
@@ -541,7 +538,7 @@ export default function ApprenticeSalaryPage() {
       answerBox={{
         question: 'How much does an apprentice electrician earn in the UK?',
         answer:
-          'In 2026, apprentice electricians earn a minimum of £7.55 per hour in Year 1. From Year 2, the age-appropriate National Minimum Wage applies — £10.00 (ages 18–20) or £12.21 (ages 21+). JIB-registered employers typically pay significantly more, with Stage 1 rates starting around £8.00 to £9.50 per hour.',
+          'From April 2026, apprentice electricians earn a minimum of £8.00 per hour in Year 1. From Year 2, the age-appropriate National Minimum Wage applies — £10.85 (ages 18–20) or £12.71 (ages 21+). JIB-registered employers pay more: the 2026 JIB apprentice rates run from £8.16 per hour at Stage 1 to £14.03 at Stage 4 (£9.14 to £15.72 in London).',
       }}
       readingTime={14}
       keyTakeaways={keyTakeaways}

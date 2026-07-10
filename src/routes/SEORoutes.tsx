@@ -2286,6 +2286,7 @@ const ElectricalTestingCalculatorsPage = lazy(
 );
 const ElectricianInvoiceAppPage = lazy(() => import('@/pages/seo/ElectricianInvoiceAppPage'));
 const GuidesHubPage = lazy(() => import('@/pages/seo/GuidesHubPage'));
+const LocationsIndexPage = lazy(() => import('@/pages/seo/LocationsIndexPage'));
 const IPAFTrainingPage = lazy(() => import('@/pages/seo/IPAFTrainingPage'));
 const InspectionTestingCoursePage = lazy(() => import('@/pages/seo/InspectionTestingCoursePage'));
 const JobProfitabilityCalculatorPage = lazy(
@@ -10998,6 +10999,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <GuidesHubPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/locations"
+        element={
+          <LazyRoute>
+            <LocationsIndexPage />
           </LazyRoute>
         }
       />

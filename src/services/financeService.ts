@@ -111,18 +111,44 @@ export interface Supplier {
   updated_at: string;
 }
 
+export interface POLine {
+  name: string;
+  sku?: string | null;
+  qty: number;
+  unit?: string | null;
+  unit_cost: number;
+  received_qty?: number;
+}
+
+export type POStatus =
+  | 'Draft'
+  | 'Sent'
+  | 'Confirmed'
+  | 'Part-received'
+  | 'Received'
+  | 'Cancelled';
+
 export interface MaterialOrder {
   id: string;
   order_number: string;
   supplier_id: string;
   job_id: string | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  items: any[];
+  items: POLine[];
+  subtotal: number;
+  vat_rate: number;
+  vat_amount: number;
   total: number;
   status: string;
+  delivery_mode: string;
+  delivery_address: string | null;
   order_date: string;
+  expected_date: string | null;
   delivery_date: string | null;
   ordered_by: string | null;
+  sent_at: string | null;
+  sent_to_email: string | null;
+  confirmed_at: string | null;
+  pdf_url: string | null;
   notes: string | null;
   created_at: string;
   updated_at: string;
@@ -668,15 +694,15 @@ export async function getNextOrderNumber(): Promise<string> {
   const { data } = await supabase
     .from('employer_material_orders')
     .select('order_number')
-    .like('order_number', `ORD-${year}-%`)
+    .like('order_number', `PO-${year}-%`)
     .order('order_number', { ascending: false })
     .limit(1);
 
   if (data && data.length > 0) {
     const lastNum = parseInt(data[0].order_number.split('-')[2]) || 0;
-    return `ORD-${year}-${String(lastNum + 1).padStart(3, '0')}`;
+    return `PO-${year}-${String(lastNum + 1).padStart(4, '0')}`;
   }
-  return `ORD-${year}-001`;
+  return `PO-${year}-0001`;
 }
 
 // Stripe Connect Status

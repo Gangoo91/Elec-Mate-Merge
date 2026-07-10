@@ -207,10 +207,11 @@ export default function StaffCostCalculatorPage() {
                 to cover the cost of 1.12 days (232 productive days covering 260 paid days).
               </p>
               <p>
-                <strong className="text-yellow-400">Statutory Sick Pay (SSP):</strong> You must pay
-                SSP to eligible employees from the fourth consecutive day of sickness. The current
-                rate is £116.75 per week (2025/26) for up to 28 weeks. Budget 5 to 8 sick days per
-                year per employee. Beyond SSP, you lose the employee's productivity and may need to
+                <strong className="text-yellow-400">Statutory Sick Pay (SSP):</strong> From 6 April
+                2026 you must pay SSP from the first day of sickness to all employees — the old
+                three waiting days and the lower earnings limit were abolished. The 2026/27 rate is
+                £123.25 per week (or 80% of average weekly earnings if lower) for up to 28 weeks.
+                Budget 5 to 8 sick days per year per employee. Beyond SSP, you lose the employee's productivity and may need to
                 reorganise other jobs or hire temporary cover.
               </p>
               <p>

@@ -1,45 +1,34 @@
 // Imports trimmed for editorial restraint redesign
+import { UK_MINIMUM_WAGE, JIB_RATES_2026 } from '@/data/ukRates';
 
 const WageInformationTab = () => {
   const currentRates = {
-    apprenticeMinimum: 7.55,
-    under18: 7.55,
-    age18to20: 10.18,
-    nationalLivingWage: 12.21,
-    period: '2025/26 (current)',
-  };
-
-  const aprilRates = {
-    apprenticeMinimum: 8.0,
-    under18: 8.0,
-    age18to20: 10.85,
-    nationalLivingWage: 12.71,
-    period: 'From 1 April 2026',
+    apprenticeMinimum: UK_MINIMUM_WAGE.apprentice,
+    under18: UK_MINIMUM_WAGE.under18,
+    age18to20: UK_MINIMUM_WAGE.age18to20,
+    nationalLivingWage: UK_MINIMUM_WAGE.nlw21Plus,
+    period: '2026/27 (from 1 April 2026)',
   };
 
   const ageBasedRates = [
     {
       age: 'Apprentice (any age, Year 1)',
-      current: 7.55,
-      april: 8.0,
+      rate: UK_MINIMUM_WAGE.apprentice,
       description: 'First year of apprenticeship or under 19',
     },
     {
       age: 'Under 18 (non-apprentice)',
-      current: 7.55,
-      april: 8.0,
+      rate: UK_MINIMUM_WAGE.under18,
       description: 'Same as apprentice rate',
     },
     {
       age: '18-20',
-      current: 10.18,
-      april: 10.85,
+      rate: UK_MINIMUM_WAGE.age18to20,
       description: 'Applies after first year if aged 18-20',
     },
     {
       age: '21+ (National Living Wage)',
-      current: 12.21,
-      april: 12.71,
+      rate: UK_MINIMUM_WAGE.nlw21Plus,
       description: 'Applies after first year if aged 21+',
     },
   ];
@@ -80,14 +69,14 @@ const WageInformationTab = () => {
   const progressionPath = [
     {
       stage: 'Year 1 Apprentice',
-      wage: '£7.55/hr (current) → £8.00 from Apr 2026',
-      annual: '~£15,100 → ~£16,000',
+      wage: '£8.00/hr minimum (JIB Stage 1: £8.16)',
+      annual: '~£15,600',
       description: 'Learning fundamentals',
     },
     {
       stage: 'Year 2-4 Apprentice (21+)',
-      wage: '£12.21/hr (current) → £12.71 from Apr 2026',
-      annual: '~£24,400 → ~£25,400',
+      wage: '£12.71/hr NLW (JIB Stages 2-4: £10.60-£14.03)',
+      annual: '~£24,800',
       description: 'NLW applies after year 1 if 21+',
     },
     {
@@ -140,29 +129,29 @@ const WageInformationTab = () => {
 
   const jibGrades = [
     {
-      grade: 'Apprentice (Year 1-4)',
-      jibRate: '£7.55 - £12.21',
-      description: 'Current 2025/26 legal minimums. Rates rise to £8.00 - £12.71 from April 2026. JIB employers typically pay above these.',
+      grade: 'Apprentice (Stage 1-4)',
+      jibRate: `£${JIB_RATES_2026.apprentice.stage1.national.toFixed(2)} - £${JIB_RATES_2026.apprentice.stage4.national.toFixed(2)}`,
+      description: `JIB national standard rates from 5 January 2026 (£${JIB_RATES_2026.apprentice.stage1.london.toFixed(2)} - £${JIB_RATES_2026.apprentice.stage4.london.toFixed(2)} in the JIB London area). Stage rises are linked to passing qualifications.`,
     },
     {
       grade: 'Electrical Improver',
-      jibRate: '£14.01',
+      jibRate: `£${JIB_RATES_2026.graded.electricalImprover.toFixed(2)}`,
       description: 'Recently qualified, gaining experience. Typically 6-12 months after completing apprenticeship.',
     },
     {
+      grade: 'Electrician',
+      jibRate: `£${JIB_RATES_2026.graded.electrician.toFixed(2)}`,
+      description: 'Fully qualified with ECS Gold Card (NVQ Level 3 + AM2).',
+    },
+    {
       grade: 'Approved Electrician',
-      jibRate: '£17.54',
-      description: 'Fully qualified with ECS Gold Card. Can work independently and sign off own work.',
+      jibRate: `£${JIB_RATES_2026.graded.approvedElectrician.toFixed(2)}`,
+      description: 'Experienced and additionally qualified (e.g. inspection & testing). Can work independently and sign off own work.',
     },
     {
-      grade: 'Technician',
-      jibRate: '£19.24',
+      grade: 'Site / Installation Technician',
+      jibRate: `£${JIB_RATES_2026.graded.technician.toFixed(2)}`,
       description: 'Advanced qualifications (Testing & Inspection, Design). Higher technical responsibility.',
-    },
-    {
-      grade: 'Foreman / Supervisor',
-      jibRate: '£20.50+',
-      description: 'Managing teams and projects. Requires leadership skills and experience.',
     },
   ];
 
@@ -240,7 +229,7 @@ const WageInformationTab = () => {
       <Section eyebrow="UK minimum wage rates for apprentices">
         <div className="space-y-3">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Current rates (2025/26)
+            Current rates (from 1 April 2026)
           </span>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
             <span className="text-[14px] text-white/85">Apprentice rate (Year 1 / Under 19)</span>
@@ -256,45 +245,23 @@ const WageInformationTab = () => {
           </div>
         </div>
 
-        <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            From 1 April 2026
-          </span>
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
-            <span className="text-[14px] text-white/85">Apprentice rate (Year 1 / Under 19)</span>
-            <span className="font-mono text-white text-[13px]">
-              £{aprilRates.apprenticeMinimum.toFixed(2)}/hr
-            </span>
-          </div>
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
-            <span className="text-[14px] text-white/85">After Year 1, aged 21+ (NLW)</span>
-            <span className="font-mono text-white text-[13px]">
-              £{aprilRates.nationalLivingWage}/hr
-            </span>
-          </div>
-        </div>
-
         <div className="space-y-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             All age-based rates
           </span>
           <div className="rounded-lg border border-white/[0.06] overflow-hidden">
-            <div className="grid grid-cols-3 gap-0 text-[12px] p-2 bg-white/[0.04] text-white/85">
+            <div className="grid grid-cols-2 gap-0 text-[12px] p-2 bg-white/[0.04] text-white/85">
               <span>Age group</span>
-              <span className="text-center">Current</span>
-              <span className="text-center">Apr 2026</span>
+              <span className="text-center">Rate (from 1 Apr 2026)</span>
             </div>
             {ageBasedRates.map((rate, index) => (
               <div
                 key={index}
-                className="grid grid-cols-3 gap-0 text-[12px] p-2 border-t border-white/[0.06]"
+                className="grid grid-cols-2 gap-0 text-[12px] p-2 border-t border-white/[0.06]"
               >
                 <span className="text-white/85">{rate.age}</span>
                 <span className="text-center font-mono text-elec-yellow">
-                  £{rate.current.toFixed(2)}
-                </span>
-                <span className="text-center font-mono text-white">
-                  £{rate.april.toFixed(2)}
+                  £{rate.rate.toFixed(2)}
                 </span>
               </div>
             ))}
@@ -474,7 +441,7 @@ const WageInformationTab = () => {
               step: '2',
               title: 'Check which rate applies to you',
               desc:
-                'Under 19 or in your first year = apprentice rate (£7.55 current, £8.00 from April 2026). Over 21 and past first year = NLW (£12.21 current, £12.71 from April 2026).',
+                'Under 19 or in your first year = apprentice rate (£8.00 from 1 April 2026). Over 21 and past first year = NLW (£12.71 from 1 April 2026).',
             },
             {
               step: '3',

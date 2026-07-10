@@ -517,6 +517,13 @@ export default function ElectricianInvoiceAppPage() {
               <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink>, invoicing,
               and payment. One platform, one subscription, no gaps.
             </p>
+            <p>
+              Comparing options first? See how Elec-Mate stacks up in our{' '}
+              <SEOInternalLink href="/compare/best-invoice-app-electricians">
+                best invoice app for electricians
+              </SEOInternalLink>{' '}
+              comparison.
+            </p>
           </div>
         </div>
       </section>

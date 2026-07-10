@@ -46,6 +46,7 @@ const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
 const PublicPermitSign = lazy(() => import('@/pages/PublicPermitSign'));
 const PublicSafetySign = lazy(() => import('@/pages/PublicSafetySign'));
 const ClientPortalView = lazy(() => import('@/pages/public/ClientPortalView'));
+const GetQuoteView = lazy(() => import('@/pages/public/GetQuoteView'));
 const ParentDigestPage = lazy(() => import('@/pages/public/ParentDigestPage'));
 const PublicBooking = lazy(() => import('@/pages/public/PublicBooking'));
 const PublicElecIdView = lazy(() => import('@/pages/public/PublicElecIdView'));
@@ -53,6 +54,7 @@ const SupervisorVerificationPage = lazy(() => import('@/pages/public/SupervisorV
 const PhotoSharePage = lazy(() => import('@/pages/public/PhotoSharePage'));
 const ScopeSharePage = lazy(() => import('@/pages/public/ScopeSharePage'));
 const CompletionSignOffPage = lazy(() => import('@/pages/public/CompletionSignOffPage'));
+const DangerNoticeSignPage = lazy(() => import('@/pages/public/DangerNoticeSignPage'));
 const SharedPortfolioView = lazy(() => import('@/pages/public/SharedPortfolioView'));
 const InvoiceMarkPaid = lazy(() => import('@/pages/public/InvoiceMarkPaid'));
 // ELE-955 — BookingSlotPicker retired. Quote-accept flow now hands off
@@ -572,6 +574,14 @@ const AppRouter = () => {
               </LazyRoute>
             }
           />
+          <Route
+            path="/get-quote/:slug"
+            element={
+              <LazyRoute>
+                <GetQuoteView />
+              </LazyRoute>
+            }
+          />
           {/* J3 — Parent / guardian weekly-digest magic-link view. Public,
             single-use token. */}
           <Route
@@ -688,6 +698,14 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <CompletionSignOffPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/danger-notice/sign/:token"
+            element={
+              <LazyRoute>
+                <DangerNoticeSignPage />
               </LazyRoute>
             }
           />

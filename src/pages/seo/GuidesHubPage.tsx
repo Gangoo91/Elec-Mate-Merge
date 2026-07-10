@@ -5,6 +5,16 @@ import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { BookOpen, ClipboardCheck, FileSearch, Home, Shield, SunMedium, Zap } from 'lucide-react';
+import { GUIDES_INDEX } from '@/data/guidesIndex';
+
+const guidesByLetter = GUIDES_INDEX.reduce<Record<string, typeof GUIDES_INDEX>>((acc, guide) => {
+  const letter = /^[0-9]/.test(guide.title) ? '0-9' : guide.title[0].toUpperCase();
+  (acc[letter] ??= [] as unknown as typeof GUIDES_INDEX).push(guide);
+  return acc;
+}, {});
+const indexLetters = Object.keys(guidesByLetter).sort((a, b) =>
+  a === '0-9' ? -1 : b === '0-9' ? 1 : a.localeCompare(b)
+);
 
 const PAGE_TITLE = 'UK Electrical Guides | BS 7671, Testing, Compliance';
 const PAGE_DESCRIPTION =
@@ -315,6 +325,36 @@ export default function GuidesHubPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="all-guides" className="py-12 px-5 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Every guide, A to Z</h2>
+          <p className="text-white/60 text-[14px] mb-8">
+            The full library — all {GUIDES_INDEX.length} guides, in one index. Looking for
+            city-specific costs and rules? See the{' '}
+            <SEOInternalLink href="/locations">local guides by city</SEOInternalLink>.
+          </p>
+          {indexLetters.map((letter) => (
+            <div key={letter} className="mt-7 first:mt-0">
+              <h3 className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 border-b border-white/10 pb-2 mb-3">
+                {letter}
+              </h3>
+              <ul className="columns-2 md:columns-3 lg:columns-4 gap-x-6">
+                {guidesByLetter[letter].map((guide) => (
+                  <li key={guide.slug} className="break-inside-avoid">
+                    <Link
+                      to={`/guides/${guide.slug}`}
+                      className="block py-1 text-[13px] leading-snug text-white/70 hover:text-yellow-300 transition-colors touch-manipulation"
+                    >
+                      {guide.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </section>
 

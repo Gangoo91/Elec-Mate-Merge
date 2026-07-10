@@ -29,6 +29,19 @@ import { daysOverdue } from '@/utils/invoiceAging';
 import { useClientLinkedRecords, useUpdateClient, useDeleteClient } from '@/hooks/useEmployerClients';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
+import {
+  useClientActivities,
+  useLogClientActivity,
+  type ActivityType,
+} from '@/hooks/useClientActivities';
+import {
+  useClientTasks,
+  useAddClientTask,
+  useToggleClientTask,
+  useDeleteClientTask,
+} from '@/hooks/useClientTasks';
+import { useClientReviews, useAddReview, useDeleteReview } from '@/hooks/useClientReviews';
+import { cn } from '@/lib/utils';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
 import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
 import type { Section } from '@/pages/employer/EmployerDashboard';
@@ -54,12 +67,27 @@ interface ClientDetailSheetProps {
 
 export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: ClientDetailSheetProps) {
   const { data: linked, isLoading } = useClientLinkedRecords(open ? client?.id : undefined);
+  const { data: activities = [] } = useClientActivities(open ? client?.id : undefined);
+  const logActivity = useLogClientActivity();
+  const { data: tasks = [] } = useClientTasks(open ? client?.id : undefined);
+  const addTask = useAddClientTask();
+  const toggleTask = useToggleClientTask();
+  const deleteTask = useDeleteClientTask();
+  const { data: reviews = [] } = useClientReviews(open ? client?.id : undefined);
+  const addReview = useAddReview();
+  const deleteReview = useDeleteReview();
   const updateClient = useUpdateClient();
   const deleteClient = useDeleteClient();
   const [editing, setEditing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [showQuote, setShowQuote] = useState(false);
   const [showJob, setShowJob] = useState(false);
+  const [actType, setActType] = useState<ActivityType>('note');
+  const [actText, setActText] = useState('');
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDue, setTaskDue] = useState('');
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewText, setReviewText] = useState('');
   const [draft, setDraft] = useState({ contact_name: '', email: '', phone: '', address: '', notes: '' });
   const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
@@ -118,6 +146,78 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
     }
   };
 
+  const submitLog = async () => {
+    if (!actText.trim()) return;
+    try {
+      await logActivity.mutateAsync({ client_id: client.id, type: actType, summary: actText.trim() });
+      setActText('');
+    } catch {
+      /* non-fatal */
+    }
+  };
+
+  const submitTask = async () => {
+    if (!taskTitle.trim()) return;
+    try {
+      await addTask.mutateAsync({
+        client_id: client.id,
+        title: taskTitle.trim(),
+        due_date: taskDue || null,
+      });
+      setTaskTitle('');
+      setTaskDue('');
+    } catch {
+      /* non-fatal */
+    }
+  };
+
+  const submitReview = async () => {
+    try {
+      await addReview.mutateAsync({
+        client_id: client.id,
+        rating: reviewRating,
+        text: reviewText.trim() || null,
+      });
+      setReviewText('');
+      setReviewRating(5);
+    } catch {
+      /* non-fatal */
+    }
+  };
+
+  const requestReview = () => {
+    if (!client.email) return;
+    const subject = encodeURIComponent('How did we do?');
+    const body = encodeURIComponent(
+      `Hi ${client.contact_name || client.name},\n\nThanks for choosing us. If you have a moment, we'd really appreciate a quick review of how the job went — it helps us a lot.\n\nMany thanks.`
+    );
+    openExternalUrl(`mailto:${client.email}?subject=${subject}&body=${body}`);
+  };
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  // One feed: manual activities merged with derived quote/invoice/job events.
+  const timeline = [
+    ...activities.map((a) => ({ at: a.created_at, kind: a.type as string, text: a.summary })),
+    ...(linked?.quotes || []).map((q) => ({
+      at: q.created_at,
+      kind: 'quote',
+      text: `Quote ${q.quote_number || ''} · ${fmt(q.value)}`.trim(),
+    })),
+    ...(linked?.invoices || []).map((inv) => ({
+      at: inv.created_at,
+      kind: 'invoice',
+      text: `Invoice ${inv.invoice_number || ''} · ${fmt(inv.amount)}`.trim(),
+    })),
+    ...(linked?.jobs || []).map((j) => ({
+      at: j.start_date || '',
+      kind: 'job',
+      text: `Job: ${j.title}`,
+    })),
+  ]
+    .filter((e) => e.at)
+    .sort((a, b) => (a.at < b.at ? 1 : -1));
+
   return (
     <>
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -127,7 +227,7 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
           title={client.name}
           description={client.contact_name || undefined}
         >
-          <div className="px-5 sm:px-6 py-5 space-y-4">
+          <div className="space-y-4">
             {/* Lifetime value / outstanding / pipeline — real numbers */}
             <StatStrip
               columns={3}
@@ -359,6 +459,204 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                 </ListCard>
               </>
             )}
+
+            {/* Follow-ups */}
+            <ListCard>
+              <ListCardHeader
+                tone="amber"
+                title="Follow-ups"
+                meta={<Pill tone="default">{tasks.filter((t) => !t.done).length}</Pill>}
+              />
+              <div className="p-3 border-b border-white/[0.06] flex flex-col gap-2">
+                <Input
+                  className={inputClass}
+                  value={taskTitle}
+                  onChange={(e) => setTaskTitle(e.target.value)}
+                  placeholder="Add a follow-up…"
+                  onKeyDown={(e) => e.key === 'Enter' && submitTask()}
+                />
+                <div className="flex gap-2">
+                  <Input
+                    className={inputClass}
+                    type="date"
+                    value={taskDue}
+                    onChange={(e) => setTaskDue(e.target.value)}
+                  />
+                  <SecondaryButton
+                    onClick={submitTask}
+                    disabled={!taskTitle.trim() || addTask.isPending}
+                    className="shrink-0"
+                  >
+                    Add
+                  </SecondaryButton>
+                </div>
+              </div>
+              <ListBody>
+                {tasks.length === 0 ? (
+                  <div className="p-5">
+                    <EmptyState title="No follow-ups" />
+                  </div>
+                ) : (
+                  tasks.map((t) => {
+                    const overdue = !t.done && !!t.due_date && t.due_date < todayStr;
+                    return (
+                      <ListRow
+                        key={t.id}
+                        onClick={() => toggleTask.mutate({ id: t.id, done: !t.done })}
+                        lead={
+                          <span
+                            className={cn(
+                              'h-5 w-5 rounded-md border grid place-items-center text-[11px] font-bold',
+                              t.done
+                                ? 'bg-emerald-500/80 border-emerald-500 text-black'
+                                : 'border-white/25 text-transparent'
+                            )}
+                          >
+                            ✓
+                          </span>
+                        }
+                        title={t.done ? `✓ ${t.title}` : t.title}
+                        subtitle={
+                          t.due_date
+                            ? overdue
+                              ? `Overdue · ${fmtDate(t.due_date)}`
+                              : `Due ${fmtDate(t.due_date)}`
+                            : undefined
+                        }
+                        trailing={
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteTask.mutate(t.id);
+                            }}
+                            className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white/30 hover:text-red-400 touch-manipulation"
+                          >
+                            Remove
+                          </button>
+                        }
+                      />
+                    );
+                  })
+                )}
+              </ListBody>
+            </ListCard>
+
+            {/* Activity timeline */}
+            <ListCard>
+              <ListCardHeader tone="cyan" title="Activity" />
+              <div className="p-3 border-b border-white/[0.06] space-y-2">
+                <div className="flex gap-1.5">
+                  {(['note', 'call', 'email', 'meeting'] as ActivityType[]).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setActType(t)}
+                      className={cn(
+                        'px-3 h-11 rounded-lg text-[12px] capitalize touch-manipulation transition-colors',
+                        actType === t
+                          ? 'bg-elec-yellow text-black font-medium'
+                          : 'bg-white/[0.05] text-white/60 hover:text-white/85'
+                      )}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    className={inputClass}
+                    value={actText}
+                    onChange={(e) => setActText(e.target.value)}
+                    placeholder={`Log a ${actType}…`}
+                    onKeyDown={(e) => e.key === 'Enter' && submitLog()}
+                  />
+                  <SecondaryButton
+                    onClick={submitLog}
+                    disabled={!actText.trim() || logActivity.isPending}
+                  >
+                    Log
+                  </SecondaryButton>
+                </div>
+              </div>
+              <ListBody>
+                {timeline.length === 0 ? (
+                  <div className="p-5">
+                    <EmptyState title="No activity yet" />
+                  </div>
+                ) : (
+                  timeline.slice(0, 25).map((e, i) => (
+                    <ListRow
+                      key={`${e.kind}-${i}`}
+                      title={e.text}
+                      subtitle={fmtDate(e.at)}
+                      trailing={<Pill tone="default">{e.kind}</Pill>}
+                    />
+                  ))
+                )}
+              </ListBody>
+            </ListCard>
+
+            {/* Reviews */}
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Reviews"
+                meta={<Pill tone="default">{reviews.length}</Pill>}
+              />
+              <div className="p-3 border-b border-white/[0.06] space-y-2">
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => setReviewRating(n)}
+                      className="h-11 w-8 grid place-items-center text-[20px] leading-none touch-manipulation"
+                      aria-label={`${n} star${n === 1 ? '' : 's'}`}
+                    >
+                      <span className={n <= reviewRating ? 'text-elec-yellow' : 'text-white/20'}>
+                        ★
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    className={inputClass}
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    placeholder="What did they say?"
+                    onKeyDown={(e) => e.key === 'Enter' && submitReview()}
+                  />
+                  <SecondaryButton onClick={submitReview} disabled={addReview.isPending}>
+                    Save
+                  </SecondaryButton>
+                </div>
+                <SecondaryButton onClick={requestReview} disabled={!client.email} fullWidth>
+                  Request a review by email
+                </SecondaryButton>
+              </div>
+              <ListBody>
+                {reviews.length === 0 ? (
+                  <div className="p-5">
+                    <EmptyState title="No reviews yet" />
+                  </div>
+                ) : (
+                  reviews.map((r) => (
+                    <ListRow
+                      key={r.id}
+                      title={'★'.repeat(r.rating || 0) + '☆'.repeat(5 - (r.rating || 0))}
+                      subtitle={r.text || fmtDate(r.created_at)}
+                      trailing={
+                        <button
+                          onClick={() => deleteReview.mutate(r.id)}
+                          className="min-h-11 px-2 -my-1 inline-flex items-center text-[12px] text-white/30 hover:text-red-400 touch-manipulation"
+                        >
+                          Remove
+                        </button>
+                      }
+                    />
+                  ))
+                )}
+              </ListBody>
+            </ListCard>
 
             {/* Manage */}
             <div className="pt-2">

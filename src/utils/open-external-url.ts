@@ -20,6 +20,7 @@ const EXTERNAL_APP_PATTERNS = [
   'whatsapp.com',
   'tel:',
   'mailto:',
+  'sms:',
   'maps.apple.com',
   'maps.google.com',
   'youtube.com/watch',

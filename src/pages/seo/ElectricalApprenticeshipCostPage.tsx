@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'How much do electrical apprentices earn in the UK?',
     answer:
-      'The national minimum apprenticeship wage from April 2025 is £7.55 per hour for apprentices under 19 or in their first year. After the first year (or if the apprentice is 19+), the National Living Wage for their age group applies — £12.21 per hour for 21 and over (April 2025 rate). However, most electrical employers pay above the minimum. A first-year electrical apprentice typically earns £12,000 to £18,000 per year. A third or fourth-year apprentice, who is more productive and closer to qualifying, can earn £18,000 to £24,000. Once qualified and registered with a competent person scheme, starting salaries are typically £28,000 to £35,000, rising to £35,000 to £50,000+ with experience.',
+      'The national minimum apprenticeship wage from 1 April 2026 is £8.00 per hour for apprentices under 19 or in their first year. After the first year (or if the apprentice is 19+), the National Living Wage for their age group applies — £12.71 per hour for 21 and over (April 2026 rate). However, most electrical employers pay above the minimum. A first-year electrical apprentice typically earns £15,000 to £18,000 per year. A third or fourth-year apprentice, who is more productive and closer to qualifying, can earn £18,000 to £24,000. Once qualified and registered with a competent person scheme, starting salaries are typically £28,000 to £35,000, rising to £35,000 to £50,000+ with experience.',
   },
   {
     question: 'Are exam fees included in the apprenticeship funding or paid separately?',

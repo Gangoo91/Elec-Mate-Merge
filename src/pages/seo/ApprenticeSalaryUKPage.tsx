@@ -40,9 +40,9 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The National Minimum Wage for apprentices aged under 19 (or in their first year) is £7.55 per hour from April 2025, with a further rise expected in April 2026.',
-  'Apprentice electricians typically earn £14,000 to £18,000 in Year 1, rising to £22,000 to £28,000 by Year 4 depending on employer and region.',
-  'JIB (Joint Industry Board) rates for electrical apprentices are significantly higher than the legal minimum — starting around £5.85 per hour above NMW in Year 1.',
+  'The National Minimum Wage for apprentices aged under 19 (or in their first year) is £8.00 per hour from 1 April 2026.',
+  'Apprentice electricians typically earn £15,000 to £18,000 in Year 1, rising to £22,000 to £28,000 by Year 4 depending on employer and region.',
+  'JIB (Joint Industry Board) 2026 apprentice rates run from £8.16 per hour at Stage 1 to £14.03 at Stage 4 nationally — and £9.14 to £15.72 in the JIB London area — with stage rises linked to passing your qualifications.',
   'London and the South East pay the highest apprentice wages, with some employers offering £2,000 to £4,000 more per year than the national average.',
   'Overtime, weekend work, and site allowances can add £3,000 to £6,000 per year to an apprentice electrician salary — track every penny with Elec-Mate business tools.',
 ];
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What is the minimum wage for an apprentice electrician in 2026?',
     answer:
-      'The National Minimum Wage (NMW) for apprentices aged under 19, or those aged 19 and over in the first year of their apprenticeship, is £7.55 per hour from April 2025. This rate is reviewed annually and typically rises each April. Once an apprentice turns 19 and has completed the first year, they move to the standard NMW rate for their age group — £10.18 for 18-20 year olds and £12.21 for 21 and over (2025 rates). Most electrical employers pay significantly above these minimums, particularly those on JIB agreements. It is worth noting that the government publishes proposed rates each autumn for the following April, so the 2026 rate will be confirmed by late 2025.',
+      'The National Minimum Wage (NMW) for apprentices aged under 19, or those aged 19 and over in the first year of their apprenticeship, is £8.00 per hour from 1 April 2026. This rate is reviewed annually and typically rises each April. Once an apprentice turns 19 and has completed the first year, they move to the standard NMW rate for their age group — £10.85 for 18-20 year olds and the £12.71 National Living Wage for 21 and over (rates from 1 April 2026). Most electrical employers pay significantly above these minimums, particularly those on JIB agreements.',
   },
   {
     question: 'How much does an apprentice electrician earn per year?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Do JIB rates apply to all apprentice electricians?',
     answer:
-      'JIB (Joint Industry Board) rates only apply to apprentices employed by JIB-registered companies. The JIB is a partnership between the Electrical Contractors Association (ECA) and Unite the Union, and its pay rates cover apprentices in the electrical contracting sector. Not all employers are JIB-registered — many smaller domestic electricians and some commercial contractors are outside the JIB framework. JIB apprentice rates are significantly higher than the statutory NMW. For 2025/26, JIB Year 1 apprentice rates start around £13.40 per hour (depending on age), rising each year. If your employer is not JIB-registered, you are still entitled to at least the NMW but may earn considerably less than a JIB apprentice at the same stage.',
+      'JIB (Joint Industry Board) rates only apply to apprentices employed by JIB-registered companies. The JIB is a partnership between the Electrical Contractors Association (ECA) and Unite the Union, and its pay rates cover apprentices in the electrical contracting sector. Not all employers are JIB-registered — many smaller domestic electricians and some commercial contractors are outside the JIB framework. JIB apprentice rates are higher than the statutory NMW. From 5 January 2026, the JIB national standard apprentice rates are £8.16 per hour at Stage 1, rising to £10.60 (Stage 2), £13.05 (Stage 3) and £14.03 (Stage 4), with higher London-area rates of £9.14 to £15.72. If your employer is not JIB-registered, you are still entitled to at least the NMW but may earn less than a JIB apprentice at the same stage.',
   },
 ];
 
@@ -146,26 +146,26 @@ const sections = [
           figures each autumn.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">NMW / NLW Rates (from April 2025)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">NMW / NLW Rates (from 1 April 2026)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Apprentice rate:</strong> £7.55 per hour — applies to apprentices under 19,
+                <strong>Apprentice rate:</strong> £8.00 per hour — applies to apprentices under 19,
                 or aged 19+ in their first year of the apprenticeship.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Aged 18-20:</strong> £10.18 per hour — applies once you turn 19 and have
+                <strong>Aged 18-20:</strong> £10.85 per hour — applies once you turn 19 and have
                 completed your first apprenticeship year.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Aged 21 and over (NLW):</strong> £12.21 per hour — the National Living Wage
+                <strong>Aged 21 and over (NLW):</strong> £12.71 per hour — the National Living Wage
                 applies to all workers aged 21 and over, including apprentices past their first
                 year.
               </span>
@@ -182,9 +182,8 @@ const sections = [
           rate, you are at the bottom of the market. It is worth shopping around.
         </p>
         <p>
-          The 2026 rates will be confirmed by the government in autumn 2025 following the Low Pay
-          Commission recommendation. Historically, the NMW has risen by 5-10% per year. We will
-          update this page as soon as the 2026 figures are announced.
+          These rates took effect on 1 April 2026 following the Low Pay Commission recommendation.
+          The rates are reviewed every April — historically, the NMW has risen by 5-10% per year.
         </p>
       </>
     ),
@@ -204,13 +203,13 @@ const sections = [
             <div className="flex items-start gap-4">
               <Clock className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Year 1: £14,000 to £18,000</h4>
+                <h4 className="font-bold text-white mb-1">Year 1: £15,000 to £18,000</h4>
                 <p className="text-white text-sm leading-relaxed">
                   You are brand new to the trade. You will be shadowing a qualified electrician,
                   carrying materials, learning basic first fix, and attending college one day per
-                  week (or block release). Most employers start you on the apprentice NMW or
-                  slightly above. JIB employers start at around £13.40 per hour. Your focus is
-                  learning — the pay reflects that.
+                  week (or block release). Most employers start you on the apprentice NMW (£8.00
+                  per hour) or slightly above — JIB employers start at £8.16 per hour (£9.14 in
+                  London). Your focus is learning — the pay reflects that.
                 </p>
               </div>
             </div>
@@ -471,37 +470,38 @@ const sections = [
           calendar year.
         </p>
         <p>
-          JIB apprentice rates are structured by year of training and are significantly higher than
-          the statutory NMW. For 2025/26, JIB apprentice rates are approximately:
+          JIB apprentice rates are structured by stage of training and sit above the statutory NMW.
+          Under the JIB Industrial Determination, the national standard rates from 5 January 2026
+          are (JIB London rate in brackets):
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stage 1 (Year 1):</strong> Approximately £13.40 per hour — nearly double the
-                apprentice NMW rate.
+                <strong>Stage 1 (Year 1):</strong> £8.16 per hour (£9.14 London) — just above the
+                apprentice NMW rate, with the real gains coming as you progress.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stage 2 (Year 2):</strong> Approximately £14.80 per hour — with annual
-                increments built in.
+                <strong>Stage 2 (Year 2):</strong> £10.60 per hour (£11.88 London) — a rise of
+                around 30% on Stage 1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stage 3 (Year 3):</strong> Approximately £16.20 per hour — approaching the
-                improver rate.
+                <strong>Stage 3 (Year 3):</strong> £13.05 per hour (£14.62 London) — above the
+                National Living Wage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stage 4 (Year 4):</strong> Approximately £17.60 per hour — just below the
-                qualified JIB electrician rate.
+                <strong>Stage 4 (Year 4):</strong> £14.03 per hour (£15.72 London) — the final step
+                before the qualified JIB electrician rate.
               </span>
             </li>
           </ul>

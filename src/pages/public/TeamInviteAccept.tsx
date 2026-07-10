@@ -55,7 +55,11 @@ const WORKER_TOOLS = '/electrician/worker-tools';
 
 // get_team_invite / accept_team_invite are added by the ELE-1272 migration and
 // aren't in the generated Supabase types yet — cast the rpc caller.
-const rpc = supabase.rpc as unknown as (
+// MUST stay bound to the client: extracting the bare method loses `this`, and
+// supabase-js's rpc() reads this.rest → "undefined is not an object
+// (evaluating 'this.rest')" crashed every accept in prod (Sentry REACT-C3).
+const rpc = ((fn: string, args?: Record<string, unknown>) =>
+  supabase.rpc(fn as never, args as never)) as (
   fn: string,
   args?: Record<string, unknown>
 ) => Promise<{ data: unknown; error: unknown }>;
