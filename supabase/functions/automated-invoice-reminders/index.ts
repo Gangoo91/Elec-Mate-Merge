@@ -232,13 +232,11 @@ serve(async (req: Request) => {
       });
 
       // ELE-662 + ELE-880 — Send via Brevo (Resend banned us at the domain
-      // level). BCC the electrician so they receive a copy with the
-      // mark-paid button in their inbox.
+      // level).
       const resend = new Resend(resendApiKey);
       try {
         const { data, error } = await resend.emails.send({
           ...sender,
-          ...(electricianCopyBcc ? { bcc: [electricianCopyBcc] } : {}),
           to: [clientEmail],
           subject: emailContent.subject,
           html: emailContent.html,
@@ -251,6 +249,23 @@ serve(async (req: Request) => {
           continue;
         }
         console.log(`[automated-invoice-reminders] sent ${invoice.invoice_number}`, data?.id);
+
+        // ELE-1317 — labelled copy to the electrician (keeps the mark-paid
+        // button in their inbox) instead of an identical BCC, which read as
+        // "the reminder was sent to ME, not my customer".
+        if (electricianCopyBcc && electricianCopyBcc.toLowerCase() !== clientEmail.toLowerCase()) {
+          const copyBanner = `<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-family:sans-serif;font-size:14px;color:#78350f;"><strong>Copy for your records</strong> — this reminder was sent to your customer at ${clientEmail}.</div>`;
+          const { error: copyError } = await resend.emails.send({
+            ...sender,
+            to: [electricianCopyBcc],
+            subject: `Copy: ${emailContent.subject}`,
+            html: copyBanner + emailContent.html,
+            text: `COPY FOR YOUR RECORDS — this reminder was sent to your customer at ${clientEmail}.\n\n${htmlToPlainText(emailContent.html)}`,
+          });
+          if (copyError) {
+            console.warn(`[automated-invoice-reminders] electrician copy failed for ${invoice.invoice_number}:`, copyError.message);
+          }
+        }
 
         // Update invoice with reminder tracking
         await supabase

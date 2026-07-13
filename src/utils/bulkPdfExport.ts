@@ -428,14 +428,31 @@ export const generateBulkPDFs = async (
         requestBody.templateId = templateId;
       }
 
-      // Call edge function to generate PDF
+      // Call edge function to generate PDF.
+      // ELE-1319 — a FunctionsFetchError is a network-level failure (connection
+      // drop / app backgrounded mid-request on native), not a function error.
+      // Retry those with backoff before giving up on the report.
       console.log(`[bulkPdfExport] Invoking ${edgeFunctionName} for ${reportId}...`);
-      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
-        edgeFunctionName,
-        {
-          body: requestBody,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let pdfResult: any = null;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let pdfError: any = null;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        ({ data: pdfResult, error: pdfError } = await supabase.functions.invoke(
+          edgeFunctionName,
+          {
+            body: requestBody,
+          }
+        ));
+        const isTransient = pdfError?.name === 'FunctionsFetchError';
+        if (!isTransient) break;
+        if (attempt < 3) {
+          console.warn(
+            `[bulkPdfExport] ${edgeFunctionName} fetch failed (attempt ${attempt}/3) — retrying...`
+          );
+          await new Promise((r) => setTimeout(r, attempt * 1500));
         }
-      );
+      }
 
       if (pdfError) {
         // ELE-NEW — Sentry log: edge function returned an error.

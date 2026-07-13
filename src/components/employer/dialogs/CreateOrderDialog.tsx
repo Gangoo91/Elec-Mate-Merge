@@ -15,6 +15,7 @@ import {
   useNextOrderNumber,
   useSuppliers,
   usePriceBook,
+  useQuotes,
 } from '@/hooks/useFinance';
 import { useJobs } from '@/hooks/useJobs';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
@@ -85,7 +86,35 @@ export function CreateOrderDialog({
   const { data: suppliers = [] } = useSuppliers();
   const { data: priceBook = [] } = usePriceBook();
   const { data: jobs = [] } = useJobs();
+  const { data: quotes = [] } = useQuotes();
   const createOrderMutation = useCreateMaterialOrder();
+  const [fromQuoteId, setFromQuoteId] = useState('');
+
+  // Pull the material lines out of a quote and pre-fill them as PO lines,
+  // priced at buy cost (price-book match) so the PO builds itself from the job.
+  const buildFromQuote = (quoteId: string) => {
+    setFromQuoteId(quoteId);
+    const quote = quotes.find((q) => q.id === quoteId);
+    if (!quote) return;
+    const lines = (quote.line_items as Array<Record<string, unknown>>) ?? [];
+    const materials = lines.filter((li) => li.type === 'material');
+    setItems(
+      materials.map((li) => {
+        const name = String(li.description ?? 'Material');
+        const match = priceBook.find((pb) => pb.name.toLowerCase() === name.toLowerCase());
+        return {
+          id: crypto.randomUUID(),
+          name,
+          sku: match?.sku ?? null,
+          unit: (li.unit as string) ?? match?.unit ?? null,
+          qty: Number(li.quantity) || 1,
+          price: match ? Number(match.buy_price) : Number(li.unitPrice) || 0,
+        };
+      })
+    );
+    const qJobId = (quote as { job_id?: string | null }).job_id;
+    if (qJobId) setJobId(qJobId);
+  };
 
   const activeJobs = jobs.filter((j) => j.status === 'Active');
   const subtotal = items.reduce((sum, item) => sum + item.qty * item.price, 0);
@@ -200,6 +229,10 @@ export function CreateOrderDialog({
     setItems(items.map((item) => (item.id === id ? { ...item, qty } : item)));
   };
 
+  const updateItemPrice = (id: string, price: number) => {
+    setItems(items.map((item) => (item.id === id ? { ...item, price } : item)));
+  };
+
   const handleSubmit = async (send = false) => {
     if (!supplierId || items.length === 0) return;
 
@@ -248,6 +281,7 @@ export function CreateOrderDialog({
     setDeliveryAddress('');
     setExpectedDate(defaultExpectedDate());
     setVatRate(20);
+    setFromQuoteId('');
   };
 
   const selectedSupplier = suppliers.find((s) => s.id === supplierId);
@@ -293,6 +327,25 @@ export function CreateOrderDialog({
             )
           }
         >
+          {quotes.length > 0 && (
+            <FormCard eyebrow="Build it for me">
+              <Field label="Start from a quote" hint="Pulls the quote's materials in at buy cost — edit before sending.">
+                <Select value={fromQuoteId} onValueChange={buildFromQuote}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Pick a quote to copy materials from" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {quotes.map((quote) => (
+                      <SelectItem key={quote.id} value={quote.id}>
+                        {quote.quote_number} · {quote.client}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormCard>
+          )}
+
           <FormCard eyebrow="Supplier & job">
             <Field label="Supplier" required>
               <Select value={supplierId} onValueChange={setSupplierId}>
@@ -405,13 +458,23 @@ export function CreateOrderDialog({
                           type="number"
                           value={item.qty}
                           onChange={(e) => updateItemQty(item.id, Number(e.target.value))}
-                          className={`${inputClass} w-16 h-8`}
+                          className={`${inputClass} w-14 h-8`}
                           min={1}
+                          aria-label="Quantity"
                         />
-                        <span className="text-[11px] text-white">
-                          × £{item.price.toFixed(2)}
-                          {item.unit ? ` / ${item.unit}` : ''}
-                        </span>
+                        <span className="text-[11px] text-white/50">× £</span>
+                        <Input
+                          type="number"
+                          value={item.price}
+                          onChange={(e) => updateItemPrice(item.id, Number(e.target.value))}
+                          className={`${inputClass} w-20 h-8`}
+                          min={0}
+                          step={0.01}
+                          aria-label="Unit cost"
+                        />
+                        {item.unit ? (
+                          <span className="text-[11px] text-white/50">/ {item.unit}</span>
+                        ) : null}
                       </div>
                     </div>
                     <div className="text-right shrink-0">

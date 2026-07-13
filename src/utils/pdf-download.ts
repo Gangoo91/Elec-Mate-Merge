@@ -51,11 +51,7 @@ export async function openOrDownloadPdf(url: string, filename = 'document.pdf'):
       recursive: true,
     });
 
-    await Share.share({
-      title: safeFilename,
-      files: [saved.uri],
-      dialogTitle: 'Save or share your PDF',
-    });
+    await shareOrSwallowCancel(saved.uri, safeFilename);
     return;
   }
 
@@ -63,27 +59,62 @@ export async function openOrDownloadPdf(url: string, filename = 'document.pdf'):
   // Avoid window.open() which would kick the user out of the PWA.
   // Fetch as blob and use a temporary <a download> link.
   if (isStandalone()) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Failed to download PDF');
-
-    const blob = await res.blob();
-    const blobUrl = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = safeFilename;
-    document.body.appendChild(a);
-    a.click();
-
-    setTimeout(() => {
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
-    }, 200);
+    await blobDownload(url, safeFilename);
     return;
   }
 
   // ── Regular browser tab ─────────────────────────────────────────────────
-  window.open(url, '_blank');
+  // By the time we get here we're several awaits past the original tap, so
+  // Safari/Chrome popup blockers can silently return null instead of opening
+  // the tab. Fall back to a blob download, which needs no user gesture — and
+  // if THAT fails (cross-origin PDF hosts like PDFMonkey's S3 send no CORS
+  // headers, so fetch rejects), navigate the current tab as a last resort.
+  const win = window.open(url, '_blank');
+  if (!win) {
+    try {
+      await blobDownload(url, safeFilename);
+    } catch {
+      window.location.assign(url);
+    }
+  }
+}
+
+/**
+ * Present the native share sheet. The user tapping "cancel" on the sheet
+ * makes Share.share() reject — that is a normal outcome, not a failure, so
+ * swallow it rather than letting callers show an "Export Failed" toast.
+ */
+async function shareOrSwallowCancel(fileUri: string, title: string): Promise<void> {
+  try {
+    await Share.share({
+      title,
+      files: [fileUri],
+      dialogTitle: 'Save or share your PDF',
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message.toLowerCase() : String(err).toLowerCase();
+    if (message.includes('cancel') || message.includes('dismiss')) return;
+    throw err;
+  }
+}
+
+async function blobDownload(url: string, filename: string): Promise<void> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to download PDF: ${res.status}`);
+
+  const blob = await res.blob();
+  const blobUrl = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  }, 200);
 }
 
 /**
@@ -113,11 +144,7 @@ export async function openOrDownloadBlobPdf(blob: Blob, filename = 'document.pdf
       recursive: true,
     });
 
-    await Share.share({
-      title: safeFilename,
-      files: [saved.uri],
-      dialogTitle: 'Save or share your PDF',
-    });
+    await shareOrSwallowCancel(saved.uri, safeFilename);
     return;
   }
 

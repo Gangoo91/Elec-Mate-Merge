@@ -19,6 +19,7 @@ import {
 import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
 import { useEmployerOverview, type RadarItem } from '@/hooks/useEmployerOverview';
 import { useLeads } from '@/hooks/useLeads';
+import { useMaterialOrders, useQuotes } from '@/hooks/useFinance';
 import { useVacancyStats } from '@/hooks/useVacancies';
 import { useQsReviewQueue } from '@/hooks/useQsReviewQueue';
 import { useJobSignals } from '@/hooks/useJobSignals';
@@ -43,6 +44,8 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   const { stats, isLoading, refetch } = useEmployerDashboardStats();
   const { data: radar, refetch: refetchRadar } = useEmployerOverview();
   const { data: leads = [] } = useLeads();
+  const { data: materialOrders = [] } = useMaterialOrders();
+  const { data: quotes = [] } = useQuotes();
   const { data: vacancyStats } = useVacancyStats();
   // QS certificates awaiting this user's sign-off (empty unless they're a QS).
   const { data: qsPending = [] } = useQsReviewQueue('pending');
@@ -98,6 +101,20 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
     void refetchRadar();
   };
 
+  // Today's money-flow signals — new leads to chase, quotes to send, and the
+  // purchase-order pipeline (late deliveries, arriving today).
+  const todayStr = new Date().toISOString().split('T')[0];
+  const awaitingPo = (o: { status: string }) =>
+    ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
+  const newLeads = leads.filter((l) => l.stage === 'New').length;
+  const unsentQuotes = quotes.filter((q) => q.status === 'Draft').length;
+  const latePOs = materialOrders.filter(
+    (o) => awaitingPo(o) && o.expected_date && o.expected_date < todayStr
+  ).length;
+  const deliveriesDue = materialOrders.filter(
+    (o) => awaitingPo(o) && o.expected_date === todayStr
+  ).length;
+
   // Named, one-tap attention rows from the radar, plus the cross-table
   // aggregates the radar reports as counts (timesheets) and the surfaces it
   // doesn't yet cover (expenses, applications).
@@ -132,6 +149,56 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
             section: 'jobs' as Section,
             tone: 'orange' as Tone,
             count: jobsNeedingAttention,
+          },
+        ]
+      : []),
+    // Money out: purchase orders overdue their delivery date.
+    ...(latePOs > 0
+      ? [
+          {
+            key: 'late-pos',
+            title: `${latePOs} purchase order${latePOs === 1 ? '' : 's'} overdue delivery`,
+            sub: 'Chase the supplier',
+            section: 'procurement' as Section,
+            tone: 'red' as Tone,
+            count: latePOs,
+          },
+        ]
+      : []),
+    ...(deliveriesDue > 0
+      ? [
+          {
+            key: 'deliveries-due',
+            title: `${deliveriesDue} deliver${deliveriesDue === 1 ? 'y' : 'ies'} due today`,
+            sub: 'Receive them in Purchasing when they land',
+            section: 'procurement' as Section,
+            tone: 'blue' as Tone,
+            count: deliveriesDue,
+          },
+        ]
+      : []),
+    // Money in: quotes to send and leads to chase.
+    ...(unsentQuotes > 0
+      ? [
+          {
+            key: 'unsent-quotes',
+            title: `${unsentQuotes} quote${unsentQuotes === 1 ? '' : 's'} not sent yet`,
+            sub: 'Send them to win the work',
+            section: 'quotes' as Section,
+            tone: 'amber' as Tone,
+            count: unsentQuotes,
+          },
+        ]
+      : []),
+    ...(newLeads > 0
+      ? [
+          {
+            key: 'new-leads',
+            title: `${newLeads} new lead${newLeads === 1 ? '' : 's'} to chase`,
+            sub: 'Reply before they go cold — Mate can draft it',
+            section: 'leads' as Section,
+            tone: 'cyan' as Tone,
+            count: newLeads,
           },
         ]
       : []),

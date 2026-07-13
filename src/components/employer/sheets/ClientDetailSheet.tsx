@@ -683,10 +683,10 @@ export function ClientDetailSheet({ client, open, onOpenChange, onNavigate }: Cl
                 <div className="flex items-center justify-between">
                   <Eyebrow>Added {fmtDate(client.created_at)}</Eyebrow>
                   <div className="flex gap-2">
-                    <SecondaryButton onClick={startEdit} size="sm">
+                    <SecondaryButton onClick={startEdit} aria-label="Edit client">
                       <Pencil className="h-4 w-4" />
                     </SecondaryButton>
-                    <SecondaryButton onClick={() => setConfirmDelete(true)} size="sm">
+                    <SecondaryButton onClick={() => setConfirmDelete(true)} aria-label="Delete client">
                       <Trash2 className="h-4 w-4" />
                     </SecondaryButton>
                   </div>

@@ -402,8 +402,14 @@ async function sendApnsPush(
 // was deprecated June 2024 and shut down. We now use FCM HTTP v1 which requires
 // an OAuth 2.0 access token derived from a Google service account.
 //
-// Env var: FCM_SERVICE_ACCOUNT_JSON — the full JSON from Firebase Console →
-// Project Settings → Service Accounts → Generate New Private Key.
+// Env var: FCM_SERVICE_ACCOUNT_JSON — a Google service account JSON with the
+// Firebase Cloud Messaging API Admin role on the Firebase project. Key creation
+// is disabled by org policy (iam.disableServiceAccountKeyCreation), so this is
+// the pre-existing elec-mate SA key granted cross-project FCM rights on
+// elec-mate-588a0 — NOT a key minted from the Firebase console.
+// Env var: FCM_PROJECT_ID — the Firebase project to send through
+// (elec-mate-588a0). Overrides the JSON's own project_id, which for the
+// cross-project SA points at the wrong project.
 //
 // The access token is cached in module scope for up to ~58 minutes (Google
 // tokens expire after 60) so high-volume push calls don't re-exchange every
@@ -426,6 +432,7 @@ async function getFcmAccessToken(): Promise<{ projectId: string; accessToken: st
     client_email: string;
     private_key: string;
   };
+  const fcmProjectId = Deno.env.get('FCM_PROJECT_ID') || sa.project_id;
 
   const now = Math.floor(Date.now() / 1000);
   const header = { alg: 'RS256', typ: 'JWT' };
@@ -483,11 +490,11 @@ async function getFcmAccessToken(): Promise<{ projectId: string; accessToken: st
 
   const tokenJson = (await tokenResponse.json()) as { access_token: string; expires_in: number };
   cachedFcmToken = {
-    projectId: sa.project_id,
+    projectId: fcmProjectId,
     token: tokenJson.access_token,
     expiresAt: Date.now() + (tokenJson.expires_in - 120) * 1000,
   };
-  return { projectId: sa.project_id, accessToken: tokenJson.access_token };
+  return { projectId: fcmProjectId, accessToken: tokenJson.access_token };
 }
 
 async function sendFcmPush(

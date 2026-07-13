@@ -38,7 +38,7 @@ GROUNDING — non-negotiable, two knowledge bases, never invent: (1) for any BUS
 
 THE FIRM — you have OVERSIGHT of the whole business. Each turn you receive a live snapshot across the entire hub: team, jobs and job packs, money (invoices, overdue, quotes, material orders, expenses to approve), hiring (vacancies, applicants), safety & ops (open incidents, open/overdue tasks), and resources (suppliers, price book). Use it: answer about any corner of the firm, make advice specific to their real numbers, and join the dots across areas (e.g. an overdue invoice that threatens cashflow on a job starting next week; a compliance gap on a worker assigned to a live job).
 
-ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies. When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-0003 to Dave for £450").
+ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies; raise purchase orders (drafts — the owner sends them). When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-0003 to Dave for £450"). When asked to order materials or "raise a PO" for a job, use create_purchase_order — price items from the firm price book (get_material_prices for anything not in it), link the job so the cost commits to it, and tell the owner to review and send it.
 
 ONBOARDING PEOPLE — when you add a team member, get their EMAIL and their PAY: salaried roles (QS, Project Manager, Supervisor) take an annual_salary, hands-on roles (Operative, Apprentice) an hourly_rate — ask if it's missing rather than assume. If you have an email, adding them automatically emails them their sign-in details: they sign in with that email and link to the firm on their own, no password handover from you. Each linked team member is a £9.99/month seat on the firm's subscription, charged only once they actually link. Tell the owner what you did in those terms, and if there's no email, tell them to share the team invite code instead. For a large batch, confirm the count first. You only ever INSERT — never overwrite or delete; the user edits in the hub. Setting up from scratch, work in order: team → suppliers → price book → jobs → quotes/invoices. For anything you don't yet have a tool for (producing PDFs, hiring an applicant), give the precise manual steps.
 
@@ -182,6 +182,37 @@ const TOOLS = [
           client_email: { type: 'string' },
         },
         required: ['client'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'create_purchase_order',
+      description:
+        'Raise a DRAFT purchase order to a supplier for materials, optionally against a job (so its cost is committed to that job). A PO number is generated. Prices are BUY/cost prices. Does NOT send it — the owner reviews and sends. Use the firm price book for costs where you can.',
+      parameters: {
+        type: 'object',
+        properties: {
+          supplier: { type: 'string', description: 'Supplier name — must already exist in the firm (add it first if not).' },
+          job: { type: 'string', description: 'Optional job title to link the PO to (commits the cost to that job).' },
+          items: {
+            type: 'array',
+            description: 'Line items to order.',
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string' },
+                qty: { type: 'number' },
+                unit_cost: { type: 'number', description: 'BUY/cost price per unit in GBP.' },
+                unit: { type: 'string' },
+              },
+              required: ['name', 'qty', 'unit_cost'],
+            },
+          },
+          notes: { type: 'string' },
+        },
+        required: ['supplier', 'items'],
       },
     },
   },
@@ -455,6 +486,7 @@ const ENTITY_MAP: Record<string, { table: string; owner: string }> = {
   job: { table: 'employer_jobs', owner: 'user_id' },
   quote: { table: 'employer_quotes', owner: 'employer_id' },
   invoice: { table: 'employer_invoices', owner: 'employer_id' },
+  purchase_order: { table: 'employer_material_orders', owner: 'employer_id' },
   job_pack: { table: 'employer_job_packs', owner: 'employer_id' },
   vacancy: { table: 'employer_vacancies', owner: 'employer_id' },
   task: { table: 'employer_job_tasks', owner: 'employer_id' },
@@ -561,6 +593,39 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
         project: args.project ?? null, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
       }, 'invoice');
       return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client} (id: ${id}).`;
+    } else if (name === 'create_purchase_order') {
+      const { data: sup } = await admin
+        .from('employer_suppliers').select('id, name').eq('employer_id', uid).ilike('name', args.supplier).limit(1).maybeSingle();
+      if (!sup?.id) return `No supplier named "${args.supplier}" yet — add the supplier first, then raise the PO.`;
+      let poJobId: string | null = null;
+      if (args.job) {
+        const { data: job } = await admin
+          .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
+        poJobId = (job?.id as string) ?? null;
+      }
+      const year = new Date().getFullYear();
+      const { data: last } = await admin
+        .from('employer_material_orders').select('order_number').eq('employer_id', uid)
+        .like('order_number', `PO-${year}-%`).order('order_number', { ascending: false }).limit(1);
+      const lastNum = last?.[0]?.order_number ? parseInt(String(last[0].order_number).split('-')[2]) || 0 : 0;
+      const poNum = `PO-${year}-${String(lastNum + 1).padStart(4, '0')}`;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const items = (args.items ?? []).map((it: any) => ({
+        name: String(it.name), qty: Number(it.qty) || 1, unit_cost: Number(it.unit_cost) || 0,
+        unit: it.unit ?? null, received_qty: 0,
+      }));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const subtotal = items.reduce((s: number, it: any) => s + it.qty * it.unit_cost, 0);
+      const vat = subtotal * 0.2;
+      const { id, error } = await ins('employer_material_orders', {
+        employer_id: uid, order_number: poNum, supplier_id: sup.id, job_id: poJobId, items,
+        subtotal, vat_rate: 20, vat_amount: vat, total: subtotal + vat, status: 'Draft',
+        delivery_mode: 'Deliver to site', order_date: new Date().toISOString().split('T')[0],
+        ordered_by: 'Mate', notes: args.notes ?? null,
+      }, 'purchase_order');
+      return error
+        ? `Failed to raise the PO: ${error.message}`
+        : `Drafted ${poNum} to ${sup.name} for £${(subtotal + vat).toFixed(2)}${poJobId ? ' (linked to the job — commits to its cost when you send it)' : ''} (id: ${id}) — review and send it in Purchasing.`;
     } else if (name === 'create_job_pack') {
       const { id, error } = await ins('employer_job_packs', {
         employer_id: uid, title: args.title, client: args.client, location: args.location, scope: args.scope ?? null,

@@ -31,6 +31,24 @@ export interface JobFinancial {
   created_at: string;
   updated_at: string;
   job?: Job;
+  /** Live from purchase orders (Sent/Confirmed/received) — not stored. */
+  committed_materials?: number;
+}
+
+// Untyped RPC escape hatch (the generated types don't include our new RPCs yet).
+const rpcCall = supabase.rpc as unknown as (
+  fn: string,
+  args?: Record<string, unknown>
+) => Promise<{ data: unknown; error: unknown }>;
+
+// job_id -> committed material cost (POs ordered but not yet booked as actual).
+async function fetchCommittedMaterials(): Promise<Map<string, number>> {
+  const map = new Map<string, number>();
+  const { data } = await rpcCall('employer_committed_materials');
+  (data as { job_id: string; committed: number }[] | null)?.forEach((r) =>
+    map.set(r.job_id, Number(r.committed) || 0)
+  );
+  return map;
 }
 
 export interface VariationOrder {
@@ -89,8 +107,10 @@ export function useJobFinancials() {
 
       // Fetch variation orders for each job
       const financials = (data || []) as JobFinancialWithJob[];
+      const committedMap = await fetchCommittedMaterials();
 
       for (const fin of financials) {
+        fin.committed_materials = committedMap.get(fin.job_id) || 0;
         const { data: variations } = await supabase
           .from('variation_orders')
           .select('*')
@@ -136,8 +156,11 @@ export function useJobFinancial(jobId: string | undefined) {
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
 
+      const committedMap = await fetchCommittedMaterials();
+
       return {
         ...data,
+        committed_materials: committedMap.get(jobId) || 0,
         variation_orders: (variations || []) as VariationOrder[],
       } as JobFinancialWithJob;
     },

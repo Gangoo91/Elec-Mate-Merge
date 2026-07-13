@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { RefreshCw, Phone, Mail, Plus } from 'lucide-react';
+import { RefreshCw, Phone, Mail, Plus, PackageCheck } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -18,6 +18,7 @@ import {
   IconButton,
   PrimaryButton,
   SecondaryButton,
+  DestructiveButton,
   SheetShell,
   type Tone,
 } from '@/components/employer/editorial';
@@ -36,6 +37,10 @@ import { CreateOrderDialog } from '@/components/employer/dialogs/CreateOrderDial
 import { CreateSupplierDialog } from '@/components/employer/dialogs/CreateSupplierDialog';
 import { generatePoPdf } from '@/utils/generatePoPdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { ReceiveDeliverySheet } from '@/components/employer/sheets/ReceiveDeliverySheet';
+import { useGoodsReceipts } from '@/hooks/useGoodsReceipts';
+import { useSupplierInvoices, useMatchInvoice } from '@/hooks/useSupplierInvoices';
+import { openExternalUrl } from '@/utils/open-external-url';
 import type { MaterialOrder, Supplier } from '@/services/financeService';
 
 type TabValue = 'all' | 'orders' | 'suppliers' | 'pat';
@@ -65,23 +70,6 @@ const orderStatusTone = (status: string): Tone => {
       return 'red';
     default:
       return 'purple'; // Draft
-  }
-};
-
-// The next lifecycle step for a PO (null = terminal). Slice 1 replaces the
-// Draft→Sent step with a real "send PDF + email to supplier" action.
-const nextOrderStatus = (status: string): { to: string; label: string } | null => {
-  switch (status) {
-    case 'Draft':
-      return { to: 'Sent', label: 'Mark as sent' };
-    case 'Sent':
-      return { to: 'Confirmed', label: 'Mark confirmed' };
-    case 'Confirmed':
-      return { to: 'Received', label: 'Mark received' };
-    case 'Part-received':
-      return { to: 'Received', label: 'Mark fully received' };
-    default:
-      return null;
   }
 };
 
@@ -128,12 +116,16 @@ export function ProcurementSection() {
   const [selectedOrder, setSelectedOrder] = useState<MaterialOrder | null>(null);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [editSupplier, setEditSupplier] = useState<Supplier | null>(null);
+  const [receiveOrder, setReceiveOrder] = useState<MaterialOrder | null>(null);
 
   const queryClient = useQueryClient();
   const { data: materialOrders = [], isLoading: ordersLoading } = useMaterialOrders();
   const { data: suppliers = [], isLoading: suppliersLoading } = useSuppliers();
   const { data: companyTools = [], isLoading: toolsLoading } = useCompanyTools();
   const { data: jobs = [] } = useJobs();
+  const { data: receipts = [] } = useGoodsReceipts(selectedOrder?.id);
+  const { data: supplierInvoices = [] } = useSupplierInvoices(selectedOrder?.id);
+  const matchInvoice = useMatchInvoice();
   const toolStats = useToolStats();
   const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title : undefined);
   const updateOrderStatusMutation = useUpdateOrderStatus();
@@ -204,6 +196,10 @@ export function ProcurementSection() {
   };
 
   const sendPoToSupplier = async (order: MaterialOrder) => {
+    if (!Array.isArray(order.items) || order.items.length === 0) {
+      toast.error('This PO has no line items to send.');
+      return;
+    }
     const supplier = supplierForOrder(order);
     if (!supplier?.email) {
       toast.error('Add an email to this supplier first, then send.');
@@ -224,6 +220,7 @@ export function ProcurementSection() {
       });
       if (error) throw error;
       queryClient.invalidateQueries({ queryKey: ['material_orders'] });
+      queryClient.invalidateQueries({ queryKey: ['job-financials'] }); // committed cost moves
       setSelectedOrder(null);
       toast.success(`PO sent to ${supplier.name}.`);
     } catch {
@@ -321,8 +318,8 @@ export function ProcurementSection() {
       name: string;
       unit_cost: number;
       unit?: string | null;
+      received_qty?: number;
     }>) ?? [];
-  const nextStep = selectedOrder ? nextOrderStatus(selectedOrder.status) : null;
   const canCancelPo =
     !!selectedOrder && !['Received', 'Cancelled'].includes(selectedOrder.status);
   const orderSupplier = supplierForOrder(selectedOrder);
@@ -378,14 +375,12 @@ export function ProcurementSection() {
               onAction={() => setShowOrderDialog(true)}
             />
             {filteredOrders.length === 0 ? (
-              <div className="p-5 sm:p-6">
-                <EmptyState
-                  title="No purchase orders"
-                  description={q ? 'No POs match your search.' : 'Raise your first purchase order to send to a supplier and track spend against the job.'}
-                  action={q ? undefined : 'Raise PO'}
-                  onAction={q ? undefined : () => setShowOrderDialog(true)}
-                />
-              </div>
+              <EmptyState
+                title="No purchase orders"
+                description={q ? 'No POs match your search.' : 'Raise your first purchase order to send to a supplier and track spend against the job.'}
+                action={q ? undefined : 'Raise PO'}
+                onAction={q ? undefined : () => setShowOrderDialog(true)}
+              />
             ) : (
               <ListBody>
                 {filteredOrders.map((o) => {
@@ -495,12 +490,10 @@ export function ProcurementSection() {
               }
             />
             {filteredTools.length === 0 ? (
-              <div className="p-5 sm:p-6">
-                <EmptyState
-                  title="No equipment logged"
-                  description={q ? 'No equipment matches your search.' : 'Add tools to track PAT testing and calibration intervals.'}
-                />
-              </div>
+              <EmptyState
+                title="No equipment logged"
+                description={q ? 'No equipment matches your search.' : 'Add tools to track PAT testing and calibration intervals.'}
+              />
             ) : (
               <ListBody>
                 {filteredTools.map((t) => {
@@ -567,25 +560,17 @@ export function ProcurementSection() {
                       {sendingPo ? 'Sending…' : 'Send to supplier'}
                     </PrimaryButton>
                   ) : (
-                    nextStep && (
+                    ['Sent', 'Confirmed', 'Part-received'].includes(selectedOrder.status) && (
                       <PrimaryButton
                         onClick={() => {
-                          updateOrderStatusMutation.mutate(
-                            {
-                              id: selectedOrder.id,
-                              status: nextStep.to,
-                              deliveryDate:
-                                nextStep.to === 'Received'
-                                  ? new Date().toISOString().split('T')[0]
-                                  : undefined,
-                            },
-                            { onSuccess: () => setSelectedOrder(null) }
-                          );
+                          const o = selectedOrder;
+                          setSelectedOrder(null);
+                          setReceiveOrder(o);
                         }}
-                        disabled={updateOrderStatusMutation.isPending}
                         fullWidth
                       >
-                        {updateOrderStatusMutation.isPending ? 'Updating…' : nextStep.label}
+                        <PackageCheck className="h-4 w-4 mr-1.5" />
+                        Receive delivery
                       </PrimaryButton>
                     )
                   )}
@@ -613,16 +598,14 @@ export function ProcurementSection() {
               <ListCard>
                 <ListCardHeader tone="cyan" title="Line items" />
                 {selectedOrderItems.length === 0 ? (
-                  <div className="p-5 sm:p-6">
-                    <EmptyState title="No line items" />
-                  </div>
+                  <EmptyState title="No line items" />
                 ) : (
                   <ListBody>
                     {selectedOrderItems.map((item, idx) => (
                       <ListRow
                         key={`${item.name}-${idx}`}
                         title={item.name}
-                        subtitle={`Qty ${item.qty} · £${Number(item.unit_cost).toFixed(2)} ea${item.unit ? ` / ${item.unit}` : ''}`}
+                        subtitle={`Qty ${item.qty} · £${Number(item.unit_cost).toFixed(2)} ea${item.unit ? ` / ${item.unit}` : ''}${Number(item.received_qty || 0) > 0 ? ` · ${Number(item.received_qty)} received` : ''}`}
                         trailing={
                           <span className="text-[14px] font-semibold text-white tabular-nums">
                             £{(Number(item.qty) * Number(item.unit_cost)).toFixed(2)}
@@ -651,7 +634,7 @@ export function ProcurementSection() {
               </ListCard>
 
               <ListCard>
-                <ListCardHeader title="Details" />
+                <ListCardHeader tone="default" title="Details" />
                 <ListBody>
                   {jobTitleFor(selectedOrder.job_id) && (
                     <ListRow
@@ -699,6 +682,102 @@ export function ProcurementSection() {
                 </ListCard>
               )}
 
+              {receipts.length > 0 && (
+                <ListCard>
+                  <ListCardHeader
+                    tone="emerald"
+                    title="Deliveries"
+                    meta={<Pill tone="emerald">{receipts.length}</Pill>}
+                  />
+                  <ListBody>
+                    {receipts.map((r) => {
+                      const qty = r.lines.reduce((s, l) => s + Number(l.qty_received || 0), 0);
+                      return (
+                        <ListRow
+                          key={r.id}
+                          title={formatDate(r.received_at)}
+                          subtitle={`${qty} item${qty === 1 ? '' : 's'} received${r.notes ? ` · ${r.notes}` : ''}`}
+                          trailing={
+                            r.delivery_note_url ? (
+                              <button
+                                type="button"
+                                onClick={() => openExternalUrl(r.delivery_note_url as string)}
+                                className="text-[12px] text-elec-yellow/90 hover:text-elec-yellow touch-manipulation"
+                              >
+                                View note
+                              </button>
+                            ) : undefined
+                          }
+                        />
+                      );
+                    })}
+                  </ListBody>
+                </ListCard>
+              )}
+
+              {selectedOrder.status !== 'Draft' && selectedOrder.status !== 'Cancelled' && (
+                <ListCard>
+                  <ListCardHeader
+                    tone="amber"
+                    title="Supplier invoice"
+                    meta={
+                      supplierInvoices.length > 0 ? (
+                        <Pill tone="default">{supplierInvoices.length}</Pill>
+                      ) : undefined
+                    }
+                  />
+                  <div className="px-5 sm:px-6 py-4 space-y-3">
+                    <label className="flex items-center justify-center gap-2 h-11 rounded-xl border border-dashed border-white/[0.15] bg-white/[0.03] text-[13px] text-white/70 cursor-pointer touch-manipulation hover:bg-white/[0.05]">
+                      <Mail className="h-4 w-4" />
+                      {matchInvoice.isPending ? 'Checking invoice…' : 'Match a supplier invoice'}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        className="hidden"
+                        disabled={matchInvoice.isPending}
+                        onChange={(e) => {
+                          const f = e.target.files?.[0];
+                          if (f) matchInvoice.mutate({ orderId: selectedOrder.id, file: f });
+                          e.target.value = '';
+                        }}
+                      />
+                    </label>
+                    <p className="text-[11px] text-white/45">
+                      Photograph the invoice — we check it against the PO and what you received.
+                    </p>
+                    {supplierInvoices.map((inv) => (
+                      <div
+                        key={inv.id}
+                        className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3 space-y-1.5"
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[13px] text-white truncate">
+                            {inv.supplier_name || 'Invoice'}
+                            {inv.invoice_number ? ` · ${inv.invoice_number}` : ''}
+                          </span>
+                          <span className="text-[13px] font-semibold text-white tabular-nums">
+                            £{Number(inv.invoice_total).toFixed(2)}
+                          </span>
+                        </div>
+                        {inv.matched ? (
+                          <Pill tone="emerald">Matches PO</Pill>
+                        ) : (
+                          <ul className="space-y-1">
+                            {inv.variances.map((v, i) => (
+                              <li key={i} className="text-[12px] text-amber-300 leading-snug">
+                                • {v.detail}
+                                {v.amount > 0 ? ` (+£${Number(v.amount).toFixed(2)})` : ''}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </ListCard>
+              )}
+
               {selectedOrder.status === 'Draft' && supplierNeedsEmail && orderSupplier && (
                 <ListCard>
                   <ListCardHeader tone="amber" title="Supplier email needed" />
@@ -727,8 +806,7 @@ export function ProcurementSection() {
               )}
 
               {canCancelPo && (
-                <button
-                  type="button"
+                <DestructiveButton
                   onClick={() =>
                     updateOrderStatusMutation.mutate(
                       { id: selectedOrder.id, status: 'Cancelled' },
@@ -736,10 +814,10 @@ export function ProcurementSection() {
                     )
                   }
                   disabled={updateOrderStatusMutation.isPending}
-                  className="w-full h-11 rounded-xl text-[13px] text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation disabled:opacity-50"
+                  fullWidth
                 >
                   Cancel this PO
-                </button>
+                </DestructiveButton>
               )}
             </SheetShell>
           )}
@@ -844,6 +922,11 @@ export function ProcurementSection() {
         onCreated={(order, send) => {
           if (send) sendPoToSupplier(order);
         }}
+      />
+      <ReceiveDeliverySheet
+        open={!!receiveOrder}
+        order={receiveOrder}
+        onOpenChange={(o) => !o && setReceiveOrder(null)}
       />
       <CreateSupplierDialog
         open={showSupplierDialog}

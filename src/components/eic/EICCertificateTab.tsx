@@ -19,6 +19,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
+import { useQsTeamContext } from '@/hooks/useQsReview';
+import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import EICValidationPanel from './EICValidationPanel';
 import type { EICTabId } from '@/hooks/useEICValidation';
 
@@ -90,6 +92,9 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const { getDefaultProfile } = useInspectorProfiles();
+  // ELE-1307 — company team members who aren't the QS can't self-authorise.
+  const { data: qsCtx } = useQsTeamContext();
+  const lockedForQs = qsCtx?.is_team_member === true && qsCtx?.am_i_qs !== true;
   const [openSections, setOpenSections] = useState({
     // Auto-loaded from profile on mount — keep collapsed until user wants to edit.
     reportAuthorised: false,
@@ -101,8 +106,12 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  // Auto-fill from inspector profile or company settings on mount if fields are empty
+  // Auto-fill from inspector profile or company settings on mount if fields are empty.
+  // ELE-1307 — never auto-fill while the QS context is still loading, and never
+  // for a non-QS team member: it would silently write THEIR signature into the
+  // QS countersignature block hidden behind the locked panel.
   useEffect(() => {
+    if (qsCtx === undefined || lockedForQs) return;
     if (!formData.reportAuthorisedByName) {
       const inspectorProfile = getDefaultProfile();
 
@@ -156,7 +165,8 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
         onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
       }
     }
-  }, [companyProfile, getDefaultProfile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [companyProfile, getDefaultProfile, qsCtx, lockedForQs]);
 
   // Completion checks
   const isReportAuthorisedComplete =
@@ -282,7 +292,27 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
       {/* Pre-flight validation summary — surfaces what's missing before user taps Generate */}
       <EICValidationPanel formData={formData} onJumpToTab={onJumpToTab} />
 
-      {/* Report Authorised For Issue By */}
+      {/* QS review — submit/track/countersign. Renders nothing for solo users. */}
+      <QsReviewPanel reportId={reportId} reportType="eic" onBeforeSubmit={onSaveDraft} />
+
+      {/* ELE-1307 — Report Authorisation is the QS's countersignature. Team
+          members who aren't the QS see a locked explainer instead of editable
+          fields; solo users (not on a company team) remain their own QS. */}
+      {lockedForQs ? (
+        <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-2">
+          <div className="flex items-center gap-2">
+            <Shield className="h-4 w-4 text-elec-yellow" />
+            <h3 className="text-xs font-medium text-white uppercase tracking-wider">
+              Report Authorisation
+            </h3>
+          </div>
+          <p className="text-xs leading-relaxed text-white/70">
+            This section is completed by your company's Qualifying Supervisor. Use{' '}
+            <span className="text-elec-yellow">Send for QS review</span> above — their
+            countersignature is applied automatically when they approve this certificate.
+          </p>
+        </div>
+      ) : (
       <CollapsibleSection
         title="Report Authorisation"
         icon={Award}
@@ -385,6 +415,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
           </div>
         </div>
       </CollapsibleSection>
+      )}
 
       {/* Compliance Confirmations */}
       <div className="space-y-3">

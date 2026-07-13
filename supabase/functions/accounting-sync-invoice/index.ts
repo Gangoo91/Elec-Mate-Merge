@@ -304,6 +304,12 @@ Deno.serve(async (req: Request) => {
       currency: 'GBP',
       isPaid: invoice.invoice_status === 'paid',
       paidAt: invoice.invoice_paid_at,
+      // ELE-1318 — CIS domestic reverse charge: VAT is accounted for by the
+      // customer, so the invoice carries no VAT but must be coded as DRC in
+      // the accounting provider (NOT zero-rated/exempt).
+      reverseCharge:
+        (invoice.settings as Record<string, unknown> | null)?.reverseCharge === true ||
+        (invoice.settings as Record<string, unknown> | null)?.reverseCharge === 'true',
     };
 
     // Sync to provider - WITHOUT retry/timeout wrappers for now to simplify debugging
@@ -637,6 +643,7 @@ interface InvoiceData {
   currency: string;
   isPaid?: boolean;
   paidAt?: string;
+  reverseCharge?: boolean;
 }
 
 interface SyncResult {
@@ -887,8 +894,21 @@ async function syncToQuickBooks(
   // Resolve the sales tax code once. UK QuickBooks requires a TaxCodeRef on every
   // sales line; without it QuickBooks drops the VAT and can reject the invoice
   // with a business validation error. ELE-1235.
-  const vatTaxCodeId = await getQBSalesTaxCode(accessToken, realmId, invoice.vatAmount > 0);
-  console.log('VAT tax code:', vatTaxCodeId, '(vatAmount:', invoice.vatAmount, ')');
+  const vatTaxCodeId = await getQBSalesTaxCode(
+    accessToken,
+    realmId,
+    invoice.vatAmount > 0,
+    invoice.reverseCharge === true
+  );
+  console.log(
+    'VAT tax code:',
+    vatTaxCodeId,
+    '(vatAmount:',
+    invoice.vatAmount,
+    'reverseCharge:',
+    invoice.reverseCharge === true,
+    ')'
+  );
 
   // Format line items for QuickBooks - distribute overhead/profit into each line item
   // MUST include ItemRef or amounts are ignored!
@@ -928,7 +948,15 @@ async function syncToQuickBooks(
     TxnDate: invoice.date?.split('T')[0],
     DueDate: invoice.dueDate?.split('T')[0],
     Line: lineItems,
-    CustomerMemo: invoice.notes ? { value: invoice.notes } : undefined,
+    // ELE-1318 — HMRC requires reverse-charge wording on the invoice itself.
+    CustomerMemo: (() => {
+      const drcNote =
+        invoice.reverseCharge === true
+          ? 'Domestic reverse charge: customer to account for VAT to HMRC (VAT Act 1994 s55A).'
+          : '';
+      const memo = [invoice.notes, drcNote].filter(Boolean).join('\n\n');
+      return memo ? { value: memo } : undefined;
+    })(),
   });
 
   const postInvoice = (payload: unknown) =>
@@ -1166,7 +1194,8 @@ async function getOrCreateQBServiceItem(
 async function getQBSalesTaxCode(
   accessToken: string,
   realmId: string,
-  vatable: boolean
+  vatable: boolean,
+  reverseCharge = false
 ): Promise<string | null> {
   try {
     const query = `SELECT * FROM TaxCode MAXRESULTS 100`;
@@ -1186,6 +1215,22 @@ async function getQBSalesTaxCode(
 
     const name = (c: any) => String(c.Name || '');
     const byName = (re: RegExp) => codes.find((c: any) => re.test(name(c)));
+
+    // ELE-1318 — CIS domestic reverse charge. UK QuickBooks companies have
+    // dedicated DRC codes ("Domestic Reverse Charge @ 20%" / "@ 5%"); coding
+    // the sale with one puts the right figures on the customer's VAT return
+    // and prints the DRC treatment on the QBO invoice. Prefer the 20% code.
+    // Fall back to the zero-rated path when the company has no DRC code so
+    // the sync still succeeds (memo wording is added either way).
+    if (reverseCharge) {
+      const drcCodes = codes.filter((c: any) => /reverse\s*charge/i.test(name(c)));
+      const drc =
+        drcCodes.find((c: any) => /20/.test(name(c))) || drcCodes[0];
+      if (drc) return String(drc.Id);
+      console.warn(
+        '[getQBSalesTaxCode] no Domestic Reverse Charge tax code in this QBO company — falling back to zero-rated (ELE-1318)'
+      );
+    }
 
     if (vatable) {
       // Standard-rated 20% sales VAT — exclude EC acquisition / purchase / reverse

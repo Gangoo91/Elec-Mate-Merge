@@ -128,11 +128,19 @@ export const reportCloud = {
         .eq('user_id', userId)
         .is('deleted_at', null);
 
-      if (!includeAutoDrafts) {
+      // ELE-1305 — 'draft' means both manual drafts and auto-saves: a filter
+      // tab literally named "Drafts" showing 0 while 12 auto-saved forms exist
+      // reads as "my certificates disappeared".
+      const draftFilter = statusFilter === 'draft';
+      if (!includeAutoDrafts && !draftFilter) {
         countQuery = countQuery.neq('status', 'auto-draft');
       }
       if (reportTypeFilter) countQuery = countQuery.eq('report_type', reportTypeFilter);
-      if (statusFilter) countQuery = countQuery.eq('status', statusFilter);
+      if (statusFilter) {
+        countQuery = draftFilter
+          ? countQuery.in('status', ['draft', 'auto-draft'])
+          : countQuery.eq('status', statusFilter);
+      }
       if (options?.dateFrom) countQuery = countQuery.gte('updated_at', options.dateFrom);
       if (options?.dateTo) countQuery = countQuery.lte('updated_at', options.dateTo);
 
@@ -148,11 +156,15 @@ export const reportCloud = {
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
 
-      if (!includeAutoDrafts) {
+      if (!includeAutoDrafts && !draftFilter) {
         query = query.neq('status', 'auto-draft');
       }
       if (reportTypeFilter) query = query.eq('report_type', reportTypeFilter);
-      if (statusFilter) query = query.eq('status', statusFilter);
+      if (statusFilter) {
+        query = draftFilter
+          ? query.in('status', ['draft', 'auto-draft'])
+          : query.eq('status', statusFilter);
+      }
       if (options?.dateFrom) query = query.gte('updated_at', options.dateFrom);
       if (options?.dateTo) query = query.lte('updated_at', options.dateTo);
 

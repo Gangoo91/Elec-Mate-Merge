@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { FileText, Send, AlertCircle, Plus, CheckCircle, Search, ArrowLeft, X, Clock, ChevronRight, ArrowUpDown } from 'lucide-react';
+import { FileText, Send, AlertCircle, Plus, CheckCircle, Search, ArrowLeft, X, Clock, ChevronRight, ArrowUpDown, FileSpreadsheet } from 'lucide-react';
+import InvoiceExportSheet from '@/components/electrician/invoice-builder/InvoiceExportSheet';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { isPast, addHours } from 'date-fns';
 import { Quote } from '@/types/quote';
@@ -58,6 +59,7 @@ const InvoicesPage = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isExportOpen, setIsExportOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const { recordExternalPayment } = useAccountingIntegrations();
@@ -626,6 +628,13 @@ const InvoicesPage = () => {
                 Quotes
               </button>
               <button
+                onClick={() => setIsExportOpen(true)}
+                aria-label="Export invoices to Excel"
+                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+              >
+                <FileSpreadsheet className="h-5 w-5 text-white" />
+              </button>
+              <button
                 onClick={() => setIsSearchOpen(true)}
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
@@ -966,6 +975,9 @@ const InvoicesPage = () => {
         errorMessage={generationError}
         documentLabel="Invoice"
       />
+
+      {/* ELE-1328 — Invoice Summary Excel export (fetches its own full history) */}
+      <InvoiceExportSheet open={isExportOpen} onOpenChange={setIsExportOpen} />
     </div>
   );
 };

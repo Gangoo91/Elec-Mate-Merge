@@ -32,6 +32,36 @@ function normaliseEarthing(raw: string): string {
   return map[raw.toLowerCase()] ?? raw;
 }
 
+function capitaliseFirst(raw: string): string {
+  if (!raw) return '';
+  return raw.charAt(0).toUpperCase() + raw.slice(1);
+}
+
+// ELE-1315 — workType holds one or more comma-separated values.
+const WORK_TYPE_LABELS: Record<string, string> = {
+  new: 'New installation',
+  addition: 'Addition to existing',
+  alteration: 'Alteration to existing',
+  'db-upgrade': 'DB upgrade/replacement',
+};
+
+function workTypeList(raw: unknown): string[] {
+  return String(raw || '')
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
+function hasWorkType(raw: unknown, type: string): boolean {
+  return workTypeList(raw).includes(type);
+}
+
+function formatWorkTypes(raw: unknown): string {
+  return workTypeList(raw)
+    .map((v) => WORK_TYPE_LABELS[v] ?? capitaliseFirst(v))
+    .join(', ');
+}
+
 function normalisePartPCompliance(raw: string): string {
   if (!raw) return 'N/A';
   if (raw === 'notApplicable' || raw === 'not-applicable') return 'Not Applicable';
@@ -210,8 +240,21 @@ export async function formatEicJson(
       address: formData.installationAddress || '',
       same_as_client_address:
         formData.sameAsClientAddress === true || formData.sameAsClientAddress === 'true',
-      installation_type: formData.installationType || '',
-      work_type: formData.workType || formData.installationType || '',
+      // ELE-1314 — shown on the cert as "Property Type"; capitalise the value.
+      installation_type: capitaliseFirst(String(formData.installationType || '')),
+      property_type: capitaliseFirst(String(formData.installationType || '')),
+      // ELE-1315 — workType is multi-select, stored comma-separated. Keep
+      // work_type RAW: the live PDFMonkey template string-matches 'new' /
+      // 'addition' / 'alteration' for the cover status and tick-boxes, so a
+      // humanised value here blanks every checkbox and prints "NEW ELECTRICAL
+      // INSTALLATION" on alteration certs. The humanised list + booleans are
+      // extra fields for the template rework (weekend PDF cluster).
+      work_type: String(formData.workType || formData.installationType || ''),
+      work_type_display: formatWorkTypes(formData.workType),
+      work_type_new: hasWorkType(formData.workType, 'new'),
+      work_type_addition: hasWorkType(formData.workType, 'addition'),
+      work_type_alteration: hasWorkType(formData.workType, 'alteration'),
+      work_type_db_upgrade: hasWorkType(formData.workType, 'db-upgrade'),
       description: formData.description || '',
       extent_of_installation: formData.extentOfInstallation || '',
       installation_date: formData.installationDate || '',

@@ -229,32 +229,46 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
       {/* Description and Extent of Installation */}
       <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
         <SectionTitle title="Description & Extent of Installation" />
-          {/* Work Type + Premises side by side */}
+          {/* Work Type — multi-select (ELE-1315): a job is often an addition
+              AND an alteration, and a DB upgrade deserves its own box. Stored
+              comma-separated in workType. */}
           <div className="grid grid-cols-4 gap-1.5">
             {[
               { value: 'new', label: 'New' },
               { value: 'addition', label: 'Addition' },
               { value: 'alteration', label: 'Alteration' },
-            ].map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => {
-                  haptic.light();
-                  handleFieldChange('workType', localValues.workType === option.value ? '' : option.value);
-                  flush();
-                }}
-                className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
-                  localValues.workType === option.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {localValues.workType === option.value && <Check className="h-3 w-3" />}
-                {option.label}
-              </button>
-            ))}
+              { value: 'db-upgrade', label: 'DB Upgrade' },
+            ].map((option) => {
+              const selected = String(localValues.workType || '')
+                .split(',')
+                .filter(Boolean);
+              const isActive = selected.includes(option.value);
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    const next = isActive
+                      ? selected.filter((v) => v !== option.value)
+                      : [...selected, option.value];
+                    handleFieldChange('workType', next.join(','));
+                    flush();
+                  }}
+                  className={cn(
+                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
+                    isActive
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {isActive && <Check className="h-3 w-3" />}
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="grid grid-cols-1 gap-1.5">
             <MobileSelectPicker
               value={localValues.installationType || ''}
               onValueChange={(value) => { haptic.light(); handleFieldChange('installationType', value); flush(); }}
@@ -264,8 +278,8 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
                 { value: 'industrial', label: 'Industrial' },
                 { value: 'other', label: 'Other' },
               ]}
-              placeholder="Premises"
-              title="Premises Type"
+              placeholder="Property type"
+              title="Property Type"
               triggerClassName="h-10 text-[11px]"
             />
           </div>

@@ -263,6 +263,9 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         status: statusFilter,
         dateFrom: resolvedDateRange.from,
         dateTo: resolvedDateRange.to,
+        // ELE-1305 — the library shows auto-saved work (badged "Auto-saved");
+        // only the dashboard's Recent Certs hides it.
+        includeAutoDrafts: true,
       });
       return result;
     },
@@ -276,7 +279,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     queryKey: ['my-reports-counts', user?.id],
     queryFn: async () => {
       if (!user) return { total: 0, byType: {}, byStatus: {} };
-      return await reportCloud.getReportCounts(user.id);
+      return await reportCloud.getReportCounts(user.id, { includeAutoDrafts: true });
     },
     enabled: !!user,
   });
@@ -342,16 +345,19 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // Falls back to loaded reports while counts query is still pending.
   const statusCounts = useMemo(() => {
     if (countsData) {
+      // ELE-1305 — auto-saved forms count as drafts; the Drafts tab shows them.
+      const draftCount =
+        (countsData.byStatus.draft || 0) + (countsData.byStatus['auto-draft'] || 0);
       return {
         all: countsData.total,
-        draft: countsData.byStatus.draft || 0,
+        draft: draftCount,
         'in-progress': countsData.byStatus['in-progress'] || 0,
         completed: countsData.byStatus.completed || 0,
       };
     }
     return {
       all: reports.length,
-      draft: reports.filter((r) => r.status === 'draft').length,
+      draft: reports.filter((r) => r.status === 'draft' || r.status === 'auto-draft').length,
       'in-progress': reports.filter((r) => r.status === 'in-progress').length,
       completed: reports.filter((r) => r.status === 'completed').length,
     };
@@ -1163,7 +1169,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               type ChipItem =
                 | { kind: 'chip'; value: string; label: string }
                 | { kind: 'divider'; key: string };
-              const items: ChipItem[] = [{ kind: 'chip', value: 'all', label: 'All' }];
+              // ELE-1306 — no 'All' chip here: the status row already carries the
+              // global count, and a second "All 23" read as a duplicate. Tapping
+              // the active type chip clears the type filter instead.
+              const items: ChipItem[] = [];
               for (const group of TYPE_GROUPS) {
                 const visible = group.types.filter(
                   (t) =>
@@ -1172,7 +1181,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     typeFilter === t.value
                 );
                 if (visible.length === 0) continue;
-                items.push({ kind: 'divider', key: `div-${group.label}` });
+                if (items.length > 0) items.push({ kind: 'divider', key: `div-${group.label}` });
                 for (const t of visible)
                   items.push({ kind: 'chip', value: t.value, label: t.label });
               }
@@ -1194,7 +1203,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     key={value}
                     onClick={() => {
                       navigator.vibrate?.(10);
-                      setTypeFilter(value);
+                      // Tap the active chip again to clear the type filter.
+                      setTypeFilter(typeFilter === value ? 'all' : value);
                     }}
                     className={cn(
                       'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-1.5',

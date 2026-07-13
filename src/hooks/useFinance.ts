@@ -293,6 +293,7 @@ export function useCreateMaterialOrder() {
       financeService.createMaterialOrder(order),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['material_orders'] });
+      queryClient.invalidateQueries({ queryKey: ['job-financials'] }); // committed cost
       toast.success('Order created');
     },
     onError: (error: Error) => {
@@ -315,6 +316,7 @@ export function useUpdateOrderStatus() {
     }) => financeService.updateOrderStatus(id, status, deliveryDate),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['material_orders'] });
+      queryClient.invalidateQueries({ queryKey: ['job-financials'] }); // committed cost
       toast.success('Order status updated');
     },
     onError: (error: Error) => {

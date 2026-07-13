@@ -172,17 +172,9 @@ const handler = async (req: Request): Promise<Response> => {
       companyEmail: companyProfile?.company_email,
     });
 
-    // ELE-880 — BCC the electrician so they receive a copy in their own
-    // inbox containing the "Mark as paid" button. This is what makes the
-    // one-tap close-the-loop UX work: when the client replies "I've paid",
-    // the electrician opens the original reminder (now in their inbox) and
-    // taps the link.
-    const electricianCopyBcc = sender.replyTo || undefined;
-
     const { data: emailResult, error: emailError } = await resend.emails.send({
       ...sender,
       to: [clientEmail],
-      ...(electricianCopyBcc ? { bcc: [electricianCopyBcc] } : {}),
       subject: emailContent.subject,
       html: emailContent.html,
       text: htmlToPlainText(emailContent.html),
@@ -196,15 +188,52 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Update invoice reminder tracking
-    await supabase
+    // ELE-880 / ELE-1317 — send the electrician a clearly-labelled copy in a
+    // separate email rather than an identical BCC. The identical BCC read as
+    // "the reminder was sent to ME, not my customer" (Mark, 2026-07-13). The
+    // copy carries the "Mark as paid" button so the close-the-loop UX stays.
+    const electricianEmail = sender.replyTo || undefined;
+    if (electricianEmail && electricianEmail.toLowerCase() !== clientEmail.toLowerCase()) {
+      const copyBanner = `<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-family:sans-serif;font-size:14px;color:#78350f;"><strong>Copy for your records</strong> — this reminder was sent to your customer at ${clientEmail}.</div>`;
+      const { error: copyError } = await resend.emails.send({
+        ...sender,
+        to: [electricianEmail],
+        subject: `Copy: ${emailContent.subject}`,
+        html: copyBanner + emailContent.html,
+        text: `COPY FOR YOUR RECORDS — this reminder was sent to your customer at ${clientEmail}.\n\n${htmlToPlainText(emailContent.html)}`,
+      });
+      if (copyError) {
+        // Client leg already succeeded — log and carry on.
+        console.warn('[send-payment-reminder] electrician copy failed:', copyError);
+      }
+    }
+
+    // Update invoice reminder tracking.
+    // ELE-1317 — this update previously wrote `last_reminder_type`, a column
+    // that does not exist on `quotes`, so the whole update silently failed
+    // and reminder_count/last_reminder_sent_at never moved.
+    const { error: trackingError } = await supabase
       .from('quotes')
       .update({
         last_reminder_sent_at: new Date().toISOString(),
-        last_reminder_type: reminderType,
         reminder_count: (invoice.reminder_count || 0) + 1,
       })
       .eq('id', invoiceId);
+    if (trackingError) {
+      console.error('[send-payment-reminder] tracking update failed:', trackingError.message);
+    }
+
+    // ELE-1317 — record history where the invoice panel actually reads it.
+    const { error: historyError } = await supabase.from('invoice_reminders').insert({
+      quote_id: invoiceId,
+      user_id: invoice.user_id,
+      reminder_type: reminderType,
+      sent_at: new Date().toISOString(),
+      sent_to_email: clientEmail,
+    });
+    if (historyError) {
+      console.error('[send-payment-reminder] history insert failed:', historyError.message);
+    }
 
     console.log(`${reminderType} reminder sent successfully to ${clientEmail}`);
 

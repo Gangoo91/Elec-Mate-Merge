@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -566,18 +566,69 @@ const Subscriptions = () => {
           </div>
         )}
 
-        {/* Where-to-manage notice */}
-        <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-4 py-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-300 mb-1">
-            Manage your subscription where you bought it
-          </p>
-          <p className="text-[13px] text-white/80 leading-relaxed">
-            Apple and Google require subscriptions purchased through their stores to be managed in
-            their settings, and Stripe subscriptions can only be managed via the web. If you bought
-            on the web and signed in on the iOS app, you'll need to cancel or change your plan from
-            a browser — not in the app. Same the other way around.
-          </p>
-        </div>
+        {/* Where-your-billing-lives card — always visible to subscribers so
+            nobody hunts for the cancel/change button in the wrong place.
+            Copy + action adapt to where the subscription was purchased. */}
+        {isSubscribed &&
+          (() => {
+            const platform = Capacitor.getPlatform(); // 'web' | 'ios' | 'android'
+            const source = profile?.subscription_source ?? 'stripe'; // legacy rows = web/Stripe
+            const isNative = platform !== 'web';
+
+            if (source === 'app_store' || source === 'play_store') {
+              const isApple = source === 'app_store';
+              return (
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/60">
+                    {isApple ? 'Billed through the App Store' : 'Billed through Google Play'}
+                  </p>
+                  <p className="mt-1.5 text-[14px] text-white/85 leading-relaxed">
+                    {isApple
+                      ? 'Apple handles your payments, so plan changes and cancellations live in your Apple subscriptions — not on this page or the website.'
+                      : 'Google handles your payments, so plan changes and cancellations live in your Play Store subscriptions — not on this page or the website.'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openExternalUrl(
+                        isApple
+                          ? 'https://apps.apple.com/account/subscriptions'
+                          : 'https://play.google.com/store/account/subscriptions'
+                      )
+                    }
+                    className="mt-4 inline-flex items-center gap-2 h-11 px-5 rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    {isApple ? 'Open Apple subscriptions' : 'Open Play Store subscriptions'}
+                    <ExternalLink className="h-4 w-4" />
+                  </button>
+                </div>
+              );
+            }
+
+            // Web/Stripe purchase
+            return (
+              <div className="rounded-2xl border border-elec-yellow/25 bg-gradient-to-br from-elec-yellow/[0.08] via-elec-yellow/[0.03] to-transparent p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-yellow-300">
+                  Billed through elec-mate.com
+                </p>
+                <p className="mt-1.5 text-[14px] text-white/85 leading-relaxed">
+                  {isNative
+                    ? 'You subscribed on our website, so plan changes and cancellations happen there — not through the app store. It takes a minute and you stay signed in here.'
+                    : 'You subscribed on our website, so everything is managed right here — change plan, update your card or cancel below.'}
+                </p>
+                {isNative && (
+                  <button
+                    type="button"
+                    onClick={() => openExternalUrl('https://www.elec-mate.com/subscriptions')}
+                    className="mt-4 inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    Manage on elec-mate.com
+                    <ExternalLink className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            );
+          })()}
 
         {/* Current subscription — proper billing card */}
         {isSubscribed && (

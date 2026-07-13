@@ -41,6 +41,18 @@ export interface SolarInverter {
   monitoring: string; // App/portal name
   yearIntroduced?: number;
   notes?: string;
+  /**
+   * DC-optimised architecture (SolarEdge): optimisers regulate the string to a
+   * fixed bus voltage, so string length is governed by the manufacturer's
+   * optimiser rules (min optimisers per string, max STC power per string),
+   * NOT by the MPPT voltage window. Per SolarEdge datasheets: single-phase
+   * min 8 / max 5,700W @ 380V; three-phase min 13 / max 12,750W @ 750V.
+   */
+  dcOptimised?: {
+    minPanels: number;
+    maxStringPowerW: number;
+    regulatedStringV: number;
+  };
 }
 
 /**
@@ -76,6 +88,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
+    dcOptimised: { minPanels: 8, maxStringPowerW: 5700, regulatedStringV: 380 },
     notes: 'HD-Wave technology. Requires optimisers. 12 year warranty.',
   },
   {
@@ -105,6 +118,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
+    dcOptimised: { minPanels: 8, maxStringPowerW: 5700, regulatedStringV: 380 },
     notes: 'Popular residential size. HD-Wave technology.',
   },
   {
@@ -134,6 +148,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
+    dcOptimised: { minPanels: 8, maxStringPowerW: 5700, regulatedStringV: 380 },
     notes: 'Popular 5kW residential. Optimiser-based system.',
   },
   {
@@ -163,6 +178,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2021,
+    dcOptimised: { minPanels: 8, maxStringPowerW: 5700, regulatedStringV: 380 },
     notes: 'Largest single phase HD-Wave.',
   },
   {
@@ -192,6 +208,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2022,
+    dcOptimised: { minPanels: 13, maxStringPowerW: 12750, regulatedStringV: 750 },
     notes: 'Three phase hybrid with backup. StorEdge compatible.',
   },
 
@@ -1082,6 +1099,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2024,
+    dcOptimised: { minPanels: 8, maxStringPowerW: 5700, regulatedStringV: 380 },
     notes: 'Latest HD-Wave technology. Enhanced efficiency. Requires P505 optimisers.',
   },
 
@@ -1113,6 +1131,7 @@ export const SOLAR_INVERTERS: SolarInverter[] = [
     ethernet: true,
     monitoring: 'mySolarEdge',
     yearIntroduced: 2024,
+    dcOptimised: { minPanels: 8, maxStringPowerW: 5700, regulatedStringV: 380 },
     notes: 'Integrated backup capability. Works with SolarEdge Home Battery.',
   },
 

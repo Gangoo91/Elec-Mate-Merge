@@ -118,12 +118,14 @@ export function planStrings(s: SolarDesignState): StringPlan | null {
       isc: panel.isc,
       betaVoc: panel.tempCoeffVoc,
       betaVmp: panel.tempCoeffPmax, // Vmp tracks Pmax coefficient closely
+      wattage: panel.wattage,
     },
     inverter: {
       vDcMax: inverter.maxInputVoltage,
       vMpptMin: inverter.mpptVoltageMin,
       vMpptMax: inverter.mpptVoltageMax,
       iMpptMax: inverter.maxInputCurrent,
+      dcOptimised: inverter.dcOptimised,
     },
     tMin: s.tMin,
     tCellMax: s.tCellMax,
@@ -173,9 +175,17 @@ export function planStrings(s: SolarDesignState): StringPlan | null {
     ),
     panelCount,
     kwp: r2((panelCount * panel.wattage) / 1000),
-    stringVoc: r1(perString * panel.voc),
-    stringVocCold: r1(perString * sizing.vocCold),
-    stringVmp: r1(perString * panel.vmp),
+    // DC-optimised strings run at the optimisers' fixed bus voltage — the
+    // series-sum figures would (alarmingly) exceed the inverter input limit.
+    stringVoc: inverter.dcOptimised
+      ? r1(inverter.dcOptimised.regulatedStringV)
+      : r1(perString * panel.voc),
+    stringVocCold: inverter.dcOptimised
+      ? r1(inverter.dcOptimised.regulatedStringV)
+      : r1(perString * sizing.vocCold),
+    stringVmp: inverter.dcOptimised
+      ? r1(inverter.dcOptimised.regulatedStringV)
+      : r1(perString * panel.vmp),
     stringImp: r2(panel.imp),
   };
 }

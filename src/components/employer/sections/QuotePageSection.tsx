@@ -182,19 +182,19 @@ export function QuotePageSection() {
   return (
     <PageFrame>
       <PageHero
-        eyebrow="Lead generation"
-        title="Quote page"
-        description="Your own branded web page where customers request a quote. Every enquiry drops straight into your Leads pipeline."
+        eyebrow="Get work"
+        title="Your quote page"
+        description="You've got your own branded page where customers request a quote — it's ready to go. Share the link or QR below and every enquiry drops straight into your Leads."
         tone="cyan"
         live={isLive ? { label: 'Live', tone: 'green' } : undefined}
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Config */}
-        <FormCard eyebrow="Set up your page">
+        <FormCard eyebrow="Your link">
           <Field
             label="Link name"
-            hint="This is your public web address. Use your company name so it's easy to share."
+            hint="We set this from your company name — change it if you like."
             required
           >
             <div className="flex items-center gap-1.5 rounded-xl border border-white/[0.10] bg-white/[0.05] px-3.5 focus-within:border-elec-yellow focus-within:ring-2 focus-within:ring-elec-yellow/15">

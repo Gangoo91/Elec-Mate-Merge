@@ -187,7 +187,10 @@ export function JobFinancialsSection() {
     );
   }
 
-  const profit = stats.totalBudget - stats.totalActual;
+  // Fold committed PO spend into the headline so it matches the per-job forecast.
+  const totalCommitted = financials.reduce((s, f) => s + Number(f.committed_materials || 0), 0);
+  const profit = stats.totalBudget - stats.totalActual - totalCommitted;
+  const forecastMarginPct = stats.totalBudget > 0 ? (profit / stats.totalBudget) * 100 : 0;
 
   return (
     <PageFrame>
@@ -223,8 +226,8 @@ export function JobFinancialsSection() {
           },
           {
             label: 'Margin %',
-            value: `${stats.avgMargin.toFixed(1)}%`,
-            tone: 'emerald',
+            value: `${forecastMarginPct.toFixed(1)}%`,
+            tone: marginToneFor(forecastMarginPct),
           },
         ]}
       />
@@ -257,15 +260,18 @@ export function JobFinancialsSection() {
           <ListBody>
             {filteredFinancials.map((fin) => {
               const revenue = Number(fin.budget_total);
-              const cost = Number(fin.actual_total);
-              const margin = Number(fin.margin);
-              const isOver = cost > revenue;
+              const committed = Number(fin.committed_materials || 0);
+              const forecastCost = Number(fin.actual_total) + committed;
+              // Forecast margin folds in committed PO spend, not just booked actuals.
+              const margin =
+                revenue > 0 ? ((revenue - forecastCost) / revenue) * 100 : Number(fin.margin);
+              const isOver = forecastCost > revenue;
 
               return (
                 <ListRow
                   key={fin.id}
                   title={fin.job?.title || 'Untitled Job'}
-                  subtitle={`${fin.job?.client || 'No client'} · rev ${formatCurrency(revenue)} · cost ${formatCurrency(cost)}`}
+                  subtitle={`${fin.job?.client || 'No client'} · rev ${formatCurrency(revenue)} · cost ${formatCurrency(forecastCost)}${committed > 0 ? ` (inc ${formatCurrency(committed)} committed)` : ''}`}
                   trailing={
                     <>
                       {isOver && <Pill tone="red">Over</Pill>}
@@ -300,33 +306,71 @@ export function JobFinancialsSection() {
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-5 space-y-6">
-                <StatStrip
-                  columns={4}
-                  stats={[
-                    {
-                      label: 'Revenue £',
-                      value: formatK(Number(openDetail.budget_total)),
-                      tone: 'emerald',
-                    },
-                    {
-                      label: 'Cost £',
-                      value: formatK(Number(openDetail.actual_total)),
-                      tone: 'amber',
-                    },
-                    {
-                      label: 'Forecast margin £',
-                      value: formatK(
-                        Number(openDetail.budget_total) - Number(openDetail.actual_total)
-                      ),
-                      accent: true,
-                    },
-                    {
-                      label: 'Margin %',
-                      value: `${Number(openDetail.margin).toFixed(0)}%`,
-                      tone: marginToneFor(Number(openDetail.margin)),
-                    },
-                  ]}
-                />
+                {(() => {
+                  const revenue = Number(openDetail.budget_total);
+                  const actual = Number(openDetail.actual_total);
+                  const committed = Number(openDetail.committed_materials || 0);
+                  const forecastCost = actual + committed;
+                  const forecastMarginPct =
+                    revenue > 0 ? ((revenue - forecastCost) / revenue) * 100 : 0;
+                  // Stacked budget bar: spent (amber) + committed (blue) vs budget.
+                  const spentPct = revenue > 0 ? Math.min((actual / revenue) * 100, 100) : 0;
+                  const committedPct =
+                    revenue > 0 ? Math.min((committed / revenue) * 100, 100 - spentPct) : 0;
+                  const overBudget = forecastCost > revenue && revenue > 0;
+                  return (
+                    <div className="space-y-3">
+                      <StatStrip
+                        columns={4}
+                        stats={[
+                          { label: 'Revenue £', value: formatK(revenue), tone: 'emerald' },
+                          { label: 'Cost £', value: formatK(actual), tone: 'amber' },
+                          {
+                            label: 'Committed £',
+                            value: committed > 0 ? formatK(committed) : '£0',
+                            tone: committed > 0 ? 'blue' : undefined,
+                          },
+                          {
+                            label: 'Forecast margin',
+                            value: `${forecastMarginPct.toFixed(0)}%`,
+                            tone: marginToneFor(forecastMarginPct),
+                            accent: true,
+                          },
+                        ]}
+                      />
+                      {revenue > 0 && (committed > 0 || actual > 0) && (
+                        <div className="space-y-2">
+                          <div className="h-2.5 w-full rounded-full bg-white/[0.06] overflow-hidden flex">
+                            <div
+                              className={`h-full ${overBudget ? 'bg-red-500' : 'bg-amber-400'}`}
+                              style={{ width: `${spentPct}%` }}
+                            />
+                            <div
+                              className="h-full bg-blue-400/80"
+                              style={{ width: `${committedPct}%` }}
+                            />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/60">
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="h-2 w-2 rounded-full bg-amber-400" />
+                              {formatCurrency(actual)} spent
+                            </span>
+                            {committed > 0 && (
+                              <span className="inline-flex items-center gap-1.5">
+                                <span className="h-2 w-2 rounded-full bg-blue-400/80" />
+                                {formatCurrency(committed)} on PO
+                              </span>
+                            )}
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="h-2 w-2 rounded-full bg-white/20" />
+                              {formatCurrency(Math.max(revenue - forecastCost, 0))} left
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 <ListCard>
                   <ListCardHeader
@@ -352,30 +396,39 @@ export function JobFinancialsSection() {
                         label: 'Labour',
                         budget: Number(openDetail.budget_labour),
                         actual: Number(openDetail.actual_labour),
+                        committed: 0,
                       },
                       {
                         label: 'Materials',
                         budget: Number(openDetail.budget_materials),
                         actual: Number(openDetail.actual_materials),
+                        committed: Number(openDetail.committed_materials || 0),
                       },
                       {
                         label: 'Equipment',
                         budget: Number(openDetail.budget_equipment),
                         actual: Number(openDetail.actual_equipment),
+                        committed: 0,
                       },
                       {
                         label: 'Overheads',
                         budget: Number(openDetail.budget_overheads),
                         actual: Number(openDetail.actual_overheads),
+                        committed: 0,
                       },
                     ].map((row) => {
-                      const pct = row.budget > 0 ? (row.actual / row.budget) * 100 : 0;
+                      const effective = row.actual + row.committed;
+                      const pct = row.budget > 0 ? (effective / row.budget) * 100 : 0;
                       const over = pct > 100;
                       return (
                         <ListRow
                           key={row.label}
                           title={row.label}
-                          subtitle={`${formatCurrency(row.actual)} of ${formatCurrency(row.budget)}`}
+                          subtitle={
+                            row.committed > 0
+                              ? `${formatCurrency(row.actual)} spent + ${formatCurrency(row.committed)} on PO of ${formatCurrency(row.budget)}`
+                              : `${formatCurrency(row.actual)} of ${formatCurrency(row.budget)}`
+                          }
                           trailing={
                             <Pill tone={over ? 'red' : pct > 80 ? 'amber' : 'emerald'}>
                               {pct.toFixed(0)}%

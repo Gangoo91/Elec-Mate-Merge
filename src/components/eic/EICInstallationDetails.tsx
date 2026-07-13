@@ -1,4 +1,5 @@
 import React from 'react';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import EICClientDetailsSection from './EICClientDetailsSection';
 import EICSupplyCharacteristicsSection from './EICSupplyCharacteristicsSection';
@@ -40,8 +41,14 @@ const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
       <EarthingAndBondingSection formData={formData} onUpdate={onUpdate} />
       <StandardsComplianceSection formData={formData} onUpdate={onUpdate} />
 
-      {/* Comments on Existing Installation — BS 7671 Reg 644.1.2 */}
-      {(formData.workType === 'addition' || formData.workType === 'alteration') && (
+      {/* Comments on Existing Installation — BS 7671 Reg 644.1.2.
+          workType is comma-separated multi-select (ELE-1315) — a DB upgrade is
+          an alteration to the existing installation, so it needs comments too. */}
+      {['addition', 'alteration', 'db-upgrade'].some((t) =>
+        String(formData.workType || '')
+          .split(',')
+          .includes(t)
+      ) && (
         <div className="space-y-4">
           <SectionTitle title="Comments on Existing Installation" />
           <p className="text-[10px] text-white">

@@ -15,6 +15,7 @@ export interface PanelSpec {
   isc: number; // Isc at STC (A)
   betaVoc: number; // temp coeff of Voc (%/°C, negative, e.g. -0.27)
   betaVmp: number; // temp coeff of Vmp (%/°C, negative, e.g. -0.40)
+  wattage?: number; // Pmax at STC (W) — required for DC-optimised sizing
 }
 
 export interface InverterSpec {
@@ -22,6 +23,17 @@ export interface InverterSpec {
   vMpptMin: number; // MPPT window minimum (V)
   vMpptMax: number; // MPPT window maximum (V)
   iMpptMax: number; // max input current per MPPT (A)
+  /**
+   * DC-optimised architectures (SolarEdge + power optimisers): the optimisers
+   * regulate the string to a fixed DC bus voltage, so the MPPT voltage-window
+   * maths above does NOT apply. String length is bounded by the manufacturer's
+   * minimum optimiser count and maximum string power instead.
+   */
+  dcOptimised?: {
+    minPanels: number; // manufacturer minimum optimisers per string
+    maxStringPowerW: number; // manufacturer maximum STC power per string (W)
+    regulatedStringV: number; // fixed DC bus voltage the optimisers hold (V)
+  };
 }
 
 export interface StringSizingInputs {
@@ -68,17 +80,48 @@ export function sizeStrings(input: StringSizingInputs): StringSizingResult {
   const vmpHot = tempCorrect(panel.vmp, panel.betaVmp, tCellMax);
   const vmpCold = tempCorrect(panel.vmp, panel.betaVmp, tMin);
 
+  const designCurrent = round(factor * panel.isc, 2); // for DC cable/fuse sizing
+  // Parallel strings compare string Isc against the inverter MPPT input limit
+  // (the 1.25× factor is for cable/fuse design, not the inverter limit).
+  const stringsPerMppt = panel.isc > 0 ? Math.floor(inverter.iMpptMax / panel.isc) : 0;
+
+  // ── DC-optimised architecture (ELE-1322) ─────────────────────────────────
+  // Power optimisers hold the string at a fixed bus voltage, so the MPPT
+  // voltage-window rules below would (wrongly) reject every pairing. String
+  // length is bounded by the manufacturer's optimiser rules instead.
+  if (inverter.dcOptimised) {
+    const { minPanels, maxStringPowerW } = inverter.dcOptimised;
+    const wattage = panel.wattage ?? 0;
+    const nMaxOpt = wattage > 0 ? Math.floor(maxStringPowerW / wattage) : 0;
+    const recommendedOpt = nMaxOpt >= minPanels ? nMaxOpt : null;
+    if (recommendedOpt == null)
+      warnings.push(
+        'No valid string length — the panel wattage exceeds the optimiser string power limit before reaching the minimum string length. Choose a lower-wattage panel or a larger inverter.'
+      );
+    return {
+      vocCold: round(vocCold),
+      vmpHot: round(vmpHot),
+      vmpCold: round(vmpCold),
+      nMax: nMaxOpt,
+      nMin: minPanels,
+      nMaxMppt: nMaxOpt,
+      recommended: recommendedOpt,
+      // Optimisers regulate string current to P/V_bus — the panel's Isc never
+      // reaches the inverter input, so the Isc-vs-input-current check does not
+      // apply. One string per input is the SolarEdge design rule.
+      stringsPerMppt: 1,
+      designCurrent,
+      valid: recommendedOpt != null,
+      warnings,
+    };
+  }
+
   // Safety: series string Voc (cold) must never exceed inverter abs max DC.
   const nMax = vocCold > 0 ? Math.floor(inverter.vDcMax / vocCold) : 0;
   // Performance: must stay above MPPT min when hot.
   const nMin = vmpHot > 0 ? Math.ceil(inverter.vMpptMin / vmpHot) : 0;
   // Performance: stay within MPPT max when cold (else inverter clips, loses yield).
   const nMaxMppt = vmpCold > 0 ? Math.floor(inverter.vMpptMax / vmpCold) : 0;
-
-  const designCurrent = round(factor * panel.isc, 2); // for DC cable/fuse sizing
-  // Parallel strings compare string Isc against the inverter MPPT input limit
-  // (the 1.25× factor is for cable/fuse design, not the inverter limit).
-  const stringsPerMppt = panel.isc > 0 ? Math.floor(inverter.iMpptMax / panel.isc) : 0;
 
   // Recommended = largest n that is safe AND tracks (within MPPT max), else
   // largest safe n that still meets MPPT min.
