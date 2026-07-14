@@ -391,6 +391,38 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
+    // ELE-1330 — PDFMonkey URLs are 1-hour signed S3 links; every link we
+    // exposed (email CTA, stored pdf_url) expired shortly after sending.
+    // Persist the bytes we already downloaded to our own public bucket and
+    // use the permanent URL instead (same fix as send-invoice-resend).
+    if (pdfBase64) {
+      try {
+        const serviceClient = createClient(
+          supabaseUrl,
+          Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        );
+        const pdfBytes = Uint8Array.from(atob(pdfBase64), (c) => c.charCodeAt(0));
+        const storagePath = `${user.id}/quote-${quoteId}.pdf`;
+        const { error: uploadErr } = await serviceClient.storage
+          .from('invoice-pdfs')
+          .upload(storagePath, pdfBytes, { contentType: 'application/pdf', upsert: true });
+        if (uploadErr) {
+          console.warn('⚠️ quote PDF upload failed (using signed URL):', uploadErr.message);
+        } else {
+          const { data: pub } = serviceClient.storage
+            .from('invoice-pdfs')
+            .getPublicUrl(storagePath);
+          if (pub?.publicUrl) {
+            pdfUrl = `${pub.publicUrl}?v=${Date.now()}`;
+            await serviceClient.from('quotes').update({ pdf_url: pdfUrl }).eq('id', quoteId);
+            console.log('✅ Quote PDF persisted to permanent storage');
+          }
+        }
+      } catch (persistErr) {
+        console.warn('⚠️ quote PDF persist error (non-fatal):', persistErr);
+      }
+    }
+
     // ========================================================================
     // STEP 9: Parse job details safely
     // ========================================================================

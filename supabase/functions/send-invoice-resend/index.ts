@@ -389,6 +389,44 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // ========================================================================
+    // STEP 8b: Persist the PDF to permanent storage — ELE-1330
+    // ========================================================================
+    // PDFMonkey URLs are signed S3 links that expire after ONE HOUR. Every
+    // link we exposed (email CTA, link-only fallback, stored quotes.pdf_url)
+    // died shortly after sending — customers opening the email a day later
+    // got S3 AccessDenied. Certs solved this by copying to our own storage;
+    // do the same here with the bytes we already downloaded for the
+    // attachment, so the emailed link and the stored pdf_url never expire.
+    if (pdfBase64) {
+      try {
+        const serviceClient = createClient(
+          supabaseUrl,
+          Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        );
+        const pdfBytes = Uint8Array.from(atob(pdfBase64), (c) => c.charCodeAt(0));
+        const storagePath = `${user.id}/${invoiceId}.pdf`;
+        const { error: uploadErr } = await serviceClient.storage
+          .from('invoice-pdfs')
+          .upload(storagePath, pdfBytes, { contentType: 'application/pdf', upsert: true });
+        if (uploadErr) {
+          console.warn('⚠️ invoice-pdfs upload failed (using signed URL):', uploadErr.message);
+        } else {
+          const { data: pub } = serviceClient.storage
+            .from('invoice-pdfs')
+            .getPublicUrl(storagePath);
+          if (pub?.publicUrl) {
+            // Cache-bust so a re-send after edits serves the fresh render.
+            pdfUrl = `${pub.publicUrl}?v=${Date.now()}`;
+            await serviceClient.from('quotes').update({ pdf_url: pdfUrl }).eq('id', invoiceId);
+            console.log('✅ Invoice PDF persisted to permanent storage');
+          }
+        }
+      } catch (persistErr) {
+        console.warn('⚠️ invoice PDF persist error (non-fatal):', persistErr);
+      }
+    }
+
+    // ========================================================================
     // STEP 9: Parse settings + job details for email payload
     // ========================================================================
     const settings = safeJsonParse(invoice.settings, {});
