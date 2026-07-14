@@ -49,10 +49,21 @@ export const MobileSelectPicker = ({
 
   const selectedOption = options.find((o) => o.value === value);
 
+  // Radix Select throws on <SelectItem value="">, but callers legitimately use
+  // '' for "none" options (e.g. "No Project"). Bridge with a sentinel on the
+  // desktop path only — the mobile sheet renders plain buttons and handles ''
+  // fine. Callers keep their '' semantics untouched.
+  const EMPTY_SENTINEL = '__empty__';
+  const hasEmptyOption = options.some((o) => o.value === '');
+
   // On desktop, use regular Radix Select
   if (!isMobile) {
     return (
-      <Select value={value} onValueChange={onValueChange} disabled={disabled}>
+      <Select
+        value={value === '' && hasEmptyOption ? EMPTY_SENTINEL : value}
+        onValueChange={(v) => onValueChange(v === EMPTY_SENTINEL ? '' : v)}
+        disabled={disabled}
+      >
         <SelectTrigger
           className={cn(
             'h-11 touch-manipulation bg-background border-input',
@@ -66,8 +77,8 @@ export const MobileSelectPicker = ({
         <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-card border-border text-foreground">
           {options.map((option) => (
             <SelectItem
-              key={option.value}
-              value={option.value}
+              key={option.value || EMPTY_SENTINEL}
+              value={option.value === '' ? EMPTY_SENTINEL : option.value}
               className="min-h-[44px] touch-manipulation"
             >
               <div className="flex flex-col">

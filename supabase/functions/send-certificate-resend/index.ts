@@ -35,7 +35,6 @@ function isValidEmail(email: string | null | undefined): boolean {
   return emailRegex.test(email.trim());
 }
 
-
 // ============================================================================
 // MAIN HANDLER
 // ============================================================================
@@ -459,12 +458,28 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // Download PDF for attachment
+    // Download PDF for attachment. One retry — a transient storage fetch
+    // failure here used to silently produce a link-only email (a 0.6MB EICR
+    // went out unattached with no trace, 2026-07-14).
     if (pdfUrl) {
       try {
         console.log('📥 Downloading PDF for attachment...');
-        const pdfFileResponse = await fetch(pdfUrl);
-        if (pdfFileResponse.ok) {
+        // Two attempts covering BOTH failure modes: a non-ok response AND a
+        // thrown fetch (connection reset / DNS) — the thrown class is what
+        // actually produced the 2026-07-14 link-only EICR.
+        let pdfFileResponse: Response | null = null;
+        for (let attempt = 1; attempt <= 2 && !pdfFileResponse?.ok; attempt++) {
+          try {
+            pdfFileResponse = await fetch(pdfUrl);
+            if (!pdfFileResponse.ok && attempt === 1) {
+              console.warn(`PDF download returned ${pdfFileResponse.status} — retrying once`);
+            }
+          } catch (fetchErr) {
+            pdfFileResponse = null;
+            console.warn(`PDF download threw (attempt ${attempt}):`, fetchErr);
+          }
+        }
+        if (pdfFileResponse?.ok) {
           const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
           // Safer base64 encoding for large files
           const uint8Array = new Uint8Array(pdfArrayBuffer);
@@ -490,6 +505,10 @@ const handler = async (req: Request): Promise<Response> => {
             pdfAttachmentSuccess = true;
           }
           console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+        } else {
+          console.warn(
+            `PDF download failed after retry (${pdfFileResponse?.status ?? 'network error'}) — sending link-only`
+          );
         }
       } catch (pdfDownloadError) {
         console.warn('PDF download error (non-fatal):', pdfDownloadError);
@@ -520,39 +539,44 @@ const handler = async (req: Request): Promise<Response> => {
       ? String(rawAssessment).charAt(0).toUpperCase() + String(rawAssessment).slice(1).toLowerCase()
       : null;
 
-    const certEmailPayload = buildCertificateSendEmail({
-      company: {
-        name: companyName,
-        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
-        primaryColor: companyProfile?.primary_color || null,
-        email: companyProfile?.company_email || null,
-        phone: companyProfile?.company_phone || null,
-        website: companyProfile?.company_website || null,
-        address: companyProfile?.company_address || null,
-        vatNumber: companyProfile?.vat_number || null,
-        registrationNumber: companyProfile?.company_registration || null,
-      },
-      clientName: report.client_name || reportData.clientName || reportData.client_name || '',
-      certificateType: certificateTypeDisplay,
-      certificateNumber: report.certificate_number || '',
-      installationAddress:
-        report.installation_address ||
-        reportData.installationAddress ||
-        reportData.installation_address ||
-        null,
-      inspectionDate:
-        report.inspection_date || reportData.inspectionDate || reportData.inspection_date || null,
-      overallAssessment: assessmentDisplay,
-      nextInspectionDue:
-        reportData.nextInspectionDate ||
-        reportData.next_inspection_date ||
-        report.next_inspection_date ||
-        null,
-      pdfUrl: pdfUrl || null,
-      pdfAttached: pdfAttachmentSuccess,
-      customMessage: customMessage || null,
-      trackingPixelUrl: `${supabaseUrl}/functions/v1/email-open?type=cert_send&id=${report.id}`,
-    });
+    // Builder takes `attached` so the link-only retry can REBUILD the copy —
+    // reusing the attached-variant HTML on a retry told the client "Find the
+    // full PDF attached to this email" with no attachment present.
+    const buildEmailVariant = (attached: boolean) =>
+      buildCertificateSendEmail({
+        company: {
+          name: companyName,
+          logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+          primaryColor: companyProfile?.primary_color || null,
+          email: companyProfile?.company_email || null,
+          phone: companyProfile?.company_phone || null,
+          website: companyProfile?.company_website || null,
+          address: companyProfile?.company_address || null,
+          vatNumber: companyProfile?.vat_number || null,
+          registrationNumber: companyProfile?.company_registration || null,
+        },
+        clientName: report.client_name || reportData.clientName || reportData.client_name || '',
+        certificateType: certificateTypeDisplay,
+        certificateNumber: report.certificate_number || '',
+        installationAddress:
+          report.installation_address ||
+          reportData.installationAddress ||
+          reportData.installation_address ||
+          null,
+        inspectionDate:
+          report.inspection_date || reportData.inspectionDate || reportData.inspection_date || null,
+        overallAssessment: assessmentDisplay,
+        nextInspectionDue:
+          reportData.nextInspectionDate ||
+          reportData.next_inspection_date ||
+          report.next_inspection_date ||
+          null,
+        pdfUrl: pdfUrl || null,
+        pdfAttached: attached,
+        customMessage: customMessage || null,
+        trackingPixelUrl: `${supabaseUrl}/functions/v1/email-open?type=cert_send&id=${report.id}`,
+      });
+    const certEmailPayload = buildEmailVariant(pdfAttachmentSuccess);
     const emailHtml = certEmailPayload.html;
 
     // ========================================================================
@@ -576,9 +600,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // CC — sanitise the optional carbon-copy list from the client (valid emails only)
     const ccList = Array.isArray(body.cc)
-      ? body.cc
-          .map((e) => String(e).trim())
-          .filter((e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))
+      ? body.cc.map((e) => String(e).trim()).filter((e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))
       : [];
     if (ccList.length > 0) console.log(`📧 CC: ${ccList.join(', ')}`);
 
@@ -622,6 +644,12 @@ const handler = async (req: Request): Promise<Response> => {
     if (emailError && emailOptions.attachments?.length) {
       console.warn(`Send failed with attachment, retrying link-only: ${emailError.message}`);
       delete emailOptions.attachments;
+      // Rebuild copy for the link-only reality (ELE-1330 follow-up) — the
+      // attached-variant HTML says "attached to this email".
+      const linkOnlyPayload = buildEmailVariant(false);
+      emailOptions.html = linkOnlyPayload.html;
+      emailOptions.text = htmlToPlainText(linkOnlyPayload.html);
+      pdfAttachmentSuccess = false;
       ({ data: emailData, error: emailError } = await resend.emails.send(emailOptions));
     }
 

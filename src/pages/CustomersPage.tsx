@@ -10,6 +10,8 @@ import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { MergeDuplicatesSheet } from '@/components/customers/MergeDuplicatesSheet';
 import { CustomerImportDialog } from '@/components/customers/customers/CustomerImportDialog';
+import DeviceContactsImportSheet from '@/components/customers/DeviceContactsImportSheet';
+import { Capacitor } from '@capacitor/core';
 import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
 import { Button } from '@/components/ui/button';
@@ -179,6 +181,18 @@ export default function CustomersPage() {
   const [showSearch, setShowSearch] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
+  const [showDeviceImport, setShowDeviceImport] = useState(false);
+  // ELE-1332 — on the native app "Import from contacts" opens the device
+  // address book; the CSV dialog stays as the web path. Feature-detect the
+  // plugin rather than the platform: binaries installed before the Contacts
+  // plugin shipped must keep the CSV path or import is a dead-end for them.
+  const openContactsImport = () => {
+    if (Capacitor.isNativePlatform() && Capacitor.isPluginAvailable('Contacts')) {
+      setShowDeviceImport(true);
+    } else {
+      setShowImportDialog(true);
+    }
+  };
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [quickNoteCustomer, setQuickNoteCustomer] = useState<Customer | null>(null);
@@ -527,7 +541,7 @@ export default function CustomersPage() {
                       <button
                         onClick={() => {
                           setShowQuickCreateMenu(false);
-                          setShowImportDialog(true);
+                          openContactsImport();
                         }}
                         className="block w-full border-t border-white/[0.06] px-4 py-3 text-left text-[13px] text-white transition-colors hover:bg-white/[0.04] touch-manipulation"
                       >
@@ -683,7 +697,7 @@ export default function CustomersPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <button
-                      onClick={() => setShowImportDialog(true)}
+                      onClick={openContactsImport}
                       className="flex h-9 w-9 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.06] touch-manipulation active:scale-[0.97]"
                       aria-label="Import customers"
                     >
@@ -791,12 +805,14 @@ export default function CustomersPage() {
                       {upcomingReminders.filter((r) => r.isOverdue).length > 0 && (
                         <>
                           {upcomingReminders.filter((r) => r.isOverdue).length} overdue
-                          {upcomingReminders.length > upcomingReminders.filter((r) => r.isOverdue).length && ' · '}
+                          {upcomingReminders.length >
+                            upcomingReminders.filter((r) => r.isOverdue).length && ' · '}
                         </>
                       )}
                       {upcomingReminders.filter((r) => !r.isOverdue).length > 0 && (
                         <>
-                          {upcomingReminders.filter((r) => !r.isOverdue).length} due in the next 7 days
+                          {upcomingReminders.filter((r) => !r.isOverdue).length} due in the next 7
+                          days
                         </>
                       )}
                     </div>
@@ -897,7 +913,7 @@ export default function CustomersPage() {
                         Add first customer
                       </Button>
                       <Button
-                        onClick={() => setShowImportDialog(true)}
+                        onClick={openContactsImport}
                         variant="outline"
                         className="h-12 w-full rounded-xl border-white/[0.08] bg-white/[0.04] font-medium text-white touch-manipulation active:scale-[0.98]"
                       >
@@ -1015,6 +1031,12 @@ export default function CustomersPage() {
       <CustomerImportDialog
         open={showImportDialog}
         onOpenChange={setShowImportDialog}
+        onImportComplete={refreshCustomers}
+      />
+      {/* ELE-1332 — native device address book import (iOS + Android) */}
+      <DeviceContactsImportSheet
+        open={showDeviceImport}
+        onOpenChange={setShowDeviceImport}
         onImportComplete={refreshCustomers}
       />
       {quickNoteCustomer && (

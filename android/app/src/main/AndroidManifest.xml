@@ -73,6 +73,13 @@
     <!-- Camera — photo capture for certificates, site safety, inspections -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- Contacts — ELE-1332: import customers into the CRM from device contacts.
+         WRITE_CONTACTS is required too: the Capacitor plugin's 'contacts'
+         permission alias bundles read+write and only reports 'granted' when
+         every permission in the alias is grantable — we never actually write. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
     <!-- Location — optional "share my live location" check-in on the worker app
          (iOS equivalents already declared in Info.plist). -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

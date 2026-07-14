@@ -98,6 +98,21 @@
 			</array>
 		</dict>
 
+		<!-- Contacts — ELE-1332: user-initiated import of device contacts into
+		     their CRM (names, phones, emails, addresses stored as customers) -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeContacts</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
 		<!-- User ID — internal identifier used to associate data with the account -->
 		<dict>
 			<key>NSPrivacyCollectedDataType</key>

@@ -29,9 +29,11 @@
     "build:seo:canary": "npm run build && node scripts/seo-prerender.mjs --limit 5 --verbose",
     "seo:bump-dates": "node scripts/seo-engine/bump-dates.mjs",
     "seo:bump-dates:dry": "node scripts/seo-engine/bump-dates.mjs --dry-run",
-    "seo:bump-dates:force": "node scripts/seo-engine/bump-dates.mjs --force"
+    "seo:bump-dates:force": "node scripts/seo-engine/bump-dates.mjs --force",
+    "postinstall": "patch-package"
   },
   "dependencies": {
+    "@capacitor-community/contacts": "^7.2.0",
     "@capacitor-community/in-app-review": "^8.0.0",
     "@capacitor-community/speech-recognition": "^7.0.1",
     "@capacitor/android": "^8.2.0",
@@ -179,6 +181,7 @@
     "knip": "^5.85.0",
     "lint-staged": "^16.3.1",
     "lovable-tagger": "^1.1.13",
+    "patch-package": "^8.0.1",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^2.4.5",
     "pg": "^8.19.0",

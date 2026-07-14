@@ -58,7 +58,15 @@ export function buildCertificateSendEmail(data: CertificateSendData): Certificat
   const preheader = `${certType} ${data.certificateNumber}${inspectionStr ? ` · inspected ${inspectionStr}` : ''}${data.overallAssessment ? ` · ${data.overallAssessment}` : ''}`;
 
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
-  const body = `Your <strong style="color:#0f172a">${certType}</strong> certificate is ready. Find the full PDF ${data.pdfAttached ? 'attached to this email' : 'using the button below'} — keep it somewhere safe for your records and for your insurance / letting agent if applicable.`;
+  // Copy must match what's actually in the email: attached PDF, download
+  // button, or (when neither exists — PDF fetch failed AND no URL) a
+  // reply-to-me fallback rather than referencing a button that isn't there.
+  const pdfAccess = data.pdfAttached
+    ? 'Find the full PDF attached to this email'
+    : data.pdfUrl
+      ? 'Find the full PDF using the button below'
+      : "Reply to this email and I'll send the PDF over";
+  const body = `Your <strong style="color:#0f172a">${certType}</strong> certificate is ready. ${pdfAccess} — keep it somewhere safe for your records and for your insurance / letting agent if applicable.`;
 
   // Hero — the certificate type + reference (no monetary amount here).
   // Value is the cert reference, label is the type.
@@ -117,7 +125,7 @@ export function buildCertificateSendEmail(data: CertificateSendData): Certificat
     hero,
     cta,
     card: `${messageCard}${advisoryCard}`,
-    trackingPixelUrl: data.trackingPixelUrl
+    trackingPixelUrl: data.trackingPixelUrl,
   });
 
   return { subject, preheader, html };

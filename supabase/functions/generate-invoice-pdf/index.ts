@@ -10,7 +10,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface LineItem {
@@ -59,7 +60,9 @@ Deno.serve(async (req) => {
 
     const { data: company } = await supabase
       .from('company_profiles')
-      .select('company_name, company_email, company_phone, company_website, logo_url, bank_details')
+      .select(
+        'company_name, company_email, company_phone, company_website, logo_url, bank_details, lead_page_slug, lead_page_enabled'
+      )
       .eq('user_id', user.id)
       .maybeSingle();
 
@@ -114,12 +117,17 @@ ${reverseCharge ? `<p style="margin-top:16px;font-size:12px;color:#64748b">VAT r
 ${!isPaid && (bank.accountName || bank.sortCode || bank.accountNumber) ? `<div class="bank"><h4>Payment details</h4><div class="grid">${bank.accountName ? `<div><label>Account name</label>${bank.accountName}</div>` : ''}${bank.sortCode ? `<div><label>Sort code</label>${bank.sortCode}</div>` : ''}${bank.accountNumber ? `<div><label>Account number</label>${bank.accountNumber}</div>` : ''}</div><p style="margin-top:12px;font-size:13px;color:#64748b">Reference: <strong>${invoice.invoice_number}</strong></p></div>` : ''}
 ${invoice.notes ? `<p style="margin-top:24px;font-size:13px;white-space:pre-wrap">${invoice.notes}</p>` : ''}
 <div class="footer">${companyName}${company?.company_website ? ` · ${String(company.company_website).replace(/^https?:\/\//, '')}` : ''}</div>
+${company?.lead_page_enabled && company?.lead_page_slug ? `<div style="margin-top:8px;text-align:center;font-size:12px;color:#64748b">Need another job doing, or know someone who does? Get a quote at <strong style="color:#f59e0b">elec-mate.com/get-quote/${company.lead_page_slug}</strong></div>` : ''}
 </div><div class="actions"><button class="close" onclick="window.close()">Close</button><button class="print" onclick="window.print()">Print / Save as PDF</button></div></body></html>`;
 
     return new Response(
       JSON.stringify({
         html,
-        invoice: { number: invoice.invoice_number, client: invoice.client, total: money(Number(invoice.amount)) },
+        invoice: {
+          number: invoice.invoice_number,
+          client: invoice.client,
+          total: money(Number(invoice.amount)),
+        },
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

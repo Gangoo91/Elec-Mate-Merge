@@ -74,7 +74,13 @@
           msg.includes('importing a module') ||
           msg.includes('failed to load module script') ||
           msg.includes('mime type') ||
-          msg.includes('text/html')
+          msg.includes('text/html') ||
+          // Stale-deploy export mismatch. Match the fragment common to both
+          // Chrome ("does not provide an export named") and the contraction
+          // variant ("doesn't provide an export named").
+          msg.includes('provide an export') ||
+          // Safari's wording for the same failure.
+          msg.includes('importing binding name')
         );
       }
       function handleChunkError(e) {

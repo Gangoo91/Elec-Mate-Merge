@@ -265,7 +265,7 @@ export function LeadsSection() {
             title={leads.length === 0 ? 'No leads yet' : 'None in this stage'}
             description={
               leads.length === 0
-                ? 'Add your first enquiry to start tracking your pipeline.'
+                ? 'Share your quote page (Clients → Quote Page) and enquiries land here automatically — or add one manually.'
                 : 'Try another stage.'
             }
             action={leads.length === 0 ? 'Add lead' : undefined}
@@ -394,12 +394,20 @@ export function LeadsSection() {
       >
         <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
           {selected && (
-            <SheetShell eyebrow="Lead" title={selected.name} description={selected.source || undefined}>
+            <SheetShell
+              eyebrow="Lead"
+              title={selected.name}
+              description={selected.source || undefined}
+            >
               <div className="space-y-4">
                 <StatStrip
                   columns={2}
                   stats={[
-                    { label: 'Estimated value', value: fmt(selected.estimated_value), accent: true },
+                    {
+                      label: 'Estimated value',
+                      value: fmt(selected.estimated_value),
+                      accent: true,
+                    },
                     { label: 'Stage', value: selected.stage, tone: stageTone(selected.stage) },
                   ]}
                 />
@@ -444,11 +452,11 @@ export function LeadsSection() {
                   </div>
 
                   {followUp.loading && !followUp.draft && (
-                    <p className="text-[12.5px] text-white/55">Mate is drafting your {channel === 'sms' ? 'text' : 'email'}…</p>
+                    <p className="text-[12.5px] text-white/55">
+                      Mate is drafting your {channel === 'sms' ? 'text' : 'email'}…
+                    </p>
                   )}
-                  {followUp.error && (
-                    <p className="text-[12.5px] text-red-400">{followUp.error}</p>
-                  )}
+                  {followUp.error && <p className="text-[12.5px] text-red-400">{followUp.error}</p>}
 
                   {(draftShown || followUp.loading) && (
                     <div className="space-y-2">
@@ -539,7 +547,9 @@ export function LeadsSection() {
                 <div className="pt-1">
                   {confirmDelete ? (
                     <FormCard eyebrow="Delete lead">
-                      <p className="text-[13px] text-white">This removes the lead. Can't be undone.</p>
+                      <p className="text-[13px] text-white">
+                        This removes the lead. Can't be undone.
+                      </p>
                       <div className="flex gap-2">
                         <SecondaryButton onClick={() => setConfirmDelete(false)} fullWidth>
                           Cancel
@@ -555,7 +565,9 @@ export function LeadsSection() {
                     </FormCard>
                   ) : (
                     <div className="flex items-center justify-between">
-                      <Eyebrow>Added {new Date(selected.created_at).toLocaleDateString('en-GB')}</Eyebrow>
+                      <Eyebrow>
+                        Added {new Date(selected.created_at).toLocaleDateString('en-GB')}
+                      </Eyebrow>
                       <SecondaryButton onClick={() => setConfirmDelete(true)} size="sm">
                         Delete
                       </SecondaryButton>

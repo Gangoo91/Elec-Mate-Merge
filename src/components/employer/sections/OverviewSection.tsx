@@ -35,6 +35,7 @@ interface OverviewSectionProps {
 }
 
 import { FirstRunChecklist } from '@/components/employer/FirstRunChecklist';
+import { QuotePagePromoCard } from '@/components/employer/QuotePagePromoCard';
 import { MateEntryCard } from '@/components/employer/EmployerMate';
 import { CommandTrigger } from '@/components/employer/EmployerCommandPalette';
 
@@ -107,6 +108,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   const awaitingPo = (o: { status: string }) =>
     ['Sent', 'Confirmed', 'Part-received'].includes(o.status);
   const newLeads = leads.filter((l) => l.stage === 'New').length;
+  const quotePageLeads = leads.filter((l) => l.source === 'Quote page').length;
   const unsentQuotes = quotes.filter((q) => q.status === 'Draft').length;
   const latePOs = materialOrders.filter(
     (o) => awaitingPo(o) && o.expected_date && o.expected_date < todayStr
@@ -280,6 +282,8 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
 
       {onOpenMate && <MateEntryCard onOpen={onOpenMate} />}
 
+      <QuotePagePromoCard quotePageLeads={quotePageLeads} onNavigate={onNavigate} />
+
       <StatStrip
         columns={4}
         stats={[
@@ -325,7 +329,9 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
                   subtitle={[job.client, job.location].filter(Boolean).join(' · ')}
                   trailing={
                     typeof job.progress === 'number' && job.progress > 0 ? (
-                      <span className="text-[11px] tabular-nums text-white/70">{job.progress}%</span>
+                      <span className="text-[11px] tabular-nums text-white/70">
+                        {job.progress}%
+                      </span>
                     ) : undefined
                   }
                   onClick={onOpenJobs}

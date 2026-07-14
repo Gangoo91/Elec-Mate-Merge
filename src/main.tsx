@@ -57,9 +57,12 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
     errorString.includes('mime type') ||
     errorString.includes('text/html') ||
     // Stale-deploy export mismatch: a cached entry chunk imports a renamed
-    // export from a freshly deployed module ("does not provide an export
-    // named 'p'"). Same root cause as a chunk 404 — reload with fresh assets.
-    errorString.includes('does not provide an export')
+    // export from a freshly deployed module. Match the fragment common to
+    // Chrome's "does not provide an export named" and the "doesn't provide
+    // an export named" contraction variant seen in the wild.
+    errorString.includes('provide an export') ||
+    // Safari's wording for the same failure.
+    errorString.includes('importing binding name')
   ) {
     console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     event.preventDefault();

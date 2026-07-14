@@ -56,9 +56,19 @@ function ensureConsentDefault(): void {
   window.dataLayer = window.dataLayer || [];
   window.gtag =
     window.gtag ||
-    function gtag(...args: unknown[]) {
-      window.dataLayer!.push(args);
+    // MUST push the `arguments` object, not a rest-param array — gtag.js only
+    // executes commands queued as Arguments objects and silently ignores plain
+    // arrays. An array-pushing stub here meant consent/config/events were all
+    // inert and GA4 recorded nothing (found 2026-07-14).
+    function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer!.push(arguments);
     };
+  // No `region` key — denied-by-default applies worldwide. The previous
+  // region list used 'EU', which is not a valid ISO 3166 code, so the
+  // default only actually covered GB and EEA visitors could have been
+  // tracked pre-consent. Global default-denied is the safe posture for a
+  // UK/EEA-focused site; consent('update') lifts it after opt-in.
   window.gtag('consent', 'default', {
     ad_storage: 'denied',
     analytics_storage: 'denied',
@@ -67,7 +77,6 @@ function ensureConsentDefault(): void {
     functionality_storage: 'granted',
     security_storage: 'granted',
     wait_for_update: 500,
-    region: ['GB', 'EU'],
   });
   consentDefaultSet = true;
 }
@@ -143,12 +152,14 @@ function loadGtag(): void {
   script.src = `https://www.googletagmanager.com/gtag/js?id=${primaryId}`;
   document.head.appendChild(script);
 
-  // gtag stub (may already exist via ensureConsentDefault)
+  // gtag stub (may already exist via ensureConsentDefault). Same rule as
+  // above: push `arguments`, never an array, or gtag.js ignores the command.
   window.dataLayer = window.dataLayer || [];
   window.gtag =
     window.gtag ||
-    function gtag(...args: unknown[]) {
-      window.dataLayer!.push(args);
+    function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer!.push(arguments);
     };
 
   // Consent Mode v2 — upgrade from default=denied to granted for marketing cookies
@@ -160,7 +171,10 @@ function loadGtag(): void {
   });
 
   window.gtag('js', new Date());
-  if (GA4_MEASUREMENT_ID) window.gtag('config', GA4_MEASUREMENT_ID, { send_page_view: true });
+  // send_page_view: false — page views are sent explicitly by
+  // MarketingPixelsProvider on every SPA route change (including the first),
+  // so the automatic one here would double-count the landing page.
+  if (GA4_MEASUREMENT_ID) window.gtag('config', GA4_MEASUREMENT_ID, { send_page_view: false });
   if (GOOGLE_ADS_ID) window.gtag('config', GOOGLE_ADS_ID);
   gtagLoaded = true;
   console.log('[marketing-pixels] gtag loaded', { GA4_MEASUREMENT_ID, GOOGLE_ADS_ID });
@@ -285,7 +299,10 @@ export function trackCompleteRegistration(data?: { method?: string; value?: numb
     },
     { eventID: eventId }
   );
-  if (GOOGLE_ADS_ID) {
+  // Fire whenever gtag has any destination — previously gated on
+  // GOOGLE_ADS_ID only, which silently dropped the sign_up conversion from
+  // GA4 when only the GA4 ID was configured.
+  if (GA4_MEASUREMENT_ID || GOOGLE_ADS_ID) {
     window.gtag?.('event', 'sign_up', { method: data?.method });
   }
   return eventId;

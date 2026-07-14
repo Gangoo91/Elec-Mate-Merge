@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { generateQuotePosterPdf } from '@/utils/generateQuotePosterPdf';
 import { useToast } from '@/hooks/use-toast';
 import { useLeadPageConfig, useUpdateLeadPage } from '@/hooks/useLeadPageConfig';
 import {
@@ -23,7 +25,31 @@ import {
   Sparkles,
   QrCode,
   Link2,
+  Printer,
 } from 'lucide-react';
+
+// Render the on-screen quote-page QR (SVG) to a high-res PNG data URL.
+const qrToPngDataUrl = (): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const svg = document.getElementById('quote-page-qr');
+    if (!svg) return reject(new Error('QR not ready'));
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = img.width * 4;
+      canvas.height = img.height * 4;
+      if (ctx) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+      resolve(canvas.toDataURL('image/png'));
+    };
+    img.onerror = () => reject(new Error('QR render failed'));
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+  });
 
 const slugify = (v: string) =>
   v
@@ -170,6 +196,20 @@ export function QuotePageSection() {
     toast({ title: 'QR downloaded', description: 'Print it on invoices, vans and job sheets.' });
   };
 
+  const handleDownloadPoster = async () => {
+    try {
+      const qr = await qrToPngDataUrl();
+      const { doc, filename } = await generateQuotePosterPdf(
+        config?.company_name ?? 'Your electrician',
+        publicUrl,
+        qr
+      );
+      await saveOrSharePdf(doc, filename);
+    } catch {
+      toast({ title: 'Could not make the poster', variant: 'destructive' });
+    }
+  };
+
   if (isLoading) {
     return (
       <PageFrame>
@@ -298,7 +338,11 @@ export function QuotePageSection() {
 
               <div className="grid grid-cols-2 gap-2">
                 <SecondaryButton onClick={handleCopy} fullWidth>
-                  {copied ? <Check className="h-4 w-4 mr-1.5" /> : <Copy className="h-4 w-4 mr-1.5" />}
+                  {copied ? (
+                    <Check className="h-4 w-4 mr-1.5" />
+                  ) : (
+                    <Copy className="h-4 w-4 mr-1.5" />
+                  )}
                   {copied ? 'Copied' : 'Copy'}
                 </SecondaryButton>
                 <SecondaryButton onClick={handleShare} fullWidth>
@@ -311,6 +355,10 @@ export function QuotePageSection() {
                   <ExternalLink className="h-4 w-4 mr-1.5" /> Preview
                 </SecondaryButton>
               </div>
+
+              <SecondaryButton onClick={handleDownloadPoster} fullWidth>
+                <Printer className="h-4 w-4 mr-1.5" /> Print a “Scan for a quote” poster
+              </SecondaryButton>
 
               <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3.5">
                 <p className="text-[12px] font-medium text-white/80">Where to put it</p>

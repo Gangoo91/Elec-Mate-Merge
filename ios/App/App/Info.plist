@@ -41,6 +41,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Elec-Mate uses your camera to scan distribution boards and capture site photos.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Elec-Mate uses your contacts so you can import customers into your CRM without retyping them.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Elec-Mate uses Face ID so you can sign in quickly and securely without typing your password.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

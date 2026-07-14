@@ -12,7 +12,8 @@ import { sendEmail, clientFacingSender, htmlToPlainText } from '../_shared/maile
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const money = (v: number | string | null | undefined) =>
@@ -145,10 +146,13 @@ Deno.serve(async (req) => {
     }
 
     if (!['quote', 'invoice'].includes(type) || !documentId || !recipientEmail) {
-      return new Response(JSON.stringify({ error: 'type, documentId and recipientEmail required' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: 'type, documentId and recipientEmail required' }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(recipientEmail)) {
       return new Response(JSON.stringify({ error: 'Invalid recipient email' }), {
@@ -174,11 +178,17 @@ Deno.serve(async (req) => {
 
     const { data: company } = await supabase
       .from('company_profiles')
-      .select('company_name, company_email, company_phone')
+      .select('company_name, company_email, company_phone, lead_page_slug, lead_page_enabled')
       .eq('user_id', user.id)
       .maybeSingle();
 
     const companyName = company?.company_name?.trim() || 'Your Electrician';
+    // Turn every quote/invoice into a lead source: a subtle referral to the
+    // sender's quote page (only if they've got one live).
+    const referralHtml =
+      company?.lead_page_enabled && company?.lead_page_slug
+        ? `<p style="margin: 20px 0 0; font-size: 12px; color: #999;">Need another job doing, or know someone who does? <a href="https://elec-mate.com/get-quote/${company.lead_page_slug}" style="color: #666;">Get a quote &rarr;</a></p>`
+        : '';
     const docNumber = doc[numberCol] || '';
     const cisAmount = Number(doc.cis_amount) || 0;
     const amount = Number(type === 'quote' ? doc.value : doc.amount) - cisAmount;
@@ -212,6 +222,7 @@ Deno.serve(async (req) => {
         <p style="color: #666; font-size: 13px;">
           Any questions, just reply to this email${company?.company_phone ? ` or call ${company.company_phone}` : ''}.
         </p>
+        ${referralHtml}
       </div>`;
 
     const sender = clientFacingSender({

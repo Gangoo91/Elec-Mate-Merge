@@ -29,13 +29,7 @@ const RESUMABLE_STATUSES = ['draft', 'auto-draft', 'in-progress'];
 
 // Only route types with a confirmed /{type}/{id} edit route; anything else
 // falls back to the My Reports list rather than a guessed URL.
-const ROUTED_REPORT_TYPES = new Set([
-  'eicr',
-  'eic',
-  'minor-works',
-  'testing-only',
-  'pat-testing',
-]);
+const ROUTED_REPORT_TYPES = new Set(['eicr', 'eic', 'minor-works', 'testing-only', 'pat-testing']);
 
 const TYPE_LABELS: Record<string, string> = {
   eicr: 'EICR',
@@ -46,7 +40,7 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 interface ResumeItem {
-  kind: 'cert' | 'quote';
+  kind: 'cert' | 'quote' | 'invoice';
   id: string;
   tag: string;
   headline: string;
@@ -68,12 +62,18 @@ export function ResumeCard() {
       // surfacing it forever made the card feel stuck (ELE-1290)
       const recencyCutoff = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
 
-      const [certRes, quoteRes] = await Promise.all([
+      // ELE-1327 — the card must reflect what the user has ACTUALLY been
+      // doing: rank certs, draft quotes AND draft invoices by recency, and
+      // suppress the card entirely when the user's latest activity was
+      // COMPLETING something after last touching the candidate — a draft
+      // older than your last finished job isn't "where you left off".
+      const [certRes, quoteRes, invoiceRes, doneCertRes] = await Promise.all([
         supabase
           .from('reports')
           .select('id, report_type, client_name, installation_address, updated_at')
           .eq('user_id', user!.id)
           .in('status', RESUMABLE_STATUSES)
+          .is('deleted_at', null)
           .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
           .limit(1),
@@ -82,13 +82,47 @@ export function ResumeCard() {
           .select('id, total, status, updated_at, quote_number, client_data')
           .eq('user_id', user!.id)
           .eq('status', 'draft')
+          .eq('invoice_raised', false)
+          .is('deleted_at', null)
+          .gte('updated_at', recencyCutoff)
+          .order('updated_at', { ascending: false })
+          .limit(1),
+        supabase
+          .from('quotes')
+          .select('id, total, updated_at, invoice_number, client_data')
+          .eq('user_id', user!.id)
+          .eq('invoice_raised', true)
+          .eq('invoice_status', 'draft')
+          // Invoices soft-delete (and the delete bumps updated_at) — without
+          // this a just-deleted draft becomes the "most recent" resume item.
+          .is('deleted_at', null)
+          .gte('updated_at', recencyCutoff)
+          .order('updated_at', { ascending: false })
+          .limit(1),
+        // Latest COMPLETED work. Certs only: issuing a cert is always a
+        // user action, whereas quote/invoice status flips can come from the
+        // CLIENT (public accept link) or webhooks bumping updated_at — those
+        // would suppress the card without the user doing anything.
+        supabase
+          .from('reports')
+          .select('updated_at')
+          .eq('user_id', user!.id)
+          .eq('status', 'completed')
+          // soft_delete_report bumps updated_at — deleting an old cert must
+          // not count as "finished work" and suppress the card.
+          .is('deleted_at', null)
           .gte('updated_at', recencyCutoff)
           .order('updated_at', { ascending: false })
           .limit(1),
       ]);
 
+      [certRes, quoteRes, invoiceRes, doneCertRes].forEach((r) => {
+        if (r.error) console.warn('[ResumeCard] query failed:', r.error.message);
+      });
+
       const cert = certRes.data?.[0];
       const quote = quoteRes.data?.[0];
+      const invoice = invoiceRes.data?.[0];
 
       const certAddress = cert?.installation_address?.split('\n')[0]?.trim();
       const certItem: ResumeItem | null = cert
@@ -134,12 +168,50 @@ export function ResumeCard() {
           }
         : null;
 
-      if (certItem && quoteItem) {
-        return new Date(certItem.updatedAt) >= new Date(quoteItem.updatedAt)
-          ? certItem
-          : quoteItem;
-      }
-      return certItem ?? quoteItem ?? null;
+      const invoiceClient = (invoice?.client_data as { name?: string } | null)?.name?.trim();
+      const invoiceTotal = Number(invoice?.total ?? 0);
+      const invoiceAmount =
+        invoiceTotal > 0
+          ? `£${invoiceTotal.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`
+          : null;
+      const invoiceItem: ResumeItem | null = invoice
+        ? {
+            kind: 'invoice',
+            id: invoice.id,
+            tag: 'Draft invoice',
+            headline:
+              invoiceClient ||
+              invoiceAmount ||
+              (invoice.invoice_number ? `Invoice ${invoice.invoice_number}` : 'Untitled invoice'),
+            detail: invoiceClient
+              ? invoiceAmount
+                ? `${invoiceAmount} drafted`
+                : 'No items yet'
+              : invoice.invoice_number
+                ? `Invoice ${invoice.invoice_number}`
+                : 'Draft in progress',
+            updatedAt: invoice.updated_at,
+            path: `/electrician/invoice-quote-builder/${invoice.id}`,
+          }
+        : null;
+
+      // Most recently touched across all three work types.
+      const candidates = [certItem, quoteItem, invoiceItem].filter(
+        (i): i is ResumeItem => i !== null
+      );
+      if (candidates.length === 0) return null;
+      candidates.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      const best = candidates[0];
+
+      // Completed-since check: if the user has FINISHED something since last
+      // touching this draft, it isn't "where they left off" — show nothing
+      // rather than nag about stale context (ELE-1327).
+      const latestCompleted = doneCertRes.data?.[0]
+        ? new Date(doneCertRes.data[0].updated_at).getTime()
+        : 0;
+      if (latestCompleted > new Date(best.updatedAt).getTime()) return null;
+
+      return best;
     },
   });
 

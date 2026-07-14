@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import {
@@ -17,7 +17,7 @@ import {
  * ad-network integrations (Meta / Google Ads / TikTok) configured in the
  * RC dashboard.
  */
-export default function MarketingPixelsProvider({ children }: { children: React.ReactNode }) {
+export default function MarketingPixelsProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
   const isNative = Capacitor.isNativePlatform();
 
@@ -29,6 +29,10 @@ export default function MarketingPixelsProvider({ children }: { children: React.
       const marketing = event.detail?.marketing === true;
       if (marketing) {
         initMarketingPixels();
+        // Count the page the user consented on — gtag config uses
+        // send_page_view: false, so without this the first page after
+        // consent is missed until the next route change.
+        trackPageView();
       } else {
         shutdownMarketingPixels();
       }
