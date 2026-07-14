@@ -103,7 +103,7 @@ Deno.serve(async (req: Request) => {
     const { data: quote, error: quoteErr } = await supabase
       .from('quotes')
       .select(
-        'id, invoice_number, invoice_status, invoice_paid_at, total, total_paid, external_invoice_id, external_invoice_provider'
+        'id, invoice_number, invoice_status, invoice_paid_at, total, total_paid, partial_payments, external_invoice_id, external_invoice_provider'
       )
       .eq('id', invoiceId)
       .eq('user_id', user.id)
@@ -237,6 +237,7 @@ Deno.serve(async (req: Request) => {
         total: Number(quote.total ?? 0),
         currentStatus: quote.invoice_status,
         currentTotalPaid: Number(quote.total_paid ?? 0),
+        currentPartialPayments: (quote.partial_payments as unknown[] | null) ?? null,
       },
       pulled
     );

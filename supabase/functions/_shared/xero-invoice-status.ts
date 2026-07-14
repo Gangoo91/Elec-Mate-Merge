@@ -251,7 +251,13 @@ export interface ApplyResult {
 export async function applyPaymentStatus(
   supabase: SupabaseLike,
   quoteId: string,
-  current: { total: number; currentStatus: string | null; currentTotalPaid: number | null },
+  current: {
+    total: number;
+    currentStatus: string | null;
+    currentTotalPaid: number | null;
+    /** quotes.partial_payments — non-empty means payments were recorded manually in-app. */
+    currentPartialPayments?: unknown[] | null;
+  },
   pulled: PullResult
 ): Promise<ApplyResult> {
   const total = round2(current.total);
@@ -259,15 +265,13 @@ export async function applyPaymentStatus(
   // Fully paid if Xero says PAID, or AmountPaid covers the total (within a penny).
   const fullyPaid = pulled.isPaid || (total > 0 && amountPaid >= total - 0.005);
 
-  // ELE-1316 — only infer a partial payment when the provider's invoice total
-  // (amountPaid + amountDue) reconciles with ours. When the user has amended
-  // the invoice provider-side (e.g. credited off VAT for domestic reverse
-  // charge — ELE-1318), TotalAmt − Balance is an accounting adjustment, not
-  // money received. Treating it as a payment showed phantom "deposit paid"
-  // amounts that re-applied on every sync.
-  const providerTotal = round2(amountPaid + round2(pulled.amountDue ?? 0));
-  const totalsReconcile = total > 0 && Math.abs(providerTotal - total) <= 0.01;
-  const partiallyPaid = !fullyPaid && amountPaid > 0 && totalsReconcile;
+  // ELE-1316 — amountPaid must be PAYMENT-BACKED by the provider layer:
+  // Xero's AmountPaid excludes credits (AmountCredited is separate), and the
+  // QuickBooks pull now sums actual linked Payment transactions rather than
+  // inferring TotalAmt − Balance (which counted CIS withholding and credit
+  // notes as phantom "deposits"). With that guarantee we trust the figure
+  // directly — no reconcile heuristic, which mis-fired both ways.
+  const partiallyPaid = !fullyPaid && amountPaid > 0;
 
   // deno-lint-ignore no-explicit-any
   const patch: Record<string, any> = {};
@@ -275,15 +279,24 @@ export async function applyPaymentStatus(
   // Record the deposit/partial payment when the figure has actually changed.
   if (
     amountPaid > 0 &&
-    totalsReconcile &&
     !fullyPaid &&
     Math.abs(amountPaid - round2(current.currentTotalPaid ?? 0)) > 0.005
   ) {
     patch.total_paid = amountPaid;
-  } else if (amountPaid > 0 && !totalsReconcile && !fullyPaid) {
-    console.warn(
-      `[applyPaymentStatus] provider total ${providerTotal} != local total ${total} — skipping partial-payment inference (ELE-1316)`
-    );
+  }
+
+  // Heal phantom deposits DOWNWARD (ELE-1316): earlier syncs recorded CIS
+  // withholding / credit notes as paid amounts. When the provider's
+  // payment-backed figure is LOWER than what we hold, and no payments were
+  // recorded manually in-app (partial_payments empty), correct it.
+  const hasManualPayments =
+    Array.isArray(current.currentPartialPayments) && current.currentPartialPayments.length > 0;
+  if (
+    !fullyPaid &&
+    !hasManualPayments &&
+    amountPaid < round2(current.currentTotalPaid ?? 0) - 0.005
+  ) {
+    patch.total_paid = amountPaid;
   }
 
   if (fullyPaid) {

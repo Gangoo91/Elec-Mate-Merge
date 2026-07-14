@@ -61,7 +61,7 @@ Deno.serve(async (req: Request) => {
       // Open, synced invoices for this user (source of truth = quotes).
       const { data: invoices, error: invErr } = await supabase
         .from('quotes')
-        .select('id, total, total_paid, invoice_status, external_invoice_id')
+        .select('id, total, total_paid, partial_payments, invoice_status, external_invoice_id')
         .eq('user_id', tokenRow.user_id)
         .eq('invoice_raised', true)
         .eq('external_invoice_provider', tokenRow.provider)
@@ -112,6 +112,7 @@ Deno.serve(async (req: Request) => {
               total: Number(inv.total ?? 0),
               currentStatus: inv.invoice_status,
               currentTotalPaid: Number(inv.total_paid ?? 0),
+              currentPartialPayments: (inv.partial_payments as unknown[] | null) ?? null,
             },
             pulled
           );

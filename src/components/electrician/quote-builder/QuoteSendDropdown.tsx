@@ -17,6 +17,7 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
+import { isPermanentPdfUrl } from '@/utils/pdfUrl';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -331,9 +332,11 @@ export const QuoteSendDropdown = ({
 
       // Company profile may not exist — non-blocking
 
-      // Step 2: Check if PDF is current
+      // Step 2: Check if PDF is current — content-current AND a permanent
+      // storage URL; PDFMonkey signed links expire after an hour (ELE-1330).
       const pdfIsCurrent =
         freshQuote?.pdf_url &&
+        isPermanentPdfUrl(freshQuote.pdf_url) &&
         freshQuote?.pdf_generated_at &&
         new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
 

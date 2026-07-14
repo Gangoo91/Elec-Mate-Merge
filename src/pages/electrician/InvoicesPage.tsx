@@ -40,6 +40,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
+import { isPermanentPdfUrl } from '@/utils/pdfUrl';
 
 type TemporaryPdfLinkResponse = {
   publicUrl: string;
@@ -140,8 +141,11 @@ const InvoicesPage = () => {
       setGenerationError(null);
       setShowGenerationDialog(true);
 
+      // Cached PDF must be content-current AND a permanent storage URL —
+      // PDFMonkey signed links die after an hour (ELE-1330).
       const pdfIsCurrent =
         invoice.pdf_url &&
+        isPermanentPdfUrl(invoice.pdf_url) &&
         invoice.pdf_generated_at &&
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 

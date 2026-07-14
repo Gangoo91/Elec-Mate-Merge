@@ -26,6 +26,7 @@ import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/In
 import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/PartialPaymentDialog';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { PANEL } from '@/components/electrician/shared/surfaces';
+import { isPermanentPdfUrl } from '@/utils/pdfUrl';
 
 const InvoiceViewPage = () => {
   const { id } = useParams();
@@ -189,8 +190,12 @@ const InvoiceViewPage = () => {
     setShowGenerationDialog(true);
 
     try {
+      // Reuse the cached PDF only when it's content-current AND permanent —
+      // PDFMonkey signed URLs die after an hour even when the content is
+      // current, serving the customer/user an S3 AccessDenied page (ELE-1330).
       const pdfIsCurrent =
         invoice.pdf_url &&
+        isPermanentPdfUrl(invoice.pdf_url) &&
         invoice.pdf_generated_at &&
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 

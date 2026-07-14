@@ -54,8 +54,55 @@ export async function pullInvoiceStatusFromQuickBooks(
 
   const total = round2(inv.TotalAmt ?? 0);
   const balance = round2(inv.Balance ?? 0);
-  const amountPaid = round2(total - balance);
   const isPaid = total > 0 && balance <= 0.005;
+
+  // ELE-1316 (Mark Glowacki) — TotalAmt − Balance is NOT "amount the customer
+  // paid". QuickBooks reduces Balance for CIS withholding (its CIS module
+  // posts the 20% labour deduction automatically on CIS invoices) and for
+  // credit notes — neither is money received, but the old inference showed
+  // them as a phantom "deposit paid" in the app, re-applied by every 3h sync.
+  // Only count money backed by actual Payment transactions linked to this
+  // invoice: fetch them and sum the amounts applied to this invoice.
+  let amountPaid = 0;
+  // deno-lint-ignore no-explicit-any
+  const linkedPaymentIds: string[] = (((inv.LinkedTxn as any[]) ?? []) as any[])
+    .filter((t) => t?.TxnType === 'Payment' && t?.TxnId)
+    .map((t) => String(t.TxnId));
+
+  if (linkedPaymentIds.length > 0) {
+    try {
+      const idList = linkedPaymentIds.map((id) => `'${id.replace(/'/g, '')}'`).join(',');
+      const q = `SELECT * FROM Payment WHERE Id IN (${idList})`;
+      const payRes = await fetch(
+        `${QB_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(q)}&minorversion=70`,
+        { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } }
+      );
+      if (payRes.ok) {
+        const payJson = await payRes.json();
+        // deno-lint-ignore no-explicit-any
+        const payments: any[] = payJson?.QueryResponse?.Payment ?? [];
+        for (const p of payments) {
+          // deno-lint-ignore no-explicit-any
+          for (const line of ((p.Line as any[]) ?? []) as any[]) {
+            // deno-lint-ignore no-explicit-any
+            const linksInvoice = (((line.LinkedTxn as any[]) ?? []) as any[]).some(
+              (lt) => lt?.TxnType === 'Invoice' && String(lt?.TxnId) === String(invoiceId)
+            );
+            if (linksInvoice) amountPaid += Number(line.Amount) || 0;
+          }
+        }
+        amountPaid = round2(amountPaid);
+      } else {
+        console.warn(
+          `[quickbooks-invoice-status] Payment lookup failed (${payRes.status}) — not inferring a paid amount`
+        );
+      }
+    } catch (e) {
+      console.warn('[quickbooks-invoice-status] Payment lookup error — not inferring:', e);
+    }
+  }
+  // No linked Payment transactions → nothing received (a zero balance with
+  // no payments means the invoice was settled by credits/CIS, not money).
 
   let paidAt: string | null = null;
   if (isPaid && inv.MetaData?.LastUpdatedTime) {
