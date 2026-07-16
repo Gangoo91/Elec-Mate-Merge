@@ -385,14 +385,22 @@
             </tr>
             {% endif %}
             {% if manualItems.size > 0 %}
-            {% assign cat_total = 0 %}
-            {% for item in manualItems %}{% assign cat_total = cat_total | plus: item.totalPrice %}{% endfor %}
+            {% comment %}ELE-1335 — manual items always show individual descriptions,
+            even in collapsed mode, because they are user-defined job lines (not
+            hidden materials costs). Never lump them under a generic label.{% endcomment %}
+            {% for item in manualItems %}
             <tr>
-              <td><div class="item-desc">Additional items</div></td>
-              <td class="qty-unit"></td>
-              <td class="r"></td>
-              <td class="r num" style="font-weight: 600;">£{{ cat_total | round: 2 }}</td>
+              <td>
+                <div class="item-desc">{{ item.description }}</div>
+                {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+                {% if item.itemAdjustmentPercent > 0 %}<span class="item-adj">+{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'markup' }}</span>{% endif %}
+                {% if item.itemAdjustmentPercent < 0 %}<span class="item-adj discount">{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'discount' }}</span>{% endif %}
+              </td>
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
+              <td class="r num">{% if item.unitPriceFormatted != blank %}{{ item.unitPriceFormatted }}{% else %}£{{ item.unitPrice | round: 2 }}{% endif %}</td>
+              <td class="r num" style="font-weight: 600;">{% if item.totalPriceFormatted != blank %}{{ item.totalPriceFormatted }}{% else %}£{{ item.totalPrice | round: 2 }}{% endif %}</td>
             </tr>
+            {% endfor %}
             {% endif %}
             {% endif %}
             {% comment %}Legacy fallback — flat list when nothing is categorised.{% endcomment %}
