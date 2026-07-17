@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Single Phase vs Three Phase', href: '/guides/guides/single-phase-vs-three-phase' },
+  { label: 'Single Phase vs Three Phase', href: '/guides/single-phase-vs-three-phase' },
 ];
 
 const tocItems = [

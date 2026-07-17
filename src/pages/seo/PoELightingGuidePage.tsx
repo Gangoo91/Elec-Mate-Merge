@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/guides/data-cabling-installation',
+    href: '/guides/data-cabling-installation',
     title: 'Data Cabling Installation',
     description: 'Structured cabling fundamentals that underpin PoE lighting installations.',
     icon: Network,

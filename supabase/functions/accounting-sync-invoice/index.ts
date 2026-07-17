@@ -310,6 +310,10 @@ Deno.serve(async (req: Request) => {
       reverseCharge:
         (invoice.settings as Record<string, unknown> | null)?.reverseCharge === true ||
         (invoice.settings as Record<string, unknown> | null)?.reverseCharge === 'true',
+      externalInvoiceId:
+        invoice.external_invoice_provider === provider
+          ? ((invoice.external_invoice_id as string | null) ?? null)
+          : null,
     };
 
     // Sync to provider - WITHOUT retry/timeout wrappers for now to simplify debugging
@@ -644,6 +648,10 @@ interface InvoiceData {
   isPaid?: boolean;
   paidAt?: string;
   reverseCharge?: boolean;
+  // Set when the invoice was already synced to this provider — providers
+  // that support it update the existing record instead of creating a
+  // duplicate (ELE-1339).
+  externalInvoiceId?: string | null;
 }
 
 interface SyncResult {
@@ -673,8 +681,12 @@ async function syncToXero(
     TaxType: invoice.vatAmount > 0 ? 'OUTPUT2' : 'NONE', // 20% VAT or no VAT
   }));
 
-  // Create the invoice
+  // Create the invoice — or update it in place. Xero's POST /Invoices
+  // patches the existing record when the body carries its InvoiceID;
+  // without it every re-sync created a duplicate invoice (ELE-1339).
+  const isUpdate = Boolean(invoice.externalInvoiceId);
   const xeroInvoice = {
+    ...(isUpdate ? { InvoiceID: invoice.externalInvoiceId } : {}),
     Type: 'ACCREC', // Accounts Receivable invoice
     Contact: { ContactID: contactId },
     Date: invoice.date?.split('T')[0] || new Date().toISOString().split('T')[0],
@@ -710,8 +722,9 @@ async function syncToXero(
     throw new ExternalAPIError('Xero', { error: 'No invoice ID returned' });
   }
 
-  // If invoice is paid, create a payment in Xero
-  if (invoice.isPaid) {
+  // If invoice is paid, create a payment in Xero. Create path only — on an
+  // update the payment may already exist and would be duplicated.
+  if (invoice.isPaid && !isUpdate) {
     await createXeroPayment(accessToken, tenantId, {
       invoiceId: createdInvoice.InvoiceID,
       amount: invoice.total,

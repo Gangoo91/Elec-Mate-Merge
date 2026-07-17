@@ -24,7 +24,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Data Cabling Installation Cost', href: '/guides/guides/data-cabling-installation-cost' },
+  { label: 'Data Cabling Installation Cost', href: '/guides/data-cabling-installation-cost' },
 ];
 
 const tocItems = [

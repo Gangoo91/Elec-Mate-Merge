@@ -1830,21 +1830,22 @@
       </div>
 
       <!-- Main Switch / Consumer's Switch (BS 7671 Section J) -->
-      {% if main_protective_device.main_switch_location != "" or main_protective_device.main_switch_poles != "" or main_protective_device.main_switch_voltage_rating != "" or main_protective_device.fuse_device_rating != "" %}
+      {% comment %}ELE-1323 — half-filled data left bare blank cells and the
+      block never showed the current rating the user DID enter, which read as
+      broken. Full block with em-dash defaults; rating + BS (EN) added.{% endcomment %}
+      {% if main_protective_device.main_switch_location != "" or main_protective_device.main_switch_poles != "" or main_protective_device.main_switch_rating != "" or main_protective_device.main_switch_voltage_rating != "" or main_protective_device.fuse_device_rating != "" %}
       <div class="avoid-break">
         <div class="section-subtitle">Main Switch / Consumer's Switch</div>
         <div class="grid-row cols-3">
-          <div class="grid-cell"><div class="cell-label">Location</div><div class="cell-value">{{main_protective_device.main_switch_location}}</div></div>
-          <div class="grid-cell"><div class="cell-label">No of poles</div><div class="cell-value">{{main_protective_device.main_switch_poles}}</div></div>
-          <div class="grid-cell"><div class="cell-label">Voltage rating (V)</div><div class="cell-value">{{main_protective_device.main_switch_voltage_rating}}</div></div>
+          <div class="grid-cell"><div class="cell-label">Location</div><div class="cell-value">{{main_protective_device.main_switch_location | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">No of poles</div><div class="cell-value">{{main_protective_device.main_switch_poles | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">Current rating (A)</div><div class="cell-value">{{main_protective_device.main_switch_rating | default: "&mdash;"}}</div></div>
         </div>
-        {% if main_protective_device.fuse_device_rating != "" %}
         <div class="grid-row cols-3">
-          <div class="grid-cell"><div class="cell-label">Fuse / device rating</div><div class="cell-value">{{main_protective_device.fuse_device_rating}}</div></div>
-          <div class="grid-cell"><div class="cell-label"></div><div class="cell-value" style="border-bottom: 0;"></div></div>
-          <div class="grid-cell"><div class="cell-label"></div><div class="cell-value" style="border-bottom: 0;"></div></div>
+          <div class="grid-cell"><div class="cell-label">Voltage rating (V)</div><div class="cell-value">{{main_protective_device.main_switch_voltage_rating | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">Fuse / device rating (A)</div><div class="cell-value">{{main_protective_device.fuse_device_rating | default: "&mdash;"}}</div></div>
+          <div class="grid-cell"><div class="cell-label">BS (EN)</div><div class="cell-value">{{main_protective_device.bs_en | default: "&mdash;"}}</div></div>
         </div>
-        {% endif %}
       </div>
       {% endif %}
       <!-- ELE-849 — Continuity verification row (Yes/No/N/V) — grid-aligned -->

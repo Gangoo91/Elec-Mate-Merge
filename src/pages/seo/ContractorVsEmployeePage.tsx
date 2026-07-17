@@ -25,7 +25,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides/electrician-career-progression' },
-  { label: 'Contractor vs Employee', href: '/guides/contractor-vs-employee-electrician-electrician' },
+  { label: 'Contractor vs Employee', href: '/guides/contractor-vs-employee-electrician' },
 ];
 
 const tocItems = [

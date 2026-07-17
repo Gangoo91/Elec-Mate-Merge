@@ -26,7 +26,7 @@ const PAGE_DESCRIPTION =
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
-  { label: 'First Aid for Electricians', href: '/training/first-aid-electrical-electrical' },
+  { label: 'First Aid for Electricians', href: '/training/first-aid-electrical' },
 ];
 
 const tocItems = [
@@ -429,7 +429,7 @@ export default function FirstAidCoursePage() {
       ctaHeading="Ready to learn life-saving first aid skills?"
       ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 5 focused modules covering electric shock response, CPR, burns treatment, and workplace emergencies. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
-      coursePath="/training/first-aid-electrical-electrical"
+      coursePath="/training/first-aid-electrical"
     />
   );
 }

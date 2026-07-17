@@ -530,12 +530,14 @@ export const reportCloud = {
                                                 ? 'eic'
                                                 : 'eicr';
 
-      // Get current status to check if it's an auto-draft
+      // Get current status to check if it's an auto-draft.
+      // No user_id filter (report_id is unique): a QS editing a team
+      // member's cert must hit the OWNER's row — RLS decides access, and the
+      // report_edit_log trigger attributes the change (Team Certificates).
       const { data: currentReport } = await supabase
         .from('reports')
         .select('status')
         .eq('report_id', reportId)
-        .eq('user_id', userId)
         .single();
 
       const currentStatus = currentReport?.status;
@@ -594,8 +596,7 @@ export const reportCloud = {
       const { error } = await supabase
         .from('reports')
         .update(updateData)
-        .eq('report_id', reportId)
-        .eq('user_id', userId);
+        .eq('report_id', reportId);
 
       if (error) throw error;
 
@@ -617,8 +618,7 @@ export const reportCloud = {
       const { data: report, error } = await supabase
         .from('reports')
         .select('data')
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .maybeSingle();
 
@@ -644,11 +644,12 @@ export const reportCloud = {
     lastSyncedAt?: string;
   } | null> => {
     try {
+      // No user_id filter — RLS grants the owner AND their team QS
+      // (Team Certificates: the QS opens the member's cert in the editor).
       const { data: report, error } = await supabase
         .from('reports')
         .select('id, data, updated_at, last_synced_at')
         .eq('report_id', reportId)
-        .eq('user_id', userId)
         .is('deleted_at', null)
         .maybeSingle();
 
@@ -757,8 +758,7 @@ export const reportCloud = {
       const { data, error } = await supabase
         .from('reports')
         .select('*')
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .single();
 
@@ -781,8 +781,7 @@ export const reportCloud = {
       const { data, error } = await supabase
         .from('reports')
         .select('edit_version, updated_at')
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .single();
 
@@ -810,8 +809,7 @@ export const reportCloud = {
       const { data: existing } = await supabase
         .from('reports')
         .select('locked_at')
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .single();
 
@@ -823,8 +821,7 @@ export const reportCloud = {
       const { error } = await supabase
         .from('reports')
         .update({ locked_at: lockedAt })
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null);
 
       if (error) throw error;
@@ -853,8 +850,7 @@ export const reportCloud = {
       const { data, error } = await supabase
         .from('reports')
         .select('id, locked_at, parent_report_id, superseded_by, edit_version, certificate_number')
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .single();
 
@@ -885,8 +881,7 @@ export const reportCloud = {
       const { data, error } = await supabase
         .from('reports')
         .select('edit_version, updated_at, data')
-        .eq('report_id', reportId)
-        .eq('user_id', userId)
+        .eq('report_id', reportId) // no user filter — RLS grants owner + team QS (Team Certificates)
         .is('deleted_at', null)
         .single();
 
@@ -933,12 +928,14 @@ export const reportCloud = {
         return { success: false, conflict };
       }
 
-      // Get current status to check if it's an auto-draft
+      // Get current status to check if it's an auto-draft.
+      // No user_id filter (report_id is unique): a QS editing a team
+      // member's cert must hit the OWNER's row — RLS decides access, and the
+      // report_edit_log trigger attributes the change (Team Certificates).
       const { data: currentReport } = await supabase
         .from('reports')
         .select('status')
         .eq('report_id', reportId)
-        .eq('user_id', userId)
         .single();
 
       const currentStatus = currentReport?.status;
@@ -972,8 +969,8 @@ export const reportCloud = {
       const { error } = await supabase
         .from('reports')
         .update(updateData)
-        .eq('report_id', reportId)
-        .eq('user_id', userId);
+        // no user filter — RLS grants owner + team QS (Team Certificates)
+        .eq('report_id', reportId);
 
       if (error) throw error;
 

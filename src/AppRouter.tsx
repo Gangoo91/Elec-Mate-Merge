@@ -96,6 +96,7 @@ const AdminAuditLogs = lazy(() => import('@/pages/Admin/AdminAuditLogs'));
 const AdminFeatureFlags = lazy(() => import('@/pages/Admin/AdminFeatureFlags'));
 const AdminSettings = lazy(() => import('@/pages/Admin/AdminSettings'));
 const AdminAnalytics = lazy(() => import('@/pages/Admin/AdminAnalytics'));
+const AdminPageAnalytics = lazy(() => import('@/pages/Admin/AdminPageAnalytics'));
 const AdminVerificationQueue = lazy(() => import('@/pages/Admin/AdminVerificationQueue'));
 const AdminRevenue = lazy(() => import('@/pages/Admin/AdminRevenue'));
 const AdminMate = lazy(() => import('@/pages/Admin/AdminMate'));
@@ -1649,6 +1650,14 @@ const AppRouter = () => {
                 element={
                   <LazyRoute>
                     <AdminAnalytics />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="page-analytics"
+                element={
+                  <LazyRoute>
+                    <AdminPageAnalytics />
                   </LazyRoute>
                 }
               />

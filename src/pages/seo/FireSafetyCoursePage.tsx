@@ -331,7 +331,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/first-aid-electrical-electrical',
+    href: '/training/first-aid-electrical',
     title: 'First Aid for Electricians',
     description:
       'Emergency response skills including burn treatment and CPR for fire and electrical incidents.',

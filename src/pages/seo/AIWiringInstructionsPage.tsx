@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/apprentice-training-training',
+    href: '/apprentice-training',
     title: 'Apprentice Training',
     description:
       'Level 2 and Level 3 electrical apprentice courses with interactive wiring exercises and AM2 preparation.',

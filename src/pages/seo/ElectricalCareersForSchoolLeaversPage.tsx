@@ -90,6 +90,22 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
+    href: '/guides/starting-electrical-apprenticeship',
+    title: 'Starting Your Electrical Apprenticeship',
+    description:
+      'Landed a place, or aiming for September? The complete guide to the four years ahead.',
+    icon: GraduationCap,
+    category: 'Career',
+  },
+  {
+    href: '/guides/how-to-find-electrical-apprenticeship',
+    title: 'How to Find an Apprenticeship',
+    description:
+      'The five channels that hold nearly every apprenticeship — including unadvertised ones.',
+    icon: GraduationCap,
+    category: 'Career',
+  },
+  {
     href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description: 'Everything you need to know about the Level 3 Electrotechnical Apprenticeship.',

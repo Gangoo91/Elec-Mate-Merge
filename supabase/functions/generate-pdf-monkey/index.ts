@@ -643,6 +643,8 @@ serve(async (req) => {
         quantity: number;
         unit: string;
         unitPrice: number;
+        unitPriceFormatted?: string;
+        amountFormatted?: string;
       }>;
 
       // ELE-888 — pre-compute item-adjusted versions of every line for both views
@@ -714,8 +716,11 @@ serve(async (req) => {
           categoryTotals[it.category] += it.totalPrice;
         }
 
-        // Build summary items in order
-        const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
+        // Build summary items in order. Custom (manual) items are
+        // user-authored lines the customer is meant to read — keep them
+        // itemised by description instead of one anonymous "Other" row
+        // (ELE-1335).
+        const categoryOrder = ['labour', 'materials', 'equipment'];
         processedItems = categoryOrder
           .filter((cat) => categoryTotals[cat] && categoryTotals[cat] > 0)
           .map((category) => ({
@@ -727,6 +732,18 @@ serve(async (req) => {
             unitPriceFormatted: gbp(categoryTotals[category]),
             amountFormatted: gbp(categoryTotals[category]),
           }));
+        for (const it of adjustedRawItems) {
+          if (it.category !== 'manual') continue;
+          processedItems.push({
+            name: it.description,
+            description: it.raw?.notes || '',
+            quantity: 1,
+            unit: 'lot',
+            unitPrice: it.totalPrice,
+            unitPriceFormatted: gbp(it.totalPrice),
+            amountFormatted: gbp(it.totalPrice),
+          });
+        }
       } else {
         // Detailed view: Show all items individually with adjustments applied.
         // ELE-T-inv-extra — also surface labour breakdown (hours/rate/worker)
@@ -1018,11 +1035,14 @@ serve(async (req) => {
             }
           : null;
 
-      // Balance due = total minus any deposit already paid. When no
-      // deposit, balanceDue == total (and the template falls back to
-      // showing "Amount Due" with total).
+      // Balance due = total minus money already received. Deposits live in
+      // the deposit fields; partial payments live in quotes.total_paid
+      // (ELE-1339 — the PDF ignored total_paid so it disagreed with the
+      // invoice card). Max, not sum: a deposit recorded as a payment too
+      // must not be counted twice.
       const depositAmt = depositPaidSummary?.amount || 0;
-      const balanceDue = Math.max(0, total - depositAmt);
+      const totalPaidAmt = Number((freshQuote as Record<string, unknown> | null)?.total_paid || 0);
+      const balanceDue = Math.max(0, total - Math.max(depositAmt, totalPaidAmt));
 
       // ELE-T-inv-extra — three extra lookups (parent quote number,
       // deposit invoice number, view tracking). All non-fatal — if any

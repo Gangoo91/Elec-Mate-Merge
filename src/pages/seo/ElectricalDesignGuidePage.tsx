@@ -27,7 +27,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
-  { label: 'Electrical Design', href: '/guides/guides/electrical-design-guide' },
+  { label: 'Electrical Design', href: '/guides/electrical-design-guide' },
 ];
 
 const tocItems = [

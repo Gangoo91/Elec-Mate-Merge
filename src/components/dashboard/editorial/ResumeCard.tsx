@@ -70,7 +70,7 @@ export function ResumeCard() {
       const [certRes, quoteRes, invoiceRes, doneCertRes] = await Promise.all([
         supabase
           .from('reports')
-          .select('id, report_type, client_name, installation_address, updated_at')
+          .select('id, report_id, report_type, client_name, installation_address, updated_at')
           .eq('user_id', user!.id)
           .in('status', RESUMABLE_STATUSES)
           .is('deleted_at', null)
@@ -133,9 +133,14 @@ export function ResumeCard() {
             headline: certAddress || cert.client_name || 'Unnamed job',
             detail: certAddress && cert.client_name ? cert.client_name : null,
             updatedAt: cert.updated_at,
-            path: ROUTED_REPORT_TYPES.has(cert.report_type)
-              ? `/electrician/inspection-testing/${cert.report_type}/${cert.id}`
-              : '/electrician/inspection-testing?section=my-reports',
+            // Query-param sections for eicr/eic/minor-works, path routes for
+            // pat/testing-only — both keyed on the report_id STRING. The old
+            // path-with-uuid form fell through to the I&T dashboard.
+            path: ['eicr', 'eic', 'minor-works'].includes(cert.report_type)
+              ? `/electrician/inspection-testing?section=${cert.report_type}&reportId=${encodeURIComponent(cert.report_id)}`
+              : ROUTED_REPORT_TYPES.has(cert.report_type)
+                ? `/electrician/inspection-testing/${cert.report_type}/${encodeURIComponent(cert.report_id)}`
+                : '/electrician/inspection-testing?section=my-reports',
           }
         : null;
 

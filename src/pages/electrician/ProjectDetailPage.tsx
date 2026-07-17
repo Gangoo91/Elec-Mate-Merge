@@ -1804,10 +1804,23 @@ const ProjectDetailPage = () => {
                   <button
                     key={cert.id}
                     type="button"
-                    onClick={() =>
-                      cert.report_type &&
-                      navigate(`/electrician/inspection-testing/${cert.report_type}/${cert.id}`)
-                    }
+                    onClick={() => {
+                      if (!cert.report_type) return;
+                      // eicr/eic/minor-works are query-param sections; pat/
+                      // testing-only are path routes — both take report_id,
+                      // not the row uuid (uuid paths fell to the dashboard).
+                      if (['eicr', 'eic', 'minor-works'].includes(cert.report_type)) {
+                        navigate(
+                          `/electrician/inspection-testing?section=${cert.report_type}&reportId=${encodeURIComponent(cert.report_id)}`
+                        );
+                      } else if (['pat-testing', 'testing-only'].includes(cert.report_type)) {
+                        navigate(
+                          `/electrician/inspection-testing/${cert.report_type}/${encodeURIComponent(cert.report_id)}`
+                        );
+                      } else {
+                        navigate('/electrician/inspection-testing?section=my-reports');
+                      }
+                    }}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">

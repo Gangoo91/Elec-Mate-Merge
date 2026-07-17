@@ -77,7 +77,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/apprentice-training-training',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Level 2 and Level 3 courses, flashcards, and 20,000+ practice questions.',
     icon: GraduationCap,

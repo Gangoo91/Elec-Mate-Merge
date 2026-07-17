@@ -23,6 +23,18 @@ interface ApprenticeProfileData {
   apprenticeCollege: string;
 }
 
+// profiles.apprentice_year is an integer column; the quick step sends
+// stage strings ('1st'…'4th', 'pre-am2', 'post'). 'pre-am2' counts as
+// final year; 'post' (qualified) has no year.
+const APPRENTICE_YEAR_MAP: Record<string, number | null> = {
+  '1st': 1,
+  '2nd': 2,
+  '3rd': 3,
+  '4th': 4,
+  'pre-am2': 4,
+  post: null,
+};
+
 export function useSetupWizard() {
   const queryClient = useQueryClient();
 
@@ -129,7 +141,7 @@ export function useSetupWizard() {
         .from('profiles')
         .update({
           apprentice_course: data.apprenticeCourse || null,
-          apprentice_year: data.apprenticeYear || null,
+          apprentice_year: APPRENTICE_YEAR_MAP[data.apprenticeYear] ?? null,
           apprentice_college: data.apprenticeCollege?.trim() || null,
         })
         .eq('id', user.id);

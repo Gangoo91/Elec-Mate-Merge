@@ -12,6 +12,7 @@ import {
 import FeatureComparison from '@/components/subscriptions/FeatureComparison';
 import SubscriptionFAQ from '@/components/subscriptions/SubscriptionFAQ';
 import SupportSection from '@/components/subscriptions/SupportSection';
+import LifetimeCard from '@/components/subscriptions/LifetimeCard';
 import { CancelFlow } from '@/components/subscription/CancelFlow';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useAuth } from '@/contexts/AuthContext';
@@ -510,17 +511,11 @@ const Subscriptions = () => {
 
   const errorMessage = rcError || null;
 
-  // ── Split plans into row 1 (3-up) and row 2 (2-up) ────────────────────────
-  const ROW_1_IDS = new Set([
-    'apprentice-monthly',
-    'apprentice-yearly',
-    'electrician-monthly',
-    'electrician-yearly',
-    'business-ai-monthly',
-    'business-ai-yearly',
-  ]);
-  const rowOne = plans.filter((p) => ROW_1_IDS.has(p.id));
-  const rowTwo = plans.filter((p) => !ROW_1_IDS.has(p.id));
+  // ── Visible plans ──────────────────────────────────────────────────────────
+  // Mate (business_ai) is deliberately not sold from this page — one grid of
+  // Apprentice · Electrician · Employer · College.
+  const HIDDEN_PLAN_IDS = new Set(['business-ai-monthly', 'business-ai-yearly']);
+  const visiblePlans = plans.filter((p) => !HIDDEN_PLAN_IDS.has(p.id));
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -540,7 +535,7 @@ const Subscriptions = () => {
         </Link>
       </div>
 
-      <div className="px-4 sm:px-6 max-w-6xl mx-auto pb-24 space-y-10 sm:space-y-14">
+      <div className="px-4 sm:px-6 max-w-6xl mx-auto pb-24 space-y-8 sm:space-y-12">
         {/* Cancelled return */}
         {wasCancelled && (
           <p className="text-[13px] text-white border-l-2 border-yellow-500/60 pl-3 py-1">
@@ -745,7 +740,7 @@ const Subscriptions = () => {
               Pricing
             </span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.05]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.05]">
             Built for every stage
             <br />
             <span className="bg-gradient-to-r from-elec-yellow via-amber-300 to-elec-yellow bg-clip-text text-transparent">
@@ -757,6 +752,10 @@ const Subscriptions = () => {
             no charge until day 8.
           </p>
         </header>
+
+        {/* Lifetime one-off — the headline offer, straight after the hero.
+            Web only: external payment links are not allowed in native builds. */}
+        {!isNative && <LifetimeCard />}
 
         {/* Error (RevenueCat) */}
         {errorMessage && (
@@ -821,12 +820,12 @@ const Subscriptions = () => {
           )}
         </div>
 
-        {/* Row 1: Apprentice · Electrician · Mate */}
+        {/* Plans: Apprentice · Electrician · Employer · College */}
         <section
           id="plans"
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch scroll-mt-16"
+          className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 items-stretch scroll-mt-16"
         >
-          {rowOne.map((plan) => (
+          {visiblePlans.map((plan) => (
             <PlanCard
               key={plan.id}
               plan={plan}
@@ -842,27 +841,6 @@ const Subscriptions = () => {
             />
           ))}
         </section>
-
-        {/* Row 2: Employer · College (skipped on native where plans aren't offered) */}
-        {rowTwo.length > 0 && (
-          <section className="grid gap-4 sm:grid-cols-2 items-stretch">
-            {rowTwo.map((plan) => (
-              <PlanCard
-                key={plan.id}
-                plan={plan}
-                isNative={isNative}
-                isCurrentPlan={!isNative && subscriptionTier === plan.name && isSubscribed}
-                isLoading={!!isLoading[plan.id] || isPurchasing}
-                waitlistJoined={waitlistJoined}
-                waitlistLoading={waitlistLoading}
-                onSubscribe={handleSubscribe}
-                onNativePurchase={handleNativePurchase}
-                onJoinWaitlist={handleJoinWaitlist}
-                onCollegeContact={handleCollegeContact}
-              />
-            ))}
-          </section>
-        )}
 
         {/* Native IAP disclosure */}
         {isNative && (
@@ -1134,18 +1112,16 @@ const PlanCard = ({
 
         {/* Price — fixed height so all cards align regardless of whether
             the tier shows a numeric price or "Pricing on request" */}
-        <div className="mb-2 flex items-end min-h-[3.75rem] sm:min-h-[4.25rem]">
+        <div className="mb-2 flex items-end min-h-[3rem] sm:min-h-[3.5rem]">
           {showBigPrice ? (
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-5xl sm:text-[56px] font-extrabold tracking-tight text-white leading-none">
+            <div className="flex items-baseline gap-1">
+              <span className="text-4xl sm:text-[40px] font-extrabold tracking-tight text-white leading-none">
                 {priceMain}
               </span>
-              {plan.period && (
-                <span className="text-base text-white font-medium">{plan.period}</span>
-              )}
+              {plan.period && <span className="text-sm text-white font-medium">{plan.period}</span>}
             </div>
           ) : (
-            <div className="text-3xl sm:text-[40px] font-extrabold tracking-tight text-white leading-none">
+            <div className="text-2xl sm:text-[28px] font-extrabold tracking-tight text-white leading-tight">
               {plan.price}
             </div>
           )}

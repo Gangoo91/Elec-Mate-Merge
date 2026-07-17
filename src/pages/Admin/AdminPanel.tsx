@@ -52,6 +52,7 @@ const adminToolItems: NavItem[] = [
   { name: 'Announcements', path: '/admin/announcements' },
   { name: 'Emails', path: '/admin/emails' },
   { name: 'Analytics', path: '/admin/analytics' },
+  { name: 'Page time', path: '/admin/page-analytics' },
   { name: 'System', path: '/admin/system' },
   { name: 'Flags', path: '/admin/feature-flags' },
   { name: 'Settings', path: '/admin/settings' },

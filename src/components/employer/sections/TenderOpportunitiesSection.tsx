@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type KeyboardEvent } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import {
   Search,
@@ -92,7 +92,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
@@ -159,6 +159,27 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
             <Filter className="h-4 w-4 mr-1" />
             Filters
           </SecondaryButton>
+        </div>
+
+        {/* Open / Recently closed toggle */}
+        <div className="flex items-center gap-2 flex-wrap mt-3">
+          <span className="text-[12px] text-white">Show:</span>
+          {[
+            { value: 'live', label: 'Open to bid' },
+            { value: 'all', label: 'Open + recently closed' },
+            { value: 'closed', label: 'Recently closed' },
+          ].map((opt) => {
+            const active = (filters.status || 'live') === opt.value;
+            return (
+              <button
+                key={opt.value}
+                onClick={() => setFilters({ ...filters, status: opt.value })}
+                className={`h-9 px-3 rounded-full text-[12px] font-medium border touch-manipulation transition-colors ${active ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -513,11 +534,13 @@ function OpportunityCard({
                 {(() => {
                   const t = opportunity.opportunity_type || 'tender';
                   const badge =
-                    t === 'planning'
-                      ? { label: 'Planning lead · approach early', cls: 'bg-purple-500/15 text-purple-300 border-purple-500/25' }
-                      : t === 'award'
-                        ? { label: 'Award · pitch as subcontractor', cls: 'bg-blue-500/15 text-blue-300 border-blue-500/25' }
-                        : { label: 'Tender · open to bid', cls: 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/25' };
+                    opportunity.status === 'closed'
+                      ? { label: 'Recently closed · approach the buyer', cls: 'bg-white/[0.08] text-white/70 border-white/15' }
+                      : t === 'planning'
+                        ? { label: 'Planning lead · approach early', cls: 'bg-purple-500/15 text-purple-300 border-purple-500/25' }
+                        : t === 'award'
+                          ? { label: 'Award · pitch as subcontractor', cls: 'bg-blue-500/15 text-blue-300 border-blue-500/25' }
+                          : { label: 'Tender · open to bid', cls: 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/25' };
                   return (
                     <span className={`inline-block mb-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badge.cls}`}>
                       {badge.label}

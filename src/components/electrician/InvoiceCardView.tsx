@@ -291,7 +291,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                             {syncingInvoiceId === invoice.id ? (
                               <Loader2 className="h-3 w-3 animate-spin" />
                             ) : (invoice as any).external_invoice_id ? (
-                              'Synced'
+                              'Re-sync'
                             ) : (
                               connectedProvider ? `Sync` : 'Sync'
                             )}

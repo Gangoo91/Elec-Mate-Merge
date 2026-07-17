@@ -666,7 +666,10 @@ export async function formatEicJson(
         name: formData.inspectedByName || formData.inspectorName || '',
         signature: formData.inspectedBySignature || formData.inspectorSignature || '',
         for_on_behalf_of: formData.inspectedByForOnBehalfOf || formData.inspectorCompany || '',
-        position: formData.inspectedByPosition || formData.inspectorQualifications || '',
+        // ELE-1308 — no qualifications fallback here: this block renders on the
+        // cover page and the full quals string swamps it. Quals stay available
+        // under inspector/designer/constructor for the declarations pages.
+        position: formData.inspectedByPosition || '',
         address:
           formData.inspectedByAddress ||
           `${formData.inspectorAddress || ''}${formData.inspectorPostcode ? ', ' + formData.inspectorPostcode : ''}`,
@@ -793,6 +796,20 @@ export async function formatEicJson(
     has_additional_boards: (() => {
       const boards = formData.distributionBoards || [];
       return Array.isArray(boards) && boards.length > 1;
+    })(),
+
+    // ELE-1309/1313 — one person filled all three roles: template renders a
+    // single consolidated declaration + signatory block instead of three
+    // identical ones. Falls back to name comparison for certs saved before
+    // the same-as toggles were reliably set.
+    all_same_person: (() => {
+      if (formData.sameAsDesigner && formData.sameAsConstructor) return true;
+      const names = [
+        formData.designerName,
+        formData.constructorName,
+        formData.inspectorName,
+      ].map((n: string) => (n || '').trim().toLowerCase());
+      return !!names[0] && names[0] === names[1] && names[1] === names[2];
     })(),
   };
 

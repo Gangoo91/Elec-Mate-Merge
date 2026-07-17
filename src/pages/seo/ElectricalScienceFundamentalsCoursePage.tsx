@@ -28,7 +28,7 @@ const breadcrumbs = [
   { label: 'Training', href: '/training' },
   {
     label: 'Electrical Science Fundamentals',
-    href: '/training/electrical-science-fundamentals-fundamentals',
+    href: '/training/electrical-science-fundamentals',
   },
 ];
 
@@ -562,7 +562,7 @@ export default function ElectricalScienceFundamentalsCoursePage() {
       ctaHeading="Ready to master electrical science?"
       ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 12 structured modules covering every electrical science topic from Ohm's law to three-phase power. Video explanations, interactive quizzes, and an AI tutor for any theory question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
-      coursePath="/training/electrical-science-fundamentals-fundamentals"
+      coursePath="/training/electrical-science-fundamentals"
     />
   );
 }

@@ -270,6 +270,14 @@
       </div>
       {% endif %}
 
+      <!-- ── Additional details (ELE-1336) ── -->
+      {% if invoice.jobDetails.specialRequirements != blank %}
+      <div class="description-card">
+        <div class="card-header">Additional details</div>
+        <div class="description-body">{{ invoice.jobDetails.specialRequirements }}</div>
+      </div>
+      {% endif %}
+
       <!-- ── Certificate callout ── -->
       {% if invoice.linkedCertificate %}
       <div class="callout">

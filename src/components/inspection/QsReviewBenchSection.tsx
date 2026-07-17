@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { QSReviewsSection } from '@/components/employer/sections/QSReviewsSection';
+import TeamCertificatesSection from '@/components/inspection/TeamCertificatesSection';
 
 interface QsReviewBenchSectionProps {
   onBack: () => void;
@@ -20,6 +21,7 @@ interface QsReviewBenchSectionProps {
  * the I&T dashboard is additionally gated on `am_i_qs`.
  */
 const QsReviewBenchSection: React.FC<QsReviewBenchSectionProps> = ({ onBack }) => {
+  const [tab, setTab] = useState<'reviews' | 'certs'>('reviews');
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky header — matches the other I&T hub sections (e.g. Part P notifications) */}
@@ -40,8 +42,35 @@ const QsReviewBenchSection: React.FC<QsReviewBenchSectionProps> = ({ onBack }) =
         <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      <div className="px-4 py-4">
-        <QSReviewsSection />
+      {/* Team Certificates (ELE-1307 follow-on, Craig 2026-07-17): the QS
+          workspace is no longer a snapshot — Reviews for pending sign-offs,
+          Team Certificates for the full library with open/edit rights. */}
+      <div className="max-w-6xl mx-auto px-4 pt-3">
+        <div className="grid grid-cols-2 gap-1.5">
+          {(
+            [
+              { key: 'reviews', label: 'Reviews' },
+              { key: 'certs', label: 'Team Certificates' },
+            ] as const
+          ).map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setTab(key)}
+              className={
+                tab === key
+                  ? 'h-10 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow text-[13px] font-semibold touch-manipulation active:scale-[0.98]'
+                  : 'h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-[13px] font-semibold touch-manipulation active:scale-[0.98]'
+              }
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-4">
+        {tab === 'reviews' ? <QSReviewsSection /> : <TeamCertificatesSection />}
       </div>
     </div>
   );

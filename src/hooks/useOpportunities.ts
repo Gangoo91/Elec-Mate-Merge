@@ -114,6 +114,7 @@ export interface SearchResult {
   stats: {
     total: number;
     live: number;
+    closed: number;
     coming_soon: number;
     avg_value: number;
     by_sector: Record<string, number>;

@@ -437,7 +437,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/electrical-science-fundamentals-fundamentals',
+    href: '/training/electrical-science-fundamentals',
     title: 'Electrical Science Fundamentals',
     description:
       'The theory foundation that underpins all smart home power supply and circuit design.',

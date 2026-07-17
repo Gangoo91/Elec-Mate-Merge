@@ -84,6 +84,14 @@ const faqs = [
 
 const relatedPages = [
   {
+    href: '/guides/starting-electrical-apprenticeship',
+    title: 'Starting Your Electrical Apprenticeship',
+    description:
+      'The complete 2026 guide: routes in, what you study, year-by-year expectations and the AM2.',
+    icon: GraduationCap,
+    category: 'Career',
+  },
+  {
     href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description:

@@ -916,7 +916,9 @@
         <div class="cover-row"><span class="cover-k">Certificate Reference</span><span class="cover-v">{{ metadata.certificate_number }}</span></div>
         <div class="cover-row"><span class="cover-k">Date of Test</span><span class="cover-v">{{ installation_details.test_date }}</span></div>
         <div class="cover-row"><span class="cover-k">Next Inspection Due</span><span class="cover-v">{{ next_inspection.recommended_date }}</span></div>
-        <div class="cover-row"><span class="cover-k">Inspected &amp; Tested By</span><span class="cover-v">{{ inspector.name }}{% if inspector.qualifications != blank %}&nbsp;<span class="muted">&middot; {{ inspector.qualifications }}</span>{% endif %}</span></div>
+        {% comment %}ELE-1308 — no qualifications on the cover; they render in
+        full under Particulars of Signatories.{% endcomment %}
+        <div class="cover-row"><span class="cover-k">Inspected &amp; Tested By</span><span class="cover-v">{{ inspector.name }}</span></div>
         {% if inspector.company != blank %}<div class="cover-row"><span class="cover-k">For / On Behalf Of</span><span class="cover-v">{{ inspector.company }}</span></div>{% endif %}
         {% if company_details.registration_scheme != blank %}<div class="cover-row"><span class="cover-k">Registration Scheme</span><span class="cover-v">{{ company_details.registration_scheme }}{% if company_details.registration_number != blank %} &middot; {{ company_details.registration_number }}{% endif %}</span></div>{% endif %}
     </div>
@@ -1053,6 +1055,66 @@
     </div>
 </div>
 
+{% comment %}ELE-1309 — when one person designed, constructed and tested the
+installation (the common domestic case), render one consolidated NICEIC-style
+declaration with a single signature instead of three identical blocks.{% endcomment %}
+{% if all_same_person %}
+<!-- FOR DESIGN, CONSTRUCTION, INSPECTION AND TESTING (single signatory) -->
+<div class="section avoid-break">
+    <div class="section-title">For Design, Construction, Inspection and Testing</div>
+    <div class="declaration-box">
+        <div class="declaration-text">
+            I, being the person responsible for the design, construction, inspection &amp; testing of
+            the electrical installation, having exercised reasonable skill and care when carrying out
+            this work, hereby CERTIFY that the said work for which I have been responsible is to the
+            best of my knowledge and belief in accordance with <strong>BS 7671:2018</strong>, amended
+            to <strong>{{ designer.bs7671_amendment_date }}</strong> except for the departures, if
+            any, detailed below.
+        </div>
+    </div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Details of Departures from BS 7671 (Regulations 120.3, 133.1.3 and 133.5)</div>
+            <div class="form-value">{{ designer.departures }}</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Details of Permitted Exceptions (Regulation 411.3.3)</div>
+            <div class="form-value">{{ designer.permitted_exceptions }}</div>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px">
+        <div class="checkbox-item">
+            <span class="checkbox-box {% if designer.risk_assessment_attached %}checked{% endif %}">{% if designer.risk_assessment_attached %}&#10003;{% endif %}</span>
+            <span class="checkbox-label">Risk assessment attached</span>
+        </div>
+    </div>
+    <div class="signature-grid" style="margin-top: 3px">
+        <div class="signature-box">
+            <div class="signature-box-header">Designer / Constructor / Inspector</div>
+            <div class="signature-box-body">
+                <div class="sig-field">
+                    <span class="sig-field-label">Name (CAPITALS)</span>
+                    <span class="sig-field-value" style="text-transform: uppercase">{{ designer.name }}</span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Signature</span>
+                    <span class="sig-field-value signature">
+                        {% if designer.signature contains "data:" %}
+                        <img src="{{ designer.signature }}" />
+                        {% else %}
+                        {{ designer.signature }}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="sig-field">
+                    <span class="sig-field-label">Date</span>
+                    <span class="sig-field-value" style="max-width: 100px">{{ designer.date }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
 <!-- FOR DESIGN -->
 <div class="section avoid-break">
     <div class="section-title">For Design</div>
@@ -1200,6 +1262,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <!-- NEXT INSPECTION -->
 <div class="section avoid-break">
@@ -1255,8 +1318,10 @@
 <div class="section">
     <div class="section-title">Particulars of Signatories to the Electrical Installation Certificate</div>
 
-    <!-- Designer -->
-    <div class="section-subtitle">Designer (No 1)</div>
+    <!-- Designer. ELE-1313 — when one person holds all three roles, this
+         block renders once with a combined title instead of three identical
+         name/address/qualifications blocks. -->
+    <div class="section-subtitle">{% if all_same_person %}Designer / Constructor / Inspector &mdash; same person{% else %}Designer (No 1){% endif %}</div>
     <div class="form-grid">
         <div class="form-row">
             <div class="form-label">Name</div>
@@ -1319,6 +1384,7 @@
     </div>
     {% endif %}
 
+    {% unless all_same_person %}
     <!-- Constructor -->
     <div class="section-subtitle" style="margin-top: 4px">Constructor</div>
     <div class="form-grid">
@@ -1368,6 +1434,7 @@
             <div class="form-value">{{ inspector.qualifications }}</div>
         </div>
     </div>
+    {% endunless %}
 </div>
 
 <!-- Supply Characteristics and Earthing Arrangements -->
@@ -2062,7 +2129,7 @@
         <thead>
             <tr>
                 <th colspan="4">Circuit Details</th>
-                <th colspan="3">Conductor</th>
+                <th colspan="4">Conductor</th>
                 <th colspan="4">Overcurrent Device</th>
                 <th colspan="4">RCD</th>
                 <th colspan="5">Continuity (&Omega;)</th>
@@ -2080,7 +2147,8 @@
                 <th><span class="rotate">Pts</span></th>
                 <th><span class="rotate">Live mm&sup2;</span></th>
                 <th><span class="rotate">CPC mm&sup2;</span></th>
-                <th><span class="rotate">Wiring / Ref</span></th>
+                <th><span class="rotate">Type of Wiring</span></th>
+                <th><span class="rotate">Ref Method</span></th>
                 <th><span class="rotate">BS(EN)</span></th>
                 <th><span class="rotate">Type</span></th>
                 <th><span class="rotate">Rating A</span></th>
@@ -2114,6 +2182,7 @@
                 <td>{{ circuit.live_size }}</td>
                 <td>{{ circuit.cpc_size }}</td>
                 <td>{{ circuit.type_of_wiring }}</td>
+                <td>{{ circuit.reference_method }}</td>
                 <td>{{ circuit.bs_standard }}</td>
                 <td>{{ circuit.protective_device_curve }}</td>
                 <td>{{ circuit.protective_device_rating }}</td>

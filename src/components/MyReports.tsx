@@ -439,7 +439,9 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     canExportToEIC:
       report.report_type === 'eicr' &&
       report.status === 'completed' &&
-      report.data?.satisfactoryForContinuedUse?.toLowerCase() === 'yes',
+      // ELE-1342 — startsWith catches 'yes' AND 'yes-with-recommendations'
+      // (a C3-only pass is still a valid EICR to convert), but not 'no'.
+      Boolean(report.data?.satisfactoryForContinuedUse?.toLowerCase().startsWith('yes')),
   });
 
   // Pull-to-refresh handler
@@ -1459,7 +1461,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 canExportToEIC:
                   selectedCertificate.report_type === 'eicr' &&
                   selectedCertificate.status === 'completed' &&
-                  selectedCertificate.data?.satisfactoryForContinuedUse?.toLowerCase() === 'yes',
+                  // ELE-1342 — 'yes' or 'yes-with-recommendations' both convert.
+                  Boolean(
+                    selectedCertificate.data?.satisfactoryForContinuedUse
+                      ?.toLowerCase()
+                      .startsWith('yes')
+                  ),
               }
             : null
         }

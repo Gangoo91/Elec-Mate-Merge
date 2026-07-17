@@ -73,10 +73,26 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
   if (!isTeamMember || !reportId) return null;
 
+  // ELE-1341 — a saved cert has a typed report_id ("EIC-1783…"); before the
+  // form persists, the id is a bare temp UUID used for photo uploads. Submit
+  // would silently fail against it (no reports row). Detect that state so the
+  // button can guide "save first" instead of dead-ending.
+  const isTempReportId =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(reportId);
+
   const handleSubmit = async () => {
     haptic.light();
+    // Give onBeforeSubmit (save draft) a chance to persist first; if the id is
+    // still a temp UUID afterwards, the cert genuinely isn't saved.
     try {
       await onBeforeSubmit?.();
+      if (isTempReportId) {
+        toast({
+          title: 'Save your certificate first',
+          description: 'Tap Save, then send it for QS review.',
+        });
+        return;
+      }
       await submitMutation.mutateAsync({ reportId, note: note.trim() || undefined });
       setNote('');
       setShowNote(false);
@@ -218,7 +234,8 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
             </Button>
             <Button
               onClick={handleSubmit}
-              disabled={submitMutation.isPending}
+              disabled={submitMutation.isPending || isTempReportId}
+              title={isTempReportId ? 'Save your certificate first' : undefined}
               className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
             >
               {submitMutation.isPending ? (
@@ -330,6 +347,9 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
                 Send this certificate to {ctx?.company_name || 'your company'} for Qualifying
                 Supervisor sign-off.
               </p>
+              {isTempReportId && (
+                <p className="text-xs text-amber-300">Save your certificate first to send it for review.</p>
+              )}
               {showNote && (
                 <Textarea
                   value={note}

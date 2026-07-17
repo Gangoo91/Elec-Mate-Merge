@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/guides/data-cabling-installation-cost',
+    href: '/guides/data-cabling-installation-cost',
     title: 'Data Cabling Installation Cost',
     description: 'Cat6 cabling costs — the same infrastructure used for PoE CCTV installations.',
     icon: Network,

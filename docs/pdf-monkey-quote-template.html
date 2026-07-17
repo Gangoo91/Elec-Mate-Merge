@@ -273,6 +273,14 @@
       </div>
       {% endif %}
 
+      <!-- ── Additional details (ELE-1336) ── -->
+      {% if jobDetails.specialRequirements != blank %}
+      <div class="description-card">
+        <div class="card-header">Additional details</div>
+        <div class="description-body">{{ jobDetails.specialRequirements }}</div>
+      </div>
+      {% endif %}
+
       <!-- ── Items ── -->
       <div class="items-section">
         <div class="section-title">{% if quote.isEstimate %}Estimate breakdown{% else %}Quotation breakdown{% endif %}</div>
@@ -384,15 +392,21 @@
               <td class="r num" style="font-weight: 600;">£{{ cat_total | round: 2 }}</td>
             </tr>
             {% endif %}
+            {% comment %}ELE-1335 — custom items are user-authored lines the
+            customer is meant to read; print each description even in summary
+            view instead of one anonymous "Additional items" total.{% endcomment %}
             {% if manualItems.size > 0 %}
-            {% assign cat_total = 0 %}
-            {% for item in manualItems %}{% assign cat_total = cat_total | plus: item.totalPrice %}{% endfor %}
+            {% for item in manualItems %}
             <tr>
-              <td><div class="item-desc">Additional items</div></td>
+              <td>
+                <div class="item-desc">{{ item.description }}</div>
+                {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+              </td>
               <td class="qty-unit"></td>
               <td class="r"></td>
-              <td class="r num" style="font-weight: 600;">£{{ cat_total | round: 2 }}</td>
+              <td class="r num" style="font-weight: 600;">{% if item.totalPriceFormatted != blank %}{{ item.totalPriceFormatted }}{% else %}£{{ item.totalPrice | round: 2 }}{% endif %}</td>
             </tr>
+            {% endfor %}
             {% endif %}
             {% endif %}
             {% comment %}Legacy fallback — flat list when nothing is categorised.{% endcomment %}

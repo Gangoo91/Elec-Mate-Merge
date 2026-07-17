@@ -2287,6 +2287,20 @@ const ElectricalTestingCalculatorsPage = lazy(
 const ElectricianInvoiceAppPage = lazy(() => import('@/pages/seo/ElectricianInvoiceAppPage'));
 const GuidesHubPage = lazy(() => import('@/pages/seo/GuidesHubPage'));
 const LocationsIndexPage = lazy(() => import('@/pages/seo/LocationsIndexPage'));
+const StartingElectricalApprenticeshipPage = lazy(
+  () => import('@/pages/seo/StartingElectricalApprenticeshipPage')
+);
+const ApprenticeToolListPage = lazy(() => import('@/pages/seo/ApprenticeToolListPage'));
+const ApprenticeshipInterviewQuestionsPage = lazy(
+  () => import('@/pages/seo/ApprenticeshipInterviewQuestionsPage')
+);
+const FindElectricalApprenticeshipPage = lazy(
+  () => import('@/pages/seo/FindElectricalApprenticeshipPage')
+);
+const AdultElectricalApprenticeshipPage = lazy(
+  () => import('@/pages/seo/AdultElectricalApprenticeshipPage')
+);
+const Hardest2391QuestionsPage = lazy(() => import('@/pages/seo/Hardest2391QuestionsPage'));
 const IPAFTrainingPage = lazy(() => import('@/pages/seo/IPAFTrainingPage'));
 const InspectionTestingCoursePage = lazy(() => import('@/pages/seo/InspectionTestingCoursePage'));
 const JobProfitabilityCalculatorPage = lazy(
@@ -11007,6 +11021,54 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <LocationsIndexPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/starting-electrical-apprenticeship"
+        element={
+          <LazyRoute>
+            <StartingElectricalApprenticeshipPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/apprentice-electrician-tool-list"
+        element={
+          <LazyRoute>
+            <ApprenticeToolListPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-apprenticeship-interview-questions"
+        element={
+          <LazyRoute>
+            <ApprenticeshipInterviewQuestionsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-find-electrical-apprenticeship"
+        element={
+          <LazyRoute>
+            <FindElectricalApprenticeshipPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-apprenticeship-for-adults"
+        element={
+          <LazyRoute>
+            <AdultElectricalApprenticeshipPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/hardest-2391-exam-questions"
+        element={
+          <LazyRoute>
+            <Hardest2391QuestionsPage />
           </LazyRoute>
         }
       />

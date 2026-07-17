@@ -139,7 +139,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/guides/electrical-safety-at-home',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description: 'When to call an electrician, DIY limits, danger signs, and EICR for homeowners.',
     icon: Home,

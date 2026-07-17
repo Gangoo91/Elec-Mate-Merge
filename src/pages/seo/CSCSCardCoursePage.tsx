@@ -354,7 +354,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/first-aid-electrical-electrical',
+    href: '/training/first-aid-electrical',
     title: 'First Aid for Electricians',
     description:
       'Emergency first aid response is tested in the HS&E examination and required on construction sites.',

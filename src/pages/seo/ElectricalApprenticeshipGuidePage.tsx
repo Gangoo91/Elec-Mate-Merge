@@ -77,7 +77,15 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/apprentice-training-training',
+    href: '/guides/starting-electrical-apprenticeship',
+    title: 'Starting Your Electrical Apprenticeship',
+    description:
+      'The complete 2026 guide: routes in, what you study, pay, year-by-year and the AM2.',
+    icon: GraduationCap,
+    category: 'Career',
+  },
+  {
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description:
       'Level 2 and Level 3 courses, flashcards, mock exams, and practice questions for electrical apprentices.',

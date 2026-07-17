@@ -2,7 +2,9 @@
  * Lifetime purchase auto-fulfilment (ELE-1253 loop, automated Jul 2026).
  *
  * Polls Stripe every 15 minutes (pg_cron) for completed checkout sessions on
- * the £300 lifetime payment link and, for each new one:
+ * the lifetime payment links (£299.99 standard; £499.99 Everything, which also
+ * grants employer tier for Employer Hub access — College Hub stays excluded)
+ * and, for each new one:
  *   1. Records it in lifetime_purchases (session id = idempotency key)
  *   2. Matches the buyer to a profile by checkout email
  *   3. Cancels their active Stripe subscription(s) at period end
@@ -27,10 +29,23 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-const LIFETIME_PAYMENT_LINK_ID = 'plink_1TdVTV2RKw5t5RAmrj3CgMmH';
+// Reason text must contain "lifetime" — the admin revenue panel counts on it.
+const LIFETIME_LINKS = [
+  {
+    id: 'plink_1TdVTV2RKw5t5RAmrj3CgMmH', // £299.99 — top-100 rate, same access-all-areas deal
+    label: 'Lifetime (£299.99)',
+    reason: 'Lifetime purchase (£300 one-off, Jul 2026 campaign) — auto-fulfilled',
+    grantEmployerTier: true, // top-100 offer includes Employer Hub (Andrew, 2026-07-17)
+  },
+  {
+    id: 'plink_1TtPMB2RKw5t5RAmddq8SEkv', // £499.99 — Everything (incl. Employer Hub)
+    label: 'Lifetime Everything (£499.99)',
+    reason: 'Lifetime EVERYTHING purchase (£499.99 one-off, Jul 2026) — incl. Employer Hub — auto-fulfilled',
+    grantEmployerTier: true, // employerAccess.ts gates on tier.startsWith('employer')
+  },
+];
 const NOTIFY_EMAIL = 'andrewgangoo91@gmail.com';
 const FROM = 'Elec-Mate <info@elec-mate.com>';
-const LIFETIME_REASON = 'Lifetime purchase (£300 one-off, Jul 2026 campaign) — auto-fulfilled';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -53,17 +68,21 @@ serve(async (req) => {
     const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, { apiVersion: '2023-10-16' });
     const resend = new Resend(Deno.env.get('RESEND_API_KEY') ?? '');
 
-    // Completed sessions on the lifetime payment link, last 7 days
+    // Completed sessions on the lifetime payment links, last 7 days
     const since = Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60;
-    const sessions = await stripe.checkout.sessions.list({
-      payment_link: LIFETIME_PAYMENT_LINK_ID,
-      created: { gte: since },
-      limit: 100,
-    });
+    const found: Array<{ session: Stripe.Checkout.Session; link: (typeof LIFETIME_LINKS)[number] }> = [];
+    for (const link of LIFETIME_LINKS) {
+      const page = await stripe.checkout.sessions.list({
+        payment_link: link.id,
+        created: { gte: since },
+        limit: 100,
+      });
+      for (const session of page.data) found.push({ session, link });
+    }
 
     const stats = { seen: 0, fulfilled: 0, needs_manual: 0, already_processed: 0 };
 
-    for (const session of sessions.data) {
+    for (const { session, link } of found) {
       if (session.status !== 'complete' || session.payment_status !== 'paid') continue;
       stats.seen++;
 
@@ -100,8 +119,8 @@ serve(async (req) => {
         await resend.emails.send({
           from: FROM,
           to: NOTIFY_EMAIL,
-          subject: `💷 Lifetime purchase — MANUAL MATCH NEEDED (${email})`,
-          html: `<p>Someone paid <strong>£${((session.amount_total ?? 0) / 100).toFixed(2)}</strong> for lifetime access but <strong>${email}</strong> doesn't match any account email.</p><p>Find their account, cancel any subscription, and set free access (never expires) with a reason containing "lifetime".</p><p>Stripe session: ${session.id}</p>`,
+          subject: `💷 ${link.label} — MANUAL MATCH NEEDED (${email})`,
+          html: `<p>Someone paid <strong>£${((session.amount_total ?? 0) / 100).toFixed(2)}</strong> for <strong>${link.label}</strong> but <strong>${email}</strong> doesn't match any account email.</p><p>Find their account, cancel any subscription, and set free access (never expires) with a reason containing "lifetime".${link.grantEmployerTier ? ' Also set subscription_tier to <strong>employer</strong> so the Employer Hub unlocks.' : ''}</p><p>Stripe session: ${session.id}</p>`,
         });
         continue;
       }
@@ -141,19 +160,22 @@ serve(async (req) => {
         nativeSubWarning = `⚠️ Subscription cancellation hit an error — check Stripe manually: ${cancelErr instanceof Error ? cancelErr.message : String(cancelErr)}`;
       }
 
-      // Grant lifetime access — reason must contain "lifetime" (admin count)
+      // Grant lifetime access — reason must contain "lifetime" (admin count).
+      // Everything tier also sets subscription_tier='employer' so the
+      // EmployerGuard / sidebar (employerAccess.ts) open the Employer Hub.
       await supabase
         .from('profiles')
         .update({
           free_access_granted: true,
           free_access_expires_at: null,
-          free_access_reason: LIFETIME_REASON,
+          free_access_reason: link.reason,
           subscribed: true,
           is_trial: false,
           is_trial_cancelled: false,
           trial_end: null,
           onboarding_completed: true,
           updated_at: new Date().toISOString(),
+          ...(link.grantEmployerTier ? { subscription_tier: 'employer' } : {}),
         })
         .eq('id', match.id);
 
@@ -174,8 +196,8 @@ serve(async (req) => {
       await resend.emails.send({
         from: FROM,
         to: NOTIFY_EMAIL,
-        subject: `💷 Lifetime purchase fulfilled — ${email} (£${((session.amount_total ?? 0) / 100).toFixed(2)})`,
-        html: `<p><strong>${email}</strong> bought lifetime access and has been fulfilled automatically:</p><ul><li>Lifetime access granted (never expires)</li><li>${cancelled.length ? `${cancelled.length} Stripe subscription(s) cancelled at period end` : 'No active Stripe subscription found'}</li></ul>${nativeSubWarning ? `<p>${nativeSubWarning}</p>` : ''}<p>Stripe session: ${session.id}</p>`,
+        subject: `💷 ${link.label} fulfilled — ${email} (£${((session.amount_total ?? 0) / 100).toFixed(2)})`,
+        html: `<p><strong>${email}</strong> bought <strong>${link.label}</strong> and has been fulfilled automatically:</p><ul><li>Lifetime access granted (never expires)</li>${link.grantEmployerTier ? '<li>Employer tier set — Employer Hub unlocked</li>' : ''}<li>${cancelled.length ? `${cancelled.length} Stripe subscription(s) cancelled at period end` : 'No active Stripe subscription found'}</li></ul>${nativeSubWarning ? `<p>${nativeSubWarning}</p>` : ''}<p>Stripe session: ${session.id}</p>`,
       });
     }
 

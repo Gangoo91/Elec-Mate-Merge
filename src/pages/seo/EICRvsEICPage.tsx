@@ -94,7 +94,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/unsatisfactory-eicr-what-next-what-next',
+    href: '/guides/unsatisfactory-eicr-what-next',
     title: 'Unsatisfactory EICR — What Next?',
     description:
       'What happens when an EICR comes back unsatisfactory. Landlord duties and remedial steps.',

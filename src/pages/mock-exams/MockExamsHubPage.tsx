@@ -1,7 +1,7 @@
 /**
  * MockExamsHubPage — /mock-exams index.
  *
- * Lists all 37 free mock exams grouped by category. Designed as a share-target
+ * Lists all 38 free mock exams grouped by category. Designed as a share-target
  * (clean URL, branded card grid) for Facebook trade groups + apprentice chats.
  */
 import { Link } from 'react-router-dom';
@@ -91,6 +91,18 @@ const ELECTRICAL_EXAMS: ExamCard[] = [
     title: 'C&G 2391 Inspection & Testing',
     qCount: 300,
     blurb: 'Initial verification, periodic inspection, EICR coding, GN3 sequence.',
+  },
+  {
+    slug: '2391-50-initial-verification',
+    title: 'C&G 2391-50 Initial Verification',
+    qCount: 275,
+    blurb: 'GN3 test sequence, dead + live testing, certification and the EIC.',
+  },
+  {
+    slug: '2391-51-periodic-inspection',
+    title: 'C&G 2391-51 Periodic Inspection',
+    qCount: 296,
+    blurb: 'EICR observations, C1/C2/C3/FI coding, sampling, extent + limitations.',
   },
   {
     slug: 'am2-online-knowledge-test',
@@ -297,7 +309,7 @@ export default function MockExamsHubPage() {
   useSEO({
     title: 'Free UK Mock Exams for Electricians + Tradespeople',
     description:
-      '7,800+ free practice questions across 37 mock exams: CSCS, 18th Edition, 2391, AM2, PAT testing, EV charging, fire alarm, Level 2 + 3. No sign-up to try.',
+      '7,800+ free practice questions across 38 mock exams: CSCS, 18th Edition, 2391, AM2, PAT testing, EV charging, fire alarm, Level 2 + 3. No sign-up to try.',
     type: 'website',
     breadcrumbs: [
       { name: 'Home', url: '/' },
@@ -307,7 +319,7 @@ export default function MockExamsHubPage() {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: 'Free UK Mock Exams Hub',
-      description: `${TOTAL_QUESTIONS}+ free practice questions across 37 mock exams.`,
+      description: `${TOTAL_QUESTIONS}+ free practice questions across 38 mock exams.`,
       url: 'https://www.elec-mate.com/mock-exams',
       isAccessibleForFree: true,
       inLanguage: 'en-GB',

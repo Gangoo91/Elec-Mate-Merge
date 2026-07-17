@@ -394,11 +394,15 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Build query
+    // Build query. status='all' shows open + recently-closed (last 90 days,
+    // kept for market intelligence + buyer-contact leads); otherwise exact match.
     let query = supabase
       .from('tender_opportunities')
-      .select('*', { count: 'exact' })
-      .eq('status', status);
+      .select('*', { count: 'exact' });
+    query =
+      status === 'all'
+        ? query.in('status', ['live', 'closed'])
+        : query.eq('status', status);
 
     // Category filter
     if (categories && categories.length > 0) {
@@ -500,6 +504,7 @@ Deno.serve(async (req) => {
     const stats = {
       total: opportunities.length,
       live: opportunities.filter((o) => o.status === 'live').length,
+      closed: opportunities.filter((o) => o.status === 'closed').length,
       coming_soon: opportunities.filter((o) => o.status === 'pipeline').length,
       avg_value:
         opportunities.length > 0

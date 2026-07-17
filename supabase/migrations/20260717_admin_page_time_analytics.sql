@@ -1,0 +1,7 @@
+-- Page-time analytics RPCs for the admin dashboard (applied 2026-07-17 via MCP).
+-- Source: user_events session_heartbeat rows (30s interval, page_path per beat).
+-- admin_page_time_areas(p_days) — area rollups
+-- admin_page_time_pages(p_days, p_prefix) — per-page drill-down
+-- admin_page_time_people(p_days, p_page) — WHO spent time (name/email/tier via auth.users join)
+-- All gated on is_admin(); read-only; EXECUTE granted to authenticated only.
+-- Full definitions applied to live DB; see MCP migration 'admin_page_time_analytics'.

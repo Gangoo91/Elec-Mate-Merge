@@ -127,8 +127,10 @@ export function validateEICRForExport(eicrData: EICRFormData): ExportValidation 
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  // Check if EICR is satisfactory
-  if (eicrData.satisfactoryForContinuedUse?.toLowerCase() !== 'yes') {
+  // Check if EICR is satisfactory. ELE-1342 — accept 'yes' AND
+  // 'yes-with-recommendations' (C3-only pass, still fit for continued use);
+  // still blocks 'no', empty, and undefined.
+  if (!eicrData.satisfactoryForContinuedUse?.toLowerCase().startsWith('yes')) {
     errors.push('EICR must be marked as "Satisfactory for Continued Use" to export to EIC');
   }
 
