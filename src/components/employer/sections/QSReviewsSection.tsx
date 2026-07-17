@@ -6,11 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Loader2, ShieldCheck, Undo2 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast, toast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import SignatureInput from '@/components/signature/SignatureInput';
 import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
+import TeamCertificatesSection from '@/components/inspection/TeamCertificatesSection';
 import { QsReviewComments } from '@/components/employer/sections/QsReviewComments';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import {
@@ -48,13 +49,18 @@ const formatDate = (iso: string | null) =>
 
 export function QSReviewsSection() {
   const navigate = useNavigate();
-  const [scope, setScope] = useState<'pending' | 'all'>('pending');
-  const { data: items = [], isLoading } = useQsReviewQueue(scope);
+  // Three views: the sign-off queue (pending/all) and Team Certificates — the
+  // full library of the team's certs, open + edit like Inspection & Testing
+  // (Craig, 2026-07-17). Team Certs was previously only on the I&T QS bench;
+  // QSs look here in the Employer Hub, so it lives here too.
+  const [scope, setScope] = useState<'pending' | 'all' | 'team'>('pending');
+  const queueScope = scope === 'team' ? 'all' : scope;
+  const { data: items = [], isLoading } = useQsReviewQueue(queueScope);
   const [openItem, setOpenItem] = useState<QsQueueItem | null>(null);
 
   const pendingCount = useMemo(() => items.filter((i) => i.status === 'pending').length, [items]);
 
-  if (isLoading) return <LoadingState />;
+  if (isLoading && scope !== 'team') return <LoadingState />;
 
   return (
     <div className="space-y-5">
@@ -101,25 +107,31 @@ export function QSReviewsSection() {
       )}
 
       {/* Scope toggle */}
-      <div className="grid grid-cols-2 gap-2">
-        {(['pending', 'all'] as const).map((s) => (
+      <div className="grid grid-cols-3 gap-2">
+        {(['pending', 'all', 'team'] as const).map((s) => (
           <button
             key={s}
             type="button"
             onClick={() => setScope(s)}
             className={
-              'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] border ' +
+              'h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation active:scale-[0.98] border px-1 ' +
               (scope === s
                 ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
                 : 'bg-white/[0.05] border-white/[0.08] text-white')
             }
           >
-            {s === 'pending' ? 'Awaiting review' : 'All reviews'}
+            {s === 'pending'
+              ? 'Awaiting review'
+              : s === 'all'
+                ? 'All reviews'
+                : 'Team Certificates'}
           </button>
         ))}
       </div>
 
-      {items.length === 0 ? (
+      {scope === 'team' ? (
+        <TeamCertificatesSection />
+      ) : items.length === 0 ? (
         <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-10 text-center space-y-3">
           <ShieldCheck className="h-6 w-6 mx-auto text-white/30" />
           <div className="space-y-1.5">
