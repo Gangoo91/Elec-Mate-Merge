@@ -906,7 +906,7 @@
 
     <div class="cover-status">
         <span class="cover-status-label">Certification</span>
-        <span class="cover-status-value">{% if installation_details.work_type == 'new' %}NEW INSTALLATION{% elsif installation_details.work_type == 'addition' %}ADDITION TO EXISTING INSTALLATION{% elsif installation_details.work_type == 'alteration' %}ALTERATION TO EXISTING INSTALLATION{% else %}NEW ELECTRICAL INSTALLATION{% endif %}</span>
+        <span class="cover-status-value">{% if installation_details.work_type_status != blank %}{{ installation_details.work_type_status }}{% elsif installation_details.work_type_alteration %}ALTERATION TO EXISTING INSTALLATION{% elsif installation_details.work_type_addition %}ADDITION TO EXISTING INSTALLATION{% elsif installation_details.work_type_new %}NEW INSTALLATION{% elsif installation_details.work_type_db_upgrade %}ALTERATION TO EXISTING INSTALLATION{% else %}NEW ELECTRICAL INSTALLATION{% endif %}</span>
     </div>
 
     <div class="cover-details">
@@ -1019,16 +1019,20 @@
             <span class="inline-label">Type of Installation:</span>
             <div class="checkbox-row">
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.work_type == 'new' %}checked{% endif %}">{% if installation_details.work_type == 'new' %}&#10003;{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.work_type_new %}checked{% endif %}">{% if installation_details.work_type_new %}&#10003;{% endif %}</span>
                     <span class="checkbox-label">New installation</span>
                 </div>
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.work_type == 'addition' %}checked{% endif %}">{% if installation_details.work_type == 'addition' %}&#10003;{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.work_type_addition %}checked{% endif %}">{% if installation_details.work_type_addition %}&#10003;{% endif %}</span>
                     <span class="checkbox-label">Addition to existing</span>
                 </div>
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.work_type == 'alteration' %}checked{% endif %}">{% if installation_details.work_type == 'alteration' %}&#10003;{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.work_type_alteration %}checked{% endif %}">{% if installation_details.work_type_alteration %}&#10003;{% endif %}</span>
                     <span class="checkbox-label">Alteration to existing</span>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if installation_details.work_type_db_upgrade %}checked{% endif %}">{% if installation_details.work_type_db_upgrade %}&#10003;{% endif %}</span>
+                    <span class="checkbox-label">Consumer unit / DB replacement</span>
                 </div>
             </div>
         </div>

@@ -62,6 +62,31 @@ function formatWorkTypes(raw: unknown): string {
     .join(', ');
 }
 
+const PROPERTY_TYPE_TOKENS = new Set(['domestic', 'commercial', 'industrial', 'other']);
+
+// A bare property-type token sometimes lands in `description` — older EICR→EIC
+// conversions stored the property type there. It isn't a description of the
+// work (and the property type is held separately in installationType), so blank
+// it rather than print "Domestic" as the Description of Installation
+// (Craig's 3 Blyth cert, 2026-07-17).
+function cleanInstallationDescription(raw: unknown): string {
+  const v = String(raw || '').trim();
+  return PROPERTY_TYPE_TOKENS.has(v.toLowerCase()) ? '' : v;
+}
+
+// Cover-page certification status. workType is a multi-select (comma-joined),
+// so a raw `work_type == 'new'` string match blanks everything when several are
+// ticked (e.g. "db-upgrade,alteration"). Pick the most significant statutory
+// category: an alteration/addition outranks "new"; a lone DB upgrade is an
+// alteration of the existing installation.
+function workTypeStatus(raw: unknown): string {
+  if (hasWorkType(raw, 'alteration')) return 'ALTERATION TO EXISTING INSTALLATION';
+  if (hasWorkType(raw, 'addition')) return 'ADDITION TO EXISTING INSTALLATION';
+  if (hasWorkType(raw, 'new')) return 'NEW INSTALLATION';
+  if (hasWorkType(raw, 'db-upgrade')) return 'ALTERATION TO EXISTING INSTALLATION';
+  return 'NEW ELECTRICAL INSTALLATION';
+}
+
 function normalisePartPCompliance(raw: string): string {
   if (!raw) return 'N/A';
   if (raw === 'notApplicable' || raw === 'not-applicable') return 'Not Applicable';
@@ -209,9 +234,7 @@ export async function formatEicJson(
   // ELE-876 — resolve scheme + company logos to PDF-safe forms (data URL or
   // absolute URL). Relative paths get fetched + converted to data URLs so
   // PDFMonkey's renderer can embed them inline.
-  const { resolveSchemeLogo, resolveCompanyLogo } = await import(
-    '@/utils/resolveSchemeLogo'
-  );
+  const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
   const resolvedSchemeLogo = await resolveSchemeLogo(
     companyProfile?.scheme_logo_data_url || companyProfile?.registration_scheme_logo,
     companyProfile?.registration_scheme || formData.registrationScheme
@@ -243,19 +266,20 @@ export async function formatEicJson(
       // ELE-1314 — shown on the cert as "Property Type"; capitalise the value.
       installation_type: capitaliseFirst(String(formData.installationType || '')),
       property_type: capitaliseFirst(String(formData.installationType || '')),
-      // ELE-1315 — workType is multi-select, stored comma-separated. Keep
-      // work_type RAW: the live PDFMonkey template string-matches 'new' /
-      // 'addition' / 'alteration' for the cover status and tick-boxes, so a
-      // humanised value here blanks every checkbox and prints "NEW ELECTRICAL
-      // INSTALLATION" on alteration certs. The humanised list + booleans are
-      // extra fields for the template rework (weekend PDF cluster).
-      work_type: String(formData.workType || formData.installationType || ''),
+      // workType is a multi-select stored comma-separated ("db-upgrade,alteration").
+      // The template now reads the per-type booleans below for the tick-boxes and
+      // work_type_status for the cover, so multiple selections all render. Keep
+      // work_type raw for backwards-compat, but do NOT fall back to
+      // installationType — that leaked the property type ("domestic") into the
+      // work type and blanked every checkbox (Craig, 2026-07-17).
+      work_type: String(formData.workType || ''),
+      work_type_status: workTypeStatus(formData.workType),
       work_type_display: formatWorkTypes(formData.workType),
       work_type_new: hasWorkType(formData.workType, 'new'),
       work_type_addition: hasWorkType(formData.workType, 'addition'),
       work_type_alteration: hasWorkType(formData.workType, 'alteration'),
       work_type_db_upgrade: hasWorkType(formData.workType, 'db-upgrade'),
-      description: formData.description || '',
+      description: cleanInstallationDescription(formData.description),
       extent_of_installation: formData.extentOfInstallation || '',
       installation_date: formData.installationDate || '',
       test_date: formData.testDate || '',
@@ -594,7 +618,11 @@ export async function formatEicJson(
       phone: formData.designerPhone || '',
       date: formData.designerDate || '',
       signature: formData.designerSignature || '',
-      bs7671_amendment_date: formData.designerBs7671Date || '',
+      // The declaration reads "…amended to {{ }}". No form field captures this
+      // (0% populated), so it printed blank on every cert. Default to the
+      // amendment this template certifies against (A4:2026) — consistent with
+      // the header/cover branding — unless a specific one was entered.
+      bs7671_amendment_date: formData.designerBs7671Date || 'A4:2026',
       departures: formData.designerDepartures || '',
       permitted_exceptions: formData.permittedExceptions || '',
       risk_assessment_attached: formData.riskAssessmentAttached ?? false,
@@ -621,7 +649,7 @@ export async function formatEicJson(
       phone: formData.constructorPhone || '',
       date: formData.constructorDate || '',
       signature: formData.constructorSignature || '',
-      bs7671_amendment_date: formData.constructorBs7671Date || '',
+      bs7671_amendment_date: formData.constructorBs7671Date || 'A4:2026',
       departures: formData.constructorDepartures || '',
       same_as_designer: formData.sameAsDesigner ?? false,
     },
@@ -635,7 +663,7 @@ export async function formatEicJson(
       phone: formData.inspectorPhone || '',
       date: formData.inspectorDate || '',
       signature: formData.inspectorSignature || '',
-      bs7671_amendment_date: formData.inspectorBs7671Date || '',
+      bs7671_amendment_date: formData.inspectorBs7671Date || 'A4:2026',
       departures: formData.inspectorDepartures || '',
       same_as_constructor: formData.sameAsConstructor ?? false,
     },
@@ -691,7 +719,8 @@ export async function formatEicJson(
         name: formData.reportAuthorisedByName || formData.inspectorName || '',
         date: formData.reportAuthorisedByDate || formData.inspectionDate || '',
         signature: formData.reportAuthorisedBySignature || formData.inspectorSignature || '',
-        for_on_behalf_of: formData.reportAuthorisedByForOnBehalfOf || formData.inspectorCompany || '',
+        for_on_behalf_of:
+          formData.reportAuthorisedByForOnBehalfOf || formData.inspectorCompany || '',
         position: formData.reportAuthorisedByPosition || formData.inspectorQualifications || '',
         address: formData.reportAuthorisedByAddress || '',
         postcode: formData.reportAuthorisedByPostcode || '',
@@ -804,11 +833,9 @@ export async function formatEicJson(
     // the same-as toggles were reliably set.
     all_same_person: (() => {
       if (formData.sameAsDesigner && formData.sameAsConstructor) return true;
-      const names = [
-        formData.designerName,
-        formData.constructorName,
-        formData.inspectorName,
-      ].map((n: string) => (n || '').trim().toLowerCase());
+      const names = [formData.designerName, formData.constructorName, formData.inspectorName].map(
+        (n: string) => (n || '').trim().toLowerCase()
+      );
       return !!names[0] && names[0] === names[1] && names[1] === names[2];
     })(),
   };

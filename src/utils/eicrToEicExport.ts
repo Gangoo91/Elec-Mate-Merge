@@ -60,8 +60,19 @@ export interface EICRFormData {
   satisfactoryForContinuedUse?: string;
   overallAssessment?: string;
 
-  // Test Data
+  // Test Data — three parallel circuit stores the forms/PDF read from.
+  // scheduleOfTests = flat rows (PDF schedule), circuits = editor UI list,
+  // distributionBoards = boards with nested circuits + board metadata
+  // (drives the EIC schedule UI AND the PDF's board grouping / boardRefMap).
   scheduleOfTests?: TestResult[];
+  circuits?: unknown[];
+  distributionBoards?: unknown[];
+
+  // Earthing / consumer unit / supply extras carried to the EIC
+  earthElectrodeResistance?: string;
+  earthElectrodeType?: string;
+  // (index signature so any other measured field passes through untyped)
+  [key: string]: unknown;
 }
 
 export interface EICFormData {
@@ -89,8 +100,13 @@ export interface EICFormData {
   mainBondingConductor?: string;
   supplementaryBonding?: string;
 
-  // Schedule of Tests (Pre-filled from EICR measurements)
+  // Schedule of Tests (Pre-filled from EICR measurements) — populate ALL
+  // three stores so the circuit editor, the schedule UI and the PDF all show
+  // the full data (Craig, 2026-07-17).
   scheduleOfTests?: EICCircuitData[];
+  circuits?: unknown[];
+  distributionBoards?: unknown[];
+  [key: string]: unknown;
 
   // Declarations (need to be filled by user)
   designerName?: string;
@@ -165,52 +181,78 @@ export function validateEICRForExport(eicrData: EICRFormData): ExportValidation 
   };
 }
 
+// The EIC has TWO separate fields — a "Property Type" dropdown (installationType:
+// domestic/commercial/industrial/other) and a free-text "Description of
+// Installation". The EICR form instead stores the property type in its
+// `description` field (a picker), so ~93% of EICR `description` values are the
+// bare tokens "domestic"/"commercial"/etc. Copying description→description
+// therefore printed "domestic" in the EIC's prose Description box AND left the
+// Property Type dropdown blank (Craig, images 11/12, 2026-07-17). Classify the
+// value: a known property-type token routes to installationType; anything else
+// is genuine prose and stays in description.
+const PROPERTY_TYPE_TOKENS = new Set(['domestic', 'commercial', 'industrial', 'other']);
+
+function splitEicrDescription(eicrData: EICRFormData): {
+  installationType: string;
+  description: string;
+} {
+  const rawDesc = (eicrData.description || '').trim();
+  const descToken = rawDesc.toLowerCase();
+  const typeToken = (eicrData.installationType || '').trim().toLowerCase();
+
+  // Property type: prefer a valid token from either field.
+  const installationType = PROPERTY_TYPE_TOKENS.has(descToken)
+    ? descToken
+    : PROPERTY_TYPE_TOKENS.has(typeToken)
+      ? typeToken
+      : '';
+
+  // Prose description: only keep description if it ISN'T just a property token.
+  const description = PROPERTY_TYPE_TOKENS.has(descToken) ? '' : rawDesc;
+
+  return { installationType, description };
+}
+
 /**
  * Maps a single EICR TestResult to EIC EICCircuitData
  */
 function mapCircuitToEIC(testResult: TestResult): EICCircuitData {
-  // Determine phase type
   const phaseType: 'single' | 'three' = testResult.phaseType === '3P' ? 'three' : 'single';
 
+  // FULL passthrough — the EIC PDF reads ~50 per-circuit fields (r2,
+  // insulationLiveEarth/Neutral, rcdHalfX/FiveX/BsStandard, pfcLiveNeutral/
+  // Earth, notes, phase balance, typeOfWiring, circuitType, boardId,
+  // dbReference…). Hand-picking a subset silently dropped most of the
+  // schedule on the converted EIC (Craig, 2026-07-17). Spread everything,
+  // then apply the few EIC-specific normalisations.
   return {
-    circuitNumber: testResult.circuitNumber || '',
+    ...(testResult as Record<string, unknown>),
     phaseType,
     circuitDescription: testResult.circuitDescription || testResult.circuitDesignation || '',
-    referenceMethod: testResult.referenceMethod || '',
-    pointsServed: testResult.pointsServed || '',
     liveSize: testResult.liveSize || testResult.cableSize || '',
-    cpcSize: testResult.cpcSize || '',
-    protectiveDeviceType: testResult.protectiveDeviceType || '',
-    protectiveDeviceCurve: testResult.protectiveDeviceCurve || '',
-    protectiveDeviceRating: testResult.protectiveDeviceRating || '',
-    protectiveDeviceKaRating: testResult.protectiveDeviceKaRating || '',
-    bsStandard: testResult.bsStandard || '',
-
-    // Use measured values from EICR as baseline
-    r1r2: testResult.r1r2 || '',
-    ringR1: testResult.ringR1,
-    ringRn: testResult.ringRn,
-    ringR2: testResult.ringR2,
-    ringContinuityLive: testResult.ringContinuityLive,
-    ringContinuityNeutral: testResult.ringContinuityNeutral,
     insulationTestVoltage: testResult.insulationTestVoltage || '500',
-    insulationResistance: testResult.insulationLiveNeutral || testResult.insulationResistance || '',
-    polarity: testResult.polarity || '',
-    zs: testResult.zs || '',
-    maxZs: testResult.maxZs || '',
+    insulationResistance: testResult.insulationResistance || testResult.insulationLiveNeutral || '',
+  } as EICCircuitData;
+}
 
-    // RCD fields
-    rcdRating: testResult.rcdRating,
-    rcdOneX: testResult.rcdOneX,
-    rcdTestButton: testResult.rcdTestButton,
-
-    // AFDD
-    afddTest: testResult.afddTest,
-
-    // PFC and functional
-    pfc: testResult.pfc || '',
-    functionalTesting: testResult.functionalTesting || '',
-  };
+/**
+ * Copy EICR distribution boards → EIC (same schema). Preserves every board
+ * field (reference, location, main switch, RCD, SPD, Zdb, Ipf, ways) and maps
+ * any nested circuits through the full-passthrough circuit mapper so the EIC
+ * schedule UI and PDF board section show the complete data.
+ */
+function mapEicrBoardsToEic(boards: unknown[] | undefined): unknown[] {
+  if (!Array.isArray(boards)) return [];
+  return boards.map((b) => {
+    const board = (b ?? {}) as Record<string, unknown>;
+    const nested = board.circuits;
+    return {
+      ...board,
+      ...(Array.isArray(nested)
+        ? { circuits: nested.map((c) => mapCircuitToEIC(c as TestResult)) }
+        : {}),
+    };
+  });
 }
 
 /**
@@ -226,6 +268,9 @@ export function transformEICRToEIC(eicrData: EICRFormData): EICFormData {
   // Note: EICR inspectionItems are NOT copied - each certificate type has its own inspection checklist
   const circuits = (eicrData.scheduleOfTests || []).map(mapCircuitToEIC);
 
+  // Property Type vs prose Description live in the same EICR field — split them.
+  const { installationType, description } = splitEicrDescription(eicrData);
+
   return {
     // Certificate - generate new number
     certificateNumber: '', // Will be generated on save
@@ -239,8 +284,11 @@ export function transformEICRToEIC(eicrData: EICRFormData): EICFormData {
 
     // Use inspection date as installation date baseline
     installationDate: eicrData.inspectionDate || '',
-    installationType: eicrData.installationType || '',
-    description: eicrData.description || '',
+    // Property Type ← EICR property token; prose Description only if not a token.
+    installationType,
+    description,
+    occupier: eicrData.occupier || '',
+    estimatedAge: eicrData.estimatedAge || '',
     designStandard: 'BS 7671:2018+A2:2022',
 
     // Supply & Earthing - direct transfer
@@ -253,8 +301,22 @@ export function transformEICRToEIC(eicrData: EICRFormData): EICFormData {
     mainBondingConductor: eicrData.mainBondingSize || '',
     supplementaryBonding: eicrData.supplementaryBondingSize || '',
 
-    // Circuits
+    // Circuits — populate all three stores. distributionBoards is copied
+    // wholesale (EICR + EIC share the board schema): this preserves board
+    // grouping, board metadata (main switch, RCD, SPD, Zdb, Ipf) AND the
+    // nested circuits, which is what the EIC schedule UI and the PDF's
+    // board section + boardRefMap read. scheduleOfTests/circuits carry the
+    // flat rows for the PDF schedule and the circuit editor list.
     scheduleOfTests: circuits,
+    circuits: circuits,
+    distributionBoards: mapEicrBoardsToEic(eicrData.distributionBoards),
+
+    // Earthing / consumer unit extras
+    earthElectrodeType: eicrData.earthElectrodeType || '',
+    earthElectrodeResistance: eicrData.earthElectrodeResistance || '',
+    cuLocation: eicrData.cuLocation || '',
+    cuManufacturer: eicrData.cuManufacturer || '',
+    cuType: eicrData.cuType || '',
 
     // Inspector from EICR maps to inspector role in EIC
     inspectorName: eicrData.inspectorName || '',
