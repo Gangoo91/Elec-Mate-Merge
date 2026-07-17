@@ -16,6 +16,17 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
+// A sync we deliberately refuse with an actionable reason (ELE-1343) — the
+// handler turns this into a 409 whose message reaches the user verbatim.
+class SyncBlockedError extends Error {
+  constructor(
+    public title: string,
+    public detail: string
+  ) {
+    super(`${title}: ${detail}`);
+  }
+}
+
 // Provider credentials for token refresh
 const XERO_CLIENT_ID = Deno.env.get('XERO_CLIENT_ID');
 const XERO_CLIENT_SECRET = Deno.env.get('XERO_CLIENT_SECRET');
@@ -364,8 +375,10 @@ Deno.serve(async (req: Request) => {
       }
     } catch (syncError) {
       console.error('Provider sync error:', syncError);
+      if (syncError instanceof SyncBlockedError) {
+        return errorResponse(syncError.title, syncError.detail, 409);
+      }
       const errorMsg = syncError instanceof Error ? syncError.message : String(syncError);
-      const errorStack = syncError instanceof Error ? syncError.stack : undefined;
 
       // Friendly, actionable message for well-known provider faults so the user
       // sees what to do rather than a raw API error. QuickBooks fault 6190
@@ -395,17 +408,41 @@ Deno.serve(async (req: Request) => {
       if (syncError instanceof ExternalAPIError && syncError.details) {
         const details = syncError.details;
         if (details.error) {
-          // Try to parse QuickBooks error response
           try {
-            const qbError =
+            const parsed =
               typeof details.error === 'string' ? JSON.parse(details.error) : details.error;
-            const faultError = qbError?.Fault?.Error?.[0];
+            const faultError = parsed?.Fault?.Error?.[0];
+            // Xero nests validation messages under Elements[].ValidationErrors
+            // (sometimes top-level ValidationErrors) — ELE-1339 follow-up.
+            const xeroValidation = ((parsed?.Elements as any[]) || [])
+              .flatMap((el: any) => el?.ValidationErrors || [])
+              .concat(parsed?.ValidationErrors || [])
+              .map((v: any) => v?.Message)
+              .filter(Boolean);
             if (faultError) {
               // QuickBooks puts the generic "A business validation error has
               // occurred" in Message and the actual reason in Detail — surface
               // both so the user (and we) can see what actually failed. ELE-1235.
               const parts = [faultError.Message, faultError.Detail].filter(Boolean);
               detailMsg = `${provider} Error: ${parts.join(' — ') || errorMsg}`;
+            } else if (xeroValidation.length > 0) {
+              detailMsg = `Xero: ${xeroValidation.join(' — ')}`;
+              // Xero refuses to modify an invoice once payments or credit
+              // notes are applied to it. Tell the user what to do instead of
+              // handing them a stack trace.
+              if (
+                xeroValidation.some((m: string) =>
+                  /not of valid status for modification|payment|paid invoice/i.test(m)
+                )
+              ) {
+                return errorResponse(
+                  'Xero blocked the update',
+                  `Xero refused to update this invoice: ${xeroValidation.join(' — ')}. This usually means payments or credit notes are already recorded against it in Xero. Remove or adjust those in Xero first, then tap Re-sync — or make the change directly in Xero.`,
+                  409
+                );
+              }
+            } else if (parsed?.Message) {
+              detailMsg = `${providerLabel}: ${parsed.Message}`;
             }
           } catch {
             detailMsg = `${provider} Error: ${details.error}`;
@@ -414,11 +451,9 @@ Deno.serve(async (req: Request) => {
         console.log('Detailed error:', detailMsg);
       }
 
-      return errorResponse(
-        `Failed to sync to ${provider}`,
-        `${detailMsg}\n\nStack: ${errorStack}`,
-        500
-      );
+      // Stack traces stay in the server logs (console.error above) — the
+      // client toast only gets the human-readable reason.
+      return errorResponse(`Failed to sync to ${provider}`, detailMsg, 500);
     }
 
     // Update invoice with external reference
@@ -667,10 +702,13 @@ async function syncToXero(
   // First, find or create the contact
   const contactId = await findOrCreateXeroContact(accessToken, tenantId, invoice.client);
 
-  // Calculate markup factor to distribute overhead/profit proportionally
-  const totalMarkup = (invoice.overhead || 0) + (invoice.profit || 0);
-  const markupFactor =
-    invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
+  // Distribute overhead, profit AND any invoice-level discount proportionally
+  // into the line prices. Providers recompute their invoice total from the
+  // lines, so the lines must sum to the actual net — before ELE-1343 a fixed
+  // discount never reached the provider and re-syncs pushed the undiscounted
+  // total back.
+  const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
+  const markupFactor = invoice.subtotal > 0 && netTarget > 0 ? netTarget / invoice.subtotal : 1;
 
   // Format line items for Xero - distribute overhead/profit into each line item
   const lineItems: any[] = invoice.items.map((item) => ({
@@ -685,6 +723,51 @@ async function syncToXero(
   // patches the existing record when the body carries its InvoiceID;
   // without it every re-sync created a duplicate invoice (ELE-1339).
   const isUpdate = Boolean(invoice.externalInvoiceId);
+
+  // ELE-1343 — Xero refuses a line-item replacement once payments or credit
+  // notes are applied. Fetch the live invoice first: reuse its LineItemIDs so
+  // Xero treats our lines as edits to the existing ones, and refuse early
+  // with an actionable message when the shapes can't be reconciled.
+  if (isUpdate) {
+    const existingRes = await fetch(
+      `https://api.xero.com/api.xro/2.0/Invoices/${invoice.externalInvoiceId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'xero-tenant-id': tenantId,
+          Accept: 'application/json',
+        },
+      }
+    );
+    if (existingRes.ok) {
+      const existing = (await existingRes.json()).Invoices?.[0];
+      const settled = Number(existing?.AmountPaid || 0) + Number(existing?.AmountCredited || 0);
+      if (settled > 0) {
+        if (invoice.total < settled) {
+          throw new SyncBlockedError(
+            'Xero blocked the update',
+            `£${settled.toFixed(2)} is already paid or credited against this invoice in Xero, and the new total £${invoice.total.toFixed(2)} is below that. Adjust the payments in Xero first, then Re-sync.`
+          );
+        }
+        const existingLines = existing?.LineItems || [];
+        if (existingLines.length !== lineItems.length) {
+          throw new SyncBlockedError(
+            'Xero blocked the update',
+            `This invoice has payments recorded against it in Xero, and its line items there (${existingLines.length}) no longer match this invoice (${lineItems.length}), so Xero will not accept the change. Make the change directly in Xero, or remove the payments there and Re-sync.`
+          );
+        }
+        existingLines.forEach((el: any, i: number) => {
+          lineItems[i].LineItemID = el.LineItemID;
+        });
+        console.log(
+          `Xero update: reusing ${existingLines.length} LineItemIDs (settled £${settled.toFixed(2)})`
+        );
+      }
+    } else {
+      console.warn('Could not fetch existing Xero invoice, attempting plain update:', existingRes.status);
+    }
+  }
+
   const xeroInvoice = {
     ...(isUpdate ? { InvoiceID: invoice.externalInvoiceId } : {}),
     Type: 'ACCREC', // Accounts Receivable invoice
@@ -899,10 +982,13 @@ async function syncToQuickBooks(
   const serviceItem = await getOrCreateQBServiceItem(accessToken, realmId);
   console.log('Service Item:', serviceItem);
 
-  // Calculate markup factor to distribute overhead/profit proportionally
-  const totalMarkup = (invoice.overhead || 0) + (invoice.profit || 0);
-  const markupFactor =
-    invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
+  // Distribute overhead, profit AND any invoice-level discount proportionally
+  // into the line prices. Providers recompute their invoice total from the
+  // lines, so the lines must sum to the actual net — before ELE-1343 a fixed
+  // discount never reached the provider and re-syncs pushed the undiscounted
+  // total back.
+  const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
+  const markupFactor = invoice.subtotal > 0 && netTarget > 0 ? netTarget / invoice.subtotal : 1;
 
   // Resolve the sales tax code once. UK QuickBooks requires a TaxCodeRef on every
   // sales line; without it QuickBooks drops the VAT and can reject the invoice
@@ -1516,10 +1602,13 @@ async function syncToSage(
   const contactId = await findOrCreateSageContact(accessToken, resourceOwnerId, invoice.client);
   console.log('Contact ID:', contactId);
 
-  // Calculate markup factor to distribute overhead/profit proportionally
-  const totalMarkup = (invoice.overhead || 0) + (invoice.profit || 0);
-  const markupFactor =
-    invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
+  // Distribute overhead, profit AND any invoice-level discount proportionally
+  // into the line prices. Providers recompute their invoice total from the
+  // lines, so the lines must sum to the actual net — before ELE-1343 a fixed
+  // discount never reached the provider and re-syncs pushed the undiscounted
+  // total back.
+  const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
+  const markupFactor = invoice.subtotal > 0 && netTarget > 0 ? netTarget / invoice.subtotal : 1;
 
   // Format line items for Sage - distribute overhead/profit into each line item
   const lineItems: any[] = invoice.items.map((item) => ({
