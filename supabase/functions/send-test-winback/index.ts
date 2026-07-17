@@ -21,7 +21,7 @@ import {
   winbackTouch3,
   WINBACK_FROM,
   WINBACK_REPLY_TO,
-} from '../_shared/winback-v12.ts';
+} from '../_shared/winback-v13.ts';
 import { sendEmail } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -60,11 +60,7 @@ serve(async (req) => {
 
     const ctx = { firstName, tier, wasTrial: !!wasTrial };
     const tmpl =
-      touch === 3
-        ? winbackTouch3(ctx)
-        : touch === 2
-          ? winbackTouch2(ctx)
-          : winbackTouch1(ctx);
+      touch === 3 ? winbackTouch3(ctx) : touch === 2 ? winbackTouch2(ctx) : winbackTouch1(ctx);
 
     // Brevo via _shared/mailer.ts shim (Resend was banned at domain level).
     const result = await sendEmail({
@@ -77,10 +73,10 @@ serve(async (req) => {
     });
 
     if (result.error) {
-      return new Response(
-        JSON.stringify({ ok: false, error: result.error.message }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ ok: false, error: result.error.message }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     return new Response(
@@ -96,7 +92,11 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'send-test-winback', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'send-test-winback',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     const message = error instanceof Error ? error.message : String(error);
     return new Response(JSON.stringify({ ok: false, error: message }), {
       status: 500,

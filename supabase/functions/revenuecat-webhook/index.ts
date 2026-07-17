@@ -5,7 +5,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -300,24 +301,31 @@ serve(async (req) => {
 
       // ── Win-back queue enqueue (mobile cancellations) ──────────────
       // Mirrors the Stripe webhook behaviour for App Store / Play Store
-      // cancellations. Only fires on events that truly revoke access:
-      //   - CANCELLATION where subscribed flipped to false
-      //   - EXPIRATION (sub ran out without renewal)
+      // cancellations. Fires on:
+      //   - CANCELLATION with access remaining (auto-renew turned off in the
+      //     store — the common case). Touches are anchored to the period
+      //     EXPIRY, not the cancel moment: winback-send skips anyone still
+      //     subscribed, so emails scheduled before access ends would be
+      //     eaten by that guard and the copy assumes they've left.
+      //   - CANCELLATION where the period is already over
+      //   - EXPIRATION (sub ran out without renewal, e.g. billing lapse)
       // Skips BILLING_ISSUE (dunning's job) and SUBSCRIPTION_PAUSED.
       //
-      // Idempotency: only enqueue if there's no winback row for this user
-      // in the last 7 days — prevents double-enqueue when CANCELLATION
-      // fires first then EXPIRATION fires at period end.
+      // Idempotency: skip if the user has any pending winback row or one
+      // created in the last 7 days — a store cancel fires CANCELLATION now
+      // and EXPIRATION up to a month later, and both paths land here.
+      const cancelledWithAccess = type === 'CANCELLATION' && subscribed === true;
       const shouldEnqueueWinback =
-        !subscribed && (type === 'CANCELLATION' || type === 'EXPIRATION');
+        cancelledWithAccess || (!subscribed && (type === 'CANCELLATION' || type === 'EXPIRATION'));
 
       if (shouldEnqueueWinback) {
         try {
+          const dedupeSince = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
           const { data: recentWinback } = await supabase
             .from('winback_queue')
             .select('id')
             .eq('user_id', app_user_id)
-            .gte('cancelled_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
+            .or(`status.eq.pending,cancelled_at.gte.${dedupeSince}`)
             .limit(1);
 
           if (recentWinback && recentWinback.length > 0) {
@@ -339,6 +347,12 @@ serve(async (req) => {
 
               const cancelledAt = new Date();
               const ONE_DAY = 24 * 60 * 60 * 1000;
+              // Cancelled-but-still-active subs get touches anchored to when
+              // their access actually ends; lapsed subs anchor to now.
+              const anchor =
+                cancelledWithAccess && expiration_at_ms && expiration_at_ms > Date.now()
+                  ? new Date(expiration_at_ms)
+                  : cancelledAt;
               const wbRows = [
                 { touch: 1, delayDays: 1 },
                 { touch: 2, delayDays: 7 },
@@ -352,9 +366,7 @@ serve(async (req) => {
                 was_trial: !!isTrial,
                 cancelled_at: cancelledAt.toISOString(),
                 touch_number: t.touch,
-                scheduled_for: new Date(
-                  cancelledAt.getTime() + t.delayDays * ONE_DAY
-                ).toISOString(),
+                scheduled_for: new Date(anchor.getTime() + t.delayDays * ONE_DAY).toISOString(),
                 status: 'pending',
               }));
 
@@ -446,7 +458,11 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    await captureException(err, { functionName: 'revenuecat-webhook', requestUrl: req.url, requestMethod: req.method });
+    await captureException(err, {
+      functionName: 'revenuecat-webhook',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('Webhook error:', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),

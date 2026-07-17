@@ -31,7 +31,7 @@ import {
   WINBACK_FROM,
   WINBACK_REPLY_TO,
   type WinbackContext,
-} from '../_shared/winback-v12.ts';
+} from '../_shared/winback-v13.ts';
 import { sendEmail } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -121,10 +121,7 @@ serve(async (req) => {
     if (deferred.length > 0 && !dryRun) {
       const nextAt = new Date(Date.now() + PER_USER_DEFER_MS).toISOString();
       for (const row of deferred) {
-        await supabase
-          .from('winback_queue')
-          .update({ scheduled_for: nextAt })
-          .eq('id', row.id);
+        await supabase.from('winback_queue').update({ scheduled_for: nextAt }).eq('id', row.id);
       }
       log('Deferred extra touches to keep cadence', { count: deferred.length, nextAt });
     }
@@ -136,9 +133,7 @@ serve(async (req) => {
       .from('profiles')
       .select('id, subscribed, subscription_tier')
       .in('id', userIds);
-    const subscribedAgain = new Set(
-      (profiles ?? []).filter((p) => p.subscribed).map((p) => p.id)
-    );
+    const subscribedAgain = new Set((profiles ?? []).filter((p) => p.subscribed).map((p) => p.id));
 
     let sent = 0;
     let skipped = 0;
@@ -206,8 +201,7 @@ serve(async (req) => {
           html: email.html,
           text: email.text,
           headers: {
-            'List-Unsubscribe':
-              '<mailto:founder@elec-mate.com?subject=unsubscribe%20winback>',
+            'List-Unsubscribe': '<mailto:founder@elec-mate.com?subject=unsubscribe%20winback>',
             'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
           },
         });
@@ -254,7 +248,11 @@ serve(async (req) => {
       dry_run: dryRun,
     });
   } catch (error) {
-    await captureException(error, { functionName: 'winback-send', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'winback-send',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     const message = error instanceof Error ? error.message : String(error);
     log('FATAL', { message });
     return jsonResponse({ ok: false, error: message }, 500);
