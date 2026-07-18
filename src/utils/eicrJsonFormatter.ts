@@ -5,12 +5,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import {
-  getBoardWays,
-  getMainBoard,
-  MAIN_BOARD_ID,
-  sortBoards,
-} from '@/types/distributionBoard';
+import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards } from '@/types/distributionBoard';
 import type { EICRPayload } from '@/types/eicr-payload';
 
 const toSnakeCase = (str: string): string =>
@@ -667,9 +662,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const boardId = board.id || mainBoardId;
       const isMainBoard = board.order === 0;
       // Filter circuits belonging to this board
-      const boardCircuits = testResults.filter(
-        (r: any) => (r.boardId || mainBoardId) === boardId
-      );
+      const boardCircuits = testResults.filter((r: any) => (r.boardId || mainBoardId) === boardId);
       const boardWays = getBoardWays(board);
 
       // For the main board, top-level formData fields are the source of truth for values
@@ -921,9 +914,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // PDFMonkey can't fetch — convert to data URLs. If the stored scheme logo
   // is missing entirely but `registrationScheme` is set, derive from the
   // bundled lookup.
-  const { resolveSchemeLogo, resolveCompanyLogo } = await import(
-    '@/utils/resolveSchemeLogo'
-  );
+  const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
   const resolvedSchemeLogo = await resolveSchemeLogo(
     get('registrationSchemeLogo'),
     get('registrationScheme')
@@ -1149,7 +1140,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
         main_earthing_conductor_size_note: note('mainEarthingConductorSize'),
         main_earthing_conductor: (() => {
-          const rawSize = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
+          const rawSize =
+            get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
           const type = get('mainEarthingConductorType');
           if (isMarker(rawSize)) return rawSize;
           if (isMarker(type)) return type;
@@ -1185,9 +1177,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         bonding_compliance: get('bondingCompliance'),
         bonding_compliance_note: note('bondingCompliance'),
         // ELE-849 — continuity toggles now allow N/V; pass marker through.
-        earthing_conductor_continuity_verified: getBoolOrMarker('earthingConductorContinuityVerified'),
+        earthing_conductor_continuity_verified: getBoolOrMarker(
+          'earthingConductorContinuityVerified'
+        ),
         earthing_conductor_continuity_verified_note: note('earthingConductorContinuityVerified'),
-        bonding_conductor_continuity_verified: getBoolOrMarker('bondingConductorContinuityVerified'),
+        bonding_conductor_continuity_verified: getBoolOrMarker(
+          'bondingConductorContinuityVerified'
+        ),
         bonding_conductor_continuity_verified_note: note('bondingConductorContinuityVerified'),
         // Derive presence from size when no explicit value set (no UI control for this field)
         supplementary_bonding:
@@ -1304,12 +1300,16 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       same_as_constructor: getBool('sameAsConstructor'),
       additional_notes: get('additionalComments'),
       inspected_by: {
-        name: get('inspectedByName'),
+        name: get('inspectedByName') || get('inspectorName'),
         // Fall back to the inspector's own signature (captured on the Inspector
         // tab) when the declaration-specific field wasn't drawn separately.
         signature: get('inspectedBySignature') || get('inspectorSignature'),
         for_on_behalf_of: get('inspectedByForOnBehalfOf'),
-        position: get('inspectedByPosition'),
+        // Position: fall back to the authoriser's role — NOT qualifications
+        // (that's a CV, not a position) — and default to the role for the work
+        // done, so the box is never blank. Matches the EIC formatter (2026-07-17).
+        position:
+          get('inspectedByPosition') || get('reportAuthorisedByPosition') || 'Inspector & Tester',
         address: get('inspectedByAddress'),
         date: get('inspectedByDate'),
         cp_scheme: get('inspectedByCpScheme'),
@@ -1320,7 +1320,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         date: get('reportAuthorisedByDate'),
         signature: get('reportAuthorisedBySignature') || get('inspectorSignature'),
         for_on_behalf_of: get('reportAuthorisedByForOnBehalfOf'),
-        position: get('reportAuthorisedByPosition'),
+        // Role, not qualifications — consistent with inspected_by above.
+        position: get('reportAuthorisedByPosition') || 'Inspector & Tester',
         address: get('reportAuthorisedByAddress'),
         membership_no: get('reportAuthorisedByMembershipNo'),
       },
@@ -1709,7 +1710,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       position: qsReview.qs_position,
     };
     // Flat copies the template reads at root level
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const flat = payload as any;
     flat.report_authorised_by_name = qsReview.reviewer_name;
     flat.report_authorised_by_date = qsDate;

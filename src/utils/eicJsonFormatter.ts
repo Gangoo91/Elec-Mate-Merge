@@ -697,7 +697,18 @@ export async function formatEicJson(
         // ELE-1308 — no qualifications fallback here: this block renders on the
         // cover page and the full quals string swamps it. Quals stay available
         // under inspector/designer/constructor for the declarations pages.
-        position: formData.inspectedByPosition || '',
+        // "Inspected By" and "Report Authorised By" are the same person on
+        // virtually every EIC. No form field captures inspectedByPosition
+        // (0% populated → always blank), so fall back to the authoriser's
+        // position — a proper role ("Qualified Supervisor", "Director",
+        // "Inspector & Tester"…). NOT inspectorQualifications: that holds a long
+        // qualifications list ("C&G 2391-52, 18th Edition, NVQ L3…"), which is
+        // not a position and would swamp the box. Default to the role the app
+        // itself uses when nothing is set.
+        position:
+          formData.inspectedByPosition ||
+          formData.reportAuthorisedByPosition ||
+          'Inspector & Tester',
         address:
           formData.inspectedByAddress ||
           `${formData.inspectorAddress || ''}${formData.inspectorPostcode ? ', ' + formData.inspectorPostcode : ''}`,
@@ -721,7 +732,9 @@ export async function formatEicJson(
         signature: formData.reportAuthorisedBySignature || formData.inspectorSignature || '',
         for_on_behalf_of:
           formData.reportAuthorisedByForOnBehalfOf || formData.inspectorCompany || '',
-        position: formData.reportAuthorisedByPosition || formData.inspectorQualifications || '',
+        // Role, not qualifications (see inspected_by.position above) — matches
+        // the "Inspected By" box so both signatories read consistently.
+        position: formData.reportAuthorisedByPosition || 'Inspector & Tester',
         address: formData.reportAuthorisedByAddress || '',
         postcode: formData.reportAuthorisedByPostcode || '',
         phone: formData.reportAuthorisedByPhone || '',
