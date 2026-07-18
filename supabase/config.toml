@@ -324,6 +324,12 @@ verify_jwt = false
 [functions.outreach-unsubscribe]
 verify_jwt = false
 
+# Public winback/lifetime unsubscribe endpoint — same reason. The per-recipient
+# HMAC token (WINBACK_UNSUBSCRIBE_SECRET) is the proof of intent, so it must be
+# JWT-free or recipients clicking the emailed link get a 401 before it runs.
+[functions.unsubscribe]
+verify_jwt = false
+
 
 # Newsletter subscribe — called from the landing page email capture by
 # unauthenticated visitors. Must be JWT-free. Handles its own spam protection
