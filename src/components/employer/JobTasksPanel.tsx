@@ -372,7 +372,11 @@ export function JobTasksPanel({ jobId }: Props) {
         </div>
         <button
           type="button"
-          onClick={() => deleteTask.mutate(task.id)}
+          onClick={() =>
+            deleteTask.mutate(task.id, {
+              onError: () => toast({ title: 'Could not delete task', variant: 'destructive' }),
+            })
+          }
           className="h-8 w-8 shrink-0 flex items-center justify-center rounded-full text-white/40 hover:text-red-400 hover:bg-red-500/10 touch-manipulation"
           aria-label="Delete task"
         >

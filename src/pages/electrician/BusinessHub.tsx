@@ -656,11 +656,11 @@ const BusinessHub = () => {
   const onTheJob: ToolCard[] = [
     {
       id: 'projects',
-      eyebrow: 'Projects',
-      title: 'Projects',
-      description: 'Group jobs, tasks and snags.',
+      eyebrow: 'Work',
+      title: 'Jobs',
+      description: 'Quotes, certs, invoices and tasks — every job in one place.',
       to: '/electrician/projects',
-      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a project',
+      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a job',
     },
 
     {

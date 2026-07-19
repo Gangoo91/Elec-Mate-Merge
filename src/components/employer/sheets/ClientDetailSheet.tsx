@@ -52,7 +52,8 @@ const fmtDate = (d: string | null) =>
 
 const statusTone = (s: string): 'emerald' | 'amber' | 'red' | 'cyan' | 'default' => {
   const v = s.toLowerCase();
-  if (v === 'paid' || v === 'accepted' || v === 'completed' || v === 'won') return 'emerald';
+  if (v === 'paid' || v === 'accepted' || v === 'completed' || v === 'won' || v === 'converted')
+    return 'emerald';
   if (v === 'overdue' || v === 'declined' || v === 'rejected' || v === 'cancelled') return 'red';
   if (v === 'active' || v === 'sent') return 'cyan';
   return 'amber';

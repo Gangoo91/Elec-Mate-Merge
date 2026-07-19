@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 import { Camera, Upload, X, User } from 'lucide-react';
 import { CVData } from '../types';
 import { supabase } from '@/integrations/supabase/client';
+import { useStorageUrl } from '@/utils/storageUrls';
 import { toast } from 'sonner';
 
 interface PhotoUploadFormProps {
@@ -13,6 +14,10 @@ export const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ cvData, onChan
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  // photoUrl holds a bare visual-uploads path on new CVs and a full public
+  // URL on legacy saved CVs — resolve both to a renderable URL.
+  const { url: photoDisplayUrl } = useStorageUrl('visual-uploads', cvData.personalInfo.photoUrl);
 
   const handleFileSelect = useCallback(
     async (file: File) => {
@@ -45,15 +50,14 @@ export const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ cvData, onChan
 
         if (uploadError) throw uploadError;
 
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
-
+        // Store the bare storage path — readers (this preview + the PDF
+        // generators) resolve it, so saved CVs survive the visual-uploads
+        // privacy flip. Legacy full-URL values still pass through.
         onChange({
           ...cvData,
           personalInfo: {
             ...cvData.personalInfo,
-            photoUrl: publicUrl,
+            photoUrl: fileName,
           },
         });
 
@@ -102,12 +106,8 @@ export const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ cvData, onChan
           {/* Photo Preview */}
           <div className="relative">
             <div className="w-32 h-32 rounded-full border-4 border-elec-gray overflow-hidden bg-elec-gray/50 flex items-center justify-center">
-              {cvData.personalInfo.photoUrl ? (
-                <img
-                  src={cvData.personalInfo.photoUrl}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
+              {photoDisplayUrl ? (
+                <img src={photoDisplayUrl} alt="Profile" className="w-full h-full object-cover" />
               ) : (
                 <User className="w-16 h-16 text-elec-light/30" />
               )}

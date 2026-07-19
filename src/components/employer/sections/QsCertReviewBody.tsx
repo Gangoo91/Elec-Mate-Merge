@@ -175,7 +175,9 @@ function circuitFlags(c: CertData): string[] {
   const maxZs = parseMeasure(c.maxZs);
   if (zs != null && maxZs != null && zs > maxZs) flags.push('Zs > max');
 
-  const ir = parseMeasure(c.insulationLiveEarth ?? c.insulationResistance);
+  // Fall back per-VALUE, not per-key: an empty-string insulationLiveEarth
+  // must not mask a legacy insulationResistance reading (display uses ||).
+  const ir = parseMeasure(c.insulationLiveEarth) ?? parseMeasure(c.insulationResistance);
   if (ir != null && ir < 1) flags.push('IR < 1MΩ');
 
   const pol = String(c.polarity ?? '').trim();

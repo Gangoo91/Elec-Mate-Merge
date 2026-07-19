@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -33,10 +33,13 @@ import {
   TrendingUp,
   Package,
   Clock,
+  Phone,
+  Mic,
 } from 'lucide-react';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -76,8 +79,9 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
 import { useProjectDocuments } from '@/hooks/useProjectDocuments';
-import { ProjectAINotes } from '@/components/project-management/ProjectAINotes';
 import { ProjectSafetyPack } from '@/components/electrician/project-detail/ProjectSafetyPack';
+import { useVoiceDictation } from '@/components/business-hub/assistant/useVoiceDictation';
+import JobMaterialsSection from '@/components/project-management/JobMaterialsSection';
 import { ProjectSuggestedLinks } from '@/components/project-management/ProjectSuggestedLinks';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -262,6 +266,21 @@ const ProjectDetailPage = () => {
     });
   }, []);
 
+  // Open a section AND take the user to it — a button whose target is below
+  // the fold reads as broken if nothing visibly happens.
+  const openAndScrollTo = useCallback((key: string) => {
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      next.add(key);
+      return next;
+    });
+    requestAnimationFrame(() => {
+      document
+        .getElementById(`job-section-${key}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }, []);
+
   // Task truncation
   const [showAllTasks, setShowAllTasks] = useState(false);
 
@@ -310,17 +329,72 @@ const ProjectDetailPage = () => {
   }, [id, tasks.length, invoices.length]);
 
   // ─── Project economics — one source of truth (revenue / cost / profit) ───
-  const financials = useMemo(
-    () =>
-      computeProjectFinancials({
-        invoiceTotal,
-        quoteTotal,
-        estimatedValue: project?.estimated_value,
-        expenses: projectSpend,
-        totalSeconds: timeSummary.totalSec,
-      }),
-    [invoiceTotal, quoteTotal, project?.estimated_value, projectSpend, timeSummary.totalSec]
-  );
+  // Server truth (S9): get_job_financials adds real material costs from the
+  // job's ticked-off materials list to the client-known figures.
+  const [serverFin, setServerFin] = useState<{
+    materials_got: number;
+    quoted_all: number;
+    invoiced: number;
+    paid: number;
+    expenses: number;
+    expenses_materials: number;
+  } | null>(null);
+  const [finVersion, setFinVersion] = useState(0);
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    (async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any).rpc('get_job_financials', {
+        p_project_id: id,
+      });
+      if (!cancelled && !error && data && data[0]) {
+        setServerFin({
+          materials_got: Number(data[0].materials_got) || 0,
+          quoted_all: Number(data[0].quoted_all) || 0,
+          invoiced: Number(data[0].invoiced) || 0,
+          paid: Number(data[0].paid) || 0,
+          expenses: Number(data[0].expenses) || 0,
+          expenses_materials: Number(data[0].expenses_materials) || 0,
+        });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [id, invoices.length, quotes.length, finVersion]);
+
+  // Materials section lives in its own component — it pings this event after
+  // any mutation so the P&L refreshes without a page reload.
+  useEffect(() => {
+    const bump = () => setFinVersion((v) => v + 1);
+    window.addEventListener('job-materials-changed', bump);
+    return () => window.removeEventListener('job-materials-changed', bump);
+  }, []);
+
+  const financials = useMemo(() => {
+    // Receipt-scanned materials and ticked list materials are usually the SAME
+    // spend recorded two ways — take the larger, never both.
+    const realCosts = serverFin
+      ? serverFin.expenses -
+        serverFin.expenses_materials +
+        Math.max(serverFin.expenses_materials, serverFin.materials_got)
+      : projectSpend;
+    return computeProjectFinancials({
+      invoiceTotal,
+      quoteTotal,
+      estimatedValue: project?.estimated_value,
+      expenses: realCosts,
+      totalSeconds: timeSummary.totalSec,
+    });
+  }, [invoiceTotal, quoteTotal, project?.estimated_value, projectSpend, serverFin, timeSummary.totalSec]);
+
+  // Quoted vs invoiced — the "did the job drift?" number. Uses quoted_all so
+  // the comparison survives the quote being converted to an invoice.
+  const quoteDrift = useMemo(() => {
+    if (!serverFin || serverFin.quoted_all <= 0 || serverFin.invoiced <= 0) return null;
+    return serverFin.invoiced - serverFin.quoted_all;
+  }, [serverFin]);
 
   // ─── AI assistant — context-aware prompts ────────────────────────
   const [aiOpen, setAiOpen] = useState(false);
@@ -360,6 +434,82 @@ const ProjectDetailPage = () => {
     }
     navigate('/electrician/time-tracker');
   }, [project, navigate]);
+
+  // ─── S7 Capture — one button: photo, voice note, receipt, timer ──────
+  const [captureOpen, setCaptureOpen] = useState(false);
+  const voiceNoteRef = useRef('');
+  const voiceStopIntent = useRef<'file' | 'discard' | null>(null);
+  const wasListening = useRef(false);
+  const voice = useVoiceDictation((t) => {
+    voiceNoteRef.current = t;
+  });
+
+  const fileVoiceNote = useCallback(() => {
+    const note = voiceNoteRef.current.trim();
+    voiceNoteRef.current = '';
+    setCaptureOpen(false);
+    if (!note) {
+      toast({ title: 'Nothing heard', description: 'Try again a bit closer to the mic.' });
+      return;
+    }
+    setAiPrompt(
+      `Voice note from site on "${project?.title}": "${note}"\n\nFile it for me: propose tasks for anything actionable, and summarise the rest as a note I can keep.`
+    );
+    setAiOpen(true);
+  }, [project?.title]);
+
+  // React to listening ending — whether the user tapped stop OR the
+  // recogniser auto-stopped on silence (web runs continuous=false, so the
+  // transcript would otherwise strand and be wiped by the next start()).
+  useEffect(() => {
+    if (wasListening.current && !voice.listening) {
+      const intent = voiceStopIntent.current ?? 'file';
+      voiceStopIntent.current = null;
+      if (intent === 'file') {
+        // small grace so the final transcript callback lands first
+        setTimeout(fileVoiceNote, 350);
+      } else {
+        voiceNoteRef.current = '';
+      }
+    }
+    wasListening.current = voice.listening;
+  }, [voice.listening, fileVoiceNote]);
+
+  const handleVoiceCapture = useCallback(() => {
+    if (!voice.supported) {
+      toast({ title: 'Voice not available', description: 'Dictation is not supported on this device.' });
+      return;
+    }
+    if (voice.listening) {
+      voiceStopIntent.current = 'file';
+      voice.stop();
+    } else {
+      voiceNoteRef.current = '';
+      voiceStopIntent.current = null;
+      voice.start();
+    }
+  }, [voice]);
+
+  // Closing the fan mid-dictation kills the mic and discards — never leave it hot.
+  const closeCapture = useCallback(() => {
+    if (voice.listening) {
+      voiceStopIntent.current = 'discard';
+      voice.stop();
+      toast({ title: 'Voice note discarded' });
+    }
+    setCaptureOpen(false);
+  }, [voice]);
+
+  // Leaving the page mid-dictation: stop and discard (native has no auto-stop on unmount).
+  useEffect(() => {
+    return () => {
+      if (wasListening.current) {
+        voiceStopIntent.current = 'discard';
+        voice.stop();
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Helpers used in the new hero
   const formatHoursMinutes = (seconds: number): string => {
@@ -598,12 +748,100 @@ const ProjectDetailPage = () => {
   // ─── "Needs attention" flags — derived from already-loaded data ──────
   const isCompleted = project?.status === 'completed';
   const hasAcceptedQuote = quotes.some(
-    (q) => q.status === 'approved' || q.acceptance_status === 'accepted'
+    (q) =>
+      q.status === 'approved' ||
+      q.acceptance_status === 'accepted' ||
+      q.acceptance_status === 'accepted_pending_deposit'
   );
   const awaitingQuote =
     !hasAcceptedQuote && quotes.some((q) => q.status === 'sent' || q.status === 'pending');
-  const unpaidInvoice = invoices.some((i) => i.payment_status !== 'paid');
-  const hasUnbilledTime = timeSummary.unbilledValue > 0 && !isCompleted;
+  // payment_status mirrors invoices.status: draft | sent | overdue | paid.
+  // Only sent/overdue count as unpaid — a draft isn't owed yet.
+  const unpaidInvoice = invoices.some(
+    (i) => i.payment_status === 'sent' || i.payment_status === 'overdue'
+  );
+
+  // ─── Next action — ONE stage-driven primary, mirrors the get_jobs_overview ladder ───
+  const nextAction = useMemo(() => {
+    if (!project) return null;
+    const nonDraft = invoices.filter((i) => i.payment_status !== 'draft');
+    const allPaid = nonDraft.length > 0 && nonDraft.every((i) => i.payment_status === 'paid');
+    const bookedFuture = quotes.some(
+      (q) => q.booked_slot_start && new Date(q.booked_slot_start) > new Date()
+    );
+    if (isCompleted && allPaid)
+      return {
+        eyebrow: 'Paid',
+        headline: 'All paid up — wrap it with a handover pack',
+        cta: 'Export pack',
+        run: handleExportPack,
+      };
+    if (unpaidInvoice)
+      return {
+        eyebrow: 'Awaiting payment',
+        headline: 'Invoice is out — give it a nudge',
+        cta: 'View invoices',
+        run: () => openAndScrollTo('invoices'),
+      };
+    if (isCompleted)
+      return {
+        eyebrow: 'Bill it',
+        headline: project.estimated_value
+          ? `Work's done — ${formatGBPexact(project.estimated_value)} to invoice`
+          : "Work's done — get the invoice out",
+        cta: 'Draft invoice',
+        run: () => navigate(`/electrician/invoice-builder/create?projectId=${project.id}`),
+      };
+    if (doneTasks > 0 || project.status === 'active')
+      return {
+        eyebrow: 'In progress',
+        headline: 'On the tools — keep the time logged',
+        cta: 'Start timer',
+        run: handleStartTimerForProject,
+      };
+    if (hasAcceptedQuote && bookedFuture)
+      return {
+        eyebrow: 'Booked',
+        headline: 'Booked in — everything ready for the day',
+        cta: 'View tasks',
+        run: () => openAndScrollTo('tasks'),
+      };
+    if (hasAcceptedQuote)
+      return {
+        eyebrow: 'Won',
+        headline: 'Quote accepted — get it booked in',
+        cta: 'Set the date',
+        run: openEditSheet,
+      };
+    if (quotes.length > 0)
+      return {
+        eyebrow: 'Quoted',
+        headline: 'Waiting on the client — worth a chase?',
+        cta: 'View quote',
+        run: () => openAndScrollTo('quotes'),
+      };
+    return {
+      eyebrow: 'New job',
+      headline: 'Price it up and get the quote out',
+      cta: 'Create quote',
+      run: () => navigate(`/electrician/quote-builder/create?projectId=${project.id}`),
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project, quotes, invoices, isCompleted, unpaidInvoice, hasAcceptedQuote, doneTasks, openSections]);
+
+  // Smart default sections — open what the stage says matters, once per load
+  const smartOpenApplied = useRef(false);
+  useEffect(() => {
+    if (!project || smartOpenApplied.current) return;
+    smartOpenApplied.current = true;
+    const open = new Set<string>(['tasks']);
+    if (unpaidInvoice || isCompleted) open.add('invoices');
+    if (isCompleted && certificates.length === 0) open.add('certificates');
+    if (!hasAcceptedQuote && quotes.length > 0) open.add('quotes');
+    setOpenSections(open);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project]);
+  const hasUnbilledTime = timeSummary.unbilledSec >= 900 && !isCompleted;
   const noCertificate = certificates.length === 0;
 
   type AttentionFlag = {
@@ -619,9 +857,9 @@ const ProjectDetailPage = () => {
     attentionFlags.push({
       key: 'unbilled',
       label: `${formatGBP(timeSummary.unbilledValue)} unbilled`,
-      sub: `${formatHoursMinutes(timeSummary.unbilledSec)} — draft an invoice`,
+      sub: `${formatHoursMinutes(timeSummary.unbilledSec)} on the clock — draft the invoice`,
       icon: PoundSterling,
-      tint: 'text-elec-yellow',
+      tint: 'text-white/70',
       onClick: askMateToInvoiceUnbilled,
     });
   }
@@ -631,10 +869,8 @@ const ProjectDetailPage = () => {
       label: 'Quote awaiting response',
       sub: 'Chase the customer or ask Mate',
       icon: FileText,
-      tint: 'text-blue-400',
-      onClick: () => {
-        if (!openSections.has('quotes')) toggleSection('quotes');
-      },
+      tint: 'text-white/70',
+      onClick: () => openAndScrollTo('quotes'),
     });
   }
   if (unpaidInvoice) {
@@ -643,10 +879,8 @@ const ProjectDetailPage = () => {
       label: 'Invoice unpaid',
       sub: 'Awaiting payment',
       icon: Receipt,
-      tint: 'text-orange-300',
-      onClick: () => {
-        if (!openSections.has('invoices')) toggleSection('invoices');
-      },
+      tint: 'text-white/70',
+      onClick: () => openAndScrollTo('invoices'),
     });
   }
   if (noCertificate) {
@@ -655,10 +889,17 @@ const ProjectDetailPage = () => {
       label: 'No certificate issued yet',
       sub: 'Link or create the paperwork',
       icon: Shield,
-      tint: 'text-amber-400',
+      tint: 'text-white/70',
       onClick: () => setLinkType('certificate'),
     });
   }
+
+  // Don't repeat what the Next-action card already leads with
+  const visibleFlags = attentionFlags.filter(
+    (f) =>
+      !(nextAction?.eyebrow === 'Quoted' && f.key === 'quote') &&
+      !(nextAction?.eyebrow === 'Awaiting payment' && f.key === 'invoice')
+  );
 
   // ─── Timeline — chronological activity assembled client-side ─────────
   type TimelineEntry = {
@@ -818,7 +1059,7 @@ const ProjectDetailPage = () => {
       fetch: fetchUnlinkedCertificates,
       link: linkCertificate,
       createLabel: 'Create new certificate',
-      createUrl: `/electrician/certificates/new?projectId=${project?.id}&clientName=${encodeURIComponent(project?.customer_name || '')}&address=${encodeURIComponent(project?.location || '')}`,
+      createUrl: `/electrician/inspection-testing/new?projectId=${project?.id}&clientName=${encodeURIComponent(project?.customer_name || '')}&address=${encodeURIComponent(project?.location || '')}`,
     },
     rams: {
       title: 'Link RAMS',
@@ -877,7 +1118,7 @@ const ProjectDetailPage = () => {
   }
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-36">
       {/* Slim Sticky Header — back + kebab only */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
@@ -929,7 +1170,7 @@ const ProjectDetailPage = () => {
                   className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Project
+                  Delete job
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -938,7 +1179,7 @@ const ProjectDetailPage = () => {
             <AlertDialog open={confirmDeleteProject} onOpenChange={setConfirmDeleteProject}>
               <AlertDialogContent className="bg-elec-gray border-white/10">
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-white">Delete Project?</AlertDialogTitle>
+                  <AlertDialogTitle className="text-white">Delete job?</AlertDialogTitle>
                   <AlertDialogDescription className="text-white">
                     This will permanently delete "{project.title}". Tasks, time entries and linked records will be removed. This cannot be undone.
                   </AlertDialogDescription>
@@ -1002,21 +1243,39 @@ const ProjectDetailPage = () => {
                   {project.title}
                 </h1>
                 {(project.customer_name || project.location) && (
-                  <p className="mt-1 text-[13px] text-white/55 truncate flex items-center gap-1.5">
-                    {project.customer_name && (
-                      <>
-                        <Users className="h-3 w-3 text-white/35" />
-                        <span>{project.customer_name}</span>
-                      </>
-                    )}
+                  <p className="mt-1 text-[13px] text-white/55 flex items-center gap-1.5 flex-wrap">
+                    {project.customer_name &&
+                      (project.customer_phone ? (
+                        <a
+                          href={`tel:${project.customer_phone.replace(/\s+/g, '')}`}
+                          className="inline-flex items-center gap-1.5 text-white/70 active:text-elec-yellow touch-manipulation"
+                        >
+                          <Phone className="h-3 w-3 text-elec-yellow/70" />
+                          <span className="underline decoration-white/20 underline-offset-2">
+                            {project.customer_name}
+                          </span>
+                        </a>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5">
+                          <Users className="h-3 w-3 text-white/35" />
+                          <span>{project.customer_name}</span>
+                        </span>
+                      ))}
                     {project.customer_name && project.location && (
                       <span className="text-white/25">·</span>
                     )}
                     {project.location && (
-                      <>
-                        <MapPin className="h-3 w-3 text-white/35" />
-                        <span>{project.location}</span>
-                      </>
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(project.location)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-white/70 active:text-elec-yellow touch-manipulation min-w-0"
+                      >
+                        <MapPin className="h-3 w-3 text-elec-yellow/70" />
+                        <span className="truncate underline decoration-white/20 underline-offset-2">
+                          {project.location}
+                        </span>
+                      </a>
                     )}
                   </p>
                 )}
@@ -1035,7 +1294,7 @@ const ProjectDetailPage = () => {
                 <button
                   type="button"
                   onClick={openEditSheet}
-                  aria-label="Edit project"
+                  aria-label="Edit job"
                   className="w-8 h-8 flex items-center justify-center rounded-lg text-white/55 hover:text-white hover:bg-white/[0.06] touch-manipulation"
                 >
                   <Pencil className="h-3.5 w-3.5" />
@@ -1184,7 +1443,7 @@ const ProjectDetailPage = () => {
             <div className="flex items-center justify-between px-4 py-3 sm:px-5 border-b border-white/[0.06]">
               <div className="flex items-center gap-3">
                 <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
-                  <TrendingUp className="h-4 w-4 text-emerald-400" />
+                  <TrendingUp className="h-4 w-4 text-white/70" />
                 </span>
                 <div>
                   <p className="text-[14px] font-semibold text-white leading-tight">Profitability</p>
@@ -1244,6 +1503,25 @@ const ProjectDetailPage = () => {
                 </p>
               </div>
             </div>
+            {quoteDrift !== null && (
+              <div className="flex items-center justify-between px-4 py-2.5 sm:px-5 border-t border-white/[0.06]">
+                <span className="text-[12px] text-white/60">Quoted vs invoiced</span>
+                <span
+                  className={cn(
+                    'text-[12px] font-semibold tabular-nums',
+                    quoteDrift >= 0 ? 'text-emerald-400' : 'text-red-400'
+                  )}
+                >
+                  {quoteDrift >= 0 ? '+' : '−'}
+                  {formatGBPexact(Math.abs(quoteDrift))}
+                  {serverFin && serverFin.quoted_all > 0 && (
+                    <span className="text-white/40 font-normal">
+                      {' '}({Math.round((quoteDrift / serverFin.quoted_all) * 100)}%)
+                    </span>
+                  )}
+                </span>
+              </div>
+            )}
           </motion.div>
         )}
 
@@ -1253,7 +1531,7 @@ const ProjectDetailPage = () => {
             <div className="flex items-center justify-between px-4 py-3 sm:px-5 border-b border-white/[0.06]">
               <div className="flex items-center gap-3">
                 <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
-                  <Package className="h-4 w-4 text-cyan-400" />
+                  <Package className="h-4 w-4 text-white/70" />
                 </span>
                 <div>
                   <p className="text-[14px] font-semibold text-white leading-tight">Materials used</p>
@@ -1263,7 +1541,7 @@ const ProjectDetailPage = () => {
                   </p>
                 </div>
               </div>
-              <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+              <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                 {projectMaterials.length}
               </span>
             </div>
@@ -1297,8 +1575,37 @@ const ProjectDetailPage = () => {
           </motion.div>
         )}
 
+        {/* ── Next action — ONE stage-driven primary, always present ── */}
+        {nextAction && (
+          <motion.div
+            variants={itemVariants}
+            className={cn(
+              PANEL,
+              'relative overflow-hidden border-elec-yellow/[0.22] bg-gradient-to-b from-elec-yellow/[0.07] to-transparent'
+            )}
+          >
+            <div className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-elec-yellow/80">
+                  {nextAction.eyebrow}
+                </p>
+                <p className="mt-0.5 text-[14.5px] font-semibold text-white leading-snug">
+                  {nextAction.headline}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={nextAction.run}
+                className="shrink-0 h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+              >
+                {nextAction.cta}
+              </button>
+            </div>
+          </motion.div>
+        )}
+
         {/* ── Needs attention — derived flags, only when something applies ── */}
-        {attentionFlags.length > 0 && (
+        {visibleFlags.length > 0 && (
           <motion.div variants={itemVariants} className={cn(PANEL, 'overflow-hidden')}>
             <div className="flex items-center gap-3 px-4 py-3 sm:px-5 border-b border-white/[0.06]">
               <span className="h-9 w-9 rounded-xl bg-elec-yellow/[0.10] border border-elec-yellow/20 flex items-center justify-center">
@@ -1307,12 +1614,12 @@ const ProjectDetailPage = () => {
               <div>
                 <p className="text-[14px] font-semibold text-white leading-tight">Needs attention</p>
                 <p className="text-[11px] text-white/55 leading-tight">
-                  {attentionFlags.length} thing{attentionFlags.length === 1 ? '' : 's'} to action
+                  {visibleFlags.length} thing{visibleFlags.length === 1 ? '' : 's'} to action
                 </p>
               </div>
             </div>
             <div className="divide-y divide-white/[0.05]">
-              {attentionFlags.map((flag) => (
+              {visibleFlags.map((flag) => (
                 <button
                   key={flag.key}
                   type="button"
@@ -1335,9 +1642,14 @@ const ProjectDetailPage = () => {
           </motion.div>
         )}
 
-        {/* ── Sections grid — 2-up on md+, cards expand independently ── */}
-        <div className="grid md:grid-cols-2 gap-3 items-start">
-
+        {/* ── Sections — grouped by job stage; columns inside each group ── */}
+        <div className="space-y-5">
+        <section>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Scope</span>
+          </div>
+          <div className="md:columns-2 md:gap-3 [&>*]:mb-3 [&>*]:break-inside-avoid">
         {/* ── Site Visits Section ── */}
         <motion.div variants={itemVariants}>
           <Collapsible className={cn(PANEL, 'overflow-hidden')}
@@ -1346,16 +1658,16 @@ const ProjectDetailPage = () => {
           >
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><HardHat className="h-4 w-4 text-sky-400" /></span>
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><HardHat className="h-4 w-4 text-white/70" /></span>
                   <span className="min-w-0">
                     <span className="block text-[14px] font-semibold text-white leading-tight">Site Visits</span>
                     <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{siteVisits.length > 0 ? `${siteVisits.length} visit${siteVisits.length === 1 ? '' : 's'} · last ${formatShortDate(siteVisits[0].created_at)}` : 'Record what you find on site'}</span>
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {siteVisits.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                       {siteVisits.length}
                     </span>
                   )}
@@ -1365,7 +1677,7 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('siteVisit');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
                   >
                     + Link
                   </span>
@@ -1442,21 +1754,461 @@ const ProjectDetailPage = () => {
           </Collapsible>
         </motion.div>
 
-        {/* ── Tasks Section ── */}
+        {/* ── Floor Plans Section ── */}
         <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('floorPlan')}
+            onOpenChange={() => toggleSection('floorPlan')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><LayoutGrid className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Floor Plans</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{floorPlans.length > 0 ? `${floorPlans.length} plan${floorPlans.length === 1 ? '' : 's'}` : 'Room planner layouts'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {floorPlans.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {floorPlans.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('floorPlan');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('floorPlan') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {floorPlans.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing floor plan or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('floorPlan')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Floor Plan
+                  </button>
+                </div>
+              ) : (
+                floorPlans.map((fp) => (
+                  <button
+                    key={fp.id}
+                    type="button"
+                    onClick={() => navigate(`/electrician/business/room-planner?projectId=${project?.id ?? ''}&floorPlanId=${fp.id}`)}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white truncate">
+                        {fp.name || 'Floor Plan'}
+                      </p>
+                      <p className="text-[11px] text-white">
+                        {fp.total_items} items — {fp.status}
+                      </p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Photos Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('photos')}
+            onOpenChange={() => toggleSection('photos')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Camera className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Photos</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectPhotos.length > 0 ? `${projectPhotos.length} photo${projectPhotos.length === 1 ? '' : 's'}` : 'Before, during & after shots'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {projectPhotos.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {projectPhotos.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPhotoSheetOpen(true);
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Add
+                  </span>
+                  {openSections.has('photos') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {projectPhotos.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <Camera className="h-7 w-7 text-white mb-2" />
+                  <p className="text-sm text-white mb-3">No photos yet</p>
+                  <button
+                    type="button"
+                    onClick={() => setPhotoSheetOpen(true)}
+                    className="h-11 px-4 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                  >
+                    Add Photo
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {projectPhotos.slice(0, 6).map((photo) => (
+                      <div
+                        key={photo.id}
+                        className="relative aspect-square rounded-xl overflow-hidden bg-white/[0.04]"
+                      >
+                        {photo.signedUrl && (
+                          <img
+                            src={photo.signedUrl}
+                            alt={photo.name}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/electrician/photo-docs')}
+                      className="flex-1 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-white touch-manipulation active:bg-white/[0.08] transition-colors"
+                    >
+                      View all in Photo Docs
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPhotoSheetOpen(true)}
+                      className="h-11 px-4 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                    >
+                      <Plus className="h-4 w-4 inline mr-1" />
+                      Add
+                    </button>
+                  </div>
+                </>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+          </div>
+        </section>
+        <section>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Price</span>
+          </div>
+          <div className="md:columns-2 md:gap-3 [&>*]:mb-3 [&>*]:break-inside-avoid">
+        {/* ── Quotes Section ── */}
+        <motion.div variants={itemVariants} id="job-section-quotes" className="scroll-mt-20">
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('quotes')}
+            onOpenChange={() => toggleSection('quotes')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><FileText className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Quotes</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{quotes.length > 0 ? `${quotes.length} quote${quotes.length === 1 ? '' : 's'} · ${formatGBP(quoteTotal)}` : 'Price the job'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {quotes.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {quotes.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('quote');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('quotes') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {quotes.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing quote or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('quote')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Quote
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {quotes.map((q) => (
+                    <button
+                      key={q.id}
+                      type="button"
+                      onClick={() => navigate(`/electrician/quotes/view/${q.id}`)}
+                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                    >
+                      <div className="min-w-0 text-left">
+                        <p className="text-sm font-medium text-white">
+                          {q.quote_number ? `#${q.quote_number}` : 'Quote'}
+                        </p>
+                        <p className="text-[11px] capitalize flex items-center gap-1.5">
+                          <span
+                            className={cn(
+                              'h-1.5 w-1.5 rounded-full',
+                              q.status === 'approved' || q.acceptance_status === 'accepted'
+                                ? 'bg-emerald-400'
+                                : q.status === 'rejected' || q.acceptance_status === 'rejected'
+                                  ? 'bg-red-400'
+                                  : q.status === 'sent' || q.status === 'pending'
+                                    ? 'bg-blue-400'
+                                    : 'bg-white/50'
+                            )}
+                          />
+                          <span className="text-white/65">{q.status}</span>
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <span className="text-[14px] font-bold text-elec-yellow tabular-nums">
+                          £{q.total.toLocaleString()}
+                        </span>
+                        <ChevronRight className="h-4 w-4 text-white" />
+                      </div>
+                    </button>
+                  ))}
+                  {quoteTotal > 0 && (
+                    <p className="text-[12px] text-white/60 text-right pr-1 pt-1">
+                      Total <span className="font-semibold text-elec-yellow tabular-nums">£{quoteTotal.toLocaleString()}</span>
+                    </p>
+                  )}
+                </>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Cost Estimates Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('costEstimate')}
+            onOpenChange={() => toggleSection('costEstimate')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><PoundSterling className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Cost Estimates</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{costEstimates.length > 0 ? `${costEstimates.length} estimate${costEstimates.length === 1 ? '' : 's'}` : 'AI cost engineer'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {costEstimates.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {costEstimates.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('costEstimate');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('costEstimate') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {costEstimates.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing cost estimate or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('costEstimate')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Cost Estimate
+                  </button>
+                </div>
+              ) : (
+                costEstimates.map((ce) => (
+                  <button
+                    key={ce.id}
+                    type="button"
+                    onClick={() => navigate(`/electrician/cost-engineer?projectId=${project?.id ?? ''}`)}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white truncate">
+                        {ce.query || 'Cost Estimate'}
+                      </p>
+                      <p className="text-[11px] text-white capitalize">{ce.status}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Circuit Design Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('circuitDesign')}
+            onOpenChange={() => toggleSection('circuitDesign')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Zap className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Circuit Design</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{circuitDesigns.length > 0 ? `${circuitDesigns.length} design${circuitDesigns.length === 1 ? '' : 's'}` : 'AI circuit designer'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {circuitDesigns.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {circuitDesigns.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('circuitDesign');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('circuitDesign') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {circuitDesigns.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing circuit design or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('circuitDesign')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Circuit Design
+                  </button>
+                </div>
+              ) : (
+                circuitDesigns.map((cd) => (
+                  <button
+                    key={cd.id}
+                    type="button"
+                    onClick={() => navigate(`/electrician/circuit-designer?projectId=${project?.id ?? ''}`)}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white">
+                        {(cd.job_inputs?.project_name as string) ||
+                          (cd.job_inputs?.description as string) ||
+                          'Circuit Design'}
+                      </p>
+                      <p className="text-[11px] text-white capitalize">{cd.status}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+          </div>
+        </section>
+        <section>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">03</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· On the job</span>
+          </div>
+          <div className="md:columns-2 md:gap-3 [&>*]:mb-3 [&>*]:break-inside-avoid">
+        {/* ── Tasks Section ── */}
+        <motion.div variants={itemVariants} id="job-section-tasks" className="scroll-mt-20">
           <Collapsible className={cn(PANEL, 'overflow-hidden')} open={openSections.has('tasks')} onOpenChange={() => toggleSection('tasks')}>
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><ClipboardCheck className="h-4 w-4 text-amber-400" /></span>
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><ClipboardCheck className="h-4 w-4 text-white/70" /></span>
                   <span className="min-w-0">
                     <span className="block text-[14px] font-semibold text-white leading-tight">Tasks</span>
                     <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{totalTasks > 0 ? `${doneTasks} of ${totalTasks} done` : 'Plan the work'}</span>
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {regularTasks.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                       {regularTasks.length}
                     </span>
                   )}
@@ -1558,519 +2310,6 @@ const ProjectDetailPage = () => {
           </Collapsible>
         </motion.div>
 
-        {/* ── Quotes Section ── */}
-        <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('quotes')}
-            onOpenChange={() => toggleSection('quotes')}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><FileText className="h-4 w-4 text-emerald-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Quotes</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{quotes.length > 0 ? `${quotes.length} quote${quotes.length === 1 ? '' : 's'} · ${formatGBP(quoteTotal)}` : 'Price the job'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {quotes.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {quotes.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('quote');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('quotes') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {quotes.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing quote or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('quote')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link Quote
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {quotes.map((q) => (
-                    <button
-                      key={q.id}
-                      type="button"
-                      onClick={() => navigate(`/electrician/quotes/view/${q.id}`)}
-                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                    >
-                      <div className="min-w-0 text-left">
-                        <p className="text-sm font-medium text-white">
-                          {q.quote_number ? `#${q.quote_number}` : 'Quote'}
-                        </p>
-                        <p className="text-[11px] capitalize flex items-center gap-1.5">
-                          <span
-                            className={cn(
-                              'h-1.5 w-1.5 rounded-full',
-                              q.status === 'approved' || q.acceptance_status === 'accepted'
-                                ? 'bg-emerald-400'
-                                : q.status === 'rejected' || q.acceptance_status === 'rejected'
-                                  ? 'bg-red-400'
-                                  : q.status === 'sent' || q.status === 'pending'
-                                    ? 'bg-blue-400'
-                                    : 'bg-white/50'
-                            )}
-                          />
-                          <span className="text-white/65">{q.status}</span>
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-[14px] font-bold text-elec-yellow tabular-nums">
-                          £{q.total.toLocaleString()}
-                        </span>
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </div>
-                    </button>
-                  ))}
-                  {quoteTotal > 0 && (
-                    <p className="text-[12px] text-white/60 text-right pr-1 pt-1">
-                      Total <span className="font-semibold text-elec-yellow tabular-nums">£{quoteTotal.toLocaleString()}</span>
-                    </p>
-                  )}
-                </>
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
-        {/* ── Invoices Section ── */}
-        <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('invoices')}
-            onOpenChange={() => toggleSection('invoices')}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><PoundSterling className="h-4 w-4 text-blue-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Invoices</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{invoices.length > 0 ? `${invoices.length} invoice${invoices.length === 1 ? '' : 's'} · ${formatGBP(invoiceTotal)}${paidInvoices > 0 ? ` · ${paidInvoices} paid` : ''}` : 'Bill the work'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {invoices.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {invoices.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('invoice');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('invoices') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {invoices.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing invoice or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('invoice')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link Invoice
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {invoices.map((inv) => (
-                    <button
-                      key={inv.id}
-                      type="button"
-                      onClick={() => navigate(`/electrician/invoices/${inv.id}/view`)}
-                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                    >
-                      <div className="min-w-0 text-left">
-                        <p className="text-sm font-medium text-white">
-                          {inv.invoice_number ? `#${inv.invoice_number}` : 'Invoice'}
-                        </p>
-                        <p className="text-[11px] text-white capitalize">{inv.payment_status}</p>
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-[14px] font-bold text-elec-yellow tabular-nums">
-                          £{inv.total.toLocaleString()}
-                        </span>
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </div>
-                    </button>
-                  ))}
-                  {invoiceTotal > 0 && (
-                    <p className="text-[12px] text-white text-right pr-2">
-                      Total <span className="font-semibold text-elec-yellow tabular-nums">£{invoiceTotal.toLocaleString()}</span>{paidInvoices > 0 ? ` · ${paidInvoices} paid` : ''}
-                    </p>
-                  )}
-                </>
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
-        {/* ── Certificates Section ── */}
-        <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('certificates')}
-            onOpenChange={() => toggleSection('certificates')}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Shield className="h-4 w-4 text-amber-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Certificates</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{certificates.length > 0 ? `${certificates.length} linked` : 'EICR, EIC, Minor Works'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {certificates.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {certificates.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('certificate');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('certificates') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {certificates.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing certificate or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('certificate')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link Certificate
-                  </button>
-                </div>
-              ) : (
-                certificates.map((cert) => (
-                  <button
-                    key={cert.id}
-                    type="button"
-                    onClick={() => {
-                      if (!cert.report_type) return;
-                      // eicr/eic/minor-works are query-param sections; pat/
-                      // testing-only are path routes — both take report_id,
-                      // not the row uuid (uuid paths fell to the dashboard).
-                      if (['eicr', 'eic', 'minor-works'].includes(cert.report_type)) {
-                        navigate(
-                          `/electrician/inspection-testing?section=${cert.report_type}&reportId=${encodeURIComponent(cert.report_id)}`
-                        );
-                      } else if (['pat-testing', 'testing-only'].includes(cert.report_type)) {
-                        navigate(
-                          `/electrician/inspection-testing/${cert.report_type}/${encodeURIComponent(cert.report_id)}`
-                        );
-                      } else {
-                        navigate('/electrician/inspection-testing?section=my-reports');
-                      }
-                    }}
-                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    <div className="min-w-0 text-left">
-                      <p className="text-sm font-medium text-white">
-                        {cert.report_type?.toUpperCase().replace(/-/g, ' ') || 'Certificate'}
-                      </p>
-                      {cert.client_name && (
-                        <p className="text-[11px] text-white">{cert.client_name}</p>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-[12px] text-white capitalize">{cert.status}</span>
-                      <ChevronRight className="h-4 w-4 text-white" />
-                    </div>
-                  </button>
-                ))
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
-        {/* ── RAMS Section ── */}
-        <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')} open={openSections.has('rams')} onOpenChange={() => toggleSection('rams')}>
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Zap className="h-4 w-4 text-purple-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">RAMS</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{rams.length > 0 ? `${rams.length} document${rams.length === 1 ? '' : 's'}` : 'Risk assessments & method statements'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {rams.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {rams.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('rams');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('rams') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {rams.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing RAMS or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('rams')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link RAMS
-                  </button>
-                </div>
-              ) : (
-                rams.map((r) => (
-                  <button
-                    key={r.id}
-                    type="button"
-                    onClick={() => navigate('/electrician/site-safety?tab=documents')}
-                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    <div className="min-w-0 text-left">
-                      <p className="text-sm font-medium text-white">{r.job_description}</p>
-                      <p className="text-[11px] text-white capitalize">{r.status}</p>
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <ChevronRight className="h-4 w-4 text-white" />
-                    </div>
-                  </button>
-                ))
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
-        {/* ── Safety Pack Section — every Site Safety doc linked to this project ── */}
-        <motion.div variants={itemVariants}>
-          <ProjectSafetyPack projectId={project.id} />
-        </motion.div>
-
-        {/* ── Circuit Design Section ── */}
-        <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('circuitDesign')}
-            onOpenChange={() => toggleSection('circuitDesign')}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Zap className="h-4 w-4 text-purple-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Circuit Design</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{circuitDesigns.length > 0 ? `${circuitDesigns.length} design${circuitDesigns.length === 1 ? '' : 's'}` : 'AI circuit designer'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {circuitDesigns.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {circuitDesigns.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('circuitDesign');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('circuitDesign') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {circuitDesigns.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing circuit design or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('circuitDesign')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link Circuit Design
-                  </button>
-                </div>
-              ) : (
-                circuitDesigns.map((cd) => (
-                  <button
-                    key={cd.id}
-                    type="button"
-                    onClick={() => navigate(`/electrician/circuit-designer?projectId=${project?.id ?? ''}`)}
-                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    <div className="min-w-0 text-left">
-                      <p className="text-sm font-medium text-white">
-                        {(cd.job_inputs?.project_name as string) ||
-                          (cd.job_inputs?.description as string) ||
-                          'Circuit Design'}
-                      </p>
-                      <p className="text-[11px] text-white capitalize">{cd.status}</p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </button>
-                ))
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
-        {/* ── Cost Estimates Section ── */}
-        <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('costEstimate')}
-            onOpenChange={() => toggleSection('costEstimate')}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><PoundSterling className="h-4 w-4 text-green-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Cost Estimates</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{costEstimates.length > 0 ? `${costEstimates.length} estimate${costEstimates.length === 1 ? '' : 's'}` : 'AI cost engineer'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {costEstimates.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {costEstimates.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('costEstimate');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('costEstimate') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {costEstimates.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing cost estimate or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('costEstimate')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link Cost Estimate
-                  </button>
-                </div>
-              ) : (
-                costEstimates.map((ce) => (
-                  <button
-                    key={ce.id}
-                    type="button"
-                    onClick={() => navigate(`/electrician/cost-engineer?projectId=${project?.id ?? ''}`)}
-                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    <div className="min-w-0 text-left">
-                      <p className="text-sm font-medium text-white truncate">
-                        {ce.query || 'Cost Estimate'}
-                      </p>
-                      <p className="text-[11px] text-white capitalize">{ce.status}</p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </button>
-                ))
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
         {/* ── Expenses & spend Section (ELE-1176) ── */}
         <motion.div variants={itemVariants}>
           <Collapsible className={cn(PANEL, 'overflow-hidden')}
@@ -2079,16 +2318,16 @@ const ProjectDetailPage = () => {
           >
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Receipt className="h-4 w-4 text-rose-400" /></span>
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Receipt className="h-4 w-4 text-white/70" /></span>
                   <span className="min-w-0">
                     <span className="block text-[14px] font-semibold text-white leading-tight">Expenses &amp; spend</span>
                     <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectExpenses.length > 0 ? `${projectExpenses.length} expense${projectExpenses.length === 1 ? '' : 's'} · ${formatGBPexact(projectSpend)}` : 'Track what this job costs you'}</span>
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {projectExpenses.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                       {projectExpenses.length}
                     </span>
                   )}
@@ -2098,7 +2337,7 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setExpenseSheetOpen(true);
                     }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
                   >
                     + Add
                   </span>
@@ -2173,81 +2412,14 @@ const ProjectDetailPage = () => {
           </Collapsible>
         </motion.div>
 
-        {/* ── Floor Plans Section ── */}
+        {/* ── Materials Section — shopping list seeded from the quote, ticks off stock (S6) ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('floorPlan')}
-            onOpenChange={() => toggleSection('floorPlan')}
-          >
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><LayoutGrid className="h-4 w-4 text-cyan-400" /></span>
-                  <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Floor Plans</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{floorPlans.length > 0 ? `${floorPlans.length} plan${floorPlans.length === 1 ? '' : 's'}` : 'Room planner layouts'}</span>
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  {floorPlans.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {floorPlans.length}
-                    </span>
-                  )}
-                  <span
-                    role="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLinkType('floorPlan');
-                    }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
-                  >
-                    + Link
-                  </span>
-                  {openSections.has('floorPlan') ? (
-                    <ChevronUp className="h-4 w-4 text-white/45" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-white/45" />
-                  )}
-                </div>
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {floorPlans.length === 0 ? (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <p className="text-sm text-white mb-3">
-                    Link an existing floor plan or create a new one
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setLinkType('floorPlan')}
-                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    + Link Floor Plan
-                  </button>
-                </div>
-              ) : (
-                floorPlans.map((fp) => (
-                  <button
-                    key={fp.id}
-                    type="button"
-                    onClick={() => navigate(`/electrician/business/room-planner?projectId=${project?.id ?? ''}&floorPlanId=${fp.id}`)}
-                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
-                  >
-                    <div className="min-w-0 text-left">
-                      <p className="text-sm font-medium text-white truncate">
-                        {fp.name || 'Floor Plan'}
-                      </p>
-                      <p className="text-[11px] text-white">
-                        {fp.total_items} items — {fp.status}
-                      </p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </button>
-                ))
-              )}
-            </CollapsibleContent>
-          </Collapsible>
+          <JobMaterialsSection
+            projectId={project.id}
+            open={openSections.has('materials')}
+            onToggle={() => toggleSection('materials')}
+            quoteCount={quotes.length}
+          />
         </motion.div>
 
         {/* ── Snagging Section (only when snags exist) ── */}
@@ -2260,7 +2432,7 @@ const ProjectDetailPage = () => {
               <CollapsibleTrigger asChild>
                 <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-orange-500/20 touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
                   <div className="flex items-center gap-3">
-                    <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><AlertTriangle className="h-4 w-4 text-orange-400" /></span>
+                    <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><AlertTriangle className="h-4 w-4 text-white/70" /></span>
                     <span className="min-w-0">
                     <span className="block text-[14px] font-semibold text-white leading-tight">Snagging</span>
                     <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{`${snaggingTasks.filter((t) => t.status === 'open').length} open of ${snaggingTasks.length}`}</span>
@@ -2272,7 +2444,7 @@ const ProjectDetailPage = () => {
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                       {snaggingTasks.length}
                     </span>
                     {openSections.has('snagging') ? (
@@ -2341,38 +2513,46 @@ const ProjectDetailPage = () => {
           </motion.div>
         )}
 
-        {/* ── Photos Section ── */}
-        <motion.div variants={itemVariants}>
+          </div>
+        </section>
+        <section>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">04</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Paperwork</span>
+          </div>
+          <div className="md:columns-2 md:gap-3 [&>*]:mb-3 [&>*]:break-inside-avoid">
+        {/* ── Certificates Section ── */}
+        <motion.div variants={itemVariants} id="job-section-certificates" className="scroll-mt-20">
           <Collapsible className={cn(PANEL, 'overflow-hidden')}
-            open={openSections.has('photos')}
-            onOpenChange={() => toggleSection('photos')}
+            open={openSections.has('certificates')}
+            onOpenChange={() => toggleSection('certificates')}
           >
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Camera className="h-4 w-4 text-sky-400" /></span>
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Shield className="h-4 w-4 text-white/70" /></span>
                   <span className="min-w-0">
-                    <span className="block text-[14px] font-semibold text-white leading-tight">Photos</span>
-                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectPhotos.length > 0 ? `${projectPhotos.length} photo${projectPhotos.length === 1 ? '' : 's'}` : 'Before, during & after shots'}</span>
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Certificates</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{certificates.length > 0 ? `${certificates.length} linked` : 'EICR, EIC, Minor Works'}</span>
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  {projectPhotos.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
-                      {projectPhotos.length}
+                <div className="flex items-center gap-2 shrink-0">
+                  {certificates.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {certificates.length}
                     </span>
                   )}
                   <span
                     role="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setPhotoSheetOpen(true);
+                      setLinkType('certificate');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
                   >
-                    + Add
+                    + Link
                   </span>
-                  {openSections.has('photos') ? (
+                  {openSections.has('certificates') ? (
                     <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
                     <ChevronDown className="h-4 w-4 text-white/45" />
@@ -2381,69 +2561,242 @@ const ProjectDetailPage = () => {
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
-              {projectPhotos.length === 0 ? (
+              {certificates.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
-                  <Camera className="h-7 w-7 text-white mb-2" />
-                  <p className="text-sm text-white mb-3">No photos yet</p>
+                  <p className="text-sm text-white mb-3">
+                    Link an existing certificate or create a new one
+                  </p>
                   <button
                     type="button"
-                    onClick={() => setPhotoSheetOpen(true)}
-                    className="h-11 px-4 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                    onClick={() => setLinkType('certificate')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
-                    Add Photo
+                    + Link Certificate
+                  </button>
+                </div>
+              ) : (
+                certificates.map((cert) => (
+                  <button
+                    key={cert.id}
+                    type="button"
+                    onClick={() => {
+                      if (!cert.report_type) return;
+                      // eicr/eic/minor-works are query-param sections; pat/
+                      // testing-only are path routes — both take report_id,
+                      // not the row uuid (uuid paths fell to the dashboard).
+                      if (['eicr', 'eic', 'minor-works'].includes(cert.report_type)) {
+                        navigate(
+                          `/electrician/inspection-testing?section=${cert.report_type}&reportId=${encodeURIComponent(cert.report_id)}`
+                        );
+                      } else if (['pat-testing', 'testing-only'].includes(cert.report_type)) {
+                        navigate(
+                          `/electrician/inspection-testing/${cert.report_type}/${encodeURIComponent(cert.report_id)}`
+                        );
+                      } else {
+                        navigate('/electrician/inspection-testing?section=my-reports');
+                      }
+                    }}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white">
+                        {cert.report_type?.toUpperCase().replace(/-/g, ' ') || 'Certificate'}
+                      </p>
+                      {cert.client_name && (
+                        <p className="text-[11px] text-white">{cert.client_name}</p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-[12px] text-white capitalize">{cert.status}</span>
+                      <ChevronRight className="h-4 w-4 text-white" />
+                    </div>
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── RAMS Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')} open={openSections.has('rams')} onOpenChange={() => toggleSection('rams')}>
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Zap className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">RAMS</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{rams.length > 0 ? `${rams.length} document${rams.length === 1 ? '' : 's'}` : 'Risk assessments & method statements'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {rams.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {rams.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('rams');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('rams') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {rams.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing RAMS or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('rams')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link RAMS
+                  </button>
+                </div>
+              ) : (
+                rams.map((r) => (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => navigate('/electrician/site-safety?tab=documents')}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white">{r.job_description}</p>
+                      <p className="text-[11px] text-white capitalize">{r.status}</p>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <ChevronRight className="h-4 w-4 text-white" />
+                    </div>
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Safety Pack Section — every Site Safety doc linked to this project ── */}
+        <motion.div variants={itemVariants}>
+          <ProjectSafetyPack projectId={project.id} />
+        </motion.div>
+
+          </div>
+        </section>
+        <section>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">05</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Get paid</span>
+          </div>
+          <div className="md:columns-2 md:gap-3 [&>*]:mb-3 [&>*]:break-inside-avoid">
+        {/* ── Invoices Section ── */}
+        <motion.div variants={itemVariants} id="job-section-invoices" className="scroll-mt-20">
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('invoices')}
+            onOpenChange={() => toggleSection('invoices')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><PoundSterling className="h-4 w-4 text-white/70" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Invoices</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{invoices.length > 0 ? `${invoices.length} invoice${invoices.length === 1 ? '' : 's'} · ${formatGBP(invoiceTotal)}${paidInvoices > 0 ? ` · ${paidInvoices} paid` : ''}` : 'Bill the work'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {invoices.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
+                      {invoices.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('invoice');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('invoices') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {invoices.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing invoice or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('invoice')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Invoice
                   </button>
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-3 gap-1.5">
-                    {projectPhotos.slice(0, 6).map((photo) => (
-                      <div
-                        key={photo.id}
-                        className="relative aspect-square rounded-xl overflow-hidden bg-white/[0.04]"
-                      >
-                        {photo.signedUrl && (
-                          <img
-                            src={photo.signedUrl}
-                            alt={photo.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        )}
+                  {invoices.map((inv) => (
+                    <button
+                      key={inv.id}
+                      type="button"
+                      onClick={() => navigate(`/electrician/invoices/${inv.id}/view`)}
+                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                    >
+                      <div className="min-w-0 text-left">
+                        <p className="text-sm font-medium text-white">
+                          {inv.invoice_number ? `#${inv.invoice_number}` : 'Invoice'}
+                        </p>
+                        <p className="text-[11px] text-white capitalize">{inv.payment_status}</p>
                       </div>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => navigate('/electrician/photo-docs')}
-                      className="flex-1 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-white touch-manipulation active:bg-white/[0.08] transition-colors"
-                    >
-                      View all in Photo Docs
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <span className="text-[14px] font-bold text-elec-yellow tabular-nums">
+                          £{inv.total.toLocaleString()}
+                        </span>
+                        <ChevronRight className="h-4 w-4 text-white" />
+                      </div>
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setPhotoSheetOpen(true)}
-                      className="h-11 px-4 rounded-xl bg-gradient-to-r from-sky-400 to-sky-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
-                    >
-                      <Plus className="h-4 w-4 inline mr-1" />
-                      Add
-                    </button>
-                  </div>
+                  ))}
+                  {invoiceTotal > 0 && (
+                    <p className="text-[12px] text-white text-right pr-2">
+                      Total <span className="font-semibold text-elec-yellow tabular-nums">£{invoiceTotal.toLocaleString()}</span>{paidInvoices > 0 ? ` · ${paidInvoices} paid` : ''}
+                    </p>
+                  )}
                 </>
               )}
             </CollapsibleContent>
           </Collapsible>
         </motion.div>
 
-        {/* ── Elec-AI notes section — saved answers from Elec-AI per project ── */}
-        <motion.div variants={itemVariants}>
-          <ProjectAINotes
-            projectId={id || ''}
-            isOpen={openSections.has('aiNotes')}
-            onToggle={() => toggleSection('aiNotes')}
-          />
-        </motion.div>
-
+          </div>
+        </section>
+        <section>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">06</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Wrap up</span>
+          </div>
+          <div className="md:columns-2 md:gap-3 [&>*]:mb-3 [&>*]:break-inside-avoid">
         {/* ── Documents Section ── */}
         <motion.div variants={itemVariants}>
           <Collapsible className={cn(PANEL, 'overflow-hidden')}
@@ -2452,16 +2805,16 @@ const ProjectDetailPage = () => {
           >
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><FileText className="h-4 w-4 text-amber-400" /></span>
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><FileText className="h-4 w-4 text-white/70" /></span>
                   <span className="min-w-0">
                     <span className="block text-[14px] font-semibold text-white leading-tight">Documents</span>
                     <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectDocuments.length > 0 ? `${projectDocuments.length} file${projectDocuments.length === 1 ? '' : 's'}` : 'Drawings, specs & paperwork'}</span>
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {projectDocuments.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                       {projectDocuments.length}
                     </span>
                   )}
@@ -2471,7 +2824,7 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setDocSheetOpen(true);
                     }}
-                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors whitespace-nowrap shrink-0"
                   >
                     + Add
                   </span>
@@ -2568,16 +2921,16 @@ const ProjectDetailPage = () => {
           >
             <CollapsibleTrigger asChild>
               <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-                <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Clock className="h-4 w-4 text-elec-yellow" /></span>
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Clock className="h-4 w-4 text-white/70" /></span>
                   <span className="min-w-0">
                     <span className="block text-[14px] font-semibold text-white leading-tight">Timeline</span>
                     <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{timelineEntries.length > 0 ? `${timelineEntries.length} event${timelineEntries.length === 1 ? '' : 's'} on this job` : 'Activity as it happens'}</span>
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {timelineEntries.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/60 tabular-nums rounded-full bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 leading-none">
                       {timelineEntries.length}
                     </span>
                   )}
@@ -2634,53 +2987,64 @@ const ProjectDetailPage = () => {
           </Collapsible>
         </motion.div>
 
+          </div>
+        </section>
         </div>
       </motion.div>
 
-      {/* Edit Project Sheet */}
+      {/* Edit Job Sheet */}
       <Sheet open={editProjectOpen} onOpenChange={setEditProjectOpen}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent
+          side="bottom"
+          hideCloseButton
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
+        >
           <div className="flex flex-col h-full bg-background">
-            {/* Sheet Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-              <SheetTitle className="text-lg font-bold text-white">Edit Project</SheetTitle>
-              <button
-                type="button"
-                onClick={() => setEditProjectOpen(false)}
-                className="w-11 h-11 flex items-center justify-center rounded-xl touch-manipulation active:bg-white/10"
-              >
-                <X className="h-5 w-5 text-white" />
-              </button>
+            {/* Sheet Header — grab handle + single close */}
+            <div className="px-5 pt-3 pb-3 border-b border-white/[0.08]">
+              <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-3" />
+              <div className="flex items-center justify-between">
+                <SheetTitle className="text-lg font-bold text-white">Edit job</SheetTitle>
+                <button
+                  type="button"
+                  onClick={() => setEditProjectOpen(false)}
+                  aria-label="Close"
+                  className="w-11 h-11 -mr-2 flex items-center justify-center rounded-xl touch-manipulation active:bg-white/10"
+                >
+                  <X className="h-5 w-5 text-white/70" />
+                </button>
+              </div>
             </div>
 
             {/* Scrollable Form */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
-              {/* Title */}
-              <div>
-                <label className="text-sm font-medium text-white mb-1.5 block">Title</label>
-                <Input
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                  placeholder="Project title"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="text-sm font-medium text-white mb-1.5 block">Description</label>
-                <Input
-                  value={editDescription}
-                  onChange={(e) => setEditDescription(e.target.value)}
-                  placeholder="Optional description"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
-
-              {/* Type Pills */}
-              <div>
-                <label className="text-sm font-medium text-white mb-1.5 block">Type</label>
-                <div className="grid grid-cols-3 gap-2">
+            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-6">
+              {/* 01 · Job details */}
+              <div className="space-y-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Job details</span>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-white mb-1.5 block">Title</label>
+                  <Input
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    placeholder="Job title"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-white mb-1.5 block">Description</label>
+                  <Textarea
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                    placeholder="What's the job? Scope, spec, anything worth remembering."
+                    className="touch-manipulation text-base min-h-[88px] border-white/30 focus:border-yellow-500 focus:ring-2 focus:ring-elec-yellow/20"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-white mb-1.5 block">Type</label>
+                  <div className="grid grid-cols-3 gap-2">
                   {PROJECT_TYPES.map((t) => (
                     <button
                       key={t.key}
@@ -2696,41 +3060,51 @@ const ProjectDetailPage = () => {
                       {t.label}
                     </button>
                   ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Customer */}
-              {customers.length > 0 && (
+              {/* 02 · Customer & location */}
+              <div className="space-y-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Customer & location</span>
+                </div>
+                {customers.length > 0 && (
+                  <div>
+                    <label className="text-sm font-medium text-white mb-1.5 block">Customer</label>
+                    <select
+                      value={editCustomerId}
+                      onChange={(e) => setEditCustomerId(e.target.value)}
+                      className="w-full h-11 rounded-xl bg-elec-gray border border-white/30 text-white text-base px-3 touch-manipulation focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none"
+                    >
+                      <option value="">No customer</option>
+                      {customers.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div>
-                  <label className="text-sm font-medium text-white mb-1.5 block">Customer</label>
-                  <select
-                    value={editCustomerId}
-                    onChange={(e) => setEditCustomerId(e.target.value)}
-                    className="w-full h-11 rounded-xl bg-elec-gray border border-white/30 text-white text-base px-3 touch-manipulation focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none"
-                  >
-                    <option value="">No customer</option>
-                    {customers.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
+                  <label className="text-sm font-medium text-white mb-1.5 block">Location</label>
+                  <Input
+                    value={editLocation}
+                    onChange={(e) => setEditLocation(e.target.value)}
+                    placeholder="Address or area"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
                 </div>
-              )}
-
-              {/* Location */}
-              <div>
-                <label className="text-sm font-medium text-white mb-1.5 block">Location</label>
-                <Input
-                  value={editLocation}
-                  onChange={(e) => setEditLocation(e.target.value)}
-                  placeholder="Address or area"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
               </div>
 
-              {/* Priority Pills */}
-              <div>
+              {/* 03 · Schedule & value */}
+              <div className="space-y-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">03</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Schedule & value</span>
+                </div>
+                <div>
                 <label className="text-sm font-medium text-white mb-1.5 block">Priority</label>
                 <div className="grid grid-cols-4 gap-2">
                   {(['low', 'normal', 'high', 'urgent'] as ProjectPriority[]).map((p) => (
@@ -2792,17 +3166,18 @@ const ProjectDetailPage = () => {
                   />
                 </div>
               </div>
+              </div>
             </div>
 
             {/* Fixed Save Button */}
-            <div className="px-5 py-4 border-t border-white/10">
+            <div className="px-5 py-4 border-t border-white/10 pb-[max(16px,env(safe-area-inset-bottom))]">
               <button
                 type="button"
                 onClick={handleEditSave}
                 disabled={!editTitle.trim() || editSaving}
-                className="w-full h-12 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-black text-base font-bold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-50"
+                className="w-full h-12 rounded-xl bg-elec-yellow text-black text-base font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-50"
               >
-                {editSaving ? 'Saving...' : 'Save Changes'}
+                {editSaving ? 'Saving…' : 'Save changes'}
               </button>
             </div>
           </div>
@@ -2890,6 +3265,102 @@ const ProjectDetailPage = () => {
         defaultProjectId={project.id}
         lockProject
       />
+
+      {/* S7 Capture — one button on site: photo, voice note, receipt, timer */}
+      {captureOpen && (
+        <button
+          type="button"
+          aria-label="Close capture menu"
+          onClick={closeCapture}
+          className="fixed inset-0 z-[45] bg-black/50 backdrop-blur-[2px] cursor-default"
+        />
+      )}
+      <div className="fixed left-4 bottom-[max(env(safe-area-inset-bottom),16px)] sm:bottom-6 z-50 flex flex-col items-start gap-2">
+        {captureOpen && (
+          <div className="flex flex-col gap-2 mb-1">
+            {[
+              {
+                key: 'photo',
+                label: 'Photo',
+                icon: Camera,
+                onTap: () => {
+                  setCaptureOpen(false);
+                  setPhotoSheetOpen(true);
+                },
+              },
+              {
+                key: 'voice',
+                label: voice.listening ? 'Listening — tap to finish' : 'Voice note',
+                icon: Mic,
+                onTap: handleVoiceCapture,
+              },
+              {
+                key: 'receipt',
+                label: 'Receipt',
+                icon: Receipt,
+                onTap: () => {
+                  setCaptureOpen(false);
+                  setExpenseSheetOpen(true);
+                },
+              },
+              {
+                key: 'timer',
+                label: 'Start timer',
+                icon: Timer,
+                onTap: () => {
+                  setCaptureOpen(false);
+                  handleStartTimerForProject();
+                },
+              },
+            ].map(({ key, label, icon: Icon, onTap }) => (
+              <button
+                key={key}
+                type="button"
+                onClick={onTap}
+                className="flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-transform"
+              >
+                <span
+                  className={cn(
+                    'h-11 w-11 rounded-full border flex items-center justify-center shadow-lg',
+                    key === 'voice' && voice.listening
+                      ? 'bg-red-500 border-red-400 text-white animate-pulse'
+                      : 'bg-elec-gray border-white/[0.14] text-white'
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="text-[13px] font-semibold text-white bg-black/70 rounded-lg px-2.5 py-1.5 shadow">
+                  {label}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => (captureOpen ? closeCapture() : setCaptureOpen(true))}
+            aria-label={captureOpen ? 'Close capture' : 'Capture — photo, voice, receipt, timer'}
+            aria-expanded={captureOpen}
+            className={cn(
+              'h-12 w-12 rounded-full border shadow-lg flex items-center justify-center active:scale-[0.96] touch-manipulation transition-all',
+              captureOpen
+                ? 'bg-elec-yellow border-elec-yellow text-black rotate-45'
+                : 'bg-white/[0.08] border-white/[0.14] backdrop-blur-sm text-white'
+            )}
+          >
+            <Plus className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setActionsSheetOpen(true)}
+            aria-label="Job actions"
+            className="h-12 w-12 rounded-full bg-white/[0.08] border border-white/[0.14] backdrop-blur-sm text-white shadow-lg flex items-center justify-center active:scale-[0.96] touch-manipulation"
+          >
+            <LayoutGrid className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
 
       {/* AI sparkle FAB — always-on entry to Mate, with project context */}
       <button

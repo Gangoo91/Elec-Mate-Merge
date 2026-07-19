@@ -62,16 +62,16 @@ export function ProjectSafetyPack({ projectId }: { projectId: string }) {
     <Collapsible className={cn(PANEL, 'overflow-hidden')} open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger asChild>
         <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
-          <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
             <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <ShieldCheck className="h-4 w-4 text-white/70" />
             </span>
             <span className="min-w-0">
               <span className="block text-[14px] font-semibold text-white leading-tight">Safety Pack</span>
               <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">Permits, isolations & safety records</span>
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             {docs.length > 0 && (
               <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                 {docs.length}

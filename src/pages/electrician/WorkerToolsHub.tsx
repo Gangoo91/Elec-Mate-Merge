@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
+import { useMyLatestLocation } from '@/hooks/useWorkerLocations';
 import { JoinTeamCard } from '@/components/worker-tools/JoinTeamCard';
 import { useMyTasks } from '@/hooks/useJobTasks';
 import { useQsTeamContext } from '@/hooks/useQsReview';
@@ -27,8 +28,11 @@ import { Eyebrow, containerVariants, itemVariants } from '@/components/college/p
 import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
 import { MessagesSheet } from '@/components/auth/MessagesSheet';
 
-// Dev mode whitelist - allows access without employee record
-const DEV_WHITELIST = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
+// Dev mode whitelist - allows access without employee record (dev builds only;
+// never bypasses the team gate in production bundles)
+const DEV_WHITELIST = import.meta.env.DEV
+  ? ['founder@elec-mate.com', 'andrewgangoo91@gmail.com']
+  : [];
 
 const BASE = '/electrician/worker-tools';
 
@@ -283,6 +287,10 @@ export default function WorkerToolsHub() {
     activeJobsCount,
   } = useWorkerSelfService();
 
+  // Presence for the My Status card — from the worker's latest location row.
+  // employee.status is EMPLOYMENT status ('active'), never 'On Site' etc.
+  const { data: myLocation } = useMyLatestLocation(employee?.id);
+
   // Dev mode: allow whitelisted emails to access without employee record
   const isDevMode = user?.email && DEV_WHITELIST.includes(user.email);
   const hasAccess = hasEmployeeRecord || isDevMode;
@@ -399,7 +407,7 @@ export default function WorkerToolsHub() {
       eyebrow: 'Status',
       title: 'My Status',
       description: 'Set where you are so the team can see your availability.',
-      meta: getStatusLabel(employee?.status as string),
+      meta: getStatusLabel(myLocation?.status),
       to: `${BASE}/status`,
     },
     {

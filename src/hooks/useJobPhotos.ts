@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { resolveStorageUrls } from '@/utils/storageUrls';
 
 export type PhotoCategory = 'Before' | 'During' | 'After' | 'Completion' | 'Issue';
 
@@ -54,6 +55,21 @@ export type CreateJobPhotoInput = Omit<
 >;
 export type UpdateJobPhotoInput = Partial<CreateJobPhotoInput>;
 
+// Resolve stored photo references to renderable URLs. Legacy rows hold full
+// public URLs (returned as-is); new rows hold bare storage paths that are
+// batch-signed here so grids don't waterfall. Resolution failures keep the
+// stored value — display components already guard with startsWith('http').
+async function withResolvedPhotoUrls(photos: JobPhoto[]): Promise<JobPhoto[]> {
+  const resolved = await resolveStorageUrls(
+    'job-photos',
+    photos.map((p) => p.filename)
+  );
+  return photos.map((p) => ({
+    ...p,
+    filename: resolved.get(p.filename) ?? p.filename,
+  }));
+}
+
 // Transform database record to display format
 function toDisplayFormat(photo: JobPhoto): JobPhotoDisplay {
   return {
@@ -98,7 +114,7 @@ export function useJobPhotos() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return (data as JobPhoto[]).map(toDisplayFormat);
+      return (await withResolvedPhotoUrls(data as JobPhoto[])).map(toDisplayFormat);
     },
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
@@ -131,7 +147,7 @@ export function useJobPhotosByJob(jobId: string | undefined) {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return (data as JobPhoto[]).map(toDisplayFormat);
+      return (await withResolvedPhotoUrls(data as JobPhoto[])).map(toDisplayFormat);
     },
     enabled: !!jobId,
   });
@@ -161,7 +177,7 @@ export function useJobPhotosByCategory(category: PhotoCategory) {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return (data as JobPhoto[]).map(toDisplayFormat);
+      return (await withResolvedPhotoUrls(data as JobPhoto[])).map(toDisplayFormat);
     },
   });
 }
@@ -239,17 +255,29 @@ export function useUploadJobPhoto() {
           upsert: false,
         });
 
+      let uploaded = true;
       if (uploadError) {
-        // If bucket doesn't exist, create a fallback URL
+        // If bucket doesn't exist, create a fallback reference
         if (uploadError.message.includes('not found')) {
           console.warn("Storage bucket 'job-photos' not found, storing reference only");
+          uploaded = false;
         } else {
           throw uploadError;
         }
       }
 
-      // Get public URL
-      const { data: urlData } = supabase.storage.from('job-photos').getPublicUrl(storagePath);
+      // Attribute the upload — uploaded_by is an employer_employees.id FK
+      // (NOT auth.uid), so resolve the uploader's roster row. Without this
+      // every photo displayed as 'Unknown'.
+      let uploaderId = uploadedBy || null;
+      if (!uploaderId) {
+        const { data: rosterRows } = await supabase
+          .from('employer_employees')
+          .select('id')
+          .eq('user_id', user.id)
+          .limit(1);
+        uploaderId = rosterRows?.[0]?.id ?? null;
+      }
 
       // Create database record
       const { data, error } = await supabase
@@ -257,10 +285,12 @@ export function useUploadJobPhoto() {
         .insert({
           user_id: user.id,
           job_id: jobId || null,
-          filename: urlData?.publicUrl || filename,
+          // Store the bare storage path (privacy-ready) — readers resolve it
+          // via resolveStorageUrls and still accept legacy full-URL rows.
+          filename: uploaded ? storagePath : filename,
           category,
           notes: notes || null,
-          uploaded_by: uploadedBy || null,
+          uploaded_by: uploaderId,
           location_lat: location?.lat || null,
           location_lng: location?.lng || null,
           location_address: location?.address || null,
@@ -387,6 +417,7 @@ export function useUpdateJobPhoto() {
 // Toggle photo approval
 export function useTogglePhotoApproval() {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (id: string): Promise<JobPhoto> => {
@@ -421,12 +452,20 @@ export function useTogglePhotoApproval() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
     },
+    onError: (error) => {
+      toast({
+        title: 'Could not update approval',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
   });
 }
 
 // Toggle photo sharing
 export function useTogglePhotoSharing() {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (id: string): Promise<JobPhoto> => {
@@ -460,6 +499,13 @@ export function useTogglePhotoSharing() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobPhotos'] });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Could not update sharing',
+        description: error.message,
+        variant: 'destructive',
+      });
     },
   });
 }

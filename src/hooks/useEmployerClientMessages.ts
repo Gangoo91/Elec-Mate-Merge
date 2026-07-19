@@ -50,6 +50,9 @@ export function useEmployerClientMessages(token: string | null | undefined, jobI
   const query = useQuery<ClientMessage[]>({
     queryKey: ['employer-client-messages', token],
     enabled: !!token,
+    // Realtime covers this table, but keep a 30s poll as a belt-and-braces
+    // fallback for dropped sockets (mirrors the client portal's poll).
+    refetchInterval: 30_000,
     queryFn: async () => {
       const { data, error } = await table()
         .select('*')

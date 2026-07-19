@@ -23,6 +23,16 @@ import {
   type Tone,
 } from '@/components/employer/editorial';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -31,16 +41,25 @@ import {
   useUpdateOrderStatus,
   useUpdateSupplier,
 } from '@/hooks/useFinance';
-import { useCompanyTools, useToolStats } from '@/hooks/useCompanyTools';
+import {
+  useCompanyTools,
+  useToolStats,
+  useUpdateTool,
+  useDeleteTool,
+  type CompanyTool,
+  type UpdateToolData,
+} from '@/hooks/useCompanyTools';
 import { useJobs } from '@/hooks/useJobs';
 import { CreateOrderDialog } from '@/components/employer/dialogs/CreateOrderDialog';
 import { CreateSupplierDialog } from '@/components/employer/dialogs/CreateSupplierDialog';
+import { CreateToolDialog } from '@/components/employer/dialogs/CreateToolDialog';
 import { generatePoPdf } from '@/utils/generatePoPdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { ReceiveDeliverySheet } from '@/components/employer/sheets/ReceiveDeliverySheet';
 import { useGoodsReceipts } from '@/hooks/useGoodsReceipts';
 import { useSupplierInvoices, useMatchInvoice } from '@/hooks/useSupplierInvoices';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { useStorageUrls } from '@/utils/storageUrls';
 import type { MaterialOrder, Supplier } from '@/services/financeService';
 
 type TabValue = 'all' | 'orders' | 'suppliers' | 'pat';
@@ -112,11 +131,21 @@ export function ProcurementSection() {
   const [activeTab, setActiveTab] = useState<TabValue>('all');
   const [search, setSearch] = useState('');
   const [showOrderDialog, setShowOrderDialog] = useState(false);
+  const [orderPrefillSupplier, setOrderPrefillSupplier] = useState<string | undefined>(undefined);
   const [showSupplierDialog, setShowSupplierDialog] = useState(false);
+  const [showToolDialog, setShowToolDialog] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<MaterialOrder | null>(null);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [editSupplier, setEditSupplier] = useState<Supplier | null>(null);
   const [receiveOrder, setReceiveOrder] = useState<MaterialOrder | null>(null);
+
+  // Tool detail sheet + PAT test logging (writes to employer_company_tools)
+  const [selectedTool, setSelectedTool] = useState<CompanyTool | null>(null);
+  const [editTool, setEditTool] = useState<CompanyTool | null>(null);
+  const [confirmDeleteTool, setConfirmDeleteTool] = useState(false);
+  const [patTestDate, setPatTestDate] = useState('');
+  const [patNextDue, setPatNextDue] = useState('');
+  const [patResult, setPatResult] = useState<'pass' | 'fail'>('pass');
 
   const queryClient = useQueryClient();
   const { data: materialOrders = [], isLoading: ordersLoading } = useMaterialOrders();
@@ -124,11 +153,65 @@ export function ProcurementSection() {
   const { data: companyTools = [], isLoading: toolsLoading } = useCompanyTools();
   const { data: jobs = [] } = useJobs();
   const { data: receipts = [] } = useGoodsReceipts(selectedOrder?.id);
+  // delivery_note_url = bare job-photos path on new rows, full URL on legacy
+  // rows — resolve both to openable URLs (survives the bucket privacy flip).
+  const { urls: deliveryNoteUrls } = useStorageUrls(
+    'job-photos',
+    receipts.map((r) => r.delivery_note_url)
+  );
   const { data: supplierInvoices = [] } = useSupplierInvoices(selectedOrder?.id);
   const matchInvoice = useMatchInvoice();
   const toolStats = useToolStats();
   const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title : undefined);
   const updateOrderStatusMutation = useUpdateOrderStatus();
+  const updateToolMutation = useUpdateTool();
+  const deleteToolMutation = useDeleteTool();
+
+  const openToolSheet = (tool: CompanyTool) => {
+    setSelectedTool(tool);
+    // Sensible defaults for the log form: tested today, due again in 12 months
+    const today = new Date().toISOString().split('T')[0];
+    const nextYear = new Date();
+    nextYear.setFullYear(nextYear.getFullYear() + 1);
+    setPatTestDate(today);
+    setPatNextDue(nextYear.toISOString().split('T')[0]);
+    setPatResult('pass');
+  };
+
+  const logPatTest = async () => {
+    if (!selectedTool || !patTestDate) return;
+    // No dedicated PAT-history table — the dated note line is the audit trail
+    const stampLine = `PAT ${patResult === 'pass' ? 'passed' : 'FAILED'} ${new Date(
+      patTestDate
+    ).toLocaleDateString('en-GB')}`;
+    const data: UpdateToolData = {
+      pat_date: patTestDate,
+      notes: selectedTool.notes ? `${selectedTool.notes}\n${stampLine}` : stampLine,
+    };
+    if (patResult === 'pass') {
+      data.pat_due = patNextDue || null;
+    } else {
+      // A failed PAT takes the item out of service
+      data.status = 'Under Repair';
+    }
+    try {
+      const updated = await updateToolMutation.mutateAsync({ id: selectedTool.id, data });
+      setSelectedTool(updated);
+    } catch {
+      /* hook surfaces the error */
+    }
+  };
+
+  const handleDeleteTool = async () => {
+    if (!selectedTool) return;
+    setConfirmDeleteTool(false);
+    try {
+      await deleteToolMutation.mutateAsync(selectedTool.id);
+      setSelectedTool(null);
+    } catch {
+      /* hook surfaces the error */
+    }
+  };
 
   const isLoading = ordersLoading || suppliersLoading || toolsLoading;
   const todayStr = new Date().toISOString().split('T')[0];
@@ -148,6 +231,7 @@ export function ProcurementSection() {
     cutoff.setDate(cutoff.getDate() - 30);
     const spend30 = materialOrders
       .filter((o) => {
+        if (o.status === 'Cancelled') return false;
         const d = new Date(o.order_date);
         return d >= cutoff && d <= now;
       })
@@ -163,7 +247,7 @@ export function ProcurementSection() {
   const refresh = () => {
     queryClient.invalidateQueries({ queryKey: ['material_orders'] });
     queryClient.invalidateQueries({ queryKey: ['suppliers'] });
-    queryClient.invalidateQueries({ queryKey: ['company_tools'] });
+    queryClient.invalidateQueries({ queryKey: ['company-tools'] });
   };
 
   const [sendingPo, setSendingPo] = useState(false);
@@ -361,6 +445,8 @@ export function ProcurementSection() {
           actions={
             activeTab === 'suppliers' ? (
               <PrimaryButton onClick={() => setShowSupplierDialog(true)}>Add supplier</PrimaryButton>
+            ) : activeTab === 'pat' ? (
+              <PrimaryButton onClick={() => setShowToolDialog(true)}>Add tool</PrimaryButton>
             ) : undefined
           }
         />
@@ -456,17 +542,26 @@ export function ProcurementSection() {
             ) : (
               <ListBody>
                 {filteredSuppliers.map((s) => {
-                  const delivery =
-                    s.delivery_days === 0 ? 'Same day' : `${s.delivery_days} day delivery`;
+                  // Only show what's actually on record — '0% off', '£0 balance'
+                  // and 'null day delivery' fabricated data for empty fields
+                  const subtitleParts = [s.category];
+                  if (s.delivery_days != null) {
+                    subtitleParts.push(
+                      s.delivery_days === 0 ? 'Same day' : `${s.delivery_days} day delivery`
+                    );
+                  }
+                  if (s.balance != null && Number(s.balance) !== 0) {
+                    subtitleParts.push(`£${Number(s.balance).toLocaleString()} balance`);
+                  }
                   return (
                     <ListRow
                       key={s.id}
                       title={s.name}
-                      subtitle={`${s.category} · ${delivery} · £${Number(s.balance).toLocaleString()} balance`}
+                      subtitle={subtitleParts.filter(Boolean).join(' · ')}
                       trailing={
-                        <>
+                        Number(s.discount_percent) > 0 ? (
                           <Pill tone="emerald">{Number(s.discount_percent)}% off</Pill>
-                        </>
+                        ) : undefined
                       }
                       onClick={() => setSelectedSupplier(s)}
                     />
@@ -493,6 +588,8 @@ export function ProcurementSection() {
               <EmptyState
                 title="No equipment logged"
                 description={q ? 'No equipment matches your search.' : 'Add tools to track PAT testing and calibration intervals.'}
+                action={!q ? 'Add tool' : undefined}
+                onAction={!q ? () => setShowToolDialog(true) : undefined}
               />
             ) : (
               <ListBody>
@@ -511,7 +608,13 @@ export function ProcurementSection() {
                       lead={<Dot tone={tone} />}
                       title={t.name}
                       subtitle={parts.join(' · ')}
-                      trailing={<Pill tone={toolStatusTone(t.status)}>{t.status}</Pill>}
+                      trailing={
+                        <span className="flex items-center gap-1.5">
+                          {(patOverdue || calOverdue) && <Pill tone="red">Overdue</Pill>}
+                          <Pill tone={toolStatusTone(t.status)}>{t.status}</Pill>
+                        </span>
+                      }
+                      onClick={() => openToolSheet(t)}
                     />
                   );
                 })}
@@ -698,10 +801,12 @@ export function ProcurementSection() {
                           title={formatDate(r.received_at)}
                           subtitle={`${qty} item${qty === 1 ? '' : 's'} received${r.notes ? ` · ${r.notes}` : ''}`}
                           trailing={
-                            r.delivery_note_url ? (
+                            r.delivery_note_url && deliveryNoteUrls[r.delivery_note_url] ? (
                               <button
                                 type="button"
-                                onClick={() => openExternalUrl(r.delivery_note_url as string)}
+                                onClick={() =>
+                                  openExternalUrl(deliveryNoteUrls[r.delivery_note_url as string])
+                                }
                                 className="text-[12px] text-elec-yellow/90 hover:text-elec-yellow touch-manipulation"
                               >
                                 View note
@@ -836,25 +941,41 @@ export function ProcurementSection() {
               description={
                 <span className="flex items-center gap-2 pt-1">
                   <Pill tone="blue">{selectedSupplier.category}</Pill>
-                  <Pill tone="emerald">{Number(selectedSupplier.discount_percent)}% off</Pill>
+                  {Number(selectedSupplier.discount_percent) > 0 && (
+                    <Pill tone="emerald">{Number(selectedSupplier.discount_percent)}% off</Pill>
+                  )}
                 </span>
               }
               footer={
                 <div className="grid grid-cols-3 gap-2 w-full">
-                  <a
-                    href={selectedSupplier.phone ? `tel:${selectedSupplier.phone}` : undefined}
-                    className="h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium flex items-center justify-center gap-2 touch-manipulation hover:bg-white/[0.1] transition-colors"
-                  >
-                    <Phone className="h-4 w-4" /> Call
-                  </a>
-                  <a
-                    href={selectedSupplier.email ? `mailto:${selectedSupplier.email}` : undefined}
-                    className="h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium flex items-center justify-center gap-2 touch-manipulation hover:bg-white/[0.1] transition-colors"
-                  >
-                    <Mail className="h-4 w-4" /> Email
-                  </a>
+                  {/* No phone/email on file = visibly disabled, not a dead tap */}
+                  {selectedSupplier.phone ? (
+                    <a
+                      href={`tel:${selectedSupplier.phone}`}
+                      className="h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium flex items-center justify-center gap-2 touch-manipulation hover:bg-white/[0.1] transition-colors"
+                    >
+                      <Phone className="h-4 w-4" /> Call
+                    </a>
+                  ) : (
+                    <span className="h-11 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/35 text-[13px] font-medium flex items-center justify-center gap-2">
+                      <Phone className="h-4 w-4" /> Call
+                    </span>
+                  )}
+                  {selectedSupplier.email ? (
+                    <a
+                      href={`mailto:${selectedSupplier.email}`}
+                      className="h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium flex items-center justify-center gap-2 touch-manipulation hover:bg-white/[0.1] transition-colors"
+                    >
+                      <Mail className="h-4 w-4" /> Email
+                    </a>
+                  ) : (
+                    <span className="h-11 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/35 text-[13px] font-medium flex items-center justify-center gap-2">
+                      <Mail className="h-4 w-4" /> Email
+                    </span>
+                  )}
                   <PrimaryButton
                     onClick={() => {
+                      setOrderPrefillSupplier(selectedSupplier.id);
                       setSelectedSupplier(null);
                       setShowOrderDialog(true);
                     }}
@@ -868,11 +989,30 @@ export function ProcurementSection() {
               <StatStrip
                 columns={3}
                 stats={[
-                  { label: 'Credit limit £', value: Number(selectedSupplier.credit_limit).toLocaleString(), tone: 'cyan' },
-                  { label: 'Balance £', value: Number(selectedSupplier.balance).toLocaleString(), accent: true },
+                  {
+                    label: 'Credit limit £',
+                    value:
+                      selectedSupplier.credit_limit != null
+                        ? Number(selectedSupplier.credit_limit).toLocaleString()
+                        : '—',
+                    tone: 'cyan',
+                  },
+                  {
+                    label: 'Balance £',
+                    value:
+                      selectedSupplier.balance != null
+                        ? Number(selectedSupplier.balance).toLocaleString()
+                        : '—',
+                    accent: true,
+                  },
                   {
                     label: 'Delivery',
-                    value: selectedSupplier.delivery_days === 0 ? 'Same' : `${selectedSupplier.delivery_days}d`,
+                    value:
+                      selectedSupplier.delivery_days == null
+                        ? '—'
+                        : selectedSupplier.delivery_days === 0
+                          ? 'Same'
+                          : `${selectedSupplier.delivery_days}d`,
                     tone: 'blue',
                   },
                 ]}
@@ -916,9 +1056,289 @@ export function ProcurementSection() {
         </SheetContent>
       </Sheet>
 
+      {/* Tool detail — PAT status, log a test, edit, delete */}
+      <Sheet open={!!selectedTool} onOpenChange={(open) => !open && setSelectedTool(null)}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
+        >
+          {selectedTool && (
+            <SheetShell
+              eyebrow="PAT & calibration"
+              title={selectedTool.name}
+              description={
+                <span className="flex items-center gap-2 pt-1">
+                  <Pill tone={toolStatusTone(selectedTool.status)}>{selectedTool.status}</Pill>
+                  <span className="text-[12px] text-white">{selectedTool.category}</span>
+                </span>
+              }
+              footer={
+                <div className="flex gap-2">
+                  <SecondaryButton
+                    onClick={() => {
+                      const t = selectedTool;
+                      setSelectedTool(null);
+                      setEditTool(t);
+                      setShowToolDialog(true);
+                    }}
+                    fullWidth
+                  >
+                    Edit details
+                  </SecondaryButton>
+                  <DestructiveButton
+                    onClick={() => setConfirmDeleteTool(true)}
+                    disabled={deleteToolMutation.isPending}
+                    fullWidth
+                  >
+                    Delete
+                  </DestructiveButton>
+                </div>
+              }
+            >
+              {(() => {
+                const now = new Date();
+                const patOverdue =
+                  !!selectedTool.pat_due && new Date(selectedTool.pat_due) < now;
+                const calOverdue =
+                  !!selectedTool.next_calibration &&
+                  new Date(selectedTool.next_calibration) < now;
+                return (
+                  <>
+                    <StatStrip
+                      columns={3}
+                      stats={[
+                        {
+                          label: 'PAT due',
+                          value: selectedTool.pat_due ? formatDate(selectedTool.pat_due) : '—',
+                          tone: patOverdue ? 'red' : 'emerald',
+                        },
+                        {
+                          label: 'Cal due',
+                          value: selectedTool.next_calibration
+                            ? formatDate(selectedTool.next_calibration)
+                            : '—',
+                          tone: calOverdue ? 'red' : 'blue',
+                        },
+                        {
+                          label: 'Value £',
+                          value: Number(selectedTool.purchase_price || 0).toLocaleString(),
+                          accent: true,
+                        },
+                      ]}
+                    />
+
+                    <ListCard>
+                      <ListCardHeader
+                        tone="orange"
+                        title="PAT status"
+                        meta={
+                          patOverdue ? (
+                            <Pill tone="red">Overdue</Pill>
+                          ) : selectedTool.pat_due ? (
+                            <Pill tone="emerald">In date</Pill>
+                          ) : (
+                            <Pill tone="amber">Never tested</Pill>
+                          )
+                        }
+                      />
+                      <ListBody>
+                        <ListRow
+                          title="Last test"
+                          trailing={
+                            <span className="text-white text-[13px]">
+                              {selectedTool.pat_date ? formatDate(selectedTool.pat_date) : 'No record'}
+                            </span>
+                          }
+                        />
+                        <ListRow
+                          title="Next due"
+                          trailing={
+                            <span className={`text-[13px] ${patOverdue ? 'text-red-400 font-medium' : 'text-white'}`}>
+                              {selectedTool.pat_due ? formatDate(selectedTool.pat_due) : 'Not set'}
+                            </span>
+                          }
+                        />
+                      </ListBody>
+
+                      {/* Log a PAT test — writes pat_date/pat_due; a fail takes
+                          the item out of service (status → Under Repair) */}
+                      <div className="px-5 sm:px-6 py-4 space-y-3 border-t border-white/[0.06]">
+                        <p className="text-[12px] uppercase tracking-[0.14em] text-white/50 font-medium">
+                          Log PAT test
+                        </p>
+                        <div className="flex gap-2">
+                          {(
+                            [
+                              { value: 'pass', label: 'Passed' },
+                              { value: 'fail', label: 'Failed' },
+                            ] as const
+                          ).map((opt) => (
+                            <button
+                              key={opt.value}
+                              type="button"
+                              onClick={() => setPatResult(opt.value)}
+                              className={`h-11 flex-1 rounded-full text-[13px] font-medium border touch-manipulation transition-colors ${
+                                patResult === opt.value
+                                  ? opt.value === 'pass'
+                                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                                    : 'bg-red-500/20 border-red-500/40 text-red-300'
+                                  : 'bg-white/[0.04] border-white/[0.1] text-white/70 hover:bg-white/[0.08]'
+                              }`}
+                            >
+                              {opt.label}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <label className="space-y-1">
+                            <span className="text-[11px] text-white/50">Test date</span>
+                            <input
+                              type="date"
+                              value={patTestDate}
+                              onChange={(e) => setPatTestDate(e.target.value)}
+                              className="w-full h-11 rounded-xl bg-white/[0.05] border border-white/[0.1] px-3.5 text-[14px] text-white focus:outline-none focus:border-elec-yellow touch-manipulation"
+                            />
+                          </label>
+                          {patResult === 'pass' && (
+                            <label className="space-y-1">
+                              <span className="text-[11px] text-white/50">Next due</span>
+                              <input
+                                type="date"
+                                value={patNextDue}
+                                onChange={(e) => setPatNextDue(e.target.value)}
+                                className="w-full h-11 rounded-xl bg-white/[0.05] border border-white/[0.1] px-3.5 text-[14px] text-white focus:outline-none focus:border-elec-yellow touch-manipulation"
+                              />
+                            </label>
+                          )}
+                        </div>
+                        {patResult === 'fail' && (
+                          <p className="text-[11.5px] text-red-300/80">
+                            A failed test marks this item Under Repair — it comes out of service
+                            until it's fixed and re-tested.
+                          </p>
+                        )}
+                        <PrimaryButton
+                          onClick={logPatTest}
+                          disabled={!patTestDate || updateToolMutation.isPending}
+                          fullWidth
+                        >
+                          {updateToolMutation.isPending ? 'Saving…' : 'Log PAT test'}
+                        </PrimaryButton>
+                      </div>
+                    </ListCard>
+
+                    {(selectedTool.last_calibration || selectedTool.next_calibration) && (
+                      <ListCard>
+                        <ListCardHeader
+                          tone="blue"
+                          title="Calibration"
+                          meta={calOverdue ? <Pill tone="red">Overdue</Pill> : undefined}
+                        />
+                        <ListBody>
+                          <ListRow
+                            title="Last calibration"
+                            trailing={
+                              <span className="text-white text-[13px]">
+                                {selectedTool.last_calibration
+                                  ? formatDate(selectedTool.last_calibration)
+                                  : '—'}
+                              </span>
+                            }
+                          />
+                          <ListRow
+                            title="Next due"
+                            trailing={
+                              <span className={`text-[13px] ${calOverdue ? 'text-red-400 font-medium' : 'text-white'}`}>
+                                {selectedTool.next_calibration
+                                  ? formatDate(selectedTool.next_calibration)
+                                  : '—'}
+                              </span>
+                            }
+                          />
+                        </ListBody>
+                      </ListCard>
+                    )}
+
+                    <ListCard>
+                      <ListCardHeader title="Details" />
+                      <ListBody>
+                        <ListRow
+                          title="Serial number"
+                          trailing={
+                            <span className="text-white text-[13px] tabular-nums">
+                              {selectedTool.serial_number || '—'}
+                            </span>
+                          }
+                        />
+                        <ListRow
+                          title="Assigned to"
+                          trailing={
+                            <span className="text-white text-[13px]">
+                              {selectedTool.assigned_to || 'Unassigned'}
+                            </span>
+                          }
+                        />
+                        <ListRow
+                          title="Purchased"
+                          trailing={
+                            <span className="text-white text-[13px]">
+                              {selectedTool.purchase_date
+                                ? formatDate(selectedTool.purchase_date)
+                                : '—'}
+                            </span>
+                          }
+                        />
+                      </ListBody>
+                    </ListCard>
+
+                    {selectedTool.notes && (
+                      <ListCard>
+                        <ListCardHeader title="History & notes" />
+                        <div className="px-5 sm:px-6 py-4 text-[13px] text-white leading-relaxed whitespace-pre-line">
+                          {selectedTool.notes}
+                        </div>
+                      </ListCard>
+                    )}
+                  </>
+                );
+              })()}
+            </SheetShell>
+          )}
+        </SheetContent>
+      </Sheet>
+
+      <AlertDialog open={confirmDeleteTool} onOpenChange={setConfirmDeleteTool}>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">
+              Delete {selectedTool?.name || 'this equipment'}?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              This removes the equipment and its PAT record from the inventory. This cannot be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteTool}
+              className="h-11 touch-manipulation bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <CreateOrderDialog
         open={showOrderDialog}
-        onOpenChange={setShowOrderDialog}
+        prefillSupplier={orderPrefillSupplier}
+        onOpenChange={(o) => {
+          setShowOrderDialog(o);
+          if (!o) setOrderPrefillSupplier(undefined);
+        }}
         onCreated={(order, send) => {
           if (send) sendPoToSupplier(order);
         }}
@@ -934,6 +1354,14 @@ export function ProcurementSection() {
         onOpenChange={(o) => {
           setShowSupplierDialog(o);
           if (!o) setEditSupplier(null);
+        }}
+      />
+      <CreateToolDialog
+        open={showToolDialog}
+        tool={editTool}
+        onOpenChange={(o) => {
+          setShowToolDialog(o);
+          if (!o) setEditTool(null);
         }}
       />
     </>

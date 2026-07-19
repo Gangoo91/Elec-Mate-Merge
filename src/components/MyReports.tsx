@@ -434,7 +434,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     lastModified: new Date(report.updated_at).getTime(),
     customerId: report.customer_id,
     canExportToEICR:
-      report.report_type === 'eic' &&
+      (report.report_type === 'eic' || report.report_type === 'minor-works') &&
       (report.status === 'completed' || report.status === 'in-progress'),
     canExportToEIC:
       report.report_type === 'eicr' &&
@@ -1138,30 +1138,43 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             )}
           </AnimatePresence>
 
-          {/* Status filter row */}
-          <div className="flex gap-2 px-4 py-2 overflow-x-auto scrollbar-hide">
-            {[
-              { value: 'all' as StatusFilter, label: 'All', count: statusCounts.all },
-              { value: 'draft' as StatusFilter, label: 'Drafts', count: statusCounts.draft },
-              { value: 'in-progress' as StatusFilter, label: 'In Progress', count: statusCounts['in-progress'] },
-              { value: 'completed' as StatusFilter, label: 'Done', count: statusCounts.completed },
-            ].map(({ value, label, count }) => (
-              <button
-                key={value}
-                onClick={() => {
-                  navigator.vibrate?.(10);
-                  setStatusFilter(value);
-                }}
-                className={cn(
-                  'flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
-                  statusFilter === value
-                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                    : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
-                )}
-              >
-                {label} {count > 0 && <span className="ml-1 text-white/50">{count}</span>}
-              </button>
-            ))}
+          {/* Status filter — full-width segmented control */}
+          <div className="px-4 py-2">
+            <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+              {[
+                { value: 'all' as StatusFilter, label: 'All', count: statusCounts.all },
+                { value: 'draft' as StatusFilter, label: 'Drafts', count: statusCounts.draft },
+                { value: 'in-progress' as StatusFilter, label: 'In progress', count: statusCounts['in-progress'] },
+                { value: 'completed' as StatusFilter, label: 'Done', count: statusCounts.completed },
+              ].map(({ value, label, count }) => (
+                <button
+                  key={value}
+                  onClick={() => {
+                    navigator.vibrate?.(10);
+                    setStatusFilter(value);
+                  }}
+                  className={cn(
+                    'flex-1 min-w-0 h-9 rounded-lg text-[11px] sm:text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1',
+                    statusFilter === value
+                      ? 'bg-elec-yellow/15 text-elec-yellow ring-1 ring-inset ring-elec-yellow/25'
+                      : 'text-white/60 hover:text-white'
+                  )}
+                >
+                  <span className="truncate">{label}</span>
+                  {/* Counts only where there's room — phones show the label clean. */}
+                  {count > 0 && (
+                    <span
+                      className={cn(
+                        'hidden sm:inline text-[10px] tabular-nums leading-none',
+                        statusFilter === value ? 'text-elec-yellow/70' : 'text-white/35'
+                      )}
+                    >
+                      {count}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Type filter row — grouped by category; non-core types appear only
@@ -1341,30 +1354,27 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     {sortedReports.length}
                   </span>
                 </div>
-                <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden">
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-                  <div className="divide-y divide-white/[0.18]">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3 items-stretch">
                   {sortedReports.map((report) => (
-                  <CertificateCard
-                    key={report.report_id}
-                    certificate={toCertificateData(report)}
-                    onTap={() => handleCardTap(report)}
-                    onDelete={() => handleDeleteReport(report.report_id)}
-                    onEdit={() => {
-                      navigator.vibrate?.(10);
-                      onEditReport(report.report_id, report.report_type);
-                    }}
-                    onConvert={
-                      report.report_type === 'eic'
-                        ? () => handleExportToEICR(report.report_id)
-                        : undefined
-                    }
-                    isBulkMode={isBulkMode}
-                    isSelected={selectedReports.has(report.report_id)}
-                    onSelectToggle={() => handleSelectToggle(report.report_id)}
-                  />
-                ))}
-                  </div>
+                    <CertificateCard
+                      key={report.report_id}
+                      certificate={toCertificateData(report)}
+                      onTap={() => handleCardTap(report)}
+                      onDelete={() => handleDeleteReport(report.report_id)}
+                      onEdit={() => {
+                        navigator.vibrate?.(10);
+                        onEditReport(report.report_id, report.report_type);
+                      }}
+                      onConvert={
+                        report.report_type === 'eic'
+                          ? () => handleExportToEICR(report.report_id)
+                          : undefined
+                      }
+                      isBulkMode={isBulkMode}
+                      isSelected={selectedReports.has(report.report_id)}
+                      onSelectToggle={() => handleSelectToggle(report.report_id)}
+                    />
+                  ))}
                 </div>
 
                 {/* ELE-NEW — Load More with X-of-Y context. totalCount comes
@@ -1455,7 +1465,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 clientName: selectedCertificate.client_name || undefined,
                 hasCustomer: !!selectedCertificate.customer_id,
                 canExportToEICR:
-                  selectedCertificate.report_type === 'eic' &&
+                  (selectedCertificate.report_type === 'eic' ||
+                    selectedCertificate.report_type === 'minor-works') &&
                   (selectedCertificate.status === 'completed' ||
                     selectedCertificate.status === 'in-progress'),
                 canExportToEIC:

@@ -10,6 +10,7 @@ import {
   useDeleteComment,
   JobComment,
 } from '@/hooks/useJobComments';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { FormCard, PrimaryButton, IconButton, textareaClass } from './editorial';
 
 interface JobActivityFeedProps {
@@ -48,17 +49,25 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
   const { data: comments = [], isLoading } = useJobComments(jobId);
   const addComment = useAddComment();
   const deleteComment = useDeleteComment();
+  // Real attribution — comments outlive this session, and workers see them.
+  // "You" in the author column meant nothing a week later.
+  const { companyProfile } = useCompanyProfile();
+  const authorName = companyProfile?.company_name?.trim() || 'The office';
 
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
 
-    await addComment.mutateAsync({
-      jobId,
-      content: newComment.trim(),
-      authorName: 'You', // In real app, get from auth
-      commentType: 'comment',
-    });
-    setNewComment('');
+    try {
+      await addComment.mutateAsync({
+        jobId,
+        content: newComment.trim(),
+        authorName,
+        commentType: 'comment',
+      });
+      setNewComment('');
+    } catch {
+      // The hook already toasts the failure — keep the draft so nothing is lost
+    }
   };
 
   if (isLoading) {
@@ -91,7 +100,14 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
       {/* Comment Input */}
       <div className="flex gap-2">
         <Avatar className="h-8 w-8 bg-elec-yellow/10 flex-shrink-0">
-          <AvatarFallback className="text-elec-yellow text-xs">You</AvatarFallback>
+          <AvatarFallback className="text-elec-yellow text-xs">
+            {authorName
+              .split(/\s+/)
+              .map((p) => p[0])
+              .join('')
+              .slice(0, 2)
+              .toUpperCase()}
+          </AvatarFallback>
         </Avatar>
         <div className="flex-1 space-y-2">
           <Textarea
@@ -106,7 +122,9 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
             }}
           />
           <div className="flex justify-between items-center">
-            <span className="text-[10px] text-white">Cmd+Enter to send</span>
+            {/* Keyboard hint is meaningless on a phone */}
+            <span className="hidden sm:inline text-[10px] text-white">Cmd+Enter to send</span>
+            <span className="sm:hidden" />
             <PrimaryButton
               size="sm"
               onClick={handleAddComment}
@@ -146,7 +164,9 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
                     <IconButton
                       onClick={() => deleteComment.mutate({ id: comment.id, jobId })}
                       aria-label="Delete comment"
-                      className="h-8 w-8 opacity-0 group-hover:opacity-100 hover:text-red-400"
+                      // Always visible on touch — hover-reveal left mobile users
+                      // with no way to delete
+                      className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 hover:text-red-400"
                     >
                       <Trash2 className="h-3 w-3" />
                     </IconButton>
@@ -163,7 +183,7 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
 
       {comments.length === 0 && (
         <div className="text-center py-4 text-sm text-white">
-          No activity yet. Be the first to comment!
+          No activity yet — add the first update.
         </div>
       )}
     </FormCard>

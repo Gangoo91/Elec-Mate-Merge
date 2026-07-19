@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { useLeadPage, useSubmitEnquiry } from '@/hooks/usePublicLeadPage';
 import { Loader2, Check, Zap, Phone, ShieldCheck } from 'lucide-react';
 
-const field =
-  'w-full h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 text-[14px] text-white placeholder:text-white/35 focus:border-elec-yellow/60 focus:outline-none touch-manipulation';
+const fieldBase =
+  'w-full h-12 rounded-xl bg-[hsl(0_0%_13%)] border px-3.5 text-[15px] text-white placeholder:text-white/35 focus:outline-none touch-manipulation';
+const fieldOk = `${fieldBase} border-white/10 focus:border-elec-yellow/60`;
+const fieldBad = `${fieldBase} border-red-500/60 focus:border-red-500`;
 
 export default function GetQuoteView() {
   const { slug } = useParams<{ slug: string }>();
@@ -13,11 +15,16 @@ export default function GetQuoteView() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', summary: '' });
   const [done, setDone] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [tried, setTried] = useState(false);
+
+  const nameMissing = tried && !form.name.trim();
+  const reachMissing = tried && !form.phone.trim() && !form.email.trim();
 
   const handleSubmit = async () => {
     setErr(null);
+    setTried(true);
     if (!form.name.trim() || (!form.phone.trim() && !form.email.trim())) {
-      setErr('Please add your name and a phone or email so they can reply.');
+      setErr('Please add your name and a phone number or email so they can reply.');
       return;
     }
     try {
@@ -37,15 +44,27 @@ export default function GetQuoteView() {
   if (isLoading) {
     return (
       <div className="min-h-[100svh] bg-[#0a0e17] grid place-items-center">
-        <Loader2 className="h-7 w-7 animate-spin text-elec-yellow" />
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-7 w-7 animate-spin text-elec-yellow" />
+          <p className="text-[13px] text-white/40">Loading…</p>
+        </div>
       </div>
     );
   }
 
   if (!data?.found) {
     return (
-      <div className="min-h-[100svh] bg-[#0a0e17] grid place-items-center px-6 text-center">
-        <p className="text-white/70 text-[15px]">This quote page isn't available.</p>
+      <div className="min-h-[100svh] bg-[#0a0e17] grid place-items-center px-6">
+        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[hsl(0_0%_10%)] p-8 text-center">
+          <div className="mx-auto mb-4 h-12 w-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 grid place-items-center">
+            <Zap className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <h1 className="text-lg font-semibold text-white">This quote page isn't available</h1>
+          <p className="mt-2 text-[14px] text-white/60 leading-relaxed">
+            The link may have changed or the page has been switched off. Check the link, or
+            contact your electrician directly.
+          </p>
+        </div>
       </div>
     );
   }
@@ -97,19 +116,28 @@ export default function GetQuoteView() {
                   `Tell ${data.company_name} what you need and they'll come back to you with a quote.`}
               </p>
 
+              {/* No unverifiable registration claims — we can't attest scheme
+                  membership for every firm. Free quotes is always true. */}
               <div className="mt-4 flex items-center gap-1.5 text-[12px] text-white/50">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                Registered electrician · quotes to BS 7671
+                Local electrical contractor · free, no-obligation quotes
               </div>
 
-              <div className="mt-5 space-y-3">
+              <form
+                className="mt-5 space-y-3"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+                noValidate
+              >
                 <input
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Your name"
                   aria-label="Your name"
                   autoComplete="name"
-                  className={field}
+                  className={nameMissing ? fieldBad : fieldOk}
                 />
                 <input
                   value={form.phone}
@@ -118,7 +146,7 @@ export default function GetQuoteView() {
                   aria-label="Phone number"
                   inputMode="tel"
                   autoComplete="tel"
-                  className={field}
+                  className={reachMissing ? fieldBad : fieldOk}
                 />
                 <input
                   value={form.email}
@@ -127,25 +155,28 @@ export default function GetQuoteView() {
                   aria-label="Email address"
                   inputMode="email"
                   autoComplete="email"
-                  className={field}
+                  className={reachMissing ? fieldBad : fieldOk}
                 />
                 <textarea
                   value={form.summary}
                   onChange={(e) => setForm({ ...form, summary: e.target.value })}
                   placeholder="What do you need? (e.g. rewire, new fuse board, EV charger, fault-finding…)"
+                  aria-label="What do you need?"
                   rows={4}
-                  className="w-full rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 py-2.5 text-[14px] text-white placeholder:text-white/35 focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
+                  className="w-full rounded-xl bg-[hsl(0_0%_13%)] border border-white/10 px-3.5 py-2.5 text-[15px] text-white placeholder:text-white/35 focus:border-elec-yellow/60 focus:outline-none touch-manipulation"
                 />
 
                 {err && <p className="text-[12.5px] text-red-400 leading-relaxed">{err}</p>}
 
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={submit.isPending}
                   className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
                 >
                   {submit.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                    </>
                   ) : (
                     'Request my quote'
                   )}
@@ -154,12 +185,12 @@ export default function GetQuoteView() {
                 {data.phone && (
                   <a
                     href={`tel:${data.phone}`}
-                    className="flex items-center justify-center gap-1.5 text-[13px] text-white/55 hover:text-white/80 py-1 touch-manipulation"
+                    className="flex items-center justify-center gap-1.5 text-[13px] text-white/55 hover:text-white/80 min-h-11 touch-manipulation"
                   >
                     <Phone className="h-3.5 w-3.5" /> Or call {data.phone}
                   </a>
                 )}
-              </div>
+              </form>
             </div>
           </div>
         )}

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -87,6 +88,25 @@ function getInitials(name: string): string {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
+// Nothing writes status='Expired' server-side — derive it from expires_at so
+// lapsed links surface honestly (matches useSignatureStats).
+function isRequestExpired(s: SignatureRequest): boolean {
+  if (s.status === 'Expired') return true;
+  return (
+    !!s.expires_at &&
+    new Date(s.expires_at) < new Date() &&
+    !['Signed', 'Declined'].includes(s.status)
+  );
+}
+
+const expiryOptions = [
+  { value: '7', label: '7 days' },
+  { value: '14', label: '14 days' },
+  { value: '30', label: '30 days' },
+  { value: '60', label: '60 days' },
+  { value: '90', label: '90 days' },
+];
+
 function formatRelative(iso: string): string {
   const d = new Date(iso);
   const diff = Date.now() - d.getTime();
@@ -110,6 +130,7 @@ export function SignaturesSection() {
   const [signerPhone, setSignerPhone] = useState('');
   const [selectedJobId, setSelectedJobId] = useState('');
   const [message, setMessage] = useState('');
+  const [expiryDays, setExpiryDays] = useState('30');
 
   const { data: signatures, isLoading, error, refetch, isFetching } = useSignatureRequests();
   const { data: stats } = useSignatureStats();
@@ -119,14 +140,17 @@ export function SignaturesSection() {
   const markAsSigned = useMarkAsSigned();
   const deleteRequest = useDeleteSignatureRequest();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const counts = useMemo(() => {
     const list = signatures ?? [];
     return {
-      awaiting: list.filter((s) => ['Pending', 'Sent', 'Viewed'].includes(s.status)).length,
+      awaiting: list.filter(
+        (s) => ['Pending', 'Sent', 'Viewed'].includes(s.status) && !isRequestExpired(s)
+      ).length,
       signed: list.filter((s) => s.status === 'Signed').length,
       declined: list.filter((s) => s.status === 'Declined').length,
-      expired: list.filter((s) => s.status === 'Expired').length,
+      expired: list.filter(isRequestExpired).length,
     };
   }, [signatures]);
 
@@ -147,10 +171,11 @@ export function SignaturesSection() {
         sig.signer_name.toLowerCase().includes(q) ||
         sig.document_type?.toLowerCase().includes(q);
       if (!matchesSearch) return false;
-      if (activeTab === 'awaiting') return ['Pending', 'Sent', 'Viewed'].includes(sig.status);
+      if (activeTab === 'awaiting')
+        return ['Pending', 'Sent', 'Viewed'].includes(sig.status) && !isRequestExpired(sig);
       if (activeTab === 'signed') return sig.status === 'Signed';
       if (activeTab === 'declined') return sig.status === 'Declined';
-      if (activeTab === 'expired') return sig.status === 'Expired';
+      if (activeTab === 'expired') return isRequestExpired(sig);
       return true;
     });
   }, [signatures, searchQuery, activeTab]);
@@ -179,6 +204,9 @@ export function SignaturesSection() {
       signer_phone: signerPhone || undefined,
       job_id: selectedJobId || undefined,
       message: message || undefined,
+      expires_at: new Date(
+        Date.now() + Number(expiryDays) * 24 * 60 * 60 * 1000
+      ).toISOString(),
       status: 'Pending',
     });
     setDocumentTitle('');
@@ -188,6 +216,7 @@ export function SignaturesSection() {
     setSignerPhone('');
     setSelectedJobId('');
     setMessage('');
+    setExpiryDays('30');
     setShowNewRequest(false);
   };
 
@@ -210,7 +239,7 @@ export function SignaturesSection() {
         <PageHero
           eyebrow="Money"
           title="Signatures"
-          description="Digital sign-offs for quotes, invoices and variations."
+          description="Digital sign-offs for quotes, contracts, certificates, RAMS and more."
           tone="indigo"
         />
         <EmptyState
@@ -238,7 +267,7 @@ export function SignaturesSection() {
         <PageHero
           eyebrow="Money"
           title="Signatures"
-          description="Digital sign-offs for quotes, invoices and variations."
+          description="Digital sign-offs for quotes, contracts, certificates, RAMS and more."
           tone="indigo"
           actions={headerActions}
         />
@@ -415,6 +444,24 @@ export function SignaturesSection() {
                 className={inputClass}
               />
             </div>
+
+            <div className="space-y-2">
+              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">
+                Link valid for
+              </Label>
+              <Select value={expiryDays} onValueChange={setExpiryDays}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {expiryOptions.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="px-5 py-4 border-t border-white/[0.06] flex gap-3">
@@ -468,11 +515,31 @@ export function SignaturesSection() {
                       <ListRow title="Phone" subtitle={detailRequest.signer_phone} />
                     )}
                     {detailRequest.job && (
-                      <ListRow title="Linked job" subtitle={detailRequest.job.title} />
+                      <ListRow
+                        title="Linked job"
+                        subtitle={detailRequest.job.title}
+                        onClick={() => {
+                          const jobId = detailRequest.job?.id || detailRequest.job_id;
+                          setDetailRequest(null);
+                          navigate(`/employer?section=jobs&job=${jobId}`);
+                        }}
+                      />
                     )}
                     {detailRequest.linked_invoice && (
                       <ListRow title="Linked invoice" subtitle={detailRequest.linked_invoice} />
                     )}
+                    {detailRequest.expires_at &&
+                      !['Signed', 'Declined'].includes(detailRequest.status) && (
+                        <ListRow
+                          title={
+                            isRequestExpired(detailRequest) ? 'Link expired' : 'Link expires'
+                          }
+                          subtitle={new Date(detailRequest.expires_at).toLocaleDateString(
+                            'en-GB',
+                            { day: 'numeric', month: 'short', year: 'numeric' }
+                          )}
+                        />
+                      )}
                   </ListBody>
                 </ListCard>
 
@@ -579,7 +646,7 @@ export function SignaturesSection() {
                       // signature_url is a data URL (or legacy public URL)
                       const a = document.createElement('a');
                       a.href = detailRequest.signature_url!;
-                      a.download = `signature-${detailRequest.document_name || detailRequest.id}.png`;
+                      a.download = `signature-${detailRequest.document_title || detailRequest.id}.png`;
                       a.click();
                     }}
                   >

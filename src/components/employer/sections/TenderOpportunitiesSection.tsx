@@ -41,7 +41,10 @@ import {
   type TenderOpportunity,
   type SearchFilters,
 } from '@/hooks/useOpportunities';
-import { OpportunityDetailSheet } from '../sheets/OpportunityDetailSheet';
+import {
+  OpportunityDetailSheet,
+  type OpportunityEstimate,
+} from '../sheets/OpportunityDetailSheet';
 import {
   Field,
   FormCard,
@@ -58,7 +61,7 @@ import {
 } from '@/components/employer/editorial';
 
 interface TenderOpportunitiesSectionProps {
-  onStartTender?: (opportunity: TenderOpportunity) => void;
+  onStartTender?: (opportunity: TenderOpportunity, estimate?: OpportunityEstimate) => void;
 }
 
 export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitiesSectionProps) {
@@ -321,7 +324,11 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           {/* Sources */}
           <TabsContent value="sources" className="m-0 p-4 min-h-full">
             <div className="mb-4">
-              <h3 className="font-semibold text-white mb-1">20 Integrated tender sources</h3>
+              <h3 className="font-semibold text-white mb-1">
+                {sourcesQuery.data?.length
+                  ? `${sourcesQuery.data.length} integrated tender sources`
+                  : 'Integrated tender sources'}
+              </h3>
               <p className="text-[13px] text-white">
                 We aggregate opportunities from government, housing, NHS, education, and
                 construction platforms.
@@ -483,9 +490,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
         opportunity={selectedOpportunity}
         open={!!selectedOpportunity}
         onOpenChange={(open) => !open && setSelectedOpportunity(null)}
-        onStartTender={() => {
+        onStartTender={(estimate) => {
           if (selectedOpportunity) {
-            onStartTender?.(selectedOpportunity);
+            onStartTender?.(selectedOpportunity, estimate);
             setSelectedOpportunity(null);
           }
         }}

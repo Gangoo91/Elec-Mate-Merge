@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
-import { Progress } from '@/components/ui/progress';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
-import { getElecIdProfileByNumber, ElecIdProfile } from '@/services/elecIdService';
+import {
+  getElecIdProfileByNumber,
+  getElecIdProfileByShareToken,
+  ElecIdProfile,
+} from '@/services/elecIdService';
 import { useCreateEmployee } from '@/hooks/useEmployees';
 import {
   QrCode,
@@ -27,6 +31,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
+  Avatar,
   Field,
   Pill,
   PrimaryButton,
@@ -39,7 +44,21 @@ interface ScanElecIDDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-type ScanState = 'input' | 'scanning' | 'found' | 'checking' | 'result' | 'not_found';
+type ScanState = 'input' | 'camera' | 'result' | 'not_found';
+
+const SCANNER_ELEMENT_ID = 'elec-id-qr-scanner';
+
+/** A shared/downloaded QR encodes a share or verify URL; a badge may carry the
+ *  raw number. Accept all three. */
+const parseScannedText = (
+  text: string
+): { kind: 'share_token' | 'elec_id_number'; value: string } => {
+  const shareMatch = text.match(/\/share\/([A-Za-z0-9]+)/);
+  if (shareMatch) return { kind: 'share_token', value: shareMatch[1] };
+  const verifyMatch = text.match(/\/verify\/([A-Za-z0-9-]+)/);
+  if (verifyMatch) return { kind: 'elec_id_number', value: verifyMatch[1] };
+  return { kind: 'elec_id_number', value: text.trim() };
+};
 
 type OverallStatus = 'compliant' | 'expiring' | 'non-compliant';
 
@@ -107,65 +126,97 @@ const calculateOverallStatus = (profile: ElecIdProfile): OverallStatus => {
 
 export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) => {
   const [scanState, setScanState] = useState<ScanState>('input');
-  const [scanProgress, setScanProgress] = useState(0);
   const [result, setResult] = useState<ElecIdProfile | null>(null);
   const [elecIdInput, setElecIdInput] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const scannerRef = useRef<Html5Qrcode | null>(null);
   const createEmployee = useCreateEmployee();
+
+  const stopScanner = async () => {
+    const scanner = scannerRef.current;
+    scannerRef.current = null;
+    if (scanner) {
+      try {
+        if (scanner.getState() === 2) {
+          await scanner.stop();
+        }
+      } catch {
+        // already stopped
+      }
+    }
+  };
 
   useEffect(() => {
     if (!open) {
+      void stopScanner();
       setScanState('input');
-      setScanProgress(0);
       setResult(null);
       setElecIdInput('');
       setIsSearching(false);
+      setCameraError(null);
       return;
     }
   }, [open]);
 
+  const lookupScanned = async (text: string) => {
+    try {
+      const parsed = parseScannedText(text);
+      const profile =
+        parsed.kind === 'share_token'
+          ? await getElecIdProfileByShareToken(parsed.value)
+          : await getElecIdProfileByNumber(parsed.value);
+      if (profile) {
+        setResult(profile);
+        setScanState('result');
+      } else {
+        setScanState('not_found');
+      }
+    } catch (error) {
+      console.error('Error looking up scanned Elec-ID:', error);
+      setScanState('not_found');
+    }
+  };
+
+  // Real camera scan — starts when the camera pane mounts, stops on leave
   useEffect(() => {
-    if (scanState === 'scanning') {
-      const interval = setInterval(() => {
-        setScanProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setScanState('found');
-            return 100;
-          }
-          return prev + 5;
-        });
-      }, 80);
-      return () => clearInterval(interval);
-    }
+    if (scanState !== 'camera') return;
 
-    if (scanState === 'found') {
-      const timeout = setTimeout(() => {
-        setScanState('checking');
-      }, 500);
-      return () => clearTimeout(timeout);
-    }
+    let cancelled = false;
+    const scanner = new Html5Qrcode(SCANNER_ELEMENT_ID, {
+      formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+      verbose: false,
+    });
+    scannerRef.current = scanner;
 
-    if (scanState === 'checking') {
-      const lookupProfile = async () => {
-        try {
-          const profile = await getElecIdProfileByNumber(elecIdInput);
-          if (profile) {
-            setResult(profile);
-            setScanState('result');
-          } else {
-            setScanState('not_found');
-          }
-        } catch (error) {
-          console.error('Error looking up profile:', error);
-          setScanState('not_found');
+    scanner
+      .start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 220, height: 220 } },
+        (decodedText) => {
+          if (cancelled) return;
+          cancelled = true;
+          void stopScanner().then(() => lookupScanned(decodedText));
+        },
+        () => {
+          // per-frame decode misses are normal — keep scanning
         }
-      };
+      )
+      .catch((err) => {
+        console.error('Camera start failed:', err);
+        if (!cancelled) {
+          setCameraError(
+            'Could not access the camera. Check permissions, or enter the Elec-ID number instead.'
+          );
+          setScanState('input');
+        }
+      });
 
-      const timeout = setTimeout(lookupProfile, 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [scanState, elecIdInput]);
+    return () => {
+      cancelled = true;
+      void stopScanner();
+    };
+  }, [scanState]);
 
   const handleManualSearch = async () => {
     if (!elecIdInput.trim()) {
@@ -194,19 +245,6 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
     }
   };
 
-  const handleSimulateScan = () => {
-    if (!elecIdInput.trim()) {
-      toast({
-        title: 'Enter Elec-ID',
-        description: 'Please enter an Elec-ID number to simulate scanning.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    setScanState('scanning');
-    setScanProgress(0);
-  };
-
   const handleAddToTeam = async () => {
     if (!result) return;
     const name = result.employee?.name?.trim();
@@ -226,6 +264,8 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
       .toUpperCase();
     try {
       await createEmployee.mutateAsync({
+        // Not linked to an account yet — they link via invite code later
+        user_id: null,
         name,
         role: result.employee?.role || 'Electrician',
         team_role: 'Operative',
@@ -245,8 +285,10 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
       });
       toast({
         title: 'Worker added',
+        // No email is sent on add — the roster row auto-links when they sign
+        // in with this email address
         description: result.employee?.email
-          ? `${name} added to your team — we've emailed them to link their account.`
+          ? `${name} added to your team — their account links automatically when they sign in with ${result.employee.email}.`
           : `${name} added to your team. Share your invite code so they can link their account.`,
       });
       onOpenChange(false);
@@ -261,9 +303,9 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
 
   const handleRescan = () => {
     setScanState('input');
-    setScanProgress(0);
     setResult(null);
     setElecIdInput('');
+    setCameraError(null);
   };
 
   const overallStatus = result ? calculateOverallStatus(result) : 'compliant';
@@ -277,25 +319,26 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
     })) || [];
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[520px] p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <QrCode className="h-5 w-5 text-elec-yellow" />
             Scan Elec-ID
-          </DialogTitle>
-          <DialogDescription className="text-white">
+          </ResponsiveFormModalTitle>
+          <p className="text-[12.5px] text-white/70 text-left">
             Scan a worker's QR code or enter their Elec-ID number to check credentials.
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </ResponsiveFormModalHeader>
 
+        <ResponsiveFormModalBody className="pb-6">
         <div className="pt-2">
           {scanState === 'input' && (
             <div className="space-y-4">
               <Field label="Elec-ID number">
                 <div className="flex gap-2">
                   <Input
-                    placeholder="e.g. EID-2024-1234"
+                    placeholder="e.g. EM-7K3P4N"
                     value={elecIdInput}
                     onChange={(e) => setElecIdInput(e.target.value)}
                     className={`${inputClass} font-mono`}
@@ -319,59 +362,27 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                 </div>
               </div>
 
-              <SecondaryButton onClick={handleSimulateScan} fullWidth>
+              <SecondaryButton onClick={() => setScanState('camera')} fullWidth>
                 <Scan className="h-4 w-4 mr-1.5" />
-                Simulate QR scan
+                Scan QR code with camera
               </SecondaryButton>
 
-              <p className="text-[11px] text-white text-center">
-                In production, this would activate your device camera to scan a QR code.
+              {cameraError && (
+                <p className="text-[11px] text-red-400 text-center">{cameraError}</p>
+              )}
+            </div>
+          )}
+
+          {scanState === 'camera' && (
+            <div className="text-center space-y-4">
+              <div
+                id={SCANNER_ELEMENT_ID}
+                className="w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden bg-[hsl(0_0%_9%)] border border-white/[0.06] [&_video]:rounded-2xl"
+              />
+              <p className="text-[12px] text-white">
+                Point the camera at the worker's Elec-ID QR code.
               </p>
-            </div>
-          )}
-
-          {scanState === 'scanning' && (
-            <div className="text-center space-y-4">
-              <div className="relative w-48 h-48 mx-auto border-2 border-dashed border-elec-yellow/50 rounded-2xl flex items-center justify-center bg-[hsl(0_0%_9%)]">
-                <div className="absolute inset-4 border-2 border-elec-yellow rounded-xl animate-pulse" />
-                <Scan className="h-16 w-16 text-elec-yellow animate-pulse" />
-                <div
-                  className="absolute left-4 right-4 h-0.5 bg-elec-yellow"
-                  style={{
-                    top: `${16 + (scanProgress / 100) * 68}%`,
-                    boxShadow: '0 0 8px hsl(var(--primary))',
-                  }}
-                />
-              </div>
-              <p className="text-[12px] text-white">Scanning for Elec-ID...</p>
-              <Progress value={scanProgress} className="h-2 w-48 mx-auto" />
-            </div>
-          )}
-
-          {scanState === 'found' && (
-            <div className="text-center space-y-4">
-              <div className="w-48 h-48 mx-auto border-2 border-emerald-400 rounded-2xl flex items-center justify-center bg-emerald-500/10">
-                <CheckCircle2 className="h-16 w-16 text-emerald-400" />
-              </div>
-              <p className="text-[13px] text-emerald-400 font-medium">Elec-ID found</p>
-            </div>
-          )}
-
-          {scanState === 'checking' && (
-            <div className="text-center space-y-4">
-              <div className="w-48 h-48 mx-auto border-2 border-elec-yellow rounded-2xl flex items-center justify-center bg-[hsl(0_0%_9%)]">
-                <ShieldCheck className="h-16 w-16 text-elec-yellow animate-pulse" />
-              </div>
-              <p className="text-[12px] text-white">Verifying credentials...</p>
-              <div className="flex justify-center gap-1">
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="w-2 h-2 rounded-full bg-elec-yellow animate-bounce"
-                    style={{ animationDelay: `${i * 0.15}s` }}
-                  />
-                ))}
-              </div>
+              <SecondaryButton onClick={handleRescan}>Cancel</SecondaryButton>
             </div>
           )}
 
@@ -394,13 +405,16 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
           {scanState === 'result' && result && (
             <div className="space-y-3">
               <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 flex items-start gap-4">
-                <img
-                  src={
-                    result.employee?.photo_url ||
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(result.employee?.name || 'Unknown')}&background=random`
-                  }
-                  alt={result.employee?.name}
-                  className="w-16 h-16 rounded-xl object-cover border border-white/[0.08]"
+                <Avatar
+                  size="lg"
+                  photo={result.employee?.photo_url}
+                  initials={(result.employee?.name || '??')
+                    .trim()
+                    .split(/\s+/)
+                    .map((p) => p[0])
+                    .join('')
+                    .slice(0, 2)
+                    .toUpperCase()}
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
@@ -497,7 +511,8 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
             </div>
           )}
         </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 };

@@ -24,7 +24,7 @@ import {
   textareaClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
-import { RefreshCw, Sparkles, Loader2, Download, Plus, Trash2, FileCheck } from 'lucide-react';
+import { RefreshCw, Loader2, Download, Plus, Trash2, FileCheck } from 'lucide-react';
 
 interface AIQuoteSectionProps {
   onNavigate: (section: Section) => void;
@@ -43,6 +43,14 @@ interface HistoryEntry {
   total: number;
   createdAt: number;
   saved: boolean;
+  // Snapshot so a draft can be re-opened from the list
+  snapshot: {
+    clientName: string;
+    clientAddress: string;
+    projectDescription: string;
+    lineItems: LineItem[];
+    jobPackId: string | null;
+  };
 }
 
 export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
@@ -57,10 +65,10 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     { id: '1', description: '', quantity: 1, unitPrice: 0 },
   ]);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [openEntryId, setOpenEntryId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const createQuote = useCreateQuote();
@@ -117,7 +125,6 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     }
 
     setIsGenerating(true);
-    setProgress(0);
     setError(null);
     setResult(null);
 
@@ -137,17 +144,25 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
           : null,
       };
 
-      setProgress(100);
       setResult(draft);
       setIsGenerating(false);
 
+      const entryId = `${clientName}-${validItems.length}-${total}-${Date.now()}`;
+      setOpenEntryId(entryId);
       setHistory((prev) => [
         {
-          id: `${clientName}-${validItems.length}-${total}`,
+          id: entryId,
           clientName,
           total,
           createdAt: Date.now(),
           saved: false,
+          snapshot: {
+            clientName,
+            clientAddress,
+            projectDescription,
+            lineItems: validItems.map((i) => ({ ...i })),
+            jobPackId: selectedJobPackId,
+          },
         },
         ...prev,
       ]);
@@ -229,8 +244,12 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
         subtotal,
         vat_amount: vat,
       } as never);
-      // Mark the newest draft (prepended → index 0) as saved.
-      setHistory((prev) => prev.map((h, idx) => (idx === 0 ? { ...h, saved: true } : h)));
+      // Mark the draft that is actually open (falls back to the newest one).
+      setHistory((prev) =>
+        prev.map((h, idx) =>
+          (openEntryId ? h.id === openEntryId : idx === 0) ? { ...h, saved: true } : h
+        )
+      );
       onNavigate('quotes');
     } catch {
       // useCreateQuote surfaces its own error toast
@@ -242,11 +261,29 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
   const handleReset = () => {
     setResult(null);
     setError(null);
-    setProgress(0);
+  };
+
+  // Re-open a previous draft from the list — restores the form and summary.
+  const handleReopen = (entry: HistoryEntry) => {
+    const s = entry.snapshot;
+    setOpenEntryId(entry.id);
+    setClientName(s.clientName);
+    setClientAddress(s.clientAddress);
+    setProjectDescription(s.projectDescription);
+    setLineItems(s.lineItems.map((i) => ({ ...i })));
+    setSelectedJobPackId(s.jobPackId);
+    setError(null);
+    setResult({
+      clientName: s.clientName,
+      clientAddress: s.clientAddress,
+      projectDescription: s.projectDescription,
+      lineItems: s.lineItems,
+    });
   };
 
   const handleRefresh = () => {
     handleReset();
+    setOpenEntryId(null);
     setClientName('');
     setClientAddress('');
     setProjectDescription('');
@@ -263,7 +300,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     <PageFrame>
       <PageHero
         eyebrow="Smart Docs"
-        title="AI Quote Generator"
+        title="Quote Builder"
         description="Build a quote from your line items — VAT calculated and saved straight to your quotes."
         tone="yellow"
         actions={
@@ -271,7 +308,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
             <RefreshCw className="h-4 w-4" />
           </IconButton>
         }
-        meta={<Pill tone="purple">AI</Pill>}
+        meta={<Pill tone="yellow">Quotes</Pill>}
       />
 
       <StatStrip
@@ -361,7 +398,7 @@ className={inputClass}
                       onClick={() => removeLineItem(item.id)}
                       disabled={isGenerating}
                       aria-label="Remove item"
-                      className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-red-400 hover:bg-white/[0.04] transition-colors touch-manipulation"
+                      className="h-11 w-11 -my-1 rounded-full flex items-center justify-center text-white hover:text-red-400 hover:bg-white/[0.04] transition-colors touch-manipulation"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -424,12 +461,12 @@ className={`${inputClass} tabular-nums`}
             {isGenerating ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Generating quote draft…
+                Building quote draft…
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4 mr-2" />
-                Generate quote draft
+                <FileCheck className="h-4 w-4 mr-2" />
+                Build quote draft
               </>
             )}
           </PrimaryButton>
@@ -527,8 +564,8 @@ className={`${inputClass} tabular-nums`}
         {history.length === 0 ? (
           <div className="p-1">
             <EmptyState
-              title="No quotes generated yet"
-              description="Drafts you create will appear here so you can re-open or save them as quotes."
+              title="No drafts yet"
+              description="Drafts from this session appear here so you can re-open or save them as quotes. Saved quotes live in Quotes & Invoices."
             />
           </div>
         ) : (
@@ -538,6 +575,7 @@ className={`${inputClass} tabular-nums`}
                 key={entry.id}
                 title={entry.clientName || 'Untitled'}
                 subtitle={formatTime(entry.createdAt)}
+                onClick={() => handleReopen(entry)}
                 trailing={
                   <>
                     <span className="text-[14px] font-semibold text-white tabular-nums">

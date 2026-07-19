@@ -102,6 +102,31 @@ export function usePendingSignatures() {
   });
 }
 
+// Latest signature request linked to a specific document (quote/invoice/etc.)
+// — same rail as useContractSignatureRequest in useContracts.ts.
+export function useLatestDocumentSignatureRequest(
+  documentType?: DocumentType,
+  documentId?: string
+) {
+  return useQuery({
+    queryKey: ['signatureRequests', 'document', documentType, documentId],
+    enabled: !!documentType && !!documentId,
+    queryFn: async (): Promise<SignatureRequest | null> => {
+      const { data, error } = await supabase
+        .from('signature_requests')
+        .select('*')
+        .eq('document_type', documentType!)
+        .eq('document_id', documentId!)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data as SignatureRequest | null;
+    },
+  });
+}
+
 // Get signature request statistics
 export function useSignatureStats() {
   return useQuery({
@@ -249,6 +274,26 @@ export function useResendSignatureRequest() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<SignatureRequest> => {
+      // Email FIRST, status second — stamping 'Sent' before the send left a
+      // misleading Sent status on rows whose reminder never went out
+      const { data: existing, error: fetchError } = await supabase
+        .from('signature_requests')
+        .select('id, signer_email')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // invoke() reports failure via the return value, not by throwing
+      if (existing?.signer_email) {
+        const { error: emailError } = await supabase.functions.invoke('send-signature-request', {
+          body: { signatureRequestId: existing.id },
+        });
+        if (emailError) {
+          throw new Error('Resend failed — use Copy link and send it yourself.');
+        }
+      }
+
       const { data, error } = await supabase
         .from('signature_requests')
         .update({
@@ -265,17 +310,6 @@ export function useResendSignatureRequest() {
         .single();
 
       if (error) throw error;
-
-      // Send signing request email — invoke() reports failure via the
-      // return value, not by throwing
-      if (data?.signer_email) {
-        const { error: emailError } = await supabase.functions.invoke('send-signature-request', {
-          body: { signatureRequestId: data.id },
-        });
-        if (emailError) {
-          throw new Error('Resend failed — use Copy link and send it yourself.');
-        }
-      }
 
       return data as SignatureRequest;
     },

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -187,25 +187,29 @@ export function AddCertificationDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      {trigger !== null && (
-        <DialogTrigger asChild>
-          {trigger || (
-            <Button variant="outline" size="sm" className="touch-feedback">
-              <Award className="h-4 w-4 mr-2" />
-              Add Cert
-            </Button>
-          )}
-        </DialogTrigger>
-      )}
-      <DialogContent className="max-w-[95vw] sm:max-w-lg bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal
+      open={open}
+      onOpenChange={setOpen}
+      trigger={
+        trigger !== null
+          ? trigger || (
+              <Button variant="outline" size="sm" className="touch-feedback">
+                <Award className="h-4 w-4 mr-2" />
+                Add Cert
+              </Button>
+            )
+          : undefined
+      }
+    >
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <Award className="h-5 w-5 text-elec-yellow" />
             Add Certification
-          </DialogTitle>
-        </DialogHeader>
-        <form id="certification-form" onSubmit={handleSubmit} className="space-y-4">
+          </ResponsiveFormModalTitle>
+        </ResponsiveFormModalHeader>
+        <ResponsiveFormModalBody className="pb-6">
+          <form id="certification-form" onSubmit={handleSubmit} className="space-y-4">
           <FormCard eyebrow="Certification details">
             <Field label="Employee" required>
               <Select
@@ -293,8 +297,9 @@ export function AddCertificationDialog({
               Add Certification
             </PrimaryButton>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+          </form>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

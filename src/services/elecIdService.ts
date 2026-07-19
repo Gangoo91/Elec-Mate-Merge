@@ -1,5 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { generateElecIdNumber } from '@/utils/elecIdGenerator';
 
 // Types matching the database schema
 export type RateType = 'hourly' | 'daily' | 'weekly' | 'yearly';
@@ -254,6 +255,60 @@ export const getElecIdProfileByNumber = async (
   });
 };
 
+// Resolve a scanned share-link QR (https://…/share/{token}) to its profile.
+// Downloaded QR codes encode the share URL, so the camera scanner must be
+// able to walk token → share link → profile.
+export const getElecIdProfileByShareToken = async (
+  shareToken: string
+): Promise<ElecIdProfile | null> => {
+  const { data: link, error: linkError } = await supabase
+    .from('employer_elec_id_share_links')
+    .select('profile_id, is_active, expires_at')
+    .eq('share_token', shareToken)
+    .maybeSingle();
+
+  if (linkError) throw linkError;
+  if (!link || !link.is_active) return null;
+  if (link.expires_at && new Date(link.expires_at).getTime() < Date.now()) return null;
+
+  const { data: profile, error } = await supabase
+    .from('employer_elec_id_profiles')
+    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
+    .eq('id', link.profile_id)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (!profile) return null;
+
+  const [{ data: skills }, { data: workHistory }, { data: training }, { data: qualifications }] =
+    await Promise.all([
+      supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
+      supabase
+        .from('employer_elec_id_work_history')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('start_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_training')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('completed_date', { ascending: false }),
+      supabase
+        .from('employer_elec_id_qualifications')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .order('date_achieved', { ascending: false }),
+    ]);
+
+  return toElecIdProfile({
+    ...profile,
+    skills: skills || [],
+    work_history: workHistory || [],
+    training: training || [],
+    qualifications: qualifications || [],
+  });
+};
+
 // Create a new profile
 export const createElecIdProfile = async (data: {
   employee_id: string;
@@ -264,28 +319,39 @@ export const createElecIdProfile = async (data: {
   bio?: string;
   specialisations?: string[];
 }): Promise<ElecIdProfile> => {
-  const elecIdNumber =
-    data.elec_id_number ||
-    `ELEC-${new Date().getFullYear()}-${Math.floor(Math.random() * 100000)
-      .toString()
-      .padStart(5, '0')}`;
+  // Canonical platform format (EM-XXXXXX, ambiguous characters excluded) —
+  // the old ad-hoc ELEC-{year}-{5 digits} shape clashed with the electrician
+  // side's validation and collided easily. Retry on the unique constraint so
+  // a rare collision never aborts a bulk "Create all" run.
+  const maxAttempts = 3;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const elecIdNumber =
+      data.elec_id_number || generateElecIdNumber();
 
-  const { data: profile, error } = await supabase
-    .from('employer_elec_id_profiles')
-    // ecs_card_type has a DB default of 'gold' — omitting it stamps a
-    // fabricated Gold Card on the credential. Explicit null = "not recorded".
-    .insert({ ...data, elec_id_number: elecIdNumber, ecs_card_type: data.ecs_card_type ?? null })
-    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
-    .single();
+    const { data: profile, error } = await supabase
+      .from('employer_elec_id_profiles')
+      // ecs_card_type has a DB default of 'gold' — omitting it stamps a
+      // fabricated Gold Card on the credential. Explicit null = "not recorded".
+      .insert({ ...data, elec_id_number: elecIdNumber, ecs_card_type: data.ecs_card_type ?? null })
+      .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
+      .single();
 
-  if (error) throw error;
-  return toElecIdProfile({
-    ...profile,
-    skills: [],
-    work_history: [],
-    training: [],
-    qualifications: [],
-  });
+    if (error) {
+      // 23505 = duplicate elec_id_number — regenerate and retry (unless the
+      // caller supplied the number themselves)
+      if (error.code === '23505' && !data.elec_id_number && attempt < maxAttempts - 1) continue;
+      throw error;
+    }
+
+    return toElecIdProfile({
+      ...profile,
+      skills: [],
+      work_history: [],
+      training: [],
+      qualifications: [],
+    });
+  }
+  throw new Error('Could not generate a unique Elec-ID number');
 };
 
 // Update profile

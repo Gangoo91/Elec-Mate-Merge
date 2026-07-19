@@ -327,9 +327,18 @@ export const getMessages = async (
   conversationId: string,
   options?: { limit?: number; offset?: number }
 ): Promise<Message[]> => {
+  // Embed reactions + attachments — MessageBubble renders both, and nothing
+  // else populates them (a bare select('*') made reactions vanish on refetch
+  // and attachments invisible to both parties)
   let query = supabase
     .from('employer_messages')
-    .select('*')
+    .select(
+      `
+      *,
+      reactions:employer_message_reactions(*),
+      attachments:employer_message_attachments(*)
+    `
+    )
     .eq('conversation_id', conversationId)
     .order('sent_at', { ascending: true });
 
@@ -358,6 +367,8 @@ export const sendMessage = async (params: {
   content: string;
   message_type?: 'text' | 'system' | 'file' | 'invite';
   metadata?: Record<string, unknown>;
+  /** Threads the message under an existing one — powers the reply preview UI */
+  reply_to_id?: string | null;
 }): Promise<Message> => {
   const { data, error } = await supabase
     .from('employer_messages')
@@ -368,6 +379,7 @@ export const sendMessage = async (params: {
       content: params.content,
       message_type: params.message_type || 'text',
       metadata: params.metadata || {},
+      reply_to_id: params.reply_to_id || null,
       sent_at: new Date().toISOString(),
     })
     .select()

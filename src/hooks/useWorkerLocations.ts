@@ -9,6 +9,7 @@ import {
   subscribeToLocationUpdates,
   updateOwnLocation,
   getMyEmployeeRecord,
+  getMyLatestLocation,
   WorkerStatus,
 } from '@/services/locationService';
 
@@ -108,6 +109,18 @@ export const useMyEmployeeRecord = () => {
   });
 };
 
+// Hook for a worker's own latest presence (status + when it was set).
+// employer_employees.status is EMPLOYMENT status ('active'), not presence —
+// worker-side UI must read presence from employer_worker_locations.
+export const useMyLatestLocation = (employeeId?: string) => {
+  return useQuery({
+    queryKey: ['my-latest-location', employeeId],
+    queryFn: () => getMyLatestLocation(employeeId!),
+    enabled: !!employeeId,
+    staleTime: 30 * 1000,
+  });
+};
+
 // Hook for workers to update their own location (self-service)
 export const useUpdateOwnLocation = () => {
   const queryClient = useQueryClient();
@@ -129,6 +142,7 @@ export const useUpdateOwnLocation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
       queryClient.invalidateQueries({ queryKey: ['my-employee-record'] });
+      queryClient.invalidateQueries({ queryKey: ['my-latest-location'] });
     },
   });
 };

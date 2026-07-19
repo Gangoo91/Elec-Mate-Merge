@@ -401,6 +401,17 @@ const ElectricalHubInner = () => {
           : 'Send your first quote',
     },
     {
+      id: 'projects',
+      eyebrow: 'Work',
+      title: 'Jobs',
+      description: 'Every job — quotes, certs and invoices in one place.',
+      to: '/electrician/projects',
+      meta:
+        data.business.activeProjects > 0
+          ? `${data.business.activeProjects} active`
+          : 'Set up your first job',
+    },
+    {
       id: 'calculations',
       eyebrow: 'BS 7671',
       title: 'Calculations',

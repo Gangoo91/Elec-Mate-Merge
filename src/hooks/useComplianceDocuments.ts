@@ -33,6 +33,11 @@ export interface ComplianceDocument {
   signatures_collected: number;
   file_url?: string;
   notes?: string;
+  /** FK → employer_employees.id (job/person-scoped docs: permits, inductions) */
+  employee_id?: string | null;
+  /** FK → employer_jobs.id */
+  job_id?: string | null;
+  site_name?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -41,7 +46,10 @@ export type CreateComplianceDocumentInput = Omit<
   ComplianceDocument,
   'id' | 'user_id' | 'created_at' | 'updated_at'
 >;
-export type UpdateComplianceDocumentInput = Partial<CreateComplianceDocumentInput>;
+// Updates allow null so a cleared field (expiry, notes, links) actually clears.
+export type UpdateComplianceDocumentInput = {
+  [K in keyof CreateComplianceDocumentInput]?: CreateComplianceDocumentInput[K] | null;
+};
 
 // Fetch all compliance documents for the current user
 export function useComplianceDocuments() {

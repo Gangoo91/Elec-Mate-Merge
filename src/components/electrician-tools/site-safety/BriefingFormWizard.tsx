@@ -33,6 +33,7 @@ import {
   UserPlus,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStorageUrls } from '@/utils/storageUrls';
 import {
   BriefingTypePicker,
   BriefingType,
@@ -152,6 +153,13 @@ export const BriefingFormWizard = ({
   } = methods;
   const formData = watch();
 
+  // Resolve stored photo references for display — new uploads store bare
+  // storage paths (privacy-ready); legacy entries hold full URLs (pass-through).
+  const { urls: photoSrcs } = useStorageUrls(
+    'briefing-photos',
+    (formData.photos || []).map((p: { url: string }) => p.url)
+  );
+
   const totalSteps = STEP_TITLES.length;
   const progress = ((step + 1) / totalSteps) * 100;
 
@@ -246,11 +254,9 @@ export const BriefingFormWizard = ({
 
         if (error) throw error;
 
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from('briefing-photos').getPublicUrl(data.path);
-
-        uploadedPhotos.push({ url: publicUrl, caption: '' });
+        // Store the bare storage path (privacy-ready) — readers resolve it
+        // via useStorageUrls and still accept legacy full-URL entries.
+        uploadedPhotos.push({ url: data.path, caption: '' });
       }
 
       setValue('photos', [...(formData.photos || []), ...uploadedPhotos]);
@@ -675,7 +681,7 @@ export const BriefingFormWizard = ({
                       onClick={() => setPreviewPhoto(photo.url)}
                     >
                       <img
-                        src={photo.url}
+                        src={photoSrcs[photo.url] ?? photo.url}
                         alt={`Site photo ${idx + 1}`}
                         className="w-full h-full object-cover"
                         loading="lazy"
@@ -776,7 +782,7 @@ export const BriefingFormWizard = ({
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.8, opacity: 0 }}
-                    src={previewPhoto}
+                    src={photoSrcs[previewPhoto] ?? previewPhoto}
                     alt="Preview"
                     className="max-w-full max-h-[85vh] object-contain rounded-xl"
                     onClick={(e) => e.stopPropagation()}

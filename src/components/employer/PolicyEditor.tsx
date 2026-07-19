@@ -32,7 +32,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { useUpdatePolicy, type UserPolicy } from '@/hooks/usePolicies';
 import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
-import { useToast } from '@/hooks/use-toast';
 import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 import { PrimaryButton, SecondaryButton } from './editorial';
 
@@ -47,7 +46,6 @@ const DRAFT_KEY_PREFIX = 'policy-editor-draft-';
 
 export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEditorProps) {
   const isMobile = useIsMobile();
-  const { toast } = useToast();
   const [isPreview, setIsPreview] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
@@ -89,9 +87,11 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
     },
   });
 
-  // Load draft on mount
+  // Load draft when the editor is actually opened (the TipTap instance mounts
+  // before the modal opens — without the `open` gate the restore confirm()
+  // could fire while the user is merely viewing the policy).
   useEffect(() => {
-    if (editor) {
+    if (open && editor) {
       const draft = storageGetSync(draftKey);
       if (draft && draft !== policy.content) {
         // Ask user if they want to restore draft
@@ -109,7 +109,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
         editor.commands.setContent(policy.content);
       }
     }
-  }, [editor, policy.content, draftKey]);
+  }, [open, editor, policy.content, draftKey]);
 
   // Clear draft on close without saving
   const handleClose = useCallback(() => {
@@ -139,12 +139,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
       // Clear draft
       storageRemoveSync(draftKey);
       setHasChanges(false);
-
-      toast({
-        title: 'Policy saved',
-        description: 'Your changes have been saved successfully.',
-      });
-
+      // Success toast comes from the mutation hook — no duplicate here.
       onSaved?.();
       onOpenChange(false);
     } catch (error) {
@@ -182,8 +177,6 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
       {children}
     </Button>
   );
-
-  const characterCount = editor?.storage.characterCount?.characters?.() || 0;
 
   return (
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
@@ -349,10 +342,9 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
             )}
           </div>
 
-          {/* Stats */}
-          <div className="flex justify-between text-xs text-white mt-2">
-            <span>Use headings to structure your policy. Changes auto-save as draft.</span>
-            <span>{characterCount} characters</span>
+          {/* Hint */}
+          <div className="text-xs text-white mt-2">
+            Use headings to structure your policy. Changes auto-save as draft.
           </div>
 
           {/* Editor styles */}

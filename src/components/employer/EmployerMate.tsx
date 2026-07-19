@@ -5,7 +5,35 @@ import jsPDF from 'jspdf';
 import { getBrandColour, ensureSpace, addAccentBar } from '@/utils/pdfBrand';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
-import { Sparkles, ArrowUp, X, Loader2, Copy, Check, FileDown } from 'lucide-react';
+import {
+  Sparkles,
+  ArrowUp,
+  X,
+  Loader2,
+  Copy,
+  Check,
+  FileDown,
+  RotateCcw,
+  History,
+  ChevronLeft,
+} from 'lucide-react';
+
+interface MateAuditEntry {
+  id: string;
+  action: string;
+  entity: string;
+  detail: Record<string, unknown> | null;
+  created_at: string;
+}
+
+/** "add · team" → "Added team member", best-effort from the audit row. */
+function describeAuditEntry(e: MateAuditEntry): string {
+  const name =
+    (e.detail && (e.detail.name || e.detail.title || e.detail.client || e.detail.number)) || '';
+  const entity = (e.entity || '').replace(/_/g, ' ');
+  const action = (e.action || '').replace(/_/g, ' ');
+  return `${action} ${entity}${name ? ` — ${String(name)}` : ''}`.trim();
+}
 
 const markdownClass =
   'text-[14px] leading-[1.55] text-white/90 [&_h1]:text-[15px] [&_h1]:font-semibold [&_h1]:text-white [&_h1]:mt-3 [&_h2]:text-[14.5px] [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-3 [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-2.5 [&_p]:my-1.5 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:my-1.5 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:my-1.5 [&_li]:mt-0.5 [&_strong]:text-white [&_strong]:font-semibold [&_a]:text-elec-yellow [&_a]:underline [&_code]:text-elec-yellow [&_code]:text-[12.5px]';
@@ -32,7 +60,13 @@ function downloadPdf(text: string) {
   const clean = text
     .replace(/\*\*/g, '')
     .replace(/^#{1,6}\s/gm, '')
-    .replace(/^[-*]\s/gm, '•  ');
+    .replace(/^[-*]\s/gm, '•  ')
+    // GFM tables: drop separator rows, turn cell pipes into readable spacing.
+    .replace(/^\s*\|?[\s:|-]+\|[\s:|-]*$/gm, '')
+    .replace(/^\s*\|\s*/gm, '')
+    .replace(/\s*\|\s*$/gm, '')
+    .replace(/\s*\|\s*/g, '   ·   ')
+    .replace(/\n{3,}/g, '\n\n');
   const lines = doc.splitTextToSize(clean, width) as string[];
   let y = margin + 40;
   for (const line of lines) {
@@ -112,7 +146,41 @@ export function EmployerMate({
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  // The question behind a failed answer — lets the user retry in one tap.
+  const [retryQ, setRetryQ] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Activity view: what Mate has actually done to the firm (employer_audit_log)
+  const [showActivity, setShowActivity] = useState(false);
+  const [activity, setActivity] = useState<MateAuditEntry[] | null>(null);
+  const [activityError, setActivityError] = useState(false);
+
+  useEffect(() => {
+    if (!showActivity) return;
+    let cancelled = false;
+    (async () => {
+      setActivityError(false);
+      // Only Mate-authored rows: the assistant logs action='create' (with a
+      // name in detail) or action='delete' + detail.via='mate'. The same table
+      // also collects generic DB-trigger rows (raw insert/update on
+      // employer_employees etc.) which are NOT Mate's doing — exclude them.
+      const { data, error } = await supabase
+        .from('employer_audit_log')
+        .select('id, action, entity, detail, created_at')
+        .or('action.eq.create,detail->>via.eq.mate')
+        .order('created_at', { ascending: false })
+        .limit(30);
+      if (cancelled) return;
+      if (error) {
+        setActivityError(true);
+        setActivity([]);
+      } else {
+        setActivity((data ?? []) as MateAuditEntry[]);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [showActivity]);
 
   const copy = (text: string, idx: number) => {
     navigator.clipboard?.writeText(text);
@@ -121,34 +189,47 @@ export function EmployerMate({
   };
 
   useEffect(() => {
+    // showActivity dep: while the activity view is open the messages pane is
+    // display:none (scroll position is lost) — re-pin to bottom on return.
+    if (showActivity) return;
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-  }, [messages, sending]);
+  }, [messages, sending, showActivity]);
 
   // Pre-fill a question handed in from the ⌘K palette when the sheet opens.
   useEffect(() => {
     if (open && initialQuery) setInput(initialQuery);
   }, [open, initialQuery]);
 
-  const send = async (text?: string) => {
-    const q = (text ?? input).trim();
-    if (!q || sending) return;
-    setInput('');
-    const next = [...messages, { role: 'user' as const, content: q }];
-    // Add the user message + an empty assistant message we stream into.
-    setMessages([...next, { role: 'assistant', content: '' }]);
+  // Replace the (empty/failed) assistant message at the end of the thread.
+  const setLastAssistant = (content: string) => {
+    setMessages((m) => {
+      const copy = [...m];
+      copy[copy.length - 1] = { role: 'assistant', content };
+      return copy;
+    });
+  };
+
+  // Stream an answer for `q`, where `history` already ends with the user turn.
+  const stream = async (q: string, history: Msg[]) => {
     setSending(true);
     try {
       const {
         data: { session },
       } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        // No session token — sending the anon key would just 401. Ask the
+        // owner to sign back in instead of surfacing a generic failure.
+        setLastAssistant('Your session has expired — sign in again to keep chatting with Mate.');
+        return;
+      }
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/employer-ai-assistant`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           apikey: SUPABASE_PUBLISHABLE_KEY,
-          Authorization: `Bearer ${session?.access_token ?? SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify({ messages: next, page_context: pageContext }),
+        body: JSON.stringify({ messages: history, page_context: pageContext }),
       });
       if (!resp.ok || !resp.body) throw new Error('request failed');
 
@@ -159,34 +240,39 @@ export function EmployerMate({
         const { done, value } = await reader.read();
         if (done) break;
         acc += decoder.decode(value, { stream: true });
-        setMessages((m) => {
-          const copy = [...m];
-          copy[copy.length - 1] = { role: 'assistant', content: acc };
-          return copy;
-        });
+        setLastAssistant(acc);
       }
       if (!acc.trim()) {
-        setMessages((m) => {
-          const copy = [...m];
-          copy[copy.length - 1] = {
-            role: 'assistant',
-            content: "I couldn't answer that — try rephrasing.",
-          };
-          return copy;
-        });
+        setLastAssistant("I couldn't answer that — try rephrasing.");
+        setRetryQ(q);
       }
     } catch {
-      setMessages((m) => {
-        const copy = [...m];
-        copy[copy.length - 1] = {
-          role: 'assistant',
-          content: 'Something went wrong reaching Mate. Try again in a moment.',
-        };
-        return copy;
-      });
+      setLastAssistant('Something went wrong reaching Mate.');
+      setRetryQ(q);
     } finally {
       setSending(false);
     }
+  };
+
+  const send = async (text?: string) => {
+    const q = (text ?? input).trim();
+    if (!q || sending) return;
+    setInput('');
+    setRetryQ(null);
+    const next = [...messages, { role: 'user' as const, content: q }];
+    // Add the user message + an empty assistant message we stream into.
+    setMessages([...next, { role: 'assistant', content: '' }]);
+    await stream(q, next);
+  };
+
+  // Re-ask the failed question: keep the user turn, re-stream the answer.
+  const retry = async () => {
+    if (!retryQ || sending) return;
+    const base =
+      messages[messages.length - 1]?.role === 'assistant' ? messages.slice(0, -1) : messages;
+    setRetryQ(null);
+    setMessages([...base, { role: 'assistant', content: '' }]);
+    await stream(retryQ, base);
   };
 
   return (
@@ -208,7 +294,7 @@ export function EmployerMate({
         <SheetContent
           side="bottom"
           hideCloseButton
-          className="h-[88vh] p-0 rounded-t-2xl overflow-hidden border-elec-gray bg-background lg:left-64"
+          className="h-[88vh] [height:88dvh] p-0 rounded-t-2xl overflow-hidden border-elec-gray bg-background lg:left-64"
         >
           <div className="flex flex-col h-full">
             <SheetDescription className="sr-only">
@@ -225,18 +311,75 @@ export function EmployerMate({
                   Business partner
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Close"
-                className="h-8 w-8 flex items-center justify-center rounded-full text-white/60 hover:text-white touch-manipulation"
-              >
-                <X className="h-4 w-4" />
-              </button>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => setShowActivity((s) => !s)}
+                  aria-label={showActivity ? 'Back to chat' : 'Mate activity'}
+                  className="h-11 w-11 -my-2 flex items-center justify-center rounded-full text-white/60 hover:text-white touch-manipulation"
+                >
+                  {showActivity ? <ChevronLeft className="h-4 w-4" /> : <History className="h-4 w-4" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close"
+                  className="h-11 w-11 -my-2 -mr-2 flex items-center justify-center rounded-full text-white/60 hover:text-white touch-manipulation"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
+            {showActivity && (
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+                <p className="text-[15px] font-semibold text-white">What Mate has done</p>
+                <p className="mt-1 text-[12.5px] text-white/55">
+                  Every action Mate takes on your firm is recorded here. Say “undo” in the chat
+                  to reverse something it created.
+                </p>
+                {activity === null && !activityError && (
+                  <div className="mt-6 flex justify-center">
+                    <Loader2 className="h-4 w-4 animate-spin text-white/40" />
+                  </div>
+                )}
+                {activityError && (
+                  <p className="mt-4 text-[13px] text-red-400/90">
+                    Couldn’t load the activity log — try again in a moment.
+                  </p>
+                )}
+                {activity !== null && !activityError && activity.length === 0 && (
+                  <p className="mt-4 text-[13px] text-white/45">
+                    Nothing yet — when Mate adds team members, raises quotes or creates jobs for
+                    you, each action lands here.
+                  </p>
+                )}
+                <div className="mt-4 space-y-2">
+                  {(activity ?? []).map((e) => (
+                    <div
+                      key={e.id}
+                      className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-2.5"
+                    >
+                      <p className="text-[13px] text-white/85 capitalize">{describeAuditEntry(e)}</p>
+                      <p className="mt-0.5 text-[11px] text-white/40">
+                        {new Date(e.created_at).toLocaleString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+            <div
+              ref={scrollRef}
+              className={`flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4 ${showActivity ? 'hidden' : ''}`}
+            >
               {messages.length === 0 && (
                 <div className="pt-6">
                   <p className="text-[15px] font-semibold text-white">Ask me about your firm.</p>
@@ -274,30 +417,42 @@ export function EmployerMate({
                     <div className={markdownClass}>
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
                     </div>
-                    {!(sending && i === messages.length - 1) && (
-                      <div className="mt-2.5 flex items-center gap-1 border-t border-white/[0.06] pt-2">
-                        <button
-                          type="button"
-                          onClick={() => copy(m.content, i)}
-                          className="flex items-center gap-1.5 h-7 px-2 rounded-lg text-[11.5px] text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
-                        >
-                          {copiedIdx === i ? (
-                            <Check className="h-3.5 w-3.5 text-emerald-400" />
-                          ) : (
-                            <Copy className="h-3.5 w-3.5" />
-                          )}
-                          {copiedIdx === i ? 'Copied' : 'Copy'}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => downloadPdf(m.content)}
-                          className="flex items-center gap-1.5 h-7 px-2 rounded-lg text-[11.5px] text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
-                        >
-                          <FileDown className="h-3.5 w-3.5" />
-                          PDF
-                        </button>
-                      </div>
-                    )}
+                    {!(sending && i === messages.length - 1) &&
+                      (retryQ && i === messages.length - 1 ? (
+                        <div className="mt-2.5 flex items-center gap-1 border-t border-white/[0.06] pt-2">
+                          <button
+                            type="button"
+                            onClick={retry}
+                            className="flex items-center gap-1.5 h-11 -my-1.5 px-3 rounded-lg text-[12.5px] font-medium text-elec-yellow hover:bg-white/[0.05] touch-manipulation"
+                          >
+                            <RotateCcw className="h-3.5 w-3.5" />
+                            Try again
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mt-2.5 flex items-center gap-1 border-t border-white/[0.06] pt-2">
+                          <button
+                            type="button"
+                            onClick={() => copy(m.content, i)}
+                            className="flex items-center gap-1.5 h-11 -my-1.5 px-2.5 rounded-lg text-[11.5px] text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                          >
+                            {copiedIdx === i ? (
+                              <Check className="h-3.5 w-3.5 text-emerald-400" />
+                            ) : (
+                              <Copy className="h-3.5 w-3.5" />
+                            )}
+                            {copiedIdx === i ? 'Copied' : 'Copy'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => downloadPdf(m.content)}
+                            className="flex items-center gap-1.5 h-11 -my-1.5 px-2.5 rounded-lg text-[11.5px] text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                          >
+                            <FileDown className="h-3.5 w-3.5" />
+                            PDF
+                          </button>
+                        </div>
+                      ))}
                   </div>
                 )
               )}
@@ -313,8 +468,11 @@ export function EmployerMate({
             </div>
 
             {/* Composer */}
-            <div className="border-t border-white/[0.06] px-3 py-3">
-              <div className="flex items-end gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-3 py-2">
+            <div
+              className={`border-t border-white/[0.06] px-3 pt-3 ${showActivity ? 'hidden' : ''}`}
+              style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+            >
+              <div className="flex items-end gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] pl-3 pr-1.5 py-1.5">
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -326,16 +484,16 @@ export function EmployerMate({
                   }}
                   rows={1}
                   placeholder="Ask Mate anything about your business…"
-                  className="flex-1 resize-none bg-transparent text-[14px] text-white placeholder:text-white/35 outline-none max-h-28 py-1 touch-manipulation"
+                  className="flex-1 resize-none bg-transparent text-base sm:text-[14px] text-white placeholder:text-white/35 outline-none max-h-28 py-2.5 touch-manipulation"
                 />
                 <button
                   type="button"
                   onClick={() => send()}
                   disabled={!input.trim() || sending}
                   aria-label="Send"
-                  className="h-8 w-8 shrink-0 flex items-center justify-center rounded-full bg-elec-yellow text-black disabled:opacity-40 touch-manipulation active:scale-95 transition-transform"
+                  className="h-11 w-11 shrink-0 flex items-center justify-center rounded-full bg-elec-yellow text-black disabled:opacity-40 touch-manipulation active:scale-95 transition-transform"
                 >
-                  <ArrowUp className="h-4 w-4" />
+                  <ArrowUp className="h-5 w-5" />
                 </button>
               </div>
             </div>

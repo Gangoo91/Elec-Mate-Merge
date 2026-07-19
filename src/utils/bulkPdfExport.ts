@@ -244,6 +244,17 @@ export const generateBulkPDFs = async (
   // Array to collect PDF blobs for ZIP bundling
   const pdfBlobs: PdfBlobData[] = [];
 
+  // Load the owner's company profile ONCE up front. The EIC formatter derives
+  // company branding AND the "Inspected By" CP Scheme (registration_scheme +
+  // number) from this — passing null blanked those on the menu "Download PDF"
+  // while the in-form generate (which has the profile) rendered them fine
+  // (Craig, 3 Blyth, 2026-07-19). All reportIds belong to `userId`.
+  const { data: companyProfile } = await supabase
+    .from('company_profiles')
+    .select('*')
+    .eq('user_id', userId)
+    .maybeSingle();
+
   // Process each report sequentially to avoid overwhelming the edge functions
   for (const reportId of reportIds) {
     try {
@@ -321,7 +332,7 @@ export const generateBulkPDFs = async (
           dataForPdf = await formatEICRJson(validation.data, report.report_id);
         } else if (rtLower === 'eic') {
           const { formatEicJson } = await import('./eicJsonFormatter');
-          dataForPdf = await formatEicJson(validation.data, null, report.report_id);
+          dataForPdf = await formatEicJson(validation.data, companyProfile, report.report_id);
         } else if (rtLower === 'ev-charging') {
           const { formatEVChargingJson } = await import('./evChargingJsonFormatter');
           dataForPdf = formatEVChargingJson(validation.data);

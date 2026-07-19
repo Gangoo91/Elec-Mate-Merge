@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileKanban } from '@/components/employer/MobileKanban';
 import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
+import { CopyJobSheet } from '@/components/employer/sheets/CopyJobSheet';
 import { ArchivedJobsSheet } from '@/components/employer/sheets/ArchivedJobsSheet';
 import { JobTemplatesSheet } from '@/components/employer/JobTemplatesSheet';
 import { JobCardContextMenu } from '@/components/employer/JobCardContextMenu';
@@ -30,7 +31,8 @@ import { useAllJobChecklistSummaries } from '@/hooks/useJobChecklists';
 import { JobLabelStrips } from '@/components/employer/JobLabelPicker';
 import { JobChecklistProgress } from '@/components/employer/JobChecklist';
 import { toast } from 'sonner';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
@@ -133,6 +135,7 @@ export function JobBoardSection() {
   const [viewMode, setViewMode] = useState<ViewMode>('kanban');
   const [searchQuery, setSearchQuery] = useState('');
   const [draggedJob, setDraggedJob] = useState<string | null>(null);
+  const [dragOverStage, setDragOverStage] = useState<string | null>(null);
   const [selectedJob, setSelectedJob] = useState<(typeof jobs)[number] | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [quickAddStage, setQuickAddStage] = useState<string | null>(null);
@@ -142,7 +145,7 @@ export function JobBoardSection() {
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
-  const [, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
+  const [copySheetJob, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
 
   const queryClient = useQueryClient();
   const { data: jobsData = [], isLoading, refetch } = useJobs();
@@ -162,10 +165,42 @@ export function JobBoardSection() {
     return map;
   }, [labelAssignments]);
 
-  const jobs = jobsData.map((job) => ({
-    ...job,
-    stage: getStageFromJob(job),
-  }));
+  // Real assigned crews for the mobile cards (was hardcoded []). Same
+  // query/key as JobsSection so the cache is shared.
+  const { data: allAssignments = [] } = useQuery({
+    queryKey: ['all-job-assignments'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('employer_job_assignments').select(`
+          job_id,
+          employee:employer_employees(id, name, avatar_initials, photo_url)
+        `);
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
+  const workersByJob = useMemo(() => {
+    const map = new Map<string, Array<{ initials: string; name?: string }>>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    allAssignments.forEach((a: any) => {
+      if (!a.employee) return;
+      if (!map.has(a.job_id)) map.set(a.job_id, []);
+      map.get(a.job_id)!.push({
+        initials: a.employee.avatar_initials || getInitials(a.employee.name || ''),
+        name: a.employee.name,
+      });
+    });
+    return map;
+  }, [allAssignments]);
+
+  // Cancelled jobs are dead work — they must not reappear in a live column
+  // (or count in the stat strip / pipeline total) off their stale progress.
+  const jobs = jobsData
+    .filter((job) => job.status !== 'Cancelled')
+    .map((job) => ({
+      ...job,
+      stage: getStageFromJob(job),
+    }));
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
@@ -190,11 +225,13 @@ export function JobBoardSection() {
 
   const handleDragStart = (jobId: string) => setDraggedJob(jobId);
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent, stageId: string) => {
     e.preventDefault();
+    if (dragOverStage !== stageId) setDragOverStage(stageId);
   };
 
   const handleDrop = async (stageId: string) => {
+    setDragOverStage(null);
     if (!draggedJob) return;
 
     const job = jobs.find((j) => j.id === draggedJob);
@@ -348,7 +385,7 @@ export function JobBoardSection() {
         label: label.name,
         color: label.colour,
       })),
-      assignedWorkers: [],
+      assignedWorkers: workersByJob.get(job.id) || [],
     };
   });
 
@@ -458,10 +495,10 @@ export function JobBoardSection() {
       <StatStrip
         columns={4}
         stats={[
-          { label: 'To do', value: todoCount, tone: 'orange' },
-          { label: 'In progress', value: inProgressCount, tone: 'blue' },
-          { label: 'Review', value: reviewCount, tone: 'amber' },
-          { label: 'Done', value: doneCount, tone: 'emerald' },
+          { label: 'Quoted / Confirmed', value: todoCount, tone: 'orange' },
+          { label: 'Scheduled / In progress', value: inProgressCount, tone: 'blue' },
+          { label: 'Testing', value: reviewCount, tone: 'amber' },
+          { label: 'Complete', value: doneCount, tone: 'emerald' },
         ]}
       />
 
@@ -495,13 +532,14 @@ export function JobBoardSection() {
             {stages.map((stage) => {
               const stageJobs = getJobsForStage(stage.id);
               const stageValue = getStageValue(stage.id);
-              const isDragTarget = draggedJob !== null;
+              // Only the hovered column lights up — not every column at once.
+              const isDragTarget = draggedJob !== null && dragOverStage === stage.id;
 
               return (
                 <div
                   key={stage.id}
                   className="w-[300px] flex-shrink-0"
-                  onDragOver={handleDragOver}
+                  onDragOver={(e) => handleDragOver(e, stage.id)}
                   onDrop={() => handleDrop(stage.id)}
                 >
                   <ListCard
@@ -538,10 +576,7 @@ export function JobBoardSection() {
                             }))}
                             currentStage={job.stage}
                             isTemplate={job.is_template}
-                            onCopy={() => {
-                              setSelectedJob(job);
-                              setCopySheetJob(job);
-                            }}
+                            onCopy={() => setCopySheetJob(job)}
                             onArchive={() => handleArchiveJob(job.id)}
                             onMove={(stageId) => handleMoveJob(job.id, stageId)}
                             onOpenLabels={() => handleJobClick(job.id)}
@@ -554,6 +589,12 @@ export function JobBoardSection() {
                             <div
                               draggable
                               onDragStart={() => handleDragStart(job.id)}
+                              onDragEnd={() => {
+                                // Cancelled drag (Escape / dropped outside a
+                                // column) must not leave a column highlighted.
+                                setDraggedJob(null);
+                                setDragOverStage(null);
+                              }}
                               className={cn(
                                 'group relative cursor-grab active:cursor-grabbing transition-all',
                                 draggedJob === job.id && 'opacity-50'
@@ -718,6 +759,11 @@ export function JobBoardSection() {
       )}
 
       <ViewJobSheet job={selectedJob} open={sheetOpen} onOpenChange={setSheetOpen} />
+      <CopyJobSheet
+        job={copySheetJob}
+        open={!!copySheetJob}
+        onOpenChange={(open) => !open && setCopySheetJob(null)}
+      />
       <ArchivedJobsSheet open={showArchived} onOpenChange={setShowArchived} />
       <JobTemplatesSheet open={showTemplates} onOpenChange={setShowTemplates} />
     </PageFrame>

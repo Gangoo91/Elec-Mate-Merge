@@ -60,6 +60,15 @@ class ErrorBoundary extends Component<Props, State> {
       errorString.includes('loading css chunk') ||
       errorString.includes('failed to load module script') ||
       errorString.includes('importing a module script failed') ||
+      // Stale-deploy export mismatch: a cached entry chunk imports an export
+      // that a freshly deployed module renamed/removed. This is the #1 cause of
+      // guide-page crashes for SEO visitors (JAVASCRIPT-REACT-B7). The global
+      // main.tsx handler already catches these, but errors thrown inside a
+      // React.lazy render are intercepted here first — so mirror those
+      // signatures. Chrome/Edge: "does not provide an export named 'x'";
+      // Safari: "Importing binding name 'x' is not found".
+      errorString.includes('provide an export') ||
+      errorString.includes('importing binding name') ||
       ((errorString.includes('mime type') || errorString.includes('text/html')) &&
         stackString.includes('lazy')) ||
       (errorString.includes('typeerror') && stackString.includes('lazy')) ||

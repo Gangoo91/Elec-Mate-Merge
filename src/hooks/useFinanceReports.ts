@@ -342,18 +342,33 @@ export function useExpensesByCategory() {
 
 // Job profitability ranking
 export function useJobProfitability() {
-  const { jobFinancials, isLoading, error } = useFinanceData();
+  const { jobFinancials, invoices, isLoading, error } = useFinanceData();
 
   const jobs = useMemo((): JobProfitability[] => {
+    // job_financials.invoiced/paid are never written by anything — derive
+    // per-job figures from the invoices actually raised against the job.
+    const invoiceTotals = new Map<string, { invoiced: number; paid: number }>();
+    invoices.forEach((inv) => {
+      if (!inv.job_id) return;
+      const entry = invoiceTotals.get(inv.job_id) || { invoiced: 0, paid: 0 };
+      entry.invoiced += Number(inv.amount || 0);
+      if (inv.status === 'Paid') entry.paid += Number(inv.amount || 0);
+      invoiceTotals.set(inv.job_id, entry);
+    });
+
     return jobFinancials
       .filter((jf) => jf.job)
       .map((jf) => {
         const budgetTotal = Number(jf.budget_total || 0);
         const actualTotal = Number(jf.actual_total || 0);
-        const invoiced = Number(jf.invoiced || 0);
-        const paid = Number(jf.paid || 0);
-        const profit = invoiced - actualTotal;
-        const margin = invoiced > 0 ? (profit / invoiced) * 100 : 0;
+        const derived = invoiceTotals.get(jf.job_id);
+        const invoiced = Math.max(Number(jf.invoiced || 0), derived?.invoiced || 0);
+        const paid = Math.max(Number(jf.paid || 0), derived?.paid || 0);
+        // Until a job has been invoiced, judge profitability against its
+        // budgeted revenue rather than reporting pure negative cost.
+        const revenueBasis = invoiced > 0 ? invoiced : budgetTotal;
+        const profit = revenueBasis - actualTotal;
+        const margin = revenueBasis > 0 ? (profit / revenueBasis) * 100 : 0;
 
         return {
           jobId: jf.job_id,
@@ -369,7 +384,7 @@ export function useJobProfitability() {
         };
       })
       .sort((a, b) => b.profit - a.profit);
-  }, [jobFinancials]);
+  }, [jobFinancials, invoices]);
 
   return { data: jobs, isLoading, error };
 }

@@ -291,7 +291,8 @@ export function useUploadInvoice() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const fileName = `vehicle-invoices/${user.id}/${vehicleId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+      // First folder must be auth.uid() — visual-uploads INSERT policy.
+      const fileName = `${user.id}/vehicle-invoices/${vehicleId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
 
       const { data, error } = await supabase.storage.from('visual-uploads').upload(fileName, file, {
         contentType: file.type,
@@ -300,9 +301,9 @@ export function useUploadInvoice() {
 
       if (error) throw error;
 
-      const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
-
-      return urlData.publicUrl;
+      // Store the bare storage path (privacy-ready) — resolve with
+      // resolveStorageUrl('visual-uploads', …) wherever this displays.
+      return data.path;
     },
   });
 }

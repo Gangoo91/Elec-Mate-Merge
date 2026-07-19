@@ -340,7 +340,9 @@ export function useLowStockItems() {
   });
 }
 
-// Price Book Search with pagination
+// Price Book Search with pagination. Enabled with an empty query too —
+// searchPriceBook then lists the whole (paged) book, so the Materials /
+// Equipment tabs are browsable without typing a search first.
 export function useSearchPriceBook(query: string, category?: string) {
   return useInfiniteQuery({
     queryKey: ['price_book', 'search', query, category],
@@ -348,7 +350,6 @@ export function useSearchPriceBook(query: string, category?: string) {
     getNextPageParam: (lastPage, allPages) =>
       allPages.length * 20 < lastPage.total ? allPages.length : undefined,
     initialPageParam: 0,
-    enabled: query.length >= 2,
   });
 }
 

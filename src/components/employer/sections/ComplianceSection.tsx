@@ -1,5 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -8,15 +18,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { RefreshCw, AlertTriangle } from 'lucide-react';
+import { RefreshCw, ExternalLink, Upload, X } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { openExternalUrl } from '@/utils/open-external-url';
+import { useToast } from '@/hooks/use-toast';
 import {
   useComplianceDocuments,
   useComplianceStats,
   useCreateComplianceDocument,
+  useUpdateComplianceDocument,
+  useDeleteComplianceDocument,
   type DocumentType,
   type DocumentCategory,
   type ComplianceDocument,
 } from '@/hooks/useComplianceDocuments';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useJobs } from '@/hooks/useJobs';
 import {
   PageFrame,
   PageHero,
@@ -95,36 +112,195 @@ function formatDateTime(dateStr?: string | null): string {
   });
 }
 
+const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // matches the bucket's 20MB limit
+
+/** Upload to the private compliance-documents bucket ({uid}/... path per its
+ *  RLS policies) and return the storage path stored in file_url. */
+async function uploadComplianceFile(file: File): Promise<string> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+  const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+  const path = `${user.id}/${Date.now()}-${safeName}`;
+  const { data, error } = await supabase.storage
+    .from('compliance-documents')
+    .upload(path, file, { contentType: file.type || undefined, upsert: false });
+  if (error) throw error;
+  return data.path;
+}
+
 export function ComplianceSection() {
+  const { toast } = useToast();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<FilterValue>('all');
   const [selected, setSelected] = useState<ComplianceDocument | null>(null);
 
   const { data: documents, isLoading, error, refetch } = useComplianceDocuments();
   const createDocument = useCreateComplianceDocument();
+  const updateDocument = useUpdateComplianceDocument();
+  const deleteDocument = useDeleteComplianceDocument();
+  const { data: employees = [] } = useEmployees();
+  const { data: jobs = [] } = useJobs();
   const [addOpen, setAddOpen] = useState(false);
-  const [newDoc, setNewDoc] = useState({
+  const [isEditing, setIsEditing] = useState(false);
+
+  const EMPTY_DOC = {
     title: '',
     document_type: 'Certificate' as DocumentType,
     category: 'Insurance' as DocumentCategory,
     expiry_date: '',
     notes: '',
-  });
+    employee_id: '',
+    job_id: '',
+  };
+  const [newDoc, setNewDoc] = useState(EMPTY_DOC);
+  const [editDoc, setEditDoc] = useState(EMPTY_DOC);
+  const [newFile, setNewFile] = useState<File | null>(null);
+  const [editFile, setEditFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const newFileInputRef = useRef<HTMLInputElement>(null);
+  const editFileInputRef = useRef<HTMLInputElement>(null);
+
+  const pickFile =
+    (setFile: (f: File | null) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0] ?? null;
+      // Allow re-selecting the same file after clearing
+      e.target.value = '';
+      if (!file) return;
+      if (file.size > MAX_UPLOAD_BYTES) {
+        toast({
+          title: 'File too large',
+          description: 'Documents must be 20MB or smaller.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      setFile(file);
+    };
+
+  const employeeNameById = useMemo(
+    () => new Map(employees.map((e) => [e.id, e.name])),
+    [employees]
+  );
+  const jobTitleById = useMemo(() => new Map(jobs.map((j) => [j.id, j.title])), [jobs]);
 
   const handleAddDocument = async () => {
     if (!newDoc.title.trim()) return;
+    let fileUrl: string | undefined;
+    if (newFile) {
+      setIsUploading(true);
+      try {
+        fileUrl = await uploadComplianceFile(newFile);
+      } catch (err) {
+        toast({
+          title: 'Upload failed',
+          description:
+            err instanceof Error ? err.message : 'Could not upload the document. Try again.',
+          variant: 'destructive',
+        });
+        return;
+      } finally {
+        setIsUploading(false);
+      }
+    }
     await createDocument.mutateAsync({
       title: newDoc.title.trim(),
       document_type: newDoc.document_type,
       category: newDoc.category,
       status: 'Current',
       expiry_date: newDoc.expiry_date || undefined,
-      notes: newDoc.notes || undefined,
+      notes: newDoc.notes.trim() || undefined,
+      employee_id: newDoc.employee_id || undefined,
+      job_id: newDoc.job_id || undefined,
+      file_url: fileUrl,
       signatures_required: 0,
       signatures_collected: 0,
     });
     setAddOpen(false);
-    setNewDoc({ title: '', document_type: 'Certificate', category: 'Insurance', expiry_date: '', notes: '' });
+    setNewDoc(EMPTY_DOC);
+    setNewFile(null);
+  };
+
+  const startEditing = (doc: ComplianceDocument) => {
+    setEditDoc({
+      title: doc.title ?? '',
+      document_type: (doc.document_type ?? 'Certificate') as DocumentType,
+      category: (doc.category ?? 'Insurance') as DocumentCategory,
+      expiry_date: doc.expiry_date ? doc.expiry_date.slice(0, 10) : '',
+      notes: doc.notes ?? '',
+      employee_id: doc.employee_id ?? '',
+      job_id: doc.job_id ?? '',
+    });
+    setEditFile(null);
+    setIsEditing(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!selected || !editDoc.title.trim()) return;
+    let fileUrl: string | undefined;
+    if (editFile) {
+      setIsUploading(true);
+      try {
+        fileUrl = await uploadComplianceFile(editFile);
+      } catch (err) {
+        toast({
+          title: 'Upload failed',
+          description:
+            err instanceof Error ? err.message : 'Could not upload the document. Try again.',
+          variant: 'destructive',
+        });
+        return;
+      } finally {
+        setIsUploading(false);
+      }
+    }
+    const updated = await updateDocument.mutateAsync({
+      id: selected.id,
+      title: editDoc.title.trim(),
+      document_type: editDoc.document_type,
+      category: editDoc.category,
+      // null (not undefined) so cleared values actually clear in the DB
+      expiry_date: editDoc.expiry_date || null,
+      notes: editDoc.notes.trim() || null,
+      employee_id: editDoc.employee_id || null,
+      job_id: editDoc.job_id || null,
+      ...(fileUrl ? { file_url: fileUrl } : {}),
+    });
+    setSelected(updated);
+    setEditFile(null);
+    setIsEditing(false);
+  };
+
+  const handleDelete = async () => {
+    if (!selected) return;
+    await deleteDocument.mutateAsync(selected.id);
+    setConfirmDelete(false);
+    setIsEditing(false);
+    setSelected(null);
+  };
+
+  const handleViewDocument = async () => {
+    if (!selected?.file_url) return;
+    // Legacy rows may hold a full URL; new uploads store a private-bucket path
+    // that needs a short-lived signed URL.
+    if (selected.file_url.startsWith('http')) {
+      await openExternalUrl(selected.file_url);
+      return;
+    }
+    const { data, error: signError } = await supabase.storage
+      .from('compliance-documents')
+      .createSignedUrl(selected.file_url, 3600);
+    if (signError || !data?.signedUrl) {
+      toast({
+        title: 'Could not open document',
+        description: 'The file could not be retrieved. Try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    await openExternalUrl(data.signedUrl);
   };
   const { data: stats } = useComplianceStats();
 
@@ -148,7 +324,9 @@ export function ComplianceSection() {
       if (item.kind === 'audits') audits += 1;
     }
     if (stats?.total !== undefined && enriched.length === 0) {
-      onTrack = stats.compliant ?? onTrack;
+      // The stats hook exposes `current`, not `compliant` — the old field name
+      // was a type error and always fell through to 0.
+      onTrack = stats.current ?? onTrack;
       dueSoon = stats.expiring ?? dueSoon;
       overdue = stats.expired ?? overdue;
     }
@@ -239,7 +417,7 @@ export function ComplianceSection() {
           { label: 'On track', value: counters.onTrack, tone: 'emerald' },
           { label: 'Due 30d', value: counters.dueSoon, tone: 'amber' },
           { label: 'Overdue', value: counters.overdue, tone: 'red' },
-          { label: 'Audits complete', value: counters.audits, accent: true },
+          { label: 'Audit docs', value: counters.audits, accent: true },
         ]}
       />
 
@@ -266,8 +444,18 @@ export function ComplianceSection() {
               {filtered.length === 0 ? (
                 <div className="px-4 py-8">
                   <EmptyState
-                    title="No matching compliance items"
-                    description="Adjust the filters or search to see scheduled renewals."
+                    title={
+                      (documents?.length ?? 0) === 0
+                        ? 'No compliance records yet'
+                        : 'No matching compliance items'
+                    }
+                    description={
+                      (documents?.length ?? 0) === 0
+                        ? 'Add your insurance, PAT and calibration renewals to track them here.'
+                        : 'Adjust the filters or search to see scheduled renewals.'
+                    }
+                    action={(documents?.length ?? 0) === 0 ? 'Add document' : undefined}
+                    onAction={(documents?.length ?? 0) === 0 ? () => setAddOpen(true) : undefined}
                   />
                 </div>
               ) : (
@@ -341,77 +529,316 @@ export function ComplianceSection() {
         </>
       )}
 
-      {selected && (
-        <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title={selected.title}
-            meta={<Pill tone={statusForDoc(selected).tone}>{statusForDoc(selected).label}</Pill>}
-            action="Close"
-            onAction={() => setSelected(null)}
-          />
-          <ListBody>
-            <ListRow
-              title="Type"
-              subtitle={selected.document_type ?? '—'}
-              trailing={<span className="text-[12px] text-white">{selected.category ?? '—'}</span>}
-            />
-            <ListRow
-              title="Renews"
-              subtitle={formatDate(selected.expiry_date)}
-              trailing={
-                <Pill tone={statusForDoc(selected).tone}>{statusForDoc(selected).label}</Pill>
-              }
-            />
-            {selected.signatures_required > 0 && (
-              <ListRow
-                title="Signatures"
-                subtitle={`${selected.signatures_collected}/${selected.signatures_required} collected`}
-                trailing={
-                  <Pill
-                    tone={
-                      selected.signatures_collected >= selected.signatures_required
-                        ? 'emerald'
-                        : 'amber'
-                    }
-                  >
-                    {selected.signatures_collected >= selected.signatures_required
-                      ? 'Complete'
-                      : 'Pending'}
-                  </Pill>
-                }
-              />
-            )}
-            <ListRow
-              title="Created"
-              subtitle={formatDateTime(selected.created_at)}
-              trailing={
-                selected.updated_at && selected.updated_at !== selected.created_at ? (
-                  <span className="text-[12px] text-white">
-                    Updated {formatDateTime(selected.updated_at)}
-                  </span>
-                ) : null
-              }
-            />
-          </ListBody>
-        </ListCard>
-      )}
+      {/* Detail sheet — view, edit/renew and delete */}
+      <Sheet
+        open={!!selected}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelected(null);
+            setIsEditing(false);
+            setEditFile(null);
+          }
+        }}
+      >
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
+          {selected && (
+            <>
+              <SheetHeader>
+                <SheetTitle className="text-left text-white">{selected.title}</SheetTitle>
+              </SheetHeader>
 
-      {!isLoading && !error && (documents?.length ?? 0) === 0 && (
-        <EmptyState
-          title="No compliance records yet"
-          description="Insurance, PAT and calibration renewals will appear here once added."
-        />
-      )}
+              {isEditing ? (
+                <div className="space-y-4 mt-6">
+                  <Input
+                    placeholder="Title"
+                    value={editDoc.title}
+                    onChange={(e) => setEditDoc((p) => ({ ...p, title: e.target.value }))}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Select
+                      value={editDoc.document_type}
+                      onValueChange={(v) =>
+                        setEditDoc((p) => ({ ...p, document_type: v as DocumentType }))
+                      }
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                        {['Certificate', 'Policy', 'Permit', 'Induction', 'Briefing', 'Method Statement', 'RAMS Sign-off'].map((t) => (
+                          <SelectItem key={t} value={t}>
+                            {t}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={editDoc.category}
+                      onValueChange={(v) =>
+                        setEditDoc((p) => ({ ...p, category: v as DocumentCategory }))
+                      }
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                        {['Insurance', 'Safety', 'Legal', 'Training', 'Permits', 'Induction'].map((c) => (
+                          <SelectItem key={c} value={c}>
+                            {c}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-[11px] uppercase tracking-wider text-white/50">
+                      Expiry / renewal date
+                    </label>
+                    <Input
+                      type="date"
+                      value={editDoc.expiry_date}
+                      onChange={(e) => setEditDoc((p) => ({ ...p, expiry_date: e.target.value }))}
+                      className="h-11 mt-1 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Select
+                      value={editDoc.employee_id || '__none__'}
+                      onValueChange={(v) =>
+                        setEditDoc((p) => ({ ...p, employee_id: v === '__none__' ? '' : v }))
+                      }
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                        <SelectValue placeholder="Link employee" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                        <SelectItem value="__none__">No employee</SelectItem>
+                        {employees.map((emp) => (
+                          <SelectItem key={emp.id} value={emp.id}>
+                            {emp.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={editDoc.job_id || '__none__'}
+                      onValueChange={(v) =>
+                        setEditDoc((p) => ({ ...p, job_id: v === '__none__' ? '' : v }))
+                      }
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                        <SelectValue placeholder="Link job" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                        <SelectItem value="__none__">No job</SelectItem>
+                        {jobs.map((job) => (
+                          <SelectItem key={job.id} value={job.id}>
+                            {job.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Input
+                    placeholder="Notes (optional)"
+                    value={editDoc.notes}
+                    onChange={(e) => setEditDoc((p) => ({ ...p, notes: e.target.value }))}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
+                  <input
+                    ref={editFileInputRef}
+                    type="file"
+                    accept="application/pdf,image/*"
+                    className="hidden"
+                    onChange={pickFile(setEditFile)}
+                  />
+                  {editFile ? (
+                    <div className="flex items-center gap-2 h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.1]">
+                      <span className="flex-1 min-w-0 truncate text-[13px] text-white">
+                        {editFile.name}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setEditFile(null)}
+                        aria-label="Remove selected file"
+                        className="p-2 -mr-2 text-white/60 hover:text-white touch-manipulation"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => editFileInputRef.current?.click()}
+                      className="h-11 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
+                    >
+                      <Upload className="h-4 w-4" />
+                      {selected.file_url ? 'Replace document (PDF/image, 20MB)' : 'Attach document (PDF/image, 20MB)'}
+                    </button>
+                  )}
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(false)}
+                      className="flex-1 h-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation"
+                    >
+                      Cancel
+                    </button>
+                    <PrimaryButton
+                      onClick={handleSaveEdit}
+                      disabled={!editDoc.title.trim() || updateDocument.isPending || isUploading}
+                      fullWidth
+                    >
+                      {isUploading
+                        ? 'Uploading…'
+                        : updateDocument.isPending
+                          ? 'Saving…'
+                          : 'Save changes'}
+                    </PrimaryButton>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4 mt-6">
+                  <ListCard>
+                    <ListCardHeader
+                      tone="yellow"
+                      title="Details"
+                      meta={
+                        <Pill tone={statusForDoc(selected).tone}>
+                          {statusForDoc(selected).label}
+                        </Pill>
+                      }
+                    />
+                    <ListBody>
+                      <ListRow
+                        title="Type"
+                        subtitle={selected.document_type ?? '—'}
+                        trailing={
+                          <span className="text-[12px] text-white">
+                            {selected.category ?? '—'}
+                          </span>
+                        }
+                      />
+                      <ListRow
+                        title="Renews"
+                        subtitle={formatDate(selected.expiry_date)}
+                        trailing={
+                          <Pill tone={statusForDoc(selected).tone}>
+                            {statusForDoc(selected).label}
+                          </Pill>
+                        }
+                      />
+                      {selected.employee_id && (
+                        <ListRow
+                          title="Employee"
+                          subtitle={employeeNameById.get(selected.employee_id) ?? 'Unknown'}
+                        />
+                      )}
+                      {selected.job_id && (
+                        <ListRow
+                          title="Job"
+                          subtitle={jobTitleById.get(selected.job_id) ?? 'Unknown'}
+                        />
+                      )}
+                      {selected.notes && <ListRow title="Notes" subtitle={selected.notes} />}
+                      {selected.signatures_required > 0 && (
+                        <ListRow
+                          title="Signatures"
+                          subtitle={`${selected.signatures_collected}/${selected.signatures_required} collected`}
+                          trailing={
+                            <Pill
+                              tone={
+                                selected.signatures_collected >= selected.signatures_required
+                                  ? 'emerald'
+                                  : 'amber'
+                              }
+                            >
+                              {selected.signatures_collected >= selected.signatures_required
+                                ? 'Complete'
+                                : 'Pending'}
+                            </Pill>
+                          }
+                        />
+                      )}
+                      <ListRow
+                        title="Created"
+                        subtitle={formatDateTime(selected.created_at)}
+                        trailing={
+                          selected.updated_at && selected.updated_at !== selected.created_at ? (
+                            <span className="text-[12px] text-white">
+                              Updated {formatDateTime(selected.updated_at)}
+                            </span>
+                          ) : null
+                        }
+                      />
+                    </ListBody>
+                  </ListCard>
 
-      {error && (
-        <div className="hidden">
-          <AlertTriangle aria-hidden />
-        </div>
-      )}
+                  {selected.file_url && (
+                    <button
+                      type="button"
+                      onClick={handleViewDocument}
+                      className="h-11 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      View document
+                    </button>
+                  )}
 
-      <Sheet open={addOpen} onOpenChange={setAddOpen}>
-        <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setConfirmDelete(true)}
+                      disabled={deleteDocument.isPending}
+                      className="flex-1 h-11 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-[13px] font-medium touch-manipulation disabled:opacity-50"
+                    >
+                      {deleteDocument.isPending ? 'Deleting…' : 'Delete'}
+                    </button>
+                    <PrimaryButton onClick={() => startEditing(selected)} fullWidth>
+                      Edit / record renewal
+                    </PrimaryButton>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
+
+      <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete document?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              {selected
+                ? `"${selected.title}" will be permanently removed. This cannot be undone.`
+                : 'This document will be permanently removed.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="h-11 touch-manipulation bg-red-500/90 hover:bg-red-500 text-white"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <Sheet
+        open={addOpen}
+        onOpenChange={(open) => {
+          setAddOpen(open);
+          if (!open) setNewFile(null);
+        }}
+      >
+        <SheetContent side="bottom" className="p-0 rounded-t-2xl max-h-[90vh] overflow-y-auto">
           <div className="bg-background px-4 pt-4 pb-8 space-y-4">
             <SheetHeader>
               <SheetTitle className="text-left text-base">Add compliance document</SheetTitle>
@@ -465,12 +892,87 @@ export function ComplianceSection() {
                 className="h-11 mt-1 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
               />
             </div>
+            <div className="grid grid-cols-2 gap-3">
+              <Select
+                value={newDoc.employee_id || '__none__'}
+                onValueChange={(v) =>
+                  setNewDoc((p) => ({ ...p, employee_id: v === '__none__' ? '' : v }))
+                }
+              >
+                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                  <SelectValue placeholder="Link employee (optional)" />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  <SelectItem value="__none__">No employee</SelectItem>
+                  {employees.map((emp) => (
+                    <SelectItem key={emp.id} value={emp.id}>
+                      {emp.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={newDoc.job_id || '__none__'}
+                onValueChange={(v) =>
+                  setNewDoc((p) => ({ ...p, job_id: v === '__none__' ? '' : v }))
+                }
+              >
+                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                  <SelectValue placeholder="Link job (optional)" />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  <SelectItem value="__none__">No job</SelectItem>
+                  {jobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Input
+              placeholder="Notes (optional)"
+              value={newDoc.notes}
+              onChange={(e) => setNewDoc((p) => ({ ...p, notes: e.target.value }))}
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            />
+            <input
+              ref={newFileInputRef}
+              type="file"
+              accept="application/pdf,image/*"
+              className="hidden"
+              onChange={pickFile(setNewFile)}
+            />
+            {newFile ? (
+              <div className="flex items-center gap-2 h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.1]">
+                <span className="flex-1 min-w-0 truncate text-[13px] text-white">
+                  {newFile.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setNewFile(null)}
+                  aria-label="Remove selected file"
+                  className="p-2 -mr-2 text-white/60 hover:text-white touch-manipulation"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => newFileInputRef.current?.click()}
+                className="h-11 w-full inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
+              >
+                <Upload className="h-4 w-4" />
+                Attach document (PDF/image, 20MB)
+              </button>
+            )}
             <PrimaryButton
               onClick={handleAddDocument}
-              disabled={!newDoc.title.trim() || createDocument.isPending}
+              disabled={!newDoc.title.trim() || createDocument.isPending || isUploading}
               fullWidth
             >
-              {createDocument.isPending ? 'Saving…' : 'Add document'}
+              {isUploading ? 'Uploading…' : createDocument.isPending ? 'Saving…' : 'Add document'}
             </PrimaryButton>
           </div>
         </SheetContent>

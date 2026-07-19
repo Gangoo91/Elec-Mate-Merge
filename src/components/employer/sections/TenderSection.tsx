@@ -17,6 +17,7 @@ import { CreateTenderDialog } from '@/components/employer/dialogs/CreateTenderDi
 import { ViewTenderSheet } from '@/components/employer/sheets/ViewTenderSheet';
 import { ConvertTenderToJobDialog } from '@/components/employer/dialogs/ConvertTenderToJobDialog';
 import { TenderOpportunitiesSection } from '@/components/employer/sections/TenderOpportunitiesSection';
+import { type OpportunityEstimate } from '@/components/employer/sheets/OpportunityDetailSheet';
 import { type TenderOpportunity } from '@/hooks/useOpportunities';
 import {
   useTenders,
@@ -59,13 +60,14 @@ import {
   type Tone,
 } from '@/components/employer/editorial';
 
-type TenderTab = 'matching' | 'shortlisted' | 'bidding' | 'closed';
+type TenderTab = 'matching' | 'bidding' | 'closed';
 
-const tabToStatus: Record<TenderTab, Tender['status']> = {
-  matching: 'Open',
-  shortlisted: 'Open',
-  bidding: 'Submitted',
-  closed: 'Won',
+// Closed includes Withdrawn — otherwise a withdrawn tender vanishes from
+// every tab and its "Reopen" action becomes unreachable.
+const tabToStatuses: Record<TenderTab, Tender['status'][]> = {
+  matching: ['Open'],
+  bidding: ['Submitted'],
+  closed: ['Won', 'Lost', 'Withdrawn'],
 };
 
 const stageToTone = (status: Tender['status']): Tone => {
@@ -200,13 +202,9 @@ export function TenderSection() {
       setEstimatorFiles([]);
       setEstimatorTender(null);
     } catch (error) {
+      // The upload/estimate mutations already surface their own destructive
+      // toasts — no reassuring second toast over a failure.
       console.error('Estimate generation error:', error);
-      if (estimatorFiles.length > 0) {
-        toast({
-          title: 'Documents Uploaded',
-          description: 'Files saved. AI estimation will be available soon.',
-        });
-      }
     } finally {
       setIsGeneratingEstimate(false);
       setIsUploadingForEstimate(false);
@@ -218,7 +216,10 @@ export function TenderSection() {
     setShowConvertDialog(true);
   };
 
-  const handleStartTenderFromOpportunity = (opportunity: TenderOpportunity) => {
+  const handleStartTenderFromOpportunity = (
+    opportunity: TenderOpportunity,
+    estimate?: OpportunityEstimate
+  ) => {
     const sectorToCategory: Record<string, string> = {
       public: 'Public Sector',
       housing: 'Residential',
@@ -228,16 +229,28 @@ export function TenderSection() {
       industrial: 'Industrial',
     };
 
+    const fmt = (n: number) => `£${Math.round(n).toLocaleString()}`;
+    // Carry the AI estimate (including any manual edits) into the tracked
+    // tender so "Use this estimate" isn't a dead end.
+    const estimateNote = estimate
+      ? `\nAI estimate: ${fmt(estimate.total_estimate)} (labour ${fmt(estimate.labour_cost)}, materials ${fmt(estimate.materials_cost)}, equipment ${fmt(estimate.equipment_cost)}, overheads ${fmt(estimate.overheads)}, profit ${fmt(estimate.profit)})${estimate.programme ? `\nProgramme: ${estimate.programme}` : ''}`
+      : '';
+
     const initialData = {
       title: opportunity.title,
       client: opportunity.client_name,
-      value: opportunity.value_exact || opportunity.value_high || opportunity.value_low || 0,
+      value:
+        estimate?.total_estimate ||
+        opportunity.value_exact ||
+        opportunity.value_high ||
+        opportunity.value_low ||
+        0,
       deadline: opportunity.deadline ? opportunity.deadline.split('T')[0] : '',
       category: sectorToCategory[opportunity.sector || ''] || 'Other',
       description: opportunity.scope_of_works || opportunity.description || '',
       contact_name: opportunity.contact_name || '',
       contact_email: opportunity.contact_email || '',
-      notes: `Source: ${opportunity.source?.replace('_', ' ')}${opportunity.location_text ? `\nLocation: ${opportunity.location_text}` : ''}`,
+      notes: `Source: ${opportunity.source?.replace('_', ' ')}${opportunity.location_text ? `\nLocation: ${opportunity.location_text}` : ''}${estimateNote}`,
       opportunity_id: opportunity.id,
       source_url: opportunity.source_url || '',
       fromOpportunity: true,
@@ -249,9 +262,7 @@ export function TenderSection() {
   };
 
   const filteredTenders = tenders.filter((t) => {
-    const matchesTab = t.status === tabToStatus[activeTab] ||
-      (activeTab === 'closed' && t.status === 'Lost');
-    if (!matchesTab) return false;
+    if (!tabToStatuses[activeTab].includes(t.status)) return false;
     if (!search.trim()) return true;
     const q = search.toLowerCase();
     return (
@@ -264,9 +275,8 @@ export function TenderSection() {
 
   const tabCounts = {
     matching: tenders.filter((t) => t.status === 'Open').length,
-    shortlisted: tenders.filter((t) => t.status === 'Open').length,
     bidding: stats.submitted,
-    closed: stats.won + stats.lost,
+    closed: tenders.filter((t) => tabToStatuses.closed.includes(t.status)).length,
   };
 
   const heroActions = (
@@ -316,13 +326,13 @@ export function TenderSection() {
         />
 
         <StatStrip
-          columns={4}
+          columns={3}
           stats={[
             { label: 'Open', value: stats.open, tone: 'purple' },
             { label: 'Bidding', value: stats.submitted, tone: 'blue' },
             {
               label: 'Won this year £',
-              value: formatGbp(stats.wonValue),
+              value: formatGbp(stats.wonValueThisYear),
               accent: true,
             },
           ]}

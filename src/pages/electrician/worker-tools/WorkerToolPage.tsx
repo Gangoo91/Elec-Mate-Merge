@@ -20,8 +20,11 @@ import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
 
-// Keep in sync with WorkerToolsHub's dev whitelist.
-const DEV_WHITELIST = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
+// Keep in sync with WorkerToolsHub's dev whitelist (dev builds only; never
+// bypasses the team gate in production bundles).
+const DEV_WHITELIST = import.meta.env.DEV
+  ? ['founder@elec-mate.com', 'andrewgangoo91@gmail.com']
+  : [];
 
 const maxWidthClass: Record<string, string> = {
   lg: 'max-w-lg',

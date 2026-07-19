@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const EXPENSE_CATEGORIES = [
   { id: 'Materials', icon: 'Wrench', color: 'blue', label: 'Materials' },
   { id: 'Travel', icon: 'Car', color: 'green', label: 'Travel' },
+  { id: 'Mileage', icon: 'Route', color: 'cyan', label: 'Mileage' },
   { id: 'Parking', icon: 'ParkingCircle', color: 'purple', label: 'Parking' },
   { id: 'Tools', icon: 'Hammer', color: 'orange', label: 'Tools' },
   { id: 'PPE', icon: 'HardHat', color: 'red', label: 'PPE' },
@@ -20,6 +21,22 @@ export const EXPENSE_CATEGORIES = [
 ] as const;
 
 export type ExpenseCategory = (typeof EXPENSE_CATEGORIES)[number]['id'];
+
+// Worker self-service submits lowercase categories ('travel', 'subsistence'…)
+// while the employer side uses capitalised ids — normalise before comparing
+// so employer filters/tabs don't silently drop worker claims.
+const WORKER_CATEGORY_ALIASES: Record<string, ExpenseCategory> = {
+  subsistence: 'Meals',
+};
+
+export function normaliseExpenseCategory(raw: string | null | undefined): ExpenseCategory {
+  const value = (raw || '').trim();
+  if (!value) return 'Other';
+  const alias = WORKER_CATEGORY_ALIASES[value.toLowerCase()];
+  if (alias) return alias;
+  const match = EXPENSE_CATEGORIES.find((c) => c.id.toLowerCase() === value.toLowerCase());
+  return match ? match.id : 'Other';
+}
 export type ExpenseStatus = 'Pending' | 'Approved' | 'Paid' | 'Rejected';
 
 export interface ExpenseFilters {
@@ -86,17 +103,27 @@ export function useExpenses(filters?: ExpenseFilters) {
     [['expense_claims']]
   );
 
-  // Calculate stats
+  // Calculate stats. When an employee filter is set (employee mode /
+  // "My expenses") the stat strip must reflect only that person's claims,
+  // not the whole company's.
+  const statsBase = useMemo(
+    () =>
+      filters?.employeeId
+        ? expenses.filter((e) => e.employee_id === filters.employeeId)
+        : expenses,
+    [expenses, filters?.employeeId]
+  );
+
   const stats = useMemo((): ExpenseStats => {
     const result: ExpenseStats = {
       pending: { count: 0, total: 0 },
       approved: { count: 0, total: 0 },
       paid: { count: 0, total: 0 },
       rejected: { count: 0, total: 0 },
-      total: { count: expenses.length, total: 0 },
+      total: { count: statsBase.length, total: 0 },
     };
 
-    expenses.forEach((expense) => {
+    statsBase.forEach((expense) => {
       const amount = Number(expense.amount) || 0;
       result.total.total += amount;
 
@@ -121,7 +148,7 @@ export function useExpenses(filters?: ExpenseFilters) {
     });
 
     return result;
-  }, [expenses]);
+  }, [statsBase]);
 
   // Filter expenses
   const filteredExpenses = useMemo(() => {
@@ -134,10 +161,11 @@ export function useExpenses(filters?: ExpenseFilters) {
         if (!statuses.includes(expense.status as ExpenseStatus)) return false;
       }
 
-      // Category filter
+      // Category filter — normalised so worker-submitted lowercase
+      // categories still match the employer's capitalised ids
       if (filters.category) {
         const categories = Array.isArray(filters.category) ? filters.category : [filters.category];
-        if (!categories.includes(expense.category as ExpenseCategory)) return false;
+        if (!categories.includes(normaliseExpenseCategory(expense.category))) return false;
       }
 
       // Employee filter
@@ -375,6 +403,7 @@ export function useExpenses(filters?: ExpenseFilters) {
     isApproving: approveMutation.isPending,
     isRejecting: rejectMutation.isPending,
     isMarkingPaid: markPaidMutation.isPending,
+    isCreating: createMutation.isPending,
   };
 }
 
@@ -527,10 +556,11 @@ export function formatCompactCurrency(amount: number): string {
   return formatCurrency(amount);
 }
 
-// Get category config by ID
+// Get category config by ID (tolerates worker-submitted lowercase values)
 export function getCategoryConfig(categoryId: string) {
+  const normalised = normaliseExpenseCategory(categoryId);
   return (
-    EXPENSE_CATEGORIES.find((c) => c.id === categoryId) ||
+    EXPENSE_CATEGORIES.find((c) => c.id === normalised) ||
     EXPENSE_CATEGORIES[EXPENSE_CATEGORIES.length - 1]
   );
 }

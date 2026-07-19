@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { GraduationCap, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { format, parseISO } from 'date-fns';
@@ -113,13 +113,10 @@ export function ApprenticeProgressSection() {
               meta={<Pill tone="blue">{rows.length}</Pill>}
             />
             <ListBody>
-              {rows.map((r) => {
-                const otjPct = r.otjRequiredHours
-                  ? Math.round((r.otjVerifiedHours / r.otjRequiredHours) * 100)
-                  : 0;
+              {rows.map((r, i) => {
                 return (
                   <ListRow
-                    key={`${r.studentUserId}-${rows.indexOf(r)}`}
+                    key={`${r.studentUserId}-${i}`}
                     accent={r.reviewOverdue ? 'red' : r.otjOnTrack ? 'emerald' : 'amber'}
                     lead={<Avatar initials={getInitials(r.name)} />}
                     title={r.name}

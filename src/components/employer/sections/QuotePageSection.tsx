@@ -67,6 +67,7 @@ export function QuotePageSection() {
   const [slug, setSlug] = useState('');
   const [headline, setHeadline] = useState('');
   const [copied, setCopied] = useState(false);
+  const [slugError, setSlugError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!config) return;
@@ -90,11 +91,7 @@ export function QuotePageSection() {
   const handleSave = async () => {
     const clean = slugify(slug);
     if (!clean) {
-      toast({
-        title: 'Add a link name',
-        description: 'This becomes your public web address, e.g. elec-mate.com/get-quote/your-name',
-        variant: 'destructive',
-      });
+      setSlugError('Add a link name — it becomes your public web address.');
       return;
     }
     try {
@@ -103,9 +100,17 @@ export function QuotePageSection() {
         lead_page_headline: headline.trim() || null,
       });
       setSlug(clean);
+      setSlugError(null);
       toast({ title: 'Saved', description: 'Your quote page is up to date.' });
-    } catch {
-      /* useUpdateLeadPage surfaces the error (e.g. link name taken) */
+    } catch (e) {
+      // The hook toasts too, but a taken link name deserves an inline nudge
+      // right where the owner is typing.
+      const msg = e instanceof Error ? e.message : '';
+      setSlugError(
+        /duplicate|unique/i.test(msg)
+          ? 'That link name is already taken — try another.'
+          : 'Could not save your link name. Please try again.'
+      );
     }
   };
 
@@ -122,7 +127,10 @@ export function QuotePageSection() {
       // If turning on and there are unsaved edits, save them too.
       if (!enabled && dirty) {
         const clean = slugify(slug);
-        if (!clean) return;
+        if (!clean) {
+          setSlugError('Add a link name before going live.');
+          return;
+        }
         await update.mutateAsync({
           lead_page_slug: clean,
           lead_page_headline: headline.trim() || null,
@@ -237,13 +245,22 @@ export function QuotePageSection() {
             hint="We set this from your company name — change it if you like."
             required
           >
-            <div className="flex items-center gap-1.5 rounded-xl border border-white/[0.10] bg-white/[0.05] px-3.5 focus-within:border-elec-yellow focus-within:ring-2 focus-within:ring-elec-yellow/15">
+            <div
+              className={`flex items-center gap-1.5 rounded-xl border bg-white/[0.05] px-3.5 focus-within:ring-2 ${
+                slugError
+                  ? 'border-red-500/60 focus-within:border-red-500 focus-within:ring-red-500/15'
+                  : 'border-white/[0.10] focus-within:border-elec-yellow focus-within:ring-elec-yellow/15'
+              }`}
+            >
               <span className="text-[13px] text-white/40 whitespace-nowrap hidden sm:inline">
                 /get-quote/
               </span>
               <input
                 value={slug}
-                onChange={(e) => setSlug(slugify(e.target.value))}
+                onChange={(e) => {
+                  setSlug(slugify(e.target.value));
+                  if (slugError) setSlugError(null);
+                }}
                 placeholder={suggestedSlug || 'your-company'}
                 className="h-12 flex-1 min-w-0 bg-transparent text-white text-base placeholder:text-white/40 focus:outline-none touch-manipulation"
                 autoCapitalize="none"
@@ -251,6 +268,9 @@ export function QuotePageSection() {
                 spellCheck={false}
               />
             </div>
+            {slugError && (
+              <p className="mt-1.5 text-[12.5px] text-red-400 leading-snug">{slugError}</p>
+            )}
           </Field>
 
           {suggestedSlug && slug !== suggestedSlug && (

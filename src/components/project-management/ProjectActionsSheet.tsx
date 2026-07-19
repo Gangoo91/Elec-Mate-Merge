@@ -73,9 +73,9 @@ const LINK_OPTIONS: { type: ProjectLinkType; label: string; icon: typeof FileTex
 ];
 
 const tileClass =
-  'flex flex-col items-start gap-2.5 p-3.5 min-h-[88px] rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none';
+  'flex items-center gap-3 p-3 min-h-[64px] rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none';
 const tileIconClass =
-  'h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0';
+  'h-9 w-9 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0';
 
 const ProjectActionsSheet = ({
   open,
@@ -103,7 +103,7 @@ const ProjectActionsSheet = ({
   const quoteUrl = `/electrician/quote-builder/create?projectId=${projectId}`;
   const variationUrl = `${quoteUrl}&variation=1`;
   const invoiceUrl = `/electrician/invoice-builder/create?projectId=${projectId}`;
-  const certificateUrl = `/electrician/certificates/new?projectId=${projectId}&clientName=${enc(customerName)}&address=${enc(location)}`;
+  const certificateUrl = `/electrician/inspection-testing/new?projectId=${projectId}&clientName=${enc(customerName)}&address=${enc(location)}`;
   const ramsUrl = `/electrician-tools/site-safety?projectId=${projectId}&location=${enc(location)}&clientName=${enc(customerName)}`;
   const siteVisitUrl = (() => {
     const params = new URLSearchParams();
@@ -208,7 +208,7 @@ const ProjectActionsSheet = ({
               )}
               {linkPicker && (
                 <p className="text-[11.5px] text-white/55 truncate">
-                  Attach an existing record to this project
+                  Attach an existing record to this job
                 </p>
               )}
             </div>
@@ -222,7 +222,7 @@ const ProjectActionsSheet = ({
                   key={type}
                   type="button"
                   onClick={() => handleLink(type)}
-                  className="flex flex-col items-start gap-2.5 p-3.5 min-h-[80px] rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+                  className="flex items-center gap-3 p-3 min-h-[56px] rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
                 >
                   <span className={tileIconClass}>
                     <Icon className="h-4 w-4 text-white/85" />
@@ -240,7 +240,7 @@ const ProjectActionsSheet = ({
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <button type="button" onClick={() => go(quoteUrl)} className={tileClass}>
                   <span className={tileIconClass}>
-                    <FileText className="h-4 w-4 text-emerald-400" />
+                    <FileText className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">Quote</span>
@@ -250,7 +250,7 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={() => go(invoiceUrl)} className={tileClass}>
                   <span className={tileIconClass}>
-                    <PoundSterling className="h-4 w-4 text-blue-400" />
+                    <PoundSterling className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">Invoice</span>
@@ -260,7 +260,7 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={handleExpense} className={tileClass}>
                   <span className={tileIconClass}>
-                    <Receipt className="h-4 w-4 text-rose-400" />
+                    <Receipt className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">Expense</span>
@@ -270,7 +270,7 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={() => go(siteVisitUrl)} className={tileClass}>
                   <span className={tileIconClass}>
-                    <HardHat className="h-4 w-4 text-sky-400" />
+                    <HardHat className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">Site visit</span>
@@ -280,7 +280,7 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={handleTask} className={tileClass}>
                   <span className={tileIconClass}>
-                    <ClipboardCheck className="h-4 w-4 text-amber-400" />
+                    <ClipboardCheck className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">Task</span>
@@ -290,7 +290,7 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={() => go(ramsUrl)} className={tileClass}>
                   <span className={tileIconClass}>
-                    <Zap className="h-4 w-4 text-purple-400" />
+                    <Zap className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">RAMS</span>
@@ -300,7 +300,7 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={() => go(certificateUrl)} className={tileClass}>
                   <span className={tileIconClass}>
-                    <Shield className="h-4 w-4 text-amber-400" />
+                    <Shield className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">Certificate</span>
@@ -310,14 +310,14 @@ const ProjectActionsSheet = ({
 
                 <button type="button" onClick={() => go(variationUrl)} className={tileClass}>
                   <span className={tileIconClass}>
-                    <GitBranch className="h-4 w-4 text-elec-yellow" />
+                    <GitBranch className="h-4 w-4 text-white/85" />
                   </span>
                   <span>
                     <span className="block text-[13px] font-semibold text-white">
                       Change of scope
                     </span>
                     <span className="block text-[11px] text-white/55 mt-0.5">
-                      Raise a variation
+                      New quote for extra work
                     </span>
                   </span>
                 </button>
@@ -369,7 +369,7 @@ const ProjectActionsSheet = ({
                     className="w-full flex items-center gap-3 h-12 px-3 rounded-xl hover:bg-red-500/[0.06] active:bg-red-500/[0.1] touch-manipulation transition-all"
                   >
                     <Trash2 className="h-4 w-4 text-red-400 flex-shrink-0" />
-                    <span className="text-[13px] font-semibold text-red-400">Delete project</span>
+                    <span className="text-[13px] font-semibold text-red-400">Delete job</span>
                     <span className="text-[11px] text-white/45 ml-auto">
                       Permanent — cannot be undone
                     </span>

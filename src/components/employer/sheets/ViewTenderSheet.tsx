@@ -10,6 +10,14 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+  ResponsiveFormModalFooter,
+} from '@/components/ui/responsive-form-modal';
 import { Sparkles,
   FileText,
   Send,
@@ -357,6 +365,17 @@ export function ViewTenderSheet({
               </div>
             </div>
 
+            {tender.source_url && (
+              <button
+                type="button"
+                onClick={() => openExternalUrl(tender.source_url!)}
+                className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                <FileText className="h-3 w-3" />
+                View original listing
+              </button>
+            )}
+
             <FormCard eyebrow="Tender details">
               {tender.description && (
                 <div>
@@ -491,14 +510,14 @@ export function ViewTenderSheet({
                       </div>
                       <div className="flex gap-1 shrink-0">
                         <button
-                          className="h-8 w-8 rounded-full bg-white/[0.04] hover:bg-white/[0.08] flex items-center justify-center text-white"
+                          className="h-11 w-11 touch-manipulation rounded-full bg-white/[0.04] hover:bg-white/[0.08] flex items-center justify-center text-white"
                           onClick={() => handleDownloadDocument(doc)}
                           aria-label="Download"
                         >
                           <Download className="h-4 w-4" />
                         </button>
                         <button
-                          className="h-8 w-8 rounded-full bg-white/[0.04] hover:bg-red-500/15 flex items-center justify-center text-white hover:text-red-400"
+                          className="h-11 w-11 touch-manipulation rounded-full bg-white/[0.04] hover:bg-red-500/15 flex items-center justify-center text-white hover:text-red-400"
                           onClick={() => handleDeleteDocument(doc)}
                           aria-label="Delete"
                         >
@@ -557,13 +576,14 @@ export function ViewTenderSheet({
         </SheetContent>
       </Sheet>
 
-      {/* Edit Dialog */}
-      <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Edit tender</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
+      {/* Edit — bottom sheet on mobile, modal on desktop */}
+      <ResponsiveFormModal open={showEditDialog} onOpenChange={setShowEditDialog}>
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">Edit tender</ResponsiveFormModalTitle>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6">
+          <div className="space-y-4 py-2">
             <Field label="Title">
               <Input
                 value={editForm.title}
@@ -647,11 +667,15 @@ export function ViewTenderSheet({
               />
             </Field>
           </div>
-          <DialogFooter>
-            <SecondaryButton onClick={() => setShowEditDialog(false)}>Cancel</SecondaryButton>
+          </ResponsiveFormModalBody>
+          <ResponsiveFormModalFooter className="flex gap-3">
+            <SecondaryButton onClick={() => setShowEditDialog(false)} fullWidth>
+              Cancel
+            </SecondaryButton>
             <PrimaryButton
               onClick={saveEdit}
               disabled={updateTenderMutation.isPending || !editForm.title || !editForm.client}
+              fullWidth
             >
               {updateTenderMutation.isPending && (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -659,9 +683,9 @@ export function ViewTenderSheet({
               <Check className="h-4 w-4 mr-2" />
               Save changes
             </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ResponsiveFormModalFooter>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
 
       {/* Result Confirmation Dialog */}
       <Dialog open={showResultDialog} onOpenChange={setShowResultDialog}>

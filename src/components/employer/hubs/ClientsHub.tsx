@@ -1,7 +1,12 @@
 import type { Section } from '@/pages/employer/EmployerDashboard';
-import { HubSkeleton } from '@/components/employer/skeletons';
 import { useClientSummaries } from '@/hooks/useEmployerClients';
-import { HubLanding, SectionHeader, HubGrid, HubCard } from '@/components/employer/editorial';
+import {
+  HubLanding,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  LoadingBlocks,
+} from '@/components/employer/editorial';
 
 interface ClientsHubProps {
   onNavigate: (section: Section) => void;
@@ -11,7 +16,16 @@ export function ClientsHub({ onNavigate }: ClientsHubProps) {
   const { data: clients = [], isLoading } = useClientSummaries();
 
   if (isLoading) {
-    return <HubSkeleton statCount={4} cardCount={3} columns={2} />;
+    return (
+      <HubLanding
+        eyebrow="Sales"
+        title="Clients"
+        description="Your customers, their pipeline, and what they see."
+        tone="cyan"
+      >
+        <LoadingBlocks />
+      </HubLanding>
+    );
   }
 
   const fmtMoney = (v: number) =>

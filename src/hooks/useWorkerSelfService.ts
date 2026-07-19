@@ -46,10 +46,14 @@ export const getMyCommunications = async (
     return [];
   }
 
-  // Filter out expired communications and map to expected format
+  // Filter out expired communications and map to expected format.
+  // item.communication can be null when the parent row isn't visible to this
+  // worker (e.g. manager-audience messages under RLS) — drop those rows
+  // instead of crashing and blanking the whole list.
   return (data || [])
     .filter((item) => {
-      const comm = item.communication as Communication;
+      const comm = item.communication as Communication | null;
+      if (!comm) return false;
       return !comm.expires_at || comm.expires_at > now;
     })
     .map((item) => ({
@@ -91,7 +95,8 @@ export const getMyLeaveRequests = async (employeeId: string): Promise<LeaveReque
     status: item.status as LeaveStatus,
     reason: item.reason || undefined,
     approvedBy: item.approved_by || undefined,
-    approvedDate: item.approved_at || undefined,
+    // Column is approved_date (approved_at does not exist on employer_leave_requests)
+    approvedDate: item.approved_date || undefined,
     rejectedReason: item.rejected_reason || undefined,
     createdAt: item.created_at,
   }));

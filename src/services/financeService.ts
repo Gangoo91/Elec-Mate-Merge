@@ -192,9 +192,11 @@ export async function createQuote(
 
 export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
   // Get original quote to check for status change
+  // employer_id defaults to auth.uid() at insert — created_by is a display
+  // string ('Admin'), never a user id, so it must not be a push target
   const { data: originalQuote } = await supabase
     .from('employer_quotes')
-    .select('status, created_by, quote_number, client')
+    .select('status, employer_id, quote_number, client')
     .eq('id', id)
     .single();
 
@@ -207,11 +209,11 @@ export async function updateQuote(id: string, updates: Partial<Quote>): Promise<
   if (error) throw error;
 
   // Send push notification if status changed to accepted or rejected
-  if (originalQuote?.created_by && updates.status && originalQuote.status !== updates.status) {
+  if (originalQuote?.employer_id && updates.status && originalQuote.status !== updates.status) {
     const statusLower = updates.status.toLowerCase();
     if (statusLower === 'accepted' || statusLower === 'approved') {
       sendPushNotification(
-        originalQuote.created_by,
+        originalQuote.employer_id,
         '🎉 Quote Accepted!',
         `${originalQuote.client} accepted quote #${originalQuote.quote_number}`,
         'job', // Using job type as quotes are business events
@@ -219,7 +221,7 @@ export async function updateQuote(id: string, updates: Partial<Quote>): Promise<
       ).catch(console.error);
     } else if (statusLower === 'rejected' || statusLower === 'declined') {
       sendPushNotification(
-        originalQuote.created_by,
+        originalQuote.employer_id,
         'Quote Declined',
         `${originalQuote.client} declined quote #${originalQuote.quote_number}`,
         'job',
@@ -552,13 +554,22 @@ export async function deletePriceBookItem(id: string): Promise<void> {
   if (error) throw error;
 }
 
+// Low stock only means something for items whose stock is actually being
+// tracked. Quick-add (0/0) and CSV import (0/10) both leave stock at 0 —
+// flagging every untracked pricing row buried the signal under "Low stock"
+// pills on 100% of the book.
+export const isLowStock = (item: { stock_level: number; reorder_level: number }) =>
+  Number(item.reorder_level) > 0 &&
+  Number(item.stock_level) > 0 &&
+  Number(item.stock_level) <= Number(item.reorder_level);
+
 export async function getLowStockItems(): Promise<PriceBookItem[]> {
   const { data, error } = await supabase
     .from('employer_price_book')
     .select('*, supplier:employer_suppliers(name)')
     .order('stock_level', { ascending: true });
   if (error) throw error;
-  return (data || []).filter((item) => item.stock_level <= item.reorder_level);
+  return (data || []).filter(isLowStock);
 }
 
 // Bulk import price book items (for CSV import)
@@ -622,24 +633,44 @@ export async function getPriceBookStats(): Promise<{
   lowStock: number;
   stockValue: number;
 }> {
-  const { data, count, error } = await supabase
-    .from('employer_price_book')
-    .select('buy_price, sell_price, stock_level, reorder_level', { count: 'exact' });
+  // PostgREST caps un-ranged selects at 1,000 rows while `count` reports the
+  // true total — page through everything so the aggregates cover the whole
+  // book (CSV imports regularly exceed 1,000 lines).
+  const PAGE = 1000;
+  type StatsRow = {
+    buy_price: number;
+    sell_price: number;
+    stock_level: number;
+    reorder_level: number;
+  };
+  const items: StatsRow[] = [];
+  let totalItems = 0;
 
-  if (error) throw error;
+  for (let page = 0; ; page++) {
+    const { data, count, error } = await supabase
+      .from('employer_price_book')
+      .select('buy_price, sell_price, stock_level, reorder_level', { count: 'exact' })
+      .range(page * PAGE, (page + 1) * PAGE - 1);
 
-  const items = data || [];
-  const totalItems = count || 0;
+    if (error) throw error;
+
+    const rows = (data || []) as StatsRow[];
+    items.push(...rows);
+    totalItems = count || items.length;
+    if (rows.length < PAGE || items.length >= totalItems) break;
+  }
 
   let totalMarkup = 0;
+  let markupCount = 0;
   let lowStock = 0;
   let stockValue = 0;
 
   items.forEach((item) => {
     if (item.buy_price > 0) {
       totalMarkup += ((item.sell_price - item.buy_price) / item.buy_price) * 100;
+      markupCount++;
     }
-    if (item.stock_level <= item.reorder_level) {
+    if (isLowStock(item)) {
       lowStock++;
     }
     stockValue += item.buy_price * item.stock_level;
@@ -647,30 +678,38 @@ export async function getPriceBookStats(): Promise<{
 
   return {
     totalItems,
-    avgMarkup: totalItems > 0 ? Math.round(totalMarkup / totalItems) : 0,
+    avgMarkup: markupCount > 0 ? Math.round(totalMarkup / markupCount) : 0,
     lowStock,
     stockValue: Math.round(stockValue),
   };
 }
 
-// Generate next quote/invoice number
+// Generate next quote/invoice number.
+// Numeric max across the year's numbers — a string-sorted LIMIT 1 rolls over
+// once the counter outgrows its padding (e.g. '999' sorts above '1000').
+// The queries below order newest-first: PostgREST caps un-ranged selects at
+// 1,000 rows, and sequence numbers only grow over time, so the current max is
+// always inside the newest-1,000 window even past the cap.
+const nextSequence = (numbers: (string | null)[], prefix: string): number => {
+  let max = 0;
+  for (const n of numbers) {
+    if (!n || !n.startsWith(prefix)) continue;
+    const seq = parseInt(n.slice(prefix.length), 10);
+    if (Number.isFinite(seq) && seq > max) max = seq;
+  }
+  return max + 1;
+};
+
 export async function getNextQuoteNumber(): Promise<string> {
   const year = new Date().getFullYear();
   const { data } = await supabase
     .from('employer_quotes')
     .select('quote_number')
     .like('quote_number', `QU-${year}-%`)
-    .order('quote_number', { ascending: false })
-    .limit(1);
+    .order('created_at', { ascending: false });
 
-  if (data && data.length > 0) {
-    const match = data[0].quote_number.match(/QU-\d{4}-(\d+)/);
-    if (match) {
-      const nextNum = parseInt(match[1], 10) + 1;
-      return `QU-${year}-${String(nextNum).padStart(4, '0')}`;
-    }
-  }
-  return `QU-${year}-0001`;
+  const next = nextSequence((data ?? []).map((r) => r.quote_number), `QU-${year}-`);
+  return `QU-${year}-${String(next).padStart(4, '0')}`;
 }
 
 export async function getNextInvoiceNumber(): Promise<string> {
@@ -679,14 +718,10 @@ export async function getNextInvoiceNumber(): Promise<string> {
     .from('employer_invoices')
     .select('invoice_number')
     .like('invoice_number', `INV-${year}-%`)
-    .order('invoice_number', { ascending: false })
-    .limit(1);
+    .order('created_at', { ascending: false });
 
-  if (data && data.length > 0) {
-    const lastNum = parseInt(data[0].invoice_number.split('-')[2]) || 0;
-    return `INV-${year}-${String(lastNum + 1).padStart(3, '0')}`;
-  }
-  return `INV-${year}-001`;
+  const next = nextSequence((data ?? []).map((r) => r.invoice_number), `INV-${year}-`);
+  return `INV-${year}-${String(next).padStart(3, '0')}`;
 }
 
 export async function getNextOrderNumber(): Promise<string> {
@@ -695,14 +730,10 @@ export async function getNextOrderNumber(): Promise<string> {
     .from('employer_material_orders')
     .select('order_number')
     .like('order_number', `PO-${year}-%`)
-    .order('order_number', { ascending: false })
-    .limit(1);
+    .order('created_at', { ascending: false });
 
-  if (data && data.length > 0) {
-    const lastNum = parseInt(data[0].order_number.split('-')[2]) || 0;
-    return `PO-${year}-${String(lastNum + 1).padStart(4, '0')}`;
-  }
-  return `PO-${year}-0001`;
+  const next = nextSequence((data ?? []).map((r) => r.order_number), `PO-${year}-`);
+  return `PO-${year}-${String(next).padStart(4, '0')}`;
 }
 
 // Stripe Connect Status

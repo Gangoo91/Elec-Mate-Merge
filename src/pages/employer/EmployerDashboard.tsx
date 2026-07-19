@@ -5,7 +5,7 @@ import {
   CommandTrigger,
   type CommandSection,
 } from '@/components/employer/EmployerCommandPalette';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
@@ -394,77 +394,102 @@ interface SectionMeta {
   queryKeys?: string[];
 }
 
+// queryKeys must match the REAL react-query keys used by each section's hooks
+// (see the hooks named in each comment) — otherwise the header Refresh button
+// silently invalidates nothing.
 const sectionMetadata: Record<Section, SectionMeta> = {
   overview: {
     eyebrow: 'Hub',
     title: 'Employer',
-    queryKeys: ['employerDashboardStats'],
+    queryKeys: ['employer-jobs', 'worker-locations', 'quotes', 'employer-leads', 'qsReviews'],
   },
   peoplehub: {
     eyebrow: 'Hub',
     title: 'People',
-    queryKeys: ['employer-employees', 'talentPool', 'vacancies'],
+    queryKeys: [
+      'employer-employees',
+      'vacancies',
+      'vacancy-applications',
+      'timesheets',
+      'communications',
+      'elec-id-profiles',
+      'worker-locations',
+      'people-hub-activity',
+      'apprentice-progress',
+    ],
   },
   team: { eyebrow: 'People', title: 'Your Team', queryKeys: ['employer-employees'] },
   elecid: {
     eyebrow: 'People',
     title: 'Credentials',
-    queryKeys: ['employer-employees', 'certifications'],
+    queryKeys: ['elec-id-profiles', 'employer-employees'],
   },
   timesheets: { eyebrow: 'People', title: 'Timesheets', queryKeys: ['timesheets'] },
   comms: { eyebrow: 'People', title: 'Communications', queryKeys: ['communications'] },
-  talentpool: { eyebrow: 'People', title: 'Talent Pool', queryKeys: ['talentPool'] },
+  talentpool: { eyebrow: 'People', title: 'Talent Pool' }, // RPC-backed, not react-query
   apprentices: { eyebrow: 'People', title: 'Apprentices', queryKeys: ['apprentice-progress'] },
-  vacancies: { eyebrow: 'People', title: 'Vacancies', queryKeys: ['vacancies', 'applications'] },
+  vacancies: {
+    eyebrow: 'People',
+    title: 'Vacancies',
+    queryKeys: ['vacancies', 'vacancy-applications'],
+  },
   financehub: {
     eyebrow: 'Hub',
     title: 'Finance',
-    queryKeys: ['quotes', 'invoices', 'expenses'],
+    queryKeys: ['quotes', 'invoices', 'expense_claims', 'material_orders', 'price_book'],
   },
   quotes: { eyebrow: 'Finance', title: 'Quotes & Invoices', queryKeys: ['quotes', 'invoices'] },
   tenders: { eyebrow: 'Finance', title: 'Tenders', queryKeys: ['tenders'] },
-  expenses: { eyebrow: 'Finance', title: 'Expenses', queryKeys: ['expenses'] },
+  expenses: { eyebrow: 'Finance', title: 'Expenses', queryKeys: ['expense_claims'] },
   procurement: {
     eyebrow: 'Finance',
     title: 'Procurement',
-    queryKeys: ['procurement', 'suppliers'],
+    queryKeys: ['material_orders', 'suppliers'],
   },
-  financials: { eyebrow: 'Finance', title: 'Job Financials', queryKeys: ['jobFinancials'] },
-  reports: { eyebrow: 'Finance', title: 'Reports', queryKeys: ['reports'] },
+  financials: { eyebrow: 'Finance', title: 'Job Financials', queryKeys: ['job-financials'] },
+  reports: { eyebrow: 'Finance', title: 'Reports', queryKeys: ['finance-reports', 'debtor-aging'] },
   signatures: { eyebrow: 'Finance', title: 'Signatures' },
-  pricebook: { eyebrow: 'Finance', title: 'Price Book', queryKeys: ['priceBook'] },
-  jobshub: { eyebrow: 'Hub', title: 'Jobs', queryKeys: ['jobs', 'activeJobs'] },
-  jobpacks: { eyebrow: 'Jobs', title: 'Job Packs', queryKeys: ['jobPacks'] },
-  jobs: { eyebrow: 'Jobs', title: 'Jobs', queryKeys: ['jobs'] },
-  jobboard: { eyebrow: 'Jobs', title: 'Job Board', queryKeys: ['jobs'] },
-  timeline: { eyebrow: 'Jobs', title: 'Timeline', queryKeys: ['jobTimeline'] },
-  tracking: { eyebrow: 'Jobs', title: 'Worker Tracking', queryKeys: ['workerTracking'] },
+  pricebook: { eyebrow: 'Finance', title: 'Price Book', queryKeys: ['price_book'] },
+  jobshub: {
+    eyebrow: 'Hub',
+    title: 'Jobs',
+    queryKeys: ['employer-jobs', 'job-packs', 'jobIssues', 'fleet', 'qsReviews'],
+  },
+  jobpacks: { eyebrow: 'Jobs', title: 'Job Packs', queryKeys: ['job-packs'] },
+  jobs: { eyebrow: 'Jobs', title: 'Jobs', queryKeys: ['employer-jobs'] },
+  jobboard: { eyebrow: 'Jobs', title: 'Job Board', queryKeys: ['employer-jobs'] },
+  timeline: {
+    eyebrow: 'Jobs',
+    title: 'Timeline',
+    queryKeys: ['employer-jobs', 'all-job-assignments'],
+  },
+  tracking: { eyebrow: 'Jobs', title: 'Worker Tracking', queryKeys: ['worker-locations'] },
   progresslogs: { eyebrow: 'Jobs', title: 'Progress Logs', queryKeys: ['progressLogs'] },
   issues: { eyebrow: 'Jobs', title: 'Job Issues', queryKeys: ['jobIssues'] },
-  testing: { eyebrow: 'Jobs', title: 'Testing Workflow', queryKeys: ['testingWorkflow'] },
-  quality: { eyebrow: 'Jobs', title: 'Quality & Snags', queryKeys: ['quality', 'snags'] },
+  testing: { eyebrow: 'Jobs', title: 'Testing Workflow', queryKeys: ['jobTests', 'employer-jobs'] },
+  quality: { eyebrow: 'Jobs', title: 'Quality & Snags', queryKeys: ['jobIssues', 'employer-jobs'] },
   qsreviews: { eyebrow: 'Jobs', title: 'QS Reviews', queryKeys: ['qsReviews'] },
   clientportal: { eyebrow: 'Clients', title: 'Client Portal' },
   fleet: { eyebrow: 'Jobs', title: 'Fleet', queryKeys: ['fleet', 'vehicles'] },
-  photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['photos'] },
+  photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['jobPhotos'] },
   safetyhub: {
     eyebrow: 'Hub',
     title: 'Safety',
-    queryKeys: ['rams', 'incidents', 'compliance'],
+    queryKeys: ['incidents', 'ramsDocuments', 'userPolicies', 'trainingRecords'],
   },
-  safety: { eyebrow: 'Safety', title: 'Health & Safety', queryKeys: ['safetyRecords'] },
-  rams: { eyebrow: 'Safety', title: 'RAMS', queryKeys: ['rams'] },
+  safety: { eyebrow: 'Safety', title: 'Health & Safety', queryKeys: ['incidents', 'trainingRecords'] },
+  rams: { eyebrow: 'Safety', title: 'RAMS', queryKeys: ['ramsDocuments'] },
   incidents: { eyebrow: 'Safety', title: 'Incidents', queryKeys: ['incidents'] },
-  policies: { eyebrow: 'Safety', title: 'Policies', queryKeys: ['policies'] },
+  policies: { eyebrow: 'Safety', title: 'Policies', queryKeys: ['userPolicies', 'policyTemplates'] },
   contracts: { eyebrow: 'Safety', title: 'Contracts', queryKeys: ['contracts'] },
   training: { eyebrow: 'Safety', title: 'Training Records', queryKeys: ['trainingRecords'] },
   briefings: { eyebrow: 'Safety', title: 'Briefings', queryKeys: ['briefings'] },
-  compliance: { eyebrow: 'Safety', title: 'Compliance', queryKeys: ['compliance'] },
+  compliance: { eyebrow: 'Safety', title: 'Compliance', queryKeys: ['complianceDocuments'] },
   smartdocs: { eyebrow: 'Hub', title: 'Smart Docs' },
-  clientshub: { eyebrow: 'Hub', title: 'Clients' },
-  clients: { eyebrow: 'Clients', title: 'Clients' },
-  leads: { eyebrow: 'Clients', title: 'Leads' },
-  quotepage: { eyebrow: 'Clients', title: 'Quote Page' },
+  clientshub: { eyebrow: 'Hub', title: 'Clients', queryKeys: ['employer-clients'] },
+  clients: { eyebrow: 'Clients', title: 'Clients', queryKeys: ['employer-clients'] },
+  leads: { eyebrow: 'Clients', title: 'Leads', queryKeys: ['employer-leads'] },
+  quotepage: { eyebrow: 'Clients', title: 'Quote Page', queryKeys: ['lead-page-config'] },
   aidesignspec: { eyebrow: 'Smart Docs', title: 'Design Spec' },
   airams: { eyebrow: 'Smart Docs', title: 'RAMS' },
   aimethodstatement: { eyebrow: 'Smart Docs', title: 'Method Statement' },
@@ -482,6 +507,7 @@ const EmployerDashboard = () => {
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const activeSection = (searchParams.get('section') as Section) || 'overview';
@@ -595,6 +621,10 @@ const EmployerDashboard = () => {
       'safety-hub': 'safetyhub',
       safetyhub: 'safetyhub',
       'safety hub': 'safetyhub',
+      'clients-hub': 'clientshub',
+      clientshub: 'clientshub',
+      'clients hub': 'clientshub',
+      crm: 'clientshub',
 
       employees: 'team',
       team: 'team',
@@ -692,6 +722,10 @@ const EmployerDashboard = () => {
       'client-portal': 'clientportal',
       clientportal: 'clientportal',
       'client portal': 'clientportal',
+      clients: 'clients',
+      customers: 'clients',
+      leads: 'leads',
+      enquiries: 'leads',
       'quote-page': 'quotepage',
       quotepage: 'quotepage',
       'quote page': 'quotepage',
@@ -765,13 +799,22 @@ const EmployerDashboard = () => {
   }, []);
 
   const handleBack = useCallback(() => {
-    if (window.history.length > 1) {
+    // location.key === 'default' means a cold entry (deep link / refresh) —
+    // browser-back would leave the app entirely, so walk up the hub
+    // hierarchy instead. Otherwise honour real history like a native app.
+    // Entries pushed during a hierarchy walk are tagged state.hubWalk so the
+    // next back keeps walking up rather than navigate(-1)-ing straight back
+    // into the cold entry (which would ping-pong between the two forever).
+    const isColdEntry = location.key === 'default';
+    const isHubWalk = (location.state as { hubWalk?: boolean } | null)?.hubWalk === true;
+    if (!isColdEntry && !isHubWalk && window.history.length > 1) {
       navigate(-1);
     } else {
       const parent = getParentSection(activeSection);
-      setActiveSection(parent);
+      setSearchParams({ section: parent }, { replace: false, state: { hubWalk: true } });
     }
-  }, [navigate, activeSection, setActiveSection]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, activeSection, location.key, location.state]);
 
   const renderSection = () => {
     switch (activeSection) {

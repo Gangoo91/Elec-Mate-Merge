@@ -1,6 +1,16 @@
 import { useState, useMemo } from 'react';
 import { ContractViewer } from '@/components/employer/ContractViewer';
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
   PageFrame,
   PageHero,
   StatStrip,
@@ -88,6 +98,7 @@ export function ContractsSection() {
   const [activeTab, setActiveTab] = useState<FilterTab>('all');
   const [selectedTemplate, setSelectedTemplate] = useState<EmploymentContractTemplate | null>(null);
   const [selectedContract, setSelectedContract] = useState<Contract | null>(null);
+  const [contractToDelete, setContractToDelete] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
 
   const { data: systemTemplates = [], isLoading: templatesLoading } =
@@ -152,22 +163,20 @@ export function ContractsSection() {
     setViewerOpen(true);
   };
 
+  // There is no create-from-scratch flow — every contract starts from a
+  // template, so the primary action takes the user to the template library.
   const handleNewContract = () => {
-    setSelectedContract(null);
-    setSelectedTemplate(null);
-    setViewerOpen(true);
+    setActiveTab('templates');
   };
 
-  const handleDelete = async (id: string, e: React.MouseEvent) => {
+  const handleDelete = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this contract?')) {
-      await deleteContract.mutateAsync(id);
-    }
+    setContractToDelete(id);
   };
 
   const heroActions = (
     <>
-      <PrimaryButton onClick={handleNewContract}>New contract</PrimaryButton>
+      <PrimaryButton onClick={handleNewContract}>New from template</PrimaryButton>
       <IconButton onClick={() => refetch()} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
@@ -227,7 +236,7 @@ export function ContractsSection() {
           columns={4}
           stats={[
             { label: 'Active', value: activeCount, tone: 'emerald' },
-            { label: 'Awaiting sig', value: pendingCount, tone: 'orange' },
+            { label: 'Draft', value: pendingCount, tone: 'orange' },
             { label: 'Templates', value: totalTemplates, tone: 'indigo' },
             { label: 'Expiring 30d', value: expiringSoon, tone: 'amber' },
           ]}
@@ -237,7 +246,7 @@ export function ContractsSection() {
           tabs={[
             { value: 'all', label: 'All', count: filteredUserContracts.length },
             { value: 'active', label: 'Active', count: activeCount },
-            { value: 'pending', label: 'Pending', count: pendingCount },
+            { value: 'pending', label: 'Draft', count: pendingCount },
             { value: 'expired', label: 'Expired', count: expiredCount },
             { value: 'templates', label: 'Templates', count: totalTemplates },
           ]}
@@ -259,8 +268,7 @@ export function ContractsSection() {
               <div className="px-5 sm:px-6 py-10 text-center">
                 <div className="text-sm font-medium text-white">No contracts here yet</div>
                 <p className="mt-2 text-[12.5px] text-white max-w-md mx-auto leading-relaxed">
-                  Adopt one of the templates below to start building your library, or create one
-                  from scratch.
+                  Adopt one of the templates below to start building your library.
                 </p>
               </div>
             ) : (
@@ -340,13 +348,48 @@ export function ContractsSection() {
             )}
           </>
         )}
+
+        <AlertDialog
+          open={!!contractToDelete}
+          onOpenChange={(open) => {
+            if (!open) setContractToDelete(null);
+          }}
+        >
+          <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Delete contract?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white/70">
+                The contract will be permanently removed. This cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className="h-11 touch-manipulation bg-red-500/90 hover:bg-red-500 text-white"
+                onClick={async () => {
+                  if (!contractToDelete) return;
+                  setContractToDelete(null);
+                  await deleteContract.mutateAsync(contractToDelete);
+                }}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </PageFrame>
 
       <ContractViewer
         open={viewerOpen}
         onOpenChange={setViewerOpen}
         template={selectedTemplate}
-        userContract={selectedContract}
+        // Prefer the live row from the query cache — selectedContract is a
+        // snapshot and would show stale signing state after "Sign as employer"
+        userContract={
+          selectedContract
+            ? (userContracts.find((c) => c.id === selectedContract.id) ?? selectedContract)
+            : null
+        }
         isAdopted={selectedTemplate ? adoptedTemplateIds.includes(selectedTemplate.id) : false}
       />
     </>

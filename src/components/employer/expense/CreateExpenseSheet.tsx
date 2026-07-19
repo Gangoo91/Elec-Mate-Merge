@@ -11,6 +11,7 @@ import {
   X,
   Wrench,
   Car,
+  Route,
   ParkingCircle,
   Hammer,
   HardHat,
@@ -63,6 +64,7 @@ interface CreateExpenseSheetProps {
 const categoryIcons: Record<string, React.ElementType> = {
   Materials: Wrench,
   Travel: Car,
+  Mileage: Route,
   Parking: ParkingCircle,
   Tools: Hammer,
   PPE: HardHat,

@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Progress } from '@/components/ui/progress';
 import { toast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   useUpdateJobPack,
   useDeleteJobPack,
@@ -84,6 +85,7 @@ interface ViewJobPackSheetProps {
 }
 
 export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackSheetProps) {
+  const queryClient = useQueryClient();
   const updateJobPack = useUpdateJobPack();
   const deleteJobPack = useDeleteJobPack();
   const { data: employees = [] } = useEmployees();
@@ -350,6 +352,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       const r = data as any;
       if (error || r?.error) throw new Error(r?.error || error?.message);
 
+      // Refresh the pack row (status → In Progress, sent_to_workers_at) and
+      // the ack list so the Distribute tab flips to the sent view instead of
+      // re-offering the Send button against a pack that just went out.
+      queryClient.invalidateQueries({ queryKey: ['job-packs'] });
+      queryClient.invalidateQueries({ queryKey: ['job-pack-acknowledgements', jobPack.id] });
+
       toast({
         title: 'Pack sent',
         description: `Job pack sent to ${r?.workers ?? assignedEmployees.length} worker(s) for sign-off.`,
@@ -382,6 +390,14 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
     Draft: 'amber',
   };
 
+  // Same vocabulary as the section list/tabs (Sent/Signed) — two names for
+  // one state on the same screen read as two different states
+  const statusLabel: Record<string, string> = {
+    Draft: 'Draft',
+    'In Progress': 'Sent',
+    Complete: 'Signed',
+  };
+
   return (
     <>
       <SuccessCheckmark show={showSuccess} />
@@ -392,7 +408,9 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
             title={isEditing ? 'Edit job pack' : jobPack.title}
             description={
               <span className="flex items-center gap-2">
-                <Pill tone={statusTone[jobPack.status] ?? 'amber'}>{jobPack.status}</Pill>
+                <Pill tone={statusTone[jobPack.status] ?? 'amber'}>
+                  {statusLabel[jobPack.status] ?? jobPack.status}
+                </Pill>
                 <span className="truncate">{jobPack.location}</span>
               </span>
             }
@@ -460,8 +478,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       </SelectTrigger>
                       <SelectContent className={selectContentClass}>
                         <SelectItem value="Draft">Draft</SelectItem>
-                        <SelectItem value="In Progress">In Progress</SelectItem>
-                        <SelectItem value="Complete">Complete</SelectItem>
+                        <SelectItem value="In Progress">Sent</SelectItem>
+                        <SelectItem value="Complete">Signed</SelectItem>
                       </SelectContent>
                     </Select>
                   </Field>
@@ -1001,7 +1019,16 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
                       <PrimaryButton
                         onClick={handleSendToWorkers}
-                        disabled={isSendingToWorkers || assignedEmployees.length === 0}
+                        // Same gate as the list's Send action — all 3 documents
+                        // generated. Sending an empty pack from here undermined
+                        // the list's 3/3 requirement.
+                        disabled={
+                          isSendingToWorkers ||
+                          assignedEmployees.length === 0 ||
+                          !jobPack.rams_generated ||
+                          !jobPack.method_statement_generated ||
+                          !jobPack.briefing_pack_generated
+                        }
                         fullWidth
                         size="lg"
                       >
@@ -1013,11 +1040,17 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                         Send to workers
                       </PrimaryButton>
 
-                      {assignedEmployees.length === 0 && (
+                      {assignedEmployees.length === 0 ? (
                         <p className="text-xs text-center text-white">
                           Assign workers before sending
                         </p>
-                      )}
+                      ) : !jobPack.rams_generated ||
+                        !jobPack.method_statement_generated ||
+                        !jobPack.briefing_pack_generated ? (
+                        <p className="text-xs text-center text-white">
+                          Generate all three documents before sending
+                        </p>
+                      ) : null}
                     </>
                   )}
                 </TabsContent>

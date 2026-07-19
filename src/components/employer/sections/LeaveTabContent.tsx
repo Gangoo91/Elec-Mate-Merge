@@ -50,7 +50,7 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { LeaveType, LeaveStatus } from '@/hooks/useEmployeeLeave';
+type LeaveType = 'annual' | 'sick' | 'unpaid' | 'compassionate' | 'training' | 'bank_holiday';
 
 const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'annual', label: 'Annual Leave', colour: 'bg-elec-yellow/20 text-elec-yellow' },
@@ -61,10 +61,12 @@ const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'bank_holiday', label: 'Bank Holiday', colour: 'bg-success/20 text-success' },
 ];
 
-const getLeaveTypeInfo = (type: LeaveType) =>
+// Widened to string — TeamLeaveRequest carries lowercased DB strings, and both
+// helpers already fall back safely on unknown values
+const getLeaveTypeInfo = (type: string) =>
   LEAVE_TYPES.find((t) => t.value === type) || LEAVE_TYPES[0];
 
-const getStatusColour = (status: LeaveStatus): string => {
+const getStatusColour = (status: string): string => {
   switch (status) {
     case 'approved':
       return 'bg-success/20 text-success border-success/30';
@@ -104,7 +106,7 @@ export function LeaveTabContent() {
     return days.filter((day) => !isWeekend(day)).length;
   };
 
-  const handleSubmitRequest = () => {
+  const handleSubmitRequest = async () => {
     if (!selectedEmployee || !startDate || !endDate) {
       toast({
         title: 'Missing Information',
@@ -119,16 +121,27 @@ export function LeaveTabContent() {
 
     const totalDays = calculateDays();
 
-    addLeave.mutate({
-      employeeId: selectedEmployee,
-      employeeName: employee.name,
-      type: leaveType,
-      startDate: format(startDate, 'yyyy-MM-dd'),
-      endDate: format(endDate, 'yyyy-MM-dd'),
-      halfDay: isHalfDay ? halfDayPeriod : undefined,
-      totalDays,
-      reason,
-    });
+    // Confirm only once the insert has actually landed — a failed write
+    // behind a success toast is silent data loss
+    try {
+      await addLeave.mutateAsync({
+        employeeId: selectedEmployee,
+        employeeName: employee.name,
+        type: leaveType,
+        startDate: format(startDate, 'yyyy-MM-dd'),
+        endDate: format(endDate, 'yyyy-MM-dd'),
+        halfDay: isHalfDay ? halfDayPeriod : undefined,
+        totalDays,
+        reason,
+      });
+    } catch {
+      toast({
+        title: 'Could not submit request',
+        description: 'The leave request was not saved. Please try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     toast({
       title: 'Request Submitted',
@@ -330,9 +343,13 @@ export function LeaveTabContent() {
               >
                 Cancel
               </Button>
-              <Button onClick={handleSubmitRequest} className="flex-1 gap-1.5">
+              <Button
+                onClick={handleSubmitRequest}
+                disabled={addLeave.isPending}
+                className="flex-1 gap-1.5"
+              >
                 <Check className="h-4 w-4" />
-                Submit Request
+                {addLeave.isPending ? 'Submitting…' : 'Submit Request'}
               </Button>
             </div>
           </CardContent>
@@ -343,7 +360,7 @@ export function LeaveTabContent() {
       <div className="space-y-3">
         <h4 className="text-sm font-medium text-white">Holiday Allowances</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {holidayAllowances.slice(0, 4).map((ha) => {
+          {holidayAllowances.map((ha) => {
             const employee = employees.find((e) => e.id === ha.employeeId);
             if (!employee) return null;
 
@@ -468,7 +485,6 @@ export function LeaveTabContent() {
         ) : (
           leaveRequests
             .filter((lr) => lr.status !== 'pending')
-            .slice(0, 5)
             .map((lr) => {
               const typeInfo = getLeaveTypeInfo(lr.type);
               return (

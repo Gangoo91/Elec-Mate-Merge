@@ -46,14 +46,30 @@ import {
   Heading3,
   Undo,
   Redo,
+  PenTool,
+  Send,
+  Copy,
+  Clock,
+  CheckCircle2,
 } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Textarea } from '@/components/ui/textarea';
+import SignatureInput from '@/components/signature/SignatureInput';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCreateSignatureRequest } from '@/hooks/useSignatureRequests';
+import { copyToClipboard } from '@/utils/clipboard';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import {
   type EmploymentContractTemplate,
   type Contract,
+  type ContractStatus,
   useAdoptContractTemplate,
   useUpdateContractContent,
+  useUpdateContractStatus,
+  useContractSignatureRequest,
+  useSignContractAsEmployer,
 } from '@/hooks/useContracts';
 import { useEmployees } from '@/hooks/useEmployees';
 import { downloadContractPDF } from '@/utils/contract-pdf';
@@ -98,18 +114,38 @@ export function ContractViewer({
   const [selectedEmployee, setSelectedEmployee] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [salary, setSalary] = useState('');
+
+  // Signing state
+  const [signSheetOpen, setSignSheetOpen] = useState(false);
+  const [sendSheetOpen, setSendSheetOpen] = useState(false);
+  const [employerSignerName, setEmployerSignerName] = useState('');
+  const [employerSignature, setEmployerSignature] = useState<string | null>(null);
+  const [requestSignerName, setRequestSignerName] = useState('');
+  const [requestSignerEmail, setRequestSignerEmail] = useState('');
+  const [requestMessage, setRequestMessage] = useState('');
 
   const adoptContract = useAdoptContractTemplate();
   const updateContract = useUpdateContractContent();
+  const updateStatus = useUpdateContractStatus();
   const { data: employees } = useEmployees();
+  const queryClient = useQueryClient();
+  const signAsEmployer = useSignContractAsEmployer();
+  const createSignatureRequest = useCreateSignatureRequest();
+  // Employee signing rides the existing Signatures rail — read the latest
+  // request linked to this contract rather than duplicating capture here.
+  const { data: employeeRequest } = useContractSignatureRequest(userContract?.id);
 
   // Use either the template or user contract for display
   const contract = userContract || template;
   const isTemplate = !userContract;
   const content = userContract?.content || template?.content || '';
   const name = userContract?.title || template?.name || '';
-  const category = template?.category || 'Employment';
+  // When opened from the contracts list there is no template — fall back to
+  // the adopted contract's own category so subcontractor agreements are not
+  // presented as Employment.
+  const category = template?.category || userContract?.category || 'Employment';
   const draftKey = userContract ? `${DRAFT_KEY_PREFIX}${userContract.id}` : '';
 
   // Initialize TipTap editor
@@ -150,7 +186,9 @@ export function ContractViewer({
     },
   });
 
-  // Update editor content when contract changes
+  // Update editor content when contract changes. The draft-restore branch must
+  // re-run when the user starts editing (isEditing dep) — previously it only
+  // ran on mount with isEditing=false, so a persisted draft was never offered.
   useEffect(() => {
     if (editor && content) {
       // Check for draft
@@ -168,10 +206,11 @@ export function ContractViewer({
             storageRemoveSync(draftKey);
           }
         }
+        return; // keep current editor state while editing
       }
       editor.commands.setContent(content);
     }
-  }, [editor, content, draftKey]);
+  }, [editor, content, draftKey, isEditing]);
 
   // Update editor editable state
   useEffect(() => {
@@ -191,14 +230,44 @@ export function ContractViewer({
       setSelectedEmployee('');
       setJobTitle('');
       setStartDate('');
+      setEndDate('');
       setSalary('');
+      setSignSheetOpen(false);
+      setSendSheetOpen(false);
+      setEmployerSignerName('');
+      setEmployerSignature(null);
+      setRequestSignerName('');
+      setRequestSignerEmail('');
+      setRequestMessage('');
     }
   }, [open]);
 
   const handleExportPdf = async () => {
     setIsExporting(true);
     try {
-      await downloadContractPDF({ template, userContract });
+      // Pull the real company name for the masthead/footers — party_name is
+      // the employee/subcontractor, never the company.
+      let exportCompanyName: string | undefined;
+      try {
+        const { data } = await supabase.rpc('get_my_company_profile');
+        const profile = Array.isArray(data) ? data[0] : data;
+        exportCompanyName = profile?.company_name || undefined;
+      } catch {
+        // Non-fatal — PDF falls back to a neutral placeholder
+      }
+      await downloadContractPDF({
+        template,
+        userContract,
+        companyName: exportCompanyName,
+        employeeSignature:
+          employeeRequest?.status === 'Signed'
+            ? {
+                name: employeeRequest.signer_name,
+                date: employeeRequest.signed_at,
+                data: employeeRequest.signature_url,
+              }
+            : null,
+      });
       toast({
         title: 'PDF Downloaded',
         description: 'Your contract document has been exported.',
@@ -235,6 +304,7 @@ export function ContractViewer({
         party_name: employeeName || undefined,
         employee_id: selectedEmployee || undefined,
         start_date: startDate || undefined,
+        end_date: endDate || undefined,
         placeholders,
       });
 
@@ -244,6 +314,7 @@ export function ContractViewer({
       setSelectedEmployee('');
       setJobTitle('');
       setStartDate('');
+      setEndDate('');
       setSalary('');
       onOpenChange(false);
     } catch (error) {
@@ -266,11 +337,7 @@ export function ContractViewer({
       }
       setHasChanges(false);
       setIsEditing(false);
-
-      toast({
-        title: 'Contract saved',
-        description: 'Your changes have been saved.',
-      });
+      // Success toast comes from the mutation hook — no duplicate here.
     } catch (error) {
       // Error handled by mutation
     }
@@ -295,12 +362,72 @@ export function ContractViewer({
     if (isEditing && hasChanges) {
       const confirmClose = window.confirm('You have unsaved changes. Close anyway?');
       if (!confirmClose) return;
+      // User accepted losing this session's edits.
+      if (draftKey) storageRemoveSync(draftKey);
     }
-    if (draftKey) {
-      storageRemoveSync(draftKey);
-    }
+    // Do NOT clear the draft on a plain close — a draft persisted through an
+    // app kill must survive until the user is actually offered a restore.
     onOpenChange(false);
   }, [isEditing, hasChanges, draftKey, onOpenChange]);
+
+  // ---- Signing ----
+  const employerSigned = Boolean(userContract?.employer_signed_at);
+  const employeeSigned = employeeRequest?.status === 'Signed';
+  const employeeAwaiting =
+    !!employeeRequest && ['Pending', 'Sent', 'Viewed'].includes(employeeRequest.status);
+  const bothSigned = employerSigned && employeeSigned;
+  const anySigningActivity = employerSigned || !!employeeRequest;
+
+  const handleEmployerSign = async () => {
+    if (!userContract || !employerSignerName.trim() || !employerSignature) return;
+    try {
+      await signAsEmployer.mutateAsync({
+        id: userContract.id,
+        signature: employerSignature,
+        signedBy: employerSignerName.trim(),
+        // Only auto-activate when the employee has already signed — a
+        // one-sided signature does not make a Draft contract Active.
+        activate: userContract.status === 'Draft' && employeeSigned,
+      });
+      setSignSheetOpen(false);
+      setEmployerSignerName('');
+      setEmployerSignature(null);
+    } catch {
+      // Error toast handled by the mutation
+    }
+  };
+
+  const handleSendForSignature = async () => {
+    if (!userContract || !requestSignerName.trim()) return;
+    try {
+      await createSignatureRequest.mutateAsync({
+        document_type: 'Contract',
+        document_id: userContract.id,
+        document_title: userContract.title,
+        signer_name: requestSignerName.trim(),
+        signer_email: requestSignerEmail.trim() || undefined,
+        message: requestMessage.trim() || undefined,
+        status: 'Pending',
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['contract-signature-request', userContract.id],
+      });
+      setSendSheetOpen(false);
+      setRequestMessage('');
+    } catch {
+      // Error toast handled by the mutation
+    }
+  };
+
+  const handleCopySigningLink = async () => {
+    if (!employeeRequest?.access_token) return;
+    try {
+      await copyToClipboard(`${window.location.origin}/sign/${employeeRequest.access_token}`);
+      toast({ title: 'Link copied', description: 'Signing link copied to clipboard.' });
+    } catch {
+      toast({ title: 'Copy failed', description: 'Could not copy link.', variant: 'destructive' });
+    }
+  };
 
   if (!contract) return null;
 
@@ -361,6 +488,7 @@ export function ContractViewer({
   );
 
   return (
+    <>
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
       <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-4xl')}>
         {/* Header */}
@@ -392,6 +520,18 @@ export function ContractViewer({
                         }
                       >
                         {userContract.status}
+                      </Badge>
+                    )}
+                    {userContract && anySigningActivity && (
+                      <Badge
+                        variant="secondary"
+                        className={
+                          bothSigned
+                            ? 'bg-green-500/10 text-green-400'
+                            : 'bg-amber-500/10 text-amber-400'
+                        }
+                      >
+                        {bothSigned ? 'Signed' : 'Awaiting signatures'}
                       </Badge>
                     )}
                     {isEditing && hasChanges && (
@@ -487,6 +627,16 @@ export function ContractViewer({
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+
+                <Field label="End Date (fixed-term / subcontract only)">
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
                     className={inputClass}
                   />
                 </Field>
@@ -633,6 +783,131 @@ export function ContractViewer({
                       </div>
                     )}
                   </div>
+
+                  {/* Signatures — employer counter-signature lives on the
+                      contract; the employee signs via the Signatures rail */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                      <PenTool className="h-4 w-4 text-elec-yellow" />
+                      Signatures
+                    </h3>
+
+                    {/* Employer */}
+                    <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-xs text-white/60">Employer</p>
+                        {employerSigned ? (
+                          <p className="text-sm text-white flex items-center gap-1.5">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-green-400 shrink-0" />
+                            <span className="truncate">
+                              Signed by {userContract.employer_signed_by || 'employer'} on{' '}
+                              {userContract.employer_signed_at
+                                ? new Date(userContract.employer_signed_at).toLocaleDateString(
+                                    'en-GB'
+                                  )
+                                : '—'}
+                            </span>
+                          </p>
+                        ) : (
+                          <p className="text-sm text-white/70">Not signed</p>
+                        )}
+                      </div>
+                      {!employerSigned && (
+                        <Button
+                          onClick={() => setSignSheetOpen(true)}
+                          className="h-11 px-4 shrink-0 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+                        >
+                          <PenTool className="h-4 w-4 mr-2" />
+                          Sign as employer
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Employee / other party */}
+                    <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-xs text-white/60">
+                          {category === 'Subcontractor' ? 'Subcontractor' : 'Employee'}
+                        </p>
+                        {employeeSigned ? (
+                          <p className="text-sm text-white flex items-center gap-1.5">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-green-400 shrink-0" />
+                            <span className="truncate">
+                              Signed by {employeeRequest?.signer_name} on{' '}
+                              {employeeRequest?.signed_at
+                                ? new Date(employeeRequest.signed_at).toLocaleDateString('en-GB')
+                                : '—'}
+                            </span>
+                          </p>
+                        ) : employeeAwaiting ? (
+                          <p className="text-sm text-amber-400 flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5 shrink-0" />
+                            <span className="truncate">
+                              Awaiting signature — {employeeRequest?.signer_name}
+                            </span>
+                          </p>
+                        ) : employeeRequest?.status === 'Declined' ? (
+                          <p className="text-sm text-red-400">
+                            Declined by {employeeRequest.signer_name}
+                          </p>
+                        ) : (
+                          <p className="text-sm text-white/70">Not sent for signature</p>
+                        )}
+                      </div>
+                      {!employeeSigned &&
+                        (employeeAwaiting && employeeRequest?.access_token ? (
+                          <Button
+                            variant="outline"
+                            onClick={handleCopySigningLink}
+                            className="h-11 px-4 shrink-0 touch-manipulation border-white/[0.15] text-white hover:bg-white/[0.08]"
+                          >
+                            <Copy className="h-4 w-4 mr-2" />
+                            Copy link
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              setRequestSignerName(
+                                userContract.party_name || userContract.employee?.name || ''
+                              );
+                              setSendSheetOpen(true);
+                            }}
+                            className="h-11 px-4 shrink-0 touch-manipulation border-white/[0.15] text-white hover:bg-white/[0.08]"
+                          >
+                            <Send className="h-4 w-4 mr-2" />
+                            Send for signature
+                          </Button>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Lifecycle: record execution/expiry/termination on the system record */}
+                  <div className="mt-2">
+                    <Field label="Contract status">
+                      <Select
+                        // defaultValue: the prop is a snapshot from the list —
+                        // keep the user's choice visible until data refreshes.
+                        defaultValue={userContract.status}
+                        onValueChange={(v) =>
+                          updateStatus.mutate({ id: userContract.id, status: v as ContractStatus })
+                        }
+                      >
+                        <SelectTrigger className={selectTriggerClass}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className={selectContentClass}>
+                          {(['Draft', 'Active', 'Expired', 'Terminated'] as ContractStatus[]).map(
+                            (s) => (
+                              <SelectItem key={s} value={s}>
+                                {s}
+                              </SelectItem>
+                            )
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </Field>
+                  </div>
                 </>
               )}
             </div>
@@ -757,5 +1032,124 @@ export function ContractViewer({
         </ResponsiveFormModalFooter>
       </ResponsiveFormModalContent>
     </ResponsiveFormModal>
+
+    {/* Sign as employer — bottom sheet */}
+    <Sheet open={signSheetOpen} onOpenChange={setSignSheetOpen}>
+      <SheetContent
+        side="bottom"
+        className="rounded-t-2xl border-white/[0.08] bg-[hsl(0_0%_7%)] max-h-[85vh] overflow-y-auto pb-8"
+      >
+        <div className="mx-auto w-full max-w-lg">
+          <div className="mx-auto mt-1 mb-3 h-1 w-10 rounded-full bg-white/[0.15]" />
+          <SheetHeader className="text-left">
+            <SheetTitle className="text-white flex items-center gap-2">
+              <PenTool className="h-5 w-5 text-elec-yellow" />
+              Sign as employer
+            </SheetTitle>
+          </SheetHeader>
+          <div className="space-y-4 mt-4">
+            <Field label="Your full name">
+              <Input
+                value={employerSignerName}
+                onChange={(e) => setEmployerSignerName(e.target.value)}
+                placeholder="Name of the person signing"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Signature">
+              <SignatureInput
+                value={employerSignature || ''}
+                onChange={setEmployerSignature}
+                placeholder="Type your name"
+              />
+            </Field>
+            <p className="text-xs text-white/60 leading-relaxed">
+              By signing you confirm agreement to this contract on behalf of your company. Your
+              name, signature and the date will be recorded on the contract and shown on the
+              exported PDF.
+            </p>
+            <PrimaryButton
+              onClick={handleEmployerSign}
+              disabled={
+                !employerSignerName.trim() || !employerSignature || signAsEmployer.isPending
+              }
+              fullWidth
+              size="lg"
+            >
+              {signAsEmployer.isPending ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Check className="h-4 w-4 mr-2" />
+              )}
+              Sign contract
+            </PrimaryButton>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+
+    {/* Send for signature — bottom sheet (rides the Signatures rail) */}
+    <Sheet open={sendSheetOpen} onOpenChange={setSendSheetOpen}>
+      <SheetContent
+        side="bottom"
+        className="rounded-t-2xl border-white/[0.08] bg-[hsl(0_0%_7%)] max-h-[85vh] overflow-y-auto pb-8"
+      >
+        <div className="mx-auto w-full max-w-lg">
+          <div className="mx-auto mt-1 mb-3 h-1 w-10 rounded-full bg-white/[0.15]" />
+          <SheetHeader className="text-left">
+            <SheetTitle className="text-white flex items-center gap-2">
+              <Send className="h-5 w-5 text-elec-yellow" />
+              Send for signature
+            </SheetTitle>
+          </SheetHeader>
+          <div className="space-y-4 mt-4">
+            <Field label="Signer name">
+              <Input
+                value={requestSignerName}
+                onChange={(e) => setRequestSignerName(e.target.value)}
+                placeholder="Who needs to sign?"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Email (optional — leave blank to share a link instead)">
+              <Input
+                type="email"
+                value={requestSignerEmail}
+                onChange={(e) => setRequestSignerEmail(e.target.value)}
+                placeholder="name@example.com"
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Message (optional)">
+              <Textarea
+                value={requestMessage}
+                onChange={(e) => setRequestMessage(e.target.value)}
+                placeholder="Add a short note for the signer…"
+                rows={2}
+                className="touch-manipulation text-base bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow resize-none"
+              />
+            </Field>
+            <p className="text-xs text-white/60 leading-relaxed">
+              They will get a secure signing link to review and sign this contract. Once signed,
+              their signature appears here and on the exported PDF.
+            </p>
+            <PrimaryButton
+              onClick={handleSendForSignature}
+              disabled={!requestSignerName.trim() || createSignatureRequest.isPending}
+              fullWidth
+              size="lg"
+            >
+              {createSignatureRequest.isPending ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4 mr-2" />
+              )}
+              {requestSignerEmail.trim() ? 'Send request' : 'Create signing link'}
+            </PrimaryButton>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+    </>
   );
 }

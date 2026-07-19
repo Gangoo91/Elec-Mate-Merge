@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { resolveStorageUrl } from '@/utils/storageUrls';
 import { FileText, Download, Printer, Loader2, ExternalLink, RefreshCw } from 'lucide-react';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 
@@ -120,9 +121,25 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
     try {
       console.log('[BRIEFING-PDF] Starting PDF generation for briefing:', briefing.id);
 
+      // PDFMonkey renders photos server-side from URLs in the payload. New
+      // uploads store bare storage paths (privacy-ready), so resolve each
+      // photo to a URL PDFMonkey can fetch; legacy full URLs pass through.
+      let briefingPayload = briefing;
+      if (Array.isArray(briefing.photos) && briefing.photos.length > 0) {
+        const resolvedPhotos = await Promise.all(
+          briefing.photos.map(async (photo: { url?: string }) => ({
+            ...photo,
+            url: photo.url
+              ? ((await resolveStorageUrl('briefing-photos', photo.url)) ?? photo.url)
+              : photo.url,
+          }))
+        );
+        briefingPayload = { ...briefing, photos: resolvedPhotos };
+      }
+
       const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
-          briefing: briefing,
+          briefing: briefingPayload,
           companyProfile: companyProfile,
           briefing_mode: true,
         },

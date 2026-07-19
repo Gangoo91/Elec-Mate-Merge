@@ -31,6 +31,11 @@ export interface TeamAllowance {
 }
 
 const LEAVE_KEY = ['team-leave-requests'];
+const ALLOWANCE_KEY = ['team-holiday-allowances'];
+
+// employee_holiday_allowances counters are maintained by the DB trigger
+// trg_maintain_holiday_allowance on employer_leave_requests — the client
+// only invalidates the allowance query after writes.
 
 export const useTeamLeaveRequests = () => {
   // Live: a worker submitting or cancelling a leave request (any change to the
@@ -126,6 +131,7 @@ export const useAddTeamLeave = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: LEAVE_KEY });
+      queryClient.invalidateQueries({ queryKey: ALLOWANCE_KEY });
     },
   });
 };
@@ -148,17 +154,28 @@ export const useDecideLeave = () => {
         data: { user },
       } = await supabase.auth.getUser();
 
+      // Real identity on the audit trail — 'Manager' told nobody anything
+      let decider = decidedBy;
+      if (!decider && user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .maybeSingle();
+        decider = profile?.full_name || user.email || undefined;
+      }
+
       const patch =
         decision === 'approved'
           ? {
               status: 'Approved',
-              approved_by: decidedBy || 'Manager',
+              approved_by: decider || 'Manager',
               approved_date: new Date().toISOString(),
             }
           : {
               status: 'Rejected',
               rejected_reason: reason || 'Declined',
-              approved_by: decidedBy || 'Manager',
+              approved_by: decider || 'Manager',
               approved_date: new Date().toISOString(),
             };
 
@@ -168,10 +185,10 @@ export const useDecideLeave = () => {
         .update(patch as any)
         .eq('id', id);
       if (error) throw error;
-      void user;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: LEAVE_KEY });
+      queryClient.invalidateQueries({ queryKey: ALLOWANCE_KEY });
       queryClient.invalidateQueries({ queryKey: ['my-leave-requests'] });
     },
   });

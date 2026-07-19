@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Drawer, DrawerContent, DrawerTitle } from '@/components/ui/drawer';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -103,6 +104,9 @@ export function TeamMemberSheet({
   onSendMessage,
 }: TeamMemberSheetProps) {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  // Legacy full photo URLs pass through; new bare paths are signed on demand.
+  const { url: employeePhotoSrc } = useStorageUrl('employee-photos', employee?.photo);
   const { data: rawAssignments = [] } = useEmployeeAssignments(employee?.id || '');
   const deleteAssignment = useDeleteJobAssignment();
   const { data: rawCerts = [] } = useCertificationsByEmployee(employee?.id);
@@ -245,7 +249,7 @@ export function TeamMemberSheet({
           <div className="relative">
             <div className={`p-1 rounded-full ${availabilityColors[employee.availability]}`}>
               <Avatar className="h-20 w-20 md:h-24 md:w-24 border-4 border-[hsl(0_0%_8%)]">
-                <AvatarImage src={employee.photo} alt={employee.name} />
+                <AvatarImage src={employeePhotoSrc ?? undefined} alt={employee.name} />
                 <AvatarFallback className="text-2xl md:text-3xl font-bold bg-elec-yellow/10 text-elec-yellow">
                   {employee.avatar}
                 </AvatarFallback>
@@ -521,8 +525,18 @@ export function TeamMemberSheet({
                         type="button"
                         className="h-8 w-8 flex items-center justify-center rounded-full text-white hover:bg-red-500/10 hover:text-red-400 touch-manipulation"
                         onClick={async () => {
-                          await deleteAssignment.mutateAsync(a.id);
-                          toast({ title: 'Removed from Job' });
+                          // deleteJobAssignment returns false on failure rather
+                          // than throwing — only confirm when the row is gone
+                          const removed = await deleteAssignment.mutateAsync(a.id);
+                          if (removed) {
+                            toast({ title: 'Removed from Job' });
+                          } else {
+                            toast({
+                              title: 'Could not remove from job',
+                              description: 'The assignment was not removed. Please try again.',
+                              variant: 'destructive',
+                            });
+                          }
                         }}
                       >
                         <X className="h-4 w-4" />
@@ -733,7 +747,13 @@ export function TeamMemberSheet({
                           </div>
                         </div>
                       </div>
-                      <SecondaryButton size="sm">
+                      <SecondaryButton
+                        size="sm"
+                        onClick={() => {
+                          onOpenChange(false);
+                          navigate(`/employer?section=elecid&member=${employee?.id}`);
+                        }}
+                      >
                         <ExternalLink className="h-3 w-3 mr-1" />
                         View
                       </SecondaryButton>

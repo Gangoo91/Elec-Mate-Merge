@@ -75,6 +75,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
     // Timeout to prevent infinite loading on slow mobile networks
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
+      setError('Dashboard stats are taking too long to load.');
       console.warn('Employer dashboard stats timed out after 8s');
     }, 8000);
 
@@ -94,10 +95,11 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
       }
 
       // Employees first — cert/expense queries key off employee_id, not employer_id.
-      const { data: myEmployees } = await supabase
+      const { data: myEmployees, error: employeesError } = await supabase
         .from('employer_employees')
         .select('id, status')
         .eq('employer_id', uid);
+      if (employeesError) throw employeesError;
       const employeeIds = (myEmployees ?? []).map((e) => e.id);
 
       // Run the rest in parallel for performance
@@ -154,6 +156,18 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
           .gte('paid_date', `${now.getFullYear()}-01-01`),
       ]);
 
+      // Surface the first query failure instead of silently rendering zeros —
+      // an RLS/PostgREST error must NOT look like an empty (all-clear) firm.
+      const firstError = [
+        jobsResult.error,
+        certificationsResult.error,
+        talentPoolResult.error,
+        expensesResult.error,
+        vacanciesResult.error,
+        invoicesResult.error,
+      ].find(Boolean);
+      if (firstError) throw firstError;
+
       // Process employee stats (active = status 'active', case-insensitive)
       const activeEmployees = (myEmployees ?? []).filter(
         (e) => (e.status || '').toLowerCase() === 'active'
@@ -171,9 +185,11 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
       });
 
       // Process talent pool — exclude the current employer's own employees
-      const talentPoolData = talentPoolResult.data || [];
+      const talentPoolData = (talentPoolResult.data || []) as unknown as Array<{
+        employer_employees?: { employer_id?: string } | null;
+      }>;
       const availableTalent = user
-        ? talentPoolData.filter((p: any) => p.employer_employees?.employer_id !== user.id).length
+        ? talentPoolData.filter((p) => p.employer_employees?.employer_id !== user.id).length
         : talentPoolData.length;
 
       // Process expenses
@@ -257,6 +273,8 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         upcomingDeadlines,
         recentActivities,
       });
+      // Clear any timeout error if the data eventually arrived.
+      setError(null);
     } catch (err) {
       console.error('Error fetching employer dashboard stats:', err);
       setError('Failed to load dashboard statistics');

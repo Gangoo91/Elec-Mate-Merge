@@ -46,7 +46,7 @@ interface ClientsSectionProps {
 }
 
 export function ClientsSection({ onNavigate }: ClientsSectionProps) {
-  const { data: clients = [], isLoading, refetch, isRefetching } = useClientSummaries();
+  const { data: clients = [], isLoading, isError, refetch, isRefetching } = useClientSummaries();
   const createClient = useCreateClient();
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<EmployerClientSummary | null>(null);
@@ -144,6 +144,13 @@ export function ClientsSection({ onNavigate }: ClientsSectionProps) {
 
         {isLoading ? (
           <LoadingBlocks />
+        ) : isError ? (
+          <EmptyState
+            title="Couldn't load clients"
+            description="Check your connection and try again."
+            action="Retry"
+            onAction={() => refetch()}
+          />
         ) : filtered.length === 0 ? (
           <EmptyState
             title={clients.length === 0 ? 'No clients yet' : 'No matches'}

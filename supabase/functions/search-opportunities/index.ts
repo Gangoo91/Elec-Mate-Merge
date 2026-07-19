@@ -396,13 +396,22 @@ Deno.serve(async (req) => {
 
     // Build query. status='all' shows open + recently-closed (last 90 days,
     // kept for market intelligence + buyer-contact leads); otherwise exact match.
+    // A row marked 'live' whose deadline has passed must never be returned as
+    // live (scraper status can lag reality) — require deadline null or future.
+    const nowIso = new Date().toISOString();
     let query = supabase
       .from('tender_opportunities')
       .select('*', { count: 'exact' });
-    query =
-      status === 'all'
-        ? query.in('status', ['live', 'closed'])
-        : query.eq('status', status);
+    if (status === 'all') {
+      query = query.or(
+        `status.eq.closed,and(status.eq.live,or(deadline.is.null,deadline.gte.${nowIso}))`
+      );
+    } else {
+      query = query.eq('status', status);
+      if (status === 'live') {
+        query = query.or(`deadline.is.null,deadline.gte.${nowIso}`);
+      }
+    }
 
     // Category filter
     if (categories && categories.length > 0) {

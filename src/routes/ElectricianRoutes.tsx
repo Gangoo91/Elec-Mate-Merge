@@ -6,8 +6,6 @@ import { LazyRoute } from '@/components/LazyRoute';
 const AITooling = lazy(() => import('@/pages/electrician-tools/AITooling'));
 const BusinessManagement = lazy(() => import('@/pages/electrician-tools/BusinessManagement'));
 const ComplianceManager = lazy(() => import('@/pages/electrician-tools/ComplianceManager'));
-const ProjectManagement = lazy(() => import('@/pages/electrician-tools/ProjectManagement'));
-const ProjectDetails = lazy(() => import('@/components/project-management/ProjectDetails'));
 const CableSizingCalculator = lazy(() => import('@/pages/electrician-tools/cable-sizing'));
 const StaffManagement = lazy(() => import('@/pages/electrician-tools/StaffManagement'));
 const ScheduleManager = lazy(() => import('@/pages/electrician-tools/ScheduleManager'));
@@ -41,14 +39,7 @@ const AIRAMSPage = lazy(() => import('@/pages/electrician-tools/AIRAMSPage'));
 
 const ElectricianRoutes = () => (
   <Routes>
-    <Route
-      index
-      element={
-        <LazyRoute>
-          <ProjectManagement />
-        </LazyRoute>
-      }
-    />
+    <Route index element={<Navigate to="/electrician/projects" replace />} />
     <Route
       path="testing-projects"
       element={
@@ -167,19 +158,11 @@ const ElectricianRoutes = () => (
 
     <Route
       path="project-management"
-      element={
-        <LazyRoute>
-          <ProjectManagement />
-        </LazyRoute>
-      }
+      element={<Navigate to="/electrician/projects" replace />}
     />
     <Route
       path="project-management/project/:projectId"
-      element={
-        <LazyRoute>
-          <ProjectDetails />
-        </LazyRoute>
-      }
+      element={<Navigate to="/electrician/projects" replace />}
     />
     <Route
       path="staff-management"
@@ -218,7 +201,7 @@ const ElectricianRoutes = () => (
     <Route path="admin" element={<Navigate to="/electrician/business-admin" replace />} />
     <Route path="document-templates" element={<Navigate to="/electrician" replace />} />
     <Route path="management/*" element={<Navigate to="/electrician" replace />} />
-    <Route path="project-management/*" element={<Navigate to="/electrician" replace />} />
+    <Route path="project-management/*" element={<Navigate to="/electrician/projects" replace />} />
 
     {/* Trade Essentials redirect */}
     <Route path="trade-essentials" element={<Navigate to="/electrician" replace />} />

@@ -3,7 +3,7 @@ import { RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
-import { useJobPacks, useUpdateJobPackDocument, useUpdateJobPack } from '@/hooks/useJobPacks';
+import { useJobPacks } from '@/hooks/useJobPacks';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
 import { AddJobPackDialog } from '@/components/employer/dialogs/AddJobPackDialog';
@@ -35,36 +35,57 @@ const statusTone: Record<string, Tone> = {
   Complete: 'emerald',
 };
 
+// One vocabulary everywhere: tabs and stats say Sent/Signed, so the row
+// pills must not say 'In Progress'/'Complete' for the same states
+const statusLabel: Record<string, string> = {
+  Draft: 'Draft',
+  'In Progress': 'Sent',
+  Complete: 'Signed',
+};
+
 export const JobPacksSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNewJobPack, setShowNewJobPack] = useState(false);
-  const [selectedJobPack, setSelectedJobPack] = useState<JobPack | null>(null);
+  const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
   const [showJobPackSheet, setShowJobPackSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<StatusTab>('all');
+  const [packPrefillJobId, setPackPrefillJobId] = useState<string | null>(null);
 
   const { data: jobPacks = [], isLoading, refetch, isRefetching } = useJobPacks();
   const { data: employees = [] } = useEmployees();
   const { data: jobs = [] } = useJobs();
-  const updateDocument = useUpdateJobPackDocument();
-  const updateJobPack = useUpdateJobPack();
   const queryClient = useQueryClient();
 
-  const jobPackJobIds = useMemo(
-    () => new Set(jobPacks.map((jp) => jp.title.toLowerCase())),
+  // The sheet reads the LIVE row, not a stale snapshot — after a send the
+  // refetched pack (status/sent_to_workers_at) must flow into the open sheet.
+  const selectedJobPack = useMemo(
+    () => jobPacks.find((jp) => jp.id === selectedJobPackId) ?? null,
+    [jobPacks, selectedJobPackId]
+  );
+
+  // Prefer the real FK link (employer_job_packs.job_id); title matching only
+  // covers legacy packs created before the column existed.
+  const packJobIds = useMemo(
+    () => new Set(jobPacks.map((jp) => jp.job_id).filter((id): id is string => !!id)),
+    [jobPacks]
+  );
+  const legacyPackTitles = useMemo(
+    () => new Set(jobPacks.filter((jp) => !jp.job_id).map((jp) => jp.title.toLowerCase())),
     [jobPacks]
   );
 
-  const jobsAwaitingPack = useMemo(
+  // Full list for the honest stat count; only the display list is capped.
+  const allJobsAwaitingPack = useMemo(
     () =>
-      jobs
-        .filter(
-          (j) =>
-            (j.status === 'Active' || j.status === 'Pending') &&
-            !jobPackJobIds.has(j.title.toLowerCase())
-        )
-        .slice(0, 5),
-    [jobs, jobPackJobIds]
+      jobs.filter(
+        (j) =>
+          (j.status === 'Active' || j.status === 'Pending') &&
+          !packJobIds.has(j.id) &&
+          !legacyPackTitles.has(j.title.toLowerCase())
+      ),
+    [jobs, packJobIds, legacyPackTitles]
   );
+  const jobsAwaitingPack = useMemo(() => allJobsAwaitingPack.slice(0, 5), [allJobsAwaitingPack]);
 
   const filteredJobPacks = useMemo(() => {
     let filtered = jobPacks;
@@ -89,29 +110,7 @@ export const JobPacksSection = () => {
     draft: jobPacks.filter((jp) => jp.status === 'Draft').length,
     inProgress: jobPacks.filter((jp) => jp.status === 'In Progress').length,
     complete: jobPacks.filter((jp) => jp.status === 'Complete').length,
-    awaiting: jobsAwaitingPack.length,
-  };
-
-  const handleGenerateDocument = async (
-    e: React.MouseEvent,
-    jobPackId: string,
-    documentType: 'rams_generated' | 'method_statement_generated' | 'briefing_pack_generated',
-    documentName: string
-  ) => {
-    e.stopPropagation();
-    try {
-      await updateDocument.mutateAsync({ id: jobPackId, documentType, status: true });
-      toast({
-        title: `${documentName} marked as prepared`,
-        description: 'Tick reflects pack readiness — attach the document itself in pack files.',
-      });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: `Could not update ${documentName}.`,
-        variant: 'destructive',
-      });
-    }
+    awaiting: allJobsAwaitingPack.length,
   };
 
   const handleSendToWorkers = async (e: React.MouseEvent, jobPack: JobPack) => {
@@ -137,7 +136,7 @@ export const JobPacksSection = () => {
   };
 
   const handleJobPackClick = (jobPack: JobPack) => {
-    setSelectedJobPack(jobPack);
+    setSelectedJobPackId(jobPack.id);
     setShowJobPackSheet(true);
   };
 
@@ -216,7 +215,11 @@ export const JobPacksSection = () => {
                   title={job.title}
                   subtitle={job.client}
                   trailing={<Pill tone="amber">No pack</Pill>}
-                  onClick={() => setShowNewJobPack(true)}
+                  onClick={() => {
+                    // Pre-select THIS job in the wizard, not a blank form.
+                    setPackPrefillJobId(job.id);
+                    setShowNewJobPack(true);
+                  }}
                 />
               ))}
             </ListBody>
@@ -274,27 +277,16 @@ export const JobPacksSection = () => {
                     trailing={
                       <>
                         {!allDocsReady && (
+                          /* Opens the pack's Documents tab where the REAL AI
+                             generation lives — the old handler just flipped
+                             the _generated flags, so "Docs 3/3" (and Send)
+                             could be reached with zero actual RAMS content. */
                           <button
                             onClick={(e) => {
-                              if (!jobPack.rams_generated) {
-                                handleGenerateDocument(e, jobPack.id, 'rams_generated', 'RAMS');
-                              } else if (!jobPack.method_statement_generated) {
-                                handleGenerateDocument(
-                                  e,
-                                  jobPack.id,
-                                  'method_statement_generated',
-                                  'Method Statement'
-                                );
-                              } else {
-                                handleGenerateDocument(
-                                  e,
-                                  jobPack.id,
-                                  'briefing_pack_generated',
-                                  'Briefing Pack'
-                                );
-                              }
+                              e.stopPropagation();
+                              handleJobPackClick(jobPack);
                             }}
-                            className="hidden sm:inline-flex h-8 px-3 rounded-full bg-white/[0.06] border border-white/[0.08] text-white text-[12px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
+                            className="hidden sm:inline-flex h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.08] text-white text-[12px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
                           >
                             Generate
                           </button>
@@ -302,12 +294,12 @@ export const JobPacksSection = () => {
                         {canSend && (
                           <button
                             onClick={(e) => handleSendToWorkers(e, jobPack)}
-                            className="hidden sm:inline-flex h-8 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold touch-manipulation"
+                            className="hidden sm:inline-flex h-11 px-4 rounded-full bg-elec-yellow text-black text-[12px] font-semibold touch-manipulation"
                           >
                             Send
                           </button>
                         )}
-                        <Pill tone={tone}>{jobPack.status}</Pill>
+                        <Pill tone={tone}>{statusLabel[jobPack.status] ?? jobPack.status}</Pill>
                       </>
                     }
                     onClick={() => handleJobPackClick(jobPack)}
@@ -319,7 +311,14 @@ export const JobPacksSection = () => {
         </ListCard>
       </PageFrame>
 
-      <AddJobPackDialog open={showNewJobPack} onOpenChange={setShowNewJobPack} />
+      <AddJobPackDialog
+        open={showNewJobPack}
+        onOpenChange={(open) => {
+          setShowNewJobPack(open);
+          if (!open) setPackPrefillJobId(null);
+        }}
+        initialJobId={packPrefillJobId}
+      />
 
       <ViewJobPackSheet
         jobPack={selectedJobPack}

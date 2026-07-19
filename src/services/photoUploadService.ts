@@ -37,10 +37,16 @@ export const uploadEmployeePhoto = async (
 
 export const deleteEmployeePhoto = async (photoUrl: string): Promise<boolean> => {
   try {
-    // Extract file path from URL
-    const url = new URL(photoUrl);
-    const pathParts = url.pathname.split('/');
-    const fileName = pathParts[pathParts.length - 1];
+    // Stored value may be a full URL (legacy rows) or a bare storage path
+    // (privacy-ready rows) — extract the object name either way.
+    let fileName: string;
+    if (/^https?:\/\//i.test(photoUrl)) {
+      const url = new URL(photoUrl);
+      const pathParts = url.pathname.split('/');
+      fileName = decodeURIComponent(pathParts[pathParts.length - 1].split('?')[0]);
+    } else {
+      fileName = photoUrl.replace(/^\/+/, '');
+    }
 
     const { error } = await supabase.storage.from(BUCKET_NAME).remove([fileName]);
 

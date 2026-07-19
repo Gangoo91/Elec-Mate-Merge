@@ -158,6 +158,19 @@ export function usePortalPhotos(token: string | undefined) {
     queryFn: async (): Promise<PortalPhoto[]> => {
       if (!token) return [];
 
+      // Server-signed delivery: anon clients can't mint signed URLs, and the
+      // job-photos bucket is going private. The edge fn validates the token
+      // via the same RPC and signs paths server-side.
+      const { data: signed, error: fnError } = await supabase.functions.invoke(
+        'portal-photos-signed',
+        { body: { token } }
+      );
+      if (!fnError && signed?.photos) {
+        return (signed.photos as PortalPhoto[]).filter((p) => !!p.url);
+      }
+
+      // Fallback (fn unreachable): direct RPC + public URLs — works while the
+      // bucket remains public, honest empty list otherwise.
       const { data, error } = await supabase.rpc('get_portal_photos', {
         p_token: token,
       });
@@ -167,28 +180,28 @@ export function usePortalPhotos(token: string | undefined) {
         return [];
       }
 
-      // Get public URLs for photos
-      const photos = await Promise.all(
-        (data || []).map(async (row: Record<string, unknown>) => {
-          let url = '';
-          if (row.storage_path) {
-            const { data: urlData } = supabase.storage
-              .from('job-photos')
-              .getPublicUrl(row.storage_path as string);
+      const photos = (data || []).map((row: Record<string, unknown>) => {
+        let url = '';
+        if (row.storage_path) {
+          const stored = row.storage_path as string;
+          if (/^https?:\/\//.test(stored)) {
+            url = stored;
+          } else {
+            const { data: urlData } = supabase.storage.from('job-photos').getPublicUrl(stored);
             url = urlData?.publicUrl || '';
           }
+        }
 
-          return {
-            id: row.id as string,
-            storage_path: row.storage_path as string,
-            filename: row.filename as string,
-            category: row.category as string,
-            notes: row.notes as string | null,
-            created_at: row.created_at as string,
-            url,
-          };
-        })
-      );
+        return {
+          id: row.id as string,
+          storage_path: row.storage_path as string,
+          filename: row.filename as string,
+          category: row.category as string,
+          notes: row.notes as string | null,
+          created_at: row.created_at as string,
+          url,
+        };
+      });
 
       return photos;
     },

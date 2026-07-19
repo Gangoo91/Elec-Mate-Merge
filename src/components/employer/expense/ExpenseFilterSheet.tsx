@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Filter, Check, RotateCcw } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -61,6 +61,18 @@ export function ExpenseFilterSheet({
   const isMobile = useIsMobile();
   const [localFilters, setLocalFilters] = useState<ExpenseFilters>(filters);
   const [dateRange, setDateRange] = useState('all');
+
+  // Re-snapshot the live filters each time the sheet opens — the tab chips
+  // set filters outside this sheet, and a stale mount-time snapshot meant
+  // Apply silently wiped them
+  useEffect(() => {
+    if (open) {
+      setLocalFilters(filters);
+      // dateRange is purely local UI; only reset it when no date filter is live
+      if (!filters.dateFrom) setDateRange('all');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   // Count active filters
   const activeFilterCount = [
@@ -204,7 +216,7 @@ export function ExpenseFilterSheet({
                     key={value}
                     type="button"
                     className={cn(
-                      'inline-flex items-center h-8 px-3 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
+                      'inline-flex items-center h-11 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                       selected
                         ? 'bg-elec-yellow text-black'
                         : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1]'
@@ -229,7 +241,7 @@ export function ExpenseFilterSheet({
                     key={id}
                     type="button"
                     className={cn(
-                      'inline-flex items-center h-8 px-3 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
+                      'inline-flex items-center h-11 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                       selected
                         ? 'bg-elec-yellow text-black'
                         : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1]'

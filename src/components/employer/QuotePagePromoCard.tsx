@@ -73,20 +73,20 @@ export function QuotePagePromoCard({ quotePageLeads, onNavigate }: QuotePageProm
       <div className="mt-2.5 grid grid-cols-3 gap-2">
         <button
           onClick={copy}
-          className="h-10 rounded-xl bg-white/[0.06] border border-white/[0.1] text-white text-[12.5px] font-medium inline-flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
+          className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.1] text-white text-[12.5px] font-medium inline-flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
         >
           {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
           {copied ? 'Copied' : 'Copy'}
         </button>
         <button
           onClick={share}
-          className="h-10 rounded-xl bg-white/[0.06] border border-white/[0.1] text-white text-[12.5px] font-medium inline-flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
+          className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.1] text-white text-[12.5px] font-medium inline-flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
         >
           <Share2 className="h-4 w-4" /> Share
         </button>
         <button
           onClick={() => onNavigate('quotepage')}
-          className="h-10 rounded-xl bg-elec-yellow text-black text-[12.5px] font-semibold inline-flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
+          className="h-11 rounded-xl bg-elec-yellow text-black text-[12.5px] font-semibold inline-flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
         >
           <QrCode className="h-4 w-4" /> QR
         </button>

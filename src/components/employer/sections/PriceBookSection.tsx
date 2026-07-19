@@ -39,6 +39,7 @@ import { ImportPriceBookDialog } from '../dialogs/ImportPriceBookDialog';
 import { EditPriceBookItemSheet } from '../dialogs/EditPriceBookItemSheet';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from 'sonner';
+import { isLowStock } from '@/services/financeService';
 import type { PriceBookItem } from '@/services/financeService';
 
 const CATEGORIES = [
@@ -156,9 +157,9 @@ export function PriceBookSection() {
     await updateItem.mutateAsync({ id, updates });
   };
 
+  // useDeletePriceBookItem already toasts on success/error — no double toast.
   const handleDeleteItem = async (id: string) => {
     await deleteItem.mutateAsync(id);
-    toast.success('Item deleted from price book');
   };
 
   const handleQuickAdd = async () => {
@@ -183,12 +184,12 @@ export function PriceBookSection() {
         sku: null,
       });
 
-      toast.success('Material added to price book');
+      // useCreatePriceBookItem toasts success/error itself.
       setNewItemName('');
       setNewItemBuyPrice('');
       setShowQuickAdd(false);
     } catch (error) {
-      toast.error('Failed to add material');
+      console.error('Quick add failed:', error);
     }
   };
 
@@ -514,12 +515,6 @@ className={`${inputClass} pl-7`}
               {savingRates ? 'Saving…' : 'Save markup rules'}
             </PrimaryButton>
           </div>
-        ) : search.length < 2 ? (
-          <EmptyState
-            title="Type at least 2 characters to search"
-            description="Or ask your voice assistant for a price lookup."
-            className="rounded-none border-0"
-          />
         ) : searchLoading ? (
           <div className="p-5 sm:p-6">
             <LoadingBlocks />
@@ -536,7 +531,7 @@ className={`${inputClass} pl-7`}
           <>
             <ListBody>
               {items.map((item) => {
-                const lowStock = item.stock_level <= item.reorder_level;
+                const lowStock = isLowStock(item);
                 return (
                   <ListRow
                     key={item.id}

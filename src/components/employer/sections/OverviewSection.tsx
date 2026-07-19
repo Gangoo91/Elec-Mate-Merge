@@ -1,4 +1,5 @@
 import { RefreshCw } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   PageFrame,
   PageHero,
@@ -42,7 +43,8 @@ import { CommandTrigger } from '@/components/employer/EmployerCommandPalette';
 const gbp = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 
 export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: OverviewSectionProps) {
-  const { stats, isLoading, refetch } = useEmployerDashboardStats();
+  const queryClient = useQueryClient();
+  const { stats, isLoading, error: statsError, refetch } = useEmployerDashboardStats();
   const { data: radar, refetch: refetchRadar } = useEmployerOverview();
   const { data: leads = [] } = useLeads();
   const { data: materialOrders = [] } = useMaterialOrders();
@@ -83,11 +85,15 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   const todayIso = new Date().toISOString().slice(0, 10);
   const todaysJobs = jobs.filter(
     (j) =>
-      j.status === 'Active' &&
+      (j.status || '').toLowerCase() === 'active' &&
       (!j.start_date || j.start_date <= todayIso) &&
       (!j.end_date || j.end_date >= todayIso)
   );
-  const onSiteCount = workerLocations.filter((w) => w.status === 'On Site').length;
+  // Only count check-ins from today — a worker who checked in days ago and never
+  // checked out must not be presented as on site under a "Today" header.
+  const onSiteCount = workerLocations.filter(
+    (w) => w.status === 'On Site' && (w.last_updated ?? '').slice(0, 10) === todayIso
+  ).length;
 
   const onOpenPeople = () => onNavigate('peoplehub');
   const onOpenJobs = () => onNavigate('jobshub');
@@ -95,11 +101,23 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
   const onOpenSafety = () => onNavigate('safetyhub');
   const onOpenSmartDocs = () => onNavigate('smartdocs');
   const onOpenClients = () => onNavigate('clientshub');
-  const onOpenAlerts = () => onNavigate('elecid');
+  // The alert rows themselves live on this page — take the user to them.
+  const onOpenAlerts = () => {
+    document.getElementById('overview-actions')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const refreshAll = () => {
     void refetch();
     void refetchRadar();
+    // Refresh every other source feeding this page, not just two of them.
+    void queryClient.invalidateQueries({ queryKey: ['employer-leads'] });
+    void queryClient.invalidateQueries({ queryKey: ['material_orders'] });
+    void queryClient.invalidateQueries({ queryKey: ['quotes'] });
+    void queryClient.invalidateQueries({ queryKey: ['vacancies', 'stats'] });
+    void queryClient.invalidateQueries({ queryKey: ['qsReviews'] });
+    void queryClient.invalidateQueries({ queryKey: ['job-signals'] });
+    void queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
+    void queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
   };
 
   // Today's money-flow signals — new leads to chase, quotes to send, and the
@@ -280,6 +298,15 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
         }
       />
 
+      {statsError && (
+        <AlertRow
+          tone="red"
+          title="Couldn't load your dashboard stats"
+          subtitle="The numbers below may be incomplete — tap to retry"
+          onClick={refreshAll}
+        />
+      )}
+
       {onOpenMate && <MateEntryCard onOpen={onOpenMate} />}
 
       <QuotePagePromoCard quotePageLeads={quotePageLeads} onNavigate={onNavigate} />
@@ -401,7 +428,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
       )}
 
       {attentionItems.length > 0 && (
-        <div className="space-y-4">
+        <div id="overview-actions" className="space-y-4">
           <div className="flex items-end justify-between gap-4">
             <div>
               <Eyebrow>Actions</Eyebrow>

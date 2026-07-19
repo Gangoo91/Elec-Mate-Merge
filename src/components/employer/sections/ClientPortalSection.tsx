@@ -1,9 +1,20 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   PageFrame,
@@ -47,7 +58,6 @@ import {
   Copy,
   Eye,
   Calendar,
-  Clock,
   RefreshCw,
   Loader2,
   Trash2,
@@ -72,9 +82,11 @@ function getInitials(name?: string | null): string {
 
 export function ClientPortalSection() {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [confirmRegenerate, setConfirmRegenerate] = useState(false);
   const [filter, setFilter] = useState<'all' | 'active' | 'paused'>('all');
   const [search, setSearch] = useState('');
 
@@ -139,14 +151,17 @@ export function ClientPortalSection() {
     if (portalLink) openExternalUrl(getPortalUrl());
   };
 
-  const handleRefreshLink = async () => {
-    if (portalLink) {
-      await regenerateToken.mutateAsync(portalLink.id);
-      toast({
-        title: 'Link refreshed',
-        description: 'A new portal link has been generated.',
-      });
-    }
+  // Regenerating kills the old link the client may already have — confirm first.
+  const handleRefreshLink = () => {
+    if (!portalLink) return;
+    setConfirmRegenerate(true);
+  };
+
+  const handleConfirmRegenerate = async () => {
+    setConfirmRegenerate(false);
+    if (!portalLink) return;
+    // Success/error toasts come from the mutation itself.
+    await regenerateToken.mutateAsync(portalLink.id).catch(() => undefined);
   };
 
   const handleCreateLink = async () => {
@@ -179,6 +194,11 @@ export function ClientPortalSection() {
     await deleteLink.mutateAsync(portalLink.id);
   };
 
+  const openPortalDetail = (jobId: string) => {
+    setSelectedJobId(jobId);
+    setDetailOpen(true);
+  };
+
   const handleInviteClient = () => {
     if (activeJobs.length === 0) {
       toast({
@@ -187,10 +207,9 @@ export function ClientPortalSection() {
       });
       return;
     }
-    toast({
-      title: 'Invite client',
-      description: 'Pick a job below and create a portal link to invite them.',
-    });
+    // Open the portal sheet for the selected job — that's where the link is
+    // created and copied, which is the real invite flow.
+    openPortalDetail(selectedJobId || activeJobs[0].id);
   };
 
   const filteredJobs = useMemo(() => {
@@ -220,14 +239,9 @@ export function ClientPortalSection() {
     ];
   }, [activeJobs, portalLinks]);
 
-  const heroActions = (
-    <>
-      <PrimaryButton onClick={handleInviteClient}>Invite client</PrimaryButton>
-      <IconButton onClick={handleRefreshLink} aria-label="Refresh">
-        <RefreshCw className="h-4 w-4" />
-      </IconButton>
-    </>
-  );
+  // Regenerating a link is a per-job action with consequences — it lives in the
+  // job's detail sheet, not as an ambient hero button.
+  const heroActions = <PrimaryButton onClick={handleInviteClient}>Invite client</PrimaryButton>;
 
   const isLoading = jobsLoading || linksLoading;
 
@@ -250,11 +264,6 @@ export function ClientPortalSection() {
   const portalViews = stats?.totalViews || 0;
   const jobsShared = (portalLinks || []).length;
   const liveJobs = activeJobs.length;
-
-  const openPortalDetail = (jobId: string) => {
-    setSelectedJobId(jobId);
-    setDetailOpen(true);
-  };
 
   const PortalPreview = () => {
     if (!selectedJob) return null;
@@ -330,13 +339,10 @@ export function ClientPortalSection() {
                       {new Date(log.date).toLocaleDateString('en-GB')}
                     </span>
                   }
-                  subtitle={log.summary}
+                  subtitle={log.work_completed || log.notes || 'No summary recorded'}
                   trailing={
-                    log.hours_worked ? (
-                      <Pill tone="amber">
-                        <Clock className="h-2.5 w-2.5 mr-1" />
-                        {log.hours_worked}h
-                      </Pill>
+                    log.workers_on_site ? (
+                      <Pill tone="amber">{log.workers_on_site} on site</Pill>
                     ) : undefined
                   }
                 />
@@ -593,7 +599,7 @@ export function ClientPortalSection() {
                         { key: 'showProgress', label: 'Show progress' },
                         { key: 'showPhotos', label: 'Show photos' },
                         { key: 'showTimeline', label: 'Show timeline' },
-                        { key: 'showIssues', label: 'Show issues' },
+                        { key: 'showIssues', label: 'Show site issues & resolutions' },
                         { key: 'showInvoices', label: 'Show invoices & how to pay' },
                         { key: 'allowMessages', label: 'Allow messages' },
                       ].map(({ key, label }) => (
@@ -665,8 +671,31 @@ export function ClientPortalSection() {
                           />
                         ))}
                       </ListBody>
+                      <p className="px-4 py-3 text-[12px] text-white/50 border-t border-white/[0.06]">
+                        Only photos marked as shared with the client in the Photo Gallery appear
+                        in the portal.
+                      </p>
                     </ListCard>
                   )}
+
+                  {/* Cross-links — the job and per-photo sharing live elsewhere;
+                      without these the sheet was a dead end */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <SecondaryButton
+                      onClick={() => navigate('/employer?section=jobs')}
+                      fullWidth
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Open job board
+                    </SecondaryButton>
+                    <SecondaryButton
+                      onClick={() => navigate('/employer?section=photo-gallery')}
+                      fullWidth
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      Manage photo sharing
+                    </SecondaryButton>
+                  </div>
 
                   {!isMobile && (
                     <>
@@ -752,6 +781,27 @@ export function ClientPortalSection() {
           </PrimaryButton>
         </div>
       )}
+
+      <AlertDialog open={confirmRegenerate} onOpenChange={setConfirmRegenerate}>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Generate a new link?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              The current link will stop working immediately and you will need to send the new
+              one to your client.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmRegenerate}
+              className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
+              Generate new link
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageFrame>
   );
 }

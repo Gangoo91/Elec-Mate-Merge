@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -16,7 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useCreateTool, CreateToolData } from '@/hooks/useCompanyTools';
+import {
+  useCreateTool,
+  useUpdateTool,
+  CreateToolData,
+  type UpdateToolData,
+  type CompanyTool,
+} from '@/hooks/useCompanyTools';
 import { Loader2 } from 'lucide-react';
 import {
   FormCard,
@@ -33,6 +38,8 @@ import {
 interface CreateToolDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Pass a tool to edit it — same form, update path (mirrors CreateSupplierDialog) */
+  tool?: CompanyTool | null;
 }
 
 const CATEGORIES = [
@@ -47,23 +54,51 @@ const CATEGORIES = [
 
 const STATUSES = ['Available', 'In Use', 'On Hire', 'Under Repair'];
 
-export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) {
-  const createTool = useCreateTool();
+const EMPTY_FORM: CreateToolData = {
+  name: '',
+  category: '',
+  serial_number: '',
+  purchase_date: '',
+  purchase_price: 0,
+  assigned_to: '',
+  status: 'Available',
+  pat_date: '',
+  pat_due: '',
+  last_calibration: '',
+  next_calibration: '',
+  notes: '',
+};
 
-  const [formData, setFormData] = useState<CreateToolData>({
-    name: '',
-    category: '',
-    serial_number: '',
-    purchase_date: '',
-    purchase_price: 0,
-    assigned_to: '',
-    status: 'Available',
-    pat_date: '',
-    pat_due: '',
-    last_calibration: '',
-    next_calibration: '',
-    notes: '',
-  });
+export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogProps) {
+  const createTool = useCreateTool();
+  const updateTool = useUpdateTool();
+  const isEdit = !!tool;
+  const isPending = createTool.isPending || updateTool.isPending;
+
+  const [formData, setFormData] = useState<CreateToolData>(EMPTY_FORM);
+
+  // Seed the form when opening in edit mode (or reset for create)
+  useEffect(() => {
+    if (!open) return;
+    setFormData(
+      tool
+        ? {
+            name: tool.name,
+            category: tool.category,
+            serial_number: tool.serial_number || '',
+            purchase_date: tool.purchase_date || '',
+            purchase_price: Number(tool.purchase_price) || 0,
+            assigned_to: tool.assigned_to || '',
+            status: tool.status || 'Available',
+            pat_date: tool.pat_date || '',
+            pat_due: tool.pat_due || '',
+            last_calibration: tool.last_calibration || '',
+            next_calibration: tool.next_calibration || '',
+            notes: tool.notes || '',
+          }
+        : EMPTY_FORM
+    );
+  }, [open, tool]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,40 +107,46 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
       return;
     }
 
-    const cleanedData: CreateToolData = {
-      name: formData.name,
-      category: formData.category,
-      status: formData.status || 'Available',
-    };
-
-    if (formData.serial_number?.trim()) cleanedData.serial_number = formData.serial_number;
-    if (formData.purchase_date) cleanedData.purchase_date = formData.purchase_date;
-    if (formData.purchase_price && formData.purchase_price > 0)
-      cleanedData.purchase_price = formData.purchase_price;
-    if (formData.assigned_to?.trim()) cleanedData.assigned_to = formData.assigned_to;
-    if (formData.pat_date) cleanedData.pat_date = formData.pat_date;
-    if (formData.pat_due) cleanedData.pat_due = formData.pat_due;
-    if (formData.last_calibration) cleanedData.last_calibration = formData.last_calibration;
-    if (formData.next_calibration) cleanedData.next_calibration = formData.next_calibration;
-    if (formData.notes?.trim()) cleanedData.notes = formData.notes;
-
     try {
-      await createTool.mutateAsync(cleanedData);
+      if (isEdit && tool) {
+        // Edit sends every field — empty means genuinely cleared
+        const updates: UpdateToolData = {
+          name: formData.name,
+          category: formData.category,
+          status: formData.status || 'Available',
+          serial_number: formData.serial_number?.trim() || null,
+          purchase_date: formData.purchase_date || null,
+          purchase_price: formData.purchase_price || 0,
+          assigned_to: formData.assigned_to?.trim() || null,
+          pat_date: formData.pat_date || null,
+          pat_due: formData.pat_due || null,
+          last_calibration: formData.last_calibration || null,
+          next_calibration: formData.next_calibration || null,
+          notes: formData.notes?.trim() || null,
+        };
+        await updateTool.mutateAsync({ id: tool.id, data: updates });
+      } else {
+        const cleanedData: CreateToolData = {
+          name: formData.name,
+          category: formData.category,
+          status: formData.status || 'Available',
+        };
+
+        if (formData.serial_number?.trim()) cleanedData.serial_number = formData.serial_number;
+        if (formData.purchase_date) cleanedData.purchase_date = formData.purchase_date;
+        if (formData.purchase_price && formData.purchase_price > 0)
+          cleanedData.purchase_price = formData.purchase_price;
+        if (formData.assigned_to?.trim()) cleanedData.assigned_to = formData.assigned_to;
+        if (formData.pat_date) cleanedData.pat_date = formData.pat_date;
+        if (formData.pat_due) cleanedData.pat_due = formData.pat_due;
+        if (formData.last_calibration) cleanedData.last_calibration = formData.last_calibration;
+        if (formData.next_calibration) cleanedData.next_calibration = formData.next_calibration;
+        if (formData.notes?.trim()) cleanedData.notes = formData.notes;
+
+        await createTool.mutateAsync(cleanedData);
+      }
       onOpenChange(false);
-      setFormData({
-        name: '',
-        category: '',
-        serial_number: '',
-        purchase_date: '',
-        purchase_price: 0,
-        assigned_to: '',
-        status: 'Available',
-        pat_date: '',
-        pat_due: '',
-        last_calibration: '',
-        next_calibration: '',
-        notes: '',
-      });
+      setFormData(EMPTY_FORM);
     } catch (error) {
       // handled by mutation
     }
@@ -116,16 +157,21 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[560px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="text-white">Add equipment</DialogTitle>
-          <DialogDescription className="text-white">
-            Add a new tool or piece of equipment to the inventory.
-          </DialogDescription>
-        </DialogHeader>
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
+            {isEdit ? 'Edit equipment' : 'Add equipment'}
+          </ResponsiveFormModalTitle>
+          <p className="text-[12.5px] text-white/70 text-left">
+            {isEdit
+              ? 'Update the details, PAT dates and calibration for this equipment.'
+              : 'Add a new tool or piece of equipment to the inventory.'}
+          </p>
+        </ResponsiveFormModalHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <ResponsiveFormModalBody className="pb-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
           <FormCard eyebrow="Equipment">
             <Field label="Equipment name" required>
               <Input
@@ -267,20 +313,18 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
             </Field>
           </FormCard>
 
-          <DialogFooter className="gap-2 sm:gap-2">
-            <SecondaryButton
-              onClick={() => onOpenChange(false)}
-              disabled={createTool.isPending}
-            >
+          <div className="flex gap-2 pb-2">
+            <SecondaryButton onClick={() => onOpenChange(false)} disabled={isPending} fullWidth>
               Cancel
             </SecondaryButton>
-            <PrimaryButton type="submit" disabled={createTool.isPending}>
-              {createTool.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Add equipment
+            <PrimaryButton type="submit" disabled={isPending} fullWidth>
+              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isEdit ? 'Save changes' : 'Add equipment'}
             </PrimaryButton>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          </div>
+          </form>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

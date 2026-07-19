@@ -113,11 +113,13 @@ export function PhotoGallerySection() {
 
   const filteredPhotos = useMemo(() => {
     return photos.filter((photo) => {
+      const q = searchQuery.toLowerCase();
+      // notes is nullable in the DB and spread through raw — never assume it.
       const matchesSearch =
-        photo.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        photo.notes.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        photo.uploadedBy.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        photo.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
+        photo.filename.toLowerCase().includes(q) ||
+        (photo.notes ?? '').toLowerCase().includes(q) ||
+        photo.uploadedBy.toLowerCase().includes(q) ||
+        photo.jobTitle.toLowerCase().includes(q);
 
       const matchesCategory =
         filters.categories.length === 0 || filters.categories.includes(photo.category);
@@ -163,6 +165,7 @@ export function PhotoGallerySection() {
         jobId: p.jobId,
         jobTitle: p.jobTitle,
         uploadedBy: p.uploadedBy,
+        filename: p.filename,
         category: p.category.toLowerCase() as MapPhoto['category'],
         timestamp: p.timestamp,
         location: p.location?.address,
@@ -471,7 +474,7 @@ export function PhotoGallerySection() {
                   {photo.filename?.startsWith('http') ? (
                     <img
                       src={photo.filename}
-                      alt={photo.caption || 'Job photo'}
+                      alt={photo.notes || photo.jobTitle || 'Job photo'}
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-cover"
                     />

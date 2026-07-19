@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Check, Loader2, X, AlertTriangle, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { Employee } from '@/services/employeeService';
 import { JobAssignmentWithDetails } from '@/services/jobAssignmentService';
 import { Job } from '@/services/jobService';
@@ -56,6 +57,12 @@ export function AssignmentDetailsSheet({
   const [endDate, setEndDate] = useState(job.end_date || '');
   const [notes, setNotes] = useState('');
   const [sendEmail, setSendEmail] = useState(true);
+
+  // Legacy full photo URLs pass through; new bare paths are signed on demand.
+  const { urls: photoSrcs } = useStorageUrls(
+    'employee-photos',
+    selectedWorkers.map((w) => w.photo_url)
+  );
 
   const hasClashes = Object.keys(clashWarnings).length > 0;
 
@@ -119,8 +126,8 @@ export function AssignmentDetailsSheet({
                     )}
                   >
                     <Avatar className="h-6 w-6">
-                      {worker.photo_url ? (
-                        <AvatarImage src={worker.photo_url} alt={worker.name} />
+                      {worker.photo_url && photoSrcs[worker.photo_url] ? (
+                        <AvatarImage src={photoSrcs[worker.photo_url]} alt={worker.name} />
                       ) : null}
                       <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
                         {worker.avatar_initials}

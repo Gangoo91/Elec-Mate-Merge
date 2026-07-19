@@ -166,14 +166,19 @@ serve(async (req: Request) => {
       };
     });
 
-    // Bump usage counter — fire-and-forget so a slow update doesn't delay
-    void sb
-      .from('college_employer_tokens')
+    // Bump usage counter — fire-and-forget so a slow update doesn't delay the
+    // response. NOTE: `void builder` never executes (PostgREST builders are
+    // lazy thenables) — .then() is what actually fires the request.
+    sb.from('college_employer_tokens')
       .update({
         use_count: (tokenRow as { use_count: number }).use_count + 1,
         last_used_at: new Date().toISOString(),
       })
-      .eq('id', (tokenRow as { id: string }).id);
+      .eq('id', (tokenRow as { id: string }).id)
+      .then(
+        () => {},
+        () => {}
+      );
 
     return json({
       ok: true,

@@ -410,6 +410,25 @@ const QuoteViewPage = () => {
     }
   };
 
+  const handleConvertToJob = async () => {
+    if (!quote) return;
+    setIsLinkingProject(true);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any).rpc('convert_quote_to_project', {
+        p_quote_id: quote.id,
+      });
+      if (error) throw error;
+      setShowProjectPicker(false);
+      toast({ title: 'Job created', description: 'Quote, invoices and visits are linked.' });
+      navigate(`/electrician/projects/${data}`);
+    } catch {
+      toast({ title: 'Failed to create job', variant: 'destructive' });
+    } finally {
+      setIsLinkingProject(false);
+    }
+  };
+
   const handleAssignProject = async (projectId: string | null, title?: string) => {
     if (!quote) return;
     setIsLinkingProject(true);
@@ -422,8 +441,8 @@ const QuoteViewPage = () => {
       setLinkedProject(projectId && title ? { id: projectId, title } : null);
       toast(
         projectId
-          ? { title: 'Added to project', description: title }
-          : { title: 'Removed from project' }
+          ? { title: 'Added to job', description: title }
+          : { title: 'Removed from job' }
       );
       setShowProjectPicker(false);
     } catch {
@@ -1159,10 +1178,10 @@ const QuoteViewPage = () => {
                 </span>
                 <span className="min-w-0">
                   <span className="block text-[13px] font-semibold text-white truncate">
-                    {linkedProject ? linkedProject.title : 'Add to project'}
+                    {linkedProject ? linkedProject.title : 'Add to job'}
                   </span>
                   <span className="block text-[11px] text-white/55 mt-0.5">
-                    {linkedProject ? 'In project — tap to change' : 'Track it with tasks & costs'}
+                    {linkedProject ? 'On a job — tap to change' : 'Track it with tasks & costs'}
                   </span>
                 </span>
               </button>
@@ -1354,8 +1373,30 @@ const QuoteViewPage = () => {
           <div className="w-full px-4 sm:px-6 pt-3 pb-[max(20px,env(safe-area-inset-bottom))]">
             <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-4" />
             <p className="text-[14px] font-semibold text-white px-1 mb-3">
-              {linkedProject ? 'Move to project' : 'Add to project'}
+              {linkedProject ? 'Move to another job' : 'Add to a job'}
             </p>
+
+            {!linkedProject && (
+              <button
+                onClick={handleConvertToJob}
+                disabled={isLinkingProject}
+                className="w-full flex items-center gap-3 h-12 px-3.5 mb-3 rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/[0.25] hover:bg-elec-yellow/[0.12] active:scale-[0.99] touch-manipulation transition-all disabled:opacity-50"
+              >
+                {isLinkingProject ? (
+                  <Loader2 className="h-4 w-4 animate-spin text-elec-yellow flex-shrink-0" />
+                ) : (
+                  <FolderPlus className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                )}
+                <span className="text-left min-w-0">
+                  <span className="block text-[13px] font-semibold text-white">
+                    Create job from this quote
+                  </span>
+                  <span className="block text-[11px] text-white/55">
+                    Title, client, address and value carried over
+                  </span>
+                </span>
+              </button>
+            )}
 
             {projects === null ? (
               <div className="flex items-center justify-center py-10">
@@ -1363,7 +1404,7 @@ const QuoteViewPage = () => {
               </div>
             ) : projects.length === 0 ? (
               <p className="text-[13px] text-white/60 px-1 py-6 text-center">
-                No projects yet — create one in the Business Hub first.
+                No jobs yet — create one from this quote above.
               </p>
             ) : (
               <>
@@ -1415,7 +1456,7 @@ const QuoteViewPage = () => {
                     className="w-full flex items-center gap-3 h-12 px-3 rounded-xl hover:bg-red-500/[0.06] active:bg-red-500/[0.1] touch-manipulation transition-all disabled:opacity-50"
                   >
                     <XCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
-                    <span className="text-[13px] font-semibold text-red-400">Remove from project</span>
+                    <span className="text-[13px] font-semibold text-red-400">Remove from job</span>
                   </button>
                 </div>
               )}

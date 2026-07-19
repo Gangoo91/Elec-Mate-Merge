@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   PageFrame,
   PageHero,
@@ -28,13 +30,13 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+  ResponsiveFormModalFooter,
+} from '@/components/ui/responsive-form-modal';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import {
@@ -64,9 +66,11 @@ const marginToneFor = (margin: number): Tone => {
 
 export function JobFinancialsSection() {
   const queryClient = useQueryClient();
+  const { profile } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [openDetail, setOpenDetail] = useState<JobFinancialWithJob | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // job_financials.invoiced/paid are never maintained by any writer, so derive
   // the open job's payment status live from its linked invoices instead.
@@ -111,9 +115,26 @@ export function JobFinancialsSection() {
   const createVariationMutation = useCreateVariationOrder();
   const updateVariationStatusMutation = useUpdateVariationOrderStatus();
 
+  // Deep-link: ?job=<employer_jobs id> opens that job's P&L directly
+  // (e.g. from the Reports job-profitability list).
+  useEffect(() => {
+    const jobId = searchParams.get('job');
+    if (!jobId || financials.length === 0) return;
+    const match = financials.find((f) => f.job_id === jobId);
+    if (match) setOpenDetail(match);
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('job');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, financials, setSearchParams]);
+
   const refresh = () => {
     refetch();
-    queryClient.invalidateQueries({ queryKey: ['jobFinancials'] });
+    queryClient.invalidateQueries({ queryKey: ['job-financials'] });
   };
 
   const filteredFinancials = useMemo(() => {
@@ -169,7 +190,7 @@ export function JobFinancialsSection() {
     updateVariationStatusMutation.mutate({
       id: vo.id,
       status: 'Approved',
-      approvedBy: 'Admin',
+      approvedBy: profile?.full_name || 'Manager',
     });
   };
 
@@ -210,7 +231,7 @@ export function JobFinancialsSection() {
         columns={4}
         stats={[
           {
-            label: 'Budgeted £',
+            label: 'Revenue £',
             value: formatK(stats.totalBudget),
             tone: 'emerald',
           },
@@ -566,14 +587,21 @@ export function JobFinancialsSection() {
         </SheetContent>
       </Sheet>
 
-      <Dialog open={!!showAddVariation} onOpenChange={() => setShowAddVariation(null)}>
-        <DialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">
-          <DialogHeader>
-            <DialogTitle className="text-white">Add variation order</DialogTitle>
-            <DialogDescription className="text-white">
+      {/* Bottom sheet on mobile, modal on desktop — matches employer pattern */}
+      <ResponsiveFormModal
+        open={!!showAddVariation}
+        onOpenChange={(o) => !o && setShowAddVariation(null)}
+      >
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">
+              Add variation order
+            </ResponsiveFormModalTitle>
+            <p className="text-[12.5px] text-white/70 text-left">
               Add a variation to adjust the job scope and budget.
-            </DialogDescription>
-          </DialogHeader>
+            </p>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6">
           <FormCard>
             <Field label="Description">
               <Textarea
@@ -596,19 +624,21 @@ export function JobFinancialsSection() {
               />
             </Field>
           </FormCard>
-          <DialogFooter className="flex flex-row gap-2">
-            <SecondaryButton onClick={() => setShowAddVariation(null)}>
+          </ResponsiveFormModalBody>
+          <ResponsiveFormModalFooter className="flex flex-row gap-3">
+            <SecondaryButton onClick={() => setShowAddVariation(null)} fullWidth>
               Cancel
             </SecondaryButton>
             <PrimaryButton
               onClick={handleAddVariation}
               disabled={!variationDesc.trim() || createVariationMutation.isPending}
+              fullWidth
             >
               {createVariationMutation.isPending ? 'Adding…' : 'Add variation'}
             </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ResponsiveFormModalFooter>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
 
       <RecordActualCostSheet
         open={!!showRecordCostSheet}

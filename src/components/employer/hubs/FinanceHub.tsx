@@ -1,5 +1,4 @@
 import type { Section } from '@/pages/employer/EmployerDashboard';
-import { HubSkeleton } from '@/components/employer/skeletons';
 import {
   useQuotes,
   useInvoices,
@@ -12,6 +11,7 @@ import {
   SectionHeader,
   HubGrid,
   HubCard,
+  LoadingBlocks,
 } from '@/components/employer/editorial';
 
 interface FinanceHubProps {
@@ -44,10 +44,21 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
   const totalOverdueInvoices = overdueInvoices.reduce((sum, i) => sum + Number(i.amount), 0);
 
   if (isLoading) {
-    return <HubSkeleton statCount={4} cardCount={3} columns={2} />;
+    return (
+      <HubLanding
+        eyebrow="Money"
+        title="Finance"
+        description="Quotes, invoices, tenders, expenses and reporting."
+        tone="emerald"
+      >
+        <LoadingBlocks />
+      </HubLanding>
+    );
   }
 
-  const fmtMoney = (v: number) => `£${(v / 1000).toFixed(v >= 1000 ? 1 : 0)}k`;
+  // £450 not £0.5k; £12,400 → £12.4k
+  const fmtMoney = (v: number) =>
+    v >= 1000 ? `£${(v / 1000).toFixed(1).replace(/\.0$/, '')}k` : `£${Math.round(v)}`;
 
   return (
     <HubLanding

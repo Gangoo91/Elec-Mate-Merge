@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
 import { ChevronDown, ChevronUp, Sparkles, Trash2, Bot } from 'lucide-react';
@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { supabase } from '@/integrations/supabase/client';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { cn } from '@/lib/utils';
 
 /**
@@ -51,6 +52,11 @@ export function ProjectAINotes({ projectId, isOpen, onToggle }: ProjectAINotesPr
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // image_urls hold bare visual-uploads paths on new notes and full public
+  // URLs on legacy notes — resolve both to renderable URLs.
+  const noteImageRefs = useMemo(() => notes.flatMap((n) => n.image_urls ?? []), [notes]);
+  const { urls: resolvedImageUrls } = useStorageUrls('visual-uploads', noteImageRefs);
 
   const fetchNotes = useCallback(async () => {
     if (!projectId) return;
@@ -170,22 +176,26 @@ export function ProjectAINotes({ projectId, isOpen, onToggle }: ProjectAINotesPr
                             saved note carries the visual context of the question. */}
                         {note.image_urls && note.image_urls.length > 0 && (
                           <div className="mt-2 flex flex-wrap gap-1.5">
-                            {note.image_urls.slice(0, 5).map((url, i) => (
-                              <a
-                                key={url + i}
-                                href={url}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="block w-14 h-14 rounded-lg overflow-hidden border border-white/[0.08]"
-                              >
-                                <img
-                                  src={url}
-                                  alt={`Photo ${i + 1}`}
-                                  className="w-full h-full object-cover"
-                                />
-                              </a>
-                            ))}
+                            {note.image_urls.slice(0, 5).map((stored, i) => {
+                              const url = resolvedImageUrls[stored];
+                              if (!url) return null;
+                              return (
+                                <a
+                                  key={stored + i}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="block w-14 h-14 rounded-lg overflow-hidden border border-white/[0.08]"
+                                >
+                                  <img
+                                    src={url}
+                                    alt={`Photo ${i + 1}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </a>
+                              );
+                            })}
                           </div>
                         )}
                         <p

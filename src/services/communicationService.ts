@@ -259,7 +259,18 @@ const createRecipientsForCommunication = async (communication: Communication): P
       employee_id: employeeId,
     }));
 
-    await supabase.from('employer_communication_recipients').insert(recipients);
+    const { error } = await supabase
+      .from('employer_communication_recipients')
+      .insert(recipients);
+
+    if (error) {
+      // A message with no recipient rows is invisible to every worker and
+      // never triggers the push/bell fan-out — don't leave the orphaned
+      // communication behind a success toast. Roll it back and surface.
+      console.error('Error creating communication recipients:', error);
+      await supabase.from('employer_communications').delete().eq('id', communication.id);
+      throw new Error('Message could not be delivered to the selected recipients');
+    }
   }
 };
 
@@ -328,9 +339,15 @@ export const acknowledgeMessage = async (
 
 // Get unread count for an employee
 export const getUnreadCount = async (employeeId: string): Promise<number> => {
+  // !inner join so recipient rows whose parent communication is not visible
+  // to this worker under RLS (e.g. manager-audience messages) are excluded —
+  // keeps the badge in step with the list the worker can actually see.
   const { count, error } = await supabase
     .from('employer_communication_recipients')
-    .select('id', { count: 'exact', head: true })
+    .select('id, communication:employer_communications!inner(id)', {
+      count: 'exact',
+      head: true,
+    })
     .eq('employee_id', employeeId)
     .is('read_at', null);
 

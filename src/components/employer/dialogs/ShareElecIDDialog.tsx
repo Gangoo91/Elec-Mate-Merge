@@ -3,12 +3,12 @@ import { QRCodeSVG } from 'qrcode.react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -37,7 +37,6 @@ interface ShareElecIDDialogProps {
 export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDialogProps) => {
   const generateLink = useGenerateShareableLink();
   const [shareSettings, setShareSettings] = useState({
-    includePhoto: true,
     includeCertifications: true,
     includeTraining: true,
     includeWorkHistory: true,
@@ -46,19 +45,45 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
   });
   const [recipientEmail, setRecipientEmail] = useState('');
   const [expiryDays, setExpiryDays] = useState('30');
-  const [shareLink, setShareLink] = useState<string | null>(profile.shareable_link || null);
+  // Only trust a stored link that points at the live share system — legacy
+  // rows carried dead-domain links
+  const [shareLink, setShareLink] = useState<string | null>(
+    profile.shareable_link?.includes('/share/') ? profile.shareable_link : null
+  );
+  // The link's persisted controls only change when a NEW link is generated —
+  // flag when the on-screen settings have drifted from the active link
+  const [settingsDirty, setSettingsDirty] = useState(false);
   const qrRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open && !shareLink && profile.id) {
       handleGenerateLink();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, profile.id]);
+
+  // Persisted + enforced: the checkboxes map to the share row's sections
+  // (the public /share view filters on them) and the expiry to expires_at
+  const buildOptions = () => {
+    const sections = ['basics'];
+    if (shareSettings.includeCertifications) sections.push('qualifications');
+    if (shareSettings.includeTraining) sections.push('training');
+    if (shareSettings.includeWorkHistory) sections.push('experience');
+    if (shareSettings.includeSkills) sections.push('skills');
+    // 'basics' carries contact details on the public view — drop it when
+    // contact is unticked (bio/ECS ride along; the view groups them)
+    if (!shareSettings.includeContact) sections.splice(sections.indexOf('basics'), 1);
+    return {
+      sections,
+      expiresInDays: expiryDays === 'never' ? null : parseInt(expiryDays, 10),
+    };
+  };
 
   const handleGenerateLink = async () => {
     try {
-      const link = await generateLink.mutateAsync(profile.id);
+      const link = await generateLink.mutateAsync({ id: profile.id, options: buildOptions() });
       setShareLink(link);
+      setSettingsDirty(false);
     } catch (error) {
       console.error('Error generating link:', error);
       toast({
@@ -152,19 +177,20 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[520px] max-h-[90vh] overflow-y-auto p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <Shield className="h-5 w-5 text-elec-yellow" />
             Share Elec-ID profile
-          </DialogTitle>
-          <DialogDescription className="text-white">
+          </ResponsiveFormModalTitle>
+          <p className="text-[12.5px] text-white/70 text-left">
             Share {profile.employee?.name || 'this worker'}'s portable Elec-ID with employers or
             clients.
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </ResponsiveFormModalHeader>
 
+        <ResponsiveFormModalBody className="pb-6">
         <Tabs defaultValue="link" className="mt-2">
           <TabsList className="w-full bg-[hsl(0_0%_12%)] border border-white/[0.06]">
             <TabsTrigger
@@ -199,15 +225,20 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
                     Generating shareable link...
                   </p>
                 )}
-                {!shareLink && !generateLink.isPending && (
-                  <TextAction onClick={handleGenerateLink}>Generate new link</TextAction>
+                {!generateLink.isPending && (!shareLink || settingsDirty) && (
+                  <TextAction onClick={handleGenerateLink}>
+                    {settingsDirty ? 'Apply settings — generate new link' : 'Generate new link'}
+                  </TextAction>
                 )}
               </div>
               <Field label="Link expires after">
                 <select
                   className={selectTriggerClass + ' w-full'}
                   value={expiryDays}
-                  onChange={(e) => setExpiryDays(e.target.value)}
+                  onChange={(e) => {
+                    setExpiryDays(e.target.value);
+                    setSettingsDirty(true);
+                  }}
                 >
                   <option value="7">7 days</option>
                   <option value="30">30 days</option>
@@ -274,7 +305,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
               includeTraining: 'Training records',
               includeWorkHistory: 'Work history',
               includeSkills: 'Skills & specialisms',
-              includeContact: 'Contact details',
+              includeContact: 'Contact details & bio',
             }).map(([key, label]) => (
               <label
                 key={key}
@@ -284,9 +315,10 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
                 <Checkbox
                   id={key}
                   checked={shareSettings[key as keyof typeof shareSettings]}
-                  onCheckedChange={(checked) =>
-                    setShareSettings((prev) => ({ ...prev, [key]: checked }))
-                  }
+                  onCheckedChange={(checked) => {
+                    setShareSettings((prev) => ({ ...prev, [key]: checked === true }));
+                    setSettingsDirty(true);
+                  }}
                   className={checkboxClass}
                 />
                 <span className="text-[12.5px] text-white">{label}</span>
@@ -294,7 +326,8 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
             ))}
           </div>
         </FormCard>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 };

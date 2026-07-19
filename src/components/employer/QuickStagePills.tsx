@@ -16,23 +16,25 @@ interface QuickStagePillsProps {
 
 // Get stage-specific colours
 const getStageColor = (stageId: string, isActive: boolean): string => {
-  if (!isActive) return 'bg-[hsl(0_0%_12%)] text-white hover:bg-[hsl(0_0%_12%)] border-white/[0.08]';
+  if (!isActive) return 'bg-[hsl(0_0%_12%)] text-white hover:bg-[hsl(0_0%_15%)] border-white/[0.08]';
 
   switch (stageId) {
     case 'Quoted':
-      return 'bg-[hsl(0_0%_12%)]-foreground text-background border-white/[0.08]-foreground';
+      // (was a broken scripted-replace class pair — the active pill rendered
+      // with no background at all)
+      return 'bg-white/90 text-black border-white/90';
     case 'Confirmed':
       return 'bg-info text-info-foreground border-info';
     case 'Scheduled':
       return 'bg-warning text-warning-foreground border-warning';
     case 'In Progress':
-      return 'bg-elec-yellow text-elec-yellow-foreground border-elec-yellow';
+      return 'bg-elec-yellow text-black border-elec-yellow';
     case 'Testing':
       return 'bg-purple-500 text-white border-purple-500';
     case 'Complete':
       return 'bg-success text-success-foreground border-success';
     default:
-      return 'bg-elec-yellow text-elec-yellow-foreground border-elec-yellow';
+      return 'bg-elec-yellow text-black border-elec-yellow';
   }
 };
 
@@ -42,8 +44,6 @@ export function QuickStagePills({
   activeStage,
   onStageClick,
 }: QuickStagePillsProps) {
-  const totalCount = Object.values(counts).reduce((a, b) => a + b, 0);
-
   return (
     <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-1 px-1">
       {stages.map((stage) => (
@@ -51,7 +51,7 @@ export function QuickStagePills({
           key={stage.id}
           onClick={() => onStageClick(stage.id)}
           className={cn(
-            'flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+            'flex-shrink-0 h-10 px-3 rounded-full text-sm font-medium transition-all touch-manipulation',
             'border flex items-center gap-1.5',
             getStageColor(stage.id, activeStage === stage.id)
           )}

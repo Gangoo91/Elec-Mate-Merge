@@ -41,11 +41,23 @@ import {
   Eyebrow,
 } from '@/components/employer/editorial';
 
+/** Shape of an AI estimate carried from the estimate sheet into Start tender. */
+export interface OpportunityEstimate {
+  labour_hours?: number;
+  labour_cost: number;
+  materials_cost: number;
+  equipment_cost: number;
+  overheads: number;
+  profit: number;
+  total_estimate: number;
+  programme?: string;
+}
+
 interface OpportunityDetailSheetProps {
   opportunity: TenderOpportunity | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onStartTender?: () => void;
+  onStartTender?: (estimate?: OpportunityEstimate) => void;
   isSaved: boolean;
   onToggleSave: () => void;
 }
@@ -115,7 +127,7 @@ export function OpportunityDetailSheet({
                 <Sparkles className="h-4 w-4 mr-2" />
                 AI estimate
               </SecondaryButton>
-              <PrimaryButton onClick={onStartTender} fullWidth>
+              <PrimaryButton onClick={() => onStartTender?.()} fullWidth>
                 <Zap className="h-4 w-4 mr-2" />
                 Start tender
               </PrimaryButton>
@@ -369,10 +381,16 @@ export function OpportunityDetailSheet({
             </a>
           )}
 
-          <div className="flex items-center gap-2 text-xs text-white">
-            <Calendar className="h-3.5 w-3.5" />
-            Opportunity ID {opportunity.id}
-          </div>
+          {(opportunity.external_id || opportunity.published_at) && (
+            <div className="flex items-center gap-2 text-xs text-white">
+              <Calendar className="h-3.5 w-3.5" />
+              {opportunity.external_id ? `Reference ${opportunity.external_id}` : ''}
+              {opportunity.external_id && opportunity.published_at ? ' · ' : ''}
+              {opportunity.published_at
+                ? `Published ${new Date(opportunity.published_at).toLocaleDateString('en-GB')}`
+                : ''}
+            </div>
+          )}
         </SheetShell>
       </SheetContent>
 
@@ -381,7 +399,11 @@ export function OpportunityDetailSheet({
         open={showAIEstimate}
         onOpenChange={setShowAIEstimate}
         onUseEstimate={(estimate) => {
+          // Carry the estimate straight into Start tender so it's persisted
+          // on the tracked tender rather than evaporating on close.
+          setShowAIEstimate(false);
           toast.success(`Estimate ready: £${estimate.total_estimate.toLocaleString()}`);
+          onStartTender?.(estimate);
         }}
       />
     </Sheet>

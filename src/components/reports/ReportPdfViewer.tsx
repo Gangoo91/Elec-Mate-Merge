@@ -389,6 +389,40 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         // EIC and Minor Works: no standalone formatter available, fall through with raw data
       }
 
+      // QS countersignature must survive stale pdf_payloads (saved before the
+      // QS approved) and the raw EIC/MW fall-through — graft the verified
+      // block onto whatever payload we ended up with. The RPC returns null
+      // unless the latest review is approved AND the report content hash still
+      // matches what the QS signed, so this can never stamp an edited cert.
+      try {
+        const { getLatestApprovedQsReview, formatQsReviewDate } = await import(
+          '@/utils/qsReviewPdf'
+        );
+        const qsReview = await getLatestApprovedQsReview(reportData.report_id);
+        if (qsReview && dataForPdf && typeof dataForPdf === 'object') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const fd = dataForPdf as Record<string, any>;
+          const qsDate = formatQsReviewDate(qsReview.reviewed_at);
+          fd.declarations = {
+            ...(fd.declarations ?? {}),
+            report_authorised_by: {
+              ...(fd.declarations?.report_authorised_by ?? {}),
+              name: qsReview.reviewer_name,
+              date: qsDate,
+              signature: qsReview.qs_signature,
+              position: qsReview.qs_position,
+            },
+          };
+          fd.report_authorised_by_name = qsReview.reviewer_name;
+          fd.report_authorised_by_date = qsDate;
+          fd.report_authorised_by_signature = qsReview.qs_signature;
+          fd.report_authorised_by_position = qsReview.qs_position;
+          dataForPdf = fd;
+        }
+      } catch {
+        // Countersign lookup is best-effort — never block PDF generation.
+      }
+
       // ELE-876 — make sure scheme + company logos are PDF-safe (data URLs or
       // absolute URLs) regardless of which formatter ran (or didn't). Relative
       // paths like `/logos/schemes/niceic.png` would otherwise render as
@@ -562,11 +596,12 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   const handleEdit = () => {
     if (!report) return;
 
-    if (report.is_latest_version) {
-      // Navigate directly to form
+    // is_latest_version never existed on the reports table — the honest signal
+    // is the QS/issue lock: a locked certificate is a final record and edits
+    // must become a new version; an unlocked report edits in place.
+    if (!report.locked_at) {
       navigateToForm();
     } else {
-      // Show dialog asking if they want to create new version
       setShowEditDialog(true);
     }
   };
@@ -639,7 +674,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
       toast({
         title: 'New Version Created',
-        description: `Version ${newVersion} created successfully`,
+        description: `Version ${newEditVersion} created successfully`,
       });
 
       // Navigate to edit new version

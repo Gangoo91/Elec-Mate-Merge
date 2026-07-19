@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 import {
   X,
   Check,
@@ -10,9 +11,9 @@ import {
   Calendar,
   AlertCircle,
   Trash2,
-  Edit,
   Wrench,
   Car,
+  Route,
   ParkingCircle,
   Hammer,
   HardHat,
@@ -21,6 +22,8 @@ import {
   Package,
   ExternalLink,
 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
+import { normaliseExpenseCategory } from '@/hooks/useExpenses';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
@@ -63,6 +66,7 @@ interface ExpenseDetailSheetProps {
 const categoryIcons: Record<string, React.ElementType> = {
   Materials: Wrench,
   Travel: Car,
+  Mileage: Route,
   Parking: ParkingCircle,
   Tools: Hammer,
   PPE: HardHat,
@@ -91,16 +95,16 @@ export function ExpenseDetailSheet({
   onReject,
   onMarkPaid,
   onDelete,
-  onEdit,
 }: ExpenseDetailSheetProps) {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
 
   if (!expense) return null;
 
-  const CategoryIcon = categoryIcons[expense.category] || Package;
+  const CategoryIcon = categoryIcons[normaliseExpenseCategory(expense.category)] || Package;
   const status = statusConfig[expense.status] || statusConfig.Pending;
   const StatusIcon = status.icon;
 
@@ -159,21 +163,11 @@ export function ExpenseDetailSheet({
         </PrimaryButton>
       )}
 
-      {(isRejected || expense.status === 'Paid') && (
-        <>
-          {onEdit && isPending && (
-            <SecondaryButton fullWidth onClick={() => onEdit(expense)}>
-              <Edit className="h-4 w-4 mr-2" />
-              Edit
-            </SecondaryButton>
-          )}
-          {onDelete && (
-            <DestructiveButton fullWidth onClick={() => setShowDeleteDialog(true)}>
-              <Trash2 className="h-4 w-4 mr-2" />
-              Delete
-            </DestructiveButton>
-          )}
-        </>
+      {(isRejected || expense.status === 'Paid') && onDelete && (
+        <DestructiveButton fullWidth onClick={() => setShowDeleteDialog(true)}>
+          <Trash2 className="h-4 w-4 mr-2" />
+          Delete
+        </DestructiveButton>
       )}
     </>
   );
@@ -256,6 +250,10 @@ export function ExpenseDetailSheet({
                   <span className="text-sm text-white">Linked job</span>
                   <button
                     type="button"
+                    onClick={() => {
+                      onOpenChange(false);
+                      navigate(`/employer?section=jobs&job=${expense.job_id}`);
+                    }}
                     className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors inline-flex items-center gap-1"
                   >
                     <Briefcase className="h-3 w-3" />
@@ -268,7 +266,7 @@ export function ExpenseDetailSheet({
               <div className="flex items-center justify-between py-2 border-t border-white/[0.06]">
                 <span className="text-sm text-white">Receipt</span>
                 {expense.receipt_url ? (
-                  <SecondaryButton size="sm">
+                  <SecondaryButton size="sm" onClick={() => openExternalUrl(expense.receipt_url!)}>
                     <Receipt className="h-3 w-3 mr-1" />
                     View receipt
                   </SecondaryButton>

@@ -31,6 +31,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { InspectorChatModal } from './InspectorChatModal';
 
 interface AnalysisResult {
@@ -322,9 +323,14 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       throw new Error(`Upload failed: ${uploadError.message}`);
     }
 
-    const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(filePath);
-
-    return urlData.publicUrl;
+    // Fresh signed URL (1h) — the visual-analysis edge fn fetches this
+    // server-side, so it must stay valid after visual-uploads goes private.
+    // Works identically while the bucket is still public.
+    const signedUrl = await mintFreshSignedUrl('visual-uploads', filePath);
+    if (!signedUrl) {
+      throw new Error('Could not prepare the uploaded image for analysis');
+    }
+    return signedUrl;
   };
 
   const cancelAnalysis = () => {

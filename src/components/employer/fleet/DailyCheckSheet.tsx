@@ -23,6 +23,7 @@ import {
 } from '@/hooks/useVehicleChecks';
 import type { Vehicle } from '@/hooks/useFleet';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import {
   SheetShell,
   Field,
@@ -84,7 +85,8 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
   const handleSubmit = async () => {
     let signatureUrl: string | undefined;
 
-    // Upload signature if drawn
+    // Upload signature if drawn — a failed upload must NOT silently submit an
+    // unsigned compliance record, so block and let the driver retry.
     if (sigRef.current && !sigRef.current.isEmpty()) {
       const dataUrl = sigRef.current.toDataURL('image/png');
       const blob = await fetch(dataUrl).then((r) => r.blob());
@@ -94,15 +96,24 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
         data: { user },
       } = await supabase.auth.getUser();
       if (user) {
-        const fileName = `vehicle-check-signatures/${user.id}/${vehicle.id}/${Date.now()}.png`;
+        // First folder must be auth.uid() — visual-uploads INSERT policy.
+        const fileName = `${user.id}/vehicle-check-signatures/${vehicle.id}/${Date.now()}.png`;
         const { data, error } = await supabase.storage
           .from('visual-uploads')
           .upload(fileName, file);
 
-        if (!error && data) {
-          const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
-          signatureUrl = urlData.publicUrl;
+        if (error || !data) {
+          toast({
+            title: 'Signature upload failed',
+            description:
+              'Your check was not submitted. Check your connection and tap Complete check again.',
+            variant: 'destructive',
+          });
+          return;
         }
+        // Store the bare storage path (privacy-ready) — nothing renders check
+        // signatures today; future readers resolve via useStorageUrl.
+        signatureUrl = data.path;
       }
     }
 

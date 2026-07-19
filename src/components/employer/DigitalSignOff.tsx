@@ -19,6 +19,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { getCurrentPosition } from '@/utils/geolocation';
 import {
   useBriefingAttendees,
@@ -58,6 +59,12 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const { data: attendees = [], isLoading } = useBriefingAttendees(briefing.id);
+  // Resolve stored signature references — legacy rows hold full public URLs
+  // (pass through), new rows hold bare storage paths (signed on demand).
+  const { urls: signatureSrcs } = useStorageUrls(
+    'briefings',
+    attendees.map((a) => a.signature_url)
+  );
   const signOff = useSignOffAttendee();
   const uploadSignature = useUploadSignature();
   const addAttendee = useAddBriefingAttendee();
@@ -346,9 +353,9 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                                   </p>
                                 </div>
                               </div>
-                              {attendee.signature_url && (
+                              {attendee.signature_url && signatureSrcs[attendee.signature_url] && (
                                 <img
-                                  src={attendee.signature_url}
+                                  src={signatureSrcs[attendee.signature_url]}
                                   alt="Signature"
                                   className="h-10 w-20 object-contain opacity-70"
                                 />

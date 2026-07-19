@@ -18,7 +18,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { format, isToday, isThisWeek, isThisMonth } from 'date-fns';
 import {
   useProgressLogs,
-  useProgressLogStats,
   useCreateProgressLog,
   useSignOffProgressLog,
   useDeleteProgressLog,
@@ -27,10 +26,13 @@ import {
   type WeatherCondition,
 } from '@/hooks/useProgressLogs';
 import { useJobs } from '@/hooks/useJobs';
+import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
+import type { Job } from '@/services/jobService';
 
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { toast } from '@/hooks/use-toast';
 import { uploadJobPhotos } from '@/utils/uploadJobPhotos';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
@@ -100,6 +102,8 @@ export function ProgressLogsSection() {
   const [selectedLog, setSelectedLog] = useState<ProgressLog | null>(null);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  // From a log you can jump to the job it describes.
+  const [jobSheetJob, setJobSheetJob] = useState<Job | null>(null);
 
   const [formData, setFormData] = useState<Partial<CreateProgressLogInput>>({
     job_id: '',
@@ -116,6 +120,16 @@ export function ProgressLogsSection() {
   const [newMaterial, setNewMaterial] = useState({ item: '', quantity: '', cost: 0 });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
+
+  // Resolve stored photo references for display — new uploads store bare
+  // storage paths (privacy-ready); legacy entries hold full URLs.
+  const { urls: photoSrcs } = useStorageUrls('visual-uploads', [
+    ...(formData.photos || []),
+    ...(selectedLog?.photos || []).map((p) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      typeof p === 'string' ? p : ((p as any)?.url as string)
+    ),
+  ]);
 
   const handlePhotoSelect = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -155,7 +169,6 @@ export function ProgressLogsSection() {
   };
 
   const { data: progressLogs = [], isLoading, error, refetch } = useProgressLogs();
-  const { data: stats } = useProgressLogStats();
   const { data: jobs = [] } = useJobs();
   const createProgressLog = useCreateProgressLog();
   const signOffProgressLog = useSignOffProgressLog();
@@ -300,7 +313,9 @@ export function ProgressLogsSection() {
   const todaysLogs = progressLogs.filter((l) => isToday(new Date(l.date)));
   const totalPhotos = progressLogs.reduce((acc, l) => acc + (l.photos?.length || 0), 0);
   const jobsCovered = new Set(progressLogs.map((l) => l.job_id)).size;
-  const workersLogged = stats?.totalWorkers ?? 0;
+  // Today's headcount — the old stats.totalWorkers was an all-time cumulative
+  // sum of workers_on_site, a number that means nothing on a dashboard tile.
+  const workersToday = todaysLogs.reduce((acc, l) => acc + (l.workers_on_site || 0), 0);
   const logsTodayCount = todaysLogs.length;
 
   const tabs = [
@@ -384,7 +399,7 @@ export function ProgressLogsSection() {
         stats={[
           { label: 'Logs today', value: logsTodayCount, tone: 'emerald' },
           { label: 'Photos', value: totalPhotos, tone: 'blue' },
-          { label: 'Workers logged', value: workersLogged, tone: 'amber' },
+          { label: 'Workers today', value: workersToday, tone: 'amber' },
           { label: 'Jobs covered', value: jobsCovered },
         ]}
       />
@@ -700,7 +715,11 @@ export function ProgressLogsSection() {
                       key={url}
                       className="relative h-16 w-16 rounded-lg overflow-hidden border border-white/10"
                     >
-                      <img src={url} alt="Site" className="h-full w-full object-cover" />
+                      <img
+                        src={photoSrcs[url] ?? url}
+                        alt="Site"
+                        className="h-full w-full object-cover"
+                      />
                       <button
                         type="button"
                         onClick={() => removePhoto(url)}
@@ -804,15 +823,28 @@ export function ProgressLogsSection() {
                 {selectedLog.job?.client && (
                   <ListCard>
                     <ListCardHeader title="Client" />
-                    <div className="px-5 py-4">
-                      <div className="text-[14px] font-medium text-white">
-                        {selectedLog.job.client}
-                      </div>
-                      {selectedLog.weather && (
-                        <div className="mt-1 text-[12px] text-white">
-                          Weather: {selectedLog.weather}
+                    <div className="px-5 py-4 flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="text-[14px] font-medium text-white">
+                          {selectedLog.job.client}
                         </div>
-                      )}
+                        {selectedLog.weather && (
+                          <div className="mt-1 text-[12px] text-white">
+                            Weather: {selectedLog.weather}
+                          </div>
+                        )}
+                      </div>
+                      <SecondaryButton
+                        onClick={() => {
+                          const job = jobs.find((j) => j.id === selectedLog.job_id);
+                          if (job) {
+                            setSelectedLog(null);
+                            setJobSheetJob(job);
+                          }
+                        }}
+                      >
+                        View job
+                      </SecondaryButton>
                     </div>
                   </ListCard>
                 )}
@@ -859,13 +891,13 @@ export function ProgressLogsSection() {
                           return (
                             <a
                               key={i}
-                              href={url}
+                              href={photoSrcs[url] ?? url}
                               target="_blank"
                               rel="noreferrer"
                               className="relative aspect-square rounded-xl overflow-hidden bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation"
                             >
                               <img
-                                src={url}
+                                src={photoSrcs[url] ?? url}
                                 alt={`Photo ${i + 1}`}
                                 className="absolute inset-0 w-full h-full object-cover"
                               />
@@ -936,14 +968,20 @@ export function ProgressLogsSection() {
         </SheetContent>
       </Sheet>
 
+      {/* Job detail — reached from a log's "View job" */}
+      <ViewJobSheet
+        job={jobSheetJob}
+        open={!!jobSheetJob}
+        onOpenChange={(open) => !open && setJobSheetJob(null)}
+      />
+
       {/* Delete Confirmation */}
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
         <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete progress log?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">
-              This action cannot be undone. The progress log and its audit trail entry will be
-              permanently removed.
+              This action cannot be undone. The progress log will be permanently removed.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

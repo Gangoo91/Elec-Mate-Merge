@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
 import {
@@ -146,6 +147,7 @@ const ACCOUNTING_PROVIDERS: { id: AccountingProvider; name: string }[] = [
 
 export const TimesheetsSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const { data: rawTimesheets = [], isLoading: timesheetsLoading, refetch: refetchTimesheets } = useTimesheets();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
   const { data: jobs = [], isLoading: jobsLoading } = useActiveJobs();
@@ -560,8 +562,14 @@ export const TimesheetsSection = () => {
   };
 
   const refresh = async () => {
-    await refetchTimesheets();
-    toast.success('Timesheets refreshed');
+    // refetch never throws — check the result so a failed refresh can't
+    // toast success over stale data
+    const result = await refetchTimesheets();
+    if (result.error) {
+      toast.error('Could not refresh timesheets — check your connection');
+    } else {
+      toast.success('Timesheets refreshed');
+    }
   };
 
   const activeJobs = jobs.filter((j) => j.status === 'Active');
@@ -913,12 +921,24 @@ export const TimesheetsSection = () => {
                   </button>
                 </div>
                 <div className="flex gap-2">
-                  <SecondaryButton onClick={handleBatchReject} size="sm">
+                  <SecondaryButton
+                    onClick={handleBatchReject}
+                    size="sm"
+                    disabled={batchRejectMutation.isPending || batchApproveMutation.isPending}
+                  >
                     <X className="h-3.5 w-3.5 mr-1.5" />
                     Reject
                   </SecondaryButton>
-                  <PrimaryButton onClick={handleBatchApprove} size="sm">
-                    <Check className="h-3.5 w-3.5 mr-1.5" />
+                  <PrimaryButton
+                    onClick={handleBatchApprove}
+                    size="sm"
+                    disabled={batchApproveMutation.isPending || batchRejectMutation.isPending}
+                  >
+                    {batchApproveMutation.isPending ? (
+                      <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                    ) : (
+                      <Check className="h-3.5 w-3.5 mr-1.5" />
+                    )}
                     Approve
                   </PrimaryButton>
                 </div>
@@ -1166,11 +1186,15 @@ export const TimesheetsSection = () => {
                       key={provider.id}
                       lead={<Avatar initials={getInitials(provider.name)} size="sm" />}
                       title={provider.name}
-                      subtitle={'CSV formatted for ' + provider.name + ' import'}
+                      subtitle={
+                        provider.id === 'csv'
+                          ? 'Plain CSV for spreadsheets'
+                          : `CSV formatted for ${provider.name} import`
+                      }
                       trailing={
                         <button
                           onClick={() => handleExport(provider.id)}
-                          className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                          className="h-11 px-4 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
                         >
                           <Download className="h-3.5 w-3.5" />
                           Export CSV
@@ -1253,6 +1277,15 @@ export const TimesheetsSection = () => {
                           {detailTimesheet.jobTitle}
                         </span>
                       }
+                      // Cross-link: open the job this time was booked against
+                      onClick={
+                        detailTimesheet.jobId
+                          ? () => {
+                              setDetailTimesheet(null);
+                              navigate(`/employer?section=jobs&job=${detailTimesheet.jobId}`);
+                            }
+                          : undefined
+                      }
                     />
                     <ListRow
                       title="Clock in"
@@ -1310,6 +1343,9 @@ export const TimesheetsSection = () => {
                     <SecondaryButton
                       onClick={() => handleReject(detailTimesheet.id)}
                       fullWidth
+                      disabled={
+                        rejectTimesheetMutation.isPending || approveTimesheetMutation.isPending
+                      }
                     >
                       <X className="h-4 w-4 mr-2" />
                       Reject
@@ -1317,8 +1353,15 @@ export const TimesheetsSection = () => {
                     <PrimaryButton
                       onClick={() => handleApprove(detailTimesheet.id)}
                       fullWidth
+                      disabled={
+                        approveTimesheetMutation.isPending || rejectTimesheetMutation.isPending
+                      }
                     >
-                      <Check className="h-4 w-4 mr-2" />
+                      {approveTimesheetMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Check className="h-4 w-4 mr-2" />
+                      )}
                       Approve
                     </PrimaryButton>
                   </div>

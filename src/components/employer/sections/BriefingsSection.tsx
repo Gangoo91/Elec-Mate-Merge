@@ -3,6 +3,16 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -130,6 +140,7 @@ export function BriefingsSection() {
   const [showEditor, setShowEditor] = useState(false);
   const [showSignOff, setShowSignOff] = useState(false);
   const [selectedBriefing, setSelectedBriefing] = useState<Briefing | null>(null);
+  const [briefingToDelete, setBriefingToDelete] = useState<Briefing | null>(null);
 
   const [title, setTitle] = useState('');
   const [briefingType, setBriefingType] = useState<BriefingType>('Toolbox Talk');
@@ -185,27 +196,18 @@ export function BriefingsSection() {
     });
   }, [enriched, filterTab, searchQuery]);
 
-  const thisWeek = useMemo(() => {
+  const last7d = useMemo(() => {
     const now = Date.now();
     const week = 7 * 86_400_000;
     return list.filter((b) => {
       if (!b.date) return false;
       const t = new Date(b.date).getTime();
-      return !Number.isNaN(t) && t >= now - week && t <= now + week;
+      return !Number.isNaN(t) && t >= now - week && t <= now;
     }).length;
   }, [list]);
 
-  const totalSigned = useMemo(
-    () =>
-      list.reduce(
-        (sum, b) =>
-          b.status === 'Completed' &&
-          (b.attendee_count ?? 0) > 0 &&
-          (b.acknowledged_count ?? 0) >= (b.attendee_count ?? 0)
-            ? sum + 1
-            : sum,
-        0
-      ),
+  const completedCount = useMemo(
+    () => list.filter((b) => b.status === 'Completed').length,
     [list]
   );
 
@@ -348,8 +350,8 @@ export function BriefingsSection() {
       <StatStrip
         columns={4}
         stats={[
-          { label: 'This week', value: isLoading ? '–' : thisWeek, tone: 'amber' },
-          { label: 'Signed', value: isLoading ? '–' : (stats?.completed ?? totalSigned), tone: 'emerald' },
+          { label: 'Last 7 days', value: isLoading ? '–' : last7d, tone: 'amber' },
+          { label: 'Completed', value: isLoading ? '–' : (stats?.completed ?? completedCount), tone: 'emerald' },
           { label: 'Awaiting sig', value: isLoading ? '–' : awaitingSig, tone: 'orange' },
           { label: 'Total 30d', value: isLoading ? '–' : total30d },
         ]}
@@ -564,6 +566,10 @@ export function BriefingsSection() {
           onEdit={handleEditBriefing}
           onSignOff={handleSignOff}
           onExportPdf={handleExportPdf}
+          onComplete={async (briefing) => {
+            await completeBriefing.mutateAsync(briefing.id);
+          }}
+          onDelete={(briefing) => setBriefingToDelete(briefing)}
         />
       )}
 
@@ -594,6 +600,40 @@ export function BriefingsSection() {
           }}
         />
       )}
+
+      <AlertDialog
+        open={!!briefingToDelete}
+        onOpenChange={(open) => {
+          if (!open) setBriefingToDelete(null);
+        }}
+      >
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete briefing?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              {briefingToDelete
+                ? `"${briefingToDelete.title}" and its sign-off records will be permanently removed. This cannot be undone.`
+                : ''}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500/90 hover:bg-red-500 text-white"
+              onClick={async () => {
+                if (!briefingToDelete) return;
+                await deleteBriefing.mutateAsync(briefingToDelete.id);
+                setBriefingToDelete(null);
+                setShowViewer(false);
+                setSelectedBriefingId(null);
+                setSelectedBriefing(null);
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageFrame>
   );
 }

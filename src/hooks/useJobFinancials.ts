@@ -70,23 +70,6 @@ export interface JobFinancialWithJob extends JobFinancial {
   variation_orders?: VariationOrder[];
 }
 
-export interface UpdateJobFinancialData {
-  budget_labour?: number;
-  budget_materials?: number;
-  budget_equipment?: number;
-  budget_overheads?: number;
-  budget_profit?: number;
-  budget_total?: number;
-  actual_labour?: number;
-  actual_materials?: number;
-  actual_equipment?: number;
-  actual_overheads?: number;
-  actual_total?: number;
-  invoiced?: number;
-  paid?: number;
-  notes?: string;
-}
-
 // Fetch all job financials with job details
 export function useJobFinancials() {
   return useQuery({
@@ -105,19 +88,29 @@ export function useJobFinancials() {
 
       if (error) throw error;
 
-      // Fetch variation orders for each job
+      // One variation_orders query for all jobs — a per-job loop was an N+1
       const financials = (data || []) as JobFinancialWithJob[];
       const committedMap = await fetchCommittedMaterials();
 
-      for (const fin of financials) {
-        fin.committed_materials = committedMap.get(fin.job_id) || 0;
+      const jobIds = financials.map((f) => f.job_id).filter(Boolean);
+      const variationsByJob = new Map<string, VariationOrder[]>();
+      if (jobIds.length > 0) {
         const { data: variations } = await supabase
           .from('variation_orders')
           .select('*')
-          .eq('job_id', fin.job_id)
+          .in('job_id', jobIds)
           .order('created_at', { ascending: false });
 
-        fin.variation_orders = (variations || []) as VariationOrder[];
+        for (const vo of (variations || []) as VariationOrder[]) {
+          const list = variationsByJob.get(vo.job_id) || [];
+          list.push(vo);
+          variationsByJob.set(vo.job_id, list);
+        }
+      }
+
+      for (const fin of financials) {
+        fin.committed_materials = committedMap.get(fin.job_id) || 0;
+        fin.variation_orders = variationsByJob.get(fin.job_id) || [];
       }
 
       return financials;
@@ -167,92 +160,10 @@ export function useJobFinancial(jobId: string | undefined) {
   });
 }
 
-// Update job financial
-export function useUpdateJobFinancial() {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  return useMutation({
-    mutationFn: async ({
-      jobId,
-      data,
-    }: {
-      jobId: string;
-      data: UpdateJobFinancialData;
-    }): Promise<JobFinancial> => {
-      // Calculate totals and margin if budget/actual values are updated
-      const updates: UpdateJobFinancialData & {
-        budget_total?: number;
-        actual_total?: number;
-        margin?: number;
-        status?: string;
-      } = { ...data };
-
-      if (
-        data.budget_labour !== undefined ||
-        data.budget_materials !== undefined ||
-        data.budget_equipment !== undefined ||
-        data.budget_overheads !== undefined
-      ) {
-        updates.budget_total =
-          (data.budget_labour || 0) +
-          (data.budget_materials || 0) +
-          (data.budget_equipment || 0) +
-          (data.budget_overheads || 0);
-      }
-
-      if (
-        data.actual_labour !== undefined ||
-        data.actual_materials !== undefined ||
-        data.actual_equipment !== undefined ||
-        data.actual_overheads !== undefined
-      ) {
-        updates.actual_total =
-          (data.actual_labour || 0) +
-          (data.actual_materials || 0) +
-          (data.actual_equipment || 0) +
-          (data.actual_overheads || 0);
-      }
-
-      // Calculate margin
-      if (updates.budget_total && updates.actual_total) {
-        updates.margin =
-          ((updates.budget_total - updates.actual_total) / updates.budget_total) * 100;
-        updates.status =
-          updates.actual_total > updates.budget_total
-            ? 'Over Budget'
-            : updates.actual_total < updates.budget_total * 0.9
-              ? 'Under Budget'
-              : 'On Budget';
-      }
-
-      const { data: result, error } = await supabase
-        .from('job_financials')
-        .update(updates)
-        .eq('job_id', jobId)
-        .select()
-        .single();
-
-      if (error) throw error;
-      return result as JobFinancial;
-    },
-    onSuccess: (_, { jobId }) => {
-      queryClient.invalidateQueries({ queryKey: ['job-financials'] });
-      queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
-      toast({
-        title: 'Financials Updated',
-        description: 'Job financial data has been updated.',
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
-}
+// NOTE: a useUpdateJobFinancial hook used to live here — it was dead code and
+// dangerous (a partial budget update zeroed every unspecified category and
+// dropped budget_profit from the total). Budget edits go through
+// EditJobBudgetSheet's dedicated mutation instead.
 
 // Create variation order
 export function useCreateVariationOrder() {
@@ -314,6 +225,16 @@ export function useUpdateVariationOrderStatus() {
       status: VariationOrder['status'];
       approvedBy?: string;
     }): Promise<VariationOrder> => {
+      // Read the current row first — the budget adjustment below must only
+      // fire on a real Pending→Approved (or Approved→other) transition.
+      const { data: current, error: currentError } = await supabase
+        .from('variation_orders')
+        .select('job_id, value, status')
+        .eq('id', id)
+        .single();
+
+      if (currentError) throw currentError;
+
       const updates: Partial<VariationOrder> = { status };
 
       if (status === 'Approved' && approvedBy) {
@@ -329,6 +250,48 @@ export function useUpdateVariationOrderStatus() {
         .single();
 
       if (error) throw error;
+
+      // An approved variation really does change the job's money: fold its
+      // value into budget_total (and back out if approval is reversed) so
+      // margins downstream reflect it — the sheet promises exactly this.
+      const becameApproved = status === 'Approved' && current.status !== 'Approved';
+      const lostApproval = status !== 'Approved' && current.status === 'Approved';
+      const delta = becameApproved
+        ? Number(current.value || 0)
+        : lostApproval
+          ? -Number(current.value || 0)
+          : 0;
+
+      if (delta !== 0) {
+        const { data: fin, error: finError } = await supabase
+          .from('job_financials')
+          .select('budget_total, actual_total')
+          .eq('job_id', current.job_id)
+          .maybeSingle();
+
+        if (!finError && fin) {
+          const newBudget = Number(fin.budget_total || 0) + delta;
+          const actualTotal = Number(fin.actual_total || 0);
+          const finUpdates: Record<string, number | string> = { budget_total: newBudget };
+          if (newBudget > 0) {
+            finUpdates.margin = ((newBudget - actualTotal) / newBudget) * 100;
+            finUpdates.status =
+              actualTotal > newBudget
+                ? 'Over Budget'
+                : actualTotal < newBudget * 0.9
+                  ? 'Under Budget'
+                  : 'On Budget';
+          }
+          const { error: updateFinError } = await supabase
+            .from('job_financials')
+            .update(finUpdates)
+            .eq('job_id', current.job_id);
+          if (updateFinError) {
+            console.error('Failed to fold variation into job budget:', updateFinError);
+          }
+        }
+      }
+
       return result as VariationOrder;
     },
     onSuccess: () => {

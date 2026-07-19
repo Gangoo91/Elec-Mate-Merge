@@ -53,6 +53,9 @@ export function useQsReviewComments(reviewId: string | null | undefined) {
   const query = useQuery<QsReviewComment[]>({
     queryKey: ['qs-review-comments', reviewId],
     enabled: !!reviewId,
+    // report_qs_review_comments is not in the realtime publication, so the
+    // channel above may never fire cross-party — poll as a fallback.
+    refetchInterval: 30000,
     queryFn: async () => {
       const { data, error } = await table()
         .select('*')

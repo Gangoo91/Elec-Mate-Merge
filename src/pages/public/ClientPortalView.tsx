@@ -64,10 +64,10 @@ export default function ClientPortalView() {
     }
   };
 
-  // Loading state
+  // Loading state — fill the viewport, don't cramp the spinner at the top
   if (isLoading) {
     return (
-      <div className="bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
           <p className="text-muted-foreground">Loading your project portal...</p>
@@ -76,10 +76,10 @@ export default function ClientPortalView() {
     );
   }
 
-  // Error or not found state
+  // Error or not found state — fill the viewport
   if (error || !portal) {
     return (
-      <div className="bg-background flex items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <div className="p-4 rounded-full bg-red-500/10 w-fit mx-auto mb-4">
             <AlertCircle className="h-12 w-12 text-red-500" />
@@ -102,6 +102,10 @@ export default function ClientPortalView() {
 
   // Show limited logs unless expanded
   const displayedLogs = showAllLogs ? progressLogs : progressLogs.slice(0, 3);
+
+  // Site issues — only rendered when the contractor has switched on the
+  // showIssues permission for this portal link
+  const logsWithIssues = progressLogs.filter((l) => l.issues_encountered?.trim());
 
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -127,7 +131,7 @@ export default function ClientPortalView() {
   };
 
   return (
-    <div className="bg-background">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="max-w-2xl mx-auto px-4 py-6">
@@ -352,6 +356,36 @@ export default function ClientPortalView() {
                 )}
               </Button>
             )}
+          </section>
+        )}
+
+        {/* Issues & Resolutions — gated on the showIssues permission */}
+        {portal.permissions.showIssues && logsWithIssues.length > 0 && (
+          <section className="bg-card rounded-xl border border-border p-4">
+            <h3 className="font-semibold text-foreground flex items-center gap-2 mb-1">
+              <AlertCircle className="h-5 w-5 text-amber-500" />
+              Issues & Resolutions
+            </h3>
+            <p className="text-xs text-muted-foreground mb-3">
+              Anything that came up on site, shared with you for full transparency — your
+              contractor is on top of each item.
+            </p>
+
+            <div className="space-y-3">
+              {logsWithIssues.map((log) => (
+                <div
+                  key={log.id}
+                  className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20"
+                >
+                  <p className="font-medium text-foreground text-sm mb-1">
+                    {formatDate(log.log_date)}
+                  </p>
+                  <p className="text-sm text-foreground whitespace-pre-line">
+                    {log.issues_encountered}
+                  </p>
+                </div>
+              ))}
+            </div>
           </section>
         )}
 

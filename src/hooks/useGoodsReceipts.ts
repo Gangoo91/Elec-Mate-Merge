@@ -9,6 +9,10 @@ export interface GoodsReceipt {
   received_at: string;
   received_by: string | null;
   lines: { name: string; qty_received: number }[];
+  /**
+   * Bare job-photos storage path on new rows, full public URL on legacy rows.
+   * Resolve with useStorageUrl(s)('job-photos', …) before rendering/opening.
+   */
   delivery_note_url: string | null;
   notes: string | null;
 }
@@ -49,7 +53,9 @@ async function uploadDeliveryNote(file: File): Promise<string | null> {
     upsert: false,
   });
   if (error && !error.message.includes('not found')) throw error;
-  return supabase.storage.from('job-photos').getPublicUrl(path).data?.publicUrl ?? null;
+  // Store the bare storage path — readers resolve it (and legacy full URLs)
+  // via useStorageUrl(s), so this survives the job-photos privacy flip.
+  return path;
 }
 
 export const useCreateGoodsReceipt = () => {

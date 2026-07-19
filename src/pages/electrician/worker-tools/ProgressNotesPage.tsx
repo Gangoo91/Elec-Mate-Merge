@@ -8,6 +8,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Camera, Clock, Loader2, MapPin, Send } from 'lucide-react';
 import {
@@ -74,7 +75,9 @@ const MIN_NOTE_LENGTH = 4;
 type TimelineFilter = 'all' | 'today';
 
 export default function ProgressNotesPage() {
-  const [selectedJobId, setSelectedJobId] = useState<string>('');
+  // ?job=<id> deep link (e.g. from My Jobs "Progress note") pre-selects that job.
+  const [searchParams] = useSearchParams();
+  const [selectedJobId, setSelectedJobId] = useState<string>(searchParams.get('job') ?? '');
   const [note, setNote] = useState('');
   const [touched, setTouched] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);

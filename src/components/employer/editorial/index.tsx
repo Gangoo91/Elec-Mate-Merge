@@ -6,6 +6,7 @@
  */
 
 import { cn } from '@/lib/utils';
+import { useStorageUrl } from '@/utils/storageUrls';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import * as React from 'react';
@@ -800,6 +801,9 @@ export function Avatar({
   online?: boolean;
   className?: string;
 }) {
+  // Resolve stored storage references — legacy full URLs pass through as-is,
+  // bare employee-photo paths (privacy-ready rows) are signed on demand.
+  const { url: photoSrc } = useStorageUrl('employee-photos', photo);
   const dim =
     size === 'sm'
       ? 'h-8 w-8 text-[10px]'
@@ -814,8 +818,8 @@ export function Avatar({
           dim
         )}
       >
-        {photo ? (
-          <img src={photo} alt={initials} className="h-full w-full object-cover" loading="lazy" />
+        {photoSrc ? (
+          <img src={photoSrc} alt={initials} className="h-full w-full object-cover" loading="lazy" />
         ) : (
           initials
         )}

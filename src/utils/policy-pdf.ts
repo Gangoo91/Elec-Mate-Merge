@@ -37,12 +37,13 @@ const CATEGORY_COLORS: Record<string, [number, number, number]> = {
   Operations: COLORS.ACCENT,
 };
 
-// Compliance badges
-const COMPLIANCE_BADGES: Record<string, string> = {
-  Safety: 'BS 7671:2018+A4:2026 COMPLIANT',
-  HR: 'UK EMPLOYMENT LAW COMPLIANT',
-  Legal: 'UK GDPR COMPLIANT',
-  Operations: 'COMPANY POLICY',
+// Cover badges — descriptive only. Never stamp compliance claims the platform
+// has not verified (content is freely editable after adoption).
+const COVER_BADGES: Record<string, string> = {
+  Safety: 'HEALTH & SAFETY POLICY',
+  HR: 'HR POLICY',
+  Legal: 'LEGAL POLICY',
+  Operations: 'OPERATIONS POLICY',
 };
 
 // Parse HTML content to structured sections
@@ -134,8 +135,9 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
     'category' in policy ? policy.category : userPolicy?.template?.category || 'Policy';
 
   const categoryColor = CATEGORY_COLORS[category] || COLORS.PRIMARY;
-  const complianceBadge = COMPLIANCE_BADGES[category] || 'COMPANY POLICY';
-  const displayCompany = userPolicy?.company_name || companyName || '[Company Name]';
+  const coverBadge = COVER_BADGES[category] || 'COMPANY POLICY';
+  // Blank rather than a literal "[Company Name]" placeholder on the export.
+  const displayCompany = userPolicy?.company_name || companyName || '';
   const version = 'version' in policy ? policy.version : '1.0';
   const dateStr = userPolicy?.adopted_at
     ? format(new Date(userPolicy.adopted_at), 'dd MMMM yyyy')
@@ -172,7 +174,9 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
     doc.text(policy.name, margin, 10);
 
     // Company name on right
-    doc.text(displayCompany, pageWidth - margin, 10, { align: 'right' });
+    if (displayCompany) {
+      doc.text(displayCompany, pageWidth - margin, 10, { align: 'right' });
+    }
 
     yPos = 18;
   };
@@ -194,8 +198,10 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
     doc.text('CONFIDENTIAL - For internal use only', margin, footerY + 5);
 
     // Centre: Company
-    doc.setFont('helvetica', 'bold');
-    doc.text(displayCompany, pageWidth / 2, footerY + 5, { align: 'center' });
+    if (displayCompany) {
+      doc.setFont('helvetica', 'bold');
+      doc.text(displayCompany, pageWidth / 2, footerY + 5, { align: 'center' });
+    }
 
     // Right: Page number
     doc.setFont('helvetica', 'normal');
@@ -232,7 +238,9 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
   doc.setTextColor(...COLORS.WHITE);
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
-  doc.text(displayCompany.toUpperCase(), pageWidth / 2, 18, { align: 'center' });
+  doc.text((displayCompany || 'COMPANY POLICY').toUpperCase(), pageWidth / 2, 18, {
+    align: 'center',
+  });
 
   // Thin separator
   doc.setDrawColor(255, 255, 255, 0.3);
@@ -278,15 +286,15 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
   doc.setFont('helvetica', 'normal');
   doc.text(`Version ${version}`, pageWidth / 2, yPos, { align: 'center' });
 
-  // Compliance badge - prominent
+  // Category badge (descriptive, not a compliance claim)
   yPos += 20;
-  doc.setFillColor(...COLORS.SUCCESS);
-  const compBadgeWidth = doc.getTextWidth(complianceBadge) + 24;
-  doc.roundedRect((pageWidth - compBadgeWidth) / 2, yPos, compBadgeWidth, 10, 3, 3, 'F');
+  doc.setFillColor(...categoryColor);
+  const coverBadgeW = doc.getTextWidth(coverBadge) + 24;
+  doc.roundedRect((pageWidth - coverBadgeW) / 2, yPos, coverBadgeW, 10, 3, 3, 'F');
   doc.setTextColor(...COLORS.WHITE);
   doc.setFontSize(8);
   doc.setFont('helvetica', 'bold');
-  doc.text(complianceBadge, pageWidth / 2, yPos + 6.5, { align: 'center' });
+  doc.text(coverBadge, pageWidth / 2, yPos + 6.5, { align: 'center' });
 
   // ============================================
   // DOCUMENT CONTROL BOX (Cover page)
@@ -412,8 +420,8 @@ export function generatePolicyPDF(options: PolicyPdfOptions): jsPDF {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(6.5);
   const confText =
-    'This document contains confidential information belonging to ' +
-    displayCompany +
+    'This document contains confidential information' +
+    (displayCompany ? ` belonging to ${displayCompany}` : '') +
     '. It is intended solely for internal use. Unauthorised copying, distribution, or disclosure is strictly prohibited.';
   const confLines = doc.splitTextToSize(confText, contentWidth - 16);
   confLines.forEach((line: string, i: number) => {

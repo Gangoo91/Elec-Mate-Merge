@@ -62,17 +62,20 @@ Deno.serve(async (req) => {
 
     const { data: existing } = await admin
       .from('employer_invoice_access')
-      .select('id')
+      .select('id, access_token')
       .eq('invoice_id', invoiceId)
       .eq('status', 'pending')
       .maybeSingle();
 
     let accessRecord;
     if (existing) {
+      // Keep the existing token on resend/chase — rotating it killed the link
+      // in every previously-sent email while the invoice was still live. Only
+      // the expiry window and client details refresh.
       const { data, error } = await admin
         .from('employer_invoice_access')
         .update({
-          access_token: accessToken,
+          access_token: existing.access_token || accessToken,
           client_email: clientEmail || invoice.client,
           client_name: clientName || invoice.client,
           expires_at: expiresAt.toISOString(),

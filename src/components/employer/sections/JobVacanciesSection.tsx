@@ -499,6 +499,7 @@ export function JobVacanciesSection() {
       label: 'Offered',
       count: applications.filter((a) => a.status === 'Offered').length,
     },
+    { value: 'Hired', label: 'Hired', count: hiredCount },
     {
       value: 'Rejected',
       label: 'Rejected',

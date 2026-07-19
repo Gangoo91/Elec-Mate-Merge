@@ -251,6 +251,30 @@ export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
   return data;
 };
 
+// Latest presence row the worker set for themselves (status + timestamp).
+// RLS: "Worker manages own location" lets a worker read their own rows, so
+// this works from the worker-side pages — employer_employees.status is
+// EMPLOYMENT status ('active'/'archived'), never presence, and must not be
+// used for it.
+export const getMyLatestLocation = async (
+  employeeId: string
+): Promise<WorkerLocation | null> => {
+  const { data, error } = await supabase
+    .from('employer_worker_locations')
+    .select('*')
+    .eq('employee_id', employeeId)
+    .order('last_updated', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Error fetching own latest location:', error);
+    return null;
+  }
+
+  return data;
+};
+
 // Update own location (for self-service - worker updates their own status)
 export const updateOwnLocation = async (
   lat: number,

@@ -23,6 +23,7 @@ export interface Tender {
   documents: any[];
   opportunity_id: string | null;
   source_url: string | null;
+  job_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -68,6 +69,7 @@ export interface UpdateTenderData extends Partial<CreateTenderData> {
   submission_date?: string;
   result_date?: string;
   documents?: any[];
+  job_id?: string | null;
 }
 
 export interface CreateEstimateData {
@@ -434,6 +436,14 @@ export function useTenderStats() {
     wonValue: tenders
       .filter((t) => t.status === 'Won')
       .reduce((sum, t) => sum + Number(t.value), 0),
+    // "Won this year" — dated by result_date (fallback updated_at)
+    wonValueThisYear: tenders
+      .filter((t) => {
+        if (t.status !== 'Won') return false;
+        const when = t.result_date || t.updated_at;
+        return !!when && new Date(when).getFullYear() === new Date().getFullYear();
+      })
+      .reduce((sum, t) => sum + Number(t.value), 0),
     winRate:
       tenders.filter((t) => t.status === 'Won' || t.status === 'Lost').length > 0
         ? (tenders.filter((t) => t.status === 'Won').length /
@@ -486,16 +496,22 @@ export function useUploadTenderDocument() {
 
       if (uploadError) throw uploadError;
 
-      // The bucket is PRIVATE — store the storage path and sign on read
-      // (a public URL on a private bucket 400s forever)
-      const { data: signedData } = await supabase.storage
+      // The bucket is PRIVATE — a raw storage path is useless to Download,
+      // so a failed signing must fail the upload rather than persist a
+      // dead "url". (Signed URLs still expire after 12 months; the real
+      // fix is storing the path and signing on read.)
+      const { data: signedData, error: signError } = await supabase.storage
         .from('tender-documents')
         .createSignedUrl(storagePath, 60 * 60 * 24 * 365);
+
+      if (signError || !signedData?.signedUrl) {
+        throw new Error(signError?.message || 'Could not create a download link for the document');
+      }
 
       const newDoc: TenderDocument = {
         id: `doc-${timestamp}`,
         name: file.name,
-        url: signedData?.signedUrl || storagePath,
+        url: signedData.signedUrl,
         size: file.size,
         uploaded_at: new Date().toISOString(),
       };
@@ -624,15 +640,48 @@ export function useGenerateTenderEstimate() {
         body: { tenderId, documentUrls, description },
       });
 
-      if (error) throw error;
+      if (error) {
+        // supabase.functions.invoke wraps non-2xx as a generic FunctionsHttpError;
+        // the real {error, details, estimate} payload sits on error.context (the
+        // Response). Read it so the toast says what actually went wrong.
+        let message = error.message || 'Estimation failed';
+        const ctx = (error as { context?: Response }).context;
+        if (ctx && typeof ctx.json === 'function') {
+          try {
+            const body = (await ctx.json()) as {
+              error?: string;
+              details?: string;
+              estimate?: unknown;
+            } | null;
+            if (body?.estimate) {
+              // The AI estimate came back but the save failed — say so.
+              message = `The estimate was generated but could not be saved${
+                body.details ? ` — ${body.details}` : body.error ? ` — ${body.error}` : ''
+              }. Try again.`;
+            } else if (body?.error) {
+              message = body.details ? `${body.error}: ${body.details}` : body.error;
+            }
+          } catch {
+            /* body unreadable — keep the generic message */
+          }
+        }
+        throw new Error(message);
+      }
       return data;
     },
-    onSuccess: (_, { tenderId }) => {
+    onSuccess: (data, { tenderId }) => {
       queryClient.invalidateQueries({ queryKey: ['tender-estimates'] });
       queryClient.invalidateQueries({ queryKey: ['tender-estimates', tenderId] });
+      const read = (data as { documents_read?: number })?.documents_read ?? 0;
+      const total = (data as { documents_total?: number })?.documents_total ?? 0;
       toast({
-        title: 'Estimate Generated',
-        description: 'AI has generated a cost estimate for this tender.',
+        title: 'Estimate generated',
+        description:
+          total > 0
+            ? read > 0
+              ? `Grounded in ${read} of ${total} uploaded document${total === 1 ? '' : 's'}.`
+              : 'Your uploaded documents could not be read — the estimate is based on the tender description only.'
+            : 'Estimate based on the tender description.',
       });
     },
     onError: (error: Error) => {

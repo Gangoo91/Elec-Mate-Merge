@@ -185,6 +185,10 @@ export const getQuotePriorityBadge = (
     return { label: 'Ready to Invoice', variant: 'success' };
   }
 
+  if (quote.status === 'Converted') {
+    return { label: 'Invoiced', variant: 'success' };
+  }
+
   if (daysUntilExpiry !== null && daysUntilExpiry < 0) {
     return { label: 'Expired', variant: 'secondary' };
   }

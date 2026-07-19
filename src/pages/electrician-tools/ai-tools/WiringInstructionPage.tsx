@@ -13,6 +13,7 @@ import { useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, X, Loader2 } from 'lucide-react';
 import { Eyebrow } from '@/components/college/primitives';
@@ -206,8 +207,11 @@ const WiringInstructionPage = () => {
           .from('visual-uploads')
           .upload(fileName, image);
         if (uploadError) throw uploadError;
-        const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
-        publicUrl = urlData.publicUrl;
+        // Fresh signed URL (1h) — the wiring-diagram fn fetches it
+        // server-side, so it must stay valid after visual-uploads goes
+        // private. Identical behaviour while the bucket is still public.
+        publicUrl = await mintFreshSignedUrl('visual-uploads', fileName);
+        if (!publicUrl) throw new Error('Could not prepare the uploaded image for analysis');
       }
 
       const circuitLabel = currentCircuits.find((c) => c.id === selectedCircuit)?.label || '';

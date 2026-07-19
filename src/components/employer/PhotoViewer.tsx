@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,10 +19,15 @@ import {
   ZoomOut,
   RotateCcw,
   Camera,
+  Briefcase,
 } from 'lucide-react';
 import { PhotoCategory } from '@/components/employer/employerViewTypes';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/clipboard';
+import { Capacitor } from '@capacitor/core';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 interface Photo {
   id: string;
@@ -67,6 +73,7 @@ export function PhotoViewer({
   onToggleSharing,
 }: PhotoViewerProps) {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [showControls, setShowControls] = useState(true);
@@ -254,6 +261,70 @@ export function PhotoViewer({
     });
   };
 
+  const hasImageUrl = photo.filename?.startsWith('http');
+
+  const handleDownload = async () => {
+    if (!hasImageUrl) {
+      toast({ title: 'No image file', description: 'This photo has no downloadable image.' });
+      return;
+    }
+    // Blob-anchor downloads do nothing inside the native WKWebView, and old
+    // iOS Safari ignores the download attribute — open the image itself there
+    // so the user can save/share it from the system viewer.
+    if (
+      Capacitor.isNativePlatform() ||
+      !('download' in HTMLAnchorElement.prototype)
+    ) {
+      await openExternalUrl(photo.filename);
+      return;
+    }
+    try {
+      const res = await fetch(photo.filename);
+      if (!res.ok) throw new Error(`Download failed (${res.status})`);
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const ext = blob.type.split('/')[1]?.split('+')[0] || 'jpg';
+      const safeTitle = (photo.jobTitle || 'job-photo')
+        .replace(/[^a-z0-9]+/gi, '-')
+        .replace(/^-+|-+$/g, '')
+        .toLowerCase();
+      const a = document.createElement('a');
+      a.href = objectUrl;
+      a.download = `${safeTitle}-${photo.category.toLowerCase()}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(objectUrl);
+    } catch {
+      // CORS or network failure — fall back to opening the image directly.
+      window.open(photo.filename, '_blank', 'noopener');
+    }
+  };
+
+  const handleShare = async () => {
+    if (!hasImageUrl) {
+      toast({ title: 'No image file', description: 'This photo has no shareable image.' });
+      return;
+    }
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: photo.jobTitle || 'Job photo', url: photo.filename });
+      } else {
+        await copyToClipboard(photo.filename);
+        toast({ title: 'Link copied', description: 'Photo link copied to clipboard.' });
+      }
+    } catch (err) {
+      // User cancelling the native share sheet is not an error.
+      if ((err as DOMException)?.name !== 'AbortError') {
+        toast({
+          title: 'Share failed',
+          description: 'Could not share the photo.',
+          variant: 'destructive',
+        });
+      }
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
@@ -306,10 +377,22 @@ export function PhotoViewer({
                   )}
                 </>
               )}
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={handleDownload}
+                aria-label="Download photo"
+              >
                 <Download className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={handleShare}
+                aria-label="Share photo"
+              >
                 <Share2 className="h-4 w-4" />
               </Button>
               <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onClose}>
@@ -516,6 +599,21 @@ export function PhotoViewer({
                       {isMobile ? 'Share' : 'Share with Client'}
                     </>
                   )}
+                </Button>
+              )}
+              {/* Cross-link to the job — without it the gallery is a dead end */}
+              {photo.jobId && (
+                <Button
+                  variant="outline"
+                  size={isMobile ? 'lg' : 'sm'}
+                  onClick={() => {
+                    onClose();
+                    navigate(`/employer?section=jobs&job=${photo.jobId}`);
+                  }}
+                  className={cn('gap-1.5', isMobile && 'flex-1 h-11')}
+                >
+                  <Briefcase className="h-3.5 w-3.5" />
+                  {isMobile ? 'Job' : 'View job'}
                 </Button>
               )}
             </div>

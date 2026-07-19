@@ -16,6 +16,7 @@ import {
   Sparkles,
   ChevronRight,
   LayoutGrid,
+  Search,
 } from 'lucide-react';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
@@ -41,6 +42,8 @@ import {
 } from '@/components/ui/alert-dialog';
 import {
   useSparkProjects,
+  JOB_STAGE_META,
+  type JobStage,
   type ProjectView,
   type CreateProjectInput,
   type ProjectPriority,
@@ -102,12 +105,32 @@ interface SimpleCustomer {
   address?: string | null;
 }
 
+const formatDate = (dateStr?: string) => {
+  if (!dateStr) return null;
+  return new Date(dateStr).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+  });
+};
+
+const formatCurrency = (val: number) => {
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(val);
+};
+
 const ProjectsPage = () => {
   const navigate = useNavigate();
-  const [view, setView] = useState<ProjectView>('active');
+  const [view, setViewState] = useState<ProjectView>('active');
+  const [stageFilter, setStageFilter] = useState<JobStage | 'all'>('all');
+  const [search, setSearch] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const {
     projects,
+    allProjects,
     counts,
     isLoading,
     createProject,
@@ -115,6 +138,12 @@ const ProjectsPage = () => {
     deleteProject,
     refreshProjects,
   } = useSparkProjects(view);
+
+  // Changing tab resets the stage chip — each view has its own stage set
+  const setView = (v: ProjectView) => {
+    setViewState(v);
+    setStageFilter('all');
+  };
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; title: string } | null>(null);
   const [actionsTarget, setActionsTarget] = useState<(typeof projects)[number] | null>(null);
 
@@ -159,6 +188,77 @@ const ProjectsPage = () => {
     }
     navigate('/electrician/time-tracker');
   };
+
+  // ─── Needs-you queue + pipeline chips + search ────────────────────
+  // All derived client-side from the stage data get_jobs_overview returns.
+  const attention = useMemo(() => {
+    const today = new Date();
+    const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfTomorrow = new Date(startOfToday.getTime() + 2 * 86400000);
+    type Item = { project: (typeof allProjects)[number]; reason: string; tone: string };
+    const items: Item[] = [];
+    for (const p of allProjects) {
+      if (p.stage === 'cancelled' || p.stage === 'paid') continue;
+      const booked = p.bookedSlot ? new Date(p.bookedSlot) : null;
+      if (booked && booked >= startOfToday && booked < endOfTomorrow) {
+        const when =
+          booked < new Date(startOfToday.getTime() + 86400000) ? 'today' : 'tomorrow';
+        items.push({
+          project: p,
+          reason: `On site ${when} · ${booked.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
+          tone: 'text-sky-300',
+        });
+        continue;
+      }
+      if (p.stage === 'won') {
+        items.push({ project: p, reason: 'Quote accepted — book it in', tone: 'text-white/60' });
+      } else if (p.stage === 'bill_it') {
+        items.push({
+          project: p,
+          reason: p.estimatedValue
+            ? `Finished — invoice it (${formatCurrency(p.estimatedValue)})`
+            : 'Finished — invoice it',
+          tone: 'text-white/60',
+        });
+      } else if (p.stage === 'awaiting_payment') {
+        items.push({ project: p, reason: 'Invoice out — chase payment', tone: 'text-white/60' });
+      } else if (
+        p.dueDate &&
+        p.status !== 'completed' &&
+        new Date(p.dueDate) < startOfToday
+      ) {
+        items.push({ project: p, reason: `Past due date (${formatDate(p.dueDate)})`, tone: 'text-red-300' });
+      }
+    }
+    return items;
+  }, [allProjects]);
+
+  const stageChips = useMemo(() => {
+    const order: JobStage[] = [
+      'enquiry', 'quoted', 'won', 'booked', 'in_progress', 'awaiting_payment', 'bill_it', 'paid',
+    ];
+    const byStage = new Map<JobStage, number>();
+    for (const p of projects) byStage.set(p.stage, (byStage.get(p.stage) || 0) + 1);
+    return order.filter((s) => (byStage.get(s) || 0) > 0).map((s) => ({
+      stage: s,
+      count: byStage.get(s) || 0,
+    }));
+  }, [projects]);
+
+  const visibleProjects = useMemo(() => {
+    let list = projects;
+    if (stageFilter !== 'all') list = list.filter((p) => p.stage === stageFilter);
+    const q = search.trim().toLowerCase();
+    if (q) {
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          (p.customerName || '').toLowerCase().includes(q) ||
+          (p.location || '').toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [projects, stageFilter, search]);
 
   // ─── Hero metrics ─────────────────────────────────────────────────
   // Active value: sum of estimatedValue across active (open/active) projects.
@@ -311,23 +411,6 @@ const ProjectsPage = () => {
     }
   };
 
-  const formatDate = (dateStr?: string) => {
-    if (!dateStr) return null;
-    return new Date(dateStr).toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-    });
-  };
-
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(val);
-  };
-
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen">
       {/* Sticky compact header — matches Tasks/Calendar/Time-Tracker pattern */}
@@ -344,7 +427,7 @@ const ProjectsPage = () => {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div className="min-w-0">
-                <h1 className="text-lg font-bold text-white leading-tight">Projects</h1>
+                <h1 className="text-lg font-bold text-white leading-tight">Jobs</h1>
                 <p className="text-[11px] text-white/60 leading-tight truncate">
                   <span className="font-semibold text-elec-yellow tabular-nums">
                     {formatCurrency(metrics.activeValue)}
@@ -363,7 +446,7 @@ const ProjectsPage = () => {
               variant="ghost"
               size="icon"
               onClick={() => setShowCreate(true)}
-              aria-label="New project"
+              aria-label="New job"
               className="text-white/80 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <Plus className="h-5 w-5" />
@@ -381,7 +464,7 @@ const ProjectsPage = () => {
         <div className={cn(PANEL, 'overflow-hidden')}>
           <div className="grid grid-cols-3 divide-x divide-white/[0.06]">
             <div className="px-3.5 py-3.5 sm:px-5">
-              <p className="text-[20px] sm:text-[22px] font-bold text-white tabular-nums leading-none tracking-tight">
+              <p className="text-[17px] sm:text-[22px] font-bold text-white tabular-nums leading-none tracking-tight">
                 {formatCurrency(metrics.activeValue)}
               </p>
               <p className="text-[11px] text-white/80 mt-1.5">
@@ -395,7 +478,7 @@ const ProjectsPage = () => {
             >
               <p
                 className={cn(
-                  'text-[20px] sm:text-[22px] font-bold tabular-nums leading-none tracking-tight',
+                  'text-[17px] sm:text-[22px] font-bold tabular-nums leading-none tracking-tight',
                   metrics.toBillCount > 0 ? 'text-elec-yellow' : 'text-white'
                 )}
               >
@@ -406,11 +489,11 @@ const ProjectsPage = () => {
               </p>
             </button>
             <div className="px-3.5 py-3.5 sm:px-5">
-              <p className="text-[20px] sm:text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">
+              <p className="text-[17px] sm:text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">
                 {formatCurrency(metrics.wonThisMonthValue)}
               </p>
               <p className="text-[11px] text-white/80 mt-1.5">
-                Won this month · <span className="text-white tabular-nums">{metrics.wonThisMonthCount}</span>
+                This month · <span className="text-white tabular-nums">{metrics.wonThisMonthCount}</span>
               </p>
             </div>
           </div>
@@ -429,6 +512,48 @@ const ProjectsPage = () => {
           )}
         </div>
       </div>
+
+      {/* 02 · NEEDS YOU — the ball-drop queue: one tap from each row to the job */}
+      {attention.length > 0 && (
+        <div className="px-4 lg:px-6 pt-4 space-y-2.5">
+          <div className="flex items-baseline gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Needs you</span>
+            <span className="text-[10px] text-white/40 tabular-nums">{attention.length}</span>
+          </div>
+          <div className={cn(PANEL, 'overflow-hidden divide-y divide-white/[0.06]')}>
+            {attention.slice(0, 4).map(({ project, reason, tone }) => (
+              <button
+                key={project.id}
+                type="button"
+                onClick={() => navigate(`/electrician/projects/${project.id}`)}
+                className="w-full flex items-center gap-3 px-3.5 sm:px-5 py-3 text-left touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn('h-1.5 w-1.5 rounded-full shrink-0', JOB_STAGE_META[project.stage].dot)}
+                />
+                <span className="flex-1 min-w-0">
+                  <span className="block text-[13px] font-semibold text-white truncate">
+                    {project.title}
+                    {project.customerName &&
+                      !project.title.toLowerCase().includes(project.customerName.toLowerCase()) && (
+                        <span className="font-normal text-white/45"> · {project.customerName}</span>
+                      )}
+                  </span>
+                  <span className={cn('block text-[12px] truncate', tone)}>{reason}</span>
+                </span>
+                <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />
+              </button>
+            ))}
+            {attention.length > 4 && (
+              <p className="px-3.5 sm:px-5 py-2 text-[11px] text-white/40">
+                +{attention.length - 4} more below
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* View tabs — slimmed to match the rest of the app */}
       <div className="px-4 lg:px-6 pt-3">
@@ -457,6 +582,56 @@ const ProjectsPage = () => {
           ))}
         </div>
       </div>
+
+      {/* Stage chips + search — filter within the current view */}
+      {projects.length > 0 && (
+        <div className="px-4 lg:px-6 pt-3 space-y-2.5">
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-none -mx-4 px-4 lg:mx-0 lg:px-0">
+            <button
+              type="button"
+              onClick={() => setStageFilter('all')}
+              className={cn(
+                'flex-shrink-0 h-10 px-3.5 rounded-full border text-[12px] font-medium touch-manipulation transition-colors',
+                stageFilter === 'all'
+                  ? 'bg-elec-yellow/[0.12] border-elec-yellow/[0.35] text-elec-yellow'
+                  : 'bg-white/[0.04] border-white/[0.08] text-white/70'
+              )}
+            >
+              All <span className="tabular-nums opacity-70">{projects.length}</span>
+            </button>
+            {stageChips.map(({ stage, count }) => (
+              <button
+                key={stage}
+                type="button"
+                onClick={() => setStageFilter(stageFilter === stage ? 'all' : stage)}
+                className={cn(
+                  'flex-shrink-0 h-10 px-3.5 rounded-full border text-[12px] font-medium touch-manipulation transition-colors inline-flex items-center gap-1.5',
+                  stageFilter === stage
+                    ? 'bg-elec-yellow/[0.12] border-elec-yellow/[0.35] text-elec-yellow'
+                    : 'bg-white/[0.04] border-white/[0.08] text-white/70'
+                )}
+              >
+                <span
+                  aria-hidden="true"
+                  className={cn('h-1.5 w-1.5 rounded-full', JOB_STAGE_META[stage].dot)}
+                />
+                {JOB_STAGE_META[stage].label}
+                <span className="tabular-nums opacity-70">{count}</span>
+              </button>
+            ))}
+          </div>
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search jobs…"
+              className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30 touch-manipulation"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Completed-work profit strip — only on the Completed view */}
       {isCompletedView && completedTotals.count > 0 && (
@@ -519,17 +694,17 @@ const ProjectsPage = () => {
                 <FolderKanban className="h-6 w-6 text-white/55" />
               </div>
               <h2 className="text-[18px] font-semibold text-white mb-1.5">
-                No projects yet
+                No jobs yet
               </h2>
               <p className="text-[13.5px] text-white/55 leading-relaxed mb-6 max-w-[360px]">
-                A project bundles a job's tasks, time, quotes, certs and invoices in one place.
-                Ask Mate to set one up — or build it yourself.
+                Every job keeps its quotes, certs, invoices, tasks and time in one place —
+                and when a client accepts a quote, the job sets itself up.
               </p>
               <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[360px]">
                 <Button
                   onClick={() => {
                     setAiPrompt(
-                      "I've got a new job — walk me through setting it up as a project: customer, location, dates, value, and a sensible task list."
+                      "I've got a new job — walk me through setting it up: customer, location, dates, value, and a sensible task list."
                     );
                     setAiOpen(true);
                   }}
@@ -556,7 +731,13 @@ const ProjectsPage = () => {
               className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"
             >
               <AnimatePresence mode="popLayout">
-                {projects.map((project) => {
+                {visibleProjects.length === 0 && (
+                  <p className="col-span-full text-center text-[13px] text-white/50 py-10">
+                    No jobs match{search ? ` “${search.trim()}”` : ' this stage'} — clear the
+                    filter to see everything.
+                  </p>
+                )}
+                {visibleProjects.map((project) => {
                   const isCompleted = project.status === 'completed';
                   const fin = isCompleted ? completedFinancials.get(project.id) : undefined;
                   return (
@@ -614,7 +795,7 @@ const ProjectsPage = () => {
                           {project.estimatedValue ? (
                             <span
                               className={cn(
-                                'text-[15px] font-bold tabular-nums shrink-0 pt-0.5 tracking-tight',
+                                'text-[13.5px] sm:text-[15px] font-bold tabular-nums shrink-0 pt-0.5 tracking-tight',
                                 isCompleted ? 'text-white/50' : 'text-elec-yellow'
                               )}
                             >
@@ -623,20 +804,35 @@ const ProjectsPage = () => {
                           ) : null}
                         </div>
 
-                        {/* Meta row — type · due date — subtle */}
-                        {(project.projectType || project.dueDate) && (
-                          <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11px] text-white/40">
-                            {project.projectType && (
-                              <span className="capitalize">{project.projectType}</span>
-                            )}
-                            {project.dueDate && (
-                              <span className="flex items-center gap-1">
-                                <Calendar className="h-3 w-3" />
-                                Due {formatDate(project.dueDate)}
-                              </span>
-                            )}
-                          </div>
-                        )}
+                        {/* Meta row — derived stage · type · due date */}
+                        <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11px] text-white/40">
+                          <span className="inline-flex items-center gap-1.5">
+                            <span
+                              aria-hidden="true"
+                              className={cn(
+                                'h-1.5 w-1.5 rounded-full',
+                                JOB_STAGE_META[project.stage].dot
+                              )}
+                            />
+                            <span
+                              className={cn(
+                                'font-semibold uppercase tracking-[0.06em] text-[10px]',
+                                JOB_STAGE_META[project.stage].text
+                              )}
+                            >
+                              {JOB_STAGE_META[project.stage].label}
+                            </span>
+                          </span>
+                          {project.projectType && (
+                            <span className="capitalize">{project.projectType}</span>
+                          )}
+                          {project.dueDate && (
+                            <span className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              Due {formatDate(project.dueDate)}
+                            </span>
+                          )}
+                        </div>
 
                         {/* Profit chip — completed view only, from shared calc */}
                         {fin && (
@@ -861,7 +1057,7 @@ const ProjectsPage = () => {
             <SheetHeader className="px-4 py-4 border-b border-white/10">
               <SheetTitle className="text-white text-lg flex items-center gap-2">
                 <FolderKanban className="h-5 w-5 text-elec-yellow" />
-                New Project
+                New job
               </SheetTitle>
             </SheetHeader>
 

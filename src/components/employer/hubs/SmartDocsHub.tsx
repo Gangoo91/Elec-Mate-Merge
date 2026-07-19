@@ -74,12 +74,12 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
           <HubCard
             number="05"
             eyebrow="Commercial"
-            title="AI Quote Generator"
-            description="Auto-build customer quotes from job scope and pricing data."
+            title="Quote Builder"
+            description="Build customer quotes line by line — VAT calculated, saved straight to your quotes."
             tone="yellow"
-            badge={<Pill tone="purple">AI</Pill>}
+            badge={<Pill tone="yellow">Quotes</Pill>}
             onClick={onOpenQuote}
-            cta="Generate"
+            cta="Build"
           />
         </HubGrid>
       </section>

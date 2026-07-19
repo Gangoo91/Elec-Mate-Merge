@@ -39,9 +39,13 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
   const handleAddItem = async () => {
     if (!newItemTitle.trim()) return;
 
-    await addItem.mutateAsync({ jobId, title: newItemTitle.trim() });
-    setNewItemTitle('');
-    setIsAddingItem(false);
+    try {
+      await addItem.mutateAsync({ jobId, title: newItemTitle.trim() });
+      setNewItemTitle('');
+      setIsAddingItem(false);
+    } catch {
+      // Hook toasts the failure — keep the draft text so nothing is lost
+    }
   };
 
   const handleToggle = (id: string, currentState: boolean) => {

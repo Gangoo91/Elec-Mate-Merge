@@ -14,8 +14,10 @@ export interface Vehicle {
   year?: number;
   colour?: string;
   vehicle_type?: VehicleType;
-  assigned_to?: string;
-  driver_id?: string;
+  // Roster-linked driver: driver_id FKs employer_employees.id; assigned_to is
+  // the denormalised name for display. Null clears the assignment.
+  assigned_to?: string | null;
+  driver_id?: string | null;
   mot_expiry?: string;
   tax_expiry?: string;
   insurance_expiry?: string;
@@ -289,16 +291,23 @@ export function useDeleteVehicle() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
+      // fuel_logs.vehicle_id has no ON DELETE CASCADE, so a vehicle with fuel
+      // history can never be deleted unless its logs go first. There is no
+      // fuel-log delete UI, so remove them here — the confirm dialog says so.
+      const { error: fuelError } = await supabase.from('fuel_logs').delete().eq('vehicle_id', id);
+      if (fuelError) throw fuelError;
+
       const { error } = await supabase.from('vehicles').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
+      queryClient.invalidateQueries({ queryKey: ['fuelLogs'] });
       queryClient.invalidateQueries({ queryKey: ['fleet'] });
       toast({
         title: 'Vehicle removed',
-        description: 'The vehicle has been removed from your fleet.',
+        description: 'The vehicle and its fuel logs have been removed from your fleet.',
       });
     },
     onError: (error) => {

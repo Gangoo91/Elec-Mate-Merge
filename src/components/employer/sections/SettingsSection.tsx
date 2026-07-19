@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { supabase } from '@/integrations/supabase/client';
 import { StripeConnectCard } from '../StripeConnectCard';
 import {
@@ -48,8 +47,33 @@ import {
   checkboxClass,
 } from '@/components/employer/editorial';
 
+/**
+ * A settings row with an editable field. On phones the input stacks BELOW the
+ * label at full width (fixed-width inputs in ListRow's no-shrink trailing slot
+ * crushed the titles and overflowed 375px screens); from sm: up it sits
+ * trailing like a standard ListRow.
+ */
+function SettingFieldRow({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="px-4 sm:px-5 py-3.5 sm:py-4 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3.5">
+      <div className="flex-1 min-w-0">
+        <div className="text-[14px] font-medium text-white">{title}</div>
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white/55">{subtitle}</div>}
+      </div>
+      <div className="sm:shrink-0 flex items-center gap-2 w-full sm:w-auto">{children}</div>
+    </div>
+  );
+}
+
 export function SettingsSection() {
-  const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [notificationEmail, setNotificationEmail] = useState('');
   const [savingEmail, setSavingEmail] = useState(false);
@@ -366,91 +390,63 @@ export function SettingsSection() {
         <ListCard>
           <ListCardHeader tone="yellow" title="General" meta={<Pill tone="yellow">Company</Pill>} />
           <ListBody>
-            <ListRow
-              title="Company name"
-              subtitle="Shown on quotes, invoices and emails"
-              trailing={
-                <Input
-                  value={companySettings.company_name}
-                  onChange={(e) => updateCompany({ company_name: e.target.value })}
-                  placeholder="Your Company Ltd"
-                  className={`${inputClass} w-56`}
-                />
-              }
-            />
-            <ListRow
-              title="Company number"
-              subtitle="Companies House registration"
-              trailing={
-                <Input
-                  value={companySettings.company_number}
-                  onChange={(e) => updateCompany({ company_number: e.target.value })}
-                  placeholder="12345678"
-                  className={`${inputClass} w-40`}
-                />
-              }
-            />
-            <ListRow
-              title="VAT number"
-              subtitle="Used on invoices where applicable"
-              trailing={
-                <Input
-                  value={companySettings.company_vat_number}
-                  onChange={(e) => updateCompany({ company_vat_number: e.target.value })}
-                  placeholder="GB123456789"
-                  className={`${inputClass} w-40`}
-                />
-              }
-            />
-            <ListRow
-              title="Phone"
-              subtitle="Primary contact number"
-              trailing={
-                <Input
-                  value={companySettings.company_phone}
-                  onChange={(e) => updateCompany({ company_phone: e.target.value })}
-                  placeholder="+44 123 456 7890"
-                  className={`${inputClass} w-56`}
-                />
-              }
-            />
-            <ListRow
-              title="Email"
-              subtitle="Public contact address"
-              trailing={
-                <Input
-                  type="email"
-                  value={companySettings.company_email}
-                  onChange={(e) => updateCompany({ company_email: e.target.value })}
-                  placeholder="info@yourcompany.com"
-                  className={`${inputClass} w-64`}
-                />
-              }
-            />
-            <ListRow
-              title="Website"
-              subtitle="Linked from quote PDFs"
-              trailing={
-                <Input
-                  value={companySettings.company_website}
-                  onChange={(e) => updateCompany({ company_website: e.target.value })}
-                  placeholder="https://yourcompany.com"
-                  className={`${inputClass} w-64`}
-                />
-              }
-            />
-            <ListRow
-              title="Registered address"
-              subtitle="Used on letterhead and invoices"
-              trailing={
-                <Input
-                  value={companySettings.company_address}
-                  onChange={(e) => updateCompany({ company_address: e.target.value })}
-                  placeholder="123 Business Park, City, Postcode"
-                  className={`${inputClass} w-72`}
-                />
-              }
-            />
+            <SettingFieldRow title="Company name" subtitle="Shown on quotes, invoices and emails">
+              <Input
+                value={companySettings.company_name}
+                onChange={(e) => updateCompany({ company_name: e.target.value })}
+                placeholder="Your Company Ltd"
+                className={`${inputClass} w-full sm:w-56`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Company number" subtitle="Companies House registration">
+              <Input
+                value={companySettings.company_number}
+                onChange={(e) => updateCompany({ company_number: e.target.value })}
+                placeholder="12345678"
+                className={`${inputClass} w-full sm:w-40`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="VAT number" subtitle="Used on invoices where applicable">
+              <Input
+                value={companySettings.company_vat_number}
+                onChange={(e) => updateCompany({ company_vat_number: e.target.value })}
+                placeholder="GB123456789"
+                className={`${inputClass} w-full sm:w-40`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Phone" subtitle="Primary contact number">
+              <Input
+                value={companySettings.company_phone}
+                onChange={(e) => updateCompany({ company_phone: e.target.value })}
+                placeholder="+44 123 456 7890"
+                className={`${inputClass} w-full sm:w-56`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Email" subtitle="Public contact address">
+              <Input
+                type="email"
+                value={companySettings.company_email}
+                onChange={(e) => updateCompany({ company_email: e.target.value })}
+                placeholder="info@yourcompany.com"
+                className={`${inputClass} w-full sm:w-64`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Website" subtitle="Linked from quote PDFs">
+              <Input
+                value={companySettings.company_website}
+                onChange={(e) => updateCompany({ company_website: e.target.value })}
+                placeholder="https://yourcompany.com"
+                className={`${inputClass} w-full sm:w-64`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Registered address" subtitle="Used on letterhead and invoices">
+              <Input
+                value={companySettings.company_address}
+                onChange={(e) => updateCompany({ company_address: e.target.value })}
+                placeholder="123 Business Park, City, Postcode"
+                className={`${inputClass} w-full sm:w-72`}
+              />
+            </SettingFieldRow>
           </ListBody>
         </ListCard>
 
@@ -506,48 +502,36 @@ export function SettingsSection() {
                 </>
               }
             />
-            <ListRow
-              title="Primary colour"
-              subtitle="Buttons, accents and CTAs"
-              trailing={
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={brandingSettings.brand_primary_color}
-                    onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
-                    className="h-11 w-11 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
-                    style={{ padding: 0 }}
-                  />
-                  <Input
-                    value={brandingSettings.brand_primary_color}
-                    onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
-                    placeholder="#f59e0b"
-                    className={`${inputClass} w-32 font-mono uppercase`}
-                  />
-                </div>
-              }
-            />
-            <ListRow
-              title="Secondary colour"
-              subtitle="Headers and panel backgrounds"
-              trailing={
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={brandingSettings.brand_secondary_color}
-                    onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
-                    className="h-11 w-11 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
-                    style={{ padding: 0 }}
-                  />
-                  <Input
-                    value={brandingSettings.brand_secondary_color}
-                    onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
-                    placeholder="#0f172a"
-                    className={`${inputClass} w-32 font-mono uppercase`}
-                  />
-                </div>
-              }
-            />
+            <SettingFieldRow title="Primary colour" subtitle="Buttons, accents and CTAs">
+              <input
+                type="color"
+                value={brandingSettings.brand_primary_color}
+                onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
+                className="h-11 w-11 shrink-0 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
+                style={{ padding: 0 }}
+              />
+              <Input
+                value={brandingSettings.brand_primary_color}
+                onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
+                placeholder="#f59e0b"
+                className={`${inputClass} flex-1 sm:flex-none sm:w-32 font-mono uppercase`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Secondary colour" subtitle="Headers and panel backgrounds">
+              <input
+                type="color"
+                value={brandingSettings.brand_secondary_color}
+                onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
+                className="h-11 w-11 shrink-0 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
+                style={{ padding: 0 }}
+              />
+              <Input
+                value={brandingSettings.brand_secondary_color}
+                onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
+                placeholder="#0f172a"
+                className={`${inputClass} flex-1 sm:flex-none sm:w-32 font-mono uppercase`}
+              />
+            </SettingFieldRow>
             <ListRow
               title="Live preview"
               subtitle="How your brand looks together"
@@ -589,24 +573,21 @@ export function SettingsSection() {
             meta={<Pill tone="blue">Alerts</Pill>}
           />
           <ListBody>
-            <ListRow
+            <SettingFieldRow
               title="Notification email"
               subtitle="Where quote and invoice alerts are sent"
-              trailing={
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="email"
-                    placeholder="accounts@yourcompany.com"
-                    value={notificationEmail}
-                    onChange={(e) => setNotificationEmail(e.target.value)}
-                    className={`${inputClass} w-64`}
-                  />
-                  <PrimaryButton onClick={handleSaveNotificationEmail} disabled={savingEmail}>
-                    {savingEmail ? 'Saving…' : 'Save'}
-                  </PrimaryButton>
-                </div>
-              }
-            />
+            >
+              <Input
+                type="email"
+                placeholder="accounts@yourcompany.com"
+                value={notificationEmail}
+                onChange={(e) => setNotificationEmail(e.target.value)}
+                className={`${inputClass} flex-1 sm:flex-none sm:w-64`}
+              />
+              <PrimaryButton onClick={handleSaveNotificationEmail} disabled={savingEmail}>
+                {savingEmail ? 'Saving…' : 'Save'}
+              </PrimaryButton>
+            </SettingFieldRow>
           </ListBody>
         </ListCard>
 
@@ -654,42 +635,33 @@ export function SettingsSection() {
             meta={<Pill tone="amber">Bank</Pill>}
           />
           <ListBody>
-            <ListRow
+            <SettingFieldRow
               title="Account name"
               subtitle="Appears on invoice payment instructions"
-              trailing={
-                <Input
-                  value={companySettings.bank_account_name}
-                  onChange={(e) => updateCompany({ bank_account_name: e.target.value })}
-                  placeholder="Your Company Ltd"
-                  className={`${inputClass} w-64`}
-                />
-              }
-            />
-            <ListRow
-              title="Sort code"
-              subtitle="UK bank sort code"
-              trailing={
-                <Input
-                  value={companySettings.bank_sort_code}
-                  onChange={(e) => updateCompany({ bank_sort_code: e.target.value })}
-                  placeholder="00-00-00"
-                  className={`${inputClass} w-32 font-mono`}
-                />
-              }
-            />
-            <ListRow
-              title="Account number"
-              subtitle="8-digit account number"
-              trailing={
-                <Input
-                  value={companySettings.bank_account_number}
-                  onChange={(e) => updateCompany({ bank_account_number: e.target.value })}
-                  placeholder="12345678"
-                  className={`${inputClass} w-40 font-mono`}
-                />
-              }
-            />
+            >
+              <Input
+                value={companySettings.bank_account_name}
+                onChange={(e) => updateCompany({ bank_account_name: e.target.value })}
+                placeholder="Your Company Ltd"
+                className={`${inputClass} w-full sm:w-64`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Sort code" subtitle="UK bank sort code">
+              <Input
+                value={companySettings.bank_sort_code}
+                onChange={(e) => updateCompany({ bank_sort_code: e.target.value })}
+                placeholder="00-00-00"
+                className={`${inputClass} w-full sm:w-32 font-mono`}
+              />
+            </SettingFieldRow>
+            <SettingFieldRow title="Account number" subtitle="8-digit account number">
+              <Input
+                value={companySettings.bank_account_number}
+                onChange={(e) => updateCompany({ bank_account_number: e.target.value })}
+                placeholder="12345678"
+                className={`${inputClass} w-full sm:w-40 font-mono`}
+              />
+            </SettingFieldRow>
             <ListRow
               title="Save payment details"
               subtitle="Update bank info shown on invoices"

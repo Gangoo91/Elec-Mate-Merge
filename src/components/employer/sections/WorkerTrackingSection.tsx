@@ -109,7 +109,17 @@ export function WorkerTrackingSection() {
   }, [refetchLocations]);
 
   const handleRefresh = useCallback(async () => {
-    await refetchLocations();
+    // refetch never throws — check the result so a failed refresh can't
+    // toast "updated" over stale data
+    const result = await refetchLocations();
+    if (result.error) {
+      toast({
+        title: 'Refresh failed',
+        description: 'Could not update locations — check your connection.',
+        variant: 'destructive',
+      });
+      return;
+    }
     setLastUpdated(new Date());
     toast({ title: 'Workers refreshed', description: 'Location data updated' });
   }, [refetchLocations]);
@@ -411,7 +421,6 @@ export function WorkerTrackingSection() {
                     officeLocation={officeLocation}
                     onRefresh={handleRefresh}
                     isLoading={locationsLoading || jobsLoading}
-                    className={isMobile ? 'h-[60vh]' : undefined}
                   />
                 </GoogleMapsProvider>
               </div>

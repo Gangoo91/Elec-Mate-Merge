@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import { Sparkles, Loader2 } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import type { ExperienceLevel } from './schema';
 import { SecondaryButton } from '@/components/employer/editorial';
 
@@ -12,15 +10,20 @@ interface AIDescriptionGeneratorProps {
   onGenerated: (description: string) => void;
 }
 
+/**
+ * Drafts a structured job description from the role details already entered.
+ * Honest by design: this is a template built from the employer's own inputs —
+ * the previous version invoked an edge function that has never existed, so
+ * every "AI" generation silently fell back to this template anyway while
+ * claiming AI authorship.
+ */
 export function AIDescriptionGenerator({
   jobTitle,
   requirements,
   experienceLevel,
   onGenerated,
 }: AIDescriptionGeneratorProps) {
-  const [isGenerating, setIsGenerating] = useState(false);
-
-  const handleGenerate = async () => {
+  const handleGenerate = () => {
     if (!jobTitle) {
       toast({
         title: 'Job title required',
@@ -30,78 +33,34 @@ export function AIDescriptionGenerator({
       return;
     }
 
-    setIsGenerating(true);
+    onGenerated(buildDescription(jobTitle, requirements, experienceLevel));
 
-    try {
-      const { data, error } = await supabase.functions.invoke('generate-job-description', {
-        body: {
-          jobTitle,
-          requirements,
-          experienceLevel: experienceLevel || 'Mid',
-        },
-      });
-
-      if (error) throw error;
-
-      if (data?.description) {
-        onGenerated(data.description);
-        toast({
-          title: 'Description generated',
-          description: 'AI has created a job description for you to customise',
-        });
-      } else {
-        throw new Error('No description returned');
-      }
-    } catch (error) {
-      console.error('AI generation error:', error);
-
-      // Fallback to a template if AI fails
-      const fallbackDescription = generateFallbackDescription(
-        jobTitle,
-        requirements,
-        experienceLevel
-      );
-      onGenerated(fallbackDescription);
-
-      toast({
-        title: 'Template applied',
-        description: 'Using a template description. Customise it for your role.',
-      });
-    } finally {
-      setIsGenerating(false);
-    }
+    toast({
+      title: 'Draft description added',
+      description: 'Built from your role details — customise it before publishing.',
+    });
   };
 
   return (
     <SecondaryButton
       type="button"
       onClick={handleGenerate}
-      disabled={isGenerating || !jobTitle}
+      disabled={!jobTitle}
       size="sm"
       className="gap-2 text-elec-yellow border-elec-yellow/25 hover:bg-elec-yellow/10"
     >
-      {isGenerating ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" />
-          Generating...
-        </>
-      ) : (
-        <>
-          <Sparkles className="h-4 w-4" />
-          Generate with AI
-        </>
-      )}
+      <Sparkles className="h-4 w-4" />
+      Draft description
     </SecondaryButton>
   );
 }
 
-// Fallback template generator
-function generateFallbackDescription(
+function buildDescription(
   jobTitle: string,
   requirements: string[],
   experienceLevel?: ExperienceLevel
 ): string {
-  const levelText = {
+  const levelText: Record<ExperienceLevel, string> = {
     Entry: 'entry-level',
     Mid: 'experienced',
     Senior: 'senior',
@@ -116,7 +75,7 @@ function generateFallbackDescription(
 <h2>Key Responsibilities</h2>
 <ul>
 <li>Carry out electrical installations, maintenance, and repairs to the highest standards</li>
-<li>Ensure all work complies with BS7671 and relevant regulations</li>
+<li>Ensure all work complies with BS 7671 and relevant regulations</li>
 <li>Complete accurate documentation and certification</li>
 <li>Communicate effectively with clients and team members</li>
 <li>Maintain a clean and safe working environment</li>

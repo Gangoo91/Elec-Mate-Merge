@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { BriefingShareSheet } from './briefings';
 import { BriefingPDFActions } from './BriefingPDFActions';
 import { SignaturePad } from './common/SignaturePad';
@@ -135,6 +136,12 @@ export function BriefingDetailView({
   const statusStyle = STATUS_STYLES[briefing.status || 'scheduled'] || STATUS_STYLES.scheduled;
   const hazards: string[] = briefing.identified_hazards || [];
   const photos: any[] = briefing.photos || [];
+  // Resolve stored photo references — new uploads store bare storage paths
+  // (privacy-ready); legacy entries hold full URLs (pass-through).
+  const { urls: photoSrcs } = useStorageUrls(
+    'briefing-photos',
+    photos.map((p: { url?: string }) => p.url)
+  );
   const description = briefing.briefing_description || briefing.work_scope || '';
   const typeLabel =
     BRIEFING_TYPE_LABELS[briefing.briefing_type] ||
@@ -291,7 +298,7 @@ export function BriefingDetailView({
                   className="aspect-square rounded-xl overflow-hidden border border-white/10 touch-manipulation"
                 >
                   <img
-                    src={photo.url}
+                    src={photoSrcs[photo.url] ?? photo.url}
                     alt={`Photo ${idx + 1}`}
                     className="w-full h-full object-cover"
                     loading="lazy"
@@ -549,7 +556,7 @@ export function BriefingDetailView({
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              src={previewPhoto}
+              src={photoSrcs[previewPhoto] ?? previewPhoto}
               alt="Preview"
               className="max-w-full max-h-[85vh] object-contain rounded-xl"
               onClick={(e) => e.stopPropagation()}

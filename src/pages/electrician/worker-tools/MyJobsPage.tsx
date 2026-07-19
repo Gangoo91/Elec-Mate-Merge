@@ -10,8 +10,21 @@
  */
 
 import { useMemo, useState, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, ChevronRight, ArrowLeft, User } from 'lucide-react';
+import {
+  MapPin,
+  Calendar,
+  ChevronRight,
+  ArrowLeft,
+  User,
+  Clock,
+  ListChecks,
+  NotebookPen,
+  AlertTriangle,
+  FileCheck2,
+  Navigation,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
@@ -401,12 +414,54 @@ function JobCard({
   );
 }
 
-/** Job detail card — title, status and the full client/address/schedule lines. */
+const BASE = '/electrician/worker-tools';
+
+/** Everything a worker does on site, reachable from the job itself — each
+ *  target page reads ?job=<id> and pre-selects this job. */
+const JOB_ACTIONS: { label: string; hint: string; icon: typeof MapPin; to: (id: string) => string }[] = [
+  {
+    label: 'Clock in',
+    hint: 'Log hours on this job',
+    icon: Clock,
+    to: (id) => `${BASE}/timesheets?job=${id}`,
+  },
+  {
+    label: 'My tasks',
+    hint: 'Tasks on this job',
+    icon: ListChecks,
+    to: (id) => `${BASE}/tasks?job=${id}`,
+  },
+  {
+    label: 'Progress note',
+    hint: 'Log today’s progress',
+    icon: NotebookPen,
+    to: (id) => `${BASE}/progress-notes?job=${id}`,
+  },
+  {
+    label: 'Report an issue',
+    hint: 'Snag · near-miss · incident',
+    icon: AlertTriangle,
+    to: (id) => `${BASE}/reports?job=${id}`,
+  },
+  {
+    label: 'Sign-offs',
+    hint: 'RAMS & job packs',
+    icon: FileCheck2,
+    to: () => `${BASE}/signoffs`,
+  },
+];
+
+/** Job detail card — title, status, the full client/address/schedule lines and
+ *  direct routes into everything the worker does on this job. */
 function JobDetailCard({ job }: { job: WorkerJob }) {
+  const navigate = useNavigate();
   const pill = statusPill(job.status);
   const accent = statusAccent(job.status);
   const relative = scheduleLabel(job.scheduled_date);
   const full = fullDateLabel(job.scheduled_date);
+  const mapsUrl = job.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.address)}`
+    : null;
 
   return (
     <ListCard>
@@ -430,7 +485,24 @@ function JobDetailCard({ job }: { job: WorkerJob }) {
           {job.client_name || '—'}
         </DetailRow>
         <DetailRow icon={MapPin} label="Address">
-          {job.address || '—'}
+          {job.address ? (
+            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span>{job.address}</span>
+              {mapsUrl && (
+                <a
+                  href={mapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
+                >
+                  <Navigation className="h-3.5 w-3.5" />
+                  Directions
+                </a>
+              )}
+            </span>
+          ) : (
+            '—'
+          )}
         </DetailRow>
         <DetailRow icon={Calendar} label="Scheduled">
           {full ? (
@@ -442,6 +514,35 @@ function JobDetailCard({ job }: { job: WorkerJob }) {
             'Not scheduled'
           )}
         </DetailRow>
+      </div>
+
+      {/* On-this-job actions — the job is the hub, not a dead end. */}
+      <div className="border-t border-white/[0.06] px-4 sm:px-5 py-4">
+        <div className="text-[10px] font-medium uppercase tracking-wider text-white/55">
+          On this job
+        </div>
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {JOB_ACTIONS.map((action) => {
+            const Icon = action.icon;
+            return (
+              <button
+                key={action.label}
+                type="button"
+                onClick={() => navigate(action.to(job.id))}
+                className="flex items-center gap-3 min-h-12 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.08] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60"
+              >
+                <Icon className="h-4 w-4 text-elec-yellow shrink-0" />
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-medium text-white leading-tight">
+                    {action.label}
+                  </span>
+                  <span className="block text-[11px] text-white/55 truncate">{action.hint}</span>
+                </span>
+                <ChevronRight className="ml-auto h-4 w-4 text-white/30 shrink-0" />
+              </button>
+            );
+          })}
+        </div>
       </div>
     </ListCard>
   );

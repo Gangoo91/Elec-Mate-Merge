@@ -1,11 +1,14 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface UploadedPhoto {
   id: string;
+  /** Bare visual-uploads storage path. */
   url: string;
+  /** Renderable URL (signed, 1h) — valid before and after the privacy flip. */
   publicUrl: string;
   fileName: string;
   uploadedAt: Date;
@@ -56,15 +59,18 @@ export const usePhotoUpload = () => {
         return null;
       }
 
-      // Get public URL
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
+      // Fresh signed URL (1h) — works while the bucket is public and keeps
+      // working after visual-uploads goes private.
+      const signedUrl = await mintFreshSignedUrl('visual-uploads', data.path);
+      if (!signedUrl) {
+        toast.error('Failed to prepare photo');
+        return null;
+      }
 
       const uploadedPhoto: UploadedPhoto = {
         id: uuidv4(),
         url: data.path,
-        publicUrl,
+        publicUrl: signedUrl,
         fileName: uploadFile.name,
         uploadedAt: new Date(),
       };

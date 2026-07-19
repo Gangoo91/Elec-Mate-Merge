@@ -16,7 +16,10 @@ export type IncidentType =
 
 export type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
 
+// 'open' is written by worker-side safety reports (useWorkerSelfService) —
+// treat it as a first-class open state alongside the employer-side vocabulary.
 export type IncidentStatus =
+  | 'open'
   | 'draft'
   | 'submitted'
   | 'under_review'
@@ -28,6 +31,9 @@ export interface Incident {
   id: string;
   employer_id: string;
   job_id?: string | null;
+  /** employer_employees.id (worker reports) or a display name (employer reports) */
+  reported_by?: string | null;
+  reported_by_id?: string | null;
   incident_type: IncidentType;
   title: string;
   description: string;
@@ -64,6 +70,9 @@ export type UpdateIncidentInput = Partial<CreateIncidentInput>;
 const rowToIncident = (row: any): Incident => ({
   id: row.id,
   employer_id: row.employer_id,
+  job_id: row.job_id ?? null,
+  reported_by: row.reported_by ?? null,
+  reported_by_id: row.reported_by_id ?? null,
   incident_type: row.incident_type,
   title: row.title,
   description: row.description || '',
@@ -116,24 +125,21 @@ export function useIncidents() {
   return useQuery({
     queryKey: ['incidents'],
     queryFn: async (): Promise<Incident[]> => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) return [];
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
 
-        const { data, error } = await supabase
-          .from('employer_incidents')
-          .select('*')
-          .eq('employer_id', user.id)
-          .order('reported_at', { ascending: false });
+      const { data, error } = await supabase
+        .from('employer_incidents')
+        .select('*')
+        .eq('employer_id', user.id)
+        .order('reported_at', { ascending: false });
 
-        if (error) return [];
-        return (data || []).map(rowToIncident);
-      } catch {
-        // Graceful degradation for non-employer users
-        return [];
-      }
+      // Surface real failures — a safety register must never render a
+      // reassuring empty state on an RLS/network error.
+      if (error) throw error;
+      return (data || []).map(rowToIncident);
     },
   });
 }
@@ -186,53 +192,10 @@ export function useIncidentStats() {
   return useQuery({
     queryKey: ['incidents', 'stats'],
     queryFn: async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user)
-          return {
-            total: 0,
-            open: 0,
-            resolved: 0,
-            closed: 0,
-            nearMisses: 0,
-            critical: 0,
-            high: 0,
-          };
-
-        const { data, error } = await supabase
-          .from('employer_incidents')
-          .select('status, severity, incident_type')
-          .eq('employer_id', user.id);
-
-        // Table may not exist or user may not have access - return empty stats
-        if (error || !data)
-          return {
-            total: 0,
-            open: 0,
-            resolved: 0,
-            closed: 0,
-            nearMisses: 0,
-            critical: 0,
-            high: 0,
-          };
-
-        const stats = {
-          total: data.length,
-          open: data.filter((i) => !['resolved', 'closed'].includes(i.status)).length,
-          resolved: data.filter((i) => i.status === 'resolved').length,
-          closed: data.filter((i) => i.status === 'closed').length,
-          nearMisses: data.filter(
-            (i) => (i.incident_type || '').toLowerCase().replace(' ', '_') === 'near_miss'
-          ).length,
-          critical: data.filter((i) => i.severity === 'critical').length,
-          high: data.filter((i) => i.severity === 'high').length,
-        };
-
-        return stats;
-      } catch {
-        // Graceful degradation for non-employer users
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user)
         return {
           total: 0,
           open: 0,
@@ -242,7 +205,28 @@ export function useIncidentStats() {
           critical: 0,
           high: 0,
         };
-      }
+
+      const { data, error } = await supabase
+        .from('employer_incidents')
+        .select('status, severity, incident_type')
+        .eq('employer_id', user.id);
+
+      // Surface real failures instead of fabricating an all-zero safety record.
+      if (error) throw error;
+
+      const stats = {
+        total: data.length,
+        open: data.filter((i) => !['resolved', 'closed'].includes(i.status)).length,
+        resolved: data.filter((i) => i.status === 'resolved').length,
+        closed: data.filter((i) => i.status === 'closed').length,
+        nearMisses: data.filter(
+          (i) => (i.incident_type || '').toLowerCase().replace(' ', '_') === 'near_miss'
+        ).length,
+        critical: data.filter((i) => i.severity === 'critical').length,
+        high: data.filter((i) => i.severity === 'high').length,
+      };
+
+      return stats;
     },
   });
 }
@@ -261,6 +245,14 @@ export function useCreateIncident() {
 
       const row = incidentToRow(input);
       if (!row.reported_at) row.reported_at = new Date().toISOString();
+      // Record who reported it — employer-side reports come from the logged-in
+      // account (worker-side reports write their employer_employees.id instead).
+      row.reported_by =
+        (user.user_metadata?.full_name as string | undefined) ||
+        (user.user_metadata?.name as string | undefined) ||
+        user.email ||
+        'Employer';
+      row.reported_by_id = user.id;
 
       const { data, error } = await supabase
         .from('employer_incidents')

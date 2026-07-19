@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { RefreshCw, MessageSquare, Briefcase, X, CheckSquare, Square, Send } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
@@ -143,6 +144,28 @@ export function EmployeesSection() {
 
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  // Deep link: ?member={employee_id} opens that worker's record directly —
+  // cross-links from Credentials (and elsewhere) land here
+  const [searchParams, setSearchParams] = useSearchParams();
+  const memberParam = searchParams.get('member');
+  useEffect(() => {
+    if (!memberParam || employees.length === 0) return;
+    const target = employees.find((e) => e.id === memberParam);
+    if (target) {
+      setSelectedEmployee(target);
+      setProfileSheetOpen(true);
+    }
+    // Consume the param so closing the sheet doesn't re-open it
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('member');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [memberParam, employees, setSearchParams]);
   const [assignJobDialogOpen, setAssignJobDialogOpen] = useState(false);
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [bulkAssignDialogOpen, setBulkAssignDialogOpen] = useState(false);
@@ -153,7 +176,6 @@ export function EmployeesSection() {
     [employees]
   );
 
-  const totalCount = employees.length;
   const availableCount = activeEmployees.filter((e) => getAvailability(e) === 'Available').length;
   const onJobCount = activeEmployees.filter((e) => getAvailability(e) === 'On Job').length;
   const onLeaveCount = activeEmployees.filter((e) => getAvailability(e) === 'On Leave').length;
@@ -328,7 +350,9 @@ export function EmployeesSection() {
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Total', value: totalCount },
+            // Same population as the "All" tab — archived members get their
+            // own number, not silently folded into Total
+            { label: 'Total', value: activeEmployees.length },
             { label: 'Active', value: availableCount + onJobCount, tone: 'emerald' },
             { label: 'On leave', value: onLeaveCount, tone: 'amber' },
             { label: 'Archived', value: pendingCount, tone: 'red' },
@@ -599,19 +623,12 @@ export function EmployeesSection() {
                   role: selectedEmployee.role,
                   teamRole: getTeamRole(selectedEmployee.team_role),
                   status: selectedEmployee.status,
-                  certifications: selectedEmployee.certifications_count,
-                  activeJobs: selectedEmployee.active_jobs_count,
                   phone: selectedEmployee.phone || '',
                   email: selectedEmployee.email || '',
                   joinDate: selectedEmployee.join_date || '',
-                  permissions: [],
-                  completedDocuments: [],
                   avatar: selectedEmployee.avatar_initials,
                   photo: selectedEmployee.photo_url || undefined,
                   availability: getAvailability(selectedEmployee),
-                  skills: [],
-                  rating: 0,
-                  notes: [],
                   hourlyRate: selectedEmployee.hourly_rate,
                 }
               : null

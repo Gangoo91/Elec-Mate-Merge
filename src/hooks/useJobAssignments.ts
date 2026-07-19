@@ -66,7 +66,9 @@ export const useCreateJobAssignment = () => {
             title: 'New Job Assignment',
             message: `You have been assigned to "${jobTitle}" at ${jobLocation}`,
             job_id: assignment.job_id,
-            action_url: `/jobs/${assignment.job_id}`,
+            // Workers view their jobs in Worker Tools — /jobs/:id doesn't exist
+            // anywhere in the app and dead-ended every assignment notification.
+            action_url: '/electrician/worker-tools/jobs',
           });
           console.log('In-app notification created for employee:', assignment.employee_id);
         } catch (notifError) {
@@ -109,7 +111,8 @@ export const useCreateJobAssignment = () => {
         queryKey: ['employee-assignments', variables.assignment.employee_id],
       });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      queryClient.invalidateQueries({ queryKey: ['jobs'] });
+      queryClient.invalidateQueries({ queryKey: ['employer-jobs'] }); // real jobs cache key
+      queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
     },
   });
 };
@@ -135,7 +138,8 @@ export const useDeleteJobAssignment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-assignments'] });
       queryClient.invalidateQueries({ queryKey: ['employee-assignments'] });
-      queryClient.invalidateQueries({ queryKey: ['jobs'] });
+      queryClient.invalidateQueries({ queryKey: ['employer-jobs'] }); // real jobs cache key
+      queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
     },
   });
 };
@@ -149,7 +153,8 @@ export const useRemoveWorkerFromJob = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-assignments'] });
       queryClient.invalidateQueries({ queryKey: ['employee-assignments'] });
-      queryClient.invalidateQueries({ queryKey: ['jobs'] });
+      queryClient.invalidateQueries({ queryKey: ['employer-jobs'] }); // real jobs cache key
+      queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
     },
   });
 };

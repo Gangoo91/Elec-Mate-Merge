@@ -23,13 +23,22 @@ async function notifyAvailableElectricians(vacancy: Vacancy) {
     // Only notify for open vacancies
     if (vacancy.status !== 'Open') return;
 
-    // Get all electricians marked as available for hire
-    const { data: availableProfiles, error } = await supabase
+    // Get all electricians marked as available for hire. The profile table
+    // has NO user_id column (verified live 2026-07-18) — the auth uid lives on
+    // the linked employer_employees row, so a bare select('user_id') 42703'd
+    // and every "New Job Opportunity" push silently died.
+    const { data: profileRows, error } = await supabase
       .from('employer_elec_id_profiles')
-      .select('user_id')
+      .select('employee:employer_employees(user_id)')
       .eq('available_for_hire', true);
 
-    if (error || !availableProfiles || availableProfiles.length === 0) {
+    const availableProfiles = (profileRows || [])
+      .map((p) => ({
+        user_id: (p.employee as { user_id?: string | null } | null)?.user_id ?? null,
+      }))
+      .filter((p) => p.user_id);
+
+    if (error || availableProfiles.length === 0) {
       return;
     }
 
@@ -189,7 +198,7 @@ export const createVacancy = async (
 export const updateVacancy = async (
   id: string,
   updates: Partial<Vacancy>
-): Promise<Vacancy | null> => {
+): Promise<Vacancy> => {
   // Get current status to check if it's being published
   let wasNotOpen = false;
   if (updates.status === 'Open') {
@@ -209,8 +218,10 @@ export const updateVacancy = async (
     .single();
 
   if (error) {
+    // Throw — swallowing this let every caller toast success on a failed
+    // write (RLS denial, dropped connection)
     console.error('Error updating vacancy:', error);
-    return null;
+    throw error;
   }
 
   // Notify available electricians if vacancy just became open
@@ -236,10 +247,15 @@ export const incrementVacancyViews = async (id: string): Promise<void> => {
   const { error } = await supabase.rpc('increment_vacancy_views', { vacancy_id: id });
 
   if (error) {
-    // Fallback to manual increment
-    const vacancy = await getVacancyById(id);
-    if (vacancy) {
-      await updateVacancy(id, { views: (vacancy.views || 0) + 1 });
+    // Fallback to manual increment — best-effort, a view count must never
+    // throw into a caller
+    try {
+      const vacancy = await getVacancyById(id);
+      if (vacancy) {
+        await updateVacancy(id, { views: (vacancy.views || 0) + 1 });
+      }
+    } catch (fallbackError) {
+      console.error('Error incrementing vacancy views:', fallbackError);
     }
   }
 };
@@ -376,7 +392,7 @@ export const updateApplicationStatus = async (
   id: string,
   status: VacancyApplication['status'],
   notes?: string
-): Promise<VacancyApplication | null> => {
+): Promise<VacancyApplication> => {
   // Get application details for notification
   const { data: existingApp } = await supabase
     .from('employer_vacancy_applications')
@@ -407,8 +423,10 @@ export const updateApplicationStatus = async (
     .single();
 
   if (error) {
+    // Throw — bulk shortlist/reject and single status changes all toast
+    // success off this resolving, so a swallowed error lies to the employer
     console.error('Error updating application status:', error);
-    return null;
+    throw error;
   }
 
   // Notify applicant of status change
@@ -443,14 +461,17 @@ async function notifyApplicantStatusChange(
   try {
     if (!existingApp.applicant_profile_id) return;
 
-    // Get the user ID from the elec_id profile
+    // Get the user ID via the linked employee row — employer_elec_id_profiles
+    // has no user_id column (a bare select('user_id') errored silently and
+    // killed every applicant status push)
     const { data: profile } = await supabase
       .from('employer_elec_id_profiles')
-      .select('user_id')
+      .select('employee:employer_employees(user_id)')
       .eq('id', existingApp.applicant_profile_id)
-      .single();
+      .maybeSingle();
 
-    if (!profile?.user_id) return;
+    const applicantUserId = (profile?.employee as { user_id?: string | null } | null)?.user_id;
+    if (!applicantUserId) return;
 
     const vacancyTitle = (existingApp.vacancy as any)?.title || 'a job';
     let title = '';
@@ -491,7 +512,7 @@ async function notifyApplicantStatusChange(
         return; // Don't notify for other statuses
     }
 
-    await sendPushNotification(profile.user_id, emoji ? `${emoji} ${title}` : title, body, 'job', {
+    await sendPushNotification(applicantUserId, emoji ? `${emoji} ${title}` : title, body, 'job', {
       applicationId,
       status: newStatus,
       isEmployer: false,

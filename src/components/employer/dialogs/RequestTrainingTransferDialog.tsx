@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -97,18 +96,19 @@ export const RequestTrainingTransferDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[580px] max-h-[90vh] overflow-y-auto p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <FileText className="h-5 w-5 text-elec-yellow" />
             Request training transfer
-          </DialogTitle>
-          <DialogDescription className="text-white">
+          </ResponsiveFormModalTitle>
+          <p className="text-[12.5px] text-white/70 text-left">
             Request training certificates from previous employers for {profileName}'s Elec-ID.
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </ResponsiveFormModalHeader>
 
+        <ResponsiveFormModalBody className="pb-6">
         <div className="space-y-4">
           <div className="bg-elec-yellow/5 border border-elec-yellow/20 rounded-2xl p-4 flex items-start gap-3">
             <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
@@ -200,14 +200,17 @@ export const RequestTrainingTransferDialog = ({
           </FormCard>
         </div>
 
-        <DialogFooter className="gap-2 sm:gap-2">
-          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
-          <PrimaryButton onClick={handleSendRequest}>
+        <div className="mt-4 flex gap-2 pb-2">
+          <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+            Cancel
+          </SecondaryButton>
+          <PrimaryButton onClick={handleSendRequest} fullWidth>
             <Send className="h-4 w-4 mr-1.5" />
             Send request
           </PrimaryButton>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 };

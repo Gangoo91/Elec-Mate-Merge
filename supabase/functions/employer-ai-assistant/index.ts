@@ -38,7 +38,7 @@ GROUNDING — non-negotiable, two knowledge bases, never invent: (1) for any BUS
 
 THE FIRM — you have OVERSIGHT of the whole business. Each turn you receive a live snapshot across the entire hub: team, jobs and job packs, money (invoices, overdue, quotes, material orders, expenses to approve), hiring (vacancies, applicants), safety & ops (open incidents, open/overdue tasks), and resources (suppliers, price book). Use it: answer about any corner of the firm, make advice specific to their real numbers, and join the dots across areas (e.g. an overdue invoice that threatens cashflow on a job starting next week; a compliance gap on a worker assigned to a live job).
 
-ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies; raise purchase orders (drafts — the owner sends them). When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-0003 to Dave for £450"). When asked to order materials or "raise a PO" for a job, use create_purchase_order — price items from the firm price book (get_material_prices for anything not in it), link the job so the cost commits to it, and tell the owner to review and send it.
+ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies; raise purchase orders (drafts — the owner sends them). When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-2026-003 to Dave for £450"). When asked to order materials or "raise a PO" for a job, use create_purchase_order — price items from the firm price book (get_material_prices for anything not in it), link the job so the cost commits to it, and tell the owner to review and send it.
 
 ONBOARDING PEOPLE — when you add a team member, get their EMAIL and their PAY: salaried roles (QS, Project Manager, Supervisor) take an annual_salary, hands-on roles (Operative, Apprentice) an hourly_rate — ask if it's missing rather than assume. If you have an email, adding them automatically emails them their sign-in details: they sign in with that email and link to the firm on their own, no password handover from you. Each linked team member is a £9.99/month seat on the firm's subscription, charged only once they actually link. Tell the owner what you did in those terms, and if there's no email, tell them to share the team invite code instead. For a large batch, confirm the count first. You only ever INSERT — never overwrite or delete; the user edits in the hub. Setting up from scratch, work in order: team → suppliers → price book → jobs → quotes/invoices. For anything you don't yet have a tool for (producing PDFs, hiring an applicant), give the precise manual steps.
 
@@ -158,6 +158,11 @@ const TOOLS = [
           description: { type: 'string' },
           value: { type: 'number', description: 'Total quote value in GBP.' },
           job_title: { type: 'string' },
+          job: {
+            type: 'string',
+            description:
+              "Existing job title to LINK the quote to (feeds the job's money view). Use when the quote belongs to a job you created or found.",
+          },
           valid_until: { type: 'string', description: 'YYYY-MM-DD' },
           client_email: { type: 'string' },
           client_phone: { type: 'string' },
@@ -177,6 +182,11 @@ const TOOLS = [
           client: { type: 'string' },
           amount: { type: 'number', description: 'Total invoice amount in GBP.' },
           project: { type: 'string' },
+          job: {
+            type: 'string',
+            description:
+              "Existing job title to LINK the invoice to (feeds the job's money view and P&L).",
+          },
           due_date: { type: 'string', description: 'YYYY-MM-DD' },
           notes: { type: 'string' },
           client_email: { type: 'string' },
@@ -417,9 +427,13 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
   const lc = (s: unknown) => String(s ?? '').toLowerCase();
   const now = Date.now();
 
-  const [employees, jobs, packs, invoices, quotes, vacancies, incidents, tasks, materials, expenses, suppliers, priceBook] =
+  // employer_expense_claims has no employer_id column — it links via employee_id,
+  // so resolve the firm's employee ids first, then filter expenses by them.
+  const employees = await safe(admin.from('employer_employees').select('id, name, role, status').eq('employer_id', uid));
+  const employeeIds = employees.map((e) => e.id).filter(Boolean);
+
+  const [jobs, packs, invoices, quotes, vacancies, incidents, tasks, materials, expenses, suppliers, priceBook] =
     await Promise.all([
-      safe(admin.from('employer_employees').select('name, role, status').eq('employer_id', uid)),
       safe(admin.from('employer_jobs').select('title, status, start_date').eq('user_id', uid)),
       safe(admin.from('employer_job_packs').select('status').eq('employer_id', uid)),
       safe(admin.from('employer_invoices').select('amount, status, due_date').eq('employer_id', uid)),
@@ -428,7 +442,9 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
       safe(admin.from('employer_incidents').select('severity, status').eq('employer_id', uid)),
       safe(admin.from('employer_job_tasks').select('status, due_date').eq('employer_id', uid)),
       safe(admin.from('employer_material_orders').select('total, status').eq('employer_id', uid)),
-      safe(admin.from('employer_expense_claims').select('amount, status').eq('employer_id', uid)),
+      employeeIds.length
+        ? safe(admin.from('employer_expense_claims').select('amount, status').in('employee_id', employeeIds))
+        : Promise.resolve([]),
       safe(admin.from('employer_suppliers').select('id').eq('employer_id', uid)),
       safe(admin.from('employer_price_book').select('id').eq('employer_id', uid)),
     ]);
@@ -446,8 +462,10 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
     (j) => j.start_date && new Date(j.start_date).getTime() > now && new Date(j.start_date).getTime() < now + 7 * 864e5
   );
   const openPacks = packs.filter((p) => !done(p.status));
-  const unpaid = invoices.filter((i) => !lc(i.status).includes('paid'));
+  // Drafts aren't owed money — counting them as unpaid/OVERDUE misleads Mate's advice.
+  const unpaid = invoices.filter((i) => !lc(i.status).includes('paid') && lc(i.status) !== 'draft');
   const overdue = unpaid.filter((i) => i.due_date && new Date(i.due_date).getTime() < now);
+  const draftInvoices = invoices.filter((i) => lc(i.status) === 'draft');
   const liveQuotes = quotes.filter((q) => !['accepted', 'declined', 'rejected', 'expired', 'converted'].includes(lc(q.status)));
   const openVac = vacancies.filter((v) => !lc(v.status).includes('closed'));
   const pendingApps = apps.filter((a) => !['hired', 'rejected'].includes(lc(a.status)));
@@ -458,9 +476,9 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
   const pendingExpenses = expenses.filter((e) => ['pending', 'submitted', 'awaiting'].some((s) => lc(e.status).includes(s)));
 
   const lines = [
-    `TEAM: ${employees.length} on the books${employees.length ? ' — ' + employees.slice(0, 8).map((e) => `${e.name} (${e.role})`).join('; ') : ''}.`,
+    `TEAM: ${employees.filter((e) => lc(e.status ?? 'active') !== 'archived').length} active${employees.length ? ' — ' + employees.filter((e) => lc(e.status ?? 'active') !== 'archived').slice(0, 8).map((e) => `${e.name} (${e.role})`).join('; ') : ''}.`,
     `JOBS: ${activeJobs.length} active${startingSoon.length ? `, ${startingSoon.length} starting within 7 days` : ''}. Job packs: ${openPacks.length} open.`,
-    `MONEY: ${unpaid.length} unpaid invoices £${sum(unpaid).toLocaleString()} (${overdue.length} OVERDUE £${sum(overdue).toLocaleString()}); ${liveQuotes.length} live quotes; ${pendingMaterials.length} material orders pending; ${pendingExpenses.length} expense claims to approve.`,
+    `MONEY: ${unpaid.length} unpaid invoices £${sum(unpaid).toLocaleString()} (${overdue.length} OVERDUE £${sum(overdue).toLocaleString()})${draftInvoices.length ? `; ${draftInvoices.length} draft invoices not yet sent` : ''}; ${liveQuotes.length} live quotes; ${pendingMaterials.length} material orders pending; ${pendingExpenses.length} expense claims to approve.`,
     `HIRING: ${openVac.length} vacancies open; ${pendingApps.length} applicants awaiting a decision.`,
     `SAFETY & OPS: ${openIncidents.length} open incidents; ${openTasks.length} open tasks (${overdueTasks.length} overdue).`,
     `RESOURCES: ${suppliers.length} suppliers, ${priceBook.length} price-book items.`,
@@ -575,24 +593,57 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       }, 'job');
       return error ? `Failed to create job: ${error.message}` : `Created job: ${args.title} (job_id: ${id}).`;
     } else if (name === 'create_quote') {
-      const { count } = await admin.from('employer_quotes').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
-      const num = `QTE-${String((count ?? 0) + 1).padStart(4, '0')}`;
+      // SAME format + parsing as the hub's financeService (QU-YYYY-NNNN,
+      // numeric max over the year's rows) — two writers must never diverge
+      // or they hijack each other's sequences.
+      const qteYear = new Date().getFullYear();
+      const { data: qteRows } = await admin.from('employer_quotes').select('quote_number').eq('employer_id', uid)
+        .like('quote_number', `QU-${qteYear}-%`).order('created_at', { ascending: false }).limit(1000);
+      const lastQteNum = (qteRows ?? []).reduce((max: number, r: { quote_number: string | null }) => {
+        const n = parseInt(String(r.quote_number ?? '').slice(`QU-${qteYear}-`.length), 10);
+        return Number.isFinite(n) && n > max ? n : max;
+      }, 0);
+      const num = `QU-${qteYear}-${String(lastQteNum + 1).padStart(4, '0')}`;
       const quoteClientId = await findOrCreateClientId(args.client);
+      // Link to an existing job when named — same lookup as create_purchase_order
+      let quoteJobId: string | null = null;
+      if (args.job) {
+        const { data: qJob } = await admin
+          .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
+        quoteJobId = (qJob?.id as string) ?? null;
+      }
       const { id, error } = await ins('employer_quotes', {
         employer_id: uid, quote_number: num, client: args.client, client_id: quoteClientId, status: 'Draft', description: args.description ?? null,
-        value: args.value ?? 0, job_title: args.job_title ?? null, valid_until: args.valid_until ?? null,
+        value: args.value ?? 0, job_title: args.job_title ?? null, job_id: quoteJobId, valid_until: args.valid_until ?? null,
         client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
       }, 'quote');
-      return error ? `Failed to create quote: ${error.message}` : `Created quote ${num} for ${args.client} (id: ${id}).`;
+      return error
+        ? `Failed to create quote: ${error.message}`
+        : `Created quote ${num} for ${args.client}${quoteJobId ? ` linked to job "${args.job}"` : args.job ? ` (no job named "${args.job}" found — quote not linked)` : ''} (id: ${id}).`;
     } else if (name === 'create_invoice') {
-      const { count } = await admin.from('employer_invoices').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
-      const num = `INV-${String((count ?? 0) + 1).padStart(4, '0')}`;
+      // SAME format as financeService: INV-YYYY-NNN, numeric max.
+      const invYear = new Date().getFullYear();
+      const { data: invRows } = await admin.from('employer_invoices').select('invoice_number').eq('employer_id', uid)
+        .like('invoice_number', `INV-${invYear}-%`).order('created_at', { ascending: false }).limit(1000);
+      const lastInvNum = (invRows ?? []).reduce((max: number, r: { invoice_number: string | null }) => {
+        const n = parseInt(String(r.invoice_number ?? '').slice(`INV-${invYear}-`.length), 10);
+        return Number.isFinite(n) && n > max ? n : max;
+      }, 0);
+      const num = `INV-${invYear}-${String(lastInvNum + 1).padStart(3, '0')}`;
       const invoiceClientId = await findOrCreateClientId(args.client);
+      let invoiceJobId: string | null = null;
+      if (args.job) {
+        const { data: iJob } = await admin
+          .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
+        invoiceJobId = (iJob?.id as string) ?? null;
+      }
       const { id, error } = await ins('employer_invoices', {
         employer_id: uid, invoice_number: num, client: args.client, client_id: invoiceClientId, status: 'Draft', amount: args.amount ?? 0,
-        project: args.project ?? null, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
+        project: args.project ?? null, job_id: invoiceJobId, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
       }, 'invoice');
-      return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client} (id: ${id}).`;
+      return error
+        ? `Failed to create invoice: ${error.message}`
+        : `Created draft invoice ${num} for ${args.client}${invoiceJobId ? ` linked to job "${args.job}"` : args.job ? ` (no job named "${args.job}" found — invoice not linked)` : ''} (id: ${id}).`;
     } else if (name === 'create_purchase_order') {
       const { data: sup } = await admin
         .from('employer_suppliers').select('id, name').eq('employer_id', uid).ilike('name', args.supplier).limit(1).maybeSingle();
@@ -603,11 +654,16 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
           .from('employer_jobs').select('id').eq('user_id', uid).ilike('title', args.job).limit(1).maybeSingle();
         poJobId = (job?.id as string) ?? null;
       }
+      // SAME format as financeService: PO-YYYY-NNNN, numeric max (string-sort
+      // LIMIT 1 broke past 9999 and on mixed-width rows).
       const year = new Date().getFullYear();
-      const { data: last } = await admin
+      const { data: poRows } = await admin
         .from('employer_material_orders').select('order_number').eq('employer_id', uid)
-        .like('order_number', `PO-${year}-%`).order('order_number', { ascending: false }).limit(1);
-      const lastNum = last?.[0]?.order_number ? parseInt(String(last[0].order_number).split('-')[2]) || 0 : 0;
+        .like('order_number', `PO-${year}-%`).order('created_at', { ascending: false }).limit(1000);
+      const lastNum = (poRows ?? []).reduce((max: number, r: { order_number: string | null }) => {
+        const n = parseInt(String(r.order_number ?? '').slice(`PO-${year}-`.length), 10);
+        return Number.isFinite(n) && n > max ? n : max;
+      }, 0);
       const poNum = `PO-${year}-${String(lastNum + 1).padStart(4, '0')}`;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const items = (args.items ?? []).map((it: any) => ({
@@ -655,11 +711,11 @@ async function runTool(admin: any, uid: string, openAiKey: string, authHeader: s
       return error ? `Failed to add task: ${error.message}` : `Added task: ${args.title} (id: ${id}).`;
     } else if (name === 'get_material_prices') {
       const { data: prods } = await admin.from('marketplace_products')
-        .select('name, brand, current_price, currency, stock_status')
+        .select('name, brand, current_price, currency, stock_status, supplier:marketplace_suppliers(name)')
         .textSearch('search_vector', args.query, { type: 'websearch' }).limit(6);
       return (prods ?? [])
-        .map((p: { name: string; brand: string; current_price: number; stock_status: string }) =>
-          `${p.name}${p.brand ? ' (' + p.brand + ')' : ''} — £${p.current_price}${p.stock_status ? ' [' + p.stock_status + ']' : ''}`)
+        .map((p: { name: string; brand: string; current_price: number; stock_status: string; supplier: { name: string } | null }) =>
+          `${p.name}${p.brand ? ' (' + p.brand + ')' : ''} — £${p.current_price}${p.supplier?.name ? ' @ ' + p.supplier.name : ''}${p.stock_status ? ' [' + p.stock_status + ']' : ''}`)
         .join('\n') || 'No live prices found for that — estimate it or ask the user.';
     } else if (name === 'list_team') {
       const { data: tm } = await admin.from('employer_employees').select('id, name, role').eq('employer_id', uid);
@@ -779,6 +835,7 @@ Deno.serve(async (req) => {
     const stream = new ReadableStream({
       async start(controller) {
         try {
+          let answered = false;
           for (let round = 0; round < 8; round++) {
             const resp = await fetch(OPENAI_CHAT, {
               method: 'POST',
@@ -787,6 +844,7 @@ Deno.serve(async (req) => {
             });
             if (!resp.ok || !resp.body) {
               controller.enqueue(enc.encode('Sorry — I hit a problem reaching the model. Try again.'));
+              answered = true; // terminal message already streamed — don't append the ran-out-of-steps note
               break;
             }
             const reader = resp.body.getReader();
@@ -824,7 +882,7 @@ Deno.serve(async (req) => {
               }
             }
             const toolCalls = Object.values(acc);
-            if (!toolCalls.length) break; // model produced its final answer (already streamed)
+            if (!toolCalls.length) { answered = true; break; } // model produced its final answer (already streamed)
             convo.push({
               role: 'assistant',
               content: contentAcc || null,
@@ -834,6 +892,15 @@ Deno.serve(async (req) => {
               const result = await runTool(admin, user.id, openAiKey, authHeader, t.name, t.arguments);
               convo.push({ role: 'tool', tool_call_id: t.id, content: result });
             }
+          }
+          // Honest exhaustion: the loop ran out of rounds mid-task rather than
+          // finishing — the actions already ran, so say so instead of going silent.
+          if (!answered) {
+            controller.enqueue(
+              enc.encode(
+                '\n\nThat took more steps than I can run in one go — everything above has been done. Say "continue" and I\'ll pick up where I left off.'
+              )
+            );
           }
         } catch {
           try { controller.enqueue(enc.encode('\n\n[Mate hit an error completing that — try again.]')); } catch { /* ignore */ }

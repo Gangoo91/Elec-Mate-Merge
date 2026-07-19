@@ -1,20 +1,10 @@
 import { useState, useMemo, useCallback, useRef, type TouchEvent as ReactTouchEvent } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { format } from 'date-fns';
@@ -23,14 +13,12 @@ import {
   Send,
   Pin,
   PinOff,
-  Calendar as CalendarIcon,
   Loader2,
   RefreshCw,
   Trash2,
   Eye,
   EyeOff,
   MessageSquare,
-  X,
 } from 'lucide-react';
 import {
   useCommunications,
@@ -74,17 +62,11 @@ import {
   EmptyState,
   LoadingBlocks,
   GroupHeader,
-  Divider,
   PrimaryButton,
   SecondaryButton,
-  FormCard,
-  Field,
   inputClass,
   textareaClass,
-  selectTriggerClass,
-  selectContentClass,
   checkboxClass,
-  fieldLabelClass,
 } from '@/components/employer/editorial';
 
 const typeMapping: Record<CommunicationType, string> = {
@@ -192,7 +174,17 @@ export const CommunicationsSection = () => {
   const touchStartY = useRef(0);
 
   const handleRefresh = async () => {
-    await refetch();
+    // refetch never throws — check the result so a failed refresh can't
+    // toast "updated" over stale data
+    const result = await refetch();
+    if (result.error) {
+      toast({
+        title: 'Refresh failed',
+        description: 'Could not update messages — check your connection.',
+        variant: 'destructive',
+      });
+      return;
+    }
     toast({ title: 'Refreshed', description: 'Messages updated' });
   };
 
@@ -207,8 +199,10 @@ export const CommunicationsSection = () => {
       if (activeTab === 'inbox') return matchesSearch;
       if (activeTab === 'briefs') return matchesSearch && displayType === 'Team Broadcast';
       if (activeTab === 'safety') return matchesSearch && displayType === 'Safety Warning';
+      // Real flag only — an urgent broadcast is not a sign-off demand (same
+      // rule as getDisplayType), so it must not appear under "Sign"
       if (activeTab === 'mandatory')
-        return matchesSearch && (displayType === 'Mandatory Reading' || comm.priority === 'urgent');
+        return matchesSearch && displayType === 'Mandatory Reading';
       return matchesSearch;
     });
 
@@ -679,7 +673,7 @@ export const CommunicationsSection = () => {
         <PageHero
           eyebrow="People"
           title="Communications"
-          description="Team chat, channels and announcements."
+          description="Broadcasts, safety alerts and sign-offs for your team."
           tone="purple"
           actions={heroActions}
         />
@@ -693,7 +687,7 @@ export const CommunicationsSection = () => {
       <PageHero
         eyebrow="People"
         title="Communications"
-        description="Team chat, channels and announcements."
+        description="Broadcasts, safety alerts and sign-offs for your team."
         tone="purple"
         actions={heroActions}
       />
@@ -862,6 +856,8 @@ interface MessageDetailSheetProps {
   selectedMessage: Communication | null;
   recipients: Array<{
     id: string;
+    /** employer_employees.id — used to target the nudge reminder */
+    employee_id: string;
     read_at: string | null;
     acknowledged_at: string | null;
     employee?: { name?: string; photo_url?: string | null } | null;

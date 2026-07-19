@@ -41,7 +41,6 @@ const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
 const PublicEmployerQuote = lazy(() => import('@/pages/PublicEmployerQuote'));
 const PublicEmployerInvoice = lazy(() => import('@/pages/PublicEmployerInvoice'));
 const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
-const BriefingSignOff = lazy(() => import('@/pages/BriefingSignOff'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
 const PublicPermitSign = lazy(() => import('@/pages/PublicPermitSign'));
 const PublicSafetySign = lazy(() => import('@/pages/PublicSafetySign'));
@@ -532,14 +531,6 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <PublicSignature />
-              </LazyRoute>
-            }
-          />
-          <Route
-            path="/briefing-signoff/:briefingId"
-            element={
-              <LazyRoute>
-                <BriefingSignOff />
               </LazyRoute>
             }
           />

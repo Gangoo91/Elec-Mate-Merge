@@ -258,7 +258,8 @@ export function useUploadDefectPhotos() {
       const uploadedUrls: string[] = [];
 
       for (const file of files) {
-        const fileName = `vehicle-checks/${user.id}/${vehicleId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+        // First folder must be auth.uid() — visual-uploads INSERT policy.
+        const fileName = `${user.id}/vehicle-checks/${vehicleId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
 
         const { data, error } = await supabase.storage
           .from('visual-uploads')
@@ -269,9 +270,9 @@ export function useUploadDefectPhotos() {
 
         if (error) throw error;
 
-        const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
-
-        uploadedUrls.push(urlData.publicUrl);
+        // Store the bare storage path (privacy-ready) — resolve with
+        // resolveStorageUrl(s)('visual-uploads', …) wherever these display.
+        uploadedUrls.push(data.path);
       }
 
       return uploadedUrls;

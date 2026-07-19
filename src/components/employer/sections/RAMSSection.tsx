@@ -1,6 +1,16 @@
 import { useState, useMemo } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import { ErrorState } from '@/components/employer/ErrorState';
 import {
@@ -37,6 +47,7 @@ import {
   type RAMSStatus,
 } from '@/hooks/useRAMSDocuments';
 import { format, formatDistanceToNow } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   PageFrame,
@@ -81,6 +92,7 @@ const statusLabelFor = (status: RAMSStatus): string =>
   STATUS_OPTIONS.find((s) => s.value === status)?.label ?? status;
 
 export function RAMSSection({ onNavigate }: RAMSSectionProps) {
+  const { toast } = useToast();
   const { data: ramsDocuments = [], isLoading, error, refetch } = useRAMSDocuments();
   const { data: stats } = useRAMSDocumentStats();
   const createRAMS = useCreateRAMSDocument();
@@ -90,6 +102,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showDetailSheet, setShowDetailSheet] = useState(false);
   const [selectedRAMS, setSelectedRAMS] = useState<RAMSDocument | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -138,7 +151,6 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
     if (!matchesSearch) return false;
 
     if (filterStatus === 'all') return true;
-    if (filterStatus === 'templates') return false;
     if (filterStatus === 'active') {
       return doc.status === 'approved' || doc.status === 'submitted';
     }
@@ -221,21 +233,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
     { value: 'active', label: 'Active', count: activeCount },
     { value: 'draft', label: 'Draft', count: draftCount },
     { value: 'approved', label: 'Approved', count: approvedCount },
-    { value: 'templates', label: 'Templates', count: 0 },
   ];
-
-  const listTitle =
-    filterStatus === 'all'
-      ? 'All RAMS'
-      : filterStatus === 'active'
-        ? 'Active RAMS'
-        : filterStatus === 'draft'
-          ? 'Drafts'
-          : filterStatus === 'approved'
-            ? 'Approved'
-            : filterStatus === 'templates'
-              ? 'Templates'
-              : 'RAMS';
 
   return (
     <PageFrame>
@@ -264,7 +262,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
           { label: 'Active RAMS', value: activeCount, tone: 'orange' },
           { label: 'Awaiting approval', value: submittedCount, tone: 'amber' },
           { label: 'Approved 30d', value: approved30dCount, tone: 'emerald' },
-          { label: 'Templates', value: 0, tone: 'blue' },
+          { label: 'Drafts', value: draftCount, tone: 'blue' },
         ]}
       />
 
@@ -279,16 +277,8 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
       {filteredDocuments.length === 0 ? (
         <EmptyState
-          title={
-            filterStatus === 'templates'
-              ? 'No templates yet'
-              : 'No RAMS documents found'
-          }
-          description={
-            filterStatus === 'templates'
-              ? 'Save an existing RAMS as a template to reuse it across jobs.'
-              : 'Create your first risk assessment from scratch or generate one with AI.'
-          }
+          title="No RAMS documents found"
+          description="Create your first risk assessment from scratch or generate one with AI."
           action="Create RAMS"
           onAction={() => setShowCreateSheet(true)}
         />
@@ -319,17 +309,6 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
           </ListBody>
         </ListCard>
       )}
-
-      <ListCard>
-        <ListCardHeader title={listTitle} />
-        <ListBody>
-          <ListRow
-            title="Browse by status"
-            subtitle={`${approvedCount} approved · ${submittedCount} awaiting · ${draftCount} draft`}
-            trailing={<Pill tone="orange">{totalCount}</Pill>}
-          />
-        </ListBody>
-      </ListCard>
 
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
         <SheetContent
@@ -667,26 +646,32 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                       Download PDF
                     </a>
                   )}
-                  <SecondaryButton
-                    fullWidth
-                    onClick={async () => {
-                      await copyToClipboard(window.location.href);
-                    }}
-                  >
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy link
-                  </SecondaryButton>
+                  {selectedRAMS.pdf_url && (
+                    <SecondaryButton
+                      fullWidth
+                      onClick={async () => {
+                        // Share the document itself, not the dashboard URL.
+                        const ok = await copyToClipboard(selectedRAMS.pdf_url!);
+                        toast(
+                          ok
+                            ? {
+                                title: 'Link copied',
+                                description: 'PDF link copied to clipboard.',
+                              }
+                            : {
+                                title: 'Copy failed',
+                                description: 'Could not copy the link. Try again.',
+                                variant: 'destructive',
+                              }
+                        );
+                      }}
+                    >
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy PDF link
+                    </SecondaryButton>
+                  )}
                   <DestructiveButton
-                    onClick={async () => {
-                      if (
-                        confirm(
-                          `Delete RAMS "${selectedRAMS.project_name}"? This cannot be undone.`,
-                        )
-                      ) {
-                        await deleteRAMS.mutateAsync(selectedRAMS.id);
-                        setShowDetailSheet(false);
-                      }
-                    }}
+                    onClick={() => setConfirmDelete(true)}
                     disabled={deleteRAMS.isPending}
                   >
                     Delete
@@ -701,6 +686,33 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
           )}
         </SheetContent>
       </Sheet>
+
+      <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete RAMS?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              {selectedRAMS
+                ? `"${selectedRAMS.project_name}" will be permanently removed. This cannot be undone.`
+                : 'This RAMS document will be permanently removed.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500/90 hover:bg-red-500 text-white"
+              onClick={async () => {
+                if (!selectedRAMS) return;
+                setConfirmDelete(false);
+                await deleteRAMS.mutateAsync(selectedRAMS.id);
+                setShowDetailSheet(false);
+              }}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageFrame>
   );
 }

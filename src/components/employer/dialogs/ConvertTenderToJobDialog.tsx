@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogDescription,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -76,7 +75,7 @@ export function ConvertTenderToJobDialog({
     if (!tender) return;
 
     try {
-      await createJobMutation.mutateAsync({
+      const createdJob = await createJobMutation.mutateAsync({
         title: formData.title,
         client: formData.client,
         location: formData.location || 'TBC',
@@ -91,9 +90,11 @@ export function ConvertTenderToJobDialog({
         description: formData.description || null,
       });
 
+      // Persist the tender→job link so the two records stay connected.
       await updateTenderMutation.mutateAsync({
         id: tender.id,
         data: {
+          job_id: createdJob?.id ?? null,
           notes:
             `${tender.notes || ''}\n\n[Converted to job on ${new Date().toLocaleDateString('en-GB')}]`.trim(),
         },
@@ -117,18 +118,19 @@ export function ConvertTenderToJobDialog({
   const isSubmitting = createJobMutation.isPending || updateTenderMutation.isPending;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <Trophy className="h-5 w-5 text-emerald-400" />
             Convert Won Tender to Job
-          </DialogTitle>
-          <DialogDescription className="text-white">
+          </ResponsiveFormModalTitle>
+          <p className="text-[12.5px] text-white/70 text-left">
             Create a new job from the won tender. Review and adjust the details below.
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </ResponsiveFormModalHeader>
 
+        <ResponsiveFormModalBody className="pb-6">
         <div className="space-y-4 py-4">
           {/* Source Info */}
           <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/30">
@@ -235,13 +237,14 @@ export function ConvertTenderToJobDialog({
           </FormCard>
         </div>
 
-        <DialogFooter className="gap-2">
-          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+        <div className="flex gap-2 pb-2">
+          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting} fullWidth>
             Cancel
           </SecondaryButton>
           <PrimaryButton
             onClick={handleSubmit}
             disabled={!formData.title || !formData.client || isSubmitting}
+            fullWidth
           >
             {isSubmitting ? (
               <>
@@ -255,8 +258,9 @@ export function ConvertTenderToJobDialog({
               </>
             )}
           </PrimaryButton>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

@@ -53,20 +53,20 @@ export function JobCardContextMenu({
       <ContextMenuContent className="w-56">
         <ContextMenuItem onClick={onOpenDetails} className="gap-2">
           <FileText className="h-4 w-4" />
-          Open Details
+          Open details
         </ContextMenuItem>
 
         <ContextMenuSeparator />
 
         <ContextMenuItem onClick={onCopy} className="gap-2">
           <Copy className="h-4 w-4" />
-          Copy Card
+          Duplicate job
         </ContextMenuItem>
 
         <ContextMenuSub>
           <ContextMenuSubTrigger className="gap-2">
             <ArrowRight className="h-4 w-4" />
-            Move to...
+            Move to…
           </ContextMenuSubTrigger>
           <ContextMenuSubContent>
             {stages.map((stage) => (
@@ -86,12 +86,12 @@ export function JobCardContextMenu({
 
         <ContextMenuItem onClick={onOpenLabels} className="gap-2">
           <Tag className="h-4 w-4" />
-          Edit Labels
+          Edit labels
         </ContextMenuItem>
 
         <ContextMenuItem onClick={onOpenChecklist} className="gap-2">
           <CheckSquare className="h-4 w-4" />
-          View Checklist
+          View checklist
         </ContextMenuItem>
 
         <ContextMenuSeparator />
@@ -99,7 +99,7 @@ export function JobCardContextMenu({
         {onMarkAsTemplate && (
           <ContextMenuItem onClick={onMarkAsTemplate} className="gap-2">
             <LayoutTemplate className="h-4 w-4" />
-            {isTemplate ? 'Remove from Templates' : 'Save as Template'}
+            {isTemplate ? 'Remove from templates' : 'Save as template'}
           </ContextMenuItem>
         )}
 

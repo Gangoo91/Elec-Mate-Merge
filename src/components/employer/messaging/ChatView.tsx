@@ -1,5 +1,24 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 import { ChatHeader } from './ChatHeader';
 import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
@@ -34,6 +53,8 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
   const [isSending, setIsSending] = useState(false);
   const [replyTo, setReplyTo] = useState<ReplyToMessage | null>(null);
   const [editingMessage, setEditingMessage] = useState<Message | null>(null);
+  const [editDraft, setEditDraft] = useState('');
+  const [deletingMessageId, setDeletingMessageId] = useState<string | null>(null);
   const messageListRef = useRef<{ scrollToMessage: (id: string) => void } | null>(null);
 
   // Fetch messages
@@ -146,29 +167,26 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
     [conversation]
   );
 
-  // Handle edit message
-  const handleEdit = useCallback(
-    (message: Message) => {
-      setEditingMessage(message);
-      // For now, we'll just open a simple prompt - could be enhanced with inline editing
-      const newContent = window.prompt('Edit message:', message.content);
-      if (newContent && newContent !== message.content) {
-        editMessage.mutate({ messageId: message.id, content: newContent });
-      }
-      setEditingMessage(null);
-    },
-    [editMessage]
-  );
+  // Handle edit message — themed modal, not window.prompt (which breaks in
+  // native WebViews and looks nothing like the app)
+  const handleEdit = useCallback((message: Message) => {
+    setEditingMessage(message);
+    setEditDraft(message.content);
+  }, []);
 
-  // Handle delete message
-  const handleDelete = useCallback(
-    (messageId: string) => {
-      if (window.confirm('Are you sure you want to delete this message?')) {
-        deleteMessage.mutate(messageId);
-      }
-    },
-    [deleteMessage]
-  );
+  const handleSaveEdit = () => {
+    const content = editDraft.trim();
+    if (editingMessage && content && content !== editingMessage.content) {
+      editMessage.mutate({ messageId: editingMessage.id, content });
+    }
+    setEditingMessage(null);
+    setEditDraft('');
+  };
+
+  // Handle delete message — themed confirm, not window.confirm
+  const handleDelete = useCallback((messageId: string) => {
+    setDeletingMessageId(messageId);
+  }, []);
 
   // Handle add reaction
   const handleAddReaction = useCallback(
@@ -276,6 +294,82 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
           mentionUsers={mentionUsers}
         />
       </SheetContent>
+
+      {/* Edit message — themed input replacing window.prompt */}
+      <ResponsiveFormModal
+        open={!!editingMessage}
+        onOpenChange={(o) => {
+          if (!o) {
+            setEditingMessage(null);
+            setEditDraft('');
+          }
+        }}
+      >
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">Edit message</ResponsiveFormModalTitle>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6 space-y-3">
+            <Textarea
+              value={editDraft}
+              onChange={(e) => setEditDraft(e.target.value)}
+              autoFocus
+              className="touch-manipulation text-base min-h-[100px] bg-white/[0.05] border-white/30 text-white focus:border-yellow-500 focus:ring-2 focus:ring-elec-yellow/20"
+            />
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setEditingMessage(null);
+                  setEditDraft('');
+                }}
+                className="flex-1 h-11 touch-manipulation bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={handleSaveEdit}
+                disabled={!editDraft.trim() || editMessage.isPending}
+                className="flex-1 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+              >
+                Save
+              </Button>
+            </div>
+          </ResponsiveFormModalBody>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
+
+      {/* Delete message — themed confirm replacing window.confirm */}
+      <AlertDialog
+        open={!!deletingMessageId}
+        onOpenChange={(o) => !o && setDeletingMessageId(null)}
+      >
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete this message?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              The message will be removed for everyone in this conversation. This cannot be
+              undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (deletingMessageId) deleteMessage.mutate(deletingMessageId);
+                setDeletingMessageId(null);
+              }}
+              className="h-11 touch-manipulation bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Sheet>
   );
 }

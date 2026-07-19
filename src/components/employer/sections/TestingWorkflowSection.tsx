@@ -110,7 +110,9 @@ export function TestingWorkflowSection() {
   const [showRecordSheet, setShowRecordSheet] = useState(false);
   const [recordTestId, setRecordTestId] = useState<string | null>(null);
   const [recordReading, setRecordReading] = useState('');
-  const [recordResult, setRecordResult] = useState<TestResult>('Pass');
+  // No default result — pre-selecting Pass meant one thoughtless tap recorded
+  // a passing electrical test. The CTA stays disabled until a result is chosen.
+  const [recordResult, setRecordResult] = useState<TestResult | null>(null);
   const [recordNotes, setRecordNotes] = useState('');
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [openJobs, setOpenJobs] = useState<Record<string, boolean>>({});
@@ -145,14 +147,16 @@ export function TestingWorkflowSection() {
     if (test) {
       setRecordTestId(testId);
       setRecordReading(test.reading || '');
-      setRecordResult('Pass');
+      // Editing an already-concluded test keeps its recorded result; a
+      // Pending test forces an explicit choice (no pre-selected Pass).
+      setRecordResult(test.result && test.result !== 'Pending' ? test.result : null);
       setRecordNotes(test.notes || '');
       setShowRecordSheet(true);
     }
   };
 
   const handleConfirmRecord = async () => {
-    if (recordTestId) {
+    if (recordTestId && recordResult) {
       await recordTestResult.mutateAsync({
         id: recordTestId,
         result: recordResult,
@@ -643,7 +647,7 @@ export function TestingWorkflowSection() {
             footer={
               <PrimaryButton
                 onClick={handleConfirmRecord}
-                disabled={recordTestResult.isPending}
+                disabled={recordTestResult.isPending || !recordResult}
                 fullWidth
                 size="lg"
               >
@@ -652,7 +656,7 @@ export function TestingWorkflowSection() {
                 ) : (
                   <CheckCircle className="h-5 w-5 mr-2" />
                 )}
-                Record as {recordResult}
+                {recordResult ? `Record as ${recordResult}` : 'Choose a result'}
               </PrimaryButton>
             }
           >

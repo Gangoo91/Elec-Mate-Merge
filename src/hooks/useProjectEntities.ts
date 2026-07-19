@@ -11,6 +11,7 @@ export interface ProjectData {
   status: string;
   priority: string;
   customer_name?: string;
+  customer_phone?: string;
   location?: string;
   estimated_value?: number;
   start_date?: string;
@@ -21,6 +22,8 @@ export interface ProjectData {
 export interface ProjectQuote {
   id: string;
   status: string;
+  acceptance_status?: string;
+  booked_slot_start?: string;
   total: number;
   quote_number?: string;
   client_data?: Record<string, unknown>;
@@ -115,7 +118,7 @@ export function useProjectEntities(projectId: string | undefined) {
 
       const { data: proj, error } = await s()
         .from('spark_projects')
-        .select('*, customers(name)')
+        .select('*, customers(name, phone)')
         .eq('id', projectId)
         .eq('user_id', user.id)
         .single();
@@ -132,7 +135,9 @@ export function useProjectEntities(projectId: string | undefined) {
             .order('due_at', { ascending: true }),
           s()
             .from('quotes')
-            .select('id, status, total, quote_number, client_data, created_at')
+            .select(
+              'id, status, acceptance_status, booked_slot_start, total, quote_number, client_data, created_at'
+            )
             .eq('project_id', projectId)
             .eq('invoice_raised', false),
           s()
@@ -176,6 +181,7 @@ export function useProjectEntities(projectId: string | undefined) {
         status: proj.status,
         priority: proj.priority,
         customer_name: proj.customers?.name,
+        customer_phone: proj.customers?.phone || undefined,
         location: proj.location,
         estimated_value: proj.estimated_value,
         start_date: proj.start_date,

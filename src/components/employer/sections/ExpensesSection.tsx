@@ -12,6 +12,8 @@ import {
   type ExpenseStatus,
 } from '@/hooks/useExpenses';
 import { useJobs } from '@/hooks/useJobs';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import type { ExpenseClaim } from '@/services/financeService';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
@@ -77,8 +79,11 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     return profile?.role === 'electrician' || profile?.role === 'apprentice';
   }, [mode, profile?.role]);
 
+  // employer_expense_claims.employee_id FKs to employer_employees.id, NOT
+  // profiles.id — resolve the caller's employee record for employee mode.
+  const { data: myEmployeeRecord } = useMyEmployeeRecord();
   const employeeIdForFilter =
-    currentEmployeeId || (isEmployeeMode ? profile?.id : undefined);
+    currentEmployeeId || (isEmployeeMode ? myEmployeeRecord?.id : undefined);
   const isMobile = useIsMobile();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -108,6 +113,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     create: handleCreate,
     delete: handleDelete,
     isApproving,
+    isCreating,
   } = useExpenses(mergedFilters);
 
   const { data: jobsData = [] } = useJobs();
@@ -117,12 +123,14 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     [jobsData]
   );
 
-  const employees = expenses.reduce<{ id: string; name: string }[]>((acc, expense) => {
-    if (expense.employees && !acc.find((e) => e.id === expense.employee_id)) {
-      acc.push({ id: expense.employee_id, name: expense.employees.name });
-    }
-    return acc;
-  }, []);
+  // Employee dropdown comes from the roster, not from existing claims —
+  // deriving it from claims meant the first-ever expense could never be
+  // created (empty dropdown) and unclaimed employees never appeared.
+  const { data: rosterEmployees = [] } = useEmployees();
+  const employees = useMemo(
+    () => rosterEmployees.map((e) => ({ id: e.id, name: e.name })),
+    [rosterEmployees]
+  );
 
   const handleTabChange = useCallback((tab: string) => {
     setActiveTab(tab);
@@ -280,7 +288,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
             actions={
               <button
                 onClick={() => setShowFilterSheet(true)}
-                className="relative h-10 px-4 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] font-medium text-white touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                className="relative h-11 px-4 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] font-medium text-white touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
               >
                 Filters
                 {activeFilterCount > 0 && (
@@ -385,7 +393,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
         onSubmit={handleCreateSubmit}
         employees={employees}
         jobs={jobs}
-        isSubmitting={isApproving}
+        isSubmitting={isCreating}
         employeeMode={isEmployeeMode}
         currentEmployeeId={employeeIdForFilter}
       />

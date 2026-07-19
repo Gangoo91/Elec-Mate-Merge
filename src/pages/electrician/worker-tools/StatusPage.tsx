@@ -23,8 +23,8 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { getCurrentPosition } from '@/utils/geolocation';
-import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
-import { useActiveJobs } from '@/hooks/useJobs';
+import { useWorkerSelfService, useMyJobs } from '@/hooks/useWorkerSelfService';
+import { useMyLatestLocation } from '@/hooks/useWorkerLocations';
 import { WorkerStatus } from '@/services/locationService';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
@@ -101,19 +101,25 @@ function relativeTime(iso?: string | null): string | null {
 
 export default function StatusPage() {
   const { employee, isLoadingEmployee, updateLocation } = useWorkerSelfService();
-  const { data: jobs, isLoading: jobsLoading } = useActiveJobs();
+  // The worker's assigned, still-open jobs — same list My Jobs shows — not the
+  // employer-wide 'Active'-status list, so the picker never disagrees with My Jobs.
+  const { data: jobs, isLoading: jobsLoading } = useMyJobs('active');
+  // Presence comes from the worker's latest employer_worker_locations row —
+  // employee.status is EMPLOYMENT status ('active'), never 'On Site' etc.
+  const { data: myLocation } = useMyLatestLocation(employee?.id);
+  const presenceStatus = myLocation?.status;
 
   const [selectedStatus, setSelectedStatus] = useState<WorkerStatus>('Off Duty');
   const [selectedJobId, setSelectedJobId] = useState<string>('');
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Initialise with current employee status.
+  // Initialise with the current presence status once it loads.
   useEffect(() => {
-    if (employee?.status) {
-      setSelectedStatus(employee.status as WorkerStatus);
+    if (presenceStatus) {
+      setSelectedStatus(presenceStatus);
     }
-  }, [employee?.status]);
+  }, [presenceStatus]);
 
   const handleUpdateStatus = async () => {
     if ((selectedStatus === 'On Site' || selectedStatus === 'En Route') && !selectedJobId) {
@@ -166,13 +172,13 @@ export default function StatusPage() {
   const isUpdating = updateLocation.isPending || isGettingLocation;
   const showJobSelector = selectedStatus === 'On Site' || selectedStatus === 'En Route';
 
-  const currentStatus = STATUS_OPTIONS.find((o) => o.value === employee?.status);
+  const currentStatus = STATUS_OPTIONS.find((o) => o.value === presenceStatus);
   const selectedOption = STATUS_OPTIONS.find((o) => o.value === selectedStatus);
-  const lastUpdated = relativeTime(employee?.updated_at);
+  const lastUpdated = relativeTime(myLocation?.last_updated);
 
   // A submit changes nothing when the chosen status already matches the
   // current one AND no job re-selection is needed — guide the worker instead.
-  const isNoChange = !!employee && selectedStatus === employee.status && !showJobSelector;
+  const isNoChange = !!presenceStatus && selectedStatus === presenceStatus && !showJobSelector;
   const isSubmitBlocked = isUpdating || (showJobSelector && !selectedJobId) || isNoChange;
 
   return (
@@ -202,7 +208,7 @@ export default function StatusPage() {
                   {STATUS_OPTIONS.map((option) => {
                     const Icon = option.icon;
                     const isSelected = selectedStatus === option.value;
-                    const isCurrent = employee.status === option.value;
+                    const isCurrent = presenceStatus === option.value;
 
                     return (
                       <OptionTile
@@ -313,7 +319,7 @@ export default function StatusPage() {
                     initials={employee.avatar_initials}
                     photo={employee.photo_url}
                     size="lg"
-                    online={employee.status === 'On Site' || employee.status === 'En Route'}
+                    online={presenceStatus === 'On Site' || presenceStatus === 'En Route'}
                   />
                   <div className="min-w-0">
                     <p className="text-[14px] font-semibold text-white truncate">{employee.name}</p>
@@ -326,7 +332,7 @@ export default function StatusPage() {
               <div className="mt-6">
                 <Eyebrow>Current status</Eyebrow>
                 <div className="mt-2 text-[34px] sm:text-5xl font-semibold tracking-tight leading-none text-white">
-                  {currentStatus?.label ?? employee.status ?? 'Not set'}
+                  {currentStatus?.label ?? 'Not set'}
                 </div>
                 <p className="mt-2.5 text-[13px] text-white/60">
                   {lastUpdated ? `Last set ${lastUpdated}` : 'No status set yet'}

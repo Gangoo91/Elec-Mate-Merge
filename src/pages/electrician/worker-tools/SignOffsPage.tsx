@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Loader2,
@@ -48,6 +49,12 @@ interface PackSignOff {
   id: string;
   job_pack_id: string;
   acknowledged_at: string | null;
+  // Evidence captured at signing — the record must read like evidence, not a
+  // checkbox: the drawn signature, the device it was signed on, and (if
+  // recorded) where.
+  signature_data: string | null;
+  device_info: string | null;
+  location: string | null;
   pack: {
     id: string;
     title: string;
@@ -69,7 +76,7 @@ const useMySignOffs = () => {
       const { data, error } = await supabase
         .from('employer_job_pack_acknowledgements')
         .select(
-          'id, job_pack_id, acknowledged_at, pack:employer_job_packs(id, title, client, location, scope, hazards, required_certifications, briefing_content)'
+          'id, job_pack_id, acknowledged_at, signature_data, device_info, location, pack:employer_job_packs(id, title, client, location, scope, hazards, required_certifications, briefing_content)'
         )
         .eq('employee_id', me!.id)
         .order('created_at', { ascending: false });
@@ -120,6 +127,19 @@ function fullTimestamp(iso: string): string {
   });
 }
 
+/* Friendly device name from the stored user-agent stamp — evidence should
+   read "signed on an iPhone", not a raw UA string. */
+function deviceSummary(ua: string | null): string | null {
+  if (!ua) return null;
+  if (/iPhone/i.test(ua)) return 'iPhone';
+  if (/iPad/i.test(ua)) return 'iPad';
+  if (/Android/i.test(ua)) return 'Android device';
+  if (/Macintosh|Mac OS/i.test(ua)) return 'Mac';
+  if (/Windows/i.test(ua)) return 'Windows PC';
+  if (/Linux/i.test(ua)) return 'Linux device';
+  return 'Recorded device';
+}
+
 type TabValue = 'all' | 'pending' | 'signed';
 
 export default function SignOffsPage() {
@@ -141,6 +161,20 @@ export default function SignOffsPage() {
   const [signature, setSignature] = useState<string | null>(null);
   const [tab, setTab] = useState<TabValue>('all');
   const [search, setSearch] = useState('');
+
+  // ?signoff=<id> deep link (job-pack push notification) — auto-open that pack
+  // once the list loads. Matches the acknowledgement id or the pack id.
+  const [searchParams] = useSearchParams();
+  const deepLinkId = searchParams.get('signoff');
+  useEffect(() => {
+    if (!deepLinkId || signoffs.length === 0) return;
+    setSelected((current) => {
+      if (current) return current;
+      return (
+        signoffs.find((s) => s.id === deepLinkId || s.job_pack_id === deepLinkId) ?? current
+      );
+    });
+  }, [deepLinkId, signoffs]);
 
   const pending = useMemo(() => signoffs.filter((s) => !s.acknowledged_at), [signoffs]);
   const signed = useMemo(() => signoffs.filter((s) => !!s.acknowledged_at), [signoffs]);
@@ -222,13 +256,49 @@ export default function SignOffsPage() {
     return (
       <div className="space-y-5">
         {isSigned && (
-          <div className="flex items-center gap-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-            <div className="min-w-0">
-              <p className="text-[13px] text-white">Signed {fullTimestamp(s.acknowledged_at!)}</p>
-              <p className="text-[11.5px] text-white/55">
-                {relativeTime(s.acknowledged_at!)} · the office has been notified
-              </p>
+          <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 space-y-3">
+            <div className="flex items-center gap-2.5">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+              <div className="min-w-0">
+                <p className="text-[13px] font-medium text-white">Signature record</p>
+                <p className="text-[11.5px] text-white/55">
+                  {relativeTime(s.acknowledged_at!)} · the office has been notified
+                </p>
+              </div>
+            </div>
+
+            {/* The drawn signature — this is the evidence, show it */}
+            {s.signature_data && (
+              <div className="rounded-lg bg-white px-3 py-2">
+                <img
+                  src={s.signature_data}
+                  alt={`Signature of ${me?.name || 'worker'}`}
+                  className="h-16 w-auto mx-auto"
+                />
+              </div>
+            )}
+
+            <div className="space-y-1.5 text-[12.5px]">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-white/55 shrink-0">Signed by</span>
+                <span className="text-white text-right">{me?.name || 'You'}</span>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-white/55 shrink-0">Date &amp; time</span>
+                <span className="text-white text-right">{fullTimestamp(s.acknowledged_at!)}</span>
+              </div>
+              {deviceSummary(s.device_info) && (
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-white/55 shrink-0">Signed on</span>
+                  <span className="text-white text-right">{deviceSummary(s.device_info)}</span>
+                </div>
+              )}
+              {s.location && (
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-white/55 shrink-0">Location</span>
+                  <span className="text-white text-right truncate">{s.location}</span>
+                </div>
+              )}
             </div>
           </div>
         )}

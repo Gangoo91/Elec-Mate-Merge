@@ -51,7 +51,10 @@ import { Slider } from '@/components/ui/slider';
 
 type TierFilter = 'all' | 'verified' | 'premium';
 
-const ECS_CARD_TYPES = ['Gold', 'Blue', 'Green', 'Apprentice'];
+// Matches live Elec-ID data — card colours stored on profiles, plus
+// 'Apprentice' which the hook also matches against declared job titles
+// (apprentices rarely record a card type).
+const ECS_CARD_TYPES = ['Gold', 'Blue', 'Green', 'White', 'Apprentice'];
 
 const specialisms = [
   'Commercial',
@@ -588,8 +591,14 @@ export function TalentPoolSection() {
                           {worker.yearsExperience != null && (
                             <span className="text-white">{worker.yearsExperience} yrs exp</span>
                           )}
-                          {worker.ecsCardType && (
-                            <span className="text-white">{worker.ecsCardType} ECS</span>
+                          {/* Stored values are mixed-case ('gold', 'GOLD', 'none') —
+                              never leak 'none ECS' or lowercase into copy */}
+                          {worker.ecsCardType && worker.ecsCardType.toLowerCase() !== 'none' && (
+                            <span className="text-white">
+                              {worker.ecsCardType.charAt(0).toUpperCase() +
+                                worker.ecsCardType.slice(1).toLowerCase()}{' '}
+                              ECS
+                            </span>
                           )}
                           {worker.verifiedDocuments.length > 0 && (
                             <span className="text-emerald-400">

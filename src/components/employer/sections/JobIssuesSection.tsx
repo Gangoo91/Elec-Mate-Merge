@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { RefreshCw, Loader2, Trash2, CheckCircle, AlertTriangle, Camera, X } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { uploadJobPhotos } from '@/utils/uploadJobPhotos';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { format, formatDistanceToNow } from 'date-fns';
 import {
@@ -138,6 +139,12 @@ export function JobIssuesSection() {
   });
 
   const { data: issues = [], isLoading, error, refetch } = useJobIssues();
+  // Resolve stored photo references for display — new uploads store bare
+  // storage paths (privacy-ready); legacy entries hold full URLs.
+  const { urls: photoSrcs } = useStorageUrls('visual-uploads', [
+    ...(formData.photos || []),
+    ...(selectedIssue?.photos || []),
+  ]);
   const { data: stats } = useJobIssueStats();
   const { data: jobs = [] } = useJobs();
   const { data: employees = [] } = useEmployees();
@@ -287,7 +294,7 @@ export function JobIssuesSection() {
   const tabs = [
     { value: 'all', label: 'All', count: issues.length },
     { value: 'open', label: 'Open', count: openCount },
-    { value: 'critical', label: 'Critical', count: criticalCount },
+    { value: 'critical', label: 'Critical / High', count: criticalCount },
     { value: 'in_progress', label: 'In progress', count: inProgressCount },
     { value: 'resolved', label: 'Resolved', count: (stats?.resolved ?? 0) + (stats?.closed ?? 0) },
   ];
@@ -340,7 +347,7 @@ export function JobIssuesSection() {
         columns={4}
         stats={[
           { label: 'Open', value: openCount, tone: 'red' },
-          { label: 'Critical', value: criticalCount, tone: 'red' },
+          { label: 'Critical / High', value: criticalCount, tone: 'red' },
           { label: 'In progress', value: inProgressCount, tone: 'orange' },
           { label: 'Resolved 7d', value: resolved7d, tone: 'emerald' },
         ]}
@@ -581,7 +588,11 @@ className={`${textareaClass} min-h-[100px]`}
                       key={url}
                       className="relative h-16 w-16 rounded-lg overflow-hidden border border-white/10"
                     >
-                      <img src={url} alt="Issue" className="h-full w-full object-cover" />
+                      <img
+                        src={photoSrcs[url] ?? url}
+                        alt="Issue"
+                        className="h-full w-full object-cover"
+                      />
                       <button
                         type="button"
                         onClick={() => removePhoto(url)}
@@ -771,12 +782,16 @@ className={`${textareaClass} min-h-[120px]`}
                       {selectedIssue.photos.map((url) => (
                         <a
                           key={url}
-                          href={url}
+                          href={photoSrcs[url] ?? url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block aspect-square rounded-lg overflow-hidden border border-white/10 touch-manipulation"
                         >
-                          <img src={url} alt="Issue" className="h-full w-full object-cover" />
+                          <img
+                            src={photoSrcs[url] ?? url}
+                            alt="Issue"
+                            className="h-full w-full object-cover"
+                          />
                         </a>
                       ))}
                     </div>

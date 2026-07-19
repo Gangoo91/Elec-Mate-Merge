@@ -11,6 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Upload, Loader2, MapPin, X, Image as ImageIcon } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 import { useUploadJobPhoto, type PhotoCategory } from '@/hooks/useJobPhotos';
 import { useJobs } from '@/hooks/useJobs';
 import { getCurrentPosition } from '@/utils/geolocation';
@@ -62,11 +63,22 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     const file = event.target.files?.[0];
     if (!file) return;
 
+    // Say WHY a file was refused — a silent return looked like a dead picker
     if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Not an image',
+        description: 'Choose a photo file (JPG, PNG or HEIC).',
+        variant: 'destructive',
+      });
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
+      toast({
+        title: 'Photo too large',
+        description: 'Photos must be under 10MB.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -86,7 +98,11 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
       setLocation({ lat: position.latitude, lng: position.longitude });
       setUseLocation(true);
     } catch {
-      // Location unavailable — silently continue
+      toast({
+        title: 'Location unavailable',
+        description: 'Could not get your position — check location permissions.',
+        variant: 'destructive',
+      });
     } finally {
       setGettingLocation(false);
     }
@@ -95,13 +111,18 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
   const handleUpload = async () => {
     if (!selectedFile) return;
 
-    await uploadPhoto.mutateAsync({
-      file: selectedFile,
-      jobId: jobId || undefined,
-      category,
-      notes: notes || undefined,
-      location: useLocation && location ? location : undefined,
-    });
+    try {
+      await uploadPhoto.mutateAsync({
+        file: selectedFile,
+        jobId: jobId || undefined,
+        category,
+        notes: notes || undefined,
+        location: useLocation && location ? location : undefined,
+      });
+    } catch {
+      // Hook surfaces the error toast; keep the sheet open so nothing is lost.
+      return;
+    }
 
     setSelectedFile(null);
     setPreview(null);

@@ -1,7 +1,15 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import {
   FileText,
   Send,
@@ -16,6 +24,9 @@ import {
   Copy,
   ExternalLink,
   Loader2,
+  Briefcase,
+  ChevronRight,
+  Signature,
 } from 'lucide-react';
 import { useMarkInvoicePaid, useSendInvoice, useGenerateInvoicePdf } from '@/hooks/useFinance';
 import { toast } from 'sonner';
@@ -24,11 +35,14 @@ import {
   SheetShell,
   FormCard,
   FormGrid,
+  Field,
   PrimaryButton,
   SecondaryButton,
   Pill,
   Eyebrow,
+  inputClass,
 } from '@/components/employer/editorial';
+import { RequestSignatureSheet } from '@/components/employer/sheets/RequestSignatureSheet';
 
 interface ViewInvoiceSheetProps {
   open: boolean;
@@ -41,12 +55,30 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
   const sendInvoiceMutation = useSendInvoice();
   const generatePdfMutation = useGenerateInvoicePdf();
   const [invoiceLink, setInvoiceLink] = useState<string | null>(null);
+  const [showEmailPrompt, setShowEmailPrompt] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [showSignatureRequest, setShowSignatureRequest] = useState(false);
+  const [, setSearchParams] = useSearchParams();
 
   if (!invoice) return null;
 
+  // Pivot to the linked job — JobsSection consumes ?job=<id> and opens it.
+  const handleViewJob = () => {
+    if (!invoice.job_id) return;
+    onOpenChange(false);
+    setSearchParams({ section: 'jobs', job: invoice.job_id });
+  };
+
   const lineItems = Array.isArray(invoice.line_items) ? invoice.line_items : [];
-  const isOverdue = invoice.status === 'Overdue';
   const isPaid = invoice.status === 'Paid';
+  // Nothing ever writes status='Overdue' — derive it from due_date, matching
+  // the list view (Drafts excluded: the client never received them).
+  const isOverdue =
+    invoice.status === 'Overdue' ||
+    (!isPaid &&
+      invoice.status !== 'Draft' &&
+      !!invoice.due_date &&
+      invoice.due_date < new Date().toISOString().slice(0, 10));
 
   const statusTone: Record<string, 'amber' | 'blue' | 'emerald' | 'red' | 'yellow'> = {
     Draft: 'amber',
@@ -60,15 +92,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
     markPaidMutation.mutate(invoice.id);
   };
 
-  const handleSendInvoice = async () => {
-    // Invoices need a real client email — stored one wins, otherwise ask
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let email: string | undefined = (invoice as any).client_email || undefined;
-    if (!email) {
-      const entered = window.prompt(`Email address for ${invoice.client}:`);
-      if (!entered?.trim()) return;
-      email = entered.trim();
-    }
+  const sendToEmail = (email: string) => {
     sendInvoiceMutation.mutate(
       { id: invoice.id, email },
       {
@@ -79,6 +103,26 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
         },
       }
     );
+  };
+
+  const handleSendInvoice = () => {
+    // Invoices need a real client email — stored one wins, otherwise ask
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const email: string | undefined = (invoice as any).client_email || undefined;
+    if (!email) {
+      setEmailInput('');
+      setShowEmailPrompt(true);
+      return;
+    }
+    sendToEmail(email);
+  };
+
+  const emailInputValid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailInput.trim());
+
+  const handleConfirmEmailPrompt = () => {
+    if (!emailInputValid) return;
+    setShowEmailPrompt(false);
+    sendToEmail(emailInput.trim());
   };
 
   const handleCopyLink = async () => {
@@ -92,6 +136,28 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
     generatePdfMutation.mutate(invoice.id);
   };
 
+  const handleCallClient = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const phone = (invoice as any).client_phone;
+    if (phone) {
+      window.location.href = `tel:${phone}`;
+    } else {
+      toast.info('No phone number on file for this client');
+    }
+  };
+
+  const handleEmailClient = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const email = (invoice as any).client_email;
+    if (email) {
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(
+        `Invoice ${invoice.invoice_number}`
+      )}`;
+    } else {
+      toast.info('No email address on file — use Send email to add one');
+    }
+  };
+
   const daysUntilDue = invoice.due_date
     ? Math.ceil(
         (new Date(invoice.due_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
@@ -99,7 +165,8 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
     : 0;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <>
+      <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
         className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
@@ -182,10 +249,6 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   £{Number(invoice.amount).toLocaleString()}
                 </span>
               </div>
-              <Progress
-                value={0}
-                className={`h-2 ${isOverdue ? 'bg-red-500/20' : 'bg-amber-400/20'}`}
-              />
             </div>
           )}
 
@@ -228,6 +291,17 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 <Eyebrow>Project</Eyebrow>
                 <p className="font-medium text-white mt-0.5">{invoice.project}</p>
               </div>
+            )}
+            {invoice.job_id && (
+              <button
+                type="button"
+                onClick={handleViewJob}
+                className="flex w-full items-center gap-2 min-h-11 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.08]"
+              >
+                <Briefcase className="h-4 w-4 text-elec-yellow shrink-0" />
+                <span className="text-[13px] font-medium text-white">View linked job</span>
+                <ChevronRight className="ml-auto h-4 w-4 text-white/30 shrink-0" />
+              </button>
             )}
             <FormGrid cols={2}>
               <div className="flex items-center gap-2">
@@ -360,16 +434,21 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 )}
                 Send email
               </SecondaryButton>
-              <SecondaryButton fullWidth>
+              <SecondaryButton onClick={handleCallClient} fullWidth>
                 <Phone className="h-4 w-4 mr-2" />
                 Call client
               </SecondaryButton>
             </FormGrid>
           )}
 
-          <SecondaryButton fullWidth>
+          <SecondaryButton onClick={handleEmailClient} fullWidth>
             <Mail className="h-4 w-4 mr-2" />
             Email client
+          </SecondaryButton>
+
+          <SecondaryButton onClick={() => setShowSignatureRequest(true)} fullWidth>
+            <Signature className="h-4 w-4 mr-2" />
+            Request signature
           </SecondaryButton>
 
           {isOverdue && (
@@ -380,6 +459,64 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           )}
         </SheetShell>
       </SheetContent>
-    </Sheet>
+      </Sheet>
+
+      <ResponsiveFormModal open={showEmailPrompt} onOpenChange={setShowEmailPrompt}>
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">
+              Send invoice to client
+            </ResponsiveFormModalTitle>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6">
+            <div className="space-y-4 py-4">
+              <Field label={`Email address for ${invoice.client}`} required>
+                <Input
+                  type="email"
+                  placeholder="client@example.com"
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  className={inputClass}
+                  autoComplete="off"
+                />
+              </Field>
+              <p className="text-sm text-white">
+                Invoice {invoice.invoice_number} for £{Number(invoice.amount).toLocaleString()}{' '}
+                will be emailed with a secure payment link.
+              </p>
+            </div>
+            <div className="flex gap-2 pb-2">
+              <SecondaryButton onClick={() => setShowEmailPrompt(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleConfirmEmailPrompt}
+                disabled={!emailInputValid || sendInvoiceMutation.isPending}
+                fullWidth
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Send email
+              </PrimaryButton>
+            </div>
+          </ResponsiveFormModalBody>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
+
+      <RequestSignatureSheet
+        open={showSignatureRequest}
+        onOpenChange={setShowSignatureRequest}
+        documentType="Invoice"
+        documentId={invoice.id}
+        documentTitle={`Invoice ${invoice.invoice_number}`}
+        jobId={invoice.job_id}
+        defaultName={invoice.client}
+        defaultEmail={
+          (invoice as Invoice & { client_email?: string | null }).client_email
+        }
+        defaultPhone={
+          (invoice as Invoice & { client_phone?: string | null }).client_phone
+        }
+      />
+    </>
   );
 }

@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Hash, MessageSquare, Plus, Users, Lock, Globe, Loader2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useMyTeamChannels, useTeamDMConversations, useCreateChannel } from '@/hooks/useTeamChat';
+import { useEmployees } from '@/hooks/useEmployees';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import type { TeamChannel, TeamDirectMessage } from '@/services/teamChatService';
@@ -39,6 +40,21 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
   const { data: channels = [], isLoading: channelsLoading } = useMyTeamChannels();
   const { data: dms = [], isLoading: dmsLoading } = useTeamDMConversations(employerId);
 
+  // Resolve DM counterparts to real people — the roster maps auth uid → name
+  // (a list of identical "Team Member" rows is unusable for a real firm)
+  const { data: employees = [] } = useEmployees();
+  const nameByUserId = new Map(
+    employees.filter((e) => e.user_id).map((e) => [e.user_id as string, e.name])
+  );
+  const initialsOf = (name: string) =>
+    name
+      .trim()
+      .split(/\s+/)
+      .map((p) => p[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+
   // Create channel mutation
   const createChannel = useCreateChannel();
 
@@ -46,12 +62,12 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
     if (!newChannelName.trim() || !user) return;
 
     try {
+      // created_by is stamped inside the service from auth.uid()
       await createChannel.mutateAsync({
         employer_id: employerId,
         name: newChannelName.trim(),
         description: newChannelDescription.trim() || undefined,
         is_private: newChannelPrivate,
-        created_by: user.id,
       });
 
       toast({
@@ -167,8 +183,13 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
             </div>
           ) : (
             dms.map((dm) => {
-              const unreadCount = dm.user_1_id === user?.id ? dm.unread_1 : dm.unread_2;
-              const otherUserId = dm.user_1_id === user?.id ? dm.user_2_id : dm.user_1_id;
+              // participant_*_id hold the auth uids (that's what the service
+              // writes + markAsRead compares); user_1_id/user_2_id are never
+              // populated — comparing against them broke unread + names
+              const isParticipant1 = dm.participant_1_id === user?.id;
+              const unreadCount = isParticipant1 ? dm.unread_1 : dm.unread_2;
+              const otherUserId = isParticipant1 ? dm.participant_2_id : dm.participant_1_id;
+              const otherName = nameByUserId.get(otherUserId) || 'Team member';
 
               return (
                 <button
@@ -180,13 +201,13 @@ export function TeamChatList({ employerId, onSelectChannel, onSelectDM }: TeamCh
                   <div className="flex items-center gap-3">
                     <Avatar className="h-10 w-10">
                       <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
-                        {otherUserId.slice(0, 2).toUpperCase()}
+                        {initialsOf(otherName)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-[14px] font-semibold text-white truncate">
-                          Team Member
+                          {otherName}
                         </p>
                         {dm.last_message_at && (
                           <span className="text-[11px] text-white shrink-0">

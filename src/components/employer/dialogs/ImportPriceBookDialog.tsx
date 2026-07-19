@@ -119,7 +119,9 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
           name,
           sku: skuCol ? row[skuCol]?.toString().trim() : undefined,
           buy_price: price,
-          category: categoryCol ? row[categoryCol]?.toString().trim() : 'Materials',
+          // 'Other' is a real category chip — 'Materials' isn't, so imported
+          // rows defaulting to it were invisible to every category filter.
+          category: categoryCol ? row[categoryCol]?.toString().trim() : 'Other',
         };
       })
       .filter((item): item is ParsedItem => item !== null);
@@ -154,7 +156,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
         sku: item.sku || null,
         buy_price: item.buy_price,
         sell_price: Math.round(item.buy_price * (1 + markup / 100) * 100) / 100,
-        category: item.category || 'Materials',
+        category: item.category || 'Other',
         unit: 'each',
         supplier_id: null,
         stock_level: 0,
@@ -165,12 +167,21 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
         setProgress((p) => Math.min(p + 10, 90));
       }, 200);
 
-      await bulkImportMutation.mutateAsync(items);
+      const result = await bulkImportMutation.mutateAsync(items);
 
       clearInterval(progressInterval);
       setProgress(100);
 
-      toast.success(`Successfully imported ${items.length} items`);
+      // Report what actually landed — the bulk insert swallows batch errors
+      // and returns {inserted, errors} instead of throwing.
+      if (result.inserted === 0) {
+        setError(
+          `Import failed — none of the ${items.length.toLocaleString()} items could be saved.`
+        );
+        setIsImporting(false);
+        return;
+      }
+      toast.success(`Imported ${result.inserted.toLocaleString()} items`);
 
       setTimeout(() => {
         onOpenChange(false);

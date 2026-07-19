@@ -26,7 +26,10 @@ import {
   type UserPolicy,
 } from '@/hooks/usePolicies';
 
-type TabValue = 'active' | 'draft' | 'archived';
+// 'templates' = unadopted system templates; 'review' = adopted policies past
+// their review date. There is no acknowledgement tracking in the schema, so no
+// tab or stat claims one.
+type TabValue = 'active' | 'templates' | 'review';
 
 export function PoliciesSection() {
   const queryClient = useQueryClient();
@@ -58,15 +61,15 @@ export function PoliciesSection() {
     [userPolicies]
   );
 
-  const draftTemplates = useMemo(
+  const availableTemplates = useMemo(
     () => templates.filter((t) => !adoptedTemplateIds.includes(t.id)),
     [templates, adoptedTemplateIds]
   );
 
   const activeCount = userPolicies.length;
-  const awaitingCount = reviewDuePolicies.length;
-  const draftCount = draftTemplates.length;
-  const acknowledgedPct =
+  const reviewDueCount = reviewDuePolicies.length;
+  const templateCount = availableTemplates.length;
+  const adoptedPct =
     templates.length > 0
       ? Math.round((adoptedTemplateIds.length / templates.length) * 100)
       : 0;
@@ -79,17 +82,17 @@ export function PoliciesSection() {
     [userPolicies, search]
   );
 
-  const filteredArchived = useMemo(
+  const filteredReviewDue = useMemo(
     () => reviewDuePolicies.filter((p) => matchesSearch(p.name)),
     [reviewDuePolicies, search]
   );
 
-  const filteredDrafts = useMemo(
+  const filteredTemplates = useMemo(
     () =>
-      draftTemplates.filter(
+      availableTemplates.filter(
         (t) => matchesSearch(t.name) || matchesSearch(t.category)
       ),
-    [draftTemplates, search]
+    [availableTemplates, search]
   );
 
   const handleViewTemplate = (template: PolicyTemplate) => {
@@ -126,11 +129,7 @@ export function PoliciesSection() {
 
   const heroActions = (
     <>
-      <PrimaryButton
-        onClick={() => {
-          if (draftTemplates.length > 0) handleViewTemplate(draftTemplates[0]);
-        }}
-      >
+      <PrimaryButton onClick={() => setTab('templates')}>
         Browse templates
       </PrimaryButton>
       <IconButton onClick={refresh} aria-label="Refresh">
@@ -157,8 +156,8 @@ export function PoliciesSection() {
   const activeTabList =
     tab === 'active'
       ? filteredActive
-      : tab === 'archived'
-        ? filteredArchived
+      : tab === 'review'
+        ? filteredReviewDue
         : [];
 
   return (
@@ -175,25 +174,25 @@ export function PoliciesSection() {
         columns={4}
         stats={[
           { label: 'Active', value: activeCount, tone: 'blue' },
-          { label: 'Awaiting ack', value: awaitingCount, tone: 'orange' },
+          { label: 'Review due', value: reviewDueCount, tone: 'orange' },
           {
             label: 'Adopted %',
-            value: `${acknowledgedPct}%`,
+            value: `${adoptedPct}%`,
             tone: 'emerald',
             accent: true,
           },
-          { label: 'Drafts', value: draftCount, tone: 'amber' },
+          { label: 'Templates', value: templateCount, tone: 'amber' },
         ]}
       />
 
       <FilterBar
         tabs={[
           { value: 'active', label: 'Active', count: filteredActive.length },
-          { value: 'draft', label: 'Draft', count: filteredDrafts.length },
+          { value: 'templates', label: 'Templates', count: filteredTemplates.length },
           {
-            value: 'archived',
-            label: 'Archived',
-            count: filteredArchived.length,
+            value: 'review',
+            label: 'Review due',
+            count: filteredReviewDue.length,
           },
         ]}
         activeTab={tab}
@@ -203,26 +202,26 @@ export function PoliciesSection() {
         searchPlaceholder="Search policies…"
       />
 
-      {tab === 'draft' ? (
-        filteredDrafts.length === 0 ? (
+      {tab === 'templates' ? (
+        filteredTemplates.length === 0 ? (
           <EmptyState
-            title="No draft policies"
+            title="No templates available"
             description="Every available template has been adopted. New templates will appear here when published."
           />
         ) : (
           <ListCard>
             <ListCardHeader
               tone="amber"
-              title="Drafts"
-              meta={<Pill tone="amber">{filteredDrafts.length}</Pill>}
+              title="Templates"
+              meta={<Pill tone="amber">{filteredTemplates.length}</Pill>}
             />
             <ListBody>
-              {filteredDrafts.map((t) => (
+              {filteredTemplates.map((t) => (
                 <ListRow
                   key={t.id}
                   title={t.name}
-                  subtitle={`v${t.version} · ${t.category} · template`}
-                  trailing={<Pill tone="amber">Draft</Pill>}
+                  subtitle={`v${t.version} · ${t.category}`}
+                  trailing={<Pill tone="amber">Template</Pill>}
                   onClick={() => handleViewTemplate(t)}
                 />
               ))}
@@ -231,16 +230,14 @@ export function PoliciesSection() {
         )
       ) : activeTabList.length === 0 ? (
         <EmptyState
-          title={
-            tab === 'active' ? 'No active policies' : 'No policies awaiting acknowledgement'
-          }
+          title={tab === 'active' ? 'No active policies' : 'No policies due for review'}
           description={
             tab === 'active'
-              ? 'Adopt a template from the Draft tab to start tracking acknowledgements across your organisation.'
-              : 'All adopted policies are up to date and acknowledged.'
+              ? 'Adopt a template from the Templates tab to build your policy library.'
+              : 'All adopted policies are within their review dates.'
           }
-          action={tab === 'active' ? 'Browse drafts' : undefined}
-          onAction={tab === 'active' ? () => setTab('draft') : undefined}
+          action={tab === 'active' ? 'Browse templates' : undefined}
+          onAction={tab === 'active' ? () => setTab('templates') : undefined}
         />
       ) : (
         <ListCard>
@@ -250,21 +247,17 @@ export function PoliciesSection() {
             meta={<Pill tone="blue">{activeTabList.length}</Pill>}
           />
           <ListBody>
-            {activeTabList.map((p) => {
-              const total = userPolicies.length || 1;
-              const acked = p.status === 'Active' ? total : 0;
-              return (
-                <ListRow
-                  key={p.id}
-                  title={p.name}
-                  subtitle={`v${p.template?.version ?? '1'} · ${acked}/${total} acknowledged · updated ${formatDate(p.updated_at)}`}
-                  trailing={
-                    <Pill tone={statusTone(p.status)}>{p.status ?? 'Active'}</Pill>
-                  }
-                  onClick={() => handleViewUserPolicy(p)}
-                />
-              );
-            })}
+            {activeTabList.map((p) => (
+              <ListRow
+                key={p.id}
+                title={p.name}
+                subtitle={`v${p.template?.version ?? '1'}${p.template?.category ? ` · ${p.template.category}` : ''} · updated ${formatDate(p.updated_at)}${p.review_date ? ` · review ${formatDate(p.review_date)}` : ''}`}
+                trailing={
+                  <Pill tone={statusTone(p.status)}>{p.status ?? 'Active'}</Pill>
+                }
+                onClick={() => handleViewUserPolicy(p)}
+              />
+            ))}
           </ListBody>
         </ListCard>
       )}

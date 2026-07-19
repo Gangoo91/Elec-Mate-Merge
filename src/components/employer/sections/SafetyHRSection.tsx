@@ -83,19 +83,14 @@ export function SafetyHRSection() {
   };
 
   const openIncidents = incidentStats?.open ?? 0;
-  const pendingRams = ramsStats
-    ? Math.max(0, (ramsStats.total ?? 0) - (ramsStats.approved ?? 0))
-    : 0;
+  // "Pending" = awaiting approval (submitted). Drafts and rejected RAMS are not
+  // pending — this matches the RAMS section's own "Awaiting approval" figure.
+  const pendingRams = ramsStats?.submitted ?? 0;
 
   const { data: trainingStats } = useTrainingStats();
   const trainingDue30d = trainingStats?.expiringsSoon ?? 0;
 
-  const safetyScore = incidentStats
-    ? Math.max(
-        0,
-        100 - incidentStats.critical * 15 - incidentStats.high * 10 - incidentStats.open * 5
-      )
-    : 100;
+  const closedIncidents = (incidentStats?.resolved ?? 0) + (incidentStats?.closed ?? 0);
 
   const recentIncidents = useMemo(() => {
     return (incidents ?? [])
@@ -108,9 +103,7 @@ export function SafetyHRSection() {
   }, [incidents]);
 
   const pendingRamsList = useMemo(() => {
-    return (ramsDocuments ?? [])
-      .filter((r) => r.status !== 'approved' && r.status !== 'closed')
-      .slice(0, 3);
+    return (ramsDocuments ?? []).filter((r) => r.status === 'submitted').slice(0, 3);
   }, [ramsDocuments]);
 
   const alertRows: {
@@ -257,7 +250,7 @@ export function SafetyHRSection() {
               { label: 'Open incidents', value: openIncidents, tone: 'red' },
               { label: 'Pending RAMS', value: pendingRams, tone: 'orange' },
               { label: 'Training due 30d', value: trainingDue30d, tone: 'amber' },
-              { label: 'Compliance', value: `${safetyScore}%`, accent: true },
+              { label: 'Incidents closed', value: closedIncidents, accent: true },
             ]}
           />
 

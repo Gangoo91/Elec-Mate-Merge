@@ -19,6 +19,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useUpdateEmployee } from '@/hooks/useEmployees';
 import { uploadEmployeePhoto } from '@/services/photoUploadService';
+import { useStorageUrl } from '@/utils/storageUrls';
 import { toast } from '@/hooks/use-toast';
 import { UserCog, Trash2, Camera, Loader2, CreditCard } from 'lucide-react';
 import type { Employee, PayType } from '@/services/employeeService';
@@ -63,6 +64,8 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  // Legacy full photo URLs pass through; new bare paths are signed on demand.
+  const { url: photoSrc } = useStorageUrl('employee-photos', photoUrl);
 
   const { data: elecIdProfile } = useElecIdProfileByEmployee(employee?.id || '');
 
@@ -286,7 +289,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
               <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   <Avatar className="h-28 w-28 border-4 border-[hsl(0_0%_12%)] shadow-lg">
-                    <AvatarImage src={photoUrl || undefined} alt={employee.name} />
+                    <AvatarImage src={photoSrc || undefined} alt={employee.name} />
                     <AvatarFallback className="bg-white/[0.06] text-white text-3xl">
                       {employee.avatar_initials}
                     </AvatarFallback>

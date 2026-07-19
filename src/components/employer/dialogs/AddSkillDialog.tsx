@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -105,15 +111,16 @@ export const AddSkillDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-lg bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <Star className="h-5 w-5 text-elec-yellow" />
             Add Skill
-          </DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+          </ResponsiveFormModalTitle>
+        </ResponsiveFormModalHeader>
+        <ResponsiveFormModalBody className="pb-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
           <FormCard eyebrow="Skill details">
             <Field label="Skill name" required>
               <Input
@@ -172,8 +179,9 @@ export const AddSkillDialog = ({
               {addSkill.isPending ? 'Adding...' : 'Add Skill'}
             </PrimaryButton>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+          </form>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 };

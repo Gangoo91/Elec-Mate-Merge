@@ -153,6 +153,18 @@ serve(async (req) => {
       .in('linked_task_id', snagIds);
     const photos: PhotoRow[] = (photosRaw || []) as PhotoRow[];
 
+    // image_url holds a bare storage path on new rows (storage-privacy
+    // project) and a full public URL on legacy rows. Sign bare paths so the
+    // PDF photo fetch keeps working before AND after job-photos goes private.
+    for (const p of photos) {
+      if (p.image_url && !/^https?:\/\//i.test(p.image_url)) {
+        const { data: signed } = await supabase.storage
+          .from('job-photos')
+          .createSignedUrl(p.image_url, 3600);
+        if (signed?.signedUrl) p.image_url = signed.signedUrl;
+      }
+    }
+
     // ─── Load project titles ───────────────────────────────────────
     const projectIds = Array.from(
       new Set(snags.map((s) => s.project_id).filter((x): x is string => !!x))

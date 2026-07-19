@@ -64,14 +64,34 @@ function formatWorkTypes(raw: unknown): string {
 
 const PROPERTY_TYPE_TOKENS = new Set(['domestic', 'commercial', 'industrial', 'other']);
 
-// A bare property-type token sometimes lands in `description` — older EICR→EIC
-// conversions stored the property type there. It isn't a description of the
-// work (and the property type is held separately in installationType), so blank
-// it rather than print "Domestic" as the Description of Installation
-// (Craig's 3 Blyth cert, 2026-07-17).
-function cleanInstallationDescription(raw: unknown): string {
-  const v = String(raw || '').trim();
-  return PROPERTY_TYPE_TOKENS.has(v.toLowerCase()) ? '' : v;
+// Smart auto-fill for "Description of Installation". Electricians often leave it
+// blank or the field only holds a bare property-type token ("Domestic") from an
+// older conversion — neither describes the work. So COMPOSE a sensible line from
+// the structured fields the form already captures (property type + work type):
+// e.g. "Domestic installation — DB upgrade/replacement, Alteration to existing".
+// Genuine free-text the user typed always wins. The PDF is then never blank and
+// the user types nothing (Craig, 2026-07-19).
+function buildInstallationDescription(
+  raw: unknown,
+  installationType: unknown,
+  workType: unknown
+): string {
+  const desc = String(raw || '').trim();
+  // Real free-text description → keep exactly as entered.
+  if (desc && !PROPERTY_TYPE_TOKENS.has(desc.toLowerCase())) return desc;
+
+  // Otherwise auto-compose. Property type comes from the token in `desc` if
+  // that's all it held, else from installationType.
+  const propToken = PROPERTY_TYPE_TOKENS.has(desc.toLowerCase())
+    ? desc.toLowerCase()
+    : String(installationType || '')
+        .trim()
+        .toLowerCase();
+  const parts: string[] = [];
+  if (propToken) parts.push(`${capitaliseFirst(propToken)} installation`);
+  const work = formatWorkTypes(workType);
+  if (work) parts.push(work);
+  return parts.join(' — ');
 }
 
 // Cover-page certification status. workType is a multi-select (comma-joined),
@@ -279,7 +299,11 @@ export async function formatEicJson(
       work_type_addition: hasWorkType(formData.workType, 'addition'),
       work_type_alteration: hasWorkType(formData.workType, 'alteration'),
       work_type_db_upgrade: hasWorkType(formData.workType, 'db-upgrade'),
-      description: cleanInstallationDescription(formData.description),
+      description: buildInstallationDescription(
+        formData.description,
+        formData.installationType,
+        formData.workType
+      ),
       extent_of_installation: formData.extentOfInstallation || '',
       installation_date: formData.installationDate || '',
       test_date: formData.testDate || '',

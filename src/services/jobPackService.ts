@@ -4,6 +4,8 @@ export type JobPackStatus = 'Draft' | 'In Progress' | 'Complete';
 
 export interface JobPack {
   id: string;
+  /** FK to employer_jobs — set when the pack was built from an existing job. */
+  job_id?: string | null;
   title: string;
   client: string;
   location: string;

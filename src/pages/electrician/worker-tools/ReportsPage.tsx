@@ -12,6 +12,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Camera, Loader2, Send, MapPin, AlertTriangle, ShieldAlert, Wrench } from 'lucide-react';
 import {
   Select,
@@ -79,8 +80,10 @@ const isResolved = (status?: string | null) =>
   Boolean(status && RESOLVED_STATUSES.includes(status.toLowerCase()));
 
 export default function ReportsPage() {
+  // ?job=<id> deep link (e.g. from My Jobs "Report an issue") pre-selects that job.
+  const [searchParams] = useSearchParams();
   const [reportType, setReportType] = useState<'snag' | 'near_miss' | 'incident'>('snag');
-  const [selectedJobId, setSelectedJobId] = useState<string>('');
+  const [selectedJobId, setSelectedJobId] = useState<string>(searchParams.get('job') ?? '');
   const [severity, setSeverity] = useState<string>('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');

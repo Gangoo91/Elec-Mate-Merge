@@ -71,7 +71,10 @@ export function ReviewStep({
         <Field
           label="Application Closing Date"
           required
-          hint={errors.closingDate?.message ?? 'The job listing will automatically close on this date'}
+          hint={
+            errors.closingDate?.message ??
+            'Shown to candidates on the advert — close the listing from Vacancies when the role is filled'
+          }
         >
           <Input
             type="date"

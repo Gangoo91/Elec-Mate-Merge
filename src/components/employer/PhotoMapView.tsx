@@ -14,6 +14,8 @@ export interface MapPhoto {
   jobId: string;
   jobTitle: string;
   uploadedBy: string;
+  /** Public image URL (job_photos.filename) — powers the info-window thumbnail. */
+  filename?: string;
   category: PhotoCategory;
   timestamp: string;
   location?: string;

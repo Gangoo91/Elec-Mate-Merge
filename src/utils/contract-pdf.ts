@@ -4,10 +4,21 @@ import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import type { EmploymentContractTemplate, Contract } from '@/hooks/useContracts';
 
+// Captured signature to print in the execution block. `data` is either a
+// drawn signature (data:image/... URL) or a typed name.
+export interface CapturedSignature {
+  name?: string | null;
+  date?: string | null; // ISO timestamp
+  data?: string | null;
+}
+
 interface ContractPdfOptions {
   template?: EmploymentContractTemplate | null;
   userContract?: Contract | null;
   companyName?: string;
+  // Employee signature comes from the linked signature request (the
+  // Signatures rail) — employer fields are read off the contract itself.
+  employeeSignature?: CapturedSignature | null;
 }
 
 // Professional colour palette
@@ -126,7 +137,7 @@ function htmlToSections(html: string): {
 }
 
 export function generateContractPDF(options: ContractPdfOptions): jsPDF {
-  const { template, userContract, companyName } = options;
+  const { template, userContract, companyName, employeeSignature } = options;
 
   const content = userContract?.content || template?.content;
   const name = userContract?.title || template?.name;
@@ -146,11 +157,17 @@ export function generateContractPDF(options: ContractPdfOptions): jsPDF {
   // Parse HTML content
   const { sections } = htmlToSections(content);
 
-  // Get category and metadata
-  const category = template?.category || 'Employment';
+  // Get category and metadata. When exporting from the contracts list there is
+  // no template — use the adopted contract's own category/type so a
+  // subcontractor agreement never prints an EMPLOYMENT CONTRACT cover.
+  const category =
+    template?.category ||
+    userContract?.category ||
+    (userContract?.contract_type === 'Subcontractor' ? 'Subcontractor' : 'Employment');
   const categoryColor = CATEGORY_COLORS[category] || COLORS.PRIMARY;
   const categoryLabel = CATEGORY_LABELS[category] || 'CONTRACT';
-  const displayCompany = companyName || userContract?.party_name || '[Company Name]';
+  // party_name is the employee/subcontractor — never print it as the company.
+  const displayCompany = companyName || '[Company Name]';
   const version = template?.version || '1.0';
   const dateStr = userContract?.adopted_at
     ? format(new Date(userContract.adopted_at), 'dd MMMM yyyy')
@@ -293,16 +310,8 @@ export function generateContractPDF(options: ContractPdfOptions): jsPDF {
   doc.setFont('helvetica', 'normal');
   doc.text(`Version ${version}`, pageWidth / 2, yPos, { align: 'center' });
 
-  // Legal compliance badge
-  yPos += 20;
-  const complianceText = 'UK EMPLOYMENT LAW COMPLIANT';
-  doc.setFillColor(...COLORS.SUCCESS);
-  const compBadgeWidth = doc.getTextWidth(complianceText) + 24;
-  doc.roundedRect((pageWidth - compBadgeWidth) / 2, yPos, compBadgeWidth, 10, 3, 3, 'F');
-  doc.setTextColor(...COLORS.WHITE);
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'bold');
-  doc.text(complianceText, pageWidth / 2, yPos + 6.5, { align: 'center' });
+  // No compliance stamp — templates are unverified starting points and any
+  // compliance claim on a legal document must be earned, not asserted.
 
   // ============================================
   // DOCUMENT CONTROL BOX (Cover page)
@@ -424,7 +433,7 @@ export function generateContractPDF(options: ContractPdfOptions): jsPDF {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(6.5);
   const legalText =
-    'This document constitutes a legally binding agreement. Both parties should read all terms carefully before signing. Seek independent legal advice if required. This contract complies with UK employment law including the Employment Rights Act 1996.';
+    'This document constitutes a legally binding agreement once signed. Both parties should read all terms carefully before signing and seek independent legal advice if required.';
   const legalLines = doc.splitTextToSize(legalText, contentWidth - 16);
   legalLines.forEach((line: string, i: number) => {
     doc.text(line, margin + 8, yPos + 11 + i * 4);
@@ -581,26 +590,80 @@ export function generateContractPDF(options: ContractPdfOptions): jsPDF {
   doc.setFont('helvetica', 'bold');
   doc.text('EMPLOYEE / PARTY', leftColX + colWidth / 2, sigStartY + 6, { align: 'center' });
 
-  // Employee fields
+  // Shared field renderer — prints captured signature details when present,
+  // or an honest "Awaiting signature" placeholder when not.
   const empY = sigStartY + 14;
-  doc.setTextColor(...COLORS.TEXT_MUTED);
-  doc.setFontSize(7);
-  doc.setFont('helvetica', 'normal');
+  const drawSignatureFields = (x: number, sig: CapturedSignature | null | undefined) => {
+    // Print name
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Print Name:', x + 4, empY);
+    if (sig?.name) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      doc.text(sig.name, x + 20, empY);
+    }
+    doc.setDrawColor(...COLORS.BORDER);
+    doc.setLineWidth(0.3);
+    doc.line(x + 4, empY + 6, x + colWidth - 4, empY + 6);
 
-  doc.text('Print Name:', leftColX + 4, empY);
-  doc.setDrawColor(...COLORS.BORDER);
-  doc.setLineWidth(0.3);
-  doc.line(leftColX + 4, empY + 6, leftColX + colWidth - 4, empY + 6);
+    // Signature box
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Signature:', x + 4, empY + 11);
+    doc.setDrawColor(...COLORS.PRIMARY);
+    doc.setLineWidth(0.8);
+    doc.roundedRect(x + 4, empY + 13, colWidth - 8, 10, 2, 2, 'S');
 
-  doc.text('Signature:', leftColX + 4, empY + 11);
-  doc.setDrawColor(...COLORS.PRIMARY);
-  doc.setLineWidth(0.8);
-  doc.roundedRect(leftColX + 4, empY + 13, colWidth - 8, 10, 2, 2, 'S');
+    if (sig?.data && sig.data.startsWith('data:image')) {
+      try {
+        // SignaturePad captures at 3:1 — keep that ratio inside the 10mm box
+        doc.addImage(sig.data, 'PNG', x + 6, empY + 13.5, 27, 9);
+      } catch {
+        // Unreadable image data — fall back to the signer's name in italics
+        if (sig.name) {
+          doc.setFont('helvetica', 'italic');
+          doc.setFontSize(9);
+          doc.setTextColor(...COLORS.TEXT_DARK);
+          doc.text(sig.name, x + 8, empY + 19.5);
+        }
+      }
+    } else if (sig?.data) {
+      // Typed signature
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(10);
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      doc.text(sig.data, x + 8, empY + 19.5);
+    } else {
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(7);
+      doc.setTextColor(...COLORS.TEXT_MUTED);
+      doc.text('Awaiting signature', x + 8, empY + 19);
+    }
 
-  doc.setDrawColor(...COLORS.BORDER);
-  doc.setLineWidth(0.3);
-  doc.text('Date:', leftColX + 4, empY + 28);
-  doc.line(leftColX + 14, empY + 28, leftColX + 45, empY + 28);
+    // Date
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.text('Date:', x + 4, empY + 28);
+    if (sig?.date) {
+      const parsed = new Date(sig.date);
+      if (!Number.isNaN(parsed.getTime())) {
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...COLORS.TEXT_DARK);
+        doc.text(format(parsed, 'dd/MM/yyyy'), x + 16, empY + 28);
+      }
+    }
+    doc.setDrawColor(...COLORS.BORDER);
+    doc.setLineWidth(0.3);
+    doc.line(x + 14, empY + 28.8, x + 45, empY + 28.8);
+  };
+
+  // Employee fields (from the linked signature request, when signed)
+  drawSignatureFields(leftColX, employeeSignature);
 
   // ---- EMPLOYER SIGNATURE BOX ----
   doc.setFillColor(...COLORS.LIGHTER_BG);
@@ -617,25 +680,17 @@ export function generateContractPDF(options: ContractPdfOptions): jsPDF {
   doc.setFont('helvetica', 'bold');
   doc.text('EMPLOYER / COMPANY', rightColX + colWidth / 2, sigStartY + 6, { align: 'center' });
 
-  // Employer fields
-  doc.setTextColor(...COLORS.TEXT_MUTED);
-  doc.setFontSize(7);
-  doc.setFont('helvetica', 'normal');
-
-  doc.text('Print Name:', rightColX + 4, empY);
-  doc.setDrawColor(...COLORS.BORDER);
-  doc.setLineWidth(0.3);
-  doc.line(rightColX + 4, empY + 6, rightColX + colWidth - 4, empY + 6);
-
-  doc.text('Signature:', rightColX + 4, empY + 11);
-  doc.setDrawColor(...COLORS.PRIMARY);
-  doc.setLineWidth(0.8);
-  doc.roundedRect(rightColX + 4, empY + 13, colWidth - 8, 10, 2, 2, 'S');
-
-  doc.setDrawColor(...COLORS.BORDER);
-  doc.setLineWidth(0.3);
-  doc.text('Date:', rightColX + 4, empY + 28);
-  doc.line(rightColX + 14, empY + 28, rightColX + 45, empY + 28);
+  // Employer fields (counter-signature stored on the contract record)
+  drawSignatureFields(
+    rightColX,
+    userContract?.employer_signature || userContract?.employer_signed_by
+      ? {
+          name: userContract?.employer_signed_by,
+          date: userContract?.employer_signed_at,
+          data: userContract?.employer_signature,
+        }
+      : null
+  );
 
   // ============================================
   // ADD FOOTERS TO ALL PAGES

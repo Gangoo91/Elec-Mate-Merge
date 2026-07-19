@@ -124,6 +124,7 @@ export function TrainingRecordsSection() {
   const [provider, setProvider] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [completedDate, setCompletedDate] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
 
   const { data: trainingRecords, isLoading, error, refetch } = useTrainingRecords();
@@ -133,7 +134,9 @@ export function TrainingRecordsSection() {
   const updateStatus = useUpdateTrainingStatus();
   const deleteTraining = useDeleteTrainingRecord();
 
-  const cpdHoursYtd = useMemo(() => {
+  // Count of completed CPD-type records this year. training_records has no
+  // hours column, so never present this as "hours".
+  const cpdCoursesYtd = useMemo(() => {
     if (!trainingRecords) return 0;
     const startOfYear = new Date(new Date().getFullYear(), 0, 1);
     return trainingRecords.filter((r) => {
@@ -174,20 +177,24 @@ export function TrainingRecordsSection() {
 
   const handleCreateTraining = async () => {
     if (!trainingName) return;
+    // Historical training can be logged truthfully: a completed date creates
+    // the record as Completed on that date rather than Pending.
     await createTraining.mutateAsync({
       training_name: trainingName,
       training_type: trainingType,
       provider: provider || undefined,
       employee_id: selectedEmployee || undefined,
       start_date: startDate || undefined,
+      completed_date: completedDate || undefined,
       expiry_date: expiryDate || undefined,
-      status: 'Pending',
+      status: completedDate ? 'Completed' : 'Pending',
     });
     setTrainingName('');
     setTrainingType('Safety');
     setProvider('');
     setSelectedEmployee('');
     setStartDate('');
+    setCompletedDate('');
     setExpiryDate('');
     setShowNewTraining(false);
   };
@@ -261,7 +268,7 @@ export function TrainingRecordsSection() {
           { label: 'Records', value: totalRecords, tone: 'emerald' },
           { label: 'Expiring 30d', value: stats?.expiringsSoon ?? 0, tone: 'orange' },
           { label: 'Expired', value: stats?.expired ?? 0, tone: 'red' },
-          { label: 'CPD hours YTD', value: cpdHoursYtd, accent: true },
+          { label: 'CPD courses YTD', value: cpdCoursesYtd, accent: true },
         ]}
       />
 
@@ -405,15 +412,23 @@ export function TrainingRecordsSection() {
                       className={inputClass}
                     />
                   </Field>
-                  <Field label="Expiry date">
+                  <Field label="Completed date (if already done)">
                     <Input
                       type="date"
-                      value={expiryDate}
-                      onChange={(e) => setExpiryDate(e.target.value)}
+                      value={completedDate}
+                      onChange={(e) => setCompletedDate(e.target.value)}
                       className={inputClass}
                     />
                   </Field>
                 </FormGrid>
+                <Field label="Expiry date">
+                  <Input
+                    type="date"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
               </FormCard>
             </div>
 

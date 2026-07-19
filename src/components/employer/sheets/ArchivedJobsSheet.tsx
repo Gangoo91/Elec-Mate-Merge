@@ -57,9 +57,11 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
 
   const restoreJob = useMutation({
     mutationFn: async (jobId: string) => {
+      // Restore keeps the job's own status — force-resetting to 'Pending'
+      // sent completed jobs back to the Quoted column.
       const { error } = await supabase
         .from('employer_jobs')
-        .update({ archived_at: null, status: 'Pending', updated_at: new Date().toISOString() })
+        .update({ archived_at: null, updated_at: new Date().toISOString() })
         .eq('id', jobId);
 
       if (error) throw error;

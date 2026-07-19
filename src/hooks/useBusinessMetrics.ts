@@ -39,7 +39,6 @@ export interface InvoiceSummary {
 export interface MonthlyRevenue {
   month: string;
   revenue: number;
-  target: number;
 }
 
 export interface TopPerformer {
@@ -98,14 +97,35 @@ export function useBusinessMetrics() {
         })
         .reduce((sum, inv) => sum + Number(inv.amount), 0);
 
-      // Estimate profit as 30% of revenue (can be refined later)
-      const profitMargin = 0.3;
-      const currentProfit = currentMonthPaid * profitMargin;
-      const previousProfit = previousMonthPaid * profitMargin;
+      // Real profit: paid revenue minus paid expense claims for the month —
+      // no invented margin percentages on a reporting surface.
+      const { data: expenseRows, error: expensesError } = await supabase
+        .from('employer_expense_claims')
+        .select('amount, status, paid_date');
 
-      // Target is 10% higher than previous month or minimum £50k
-      const revenueTarget = Math.max(previousMonthPaid * 1.1, 50000);
-      const profitTarget = revenueTarget * profitMargin;
+      if (expensesError) throw expensesError;
+
+      const expensesInWindow = (start: Date, end?: Date) =>
+        (expenseRows || [])
+          .filter((exp) => {
+            if (exp.status !== 'Paid' || !exp.paid_date) return false;
+            const paid = new Date(exp.paid_date);
+            if (paid < start) return false;
+            if (end && paid > end) return false;
+            return true;
+          })
+          .reduce((sum, exp) => sum + Number(exp.amount || 0), 0);
+
+      const currentMonthExpenses = expensesInWindow(currentMonthStart);
+      const previousMonthExpenses = expensesInWindow(previousMonthStart, previousMonthEnd);
+
+      const currentProfit = currentMonthPaid - currentMonthExpenses;
+      const previousProfit = previousMonthPaid - previousMonthExpenses;
+
+      // Target is simply 10% up on last month — no invented £50k floor that
+      // a one-person firm can never hit.
+      const revenueTarget = Math.round(previousMonthPaid * 1.1);
+      const profitTarget = Math.round(previousProfit * 1.1);
 
       // Fetch jobs for job counts
       const { data: jobs, error: jobsError } = await supabase
@@ -298,7 +318,6 @@ export function useMonthlyRevenue() {
         result.push({
           month: monthNames[monthIndex],
           revenue: Math.round(revenue / 1000), // Convert to thousands for chart
-          target: Math.round(50), // Default target, can be made configurable
         });
       });
 
@@ -448,22 +467,8 @@ export function useTopPerformers() {
         .sort((a, b) => b.revenue - a.revenue)
         .slice(0, 4);
 
-      // If no real data, return placeholder message
-      if (sorted.length === 0) {
-        // Get employees as fallback
-        const { data: employees } = await supabase
-          .from('employer_employees')
-          .select('name')
-          .eq('status', 'Active')
-          .limit(4);
-
-        return (employees || []).map((emp) => ({
-          name: emp.name,
-          jobs: 0,
-          revenue: 0,
-        }));
-      }
-
+      // No assignments = no leaderboard. Padding with zero-jobs employees
+      // fabricated a ranking; the section shows a real empty state instead.
       return sorted;
     },
   });

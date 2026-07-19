@@ -9,7 +9,7 @@ import {
   SectionHeader,
   HubGrid,
   HubCard,
-  LoadingState,
+  LoadingBlocks,
 } from '@/components/employer/editorial';
 
 interface JobsHubProps {
@@ -55,7 +55,16 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
   const onOpenJobPacks = () => onNavigate('jobpacks');
 
   if (isLoading) {
-    return <LoadingState />;
+    return (
+      <HubLanding
+        eyebrow="Operations"
+        title="Jobs"
+        description="Live jobs, scheduling, tracking, testing and quality."
+        tone="amber"
+      >
+        <LoadingBlocks />
+      </HubLanding>
+    );
   }
 
   return (
@@ -66,9 +75,15 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
       tone="amber"
       stats={[
         { label: 'Active jobs', value: activeJobs, tone: 'amber', onClick: onOpenJobs },
-        { label: 'Today', value: todayJobs, tone: 'blue' },
-        { label: 'Issues', value: openIssues, tone: 'red' },
-        { label: 'Completed 7d', value: completed7d, tone: 'emerald', accent: true },
+        { label: 'Today', value: todayJobs, tone: 'blue', onClick: onOpenTimeline },
+        { label: 'Issues', value: openIssues, tone: 'red', onClick: onOpenIssues },
+        {
+          label: 'Completed 7d',
+          value: completed7d,
+          tone: 'emerald',
+          accent: true,
+          onClick: onOpenJobs,
+        },
       ]}
     >
       <div className="space-y-5">

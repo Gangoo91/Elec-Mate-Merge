@@ -193,9 +193,11 @@ export function JobsSection() {
     maxValue: maxJobValue,
   });
 
-  useMemo(() => {
-    if (filters.maxValue === 500000 && maxJobValue > 500000) {
-      setFilters((f) => ({ ...f, maxValue: maxJobValue }));
+  // Widen the value filter ceiling when a bigger job loads in — a state
+  // update is an effect, not a memo
+  useEffect(() => {
+    if (maxJobValue > 500000) {
+      setFilters((f) => (f.maxValue === 500000 ? { ...f, maxValue: maxJobValue } : f));
     }
   }, [maxJobValue]);
 

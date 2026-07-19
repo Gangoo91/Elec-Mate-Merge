@@ -1,15 +1,13 @@
 import { useState, useMemo } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -33,13 +31,9 @@ import {
   Calendar,
   FileText,
   PoundSterling,
-  Bell,
-  Upload,
   CheckCircle2,
-  Sparkles,
   Award,
   Clock,
-  FileCheck,
   ChevronDown,
   Check,
   Shield,
@@ -64,9 +58,7 @@ import {
   inputClass,
   selectTriggerClass,
   selectContentClass,
-  textareaClass,
   fieldLabelClass,
-  Eyebrow,
 } from '@/components/employer/editorial';
 
 const EXPIRY_OPTIONS = [
@@ -324,8 +316,6 @@ export const AddTrainingRecordDialog = ({
     expiryDate: '',
     certificateNumber: '',
     fundingSource: 'employer',
-    cost: '',
-    notes: '',
   });
   const [selectedCourse, setSelectedCourse] = useState<{
     name: string;
@@ -459,8 +449,6 @@ export const AddTrainingRecordDialog = ({
       expiryDate: '',
       certificateNumber: '',
       fundingSource: 'employer',
-      cost: '',
-      notes: '',
     });
     setSelectedCourse(null);
     setSelectedCategory(null);
@@ -477,50 +465,50 @@ export const AddTrainingRecordDialog = ({
   ].filter(Boolean).length;
 
   return (
-    <Dialog
+    <ResponsiveFormModal
       open={open}
       onOpenChange={(isOpen) => {
         onOpenChange(isOpen);
         if (!isOpen) resetForm();
       }}
     >
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]">
+      <ResponsiveFormModalContent className="sm:max-w-2xl bg-[hsl(0_0%_8%)] border-white/[0.08]">
         {/* Premium Header */}
-        <div className="border-b border-white/[0.06] p-6">
-          <DialogHeader className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center">
-                <GraduationCap className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <div>
-                <DialogTitle className="text-xl text-white">Add Training Record</DialogTitle>
-                <DialogDescription className="text-white">
-                  Adding to <span className="font-medium text-white">{workerName}</span>'s
-                  Elec-ID
-                </DialogDescription>
-              </div>
+        <ResponsiveFormModalHeader className="border-b border-white/[0.06] space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center">
+              <GraduationCap className="h-6 w-6 text-elec-yellow" />
             </div>
-
-            {/* Progress indicator */}
-            <div className="flex items-center gap-2 pt-2">
-              <div className="flex gap-1">
-                {[1, 2, 3, 4].map((step) => (
-                  <div
-                    key={step}
-                    className={`h-1.5 w-8 rounded-full transition-colors ${
-                      step <= completedFields ? 'bg-elec-yellow' : 'bg-white/[0.08]'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-[11px] text-white">
-                {completedFields}/4 fields completed
-              </span>
+            <div className="text-left">
+              <ResponsiveFormModalTitle className="text-xl text-white">
+                Add Training Record
+              </ResponsiveFormModalTitle>
+              <p className="text-[12.5px] text-white/70">
+                Adding to <span className="font-medium text-white">{workerName}</span>'s Elec-ID
+              </p>
             </div>
-          </DialogHeader>
-        </div>
+          </div>
 
-        <div className="p-6 space-y-5">
+          {/* Progress indicator */}
+          <div className="flex items-center gap-2 pt-2">
+            <div className="flex gap-1">
+              {[1, 2, 3, 4].map((step) => (
+                <div
+                  key={step}
+                  className={`h-1.5 w-8 rounded-full transition-colors ${
+                    step <= completedFields ? 'bg-elec-yellow' : 'bg-white/[0.08]'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-[11px] text-white">
+              {completedFields}/4 fields completed
+            </span>
+          </div>
+        </ResponsiveFormModalHeader>
+
+        <ResponsiveFormModalBody className="pb-6">
+        <div className="py-6 space-y-5">
           {/* Mode Toggle */}
           <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-full w-fit">
             <button
@@ -936,114 +924,42 @@ export const AddTrainingRecordDialog = ({
             </Field>
           </FormCard>
 
-          {/* Section 3: Documentation */}
-          <FormCard eyebrow="Documentation">
-            <div className="flex items-center gap-2 -mt-1">
-              <FileCheck className="h-4 w-4 text-elec-yellow" />
-              <span className="text-[12.5px] text-white">Upload supporting certificate</span>
-            </div>
-            <div className="group relative border-2 border-dashed border-white/[0.12] hover:border-elec-yellow/50 rounded-xl p-8 text-center transition-all duration-300 hover:bg-elec-yellow/5 cursor-pointer">
-              <div className="w-16 h-16 rounded-2xl bg-white/[0.06] flex items-center justify-center mx-auto mb-4 group-hover:bg-elec-yellow/20 transition-colors">
-                <Upload className="h-7 w-7 text-white group-hover:text-elec-yellow transition-colors" />
-              </div>
-              <p className="font-medium text-white mb-1">Upload Certificate</p>
-              <p className="text-[12.5px] text-white">Drag and drop or click to browse</p>
-              <p className="text-[11px] text-white mt-2">PDF, JPG, PNG up to 10MB</p>
-            </div>
-          </FormCard>
-
-          {/* Funding Info */}
+          {/* Funding Info — only funding source persists (employer_elec_id_training.funded_by) */}
           <FormCard eyebrow="Funding information">
             <div className="flex items-center gap-2 -mt-1">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
               <span className="text-[12.5px] text-white">Optional</span>
             </div>
-            <FormGrid cols={2}>
-              <Field label="Funding source">
-                <Select
-                  value={formData.fundingSource}
-                  onValueChange={(value) => setFormData({ ...formData, fundingSource: value })}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="employer">Employer Funded</SelectItem>
-                    <SelectItem value="worker">Worker Self-Funded</SelectItem>
-                    <SelectItem value="grant">Grant / Subsidy</SelectItem>
-                    <SelectItem value="apprenticeship">Apprenticeship Levy</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-              <Field label="Cost (£)">
-                <Input
-                  id="cost"
-                  type="number"
-                  placeholder="0.00"
-                  value={formData.cost}
-                  onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
-                  className={inputClass}
-                />
-              </Field>
-            </FormGrid>
-            <Field label="Notes">
-              <Textarea
-                id="notes"
-                placeholder="Any additional notes about this training..."
-                value={formData.notes}
-                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                className={cn(textareaClass, 'min-h-[80px]')}
-              />
+            <Field label="Funding source">
+              <Select
+                value={formData.fundingSource}
+                onValueChange={(value) => setFormData({ ...formData, fundingSource: value })}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="employer">Employer Funded</SelectItem>
+                  <SelectItem value="worker">Worker Self-Funded</SelectItem>
+                  <SelectItem value="grant">Grant / Subsidy</SelectItem>
+                  <SelectItem value="apprenticeship">Apprenticeship Levy</SelectItem>
+                </SelectContent>
+              </Select>
             </Field>
           </FormCard>
-
-          {/* Notification Preview */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Bell className="h-4 w-4 text-elec-yellow" />
-              <Eyebrow>Worker notification preview</Eyebrow>
-            </div>
-
-            <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl p-4">
-              <div className="bg-white/[0.04] rounded-xl p-4 border border-white/[0.06]">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30 flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="font-semibold text-white text-[13px]">Elec-ID Updated</p>
-                      <span className="text-[10px] text-white">now</span>
-                    </div>
-                    <p className="text-white text-[12.5px] mt-1">
-                      {formData.courseName || 'New training'} has been added to your profile
-                    </p>
-                    <div className="flex items-center gap-2 mt-3">
-                      <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px]">
-                        <CheckCircle2 className="h-3 w-3 mr-1" />
-                        Verified
-                      </Badge>
-                      {formData.provider && (
-                        <span className="text-[10px] text-white">
-                          via {formData.provider}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <DialogFooter className="p-6 pt-0 gap-3">
-          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
-          <PrimaryButton onClick={handleSubmit} disabled={addTraining.isPending}>
+        <div className="flex gap-3 pb-2">
+          <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+            Cancel
+          </SecondaryButton>
+          <PrimaryButton onClick={handleSubmit} disabled={addTraining.isPending} fullWidth>
             <CheckCircle2 className="h-4 w-4 mr-2" />
             {addTraining.isPending ? 'Adding...' : 'Add Training Record'}
           </PrimaryButton>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 };

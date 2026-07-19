@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { uploadJobPhotos } from '@/utils/uploadJobPhotos';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { useToast } from '@/hooks/use-toast';
 import {
   useJobIssuesByType,
@@ -95,6 +96,12 @@ export const QualitySection = () => {
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  // Resolve stored photo references for display — new uploads store bare
+  // storage paths (privacy-ready); legacy entries hold full URLs.
+  const { urls: photoSrcs } = useStorageUrls('visual-uploads', [
+    ...snagPhotos,
+    ...(selectedIssue?.photos || []),
+  ]);
 
   const { data: snagIssues, isLoading, error, refetch } = useJobIssuesByType(['Snag', 'Defect']);
   const { data: jobs } = useJobs();
@@ -118,8 +125,17 @@ export const QualitySection = () => {
     (s) => s.status === 'Resolved' || s.status === 'Closed'
   );
 
+  // Headline stats come from the FULL dataset — typing in the search box must
+  // not change the section's numbers.
+  const allSnags = snagIssues ?? [];
+  const statCounts = {
+    open: allSnags.filter((s) => s.status === 'Open' || s.status === 'open').length,
+    review: allSnags.filter((s) => s.status === 'In Progress').length,
+    resolved: allSnags.filter((s) => s.status === 'Resolved' || s.status === 'Closed').length,
+  };
+
   const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-  const resolvedLast7d = filteredSnags.filter(
+  const resolvedLast7d = allSnags.filter(
     (s) =>
       (s.status === 'Resolved' || s.status === 'Closed') &&
       s.resolved_at &&
@@ -199,10 +215,21 @@ export const QualitySection = () => {
     }
   };
 
+  // Resolving captures WHAT was done — a bare status flip left nothing
+  // evidential behind the resolved count.
+  const [resolveMode, setResolveMode] = useState(false);
+  const [resolutionNotes, setResolutionNotes] = useState('');
+
   const handleResolve = async (issue: JobIssue) => {
     try {
-      await updateStatus.mutateAsync({ id: issue.id, status: 'Resolved' });
+      await updateStatus.mutateAsync({
+        id: issue.id,
+        status: 'Resolved',
+        resolution_notes: resolutionNotes.trim() || undefined,
+      });
       setSelectedIssue(null);
+      setResolveMode(false);
+      setResolutionNotes('');
     } catch {
       // hook surfaces the error toast; keep the sheet open to retry
     }
@@ -211,9 +238,15 @@ export const QualitySection = () => {
   if (error) {
     return (
       <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Quality & Snags"
+          description="Defect tracking with photo evidence and resolution records."
+          tone="amber"
+        />
         <EmptyState
           title="Failed to load quality data"
-          description="There was a problem fetching snags and defects."
+          description={error instanceof Error ? error.message : 'There was a problem fetching snags and defects.'}
           action="Retry"
           onAction={() => refetch()}
         />
@@ -334,7 +367,7 @@ export const QualitySection = () => {
                         className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/[0.08]"
                       >
                         <img
-                          src={url}
+                          src={photoSrcs[url] ?? url}
                           alt={`Snag photo ${index + 1}`}
                           className="w-full h-full object-cover"
                           loading="lazy"
@@ -385,7 +418,7 @@ export const QualitySection = () => {
       <PageHero
         eyebrow="Operations"
         title="Quality & Snags"
-        description="Defect tracking with photo evidence and sign-off."
+        description="Defect tracking with photo evidence and resolution records."
         tone="amber"
         actions={heroActions}
       />
@@ -393,12 +426,12 @@ export const QualitySection = () => {
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Open', value: openSnags.length, tone: 'amber' },
+          { label: 'Open', value: statCounts.open, tone: 'amber' },
           { label: 'Resolved 7d', value: resolvedLast7d, tone: 'emerald' },
-          { label: 'Awaiting sign', value: reviewSnags.length, tone: 'orange' },
+          { label: 'In progress', value: statCounts.review, tone: 'orange' },
           {
-            label: 'Signed off',
-            value: resolvedSnags.length,
+            label: 'Resolved',
+            value: statCounts.resolved,
             tone: 'emerald',
             accent: true,
           },
@@ -409,8 +442,8 @@ export const QualitySection = () => {
         tabs={[
           { value: 'all', label: 'All', count: filteredSnags.length },
           { value: 'open', label: 'Open', count: openSnags.length },
-          { value: 'review', label: 'Review', count: reviewSnags.length },
-          { value: 'signed', label: 'Signed', count: resolvedSnags.length },
+          { value: 'review', label: 'In progress', count: reviewSnags.length },
+          { value: 'signed', label: 'Resolved', count: resolvedSnags.length },
         ]}
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -460,7 +493,16 @@ export const QualitySection = () => {
         </ListCard>
       )}
 
-      <Sheet open={!!selectedIssue} onOpenChange={(open) => !open && setSelectedIssue(null)}>
+      <Sheet
+        open={!!selectedIssue}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedIssue(null);
+            setResolveMode(false);
+            setResolutionNotes('');
+          }
+        }}
+      >
         <SheetContent
           side="bottom"
           className="h-[88vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
@@ -547,13 +589,13 @@ export const QualitySection = () => {
                       {selectedIssue.photos.map((url, idx) => (
                         <a
                           key={idx}
-                          href={url}
+                          href={photoSrcs[url] ?? url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08] touch-manipulation"
                         >
                           <img
-                            src={url}
+                            src={photoSrcs[url] ?? url}
                             alt={`Issue photo ${idx + 1}`}
                             className="w-full h-full object-cover"
                             loading="lazy"
@@ -566,21 +608,48 @@ export const QualitySection = () => {
               </div>
 
               {(selectedIssue.status === 'Open' || selectedIssue.status === 'In Progress') && (
-                <div className="p-4 border-t border-white/[0.06]">
-                  <PrimaryButton
-                    onClick={() => handleResolve(selectedIssue)}
-                    disabled={updateStatus.isPending}
-                    fullWidth
-                  >
-                    {updateStatus.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <>
-                        <CheckCircle2 className="h-4 w-4 mr-2" />
-                        Mark resolved · sign off
-                      </>
-                    )}
-                  </PrimaryButton>
+                <div className="p-4 border-t border-white/[0.06] space-y-3">
+                  {resolveMode ? (
+                    <>
+                      <Textarea
+                        value={resolutionNotes}
+                        onChange={(e) => setResolutionNotes(e.target.value)}
+                        placeholder="What was done to fix it? (kept on the snag record)"
+                        className={`${textareaClass} min-h-[80px]`}
+                        autoFocus
+                      />
+                      <div className="flex gap-3">
+                        <SecondaryButton
+                          onClick={() => {
+                            setResolveMode(false);
+                            setResolutionNotes('');
+                          }}
+                          fullWidth
+                        >
+                          Cancel
+                        </SecondaryButton>
+                        <PrimaryButton
+                          onClick={() => handleResolve(selectedIssue)}
+                          disabled={updateStatus.isPending}
+                          fullWidth
+                        >
+                          {updateStatus.isPending ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <>
+                              <CheckCircle2 className="h-4 w-4 mr-2" />
+                              Confirm resolved
+                            </>
+                          )}
+                        </PrimaryButton>
+                      </div>
+                    </>
+                  ) : (
+                    <PrimaryButton onClick={() => setResolveMode(true)} fullWidth>
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
+                      Mark resolved
+                    </PrimaryButton>
+                  )}
                 </div>
               )}
             </div>

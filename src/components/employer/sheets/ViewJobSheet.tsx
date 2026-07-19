@@ -226,10 +226,11 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     }
   };
 
-  const handleProgressChange = async (newProgress: number[]) => {
+  // Persist only on release (onValueCommit) — writing a DB update + activity
+  // row for every 5% drag step spammed the audit trail.
+  const handleProgressCommit = async (newProgress: number[]) => {
     if (!job) return;
-    const oldProgress = progress;
-    setProgress(newProgress[0]);
+    const oldProgress = job.progress;
 
     try {
       await updateJob.mutateAsync({
@@ -421,8 +422,6 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </Field>
               </FormCard>
 
-              <JobAttentionPanel jobId={job.id} />
-
               <JobControlCentre jobId={job.id} jobTitle={job.title} jobClient={job.client} />
 
               <FormCard eyebrow="Status & value">
@@ -534,6 +533,10 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
             >
               <JobLabelPicker jobId={job.id} />
 
+              {/* Why this job is flagged — belongs on the screen the manager
+                  lands on, not hidden behind Edit. */}
+              <JobAttentionPanel jobId={job.id} />
+
               <FormGrid cols={3}>
                 <SecondaryButton onClick={handleCall} fullWidth>
                   <Phone className="h-4 w-4 mr-1" />
@@ -558,7 +561,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </div>
                 <Slider
                   value={[progress]}
-                  onValueChange={handleProgressChange}
+                  onValueChange={(v) => setProgress(v[0])}
+                  onValueCommit={handleProgressCommit}
                   max={100}
                   step={5}
                   className="w-full"
@@ -636,16 +640,27 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         <Pill tone="yellow">{assignments.length}</Pill>
                       </div>
                       <div className="flex items-center gap-2">
-                        <button
-                          className="text-[12px] font-medium text-elec-yellow flex items-center gap-1"
+                        {/* span, not button — this sits inside the Collapsible
+                            trigger button and nested <button> is invalid DOM */}
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          className="min-h-[44px] px-2 text-[12px] font-medium text-elec-yellow inline-flex items-center gap-1 touch-manipulation"
                           onClick={(e) => {
                             e.stopPropagation();
                             setShowAssignSheet(true);
                           }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setShowAssignSheet(true);
+                            }
+                          }}
                         >
                           <UserPlus className="h-3.5 w-3.5" />
                           Assign
-                        </button>
+                        </span>
                         <ChevronDown
                           className={cn(
                             'h-4 w-4 text-white transition-transform',
@@ -790,6 +805,14 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <SecondaryButton onClick={() => goToSection('issues')} fullWidth>
                     <AlertTriangle className="h-4 w-4 mr-1 text-elec-yellow" />
                     Issues
+                  </SecondaryButton>
+                  <SecondaryButton onClick={() => goToSection('progresslogs')} fullWidth>
+                    <ListChecks className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Progress logs
+                  </SecondaryButton>
+                  <SecondaryButton onClick={() => goToSection('testing')} fullWidth>
+                    <Activity className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Testing
                   </SecondaryButton>
                 </FormGrid>
               </FormCard>

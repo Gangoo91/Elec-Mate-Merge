@@ -18,16 +18,22 @@ interface LiveWorkerMapProps {
   className?: string;
 }
 
+// Same taxonomy as the worker list pills (emerald/blue/amber/red/purple) —
+// the map and the list must never tell two different colour stories.
 const STATUS_COLOURS: Record<string, string> = {
-  'On Site': '#22c55e',
-  'En Route': '#f97316',
-  Office: '#a855f7', // Purple for workers at office
-  'On Leave': '#6b7280',
-  'Off Duty': '#9ca3af',
+  'On Site': '#10b981',
+  'En Route': '#3b82f6',
+  Office: '#f59e0b',
+  'On Leave': '#ef4444',
+  'Off Duty': '#a855f7',
 };
 
-// Office marker colour (purple, matches Office status)
-const OFFICE_MARKER_COLOUR = '#a855f7';
+// Office marker matches the amber "Office" worker status
+const OFFICE_MARKER_COLOUR = '#f59e0b';
+
+// Job sites use cyan + a distinct triangle shape, so they can't be confused
+// with any worker status circle
+const JOB_MARKER_COLOUR = '#06b6d4';
 
 // Default centre - Manchester
 const DEFAULT_CENTER = { lat: 53.4808, lng: -2.2426 };
@@ -94,11 +100,12 @@ export function LiveWorkerMap({
 
   // The Maps key is provided by the app (get-google-maps-key) — the user is
   // never asked for one. While it loads, show a clean placeholder.
-  if (isLoadingKey) {
+  if (isLoadingKey || (!isLoaded && !loadError && apiKey)) {
+    // Skeleton at the same height as the real map — no layout jump on load
     return (
       <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
-        <div className="p-6 text-center">
-          <p className="text-white">Loading map…</p>
+        <div className="h-[45vh] min-h-[300px] sm:h-[400px] bg-white/[0.03] animate-pulse flex items-center justify-center">
+          <p className="text-white/60 text-[13px]">Loading map…</p>
         </div>
       </div>
     );
@@ -110,16 +117,6 @@ export function LiveWorkerMap({
       <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
         <div className="p-6 text-center">
           <p className="text-white/70">Map unavailable right now.</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isLoaded) {
-    return (
-      <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
-        <div className="p-6 text-center">
-          <p className="text-white">Loading map...</p>
         </div>
       </div>
     );
@@ -146,9 +143,11 @@ export function LiveWorkerMap({
           </div>
         </div>
       </div>
-      <div className="p-0 relative">
+      {/* Taller on phones (45vh) so info windows aren't clipped; one-finger
+          pan (greedy) because on mobile this map is its own dedicated view */}
+      <div className="p-0 relative h-[45vh] min-h-[300px] sm:h-[400px]">
         <GoogleMap
-          mapContainerStyle={{ height: '400px', width: '100%' }}
+          mapContainerStyle={{ height: '100%', width: '100%' }}
           center={DEFAULT_CENTER}
           zoom={6}
           onLoad={onLoad}
@@ -159,6 +158,7 @@ export function LiveWorkerMap({
             mapTypeControl: false,
             streetViewControl: false,
             fullscreenControl: false,
+            gestureHandling: 'greedy',
           }}
         >
           {/* Office marker */}
@@ -190,7 +190,7 @@ export function LiveWorkerMap({
                 icon={{
                   path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
                   scale: 6,
-                  fillColor: '#3b82f6',
+                  fillColor: JOB_MARKER_COLOUR,
                   fillOpacity: 1,
                   strokeColor: '#ffffff',
                   strokeWeight: 2,
@@ -283,43 +283,39 @@ export function LiveWorkerMap({
             </InfoWindow>
           )}
         </GoogleMap>
+      </div>
 
-        {/* Legend overlay */}
-        <div className="absolute bottom-4 left-4 bg-[hsl(0_0%_12%)]/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-white/[0.08]">
-          <div className="text-xs font-medium text-white mb-2">Legend</div>
-          <div className="space-y-1.5">
-            {/* Office marker */}
-            {officeLocation?.lat && officeLocation?.lng && (
-              <div className="flex items-center gap-2 text-xs">
-                <div
-                  className="w-3 h-3 border border-white/50"
-                  style={{ background: OFFICE_MARKER_COLOUR, borderRadius: '2px' }}
-                />
-                <span className="text-white">Head Office</span>
-              </div>
-            )}
-            {/* Job marker */}
-            <div className="flex items-center gap-2 text-xs">
-              <div
-                className="w-3 h-3 border border-white/50"
-                style={{ background: '#3b82f6', clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)' }}
-              />
-              <span className="text-white">Job Site</span>
-            </div>
-            {/* Worker status colours */}
-            {Object.entries(STATUS_COLOURS)
-              .slice(0, 4)
-              .map(([status, colour]) => (
-                <div key={status} className="flex items-center gap-2 text-xs">
-                  <div
-                    className="w-3 h-3 rounded-full border border-white/50"
-                    style={{ background: colour }}
-                  />
-                  <span className="text-white">{status}</span>
-                </div>
-              ))}
+      {/* Legend below the map — an overlay covered markers and the zoom
+          controls on phones */}
+      <div className="px-4 py-3 border-t border-white/[0.06] flex flex-wrap items-center gap-x-4 gap-y-2">
+        {officeLocation?.lat && officeLocation?.lng && (
+          <div className="flex items-center gap-1.5 text-[11px]">
+            <div
+              className="w-2.5 h-2.5 border border-white/50"
+              style={{ background: OFFICE_MARKER_COLOUR, borderRadius: '2px' }}
+            />
+            <span className="text-white">Head office</span>
           </div>
+        )}
+        <div className="flex items-center gap-1.5 text-[11px]">
+          <div
+            className="w-2.5 h-2.5"
+            style={{
+              background: JOB_MARKER_COLOUR,
+              clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)',
+            }}
+          />
+          <span className="text-white">Job site</span>
         </div>
+        {Object.entries(STATUS_COLOURS).map(([status, colour]) => (
+          <div key={status} className="flex items-center gap-1.5 text-[11px]">
+            <div
+              className="w-2.5 h-2.5 rounded-full border border-white/50"
+              style={{ background: colour }}
+            />
+            <span className="text-white">{status}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

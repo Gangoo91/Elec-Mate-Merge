@@ -122,6 +122,15 @@ export interface SearchResult {
   };
 }
 
+// Rows can carry status='live' with a deadline already in the past (sync
+// lag) — never show those as open-to-bid. Guard client-side until the
+// search function filters them server-side.
+function isExpiredLive(opp: Pick<TenderOpportunity, 'status' | 'deadline'>): boolean {
+  return (
+    opp.status === 'live' && !!opp.deadline && new Date(opp.deadline).getTime() < Date.now()
+  );
+}
+
 // Search opportunities by location
 export function useSearchOpportunities(filters: SearchFilters, enabled = true) {
   return useQuery({
@@ -132,7 +141,11 @@ export function useSearchOpportunities(filters: SearchFilters, enabled = true) {
       });
 
       if (error) throw error;
-      return data as SearchResult;
+      const result = data as SearchResult;
+      if ((filters.status || 'live') === 'live' && Array.isArray(result?.opportunities)) {
+        result.opportunities = result.opportunities.filter((opp) => !isExpiredLive(opp));
+      }
+      return result;
     },
     enabled: enabled && !!filters.postcode,
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -169,7 +182,10 @@ export function useOpportunities(filters?: Partial<SearchFilters>) {
       const { data, error } = await query.limit(filters?.limit || 50);
 
       if (error) throw error;
-      return (data || []) as TenderOpportunity[];
+      const rows = (data || []) as TenderOpportunity[];
+      return (filters?.status || 'live') === 'live'
+        ? rows.filter((opp) => !isExpiredLive(opp))
+        : rows;
     },
   });
 }

@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { MessageSquare, Send, Loader2, Award, Shield, Info } from 'lucide-react';
@@ -115,15 +121,16 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
     .join('');
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08] text-white">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <MessageSquare className="h-5 w-5 text-elec-yellow" />
             Message {electrician.name}
-          </DialogTitle>
-        </DialogHeader>
+          </ResponsiveFormModalTitle>
+        </ResponsiveFormModalHeader>
 
+        <ResponsiveFormModalBody className="pb-6">
         <div className="space-y-4">
           {/* Electrician Info */}
           <FormCard eyebrow="Sparky">
@@ -197,7 +204,8 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
             </PrimaryButton>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

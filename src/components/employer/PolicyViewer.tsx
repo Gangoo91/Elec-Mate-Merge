@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { FileText, Download, Check, Building2, Calendar, X, Loader2, Edit3 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import type { PolicyTemplate, UserPolicy } from '@/hooks/usePolicies';
 import { useAdoptPolicy } from '@/hooks/usePolicies';
@@ -54,7 +55,17 @@ export function PolicyViewer({
   const handleExportPdf = async () => {
     setIsExporting(true);
     try {
-      await downloadPolicyPDF({ template, userPolicy });
+      // Pull the real company name for the cover/footers when the adoption
+      // form's optional field was skipped.
+      let exportCompanyName: string | undefined;
+      try {
+        const { data } = await supabase.rpc('get_my_company_profile');
+        const profile = Array.isArray(data) ? data[0] : data;
+        exportCompanyName = profile?.company_name || undefined;
+      } catch {
+        // Non-fatal — the PDF omits the company line instead
+      }
+      await downloadPolicyPDF({ template, userPolicy, companyName: exportCompanyName });
       toast({
         title: 'PDF Downloaded',
         description: 'Your policy document has been exported.',

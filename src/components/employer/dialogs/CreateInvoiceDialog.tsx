@@ -23,6 +23,9 @@ import {
   X,
 } from 'lucide-react';
 import { useCreateInvoice, useNextInvoiceNumber, useQuotes } from '@/hooks/useFinance';
+import { sendInvoice as sendInvoiceService, updateQuote as updateQuoteService } from '@/services/financeService';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { linkRecordToClient } from '@/services/employerClientService';
 import { Switch } from '@/components/ui/switch';
 import { calcEmployerTotals, isLabourItem } from '@/utils/employerMoney';
@@ -73,6 +76,8 @@ export function CreateInvoiceDialog({
 }: CreateInvoiceDialogProps) {
   const [step, setStep] = useState(1);
   const [client, setClient] = useState(prefillClient || '');
+  const [clientEmail, setClientEmail] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
   const [project, setProject] = useState(jobTitle || '');
   const [paymentTerms, setPaymentTerms] = useState('30');
   const [vatRate, setVatRate] = useState('20');
@@ -94,13 +99,30 @@ export function CreateInvoiceDialog({
   const { data: invoiceNumber } = useNextInvoiceNumber();
   const { data: quotes = [] } = useQuotes();
   const createInvoiceMutation = useCreateInvoice();
+  const queryClient = useQueryClient();
 
-  const approvedQuotes = quotes.filter((q) => q.status === 'Approved');
+  // Client-accepted quotes (via the portal) are just as convertible as
+  // in-app approved ones; Converted quotes are done and drop out.
+  const approvedQuotes = quotes.filter(
+    (q) => q.status === 'Approved' || q.status === 'Client Accepted'
+  );
+
+  // Re-apply job prefills each time the sheet opens — the dialog stays mounted
+  // (e.g. inside the Job Control Centre), so initial useState values go stale
+  // when the selected job changes.
+  useEffect(() => {
+    if (!open) return;
+    if (prefillClient) setClient(prefillClient);
+    if (jobTitle) setProject(jobTitle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   useEffect(() => {
     if (fromQuote) {
       setClient(fromQuote.client);
-      setProject(fromQuote.description || '');
+      setClientEmail(fromQuote.client_email || '');
+      setClientPhone(fromQuote.client_phone || '');
+      setProject(fromQuote.job_title || fromQuote.description || '');
       setSelectedQuoteId(fromQuote.id);
       setVatRate(String(fromQuote.vat_rate ?? 20));
       setReverseCharge(Boolean(fromQuote.reverse_charge));
@@ -189,7 +211,9 @@ export function CreateInvoiceDialog({
     const quote = quotes.find((q) => q.id === quoteId);
     if (quote) {
       setClient(quote.client);
-      setProject(quote.description || '');
+      setClientEmail(quote.client_email || '');
+      setClientPhone(quote.client_phone || '');
+      setProject(quote.job_title || quote.description || '');
       setSelectedQuoteId(quote.id);
       setVatRate(String(quote.vat_rate ?? 20));
       setReverseCharge(Boolean(quote.reverse_charge));
@@ -257,15 +281,25 @@ export function CreateInvoiceDialog({
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + Number(paymentTerms));
 
+    const email = clientEmail.trim();
+    const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+
     const createdInvoice = await createInvoiceMutation.mutateAsync({
       invoice_number: invoiceNumber || `INV-${new Date().getFullYear()}-001`,
       client,
+      client_email: email || null,
+      client_phone: clientPhone.trim() || null,
       project,
       amount: total,
-      status: sendImmediately ? 'Pending' : 'Draft',
+      status: 'Draft',
       due_date: dueDate.toISOString().split('T')[0],
       paid_date: null,
-      job_id: jobId ?? null,
+      // Carry the job link through quote → invoice so the job's P&L sees it.
+      job_id:
+        jobId ??
+        fromQuote?.job_id ??
+        (selectedQuoteId ? quotes.find((q) => q.id === selectedQuoteId)?.job_id : null) ??
+        null,
       quote_id: selectedQuoteId,
       line_items: lineItems,
       notes,
@@ -284,6 +318,36 @@ export function CreateInvoiceDialog({
       linkRecordToClient('employer_invoices', createdInvoice.id, client).catch(() => {});
     }
 
+    // Converting from a quote closes it out — a Converted quote can't be
+    // invoiced twice and stops appearing in the convert list.
+    if (createdInvoice?.id && selectedQuoteId) {
+      try {
+        await updateQuoteService(selectedQuoteId, { status: 'Converted' });
+        queryClient.invalidateQueries({ queryKey: ['quotes'] });
+      } catch (err) {
+        console.error('Failed to mark source quote as converted:', err);
+      }
+    }
+
+    // "Send" really sends — the emailed portal link marks it Pending.
+    if (sendImmediately && createdInvoice?.id) {
+      if (!emailOk) {
+        toast.info('Invoice saved as draft — add a client email to send it.');
+      } else {
+        try {
+          await sendInvoiceService(createdInvoice.id, email);
+          queryClient.invalidateQueries({ queryKey: ['invoices'] });
+          toast.success(`Invoice sent to ${email}`);
+        } catch (err) {
+          toast.error(
+            err instanceof Error && err.message !== 'NEEDS_CLIENT_EMAIL'
+              ? err.message
+              : 'Invoice saved as draft — the email failed to send. Open it and use Send email.'
+          );
+        }
+      }
+    }
+
     resetForm();
     onOpenChange(false);
   };
@@ -291,6 +355,8 @@ export function CreateInvoiceDialog({
   const resetForm = () => {
     setStep(1);
     setClient('');
+    setClientEmail('');
+    setClientPhone('');
     setProject('');
     setPaymentTerms('30');
     setVatRate('20');
@@ -364,7 +430,7 @@ export function CreateInvoiceDialog({
                     <div className="space-y-2">
                       <label className={cn(fieldLabelClass, 'flex items-center gap-2')}>
                         <FileText className="h-4 w-4" />
-                        Create from Approved Quote
+                        Create from accepted quote
                       </label>
                       <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-1 px-1">
                         {approvedQuotes.map((quote) => {
@@ -399,6 +465,28 @@ export function CreateInvoiceDialog({
                         autoComplete="off"
                       />
                     </Field>
+                    <FormGrid cols={2}>
+                      <Field label="Client email">
+                        <Input
+                          type="email"
+                          placeholder="client@example.com"
+                          value={clientEmail}
+                          onChange={(e) => setClientEmail(e.target.value)}
+                          className={inputClass}
+                          autoComplete="off"
+                        />
+                      </Field>
+                      <Field label="Client phone">
+                        <Input
+                          type="tel"
+                          placeholder="+44 7700 900000"
+                          value={clientPhone}
+                          onChange={(e) => setClientPhone(e.target.value)}
+                          className={inputClass}
+                          autoComplete="off"
+                        />
+                      </Field>
+                    </FormGrid>
                     <Field label="Project / reference">
                       <Input
                         placeholder="Project name or reference"

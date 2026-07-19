@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { isFullUrl, resolveStorageUrls, storagePathFromPublicUrl } from '@/utils/storageUrls';
 
 export type DocumentType =
   | 'mot_certificate'
@@ -51,7 +52,19 @@ export function useVehicleDocuments(vehicleId: string | undefined) {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as VehicleDocument[];
+
+      // Resolve stored references to viewable URLs. Legacy rows hold full
+      // public URLs (pass-through); new rows hold bare storage paths that are
+      // batch-signed. Delete still works — the signed URL contains the path.
+      const docs = data as VehicleDocument[];
+      const resolved = await resolveStorageUrls(
+        'visual-uploads',
+        docs.map((d) => d.file_url)
+      );
+      return docs.map((d) => ({
+        ...d,
+        file_url: resolved.get(d.file_url) ?? d.file_url,
+      }));
     },
     enabled: !!vehicleId,
   });
@@ -127,8 +140,11 @@ export function useUploadDocument() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // Upload file to storage
-      const fileName = `vehicle-documents/${user.id}/${vehicleId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+      // Upload file to storage. NOTE: the visual-uploads INSERT policy
+      // requires the FIRST folder to be auth.uid() — the old
+      // 'vehicle-documents/<uid>/…' prefix violated it and every upload
+      // was rejected by RLS.
+      const fileName = `${user.id}/vehicle-documents/${vehicleId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('visual-uploads')
@@ -139,12 +155,9 @@ export function useUploadDocument() {
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('visual-uploads')
-        .getPublicUrl(uploadData.path);
-
-      // Create document record
+      // Create document record — store the bare storage path (privacy-ready).
+      // Readers resolve it via resolveStorageUrls and still accept legacy
+      // full-URL rows.
       const { data, error } = await supabase
         .from('vehicle_documents')
         .insert({
@@ -152,7 +165,7 @@ export function useUploadDocument() {
           vehicle_id: vehicleId,
           document_type: documentType,
           name,
-          file_url: urlData.publicUrl,
+          file_url: uploadData.path,
           expiry_date: expiryDate || null,
           issue_date: issueDate || null,
           reference_number: referenceNumber || null,
@@ -198,10 +211,13 @@ export function useDeleteDocument() {
       vehicleId: string;
       fileUrl: string;
     }): Promise<void> => {
-      // Delete from storage (extract path from URL)
-      const urlParts = fileUrl.split('/visual-uploads/');
-      if (urlParts.length > 1) {
-        await supabase.storage.from('visual-uploads').remove([urlParts[1]]);
+      // Delete from storage — handles every stored form: full public URLs
+      // (legacy rows), signed URLs (resolved new rows) and bare paths.
+      const storagePath = isFullUrl(fileUrl)
+        ? storagePathFromPublicUrl(fileUrl)?.path
+        : fileUrl.replace(/^\/+/, '');
+      if (storagePath) {
+        await supabase.storage.from('visual-uploads').remove([storagePath]);
       }
 
       // Delete record

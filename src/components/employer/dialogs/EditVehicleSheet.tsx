@@ -26,6 +26,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Trash2, Save, Loader2 } from 'lucide-react';
 import type { Vehicle, VehicleStatus, VehicleType, UpdateVehicleInput } from '@/hooks/useFleet';
 import { useJobs } from '@/hooks/useJobs';
+import { useEmployees } from '@/hooks/useEmployees';
 import {
   SheetShell,
   FormCard,
@@ -71,6 +72,9 @@ export function EditVehicleSheet({
   const [colour, setColour] = useState('');
   const [year, setYear] = useState('');
   const [vehicleType, setVehicleType] = useState<VehicleType | ''>('');
+  // Roster-linked driver — mirrors the create path in FleetSection: driver_id
+  // is the employer_employees.id FK, the name is denormalised into assigned_to
+  const [driverId, setDriverId] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
   const [status, setStatus] = useState<VehicleStatus>('Active');
   const [mileage, setMileage] = useState('');
@@ -83,6 +87,7 @@ export function EditVehicleSheet({
   const [notes, setNotes] = useState('');
   const [jobId, setJobId] = useState('');
   const { data: jobs = [] } = useJobs();
+  const { data: employees = [] } = useEmployees();
 
   useEffect(() => {
     if (vehicle) {
@@ -93,6 +98,7 @@ export function EditVehicleSheet({
       setColour(vehicle.colour || '');
       setYear(vehicle.year?.toString() || '');
       setVehicleType(vehicle.vehicle_type || '');
+      setDriverId(vehicle.driver_id || '');
       setAssignedTo(vehicle.assigned_to || '');
       setStatus(vehicle.status);
       setMileage(vehicle.mileage?.toString() || '0');
@@ -116,7 +122,8 @@ export function EditVehicleSheet({
       colour: colour || undefined,
       year: year ? parseInt(year) : undefined,
       vehicle_type: vehicleType || undefined,
-      assigned_to: assignedTo || undefined,
+      driver_id: driverId || null,
+      assigned_to: assignedTo || null,
       job_id: jobId || null,
       status,
       mileage: parseInt(mileage) || 0,
@@ -264,12 +271,40 @@ export function EditVehicleSheet({
             </FormGrid>
             <FormGrid cols={2}>
               <Field label="Assigned to">
-                <Input
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                  placeholder="Driver name"
-                  className={inputClass}
-                />
+                {/* Roster picker, not free text — mirrors the create path so the
+                    vehicle links to the actual employee via driver_id */}
+                <Select
+                  value={driverId || 'none'}
+                  onValueChange={(v) => {
+                    if (v === 'none') {
+                      setDriverId('');
+                      setAssignedTo('');
+                    } else {
+                      setDriverId(v);
+                      setAssignedTo(employees.find((e) => e.id === v)?.name || '');
+                    }
+                  }}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Unassigned" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="none">Unassigned</SelectItem>
+                    {employees.map((e) => (
+                      <SelectItem key={e.id} value={e.id}>
+                        {e.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {/* Legacy free-texted driver with no roster link — keep it
+                    visible so saving doesn't silently drop the name */}
+                {!driverId && assignedTo && (
+                  <p className="text-[11px] text-white/50 mt-1.5">
+                    Currently "{assignedTo}" (not linked to the roster). Pick a team member to
+                    link, or save with Unassigned to clear.
+                  </p>
+                )}
               </Field>
               <Field label="On job">
                 <Select value={jobId || 'none'} onValueChange={(v) => setJobId(v === 'none' ? '' : v)}>

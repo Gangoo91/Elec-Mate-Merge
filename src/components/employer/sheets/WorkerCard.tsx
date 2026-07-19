@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AlertTriangle, Check, Briefcase, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStorageUrl } from '@/utils/storageUrls';
 import { Employee } from '@/services/employeeService';
 import { JobAssignmentWithDetails } from '@/services/jobAssignmentService';
 import { Pill } from '@/components/employer/editorial';
@@ -20,6 +21,8 @@ export function WorkerCard({
   clashWarnings = [],
 }: WorkerCardProps) {
   const hasClash = clashWarnings.length > 0;
+  // Legacy full photo URLs pass through; new bare paths are signed on demand.
+  const { url: photoSrc } = useStorageUrl('employee-photos', employee.photo_url);
 
   const getStatusIndicator = () => {
     if (employee.status !== 'Active') {
@@ -71,8 +74,8 @@ export function WorkerCard({
 
         <div className="relative shrink-0">
           <Avatar className="h-14 w-14 border-2 border-[hsl(0_0%_8%)]">
-            {employee.photo_url ? (
-              <AvatarImage src={employee.photo_url} alt={employee.name} />
+            {photoSrc ? (
+              <AvatarImage src={photoSrc} alt={employee.name} />
             ) : null}
             <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-lg">
               {employee.avatar_initials}

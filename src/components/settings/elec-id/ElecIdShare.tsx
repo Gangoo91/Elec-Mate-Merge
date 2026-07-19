@@ -108,6 +108,7 @@ const ElecIdShare = () => {
     { id: 'qualifications', label: 'Qualifications' },
     { id: 'experience', label: 'Experience' },
     { id: 'skills', label: 'Skills' },
+    { id: 'training', label: 'Training' },
   ];
 
   const expiryOptions = [

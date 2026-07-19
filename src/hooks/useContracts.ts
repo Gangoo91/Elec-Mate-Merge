@@ -5,6 +5,8 @@ import { useToast } from '@/hooks/use-toast';
 export type ContractType = 'Employment' | 'Subcontractor' | 'Client' | 'Supplier' | 'Apprentice';
 export type ContractCategory =
   | 'Employment'
+  | 'Subcontractor'
+  | 'HR Letters'
   | 'Job Descriptions'
   | 'Performance'
   | 'Procedures'
@@ -30,6 +32,11 @@ export interface Contract {
   notes?: string;
   is_template: boolean;
   adopted_at?: string;
+  // Employer counter-signature (columns land in the contract-signing
+  // migration — treat as absent-safe until then)
+  employer_signature?: string | null;
+  employer_signed_by?: string | null;
+  employer_signed_at?: string | null;
   created_at: string;
   updated_at: string;
   // Joined data
@@ -54,9 +61,19 @@ export interface EmploymentContractTemplate {
   created_at: string;
 }
 
+// employer_* counter-signature fields are written ONLY by
+// useSignContractAsEmployer (they're not in the generated DB types yet) —
+// keep them out of the create/update inputs so those spreads still typecheck.
 export type CreateContractInput = Omit<
   Contract,
-  'id' | 'user_id' | 'created_at' | 'updated_at' | 'employee'
+  | 'id'
+  | 'user_id'
+  | 'created_at'
+  | 'updated_at'
+  | 'employee'
+  | 'employer_signature'
+  | 'employer_signed_by'
+  | 'employer_signed_at'
 >;
 export type UpdateContractInput = Partial<CreateContractInput>;
 
@@ -452,7 +469,9 @@ export function useAdoptContractTemplate() {
           template_id: input.template_id,
           title: template.name,
           contract_type: template.category === 'Subcontractor' ? 'Subcontractor' : 'Employment',
-          category: 'Employment',
+          // Keep the template's real category — a subcontractor agreement must
+          // not be filed (or exported) as an employment contract.
+          category: template.category,
           content,
           party_name: input.party_name,
           employee_id: input.employee_id,
@@ -483,6 +502,125 @@ export function useAdoptContractTemplate() {
     onError: (error) => {
       toast({
         title: 'Error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+}
+
+// ============================================
+// CONTRACT SIGNING
+// ============================================
+
+// The latest signature request linked to a contract. The employee path rides
+// the existing Signatures rail (signature_requests + the public /sign/:token
+// page) rather than a parallel contract-only system.
+export interface ContractSignatureRequest {
+  id: string;
+  status: 'Pending' | 'Sent' | 'Viewed' | 'Signed' | 'Declined' | 'Expired';
+  signer_name: string;
+  signer_email?: string | null;
+  signature_url?: string | null;
+  signed_at?: string | null;
+  access_token?: string | null;
+  created_at: string;
+}
+
+export function useContractSignatureRequest(contractId?: string) {
+  return useQuery({
+    queryKey: ['contract-signature-request', contractId],
+    enabled: !!contractId,
+    queryFn: async (): Promise<ContractSignatureRequest | null> => {
+      const { data, error } = await supabase
+        .from('signature_requests')
+        .select(
+          'id, status, signer_name, signer_email, signature_url, signed_at, access_token, created_at'
+        )
+        .eq('document_type', 'Contract')
+        .eq('document_id', contractId!)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data as ContractSignatureRequest | null;
+    },
+  });
+}
+
+const SIGNING_COLUMNS_MISSING_MSG =
+  'Contract signing is not available yet — the database update that stores employer signatures has not been applied. Nothing was saved.';
+
+// Record the employer counter-signature on the contract itself. Pass
+// activate=true to move a Draft to Active in the same write (only done when
+// the employee has already signed, so "Active" stays honest).
+export function useSignContractAsEmployer() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      signature,
+      signedBy,
+      activate,
+    }: {
+      id: string;
+      signature: string;
+      signedBy: string;
+      activate?: boolean;
+    }): Promise<Contract> => {
+      const update: Record<string, unknown> = {
+        employer_signature: signature,
+        employer_signed_by: signedBy,
+        employer_signed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      if (activate) update.status = 'Active';
+
+      // Cast: employer_* columns are added by the contract-signing migration
+      // and are not in the generated types yet.
+      const { data, error } = await supabase
+        .from('contracts')
+        .update(update as never)
+        .eq('id', id)
+        .select(
+          `
+          *,
+          employee:employer_employees(id, name)
+        `
+        )
+        .single();
+
+      if (error) {
+        // Graceful guard: the employer_* columns ship in a separate
+        // migration — surface a clear message instead of a raw
+        // schema-cache error if it has not landed yet.
+        if (
+          error.code === 'PGRST204' ||
+          error.code === '42703' ||
+          /employer_sign/i.test(error.message || '')
+        ) {
+          throw new Error(SIGNING_COLUMNS_MISSING_MSG);
+        }
+        throw error;
+      }
+      return data as Contract;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['contracts'] });
+      toast({
+        title: 'Contract signed',
+        description:
+          data.status === 'Active'
+            ? 'Both parties have signed — contract is now Active.'
+            : 'Your employer signature has been recorded.',
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Could not sign contract',
         description: error.message,
         variant: 'destructive',
       });

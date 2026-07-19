@@ -86,7 +86,13 @@ export const useGenerateShareableLink = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => generateShareableLink(id),
+    mutationFn: ({
+      id,
+      options,
+    }: {
+      id: string;
+      options?: Parameters<typeof generateShareableLink>[1];
+    }) => generateShareableLink(id, options),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['elec-id-profiles'] });
     },

@@ -3,13 +3,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Hash, MoreVertical, Send, Loader2, Users, Settings } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { ArrowLeft, Hash, Send, Loader2 } from 'lucide-react';
 import {
   useChannelMessages,
   useSendChannelMessage,
@@ -19,6 +13,7 @@ import {
   useMarkTeamDMAsRead,
 } from '@/hooks/useTeamChat';
 import { useAuth } from '@/contexts/AuthContext';
+import { useEmployees } from '@/hooks/useEmployees';
 import { toast } from '@/hooks/use-toast';
 import type { TeamChannel, TeamDirectMessage } from '@/services/teamChatService';
 import { IconButton, PrimaryButton, inputClass } from '@/components/employer/editorial';
@@ -33,6 +28,7 @@ interface TeamChatViewProps {
 
 export function TeamChatView({ channel, dmConversation, open, onOpenChange }: TeamChatViewProps) {
   const { user } = useAuth();
+  const { data: employees = [] } = useEmployees();
   const [message, setMessage] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -115,11 +111,16 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
       };
     }
     if (dmConversation) {
-      // Get the other user's info
+      // Resolve the counterpart from the roster — the header must say WHO
+      // you're talking to, not a placeholder. participant_*_id are the auth
+      // uids (user_1_id/user_2_id are never populated on these rows).
       const otherUserId =
-        dmConversation.user_1_id === user?.id ? dmConversation.user_2_id : dmConversation.user_1_id;
+        dmConversation.participant_1_id === user?.id
+          ? dmConversation.participant_2_id
+          : dmConversation.participant_1_id;
+      const other = employees.find((e) => e.user_id === otherUserId);
       return {
-        name: 'Team Member', // Would need to fetch user details
+        name: other?.name || 'Team member',
         subtitle: 'Direct Message',
         icon: null,
         avatar: otherUserId,
@@ -163,34 +164,6 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
             <p className="text-[12px] text-white truncate mt-0.5">{headerInfo.subtitle}</p>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                aria-label="More actions"
-                className="h-10 w-10 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
-              >
-                <MoreVertical className="h-5 w-5" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
-            >
-              {isChannelMode && (
-                <>
-                  <DropdownMenuItem className="text-white focus:bg-white/[0.08] focus:text-white">
-                    <Users className="h-4 w-4 mr-2" />
-                    View Members
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-white focus:bg-white/[0.08] focus:text-white">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Channel Settings
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
 
         {/* Messages */}

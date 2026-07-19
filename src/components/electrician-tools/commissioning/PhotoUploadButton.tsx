@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Camera, Upload, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { toast } from 'sonner';
 
 interface PhotoUploadButtonProps {
@@ -69,16 +70,17 @@ const PhotoUploadButton = ({
 
       if (error) throw error;
 
-      // Get public URL
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
+      // Fresh signed URL (1h) — these URLs are handed to the commissioning
+      // agent, which fetches them server-side, so they must stay valid after
+      // visual-uploads goes private. Identical while the bucket is public.
+      const signedUrl = await mintFreshSignedUrl('visual-uploads', data.path);
+      if (!signedUrl) throw new Error('Could not prepare the uploaded photo');
 
-      const newPhotos = [...photos, publicUrl];
+      const newPhotos = [...photos, signedUrl];
       setPhotos(newPhotos);
 
       // Call legacy single photo callback for backwards compatibility
-      if (onPhotoUploaded) onPhotoUploaded(publicUrl);
+      if (onPhotoUploaded) onPhotoUploaded(signedUrl);
 
       // Call multi-photo callback
       if (onPhotosUploaded) onPhotosUploaded(newPhotos);

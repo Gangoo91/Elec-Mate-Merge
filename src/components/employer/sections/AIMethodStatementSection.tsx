@@ -44,11 +44,15 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
 
   const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
+  // Keyed on the ID so a background refetch of the packs list never
+  // clobbers an edited scope.
   useEffect(() => {
-    if (selectedJobPack) {
-      setScopeDescription(selectedJobPack.scope || '');
+    const pack = jobPacks.find((jp) => jp.id === selectedJobPackId);
+    if (pack) {
+      setScopeDescription(pack.scope || '');
     }
-  }, [selectedJobPack]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedJobPackId]);
 
   const generatedCount = useMemo(
     () => jobPacks.filter((jp: any) => jp.method_statement_generated).length,
@@ -92,8 +96,21 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
       }
 
       const jobId = data.jobId as string;
+      jobIdRef.current = jobId;
       if (pollRef.current) clearInterval(pollRef.current);
+      const startedAt = Date.now();
+      const POLL_DEADLINE_MS = 10 * 60 * 1000; // generation targets ~2 min
       const poll = setInterval(async () => {
+        // Safety net: if the worker dies without writing a terminal status,
+        // stop polling instead of showing "Generating" forever.
+        if (Date.now() - startedAt > POLL_DEADLINE_MS) {
+          clearInterval(poll);
+          pollRef.current = null;
+          jobIdRef.current = null;
+          setIsGenerating(false);
+          setError('Generation timed out — try again.');
+          return;
+        }
         const { data: job } = await supabase
           .from('rams_generation_jobs')
           .select('status, progress, current_step, method_data, error_message')
@@ -103,32 +120,68 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
         setProgress(job.progress || 0);
         setCurrentStep(job.current_step || 'Working…');
 
-        if (job.status === 'complete') {
+        // Terminal states: complete, partial (one agent succeeded — the
+        // method data may still be there), failed and cancelled.
+        if (job.status === 'complete' || job.status === 'partial') {
           clearInterval(poll);
           pollRef.current = null;
+          jobIdRef.current = null;
+          setIsGenerating(false);
+          if (!job.method_data) {
+            setError(job.error_message || 'The method statement could not be generated — try again.');
+            toast({
+              title: 'Error',
+              description: job.error_message || 'The method statement could not be generated.',
+              variant: 'destructive',
+            });
+            return;
+          }
           setProgress(100);
           setResult(job.method_data);
-          setIsGenerating(false);
           toast({
-            title: 'Method statement generated',
-            description: 'Your method statement has been created successfully.',
+            title:
+              job.status === 'partial'
+                ? 'Method statement generated with gaps'
+                : 'Method statement generated',
+            description:
+              job.status === 'partial'
+                ? 'Part of the run failed — review the document carefully before use.'
+                : 'Your method statement has been created successfully.',
           });
           if (selectedJobPackId) {
-            updateJobPack.mutate({
-              id: selectedJobPackId,
-              updates: { method_statement_generated: true },
-            });
+            updateJobPack.mutate(
+              {
+                id: selectedJobPackId,
+                updates: { method_statement_generated: true },
+              },
+              {
+                onError: () =>
+                  toast({
+                    title: 'Job pack not updated',
+                    description:
+                      'The method statement was generated but could not be saved against the job pack. Downloading it attaches the PDF too.',
+                    variant: 'destructive',
+                  }),
+              }
+            );
           }
-        } else if (job.status === 'failed') {
+        } else if (job.status === 'failed' || job.status === 'cancelled') {
           clearInterval(poll);
           pollRef.current = null;
+          jobIdRef.current = null;
           setIsGenerating(false);
-          setError(job.error_message || 'Generation failed');
-          toast({
-            title: 'Error',
-            description: job.error_message || 'Generation failed',
-            variant: 'destructive',
-          });
+          const msg =
+            job.status === 'cancelled'
+              ? 'Generation was cancelled.'
+              : job.error_message || 'Generation failed';
+          setError(msg);
+          if (job.status === 'failed') {
+            toast({
+              title: 'Error',
+              description: job.error_message || 'Generation failed',
+              variant: 'destructive',
+            });
+          }
         }
       }, 3000);
       pollRef.current = poll;
@@ -141,6 +194,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
   };
 
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const jobIdRef = useRef<string | null>(null);
   useEffect(
     () => () => {
       if (pollRef.current) clearInterval(pollRef.current);
@@ -179,7 +233,12 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
         }
         toast({
           title: 'PDF downloaded',
-          description: saved ? 'Saved to the job pack for worker sign-off.' : undefined,
+          description: saved
+            ? 'Saved to the job pack for worker sign-off.'
+            : selectedJobPackId
+              ? 'But it could not be saved to the job pack — run the download again to retry.'
+              : undefined,
+          variant: selectedJobPackId && !saved ? 'destructive' : undefined,
         });
       } else {
         throw new Error(error?.message || data?.error || 'PDF generation failed');
@@ -196,6 +255,19 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
   };
 
   const handleReset = () => {
+    // Stop the poll and cancel a live server-side job so abandoned runs
+    // don't burn tokens (and the page never sticks in "Generating").
+    if (pollRef.current) {
+      clearInterval(pollRef.current);
+      pollRef.current = null;
+    }
+    if (isGenerating && jobIdRef.current) {
+      void supabase.functions
+        .invoke('rams-generator', { body: { action: 'cancel', jobId: jobIdRef.current } })
+        .catch(() => {});
+      jobIdRef.current = null;
+    }
+    setIsGenerating(false);
     setResult(null);
     setError(null);
     setProgress(0);
@@ -223,11 +295,10 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
       />
 
       <StatStrip
-        columns={3}
+        columns={2}
         stats={[
           { label: 'Generated', value: String(generatedCount), tone: 'emerald' },
-          { label: 'Avg time', value: '~2 min' },
-          { label: 'Templates', value: String(jobPacks.length), tone: 'blue' },
+          { label: 'Job packs', value: String(jobPacks.length), tone: 'blue' },
         ]}
       />
 
@@ -332,9 +403,32 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                     </div>
                     <p className="mt-2 text-[12.5px] text-white">
                       Step-by-step procedures created
-                      {selectedJobPackId ? ' and attached to job pack.' : '.'}
+                      {selectedJobPackId
+                        ? ' — download to attach the PDF to the job pack.'
+                        : '.'}
                     </p>
                   </div>
+
+                  {Array.isArray(result?.steps) && result.steps.length > 0 && (
+                    <div className="space-y-2 max-h-[320px] overflow-auto">
+                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                      {result.steps.map((step: any, i: number) => (
+                        <div
+                          key={i}
+                          className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] p-3"
+                        >
+                          <p className="text-[13px] font-medium text-white">
+                            {i + 1}. {step.title || step.stepTitle || step.name || `Step ${i + 1}`}
+                          </p>
+                          {(step.description || step.details) && (
+                            <p className="text-[12px] text-white/60 mt-1 line-clamp-3">
+                              {String(step.description || step.details)}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="flex gap-2">
                     <PrimaryButton onClick={handleDownload} disabled={isDownloading} fullWidth>

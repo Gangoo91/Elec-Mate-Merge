@@ -52,10 +52,20 @@ export const useQsReviewQueue = (status: 'pending' | 'all' = 'pending') => {
         p_status: status === 'all' ? null : status,
       });
       if (error) {
+        // Throw, don't swallow — returning [] told a QS whose fetch FAILED
+        // that there was nothing to sign off, the inverse of the truth.
         console.error('[QS queue] fetch failed:', error);
-        return [];
+        throw new Error(error.message || 'Failed to load the QS review queue');
       }
-      return (data ?? []) as QsQueueItem[];
+      // Dedupe by review_id — duplicate roster rows can fan one review out
+      // into several queue entries server-side
+      const rows = (data ?? []) as QsQueueItem[];
+      const seen = new Set<string>();
+      return rows.filter((r) => {
+        if (seen.has(r.review_id)) return false;
+        seen.add(r.review_id);
+        return true;
+      });
     },
     refetchInterval: 60000,
   });

@@ -1,6 +1,7 @@
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { resolveStorageUrl } from '@/utils/storageUrls';
 import type { Briefing, BriefingAttendee } from '@/hooks/useBriefings';
 
 interface BriefingPdfOptions {
@@ -48,7 +49,23 @@ function htmlToSections(html: string): {
   let currentSection: { heading: string; content: string[]; isList?: boolean } | null = null;
 
   const processNode = (node: Node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Briefings created via the section's plain-text form arrive as bare
+      // text nodes — without this branch their content silently vanished
+      // from the exported PDF.
+      const text = node.textContent?.trim();
+      if (text) {
+        if (!currentSection) {
+          currentSection = { heading: '', content: [] };
+        }
+        // Preserve paragraph breaks from the textarea
+        text
+          .split(/\n{2,}/)
+          .map((p) => p.replace(/\s*\n\s*/g, ' ').trim())
+          .filter(Boolean)
+          .forEach((p) => currentSection!.content.push(p));
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
       const element = node as Element;
       const tagName = element.tagName.toLowerCase();
 
@@ -624,8 +641,51 @@ export function generateBriefingPDF(options: BriefingPdfOptions): jsPDF {
   return doc;
 }
 
+/**
+ * Convert a stored signature reference into a data URL jsPDF can embed.
+ * Handles all stored forms: data URLs (as-is), legacy full public URLs and
+ * new bare storage paths in the 'briefings' bucket (both fetched — signed
+ * first when needed). jsPDF's addImage cannot fetch remote URLs itself, so
+ * without this step remote signatures silently fall back to a checkmark.
+ */
+async function signatureToDataUrl(ref: string | undefined): Promise<string | undefined> {
+  if (!ref) return undefined;
+  if (ref.startsWith('data:')) return ref;
+  const url = await resolveStorageUrl('briefings', ref);
+  if (!url) return undefined;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return undefined;
+    const blob = await res.blob();
+    return await new Promise<string | undefined>((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => resolve(undefined);
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return undefined;
+  }
+}
+
+/** Pre-resolve every stored signature reference so the sync generator can embed them. */
+async function withEmbeddableSignatures(options: BriefingPdfOptions): Promise<BriefingPdfOptions> {
+  const [presenterSignature, ...attendeeSignatures] = await Promise.all([
+    signatureToDataUrl(options.briefing.presenter_signature_url),
+    ...(options.attendees ?? []).map((a) => signatureToDataUrl(a.signature_url)),
+  ]);
+  return {
+    ...options,
+    briefing: { ...options.briefing, presenter_signature_url: presenterSignature },
+    attendees: (options.attendees ?? []).map((a, i) => ({
+      ...a,
+      signature_url: attendeeSignatures[i],
+    })),
+  };
+}
+
 export async function downloadBriefingPDF(options: BriefingPdfOptions): Promise<void> {
-  const doc = generateBriefingPDF(options);
+  const doc = generateBriefingPDF(await withEmbeddableSignatures(options));
 
   // Generate filename
   const safeName = options.briefing.title

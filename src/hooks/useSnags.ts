@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { resolveStorageUrls } from '@/utils/storageUrls';
 import { useToast } from '@/hooks/use-toast';
 
 export interface SnagAnalysis {
@@ -176,18 +177,25 @@ export const useSnags = () => {
             .in('linked_task_id', snagIds);
 
           if (photoData) {
-            for (const p of photoData as {
+            const photoRows = photoData as {
               id: string;
               image_url: string;
               analysis_result?: Record<string, unknown> | null;
               linked_task_id: string;
-            }[]) {
+            }[];
+            // image_url holds a bare storage path on new rows and a full
+            // public URL on legacy rows — resolve both to renderable URLs.
+            const resolvedUrls = await resolveStorageUrls(
+              'job-photos',
+              photoRows.map((p) => p.image_url)
+            );
+            for (const p of photoRows) {
               const taskId = p.linked_task_id;
               if (!photoMap[taskId]) photoMap[taskId] = [];
               const analysis = (p.analysis_result as Record<string, unknown>) || null;
               photoMap[taskId].push({
                 id: p.id,
-                url: p.image_url,
+                url: resolvedUrls.get(p.image_url) ?? p.image_url,
                 caption: analysis?.caption as string | undefined,
                 analysis:
                   analysis && (analysis.title || analysis.citations || analysis.grounded != null)
@@ -378,14 +386,14 @@ export const useSnags = () => {
                   upsert: false,
                 });
               if (uploadError) throw uploadError;
-              const {
-                data: { publicUrl },
-              } = supabase.storage.from('job-photos').getPublicUrl(path);
+              // Store the bare storage path — readers resolve via
+              // resolveStorageUrls, which keeps working when the job-photos
+              // bucket goes private (legacy full-URL rows still pass through).
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               await (supabase as any).from('photo_analyses').insert({
                 user_id: user.id,
                 analysis_type: 'snag-photo',
-                image_url: publicUrl,
+                image_url: path,
                 analysis_result: photo.analysis || {},
                 observations: [],
                 linked_task_id: snagId,

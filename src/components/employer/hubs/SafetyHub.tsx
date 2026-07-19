@@ -8,6 +8,7 @@ import {
   SectionHeader,
   HubGrid,
   HubCard,
+  LoadingBlocks,
 } from '@/components/employer/editorial';
 
 interface SafetyHubProps {
@@ -16,14 +17,30 @@ interface SafetyHubProps {
 
 export function SafetyHub({ onNavigate }: SafetyHubProps) {
   // Real stats — these were props that no caller ever passed (permanent zeros)
-  const { data: incidentStats } = useIncidentStats();
-  const { data: ramsDocs = [] } = useRAMSDocuments();
-  const { data: policyStats } = usePolicyStats();
+  const { data: incidentStats, isLoading: incidentsLoading } = useIncidentStats();
+  const { data: ramsDocs = [], isLoading: ramsLoading } = useRAMSDocuments();
+  const { data: policyStats, isLoading: policiesLoading } = usePolicyStats();
+  const { data: trainingRecords = [], isLoading: trainingLoading } = useTrainingRecords();
   const openIncidentsCount = incidentStats?.open ?? 0;
-  const pendingRamsCount = ramsDocs.filter((d) => d.status === 'draft' || d.status === 'submitted').length;
+  // 'generated' = AI-produced, not yet approved — still awaiting sign-off
+  const pendingRamsCount = ramsDocs.filter((d) =>
+    ['draft', 'submitted', 'generated'].includes(d.status)
+  ).length;
   const policiesCount = policyStats?.total ?? 0;
-  const { data: trainingRecords = [] } = useTrainingRecords();
   const trainingCount = trainingRecords.length;
+
+  if (incidentsLoading || ramsLoading || policiesLoading || trainingLoading) {
+    return (
+      <HubLanding
+        eyebrow="HR & Safety"
+        title="Safety"
+        description="RAMS, incidents, policies, training and compliance."
+        tone="red"
+      >
+        <LoadingBlocks />
+      </HubLanding>
+    );
+  }
 
   return (
     <HubLanding
@@ -32,10 +49,30 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
       description="RAMS, incidents, policies, training and compliance."
       tone="red"
       stats={[
-        { label: 'Open incidents', value: openIncidentsCount, tone: 'red' },
-        { label: 'Pending RAMS', value: pendingRamsCount, tone: 'orange' },
-        { label: 'Policies', value: policiesCount, tone: 'blue' },
-        { label: 'Training records', value: trainingCount, accent: true },
+        {
+          label: 'Open incidents',
+          value: openIncidentsCount,
+          tone: 'red',
+          onClick: () => onNavigate('incidents'),
+        },
+        {
+          label: 'Pending RAMS',
+          value: pendingRamsCount,
+          tone: 'orange',
+          onClick: () => onNavigate('rams'),
+        },
+        {
+          label: 'Policies',
+          value: policiesCount,
+          tone: 'blue',
+          onClick: () => onNavigate('policies'),
+        },
+        {
+          label: 'Training records',
+          value: trainingCount,
+          accent: true,
+          onClick: () => onNavigate('training'),
+        },
       ]}
     >
       <section className="space-y-5">

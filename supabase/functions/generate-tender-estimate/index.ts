@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { ingestTenderDocuments } from './documentIngest.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -658,6 +659,8 @@ Deno.serve(async (req) => {
           estimate: fallbackEstimate,
           confidence: 'Low',
           notes: 'Basic estimate - AI unavailable. Upload specifications for detailed breakdown.',
+          documents_read: 0,
+          documents_total: documentUrls.length,
           metadata: {
             team_size: teamSize.total,
             team_composition: teamSize,
@@ -668,15 +671,21 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Read the uploaded tender documents (kicked off early, awaited alongside
+    // the RAG searches). Failures never block the estimate — they become
+    // honest notes instead.
+    const docIngestPromise = ingestTenderDocuments(documentUrls);
+
     // Generate embedding for semantic search
     const ragQuery = `${projectTitle} ${projectDescription.substring(0, 500)} ${projectCategories.join(' ')} ${scopeKeywords.join(' ')} electrical installation`;
     const embedding = await generateEmbedding(ragQuery, lovableApiKey);
 
     // Parallel RAG searches with enhanced multi-pass strategy
-    const [pricingResults, labourResults, regional] = await Promise.all([
+    const [pricingResults, labourResults, regional, docIngest] = await Promise.all([
       searchPricingData(supabase, ragQuery, embedding, projectCategories, scopeKeywords),
       searchLabourData(supabase, ragQuery, scopeKeywords),
       getRegionalMultiplier(supabase, projectPostcode),
+      docIngestPromise,
     ]);
 
     // Calculate regional labour rates
@@ -688,6 +697,7 @@ Deno.serve(async (req) => {
       labour: labourResults.length,
       region: regional.region,
       multiplier: regional.multiplier,
+      documents_read: `${docIngest.read}/${docIngest.total}`,
     });
 
     // Format RAG context for AI
@@ -713,6 +723,27 @@ Deno.serve(async (req) => {
             .join('\n')}`
         : 'Use standard UK electrical installation times.';
 
+    // Format extracted tender-document text for the AI
+    const docFailureLines =
+      docIngest.failures.length > 0
+        ? `\n\nDOCUMENT READING ISSUES (state these as assumptions in "notes" and reflect them in "confidence_factors"):\n${docIngest.failures.map((f) => `- ${f}`).join('\n')}`
+        : '';
+    const documentsContext =
+      docIngest.textBlocks.length > 0
+        ? `TENDER DOCUMENTS (extracted text — ${docIngest.read} of ${docIngest.total} uploaded document(s) read):
+=== BEGIN TENDER DOCUMENT TEXT ===
+${docIngest.textBlocks.join('\n\n')}
+=== END TENDER DOCUMENT TEXT ===
+
+The tender document text above is the AUTHORITATIVE source for this estimate:
+- Ground the scope of works, specification requirements (equipment standards, cable types, testing/certification requirements) and QUANTITIES (unit counts, circuit counts, point counts, cable lengths, floor areas) in what the documents actually say.
+- Where the documents give quantities, use them in the breakdown — do not invent different ones.
+- Where the documents contradict the short project description, prefer the documents and say so in "notes".
+- Flag anything material you could not read or that is missing from the documents (e.g. drawings referenced but not supplied) in "notes" and "confidence_factors".${docFailureLines}`
+        : documentUrls.length > 0
+          ? `TENDER DOCUMENTS: ${documentUrls.length} document(s) were uploaded but NONE could be read (see issues below). This estimate is NOT grounded in the uploaded documents — base it on the project description only, state this clearly in "notes", and keep "confidence" at Low or Medium at most.${docFailureLines}`
+          : '';
+
     // Calculate adaptive token limit
     const baseTokens = 4000;
     const maxTokens = Math.min(Math.round(baseTokens * complexity.tokenMultiplier), 8000);
@@ -725,7 +756,11 @@ CRITICAL REQUIREMENTS:
 1. Use REALISTIC TEAM SIZES - A rewire of 24 units requires 3-4 electricians, NOT 1 person!
 2. Calculate programme based on team size × days, not just total hours
 3. Use the DATABASE PRICES below - they are real wholesale prices with 15% markup
-4. Apply regional labour rates (already calculated for this location)
+4. Apply regional labour rates (already calculated for this location)${
+      docIngest.read > 0
+        ? '\n5. Ground the scope, spec requirements and quantities in the TENDER DOCUMENTS section below — it overrides assumptions, and anything material you could not read must be flagged in "notes".'
+        : ''
+    }
 
 RECOMMENDED TEAM FOR THIS PROJECT:
 - Electricians: ${teamSize.electricians}
@@ -767,11 +802,13 @@ PROJECT DETAILS:
 - Sector: ${projectSector}
 - Categories: ${projectCategories.join(', ')}
 - Estimated Value Range: ${projectValue > 0 ? `£${projectValue.toLocaleString()}` : 'Not specified'}
-- Documents: ${documentUrls.length} files uploaded
+- Documents: ${documentUrls.length} uploaded, ${docIngest.read} read (text extracted below)
 - Complexity: ${complexity.level.toUpperCase()} (score: ${complexity.score}/100)
 
 SCOPE OF WORKS:
 ${projectDescription || 'No detailed scope provided - estimate based on project type and value.'}
+
+${documentsContext}
 
 RESPONSE FORMAT (JSON only - include team_size and team_composition):
 {
@@ -838,6 +875,8 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
           estimate: fallbackEstimate,
           confidence: 'Low',
           notes: 'AI estimation unavailable - using baseline calculation.',
+          documents_read: 0,
+          documents_total: documentUrls.length,
           metadata: {
             team_size: teamSize.total,
             team_composition: teamSize,
@@ -855,13 +894,28 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
 
     // Parse AI response
     let estimate: EstimateOutput;
+    // Only claim the estimate is grounded in documents when the AI estimate
+    // (which actually saw the extracted text) parsed successfully.
+    let documentsRead = docIngest.read;
     try {
       // Extract JSON from response
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error('No JSON found in AI response');
 
       estimate = JSON.parse(jsonMatch[0]);
-      estimate.rams_scoped = true;
+      // This function does not produce a RAMS document — never claim it did.
+      estimate.rams_scoped = false;
+
+      // Deterministic honesty: unreadable documents must be visible in the
+      // saved estimate even if the model ignored the instruction.
+      if (docIngest.failures.length > 0) {
+        const failNote = `Document reading: ${docIngest.failures.join(' ')}`;
+        estimate.notes = estimate.notes ? `${estimate.notes}\n\n${failNote}` : failNote;
+        estimate.confidence_factors = [
+          ...(Array.isArray(estimate.confidence_factors) ? estimate.confidence_factors : []),
+          ...docIngest.failures,
+        ];
+      }
 
       // Validate and apply regional multiplier if not already applied
       if (estimate.regional_adjustment !== regional.multiplier) {
@@ -873,6 +927,7 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
       );
     } catch (parseError) {
       console.error('[TENDER-ESTIMATE] Failed to parse AI response:', parseError);
+      documentsRead = 0; // fallback estimate is not grounded in the documents
       estimate = generateFallbackEstimate(
         projectValue,
         projectCategories,
@@ -882,7 +937,8 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
       );
     }
 
-    // Save estimate if we have a tender ID
+    // Save estimate if we have a tender ID. An insert failure is a real
+    // failure — do not report success when the estimate was not persisted.
     if (tenderId) {
       try {
         const { data: savedEstimate, error: saveError } = await supabase
@@ -908,11 +964,28 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
 
         if (saveError) {
           console.error('[TENDER-ESTIMATE] Save error:', saveError);
-        } else {
-          console.log(`[TENDER-ESTIMATE] Saved to database: ${savedEstimate.id}`);
+          return new Response(
+            JSON.stringify({
+              success: false,
+              error: 'Estimate was generated but could not be saved to the database.',
+              details: saveError.message,
+              estimate,
+            }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
         }
-      } catch (saveErr) {
+        console.log(`[TENDER-ESTIMATE] Saved to database: ${savedEstimate.id}`);
+      } catch (saveErr: any) {
         console.error('[TENDER-ESTIMATE] Save exception:', saveErr);
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: 'Estimate was generated but could not be saved to the database.',
+            details: saveErr?.message || String(saveErr),
+            estimate,
+          }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
     }
 
@@ -920,6 +993,8 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
       JSON.stringify({
         success: true,
         estimate,
+        documents_read: documentsRead,
+        documents_total: documentUrls.length,
         metadata: {
           complexity: complexity.level,
           complexity_score: complexity.score,
@@ -930,6 +1005,12 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
           labour_rate: estimate.labour_rate_used || labourRates.qualified,
           rag_pricing_items: pricingResults.length,
           rag_labour_items: labourResults.length,
+          documents: {
+            read: documentsRead,
+            attempted: docIngest.attempted,
+            total: docIngest.total,
+            issues: docIngest.failures,
+          },
           tokens_used: maxTokens,
         },
       }),

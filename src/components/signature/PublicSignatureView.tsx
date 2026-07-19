@@ -19,6 +19,39 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
 
+interface SignatureDocumentLine {
+  description?: string;
+  quantity?: number;
+  unit?: string;
+  unitPrice?: number;
+  total?: number;
+}
+
+// Server-built summary of the document being signed. Returned by the extended
+// get_signature_request_by_token RPC — absent until that migration lands, so
+// every render path must degrade gracefully without it.
+interface SignatureDocument {
+  kind: 'quote' | 'invoice' | 'contract';
+  number?: string | null;
+  client?: string | null;
+  description?: string | null;
+  line_items?: SignatureDocumentLine[] | null;
+  subtotal?: number | null;
+  vat_rate?: number | null;
+  vat_amount?: number | null;
+  reverse_charge?: boolean | null;
+  cis_amount?: number | null;
+  total?: number | null;
+  valid_until?: string | null;
+  due_date?: string | null;
+  // Contract fields
+  title?: string | null;
+  party_name?: string | null;
+  content_excerpt?: string | null;
+  start_date?: string | null;
+  end_date?: string | null;
+}
+
 interface SignatureRequestData {
   id: string;
   document_title: string;
@@ -29,8 +62,10 @@ interface SignatureRequestData {
   status: string;
   signed_at: string | null;
   expires_at: string | null;
-  user_id: string;
-  access_token: string;
+  // Optional extras from the extended RPC (graceful when absent)
+  document?: SignatureDocument | null;
+  company_name?: string | null;
+  logo_url?: string | null;
 }
 
 const PublicSignatureView = () => {
@@ -93,12 +128,33 @@ const PublicSignatureView = () => {
     try {
       // Signature travels as a data URL inside the token-keyed RPC — anon
       // storage uploads could never pass the own-folder policy
-      const { data: signed, error: updateError } = await supabase.rpc('sign_signature_request', {
+      const baseArgs = {
         p_token: token!,
         p_signature_url: signatureData,
         p_ip: await getUserIP(),
         p_notes: notes.trim() || null,
+      };
+      // Cast: p_signer_name ships in a separate RPC migration and isn't in the
+      // generated types yet.
+      const rpc = supabase.rpc as unknown as (
+        fn: string,
+        args: Record<string, unknown>
+      ) => Promise<{ data: unknown; error: { code?: string; message?: string } | null }>;
+
+      // Record the typed name alongside the drawn signature; if the RPC
+      // migration hasn't landed yet (unknown-parameter error), retry without.
+      let { data: signed, error: updateError } = await rpc('sign_signature_request', {
+        ...baseArgs,
+        p_signer_name: signerName.trim(),
       });
+      if (
+        updateError &&
+        (updateError.code === 'PGRST202' ||
+          updateError.code === 'PGRST203' ||
+          /p_signer_name/i.test(updateError.message || ''))
+      ) {
+        ({ data: signed, error: updateError } = await rpc('sign_signature_request', baseArgs));
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (updateError || (signed as any)?.error) {
         throw new Error('Could not record your signature');
@@ -201,6 +257,16 @@ const PublicSignatureView = () => {
     );
   }
 
+  const doc = request.document || null;
+  const docLines: SignatureDocumentLine[] = Array.isArray(doc?.line_items)
+    ? doc!.line_items!
+    : [];
+  const money = (v?: number | null) =>
+    `£${Number(v || 0).toLocaleString('en-GB', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+
   const isSigned = request.status === 'Signed';
   const isDeclined = request.status === 'Declined';
   const isExpired =
@@ -214,6 +280,20 @@ const PublicSignatureView = () => {
         <div className="bg-elec-gray/95 backdrop-blur-sm rounded-lg overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-elec-blue to-elec-blue/80 text-foreground p-6">
+            {(request.company_name || request.logo_url) && (
+              <div className="flex items-center gap-3 mb-4">
+                {request.logo_url && (
+                  <img
+                    src={request.logo_url}
+                    alt={request.company_name || 'Company logo'}
+                    className="h-10 w-auto max-w-[140px] object-contain rounded-md bg-white/90 p-1"
+                  />
+                )}
+                {request.company_name && (
+                  <p className="font-semibold text-sm text-blue-50">{request.company_name}</p>
+                )}
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-xl font-bold">{request.document_title}</h1>
@@ -247,6 +327,114 @@ const PublicSignatureView = () => {
           </div>
 
           <div className="p-6 space-y-6">
+            {/* Document being signed — server-built summary from the extended
+                token RPC. Older payloads have no `document`; skip gracefully. */}
+            {doc && (doc.kind === 'quote' || doc.kind === 'invoice') && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-lg">
+                    <FileText className="h-5 w-5 mr-2" />
+                    {doc.kind === 'quote' ? 'Quote' : 'Invoice'}
+                    {doc.number ? ` ${doc.number}` : ''}
+                  </CardTitle>
+                  {doc.client && <CardDescription>Prepared for {doc.client}</CardDescription>}
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {doc.description && (
+                    <p className="text-sm text-muted-foreground">{doc.description}</p>
+                  )}
+                  {docLines.length > 0 && (
+                    <div className="divide-y divide-border">
+                      {docLines.map((item, idx) => (
+                        <div key={idx} className="flex justify-between items-center py-2.5 gap-3">
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium truncate">{item.description}</p>
+                            {item.quantity != null && (
+                              <p className="text-xs text-muted-foreground mt-0.5">
+                                {item.quantity}
+                                {item.unit ? ` ${item.unit}` : ''}
+                                {item.unitPrice != null ? ` × ${money(item.unitPrice)}` : ''}
+                              </p>
+                            )}
+                          </div>
+                          <span className="text-sm font-semibold tabular-nums shrink-0">
+                            {money(item.total)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className="rounded-lg bg-muted/50 p-3 space-y-1.5">
+                    {doc.subtotal != null && (
+                      <>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Subtotal</span>
+                          <span className="tabular-nums">{money(doc.subtotal)}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">
+                            {doc.reverse_charge
+                              ? 'VAT — reverse charge'
+                              : `VAT @ ${Number(doc.vat_rate ?? 20)}%`}
+                          </span>
+                          <span className="tabular-nums">{money(doc.vat_amount)}</span>
+                        </div>
+                      </>
+                    )}
+                    <div className="flex justify-between items-center pt-1">
+                      <span className="font-medium">Total</span>
+                      <span className="text-lg font-bold tabular-nums">{money(doc.total)}</span>
+                    </div>
+                    {Number(doc.cis_amount) > 0 && (
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Less CIS deduction</span>
+                        <span className="tabular-nums">−{money(doc.cis_amount)}</span>
+                      </div>
+                    )}
+                  </div>
+                  {(doc.valid_until || doc.due_date) && (
+                    <p className="text-xs text-muted-foreground">
+                      {doc.kind === 'quote' && doc.valid_until
+                        ? `Valid until ${new Date(doc.valid_until).toLocaleDateString('en-GB')}`
+                        : doc.due_date
+                          ? `Payment due ${new Date(doc.due_date).toLocaleDateString('en-GB')}`
+                          : ''}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {doc && doc.kind === 'contract' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-lg">
+                    <FileText className="h-5 w-5 mr-2" />
+                    {doc.title || request.document_title}
+                  </CardTitle>
+                  {doc.party_name && <CardDescription>Party: {doc.party_name}</CardDescription>}
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {doc.content_excerpt && (
+                    <div className="max-h-72 overflow-y-auto rounded-lg bg-muted/50 p-4">
+                      <p className="text-sm whitespace-pre-wrap leading-relaxed">
+                        {doc.content_excerpt}
+                      </p>
+                    </div>
+                  )}
+                  {(doc.start_date || doc.end_date) && (
+                    <p className="text-xs text-muted-foreground">
+                      {doc.start_date &&
+                        `Starts ${new Date(doc.start_date).toLocaleDateString('en-GB')}`}
+                      {doc.start_date && doc.end_date && ' · '}
+                      {doc.end_date &&
+                        `Ends ${new Date(doc.end_date).toLocaleDateString('en-GB')}`}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
             {/* Message from sender */}
             {request.message && canSign && (
               <Card>

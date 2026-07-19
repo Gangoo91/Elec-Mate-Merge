@@ -457,6 +457,9 @@ export default function MyTasksPage() {
 
   // ?task deep-link — open the ticket if an id is passed (once tasks load).
   const deepLinkTask = searchParams.get('task');
+  // ?job deep-link (e.g. from My Jobs "My tasks") — that job's group is
+  // hoisted to the top of the job-grouped list.
+  const deepLinkJob = searchParams.get('job');
   useEffect(() => {
     if (deepLinkTask && tasks.some((t) => t.id === deepLinkTask)) {
       setSelectedId(deepLinkTask);
@@ -556,9 +559,10 @@ export default function MyTasksPage() {
     list.forEach((g) => g.items.sort(sortTasks));
     const openInGroup = (g: { items: JobTask[] }) =>
       g.items.some((t) => t.status !== 'Done') ? 0 : 1;
-    list.sort((a, b) => openInGroup(a) - openInGroup(b));
+    const jobRank = (g: { jobId: string }) => (deepLinkJob && g.jobId === deepLinkJob ? 0 : 1);
+    list.sort((a, b) => jobRank(a) - jobRank(b) || openInGroup(a) - openInGroup(b));
     return list;
-  }, [filtered]);
+  }, [filtered, deepLinkJob]);
 
   // Group by status — fixed ordering, only non-empty buckets.
   const byStatus = useMemo(() => {

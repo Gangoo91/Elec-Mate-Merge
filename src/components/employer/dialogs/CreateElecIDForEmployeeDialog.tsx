@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -102,23 +102,24 @@ export function CreateElecIDForEmployeeDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 flex items-center justify-center">
               <IdCard className="h-5 w-5 text-elec-yellow" />
             </div>
-            <div>
-              <DialogTitle className="text-white">Create Elec-ID</DialogTitle>
-              <DialogDescription className="text-white">
-                Set up digital ID for {employeeName}
-              </DialogDescription>
+            <div className="text-left">
+              <ResponsiveFormModalTitle className="text-white">
+                Create Elec-ID
+              </ResponsiveFormModalTitle>
+              <p className="text-[12.5px] text-white/70">Set up digital ID for {employeeName}</p>
             </div>
           </div>
-        </DialogHeader>
+        </ResponsiveFormModalHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+        <ResponsiveFormModalBody className="pb-6">
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <FormCard eyebrow="ID profile">
             <Field label="ECS card type">
               <Select
@@ -199,8 +200,9 @@ export function CreateElecIDForEmployeeDialog({
               )}
             </PrimaryButton>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+          </form>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

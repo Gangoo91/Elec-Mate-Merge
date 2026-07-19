@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -103,18 +102,19 @@ export const AddWorkHistoryDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
             <Briefcase className="h-5 w-5 text-elec-yellow" />
             Add Work History
-          </DialogTitle>
-          <DialogDescription className="text-white">
+          </ResponsiveFormModalTitle>
+          <p className="text-[12.5px] text-white/70 text-left">
             Add past employment to {profileName}'s Elec-ID profile
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </ResponsiveFormModalHeader>
 
+        <ResponsiveFormModalBody className="pb-6">
         <div className="space-y-4 py-4">
           <FormCard eyebrow="Employment details">
             <Field label="Employer" required>
@@ -196,13 +196,16 @@ export const AddWorkHistoryDialog = ({
           </FormCard>
         </div>
 
-        <DialogFooter className="gap-2">
-          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
-          <PrimaryButton onClick={handleSubmit} disabled={addWorkHistory.isPending}>
+        <div className="flex gap-2 pb-2">
+          <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+            Cancel
+          </SecondaryButton>
+          <PrimaryButton onClick={handleSubmit} disabled={addWorkHistory.isPending} fullWidth>
             {addWorkHistory.isPending ? 'Adding...' : 'Add to Elec-ID'}
           </PrimaryButton>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 };

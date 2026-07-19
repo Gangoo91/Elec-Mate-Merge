@@ -30,6 +30,11 @@ import {
   getExportToEICRSummary,
   EICFormData,
 } from '@/utils/eicToEicrExport';
+import {
+  validateMWForExport,
+  transformMWToEICR,
+  getMWExportSummary,
+} from '@/utils/mwToEicrExport';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -49,6 +54,9 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
 }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  // Same dialog serves EIC→EICR and Minor Works→EICR; the report-id prefix
+  // tells us which source we're converting from.
+  const isMinorWorks = reportId.toUpperCase().startsWith('MINOR-WORKS');
   const [isLoading, setIsLoading] = useState(true);
   const [isExporting, setIsExporting] = useState(false);
   const [eicData, setEicData] = useState<EICFormData | null>(null);
@@ -82,8 +90,8 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
       if (!data) throw new Error('Report not found');
 
       setEicData(data);
-      setValidation(validateEICForExport(data));
-      setSummary(getExportToEICRSummary(data));
+      setValidation(isMinorWorks ? validateMWForExport(data) : validateEICForExport(data));
+      setSummary(isMinorWorks ? getMWExportSummary(data) : getExportToEICRSummary(data));
     } catch (error) {
       console.error('Error loading EIC data:', error);
       toast({
@@ -107,8 +115,8 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // Transform EIC to EICR data
-      const eicrData = transformEICToEICR(eicData);
+      // Transform the source cert to EICR data
+      const eicrData = isMinorWorks ? transformMWToEICR(eicData) : transformEICToEICR(eicData);
 
       // Generate a proper EICR certificate number for the new document
       const newCertNumber = await generateCertificateNumber('eicr');
@@ -117,9 +125,10 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
       const eicrDataWithMeta = {
         ...eicrData,
         certificateNumber: newCertNumber,
-        sourceEICReportId: reportId,
+        ...(isMinorWorks
+          ? { sourceMWReportId: reportId, convertedFromMinorWorks: true }
+          : { sourceEICReportId: reportId, exportedFromEIC: true }),
         sourceCertificateNumber: eicData.certificateNumber,
-        exportedFromEIC: true,
         exportedAt: new Date().toISOString(),
       };
 
@@ -163,10 +172,12 @@ export const ExportToEICRDialog: React.FC<ExportToEICRDialogProps> = ({
           <SheetHeader className="px-4 py-4 border-b border-border">
             <SheetTitle className="flex items-center gap-2">
               <ArrowRight className="h-5 w-5 text-elec-yellow" />
-              Export EIC to EICR
+              {isMinorWorks ? 'Convert Minor Works to EICR' : 'Export EIC to EICR'}
             </SheetTitle>
             <SheetDescription>
-              Create a new EICR condition report from this installation certificate
+              {isMinorWorks
+                ? 'Create a new EICR condition report from this minor works certificate — the circuit and installation details carry over.'
+                : 'Create a new EICR condition report from this installation certificate'}
             </SheetDescription>
           </SheetHeader>
 

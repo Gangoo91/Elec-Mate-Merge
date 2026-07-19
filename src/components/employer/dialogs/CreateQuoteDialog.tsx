@@ -23,6 +23,8 @@ import {
   X,
 } from 'lucide-react';
 import { useCreateQuote, useNextQuoteNumber, usePriceBook } from '@/hooks/useFinance';
+import { sendQuote as sendQuoteService } from '@/services/financeService';
+import { useQueryClient } from '@tanstack/react-query';
 import { linkRecordToClient } from '@/services/employerClientService';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
@@ -119,6 +121,7 @@ export function CreateQuoteDialog({
   const { data: quoteNumber } = useNextQuoteNumber();
   const { data: priceBook = [] } = usePriceBook();
   const createQuoteMutation = useCreateQuote();
+  const queryClient = useQueryClient();
 
   const handleExpandDescription = async () => {
     if (!description.trim()) return;
@@ -384,6 +387,12 @@ export function CreateQuoteDialog({
       })),
     ];
 
+    const email = clientEmail.trim();
+    const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    // "Send" must actually email the client — create as Draft first and only
+    // mark Sent once the email has really gone out.
+    const willSend = sendImmediately && emailOk;
+
     const createdQuote = await createQuoteMutation.mutateAsync({
       quote_number: quoteNumber || `Q-${new Date().getFullYear()}-001`,
       client,
@@ -393,8 +402,8 @@ export function CreateQuoteDialog({
       job_title: jobTitle || null,
       description,
       value: total,
-      status: sendImmediately ? 'Sent' : 'Draft',
-      sent_date: sendImmediately ? new Date().toISOString().split('T')[0] : null,
+      status: 'Draft',
+      sent_date: null,
       valid_until: validUntil.toISOString().split('T')[0],
       job_id: jobId ?? null,
       created_by: 'Admin',
@@ -415,6 +424,46 @@ export function CreateQuoteDialog({
     // Auto-link into the CRM so the client record builds itself (non-fatal).
     if (createdQuote?.id && client) {
       linkRecordToClient('employer_quotes', createdQuote.id, client).catch(() => {});
+    }
+
+    if (sendImmediately && !willSend) {
+      toast.info('Quote saved as draft — add a client email to send it.');
+    }
+
+    if (willSend && createdQuote?.id) {
+      try {
+        const { data: linkData, error: linkError } = await supabase.functions.invoke(
+          'generate-quote-accept-link',
+          {
+            body: {
+              quoteId: createdQuote.id,
+              clientEmail: email,
+              clientName: client,
+              expiryDays: Number(validityDays) || 30,
+              baseUrl: window.location.origin,
+            },
+          }
+        );
+        if (linkError) throw linkError;
+
+        const { error: sendError } = await supabase.functions.invoke('send-finance-document', {
+          body: {
+            type: 'quote',
+            documentId: createdQuote.id,
+            recipientEmail: email,
+            recipientName: client,
+            acceptLink: linkData?.portalUrl,
+          },
+        });
+        if (sendError) throw sendError;
+
+        await sendQuoteService(createdQuote.id);
+        queryClient.invalidateQueries({ queryKey: ['quotes'] });
+        toast.success(`Quote sent to ${email}`);
+      } catch (err) {
+        console.error('Error sending quote:', err);
+        toast.error('Quote saved as draft — the email failed to send. Open it and use Send email.');
+      }
     }
 
     resetForm();

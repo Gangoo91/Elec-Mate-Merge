@@ -15,6 +15,7 @@
  */
 
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, isToday, isYesterday } from 'date-fns';
 import { Clock, Loader2, Play, Square, PenLine, ArrowLeft } from 'lucide-react';
@@ -30,8 +31,7 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
-import { useActiveJobs } from '@/hooks/useJobs';
+import { useWorkerSelfService, useMyJobs } from '@/hooks/useWorkerSelfService';
 import { useCreateTimesheet } from '@/hooks/useTimesheets';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
@@ -108,7 +108,10 @@ export default function TimesheetPage() {
     todaysHours,
   } = useWorkerSelfService();
 
-  const { data: jobs, isLoading: jobsLoading } = useActiveJobs();
+  // The worker's own assigned, still-open jobs — the same list My Jobs shows —
+  // so a worker can always log hours against any job they hold, not only jobs
+  // whose status the employer has flipped to 'Active'.
+  const { data: jobs, isLoading: jobsLoading } = useMyJobs('active');
   const createTimesheet = useCreateTimesheet();
 
   // Live: an employer decision (approve / reject) on one of this worker's
@@ -122,9 +125,12 @@ export default function TimesheetPage() {
     Boolean(employeeId)
   );
 
+  // ?job=<id> deep link (e.g. from My Jobs "Clock in") pre-selects that job.
+  const [searchParams] = useSearchParams();
+
   const [view, setView] = useState<TimesheetView>('overview');
   const [historyFilter, setHistoryFilter] = useState<HistoryFilter>('week');
-  const [selectedJobId, setSelectedJobId] = useState<string>('');
+  const [selectedJobId, setSelectedJobId] = useState<string>(searchParams.get('job') ?? '');
   const [breakMinutes, setBreakMinutes] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

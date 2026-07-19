@@ -3,6 +3,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Camera, Image, Upload, Loader2, Check, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { useStorageUrls } from '@/utils/storageUrls';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import {
@@ -32,6 +33,9 @@ export function BriefingPhotoUpload({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [photos, setPhotos] = useState<string[]>(existingPhotos);
   const [uploading, setUploading] = useState(false);
+  // Resolve stored references for display only — the saved array keeps the
+  // raw values (legacy full URLs and new bare paths) untouched.
+  const { urls: photoSrcs } = useStorageUrls('briefing-photos', photos);
 
   // Mutation to save photos to the briefing
   const savePhotosMutation = useMutation({
@@ -102,11 +106,14 @@ export function BriefingPhotoUpload({
         // Compress image if needed
         const compressedFile = await compressImage(file);
 
-        // Upload to Supabase Storage
-        const fileName = `briefing-photos/${user.id}/${briefingId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+        // Upload to the dedicated briefing-photos bucket. Its INSERT policy
+        // requires the FIRST folder to be auth.uid() — the old visual-uploads
+        // path ('briefing-photos/...') violated that policy and every upload
+        // was rejected.
+        const fileName = `${user.id}/${briefingId}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
 
         const { data, error } = await supabase.storage
-          .from('visual-uploads')
+          .from('briefing-photos')
           .upload(fileName, compressedFile, {
             contentType: file.type,
             upsert: false,
@@ -114,10 +121,9 @@ export function BriefingPhotoUpload({
 
         if (error) throw error;
 
-        // Get public URL
-        const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
-
-        uploadedUrls.push(urlData.publicUrl);
+        // Store the bare storage path (privacy-ready) — readers resolve it
+        // via useStorageUrls and still accept legacy full-URL entries.
+        uploadedUrls.push(data.path);
       }
 
       if (uploadedUrls.length > 0) {
@@ -289,7 +295,7 @@ export function BriefingPhotoUpload({
                   className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08] group"
                 >
                   <img
-                    src={photo}
+                    src={photoSrcs[photo] ?? photo}
                     alt={`Photo ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

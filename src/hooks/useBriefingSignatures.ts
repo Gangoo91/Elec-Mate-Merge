@@ -227,10 +227,9 @@ export function useUploadSignature() {
 
       if (error) throw error;
 
-      // Get public URL
-      const { data: urlData } = supabase.storage.from('briefings').getPublicUrl(data.path);
-
-      return urlData.publicUrl;
+      // Store the bare storage path (privacy-ready). Readers resolve it via
+      // useStorageUrl(s)('briefings', …) and still accept legacy full-URL rows.
+      return data.path;
     },
     onError: (error) => {
       toast({

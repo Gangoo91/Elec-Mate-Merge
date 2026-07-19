@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -121,13 +127,16 @@ export function ScheduleInterviewDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="text-white">Schedule interview</DialogTitle>
-        </DialogHeader>
+    <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
+      <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveFormModalHeader>
+          <ResponsiveFormModalTitle className="text-white">
+            Schedule interview
+          </ResponsiveFormModalTitle>
+        </ResponsiveFormModalHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <ResponsiveFormModalBody className="pb-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3">
             <p className="text-[11px] text-white uppercase tracking-[0.14em]">
               Scheduling interview with
@@ -257,8 +266,9 @@ export function ScheduleInterviewDialog({
               Schedule
             </PrimaryButton>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+          </form>
+        </ResponsiveFormModalBody>
+      </ResponsiveFormModalContent>
+    </ResponsiveFormModal>
   );
 }

@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
 import { RefreshCw, Users, MapPin } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { useJobs } from '@/hooks/useJobs';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
@@ -35,19 +37,28 @@ const RANGE_DAYS: Record<RangeKey, number> = {
   quarter: 84,
 };
 
+// Only stages the timeline actually derives (Active → In Progress,
+// Pending → Scheduled) — a legend of stages that can never occur is noise.
 const stageBarColor: Record<string, string> = {
   'In Progress': 'bg-elec-yellow',
   Scheduled: 'bg-cyan-400',
-  Testing: 'bg-purple-400',
-  Confirmed: 'bg-emerald-400',
 };
 
 const stageTone: Record<string, Tone> = {
   'In Progress': 'yellow',
   Scheduled: 'cyan',
-  Testing: 'purple',
-  Confirmed: 'emerald',
 };
+
+const WORKER_STATUS_TONE: Record<string, Tone> = {
+  'On Site': 'emerald',
+  'En Route': 'blue',
+  Office: 'amber',
+  'On Leave': 'red',
+  'Off Duty': 'purple',
+};
+
+/** Match Worker Tracking: a position older than this is history, not live. */
+const STALE_AFTER_HOURS = 12;
 
 export function JobTimelineSection() {
   const [range, setRange] = useState<RangeKey>('week');
@@ -64,13 +75,43 @@ export function JobTimelineSection() {
   const periodDays = useMemo(() => {
     const today = new Date();
     const start = new Date(today);
-    start.setDate(today.getDate() - today.getDay() + 1 + periodOffset * rangeDays);
+    // Monday of the current week — ((getDay()+6)%7) is 0 on Monday and 6 on
+    // Sunday; the old `getDay()-1` maths made Sunday show NEXT week's window.
+    start.setDate(today.getDate() - ((today.getDay() + 6) % 7) + periodOffset * rangeDays);
+    // Normalise to midnight: job dates parse to 00:00, so a wall-clock period
+    // start floored bars into the previous day and dropped edge jobs.
+    start.setHours(0, 0, 0, 0);
     return Array.from({ length: rangeDays }, (_, i) => {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
       return d;
     });
   }, [periodOffset, rangeDays]);
+
+  // Real crew counts from assignments — employer_jobs.workers_count is never
+  // updated by anything (assignment writes go to employer_job_assignments),
+  // so reading it showed 0 for every assigned crew. Same query/key as
+  // JobsSection so the cache is shared.
+  const { data: allAssignments = [] } = useQuery({
+    queryKey: ['all-job-assignments'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('employer_job_assignments').select(`
+          job_id,
+          employee:employer_employees(id, name, avatar_initials, photo_url)
+        `);
+      if (error) throw error;
+      return data || [];
+    },
+  });
+
+  const crewCountByJob = useMemo(() => {
+    const map = new Map<string, number>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    allAssignments.forEach((a: any) => {
+      map.set(a.job_id, (map.get(a.job_id) ?? 0) + 1);
+    });
+    return map;
+  }, [allAssignments]);
 
   const activeJobs = jobs
     .filter((j) => ['active', 'pending'].includes((j.status || '').toLowerCase()))
@@ -79,7 +120,7 @@ export function JobTimelineSection() {
     .map((job) => ({
       ...job,
       stage: (job.status || '').toLowerCase() === 'active' ? 'In Progress' : 'Scheduled',
-      assignedWorkers: job.workers_count || 0,
+      assignedWorkers: crewCountByJob.get(job.id) ?? 0,
       startDate: job.start_date as string,
       // Open-ended job (no end date) shows as a single-day marker, not a fake span.
       endDate: job.end_date || (job.start_date as string),
@@ -157,7 +198,7 @@ export function JobTimelineSection() {
         <PageHero
           eyebrow="Operations"
           title="Timeline"
-          description="Gantt view for every job — milestones and dependencies."
+          description="Gantt view of scheduled jobs across the week, month or quarter."
           tone="indigo"
         />
         <LoadingBlocks />
@@ -393,25 +434,35 @@ export function JobTimelineSection() {
         <ListCard>
           <ListCardHeader
             tone="cyan"
-            title="Workers on rota"
+            title="Team availability"
             meta={<Pill tone="cyan">{employees.filter((e) => e.status === 'Active').length}</Pill>}
           />
           <ListBody>
             {employees
               .filter((e) => e.status === 'Active')
-              .slice(0, 9)
               .map((employee) => {
+                // Same truth as Worker Tracking: honour the real status
+                // (a worker on leave is NOT "Available") and demote stale
+                // location rows instead of trusting a days-old "On Site".
                 const loc = workerLocations.find((l) => l.employee_id === employee.id);
-                const onSite = (loc?.status || '').toLowerCase().replace('_', ' ') === 'on site';
-                const statusTone: Tone = onSite ? 'emerald' : 'cyan';
-                const statusLabel = onSite ? 'On site' : 'Available';
+                const isStale =
+                  !!loc &&
+                  (!loc.last_updated ||
+                    Date.now() - new Date(loc.last_updated).getTime() >
+                      STALE_AFTER_HOURS * 60 * 60 * 1000);
+                const status = isStale
+                  ? 'Off Duty'
+                  : loc?.status || (employee.status === 'On Leave' ? 'On Leave' : 'Office');
+                const onSite = status === 'On Site';
                 return (
                   <ListRow
                     key={employee.id}
                     lead={<Avatar initials={employee.avatar_initials} online={onSite} />}
                     title={employee.name}
                     subtitle={employee.team_role}
-                    trailing={<Pill tone={statusTone}>{statusLabel}</Pill>}
+                    trailing={
+                      <Pill tone={WORKER_STATUS_TONE[status] ?? 'cyan'}>{status}</Pill>
+                    }
                   />
                 );
               })}

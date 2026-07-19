@@ -56,7 +56,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
   const canGenerate = hasRAMS && hasMethodStatement;
 
   const briefingsGenerated = jobPacks.filter((jp) => jp.briefing_pack_generated).length;
-  const packsSent = jobPacks.filter((jp) => jp.briefing_pack_generated).length;
+  const jobPacksCount = jobPacks.length;
 
   const handlePickPhotos = () => fileInputRef.current?.click();
 
@@ -135,27 +135,40 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
       setResult(data);
       setIsGenerating(false);
 
-      toast({
-        title: 'Briefing pack generated',
-        description: 'Saved to the job pack — workers see it when you send for sign-off.',
-      });
-
       if (selectedJobPackId) {
         // THE connection: the generated briefing lands on the pack itself,
-        // which is exactly what workers read (and sign) in SignOffsSheet
+        // which is exactly what workers read (and sign) in SignOffsSheet.
+        // Only claim "saved" once the write actually lands.
         const generatedText =
           typeof data?.content === 'string'
             ? data.content
             : typeof data?.briefingContent === 'string'
               ? data.briefingContent
               : formatBriefingContent(data?.content ?? data);
-        updateJobPack.mutate({
-          id: selectedJobPackId,
-          updates: {
-            briefing_pack_generated: true,
-            briefing_content: generatedText,
+        updateJobPack.mutate(
+          {
+            id: selectedJobPackId,
+            updates: {
+              briefing_pack_generated: true,
+              briefing_content: generatedText,
+            },
           },
-        });
+          {
+            onSuccess: () =>
+              toast({
+                title: 'Briefing pack generated',
+                description: 'Saved to the job pack — workers see it when you send for sign-off.',
+              }),
+            onError: () =>
+              toast({
+                title: 'Generated, but not saved to the job pack',
+                description: 'The briefing could not be written to the pack — tap Generate again.',
+                variant: 'destructive',
+              }),
+          }
+        );
+      } else {
+        toast({ title: 'Briefing pack generated' });
       }
     } catch (err: any) {
       setIsGenerating(false);
@@ -171,16 +184,28 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
   const handleDownloadPdf = () => {
     if (!result) return;
     const w = window.open('', '_blank');
-    if (!w) return;
+    if (!w) {
+      toast({
+        title: 'Pop-up blocked',
+        description: 'Allow pop-ups for Elec-Mate to export the briefing.',
+        variant: 'destructive',
+      });
+      return;
+    }
     const title = selectedJobPack?.title || 'Briefing Pack';
     const safe = (s: string) =>
       String(s ?? '').replace(/[&<>"']/g, (c) =>
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string)
       );
-    const body =
+    // Same human-readable formatting the worker sign-off screen gets — never
+    // the raw response object.
+    const briefingText =
       typeof result === 'string'
-        ? `<pre style="white-space:pre-wrap;font-family:inherit">${safe(result)}</pre>`
-        : `<pre style="white-space:pre-wrap;font-family:inherit">${safe(JSON.stringify(result, null, 2))}</pre>`;
+        ? result
+        : typeof result?.content === 'string'
+          ? result.content
+          : formatBriefingContent(result?.content ?? result);
+    const body = `<pre style="white-space:pre-wrap;font-family:inherit">${safe(briefingText)}</pre>`;
     const photoHtml = photos
       .map(
         (p) =>
@@ -233,8 +258,8 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
         columns={3}
         stats={[
           { label: 'Generated', value: briefingsGenerated, tone: 'amber' },
-          { label: 'Photos used', value: photos.length, tone: 'blue' },
-          { label: 'Packs sent', value: packsSent, tone: 'emerald' },
+          { label: 'Photos attached', value: photos.length, tone: 'blue' },
+          { label: 'Job packs', value: jobPacksCount, tone: 'emerald' },
         ]}
       />
 
@@ -313,6 +338,9 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     onChange={handlePhotoChange}
                   />
                 </div>
+                <p className="text-[11.5px] text-white/50">
+                  Photos are included in the exported briefing PDF.
+                </p>
                 {photos.length === 0 ? (
                   <div className="rounded-xl border border-dashed border-white/[0.08] bg-[hsl(0_0%_10%)] py-6 text-center text-[12.5px] text-white">
                     No photos attached yet.
@@ -332,9 +360,11 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                         <button
                           onClick={() => handleRemovePhoto(p.id)}
                           aria-label="Remove photo"
-                          className="absolute top-1.5 right-1.5 h-7 w-7 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black/90 touch-manipulation"
+                          className="absolute top-1 right-1 h-11 w-11 rounded-full text-white flex items-center justify-center touch-manipulation"
                         >
-                          <X className="h-3.5 w-3.5" />
+                          <span className="h-7 w-7 rounded-full bg-black/70 hover:bg-black/90 flex items-center justify-center">
+                            <X className="h-3.5 w-3.5" />
+                          </span>
                         </button>
                         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-2 py-1.5 text-[10px] text-white truncate">
                           {p.name}
@@ -380,7 +410,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
               {result && !error && (
                 <div className="flex items-center gap-2 text-[12.5px] text-white">
                   <Dot tone="emerald" />
-                  Briefing pack ready and attached to job pack.
+                  Briefing pack ready.
                 </div>
               )}
             </div>

@@ -40,13 +40,21 @@ serve(async (req) => {
       'http://localhost:',
       'https://www.elec-mate.com',
       'https://elec-mate.com',
+      'capacitor://localhost', // iOS native app (Capacitor WebView)
+      'https://localhost', // Android native app (Capacitor WebView)
     ];
 
     let finalReturnUrl = 'https://www.elec-mate.com/electrician/invoices';
     if (returnUrl) {
       const isAllowed = allowedOrigins.some((origin) => returnUrl!.startsWith(origin));
       if (isAllowed) {
-        finalReturnUrl = returnUrl;
+        // Stripe live mode rejects non-https return URLs — the native app
+        // sends its WebView origin (capacitor://localhost or https://localhost),
+        // so translate that to the same path on the public web origin. The
+        // universal-link handler routes it back into the app after onboarding.
+        finalReturnUrl = returnUrl
+          .replace(/^capacitor:\/\/localhost/, 'https://www.elec-mate.com')
+          .replace(/^https:\/\/localhost(?::\d+)?/, 'https://www.elec-mate.com');
       }
     }
 
@@ -232,7 +240,8 @@ serve(async (req) => {
     accountParams.append('type', 'express');
     accountParams.append('country', 'GB');
     accountParams.append('email', profile.company_email || user.email || '');
-    accountParams.append('business_type', 'individual');
+    // business_type intentionally omitted — Stripe Express onboarding asks the
+    // user (sole trader vs limited company) instead of us forcing 'individual'.
     accountParams.append('capabilities[card_payments][requested]', 'true');
     accountParams.append('capabilities[transfers][requested]', 'true');
     accountParams.append('business_profile[name]', profile.company_name || 'Electrical Contractor');

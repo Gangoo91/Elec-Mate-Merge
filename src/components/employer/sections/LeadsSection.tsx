@@ -36,7 +36,8 @@ import {
   selectContentClass,
   type Tone,
 } from '@/components/employer/editorial';
-import { Phone, Mail, Plus, UserPlus, Sparkles, Copy, Check, Send } from 'lucide-react';
+import { Phone, Mail, Plus, UserPlus, Sparkles, Copy, Check, Send, Zap } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import {
   useLeads,
   useCreateLead,
@@ -99,6 +100,7 @@ export function LeadsSection() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [filter, setFilter] = useState<'all' | LeadStage>('all');
   const [form, setForm] = useState({ ...EMPTY_FORM });
+  const [, setSearchParams] = useSearchParams();
 
   // Mate follow-up drafting
   const followUp = useDraftFollowUp();
@@ -248,7 +250,11 @@ export function LeadsSection() {
             { label: 'Open leads', value: openLeads.length, tone: 'cyan' },
             { label: 'Pipeline', value: fmt(pipeline), tone: 'blue', accent: true },
             { label: 'Won', value: wonCount, tone: 'emerald' },
-            { label: 'Win rate', value: `${winRate}%`, tone: winRate >= 50 ? 'emerald' : 'amber' },
+            {
+              label: 'Win rate',
+              value: decided > 0 ? `${winRate}%` : '—',
+              tone: decided === 0 ? undefined : winRate >= 50 ? 'emerald' : 'amber',
+            },
           ]}
         />
 
@@ -260,17 +266,33 @@ export function LeadsSection() {
 
         {isLoading ? (
           <LoadingBlocks />
+        ) : leads.length === 0 ? (
+          <div className="rounded-2xl border border-elec-yellow/25 bg-gradient-to-b from-elec-yellow/[0.08] to-transparent p-5 sm:p-6">
+            <div className="flex items-start gap-3">
+              <div className="h-10 w-10 shrink-0 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 grid place-items-center">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-[15px] font-semibold text-white">No leads yet</h3>
+                <p className="mt-1 text-[12.5px] text-white/60 leading-relaxed">
+                  Your quote page is the fastest way to fill this pipeline — share the link or QR
+                  and every enquiry lands here automatically. You can also add leads by hand.
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <PrimaryButton onClick={() => setSearchParams({ section: 'quotepage' })} fullWidth>
+                <Zap className="h-4 w-4 mr-1.5" />
+                Share your quote page
+              </PrimaryButton>
+              <SecondaryButton onClick={() => setAddOpen(true)} fullWidth>
+                <Plus className="h-4 w-4 mr-1.5" />
+                Add a lead
+              </SecondaryButton>
+            </div>
+          </div>
         ) : filtered.length === 0 ? (
-          <EmptyState
-            title={leads.length === 0 ? 'No leads yet' : 'None in this stage'}
-            description={
-              leads.length === 0
-                ? 'Share your quote page (Clients → Quote Page) and enquiries land here automatically — or add one manually.'
-                : 'Try another stage.'
-            }
-            action={leads.length === 0 ? 'Add lead' : undefined}
-            onAction={() => setAddOpen(true)}
-          />
+          <EmptyState title="None in this stage" description="Try another stage." />
         ) : (
           <ListCard>
             <ListCardHeader

@@ -43,7 +43,7 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
             <div className="mt-0.5 text-[11.5px] text-white truncate">{profile.role}</div>
             <div className="mt-2 flex items-center gap-2 flex-wrap">
               <Pill tone={tone}>{profile.ecsCardType}</Pill>
-              {profile.verified && <Pill tone="emerald">JIB Verified</Pill>}
+              {profile.verified && <Pill tone="emerald">Verified</Pill>}
             </div>
           </div>
           <div className="hidden sm:flex items-center gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden shrink-0">
@@ -84,7 +84,9 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
               {profile.elecIdNumber}
             </div>
           </div>
-          {profile.verified && <Pill tone="emerald">JIB Verified</Pill>}
+          {/* Employer attestation — never claim JIB (or any external body)
+              verified this; is_verified is set by the employer's own click */}
+          {profile.verified && <Pill tone="emerald">Verified</Pill>}
         </div>
 
         <div className="mt-5 flex items-start gap-4">
@@ -107,12 +109,13 @@ export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProp
         <div className="flex items-center gap-2 flex-wrap">
           <Pill tone={tone}>{profile.ecsCardType}</Pill>
           <span className="text-[11px] text-white tabular-nums">
-            Expires{' '}
-            {new Date(profile.ecsExpiry).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-            })}
+            {profile.ecsExpiry
+              ? `Expires ${new Date(profile.ecsExpiry).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}`
+              : 'No expiry on record'}
           </span>
         </div>
         <span className="font-mono text-[11px] text-white tabular-nums">

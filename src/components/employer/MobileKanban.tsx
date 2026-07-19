@@ -52,7 +52,9 @@ interface MobileKanbanProps {
 const getStageLabelColor = (stageId: string): string => {
   switch (stageId) {
     case 'Quoted':
-      return 'bg-[hsl(0_0%_12%)]-foreground';
+      // was 'bg-[hsl(0_0%_12%)]-foreground' — an invalid class from a
+      // scripted replace, so the Quoted indicator rendered invisible
+      return 'bg-amber-400';
     case 'Confirmed':
       return 'bg-info';
     case 'Scheduled':
@@ -64,7 +66,7 @@ const getStageLabelColor = (stageId: string): string => {
     case 'Complete':
       return 'bg-success';
     default:
-      return 'bg-[hsl(0_0%_12%)]-foreground';
+      return 'bg-white/40';
   }
 };
 

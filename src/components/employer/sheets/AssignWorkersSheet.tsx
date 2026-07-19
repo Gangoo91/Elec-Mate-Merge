@@ -22,6 +22,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStorageUrls } from '@/utils/storageUrls';
 import {
   PrimaryButton,
   SecondaryButton,
@@ -45,6 +46,11 @@ export function AssignWorkersSheet({
   existingAssignments,
 }: AssignWorkersSheetProps) {
   const { data: employees = [], isLoading: loadingEmployees } = useEmployees();
+  // Legacy full photo URLs pass through; new bare paths are signed on demand.
+  const { urls: photoSrcs } = useStorageUrls(
+    'employee-photos',
+    employees.map((e) => e.photo_url)
+  );
   const createAssignment = useCreateJobAssignment();
   const checkClashes = useCheckForClashes();
 
@@ -334,8 +340,8 @@ export function AssignWorkersSheet({
                           className="h-8 w-8 border-2 border-[hsl(0_0%_8%)]"
                           style={{ zIndex: 4 - idx }}
                         >
-                          {worker.photo_url ? (
-                            <AvatarImage src={worker.photo_url} alt={worker.name} />
+                          {worker.photo_url && photoSrcs[worker.photo_url] ? (
+                            <AvatarImage src={photoSrcs[worker.photo_url]} alt={worker.name} />
                           ) : null}
                           <AvatarFallback className="text-xs bg-elec-yellow text-black">
                             {worker.avatar_initials}

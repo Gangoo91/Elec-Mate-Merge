@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,6 +18,7 @@ import {
   useQuotes,
 } from '@/hooks/useFinance';
 import { useJobs } from '@/hooks/useJobs';
+import { useAuth } from '@/contexts/AuthContext';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import type { PriceBookItem, MaterialOrder } from '@/services/financeService';
 import {
@@ -88,7 +89,16 @@ export function CreateOrderDialog({
   const { data: jobs = [] } = useJobs();
   const { data: quotes = [] } = useQuotes();
   const createOrderMutation = useCreateMaterialOrder();
+  const { user, profile } = useAuth();
   const [fromQuoteId, setFromQuoteId] = useState('');
+
+  // Apply prefills when the sheet opens — the dialog stays mounted between
+  // opens, so initial useState values only ever apply on first mount.
+  useEffect(() => {
+    if (!open) return;
+    if (prefillSupplier) setSupplierId(prefillSupplier);
+    if (prefillItem) setNewItem((n) => (n.name ? n : { ...n, name: prefillItem }));
+  }, [open, prefillSupplier, prefillItem]);
 
   // Pull the material lines out of a quote and pre-fill them as PO lines,
   // priced at buy cost (price-book match) so the PO builds itself from the job.
@@ -122,6 +132,10 @@ export function CreateOrderDialog({
   const total = subtotal + vatAmount;
 
   const voiceContext = useOptionalVoiceFormContext();
+
+  // Latest handleSubmit for the voice-form registration — kept in sync in an
+  // effect below so voice "submit" never fires a stale closure
+  const submitRef = useRef<(send?: boolean) => void>(() => {});
 
   // Deliver-to-site defaults to the linked job's site address.
   useEffect(() => {
@@ -180,7 +194,10 @@ export function CreateOrderDialog({
           ]);
         }
       },
-      onSubmit: () => handleSubmit(false),
+      // Ref, not a direct closure — the register effect only re-runs on
+      // open/suppliers/jobs, so a captured handleSubmit would see stale
+      // items/supplier state and voice "submit" would silently no-op
+      onSubmit: () => submitRef.current(false),
       onCancel: () => {
         resetForm();
         onOpenChange(false);
@@ -236,40 +253,55 @@ export function CreateOrderDialog({
   const handleSubmit = async (send = false) => {
     if (!supplierId || items.length === 0) return;
 
-    const created = await createOrderMutation.mutateAsync({
-      order_number: orderNumber || `PO-${new Date().getFullYear()}-0001`,
-      supplier_id: supplierId,
-      job_id: jobId,
-      items: items.map((i) => ({
-        name: i.name,
-        sku: i.sku,
-        unit: i.unit,
-        qty: i.qty,
-        unit_cost: i.price,
-        received_qty: 0,
-      })),
-      subtotal,
-      vat_rate: vatRate,
-      vat_amount: vatAmount,
-      total,
-      status: 'Draft',
-      delivery_mode: deliveryMode,
-      delivery_address: deliveryMode === 'Deliver to site' ? deliveryAddress || null : null,
-      order_date: new Date().toISOString().split('T')[0],
-      expected_date: expectedDate || null,
-      delivery_date: null,
-      ordered_by: 'Admin',
-      sent_at: null,
-      sent_to_email: null,
-      confirmed_at: null,
-      pdf_url: null,
-      notes: notes || null,
-    });
+    let created: MaterialOrder;
+    try {
+      created = await createOrderMutation.mutateAsync({
+        // Fallback must not collide AND must not hijack the numeric sequence —
+        // a bare 6-digit epoch parsed as the year's max and jumped every later
+        // PO into 6-digit numbers. The T-prefix makes both numbering parsers
+        // skip it (parseInt → NaN); the unique index still backstops collisions.
+        order_number:
+          orderNumber || `PO-${new Date().getFullYear()}-T${Date.now().toString(36).toUpperCase()}`,
+        supplier_id: supplierId,
+        job_id: jobId,
+        items: items.map((i) => ({
+          name: i.name,
+          sku: i.sku,
+          unit: i.unit,
+          qty: i.qty,
+          unit_cost: i.price,
+          received_qty: 0,
+        })),
+        subtotal,
+        vat_rate: vatRate,
+        vat_amount: vatAmount,
+        total,
+        status: 'Draft',
+        delivery_mode: deliveryMode,
+        delivery_address: deliveryMode === 'Deliver to site' ? deliveryAddress || null : null,
+        order_date: new Date().toISOString().split('T')[0],
+        expected_date: expectedDate || null,
+        delivery_date: null,
+        ordered_by: profile?.full_name?.trim() || user?.email || null,
+        sent_at: null,
+        sent_to_email: null,
+        confirmed_at: null,
+        pdf_url: null,
+        notes: notes || null,
+      });
+    } catch {
+      // Hook surfaces the error toast; keep the sheet open so nothing is lost.
+      return;
+    }
 
     resetForm();
     onOpenChange(false);
     if (created) onCreated?.(created, send);
   };
+
+  useEffect(() => {
+    submitRef.current = handleSubmit;
+  });
 
   const resetForm = () => {
     setSupplierId('');
@@ -458,7 +490,7 @@ export function CreateOrderDialog({
                           type="number"
                           value={item.qty}
                           onChange={(e) => updateItemQty(item.id, Number(e.target.value))}
-                          className={`${inputClass} w-14 h-8`}
+                          className={`${inputClass} w-16 h-11`}
                           min={1}
                           aria-label="Quantity"
                         />
@@ -467,7 +499,7 @@ export function CreateOrderDialog({
                           type="number"
                           value={item.price}
                           onChange={(e) => updateItemPrice(item.id, Number(e.target.value))}
-                          className={`${inputClass} w-20 h-8`}
+                          className={`${inputClass} w-24 h-11`}
                           min={0}
                           step={0.01}
                           aria-label="Unit cost"
@@ -484,7 +516,7 @@ export function CreateOrderDialog({
                       <button
                         type="button"
                         onClick={() => removeItem(item.id)}
-                        className="mt-1 h-7 w-7 inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 hover:bg-red-500/15 transition-colors"
+                        className="mt-1 h-11 w-11 touch-manipulation inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 hover:bg-red-500/15 transition-colors"
                         aria-label="Remove item"
                       >
                         <Trash2 className="h-3.5 w-3.5" />

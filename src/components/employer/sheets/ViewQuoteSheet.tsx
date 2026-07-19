@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import {
   FileText,
   Send,
@@ -29,8 +30,12 @@ import {
   Signature,
   Download,
   Package,
+  Briefcase,
+  ChevronRight,
 } from 'lucide-react';
-import { useSendQuote, useUpdateQuote, useDeleteQuote } from '@/hooks/useFinance';
+import { useSendQuote, useUpdateQuote, useDeleteQuote, useCreateQuote } from '@/hooks/useFinance';
+import { getNextQuoteNumber } from '@/services/financeService';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -59,6 +64,7 @@ import {
   Eyebrow,
   inputClass,
 } from '@/components/employer/editorial';
+import { RequestSignatureSheet } from '@/components/employer/sheets/RequestSignatureSheet';
 
 interface ViewQuoteSheetProps {
   open: boolean;
@@ -87,6 +93,8 @@ export function ViewQuoteSheet({
   const sendQuoteMutation = useSendQuote();
   const updateQuoteMutation = useUpdateQuote();
   const deleteQuoteMutation = useDeleteQuote();
+  const createQuoteMutation = useCreateQuote();
+  const { companyProfile } = useCompanyProfile();
   const haptic = useHaptic();
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [showLinkDialog, setShowLinkDialog] = useState(false);
@@ -97,6 +105,15 @@ export function ViewQuoteSheet({
   const [acceptance, setAcceptance] = useState<QuoteAcceptance | null>(null);
   const [, setLoadingAcceptance] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [showSignatureRequest, setShowSignatureRequest] = useState(false);
+  const [, setSearchParams] = useSearchParams();
+
+  // Pivot to the linked job — JobsSection consumes ?job=<id> and opens it.
+  const handleViewJob = () => {
+    if (!quote?.job_id) return;
+    onOpenChange(false);
+    setSearchParams({ section: 'jobs', job: quote.job_id });
+  };
 
   useEffect(() => {
     if (quote) {
@@ -160,6 +177,7 @@ export function ViewQuoteSheet({
     Sent: 'amber',
     Approved: 'emerald',
     'Client Accepted': 'emerald',
+    Converted: 'emerald',
     Rejected: 'red',
     'Client Declined': 'red',
   };
@@ -287,6 +305,44 @@ export function ViewQuoteSheet({
     if (onConvertToInvoice) {
       onConvertToInvoice(quote);
       onOpenChange(false);
+    }
+  };
+
+  const handleDuplicate = async () => {
+    haptic.light();
+    try {
+      const nextNumber = await getNextQuoteNumber();
+      const validUntil = new Date();
+      validUntil.setDate(validUntil.getDate() + 30);
+      await createQuoteMutation.mutateAsync({
+        quote_number: nextNumber,
+        client: quote.client,
+        client_address: quote.client_address ?? null,
+        client_email: quote.client_email ?? null,
+        client_phone: quote.client_phone ?? null,
+        job_title: quote.job_title ?? null,
+        description: quote.description,
+        value: Number(quote.value),
+        status: 'Draft',
+        sent_date: null,
+        valid_until: validUntil.toISOString().split('T')[0],
+        job_id: quote.job_id ?? null,
+        created_by: quote.created_by ?? 'Admin',
+        line_items: quote.line_items,
+        notes: quote.notes,
+        vat_rate: quote.vat_rate,
+        reverse_charge: quote.reverse_charge,
+        cis_enabled: quote.cis_enabled,
+        cis_rate: quote.cis_rate,
+        subtotal: quote.subtotal,
+        vat_amount: quote.vat_amount,
+        cis_amount: quote.cis_amount,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
+      toast.success(`Duplicated as ${nextNumber} (draft)`);
+      onOpenChange(false);
+    } catch (err) {
+      console.error('Error duplicating quote:', err);
     }
   };
 
@@ -461,6 +517,17 @@ export function ViewQuoteSheet({
                     {(quote as any).job_title}
                   </p>
                 </div>
+              )}
+              {quote.job_id && (
+                <button
+                  type="button"
+                  onClick={handleViewJob}
+                  className="flex w-full items-center gap-2 min-h-11 rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 text-left touch-manipulation transition-colors hover:bg-white/[0.08]"
+                >
+                  <Briefcase className="h-4 w-4 text-elec-yellow shrink-0" />
+                  <span className="text-[13px] font-medium text-white">View linked job</span>
+                  <ChevronRight className="ml-auto h-4 w-4 text-white/30 shrink-0" />
+                </button>
               )}
               {(quote as any).client_address && (
                 <div>
@@ -651,21 +718,48 @@ export function ViewQuoteSheet({
                   // and knows nothing about employer quotes
                   const items = Array.isArray(quote.line_items) ? quote.line_items : [];
                   const money = (v: number) => `£${Number(v || 0).toFixed(2)}`;
+                  // Escape EVERY user-entered string (client names like
+                  // "Smith & Sons <Ltd>" must not break or inject markup).
+                  const esc = (s: string) =>
+                    s
+                      .replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;')
+                      .replace(/"/g, '&quot;');
                   const rows = items
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     .map(
                       (i: { description?: string; quantity?: number; total?: number }) =>
-                        `<tr><td>${i.description || ''}</td><td>${i.quantity ?? 1}</td><td style="text-align:right">${money(i.total || 0)}</td></tr>`
+                        `<tr><td>${esc(i.description || '')}</td><td>${i.quantity ?? 1}</td><td style="text-align:right">${money(i.total || 0)}</td></tr>`
                     )
                     .join('');
-                  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Quote ${quote.quote_number}</title>
-<style>body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:#0f172a;max-width:760px;margin:0 auto;padding:40px}h1{font-size:22px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{text-align:left;padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px}th{font-size:11px;text-transform:uppercase;color:#64748b}.total{font-size:24px;font-weight:700;text-align:right;margin-top:16px}.actions{position:fixed;bottom:24px;right:24px}.actions button{padding:12px 24px;font-weight:600;border-radius:10px;border:none;cursor:pointer;background:#f59e0b}@media print{.actions{display:none}}</style></head>
-<body><h1>Quote ${quote.quote_number}</h1><p>${quote.client}${quote.description ? ` — ${quote.description}` : ''}</p>
+                  // Branded header/footer from the company profile so the
+                  // client-facing artifact matches the invoice PDF standard.
+                  const companyName = companyProfile?.company_name?.trim() || '';
+                  const logoUrl = companyProfile?.logo_url || companyProfile?.logo_data_url || '';
+                  const contactBits = [
+                    companyProfile?.company_phone,
+                    companyProfile?.company_email,
+                    companyProfile?.company_website,
+                  ]
+                    .filter(Boolean)
+                    .map((v) => esc(String(v)))
+                    .join(' · ');
+                  const headerHtml = companyName
+                    ? `<div class="brand">${logoUrl ? `<img src="${esc(logoUrl)}" alt="${esc(companyName)}" style="max-height:56px;max-width:180px;object-fit:contain"/>` : ''}<div><div style="font-size:18px;font-weight:700">${esc(companyName)}</div>${companyProfile?.company_address ? `<div style="font-size:12px;color:#64748b;white-space:pre-line">${esc(companyProfile.company_address)}</div>` : ''}${contactBits ? `<div style="font-size:12px;color:#64748b">${contactBits}</div>` : ''}</div></div><hr style="border:none;border-top:2px solid #f59e0b;margin:16px 0"/>`
+                    : '';
+                  const footerHtml = companyName
+                    ? `<p style="margin-top:32px;font-size:11px;color:#94a3b8">${esc(companyName)}${companyProfile?.company_registration ? ` · Company No. ${esc(companyProfile.company_registration)}` : ''}${companyProfile?.vat_number ? ` · VAT No. ${esc(companyProfile.vat_number)}` : ''}</p>`
+                    : '';
+                  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Quote ${esc(quote.quote_number)}</title>
+<style>body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:#0f172a;max-width:760px;margin:0 auto;padding:40px}h1{font-size:22px}.brand{display:flex;gap:16px;align-items:center}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{text-align:left;padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px}th{font-size:11px;text-transform:uppercase;color:#64748b}.total{font-size:24px;font-weight:700;text-align:right;margin-top:16px}.actions{position:fixed;bottom:24px;right:24px}.actions button{padding:12px 24px;font-weight:600;border-radius:10px;border:none;cursor:pointer;background:#f59e0b}@media print{.actions{display:none}}</style></head>
+<body>${headerHtml}<h1>Quote ${esc(quote.quote_number)}</h1><p>${esc(quote.client)}${quote.description ? ` — ${esc(quote.description)}` : ''}</p>
+${quote.valid_until ? `<p style="font-size:13px;color:#64748b">Valid until ${new Date(quote.valid_until).toLocaleDateString('en-GB')}</p>` : ''}
 ${rows ? `<table><thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
 <p style="text-align:right;font-size:14px;color:#475569;margin:4px 0">Subtotal: ${money(subtotal)}<br/>${reverseCharge ? 'VAT — reverse charge: £0.00' : `VAT (${vatRate}%): ${money(vatAmount)}`}</p>
 <p class="total">Total: ${money(Number(quote.value))}</p>
 ${cisAmount > 0 ? `<p style="text-align:right;font-size:14px;color:#475569;margin:4px 0">Less CIS (${Number(quote.cis_rate ?? 20)}% of labour): −${money(cisAmount)}<br/><strong>Amount payable: ${money(amountPayable)}</strong></p>` : ''}
 ${reverseCharge ? `<p style="font-size:12px;color:#64748b;margin-top:16px">VAT reverse charge applies. Customer to account to HMRC for the VAT of ${money(subtotal * (vatRate / 100))} (${vatRate}%). This quotation shows £0 VAT — do not pay the VAT to the supplier. VAT Act 1994, s.55A.</p>` : ''}
+${footerHtml}
 <div class="actions"><button onclick="window.print()">Print / Save as PDF</button></div></body></html>`;
                   const viewWindow = window.open('', '_blank');
                   if (viewWindow) {
@@ -688,9 +782,22 @@ ${reverseCharge ? `<p style="font-size:12px;color:#64748b;margin-top:16px">VAT r
               </SecondaryButton>
             </FormGrid>
 
+            <SecondaryButton onClick={() => setShowSignatureRequest(true)} fullWidth>
+              <Signature className="h-4 w-4 mr-2" />
+              Request signature
+            </SecondaryButton>
+
             <FormGrid cols={2}>
-              <SecondaryButton fullWidth>
-                <Copy className="h-4 w-4 mr-2" />
+              <SecondaryButton
+                onClick={handleDuplicate}
+                disabled={createQuoteMutation.isPending}
+                fullWidth
+              >
+                {createQuoteMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Copy className="h-4 w-4 mr-2" />
+                )}
                 Duplicate
               </SecondaryButton>
               <AlertDialog>
@@ -729,65 +836,93 @@ ${reverseCharge ? `<p style="font-size:12px;color:#64748b;margin-top:16px">VAT r
         </SheetContent>
       </Sheet>
 
-      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Send quote to client</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <Field label="Client email address" required>
-              <Input
-                type="email"
-                placeholder="client@example.com"
-                value={recipientEmail}
-                onChange={(e) => setRecipientEmail(e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-            <p className="text-sm text-white">
-              This will send quote {quote.quote_number} for £{Number(quote.value).toLocaleString()}{' '}
-              to the client with an accept/decline link.
-            </p>
-          </div>
-          <DialogFooter>
-            <SecondaryButton onClick={() => setShowEmailDialog(false)}>Cancel</SecondaryButton>
-            <PrimaryButton onClick={() => handleSendEmail()} disabled={!recipientEmail || isSending}>
-              {isSending ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : (
-                <Send className="h-4 w-4 mr-2" />
-              )}
-              Send email
-            </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={showLinkDialog} onOpenChange={setShowLinkDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Quote accept link generated</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <p className="text-sm text-white">
-              Share this link with your client so they can review and accept the quote online.
-            </p>
-            <div className="flex gap-2">
-              <Input value={acceptLink || ''} readOnly className={inputClass} />
-              <SecondaryButton onClick={handleCopyLink}>
-                <Copy className="h-4 w-4" />
-              </SecondaryButton>
+      <ResponsiveFormModal open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">
+              Send quote to client
+            </ResponsiveFormModalTitle>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6">
+            <div className="space-y-4 py-4">
+              <Field label="Client email address" required>
+                <Input
+                  type="email"
+                  placeholder="client@example.com"
+                  value={recipientEmail}
+                  onChange={(e) => setRecipientEmail(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <p className="text-sm text-white">
+                This will send quote {quote.quote_number} for £
+                {Number(quote.value).toLocaleString()} to the client with an accept/decline link.
+              </p>
             </div>
-          </div>
-          <DialogFooter>
-            <SecondaryButton onClick={() => setShowLinkDialog(false)}>Close</SecondaryButton>
-            <PrimaryButton onClick={() => openExternalUrl(acceptLink || '')}>
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Preview portal
-            </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <div className="flex gap-2 pb-2">
+              <SecondaryButton onClick={() => setShowEmailDialog(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={() => handleSendEmail()}
+                disabled={!recipientEmail || isSending}
+                fullWidth
+              >
+                {isSending ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Send className="h-4 w-4 mr-2" />
+                )}
+                Send email
+              </PrimaryButton>
+            </div>
+          </ResponsiveFormModalBody>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
+
+      <ResponsiveFormModal open={showLinkDialog} onOpenChange={setShowLinkDialog}>
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">
+              Quote accept link generated
+            </ResponsiveFormModalTitle>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6">
+            <div className="space-y-4 py-4">
+              <p className="text-sm text-white">
+                Share this link with your client so they can review and accept the quote online.
+              </p>
+              <div className="flex gap-2">
+                <Input value={acceptLink || ''} readOnly className={inputClass} />
+                <SecondaryButton onClick={handleCopyLink}>
+                  <Copy className="h-4 w-4" />
+                </SecondaryButton>
+              </div>
+            </div>
+            <div className="flex gap-2 pb-2">
+              <SecondaryButton onClick={() => setShowLinkDialog(false)} fullWidth>
+                Close
+              </SecondaryButton>
+              <PrimaryButton onClick={() => openExternalUrl(acceptLink || '')} fullWidth>
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Preview portal
+              </PrimaryButton>
+            </div>
+          </ResponsiveFormModalBody>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
+
+      <RequestSignatureSheet
+        open={showSignatureRequest}
+        onOpenChange={setShowSignatureRequest}
+        documentType="Quote"
+        documentId={quote.id}
+        documentTitle={`Quote ${quote.quote_number}`}
+        jobId={quote.job_id}
+        defaultName={quote.client}
+        defaultEmail={quote.client_email}
+        defaultPhone={quote.client_phone}
+      />
     </>
   );
 }

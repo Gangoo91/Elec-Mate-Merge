@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { PrimaryButton, Pill, inputClass, textareaClass } from '@/components/employer/editorial';
 import { useQsReviewComments } from '@/hooks/useQsReviewComments';
@@ -39,13 +40,18 @@ export function QsReviewComments({
 
   const post = async () => {
     if (!body.trim()) return;
-    await add.mutateAsync({
-      body: body.trim(),
-      target_label: label.trim() || null,
-      author_name: authorName ?? null,
-    });
-    setBody('');
-    setLabel('');
+    try {
+      await add.mutateAsync({
+        body: body.trim(),
+        target_label: label.trim() || null,
+        author_name: authorName ?? null,
+      });
+      setBody('');
+      setLabel('');
+    } catch {
+      // Keep the draft so nothing typed is lost.
+      toast.error('Could not post the comment — please try again.');
+    }
   };
 
   return (
@@ -93,7 +99,15 @@ export function QsReviewComments({
                 </div>
                 <button
                   type="button"
-                  onClick={() => resolve.mutate({ id: c.id, resolved: !c.resolved })}
+                  onClick={() =>
+                    resolve.mutate(
+                      { id: c.id, resolved: !c.resolved },
+                      {
+                        onError: () =>
+                          toast.error('Could not update the comment — please try again.'),
+                      }
+                    )
+                  }
                   className="shrink-0 text-white/40 hover:text-emerald-300 touch-manipulation"
                   aria-label={c.resolved ? 'Mark unresolved' : 'Mark resolved'}
                 >

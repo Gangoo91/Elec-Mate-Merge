@@ -52,6 +52,7 @@ import {
   type IncidentStatus,
 } from '@/hooks/useIncidents';
 import { useJobs } from '@/hooks/useJobs';
+import { useEmployees } from '@/hooks/useEmployees';
 import { format, differenceInDays, formatDistanceToNow } from 'date-fns';
 
 const INCIDENT_TYPES: { value: IncidentType; label: string }[] = [
@@ -88,7 +89,8 @@ const FILTER_TABS = [
   { value: 'closed', label: 'Closed' },
 ];
 
-const OPEN_STATUSES: IncidentStatus[] = ['draft', 'submitted', 'under_review'];
+// 'open' is the status worker-submitted safety reports arrive with.
+const OPEN_STATUSES: IncidentStatus[] = ['open', 'draft', 'submitted', 'under_review'];
 const CLOSED_STATUSES: IncidentStatus[] = ['resolved', 'closed'];
 
 function getInitials(name?: string | null): string {
@@ -119,6 +121,7 @@ function statusTone(status: IncidentStatus): Tone {
     case 'investigating':
     case 'under_review':
       return 'cyan';
+    case 'open':
     case 'submitted':
       return 'amber';
     case 'draft':
@@ -131,8 +134,14 @@ export function IncidentsSection() {
   const { data: incidents = [], isLoading, error, refetch } = useIncidents();
   const { data: stats } = useIncidentStats();
   const { data: jobs = [] } = useJobs();
+  const { data: employees = [] } = useEmployees();
   // Reverse link: show which job an incident sits on (incidents carry job_id).
   const jobTitleById = useMemo(() => new Map(jobs.map((j) => [j.id, j.title])), [jobs]);
+  // Worker-side reports store employer_employees.id in reported_by.
+  const employeeNameById = useMemo(
+    () => new Map(employees.map((e) => [e.id, e.name])),
+    [employees]
+  );
   const createIncident = useCreateIncident();
   const updateStatus = useUpdateIncidentStatus();
 
@@ -161,20 +170,18 @@ export function IncidentsSection() {
       (a, b) => new Date(b.date_occurred).getTime() - new Date(a.date_occurred).getTime()
     )[0]?.date_occurred;
 
+  // Honest metric: days since the last logged injury ('—' when none logged).
   const daysSinceLastIncident = lastIncidentDate
     ? differenceInDays(new Date(), new Date(lastIncidentDate))
-    : 365;
+    : null;
 
   const closedLast30 = incidents.filter((i) => {
     if (!CLOSED_STATUSES.includes(i.status)) return false;
-    const updated = i.date_occurred;
-    if (!updated) return false;
-    return differenceInDays(new Date(), new Date(updated)) <= 30;
+    // updated_at is the closest thing to a closure timestamp on the row.
+    const closedAt = i.updated_at || i.date_occurred;
+    if (!closedAt) return false;
+    return differenceInDays(new Date(), new Date(closedAt)) <= 30;
   }).length;
-
-  const riddorCount = incidents.filter(
-    (i) => i.severity === 'critical' || i.incident_type === 'injury'
-  ).length;
 
   const filteredIncidents = incidents.filter((incident) => {
     const matchesTab =
@@ -221,14 +228,15 @@ export function IncidentsSection() {
     setShowDetailSheet(true);
   };
 
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
   const reporterName = (incident: Incident): string => {
-    const anyInc = incident as unknown as Record<string, unknown>;
-    return (
-      (anyInc.reporter_name as string) ||
-      (anyInc.reported_by_name as string) ||
-      (anyInc.reporter as string) ||
-      'Unknown'
-    );
+    if (!incident.reported_by) return 'Not recorded';
+    // Worker reports carry the employee id; employer reports carry a name.
+    const resolved = employeeNameById.get(incident.reported_by);
+    if (resolved) return resolved;
+    if (UUID_RE.test(incident.reported_by)) return 'Team member';
+    return incident.reported_by;
   };
 
   if (isLoading) {
@@ -272,7 +280,11 @@ export function IncidentsSection() {
         stats={[
           { label: 'Open', value: openCount, tone: 'red' },
           { label: 'Near misses', value: nearMissesCount, tone: 'orange' },
-          { label: 'RIDDOR', value: riddorCount, tone: 'red' },
+          {
+            label: 'Days since injury',
+            value: daysSinceLastIncident ?? '—',
+            tone: 'emerald',
+          },
           { label: 'Closed 30d', value: closedLast30, tone: 'emerald' },
         ]}
       />

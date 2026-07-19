@@ -12,6 +12,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { mintFreshSignedUrl } from '@/utils/storageUrls';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, X, Loader2 } from 'lucide-react';
 import { Eyebrow } from '@/components/college/primitives';
@@ -250,9 +251,11 @@ const FaultDiagnosisPage = () => {
         .upload(fileName, image);
       if (uploadError) throw uploadError;
 
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
+      // Fresh signed URL (1h) — visual-analysis fetches it server-side, so it
+      // must stay valid after visual-uploads goes private. Identical
+      // behaviour while the bucket is still public.
+      const signedUrl = await mintFreshSignedUrl('visual-uploads', fileName);
+      if (!signedUrl) throw new Error('Could not prepare the uploaded image for analysis');
 
       const symptomLabels = selectedSymptoms
         .map((s) => symptoms.find((sym) => sym.id === s)?.label)
@@ -261,7 +264,7 @@ const FaultDiagnosisPage = () => {
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
-          primary_image: publicUrl,
+          primary_image: signedUrl,
           analysis_settings: {
             mode: 'fault_diagnosis',
             confidence_threshold: 0.5,

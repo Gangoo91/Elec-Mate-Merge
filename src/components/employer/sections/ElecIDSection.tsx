@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -7,10 +8,10 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import {
   useElecIdProfiles,
   useVerifyElecIdProfile,
-  useGenerateShareableLink,
   useCreateElecIdProfile,
 } from '@/hooks/useElecId';
 import { useEmployees } from '@/hooks/useEmployees';
+import { useCertificationsByEmployee } from '@/hooks/useCertifications';
 import { ElecIdProfile } from '@/services/elecIdService';
 import { ElecIDCard } from '@/components/employer/ElecIDCard';
 import { ShareElecIDDialog } from '@/components/employer/dialogs/ShareElecIDDialog';
@@ -97,10 +98,10 @@ const skillLevelTone: Record<string, Tone> = {
 
 export const ElecIDSection = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   const { data: profiles, isLoading, refetch } = useElecIdProfiles();
   const { data: employees } = useEmployees();
   const verifyProfile = useVerifyElecIdProfile();
-  const generateLink = useGenerateShareableLink();
   const createElecIdProfile = useCreateElecIdProfile();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -131,6 +132,33 @@ export const ElecIDSection = () => {
     if (profiles && profiles.length > 0) return profiles[0];
     return null;
   }, [selectedProfile, profiles]);
+
+  // Real certifications for the selected worker — the same rows the
+  // "Add Certification" dialog writes, so an added cert shows up here
+  const { data: employeeCerts = [] } = useCertificationsByEmployee(
+    effectiveSelectedProfile?.employee_id
+  );
+
+  // Deep link: ?member={employee_id} opens that worker's credential —
+  // Worker-360's "View" lands here
+  const [searchParams, setSearchParams] = useSearchParams();
+  const memberParam = searchParams.get('member');
+  useEffect(() => {
+    if (!memberParam || !profiles || profiles.length === 0) return;
+    const target = profiles.find((p) => p.employee_id === memberParam);
+    if (target) {
+      setSelectedProfile(target);
+      if (isMobile) setSheetOpen(true);
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('member');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [memberParam, profiles, isMobile, setSearchParams]);
 
   const allTraining = useMemo(
     () =>
@@ -320,16 +348,19 @@ export const ElecIDSection = () => {
           referenceAvailable: false,
           verified: w.is_verified,
         })) || [],
-      certifications:
-        effectiveSelectedProfile.qualifications?.map((q) => ({
-          name: q.qualification_name,
-          issuer: q.awarding_body || '',
-          certNumber: q.certificate_number || '',
-          issueDate: q.date_achieved || '',
-          expiryDate: q.date_achieved || '',
-          status: 'Active' as const,
-          verified: q.is_verified,
-        })) || [],
+      // Certifications come from the certifications table the Add dialog
+      // writes — not remapped qualifications with a fabricated status and the
+      // issue date masquerading as expiry (the June cert-source bug)
+      certifications: employeeCerts.map((c) => ({
+        name: c.name,
+        issuer: c.issuing_body || '',
+        certNumber: c.certificate_number || '',
+        issueDate: c.issue_date || '',
+        expiryDate: c.expiry_date || '',
+        status: getCertStatus(c.expiry_date) as 'Active' | 'Warning' | 'Expired',
+        documentUrl: c.document_url || undefined,
+        verified: (c.status || '').toLowerCase() === 'valid',
+      })),
       training:
         effectiveSelectedProfile.training?.map((t) => ({
           id: t.id,
@@ -373,6 +404,15 @@ export const ElecIDSection = () => {
           <SecondaryButton onClick={() => setAddSkillDialogOpen(true)}>Add skill</SecondaryButton>
           <SecondaryButton onClick={() => setAddWorkHistoryDialogOpen(true)}>
             Add work history
+          </SecondaryButton>
+          {/* Bridge to the worker's team record — the expiry decisions this
+              page surfaces are acted on there (timesheets, leave, jobs) */}
+          <SecondaryButton
+            onClick={() =>
+              navigate(`/employer?section=team&member=${effectiveSelectedProfile.employee_id}`)
+            }
+          >
+            View team record
           </SecondaryButton>
         </div>
 
@@ -497,8 +537,35 @@ export const ElecIDSection = () => {
         </ListCard>
 
         <ListCard>
-          <ListCardHeader tone="orange" title="Certifications" />
-          <div className="px-5 py-5">
+          <ListCardHeader
+            tone="orange"
+            title="Certifications"
+            meta={<Pill tone="orange">{employeeCerts.length}</Pill>}
+          />
+          <ListBody>
+            {employeeCerts.length === 0 ? (
+              <div className="px-5 py-8 text-center text-[12.5px] text-white">
+                No certifications recorded yet.
+              </div>
+            ) : (
+              employeeCerts.map((cert) => {
+                const certStatus = getCertStatus(cert.expiry_date);
+                return (
+                  <ListRow
+                    key={cert.id}
+                    title={cert.name}
+                    subtitle={`${cert.issuing_body || 'Issuer unknown'}${cert.expiry_date ? ` · expires ${formatDate(cert.expiry_date)}` : ' · no expiry on record'}`}
+                    trailing={
+                      <Pill tone={statusToneMap[certStatus] ?? 'emerald'}>
+                        {certStatus === 'Warning' ? 'Expiring' : certStatus}
+                      </Pill>
+                    }
+                  />
+                );
+              })
+            )}
+          </ListBody>
+          <div className="px-5 py-4 border-t border-white/[0.06]">
             <AddCertificationDialog preselectedEmployeeId={effectiveSelectedProfile.employee_id} />
           </div>
         </ListCard>

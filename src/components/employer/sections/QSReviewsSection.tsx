@@ -30,6 +30,7 @@ import {
   useReturnQsReview,
   type QsQueueItem,
 } from '@/hooks/useQsReviewQueue';
+import { useQsTeamContext } from '@/hooks/useQsReview';
 
 const TYPE_LABEL: Record<string, string> = {
   eicr: 'EICR',
@@ -55,8 +56,20 @@ export function QSReviewsSection() {
   // QSs look here in the Employer Hub, so it lives here too.
   const [scope, setScope] = useState<'pending' | 'all' | 'team'>('pending');
   const queueScope = scope === 'team' ? 'all' : scope;
-  const { data: items = [], isLoading } = useQsReviewQueue(queueScope);
+  const { data: items = [], isLoading, isError, refetch } = useQsReviewQueue(queueScope);
   const [openItem, setOpenItem] = useState<QsQueueItem | null>(null);
+
+  // Team Certificates reads the reports table directly, and its row access only
+  // covers the company owner or the designated PRINCIPAL QS. A non-principal QS
+  // still reviews via the queue (its own server path), but would see an empty
+  // library here — so only offer the tab to people it actually works for.
+  const { data: qsCtx } = useQsTeamContext();
+  const canSeeTeamCerts = !qsCtx?.is_team_member || !!qsCtx?.am_i_principal_qs;
+
+  // If the context resolves after the user already opened the tab, step back.
+  useEffect(() => {
+    if (!canSeeTeamCerts && scope === 'team') setScope('pending');
+  }, [canSeeTeamCerts, scope]);
 
   const pendingCount = useMemo(() => items.filter((i) => i.status === 'pending').length, [items]);
 
@@ -67,8 +80,31 @@ export function QSReviewsSection() {
       <SectionHeader
         eyebrow="Compliance"
         title="QS Reviews"
-        meta={pendingCount > 0 ? `${pendingCount} awaiting sign-off` : 'Nothing waiting'}
+        meta={
+          isError
+            ? 'Queue unavailable'
+            : pendingCount > 0
+              ? `${pendingCount} awaiting sign-off`
+              : 'Nothing waiting'
+        }
       />
+
+      {/* A failed queue load must never masquerade as an empty queue — this
+          gates certificate issue, so "nothing waiting" has to be true. */}
+      {isError && scope !== 'team' && (
+        <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-5 py-4 space-y-3">
+          <p className="text-sm text-orange-300">
+            Couldn't load the review queue — certificates may still be waiting for sign-off.
+          </p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            className="h-11 px-5 rounded-lg text-sm font-semibold bg-white/[0.06] border border-white/[0.1] text-white touch-manipulation active:scale-[0.98]"
+          >
+            Try again
+          </button>
+        </div>
+      )}
 
       {scope === 'all' && items.length > 0 && (
         <button
@@ -88,7 +124,9 @@ export function QSReviewsSection() {
                 'Reviewed',
               ],
               rows: items.map((it) => [
-                it.report_id,
+                // The register is an assessor-facing record — show the
+                // certificate number, not the internal report id.
+                it.certificate_number || it.report_id,
                 it.report_type.toUpperCase(),
                 it.client_name,
                 it.electrician_name,
@@ -107,8 +145,8 @@ export function QSReviewsSection() {
       )}
 
       {/* Scope toggle */}
-      <div className="grid grid-cols-3 gap-2">
-        {(['pending', 'all', 'team'] as const).map((s) => (
+      <div className={canSeeTeamCerts ? 'grid grid-cols-3 gap-2' : 'grid grid-cols-2 gap-2'}>
+        {(canSeeTeamCerts ? (['pending', 'all', 'team'] as const) : (['pending', 'all'] as const)).map((s) => (
           <button
             key={s}
             type="button"
@@ -131,7 +169,7 @@ export function QSReviewsSection() {
 
       {scope === 'team' ? (
         <TeamCertificatesSection />
-      ) : items.length === 0 ? (
+      ) : isError ? null : items.length === 0 ? (
         <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-10 text-center space-y-3">
           <ShieldCheck className="h-6 w-6 mx-auto text-white/30" />
           <div className="space-y-1.5">

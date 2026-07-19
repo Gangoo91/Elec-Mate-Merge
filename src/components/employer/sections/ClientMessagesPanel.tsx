@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
 import { Eyebrow, Pill, PrimaryButton, textareaClass } from '@/components/employer/editorial';
 import { useEmployerClientMessages } from '@/hooks/useEmployerClientMessages';
 
@@ -12,6 +13,7 @@ import { useEmployerClientMessages } from '@/hooks/useEmployerClientMessages';
 export function ClientMessagesPanel({ token, jobId }: { token: string; jobId?: string | null }) {
   const { messages, unread, reply, markRead } = useEmployerClientMessages(token, jobId);
   const [body, setBody] = useState('');
+  const threadRef = useRef<HTMLDivElement>(null);
 
   // Clear the unread flag once the employer is looking at the thread.
   useEffect(() => {
@@ -19,10 +21,20 @@ export function ClientMessagesPanel({ token, jobId }: { token: string; jobId?: s
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unread]);
 
+  // Keep the latest message in view (the thread is capped at max-h-64).
+  useEffect(() => {
+    threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight });
+  }, [messages.length]);
+
   const send = async () => {
     if (!body.trim()) return;
-    await reply.mutateAsync(body.trim());
-    setBody('');
+    try {
+      await reply.mutateAsync(body.trim());
+      setBody('');
+    } catch {
+      // Keep the draft so nothing is lost — just tell them it didn't send.
+      toast({ title: "Message didn't send", description: 'Please try again.', variant: 'destructive' });
+    }
   };
 
   return (
@@ -37,7 +49,7 @@ export function ClientMessagesPanel({ token, jobId }: { token: string; jobId?: s
           No messages yet — your client can message you from their portal link.
         </p>
       ) : (
-        <div className="space-y-2 max-h-64 overflow-y-auto">
+        <div ref={threadRef} className="space-y-2 max-h-64 overflow-y-auto overscroll-contain">
           {messages.map((m) => (
             <div
               key={m.id}

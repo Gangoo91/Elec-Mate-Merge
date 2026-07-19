@@ -1,6 +1,6 @@
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
-import { LayoutTemplate, Plus, MapPin, Loader2 } from 'lucide-react';
+import { LayoutTemplate, Plus, MapPin, Loader2, RefreshCw } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useCreateJob } from '@/hooks/useJobs';
@@ -30,7 +30,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
   const addChecklistItem = useAddChecklistItem();
   const assignLabel = useAssignLabel();
 
-  const { data: templates = [], isLoading } = useQuery({
+  const { data: templates = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['job-templates'],
     queryFn: async (): Promise<TemplateJob[]> => {
       const { data, error } = await supabase
@@ -117,12 +117,24 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
             <div className="flex items-center justify-center py-12">
               <Loader2 className="h-6 w-6 animate-spin text-white" />
             </div>
+          ) : isError ? (
+            // A failed fetch is not "no templates" — offer a retry
+            <div className="text-center py-12">
+              <p className="text-white">Couldn't load your templates</p>
+              <button
+                onClick={() => refetch()}
+                className="mt-4 h-11 px-5 inline-flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation"
+              >
+                <RefreshCw className="h-4 w-4" />
+                Try again
+              </button>
+            </div>
           ) : templates.length === 0 ? (
             <div className="text-center py-12">
               <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white" />
               <p className="text-white">No templates yet</p>
               <p className="text-sm text-white mt-1">
-                Right-click a job and select "Save as Template"
+                Long-press (or right-click) a job card and choose "Save as template"
               </p>
             </div>
           ) : (
@@ -142,11 +154,13 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                      {template.value && (
+                      {template.value ? (
                         <Badge variant="secondary" className="text-xs bg-white/[0.06] text-white">
-                          £{(template.value / 1000).toFixed(0)}k
+                          {template.value >= 1000
+                            ? `£${(template.value / 1000).toFixed(0)}k`
+                            : `£${template.value.toLocaleString()}`}
                         </Badge>
-                      )}
+                      ) : null}
                       <PrimaryButton
                         size="sm"
                         onClick={() => handleCreateFromTemplate(template)}

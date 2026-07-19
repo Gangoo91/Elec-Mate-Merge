@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -70,6 +71,7 @@ const tooltipStyle = {
 
 export function ReportsSection() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const { data: metrics, isLoading: metricsLoading } = useBusinessMetrics();
@@ -115,7 +117,18 @@ export function ReportsSection() {
   };
 
   const refresh = () => {
-    queryClient.invalidateQueries();
+    // Scoped to this page's data — invalidating the entire app cache forced
+    // every mounted section to refetch.
+    [
+      ['business-metrics'],
+      ['monthly-revenue'],
+      ['jobs-by-status'],
+      ['compliance-data'],
+      ['top-performers'],
+      ['payment-summary'],
+      ['finance-reports'],
+      ['debtor-aging'],
+    ].forEach((queryKey) => queryClient.invalidateQueries({ queryKey }));
     toast({ title: 'Refreshing reports', description: 'Pulling the latest figures.' });
   };
 
@@ -135,9 +148,9 @@ export function ReportsSection() {
     });
     rows.push('');
     rows.push('Debtor,Bucket,Amount');
-    rows.push(`Paid 30d,Current,${paymentSummary?.paidLast30Days ?? 0}`);
-    rows.push(`Pending,1-30 days,${paymentSummary?.pending ?? 0}`);
-    rows.push(`Overdue,30+ days,${paymentSummary?.overdue ?? 0}`);
+    rows.push(`Paid 30d,Paid in last 30 days,${paymentSummary?.paidLast30Days ?? 0}`);
+    rows.push(`Pending,Not yet due,${paymentSummary?.pending ?? 0}`);
+    rows.push(`Overdue,Past due date,${paymentSummary?.overdue ?? 0}`);
 
     const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -206,11 +219,14 @@ export function ReportsSection() {
     });
   }, [unpaidInvoices]);
 
-  const totalRevenueK = metrics?.revenue.current
-    ? `£${(metrics.revenue.current / 1000).toFixed(0)}k`
+  // Headline Revenue/Profit/Margin all come from the same profitability
+  // model (invoiced vs job costs) so the three figures can never contradict
+  // each other or mix different time windows.
+  const totalRevenueK = profitability?.totalRevenue
+    ? `£${(profitability.totalRevenue / 1000).toFixed(0)}k`
     : '£0';
-  const totalProfitK = metrics?.profit.current
-    ? `£${(metrics.profit.current / 1000).toFixed(0)}k`
+  const totalProfitK = profitability?.grossProfit
+    ? `£${(profitability.grossProfit / 1000).toFixed(0)}k`
     : '£0';
   const profitMarginValue = `${(profitability?.profitMargin ?? 0).toFixed(1)}%`;
   const complianceValue = `${metrics?.complianceRate ?? 0}%`;
@@ -259,8 +275,8 @@ export function ReportsSection() {
       <ListCard>
         <ListCardHeader
           tone="blue"
-          title="Revenue 30d"
-          meta={<Pill tone="yellow">Revenue vs Target</Pill>}
+          title="Revenue by month"
+          meta={<Pill tone="yellow">6 months</Pill>}
         />
         <div className="p-4 sm:p-5">
           <div className="h-64 w-full">
@@ -287,7 +303,6 @@ export function ReportsSection() {
                   />
                   <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
                   <Bar dataKey="revenue" name="Revenue" fill={ELEC_YELLOW} radius={[6, 6, 0, 0]} />
-                  <Bar dataKey="target" name="Target" fill={WHITE_20} radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -377,7 +392,7 @@ export function ReportsSection() {
         </ListCard>
 
         <ListCard>
-          <ListCardHeader tone="blue" title="Job completion trend" />
+          <ListCardHeader tone="blue" title="Revenue trend" meta={<Pill tone="blue">6 months</Pill>} />
           <div className="p-4 sm:p-5">
             <div className="h-64 w-full">
               {monthlyData.length > 0 ? (
@@ -553,6 +568,11 @@ export function ReportsSection() {
                     {formatCompactCurrency(row.amount)}
                   </span>
                 }
+                onClick={
+                  row.amount > 0
+                    ? () => navigate('/employer?section=quotes&tab=overdue')
+                    : undefined
+                }
               />
             ))}
           </ListBody>
@@ -644,8 +664,8 @@ export function ReportsSection() {
               return (
                 <ListRow
                   key={job.jobId}
-                  title={job.title}
-                  subtitle={`${formatCurrency(job.revenue)} revenue`}
+                  title={job.jobTitle}
+                  subtitle={`${formatCurrency(job.invoiced)} invoiced`}
                   lead={
                     <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
                       {String(idx + 1).padStart(2, '0')}
@@ -659,6 +679,7 @@ export function ReportsSection() {
                       <Pill tone={marginTone}>{job.margin.toFixed(1)}%</Pill>
                     </div>
                   }
+                  onClick={() => navigate(`/employer?section=financials&job=${job.jobId}`)}
                 />
               );
             })}

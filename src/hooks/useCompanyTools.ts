@@ -39,7 +39,8 @@ export interface CreateToolData {
   notes?: string;
 }
 
-export interface UpdateToolData extends Partial<CreateToolData> {}
+// Nulls allowed on update so cleared fields genuinely clear in the DB
+export type UpdateToolData = { [K in keyof CreateToolData]?: CreateToolData[K] | null };
 
 // Fetch all tools
 export function useCompanyTools() {

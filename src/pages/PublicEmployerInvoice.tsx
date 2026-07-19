@@ -84,11 +84,29 @@ export default function PublicEmployerInvoice() {
               <Receipt className="h-6 w-6 text-elec-yellow" />
             </div>
           )}
-          <div>
+          <div className="min-w-0">
             <p className="text-[15px] font-semibold">{company?.company_name || 'Invoice'}</p>
             <p className="text-[12px] text-white/50">Invoice {invoice.invoice_number}</p>
+            {(company?.company_phone || company?.company_email) && (
+              <p className="text-[11.5px] text-white/40 truncate">
+                {[company?.company_phone, company?.company_email].filter(Boolean).join(' · ')}
+              </p>
+            )}
           </div>
         </div>
+
+        {(company?.company_address || company?.vat_number) && (
+          <div className="space-y-1">
+            {company?.company_address && (
+              <p className="text-[11.5px] text-white/40 whitespace-pre-line leading-relaxed">
+                {company.company_address}
+              </p>
+            )}
+            {company?.vat_number && (
+              <p className="text-[11.5px] text-white/40">VAT No. {company.vat_number}</p>
+            )}
+          </div>
+        )}
 
         {isPaid && (
           <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/25 p-4 flex items-center gap-3">
@@ -98,6 +116,31 @@ export default function PublicEmployerInvoice() {
         )}
 
         <div className="rounded-2xl bg-[hsl(0_0%_11%)] border border-white/[0.08] p-5 space-y-4">
+          {(invoice.client || invoice.created_at) && (
+            <div className="flex items-start justify-between gap-4">
+              {invoice.client && (
+                <div className="min-w-0">
+                  <p className="text-[11px] uppercase tracking-[0.14em] text-white/45">Billed to</p>
+                  <p className="mt-0.5 text-[13.5px] font-medium text-white truncate">
+                    {invoice.client}
+                  </p>
+                </div>
+              )}
+              {invoice.created_at && (
+                <div className="shrink-0 text-right">
+                  <p className="text-[11px] uppercase tracking-[0.14em] text-white/45">Issued</p>
+                  <p className="mt-0.5 text-[13.5px] text-white/80 tabular-nums">
+                    {new Date(invoice.created_at).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
           {invoice.project && (
             <p className="text-[13.5px] text-white/80 leading-relaxed">{invoice.project}</p>
           )}

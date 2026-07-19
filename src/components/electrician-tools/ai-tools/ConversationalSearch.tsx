@@ -9,6 +9,7 @@ import { useHaptic } from '@/hooks/useHaptic';
 import { useAIChatHistory } from '@/hooks/useAIChatHistory';
 import { useOfflineAICache } from '@/hooks/useOfflineAICache';
 import { supabase } from '@/integrations/supabase/client';
+import { mintFreshSignedUrl, useStorageUrls } from '@/utils/storageUrls';
 import { isImageFile, validateImageSize, compressImageForUpload } from '@/utils/imageUploadUtils';
 import {
   ChatContainer,
@@ -31,9 +32,13 @@ interface Message {
   content: string;
   timestamp?: Date;
   followUpQuestions?: string[];
-  /** First attached image — kept for back-compat with old chat history. */
+  /**
+   * First attached image — kept for back-compat with old chat history.
+   * New messages store the bare visual-uploads storage path; legacy history
+   * holds full public URLs. Render via the useStorageUrls resolution below.
+   */
   imageUrl?: string;
-  /** All attached images on the user message (max 5). */
+  /** All attached images on the user message (max 5) — paths or legacy URLs. */
   imageUrls?: string[];
   /** Regulation numbers cited in this answer (populated post-stream). */
   citedRegulations?: string[];
@@ -151,6 +156,18 @@ export default function ConversationalSearch() {
 
   // Batched token streaming — flush every 80ms.
   const streaming = useSmoothedStreaming({ flushInterval: 80 });
+
+  // Resolve message photo references for rendering — new messages hold bare
+  // visual-uploads paths (signed on demand), legacy history holds full public
+  // URLs (passed through untouched).
+  const messageImageRefs = useMemo(
+    () =>
+      messages.flatMap((m) =>
+        m.imageUrls && m.imageUrls.length > 0 ? m.imageUrls : m.imageUrl ? [m.imageUrl] : []
+      ),
+    [messages]
+  );
+  const { urls: resolvedImageUrls } = useStorageUrls('visual-uploads', messageImageRefs);
 
   // Auto-focus input on load (desktop only)
   useEffect(() => {
@@ -278,23 +295,22 @@ export default function ConversationalSearch() {
     setSelectedImages([]);
   }, []);
 
+  // Returns the bare storage PATH (not a URL) — the message keeps the path so
+  // history survives the visual-uploads privacy flip; rendering resolves it
+  // and the edge fn gets a fresh signed URL minted at send time.
   const uploadImage = useCallback(async (file: File): Promise<string> => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
-    const fileName = `${user.id}/elec-ai/${Date.now()}.jpg`;
+    const fileName = `${user.id}/elec-ai/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
 
     const { error } = await supabase.storage.from('visual-uploads').upload(fileName, file);
 
     if (error) throw error;
 
-    const {
-      data: { publicUrl },
-    } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
-
-    return publicUrl;
+    return fileName;
   }, []);
 
   const handleSend = useCallback(
@@ -307,10 +323,19 @@ export default function ConversationalSearch() {
 
       // Upload all attached photos in parallel — first one becomes the
       // legacy `imageUrl` for back-compat, full set lives in `imageUrls`.
+      // Messages store bare storage PATHS; the edge fn (which fetches the
+      // images server-side) gets fresh signed URLs minted at send time.
       let imageUrls: string[] = [];
+      let sendImageUrls: string[] = [];
       if (selectedImages.length > 0) {
         try {
           imageUrls = await Promise.all(selectedImages.map((f) => uploadImage(f)));
+          sendImageUrls = (
+            await Promise.all(imageUrls.map((p) => mintFreshSignedUrl('visual-uploads', p)))
+          ).filter((u): u is string => !!u);
+          if (sendImageUrls.length !== imageUrls.length) {
+            throw new Error('signing failed');
+          }
           clearImage();
         } catch {
           toast.error('Failed to upload one or more images');
@@ -376,8 +401,9 @@ export default function ConversationalSearch() {
               role: m.role,
               content: m.content,
             })),
-            imageUrl,
-            imageUrls: imageUrls.length > 0 ? imageUrls : undefined,
+            // Fresh signed URLs — the backend fetches these server-side.
+            imageUrl: sendImageUrls[0],
+            imageUrls: sendImageUrls.length > 0 ? sendImageUrls : undefined,
           }),
           signal: abortControllerRef.current.signal,
         });
@@ -843,19 +869,24 @@ export default function ConversationalSearch() {
                         <div className="max-w-[92%] sm:max-w-[75%] min-w-0 space-y-2">
                           {(() => {
                             // Prefer the new array; fall back to legacy single.
-                            const urls = (
+                            // Stored refs are paths (new) or full URLs (legacy);
+                            // both resolve through useStorageUrls above.
+                            const stored = (
                               message.imageUrls && message.imageUrls.length > 0
                                 ? message.imageUrls
                                 : message.imageUrl
                                   ? [message.imageUrl]
                                   : []
                             ) as string[];
+                            const urls = stored
+                              .map((s) => ({ stored: s, url: resolvedImageUrls[s] }))
+                              .filter((x): x is { stored: string; url: string } => !!x.url);
                             if (urls.length === 0) return null;
                             if (urls.length === 1) {
                               return (
                                 <div className="rounded-2xl overflow-hidden ml-auto max-w-[220px] border border-white/[0.06]">
                                   <img
-                                    src={urls[0]}
+                                    src={urls[0].url}
                                     alt="Attached"
                                     className="w-full h-auto object-cover"
                                   />
@@ -864,9 +895,9 @@ export default function ConversationalSearch() {
                             }
                             return (
                               <div className="ml-auto flex flex-wrap justify-end gap-1.5 max-w-[260px]">
-                                {urls.map((url, i) => (
+                                {urls.map(({ stored: key, url }, i) => (
                                   <div
-                                    key={url}
+                                    key={key}
                                     className="rounded-xl overflow-hidden border border-white/[0.06] w-[80px] h-[80px]"
                                   >
                                     <img

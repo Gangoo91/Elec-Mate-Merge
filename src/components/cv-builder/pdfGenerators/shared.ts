@@ -4,6 +4,7 @@
 
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
+import { resolveStorageUrl } from '@/utils/storageUrls';
 import { CVData, WorkExperience, Education, KeyProject, Reference } from '../types';
 
 // PDF dimensions and constants
@@ -693,8 +694,13 @@ export const addProfilePhoto = async (
   if (!photoUrl) return null;
 
   try {
+    // photoUrl may be a bare visual-uploads path (new CVs) or a full URL
+    // (legacy) — resolve to a fetchable URL either way.
+    const fetchUrl = await resolveStorageUrl('visual-uploads', photoUrl);
+    if (!fetchUrl) return null;
+
     // Fetch image and convert to base64
-    const response = await fetch(photoUrl);
+    const response = await fetch(fetchUrl);
     const blob = await response.blob();
 
     return new Promise((resolve) => {

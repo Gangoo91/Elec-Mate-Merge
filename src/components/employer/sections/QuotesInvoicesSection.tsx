@@ -2,12 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { RefreshCw } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import {
-  useQuotes,
-  useInvoices,
-  useSendQuote,
-  useMarkInvoicePaid,
-} from '@/hooks/useFinance';
+import { useQuotes, useInvoices } from '@/hooks/useFinance';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
 import { CreateInvoiceDialog } from '@/components/employer/dialogs/CreateInvoiceDialog';
 import { ViewQuoteSheet } from '@/components/employer/sheets/ViewQuoteSheet';
@@ -19,6 +14,14 @@ import { computeAging, type AgingInvoice } from '@/utils/invoiceAging';
 import type { Quote, Invoice } from '@/services/financeService';
 import { sendInvoice as sendInvoiceService } from '@/services/financeService';
 import { toast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
+import {
+  ResponsiveFormModal,
+  ResponsiveFormModalContent,
+  ResponsiveFormModalHeader,
+  ResponsiveFormModalTitle,
+  ResponsiveFormModalBody,
+} from '@/components/ui/responsive-form-modal';
 import {
   PageFrame,
   PageHero,
@@ -35,6 +38,8 @@ import {
   LoadingBlocks,
   PrimaryButton,
   SecondaryButton,
+  Field,
+  inputClass,
   type Tone,
 } from '@/components/employer/editorial';
 
@@ -95,10 +100,13 @@ function timeAgo(iso: string | null | undefined) {
 function quoteStatusTone(status: string): Tone {
   switch (status) {
     case 'Approved':
+    case 'Client Accepted':
+    case 'Converted':
       return 'emerald';
     case 'Sent':
       return 'blue';
     case 'Rejected':
+    case 'Client Declined':
       return 'red';
     case 'Draft':
     default:
@@ -106,12 +114,19 @@ function quoteStatusTone(status: string): Tone {
   }
 }
 
+// A quote is "won" whether it was approved in-app, accepted by the client
+// through the portal, or already converted to an invoice.
+const WON_QUOTE_STATUSES = ['Approved', 'Client Accepted', 'Converted'];
+
 function invoiceStatusTone(status: string): Tone {
   switch (status) {
     case 'Paid':
       return 'emerald';
     case 'Overdue':
       return 'red';
+    // Blue for Sent matches ViewInvoiceSheet — list and sheet must agree
+    case 'Sent':
+      return 'blue';
     case 'Pending':
     default:
       return 'amber';
@@ -133,10 +148,15 @@ function isThisMonth(iso: string | null | undefined) {
   return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
 }
 
-// Nothing ever writes status='Overdue' — derive it from due_date
+// Nothing ever writes status='Overdue' — derive it from due_date.
+// Drafts are excluded: an invoice the client never received can't be
+// "overdue" and must never get a client-facing Chase action.
 const isOverdueInvoice = (inv: { status?: string | null; due_date?: string | null }) =>
   inv.status === 'Overdue' ||
-  (inv.status !== 'Paid' && !!inv.due_date && inv.due_date < new Date().toISOString().slice(0, 10));
+  (inv.status !== 'Paid' &&
+    inv.status !== 'Draft' &&
+    !!inv.due_date &&
+    inv.due_date < new Date().toISOString().slice(0, 10));
 
 export function QuotesInvoicesSection() {
   const [showCreateQuote, setShowCreateQuote] = useState(false);
@@ -146,6 +166,9 @@ export function QuotesInvoicesSection() {
   const [convertQuote, setConvertQuote] = useState<Quote | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'all' | 'quotes' | 'invoices' | 'overdue'>('all');
+  // Chase flow: invoice being chased when no client email is on file
+  const [chaseTarget, setChaseTarget] = useState<{ id: string; client: string } | null>(null);
+  const [chaseEmail, setChaseEmail] = useState('');
 
   const { data: quotes = [], isLoading: quotesLoading } = useQuotes();
   const { data: invoices = [], isLoading: invoicesLoading } = useInvoices();
@@ -156,6 +179,18 @@ export function QuotesInvoicesSection() {
   useEffect(() => {
     const qid = searchParams.get('quote');
     const iid = searchParams.get('invoice');
+    const tab = searchParams.get('tab');
+    if (tab && ['all', 'quotes', 'invoices', 'overdue'].includes(tab)) {
+      setActiveTab(tab as typeof activeTab);
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete('tab');
+          return next;
+        },
+        { replace: true }
+      );
+    }
     if (!qid && !iid) return;
     if (qid && quotes.length) {
       const q = quotes.find((x) => x.id === qid);
@@ -175,8 +210,6 @@ export function QuotesInvoicesSection() {
       { replace: true }
     );
   }, [searchParams, quotes, invoices, setSearchParams]);
-  const sendQuoteMutation = useSendQuote();
-  const markPaidMutation = useMarkInvoicePaid();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
 
@@ -187,10 +220,12 @@ export function QuotesInvoicesSection() {
     ]);
   };
 
+  // Outstanding = money actually owed: sent/pending invoices, not Drafts
+  // the client has never seen.
   const outstanding = useMemo(
     () =>
       invoices
-        .filter((inv) => inv.status !== 'Paid')
+        .filter((inv) => inv.status !== 'Paid' && inv.status !== 'Draft')
         .reduce((acc, inv) => acc + Number(inv.amount || 0), 0),
     [invoices]
   );
@@ -212,7 +247,9 @@ export function QuotesInvoicesSection() {
   );
 
   const wonThisMonth = useMemo(
-    () => quotes.filter((q) => q.status === 'Approved' && isThisMonth(q.updated_at)).length,
+    () =>
+      quotes.filter((q) => WON_QUOTE_STATUSES.includes(q.status) && isThisMonth(q.updated_at))
+        .length,
     [quotes]
   );
 
@@ -257,13 +294,7 @@ export function QuotesInvoicesSection() {
     return [...qRows, ...iRows].sort((a, b) => b.timestamp - a.timestamp);
   }, [sortedQuotes, sortedInvoices]);
 
-  const handleChaseInvoice = async (inv: { id: string; client: string; client_email?: string | null }) => {
-    let email = inv.client_email || undefined;
-    if (!email) {
-      const entered = window.prompt(`Email address for ${inv.client}:`);
-      if (!entered?.trim()) return;
-      email = entered.trim();
-    }
+  const sendChase = async (inv: { id: string; client: string }, email: string) => {
     try {
       await sendInvoiceService(inv.id, email);
       toast({ title: 'Reminder sent', description: `${inv.client} has been chased.` });
@@ -275,6 +306,23 @@ export function QuotesInvoicesSection() {
       });
     }
   };
+
+  const handleChaseInvoice = (inv: {
+    id: string;
+    client: string;
+    client_email?: string | null;
+  }) => {
+    const email = inv.client_email || undefined;
+    if (!email) {
+      // No address on file — ask for one in a proper sheet, not window.prompt
+      setChaseEmail('');
+      setChaseTarget(inv);
+      return;
+    }
+    void sendChase(inv, email);
+  };
+
+  const chaseEmailValid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(chaseEmail.trim());
 
   const filteredRows = useMemo(() => {
     const needle = searchQuery.trim().toLowerCase();
@@ -468,6 +516,50 @@ export function QuotesInvoicesSection() {
         onOpenChange={(open) => !open && setSelectedInvoice(null)}
         invoice={selectedInvoice}
       />
+
+      <ResponsiveFormModal open={!!chaseTarget} onOpenChange={(o) => !o && setChaseTarget(null)}>
+        <ResponsiveFormModalContent className="bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <ResponsiveFormModalHeader>
+            <ResponsiveFormModalTitle className="text-white">
+              Chase this invoice
+            </ResponsiveFormModalTitle>
+          </ResponsiveFormModalHeader>
+          <ResponsiveFormModalBody className="pb-6">
+            <div className="space-y-4 py-4">
+              <Field label={`Email address for ${chaseTarget?.client ?? 'client'}`} required>
+                <Input
+                  type="email"
+                  placeholder="client@example.com"
+                  value={chaseEmail}
+                  onChange={(e) => setChaseEmail(e.target.value)}
+                  className={inputClass}
+                  autoComplete="off"
+                />
+              </Field>
+              <p className="text-sm text-white">
+                A payment reminder with a secure payment link will be emailed to the client.
+              </p>
+            </div>
+            <div className="flex gap-2 pb-2">
+              <SecondaryButton onClick={() => setChaseTarget(null)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={() => {
+                  if (!chaseTarget || !chaseEmailValid) return;
+                  const target = chaseTarget;
+                  setChaseTarget(null);
+                  void sendChase(target, chaseEmail.trim());
+                }}
+                disabled={!chaseEmailValid}
+                fullWidth
+              >
+                Send reminder
+              </PrimaryButton>
+            </div>
+          </ResponsiveFormModalBody>
+        </ResponsiveFormModalContent>
+      </ResponsiveFormModal>
     </PageFrame>
   );
 

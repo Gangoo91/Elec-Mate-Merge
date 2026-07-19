@@ -19,10 +19,15 @@ import {
   PenTool,
   Image,
   Copy,
+  QrCode,
+  Trash2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useStorageUrl, useStorageUrls } from '@/utils/storageUrls';
 import { useBriefingWithAttendees, type Briefing } from '@/hooks/useBriefings';
 import { getOrCreateBriefingSignLink } from '@/hooks/useBriefingSignatures';
+import { BriefingQRCode } from './BriefingQRCode';
+import { BriefingPhotoUpload } from './BriefingPhotoUpload';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { SheetShell, PrimaryButton, SecondaryButton } from './editorial';
@@ -34,6 +39,8 @@ interface BriefingViewerProps {
   onEdit?: (briefing: Briefing) => void;
   onSignOff?: (briefing: Briefing) => void;
   onExportPdf?: (briefing: Briefing) => void;
+  onComplete?: (briefing: Briefing) => void;
+  onDelete?: (briefing: Briefing) => void;
 }
 
 export function BriefingViewer({
@@ -43,11 +50,27 @@ export function BriefingViewer({
   onEdit,
   onSignOff,
   onExportPdf,
+  onComplete,
+  onDelete,
 }: BriefingViewerProps) {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('content');
+  const [showQR, setShowQR] = useState(false);
+  const [showPhotoUpload, setShowPhotoUpload] = useState(false);
 
   const { data: briefing, isLoading } = useBriefingWithAttendees(briefingId);
+
+  // Resolve stored storage references (legacy full URLs pass through as-is,
+  // new bare paths are signed) for signatures and photo evidence.
+  const { url: presenterSignatureSrc } = useStorageUrl(
+    'briefings',
+    briefing?.presenter_signature_url
+  );
+  const { urls: signatureSrcs } = useStorageUrls(
+    'briefings',
+    (briefing?.attendees ?? []).map((a) => a.signature_url)
+  );
+  const { urls: photoSrcs } = useStorageUrls('briefing-photos', briefing?.photo_evidence ?? []);
 
   // Copy QR link to clipboard
   const handleCopyLink = async () => {
@@ -137,6 +160,10 @@ export function BriefingViewer({
                 <Copy className="h-4 w-4 mr-2" />
                 Copy Link
               </SecondaryButton>
+              <SecondaryButton onClick={() => setShowQR(true)} fullWidth>
+                <QrCode className="h-4 w-4 mr-2" />
+                QR
+              </SecondaryButton>
               {onSignOff && briefing.status === 'Scheduled' && (
                 <PrimaryButton onClick={() => onSignOff(briefing)} fullWidth>
                   <PenTool className="h-4 w-4 mr-2" />
@@ -188,6 +215,24 @@ export function BriefingViewer({
             </div>
           </div>
 
+          {/* Lifecycle actions — briefings must not stay 'Live' forever */}
+          {(onComplete || onDelete) && (
+            <div className="flex gap-2">
+              {onComplete && briefing.status === 'Scheduled' && (
+                <SecondaryButton onClick={() => onComplete(briefing)} fullWidth>
+                  <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
+                  Mark completed
+                </SecondaryButton>
+              )}
+              {onDelete && (
+                <SecondaryButton onClick={() => onDelete(briefing)} fullWidth>
+                  <Trash2 className="h-4 w-4 mr-2 text-red-400" />
+                  Delete
+                </SecondaryButton>
+              )}
+            </div>
+          )}
+
           {/* Tabs */}
           <Tabs
             value={activeTab}
@@ -232,13 +277,13 @@ export function BriefingViewer({
                   )}
 
                   {/* Presenter Signature */}
-                  {briefing.presenter_signature_url && (
+                  {presenterSignatureSrc && (
                     <div className="mt-6 p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06]">
                       <p className="text-sm font-medium text-white mb-2">
                         Presenter Signature
                       </p>
                       <img
-                        src={briefing.presenter_signature_url}
+                        src={presenterSignatureSrc}
                         alt="Presenter signature"
                         className="h-16 object-contain"
                       />
@@ -323,9 +368,9 @@ export function BriefingViewer({
                               </p>
                             </div>
                           </div>
-                          {attendee.signature_url && (
+                          {attendee.signature_url && signatureSrcs[attendee.signature_url] && (
                             <img
-                              src={attendee.signature_url}
+                              src={signatureSrcs[attendee.signature_url]}
                               alt="Signature"
                               className="h-10 w-16 object-contain opacity-70"
                             />
@@ -348,7 +393,11 @@ export function BriefingViewer({
             {/* Photos Tab */}
             <TabsContent value="photos" className="flex-1 overflow-hidden mt-0">
               <ScrollArea className="h-full">
-                <div className="p-4">
+                <div className="p-4 space-y-4">
+                  <SecondaryButton onClick={() => setShowPhotoUpload(true)} fullWidth>
+                    <Image className="h-4 w-4 mr-2" />
+                    Add photos
+                  </SecondaryButton>
                   {briefing.photo_evidence && briefing.photo_evidence.length > 0 ? (
                     <div className="grid grid-cols-2 gap-3">
                       {briefing.photo_evidence.map((photo, index) => (
@@ -357,7 +406,7 @@ export function BriefingViewer({
                           className="aspect-square rounded-xl overflow-hidden border border-white/[0.06]"
                         >
                           <img
-                            src={photo}
+                            src={photoSrcs[photo] ?? photo}
                             alt={`Photo evidence ${index + 1}`}
                             className="w-full h-full object-cover"
                           />
@@ -376,6 +425,17 @@ export function BriefingViewer({
           </Tabs>
         </SheetShell>
       </SheetContent>
+
+      {/* QR sign-off sheet */}
+      <BriefingQRCode open={showQR} onOpenChange={setShowQR} briefing={briefing} />
+
+      {/* Photo evidence upload */}
+      <BriefingPhotoUpload
+        open={showPhotoUpload}
+        onOpenChange={setShowPhotoUpload}
+        briefingId={briefing.id}
+        existingPhotos={briefing.photo_evidence ?? []}
+      />
     </Sheet>
   );
 }

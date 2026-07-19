@@ -131,12 +131,15 @@ interface AddJobPackDialogProps {
   trigger?: React.ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** Pre-select an existing job (e.g. tapping a "Jobs awaiting pack" row). */
+  initialJobId?: string | null;
 }
 
 export function AddJobPackDialog({
   trigger,
   open: controlledOpen,
   onOpenChange,
+  initialJobId,
 }: AddJobPackDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
@@ -174,6 +177,15 @@ export function AddJobPackDialog({
       requiredCertifications: suggested,
     }));
   }, [formData.hazards]);
+
+  // Deep-link prefill: opening from a "Jobs awaiting pack" row lands on the
+  // wizard with that job already selected instead of a blank form.
+  useEffect(() => {
+    if (open && initialJobId) {
+      setSourceType('existing');
+      setSelectedJobId(initialJobId);
+    }
+  }, [open, initialJobId]);
 
   // When selecting an existing job, populate form data
   useEffect(() => {
@@ -232,6 +244,9 @@ export function AddJobPackDialog({
 
     try {
       await createJobPack.mutateAsync({
+        // Real FK link to the job — awaiting-pack logic keys off this, with
+        // title-matching kept only for legacy rows created before the column.
+        job_id: sourceType === 'existing' ? selectedJobId : null,
         title: formData.title,
         client: formData.client,
         location: formData.location,

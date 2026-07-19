@@ -307,7 +307,9 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
       if (!p.ecs_expiry_date) return false;
       return differenceInDays(parseISO(p.ecs_expiry_date), new Date()) >= 0;
     }).length;
-    return Math.round((compliantProfiles / activeEmployees) * 100);
+    // Clamp — profiles can outnumber active employees (e.g. leavers keep
+    // profiles), which would otherwise read >100%
+    return Math.min(100, Math.round((compliantProfiles / activeEmployees) * 100));
   }, [profiles, activeEmployees]);
 
   const handleRefresh = () => {

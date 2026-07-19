@@ -36,8 +36,18 @@ export function FirstRunChecklist({ onNavigate }: Props) {
           .select('id', { count: 'exact', head: true })
           .eq('employer_id', user.id)
           .not('user_id', 'is', null),
-        supabase.from('employer_jobs').select('id', { count: 'exact', head: true }),
-        supabase.from('employer_job_tasks').select('id', { count: 'exact', head: true }),
+        // Scope to jobs/tasks this employer OWNS — worker-side RLS policies
+        // also grant reads on jobs the user is merely assigned to, which
+        // would falsely tick these steps for an employer who also works
+        // on someone else's books.
+        supabase
+          .from('employer_jobs')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id),
+        supabase
+          .from('employer_job_tasks')
+          .select('id', { count: 'exact', head: true })
+          .eq('employer_id', user.id),
       ]);
 
       return {

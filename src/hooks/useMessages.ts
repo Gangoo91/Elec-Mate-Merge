@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
   getMessages,
   sendMessage,
@@ -35,7 +36,7 @@ export const useMessages = (conversationId: string) => {
     isSubscribed.current = true;
 
     const channel = supabase
-      .channel(`messages-${conversationId}`)
+      .channel(realtimeChannelName(`messages-${conversationId}`))
       .on(
         'postgres_changes',
         {
@@ -101,7 +102,7 @@ export const useInfiniteMessages = (conversationId: string) => {
     if (!conversationId) return;
 
     const channel = supabase
-      .channel(`messages-infinite-${conversationId}`)
+      .channel(realtimeChannelName(`messages-infinite-${conversationId}`))
       .on(
         'postgres_changes',
         {

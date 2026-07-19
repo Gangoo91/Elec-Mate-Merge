@@ -200,9 +200,16 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
 
     if (options.ecsCardFilter && options.ecsCardFilter.length > 0) {
       result = result.filter((w) =>
-        options.ecsCardFilter!.some(
-          (cardType) => (w.ecsCardType || '').toLowerCase() === cardType.toLowerCase()
-        )
+        options.ecsCardFilter!.some((cardType) => {
+          const wanted = cardType.toLowerCase();
+          if ((w.ecsCardType || '').toLowerCase() === wanted) return true;
+          // No live profile stores 'apprentice' as a card type — apprentices
+          // declare it in their job title instead, so match on that too.
+          if (wanted === 'apprentice') {
+            return (w.jobTitle || '').toLowerCase().includes('apprentice');
+          }
+          return false;
+        })
       );
     }
 

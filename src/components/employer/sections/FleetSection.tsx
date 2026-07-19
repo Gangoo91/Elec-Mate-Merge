@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useState, useCallback, useMemo } from 'react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -6,6 +5,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import {
   Select,
   SelectContent,
@@ -49,6 +58,7 @@ import {
   type VehicleStatus,
   type UpdateVehicleInput,
 } from '@/hooks/useFleet';
+import { useEmployees } from '@/hooks/useEmployees';
 import { EditVehicleSheet } from '@/components/employer/dialogs/EditVehicleSheet';
 import { VehicleToolsSheet } from '@/components/employer/fleet/VehicleToolsSheet';
 import { VehicleDocumentsSheet } from '@/components/employer/fleet/VehicleDocumentsSheet';
@@ -113,6 +123,7 @@ export function FleetSection() {
   const [showEditSheet, setShowEditSheet] = useState(false);
 
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const [vehicleToDelete, setVehicleToDelete] = useState<string | null>(null);
   const [showDetail, setShowDetail] = useState(false);
   const [showToolsSheet, setShowToolsSheet] = useState(false);
   const [showDocumentsSheet, setShowDocumentsSheet] = useState(false);
@@ -123,6 +134,9 @@ export function FleetSection() {
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [colour, setColour] = useState('');
+  // Roster-linked driver: driver_id is the employer_employees.id FK; the
+  // name is denormalised into assigned_to for list/detail display
+  const [assignedDriverId, setAssignedDriverId] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
   const [motExpiry, setMotExpiry] = useState('');
   const [taxExpiry, setTaxExpiry] = useState('');
@@ -135,6 +149,7 @@ export function FleetSection() {
   const [fuelLocation, setFuelLocation] = useState('');
 
   const { data: vehicles, isLoading: vehiclesLoading, error, refetch } = useVehicles();
+  const { data: employees = [] } = useEmployees();
   const { data: fuelLogs, isLoading: fuelLoading } = useFuelLogs();
   const { data: stats } = useFleetStats();
   const createVehicle = useCreateVehicle();
@@ -180,6 +195,7 @@ export function FleetSection() {
       model: model || undefined,
       colour: colour || undefined,
       assigned_to: assignedTo || undefined,
+      driver_id: assignedDriverId || undefined,
       mot_expiry: motExpiry || undefined,
       tax_expiry: taxExpiry || undefined,
       mileage: 0,
@@ -191,6 +207,7 @@ export function FleetSection() {
     setModel('');
     setColour('');
     setAssignedTo('');
+    setAssignedDriverId('');
     setMotExpiry('');
     setTaxExpiry('');
     setShowNewVehicle(false);
@@ -215,16 +232,20 @@ export function FleetSection() {
     setShowNewFuel(false);
   };
 
+  // Honest confirm — deleting the vehicle takes its full history with it.
+  // (async to satisfy EditVehicleSheet's onDelete: (id) => Promise<void>)
   const handleDelete = async (id: string) => {
-    // Confirm — and surface the FK failure honestly when fuel logs exist
-    if (!window.confirm('Remove this vehicle? Fuel logs attached to it must be removed first.')) {
-      return;
-    }
+    setVehicleToDelete(id);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!vehicleToDelete) return;
+    setVehicleToDelete(null);
     try {
-      await deleteVehicle.mutateAsync(id);
+      await deleteVehicle.mutateAsync(vehicleToDelete);
       setShowDetail(false);
     } catch {
-      toast.error('Could not remove — delete its fuel logs first.');
+      // The mutation's onError already shows the failure toast.
     }
   };
 
@@ -450,12 +471,32 @@ export function FleetSection() {
                 <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
                   Assigned to
                 </Label>
-                <Input
-                  placeholder="Driver name"
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                  className={inputClass}
-                />
+                {/* Roster picker, not free text — links the vehicle to the
+                    actual employee via driver_id */}
+                <Select
+                  value={assignedDriverId || 'none'}
+                  onValueChange={(v) => {
+                    if (v === 'none') {
+                      setAssignedDriverId('');
+                      setAssignedTo('');
+                    } else {
+                      setAssignedDriverId(v);
+                      setAssignedTo(employees.find((e) => e.id === v)?.name || '');
+                    }
+                  }}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Unassigned" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="none">Unassigned</SelectItem>
+                    {employees.map((e) => (
+                      <SelectItem key={e.id} value={e.id}>
+                        {e.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -837,6 +878,32 @@ export function FleetSection() {
           vehicle={selectedVehicle}
         />
       )}
+
+      <AlertDialog
+        open={!!vehicleToDelete}
+        onOpenChange={(open) => {
+          if (!open) setVehicleToDelete(null);
+        }}
+      >
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Remove this vehicle?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              Its fuel logs, daily checks, service records and documents will be removed too.
+              This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              className="h-11 touch-manipulation bg-red-500/90 hover:bg-red-500 text-white"
+            >
+              Remove vehicle
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageFrame>
   );
 
