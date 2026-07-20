@@ -569,6 +569,63 @@ const TOOLS: any[] = [
   {
     type: 'function',
     function: {
+      name: 'add_materials',
+      description:
+        "Propose adding materials to a job's materials list (the Job Sheet list that feeds stock picking and invoicing). Use when the user asks to put parts on a job ('add 3 twin sockets to the Henderson job') or after planning work that needs parts. Resolve the job id from the jobs list or find_project first — never guess it. Each material becomes an approval card; nothing is written until the user applies it.",
+      parameters: {
+        type: 'object',
+        properties: {
+          project_id: {
+            type: 'string',
+            description: 'The job (project) id from the current jobs list or find_project.',
+          },
+          materials: {
+            type: 'array',
+            minItems: 1,
+            items: {
+              type: 'object',
+              properties: {
+                name: { type: 'string', description: "e.g. '2.5mm² T&E 100m drum'." },
+                quantity: { type: 'number', description: 'Default 1.' },
+                unit: {
+                  type: 'string',
+                  description: "e.g. 'm', 'box', 'roll' — omit for each-type items.",
+                },
+                unit_price: {
+                  type: 'number',
+                  description:
+                    'Optional £ ex-VAT, ONLY if known from list_price_book / check_stock / the user — never invent a price.',
+                },
+                rationale: { type: 'string' },
+              },
+              required: ['name'],
+            },
+          },
+          rationale: { type: 'string', description: 'Why these materials, one short line.' },
+        },
+        required: ['project_id', 'materials'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'draft_invoice',
+      description:
+        "Propose opening the invoice composer for a job, pre-filled with that job's unbilled logged time and materials. This is the RIGHT way to bill a job (especially stage bill_it) because it pulls real logged hours + materials and marks them billed — prefer it over create_invoice whenever the work lives on a job. Use create_invoice only for one-off invoices not tied to a job. Nothing is created until the user reviews and generates in the composer.",
+      parameters: {
+        type: 'object',
+        properties: {
+          project_id: { type: 'string', description: 'The job (project) id.' },
+          rationale: { type: 'string' },
+        },
+        required: ['project_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'amend_quote',
       description:
         "Patch fields on an existing quote. Use for: fixing client details, changing line items, adjusting VAT, extending expiry, editing notes, or changing status (draft / sent / accepted / expired / cancelled). Items + totals are auto-recomputed if line_items is supplied. REFUSED on quotes that are already accepted or have an invoice raised — issue a variation or credit instead.",
@@ -1047,10 +1104,24 @@ serve(async (req) => {
 
     const projectSummary = (currentProjects as any[])
       .slice(0, 25)
-      .map(
-        (p) =>
-          `${p.id} [${p.status}${p.priority ? `, ${p.priority}` : ''}${p.dueDate ? `, due ${String(p.dueDate).split('T')[0]}` : ''}] ${p.title}${p.customerName ? ` (${p.customerName})` : ''}${p.location ? ` @ ${p.location}` : ''}`
-      )
+      .map((p) => {
+        const stage = p.stage || p.status;
+        const money =
+          p.estimatedValue != null && Number(p.estimatedValue) > 0
+            ? ` £${Number(p.estimatedValue).toLocaleString('en-GB')}`
+            : '';
+        const docs = [
+          p.quoteCount ? `${p.quoteCount} quote${p.quoteCount > 1 ? 's' : ''}` : null,
+          p.invoiceCount
+            ? `${p.invoiceCount} invoice${p.invoiceCount > 1 ? 's' : ''}${p.unpaidInvoiceCount ? ` (${p.unpaidInvoiceCount} unpaid)` : ''}`
+            : null,
+          p.certCount ? `${p.certCount} cert${p.certCount > 1 ? 's' : ''}` : null,
+          p.totalTasks ? `tasks ${p.completedTasks || 0}/${p.totalTasks}` : null,
+        ]
+          .filter(Boolean)
+          .join(', ');
+        return `${p.id} [${stage}${p.priority ? `, ${p.priority}` : ''}${p.startDate ? `, starts ${String(p.startDate).split('T')[0]}` : ''}${p.dueDate ? `, due ${String(p.dueDate).split('T')[0]}` : ''}]${money} ${p.title}${p.customerName ? ` (${p.customerName})` : ''}${p.location ? ` @ ${p.location}` : ''}${docs ? ` — ${docs}` : ''}`;
+      })
       .join('\n');
 
     const customerSummary = (currentCustomers as any[])
@@ -1073,8 +1144,13 @@ Recent locations: ${(userContext.recentLocations || []).slice(0, 12).join(', ') 
 Current customers (id, name, phone, email, address):
 ${customerSummary || 'no customers yet'}
 
-Current projects (id, status, due, title):
-${projectSummary || 'no projects yet'}
+Current jobs (id, [stage, priority, dates] £value, title, customer, address — linked docs):
+${projectSummary || 'no jobs yet'}
+
+Job stage meanings (derived automatically from linked data — the user calls projects "jobs"):
+enquiry = nothing priced yet · quoted = quote out, unanswered · won = quote accepted, NEEDS BOOKING IN · booked = date in the diary · in_progress = on the tools · bill_it = work finished, NEEDS INVOICING · awaiting_payment = invoice out unpaid · paid = money in.
+When asked "where am I on <job>" (or anything about a job's state), answer like a sharp foreman from the data above: the stage in plain words, the money position (value, unpaid invoices), what's booked, task progress — and ALWAYS finish with the single next action (book it / invoice it / chase it / crack on). Keep it to a few tight lines.
+To ACT on a job, not just report: add_materials puts parts on its materials list (price from list_price_book/check_stock if available — never invented); draft_invoice opens the invoice composer pre-filled with the job's unbilled time + materials — always prefer it over create_invoice when billing job work.
 
 Current open tasks (id, status, priority, due, title) — items with #snagging are snags:
 ${taskSummary || 'no open tasks'}
@@ -1621,6 +1697,29 @@ function packageTerminalCalls(
       actions.push({ type: 'delete-project', id: args.id });
     } else if (name === 'delete_customer') {
       actions.push({ type: 'delete-customer', id: args.id });
+    } else if (name === 'add_materials') {
+      for (const m of args.materials || []) {
+        if (!m?.name) continue;
+        actions.push({
+          type: 'add-material',
+          tempId: crypto.randomUUID(),
+          payload: {
+            projectId: args.project_id,
+            name: m.name,
+            quantity: m.quantity,
+            unit: m.unit,
+            unitPrice: m.unit_price,
+          },
+          rationale: m.rationale || args.rationale,
+        });
+      }
+    } else if (name === 'draft_invoice') {
+      actions.push({
+        type: 'draft-invoice',
+        tempId: crypto.randomUUID(),
+        payload: { projectId: args.project_id },
+        rationale: args.rationale,
+      });
     } else if (name === 'draft_chase_email') {
       actions.push({
         type: 'draft-message',
@@ -1666,6 +1765,9 @@ function synthesiseFraming({
     bits.push(
       `${counts['create-customer']} customer${counts['create-customer'] > 1 ? 's' : ''}`
     );
+  if (counts['add-material'])
+    bits.push(`${counts['add-material']} material${counts['add-material'] > 1 ? 's' : ''}`);
+  if (counts['draft-invoice']) bits.push('invoice to draft');
   if (counts['draft-message']) bits.push('draft email');
   const amends =
     (counts['amend-task'] || 0) +
@@ -2584,6 +2686,29 @@ async function packageResponse(
         });
       } else if (name === 'delete_customer') {
         proposedActions.push({ type: 'delete-customer', id: args.id });
+      } else if (name === 'add_materials') {
+        for (const m of args.materials || []) {
+          if (!m?.name) continue;
+          proposedActions.push({
+            type: 'add-material',
+            tempId: crypto.randomUUID(),
+            payload: {
+              projectId: args.project_id,
+              name: m.name,
+              quantity: m.quantity,
+              unit: m.unit,
+              unitPrice: m.unit_price,
+            },
+            rationale: m.rationale || args.rationale,
+          });
+        }
+      } else if (name === 'draft_invoice') {
+        proposedActions.push({
+          type: 'draft-invoice',
+          tempId: crypto.randomUUID(),
+          payload: { projectId: args.project_id },
+          rationale: args.rationale,
+        });
       } else if (name === 'draft_chase_email') {
         proposedActions.push({
           type: 'draft-message',
@@ -2619,6 +2744,9 @@ async function packageResponse(
       if (counts['create-project']) bits.push(`${counts['create-project']} project${counts['create-project'] > 1 ? 's' : ''}`);
       if (counts['create-customer'])
         bits.push(`${counts['create-customer']} customer${counts['create-customer'] > 1 ? 's' : ''}`);
+      if (counts['add-material'])
+        bits.push(`${counts['add-material']} material${counts['add-material'] > 1 ? 's' : ''}`);
+      if (counts['draft-invoice']) bits.push('invoice to draft');
       const amends =
         (counts['amend-task'] || 0) +
         (counts['amend-project'] || 0) +

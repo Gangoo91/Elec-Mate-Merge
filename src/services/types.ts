@@ -50,6 +50,12 @@ export interface PayrollEntry {
   /** Worker's overtime pay multiplier (1 = flat rate, 1.5 = time and a half). */
   overtimeMultiplier: number;
   grossPay: number;
+  /** How this worker is paid — hourly rate is the salaried/day-rate equivalent. */
+  payType: 'hourly' | 'annual' | 'day_rate';
+  /** Approved leave days falling inside the export period (weekdays, halves counted). */
+  leaveDays: number;
+  /** e.g. "2 annual, 1 sick" — so payroll never cross-references the leave screen. */
+  leaveDetail: string;
   jobBreakdown: Array<{
     jobId: string;
     jobTitle: string;

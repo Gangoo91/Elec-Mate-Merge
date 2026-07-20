@@ -1603,7 +1603,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   rcdRating: updatedResult.rcdRating || null,
                   rcdType: updatedResult.rcdType || null,
                   protectiveDeviceType: deviceType,
-                }
+                },
+                `${updatedResult.circuitDescription || ''} ${updatedResult.circuitType || updatedResult.type || ''}`
               );
               if (newMaxZs) updatedResult.maxZs = newMaxZs;
             }
@@ -2062,7 +2063,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       rcdRating?: string | null;
       rcdType?: string | null;
       protectiveDeviceType?: string | null;
-    }
+    },
+    // Circuit description (+ type) so distribution / sub-main feeds resolve to
+    // the 5 s disconnection column (Reg 411.3.2.3 / Table 41.4) not the 0.4 s
+    // final-circuit table — otherwise a BS 88 board feed ≥ 80 A finds no 0.4 s
+    // entry and Max Zs comes back blank (ELE-1365, mirrors the EIC fix).
+    circuitDescription: string = ''
   ): string => {
     if (!bsStandard || !rating) return '';
 
@@ -2080,6 +2086,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       protectiveDeviceType: rcdContext?.protectiveDeviceType ?? null,
       boardHasMainRcd,
       boardMainRcdRating,
+      circuitDescription,
     });
     // ELE-860 note: Our data table already publishes the post-Cmin (×0.95)
     // values straight from BS 7671 Table 41.3 (e.g. B32 0.4s = 1.37Ω, not the
@@ -2262,7 +2269,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               rcdRating: requiresRCD ? '30mA' : null,
               rcdType: null,
               protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
-            }
+            },
+            `${normalisedCircuit.circuitDescription || ''} ${normalisedCircuit.circuitType || ''}`
           ),
           ringContinuityLive: '',
           ringContinuityNeutral: '',
@@ -2391,7 +2399,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             rcdRating: circuit.rcdRating || (requiresRCD ? '30mA' : null),
             rcdType: circuit.rcdType || null,
             protectiveDeviceType: circuit.protectiveDeviceType,
-          }
+          },
+          `${circuit.circuitDescription || ''} ${circuit.circuitType || ''}`
         ),
         pointsServed: calculatePointsServed(circuitDesc, circuitType, circuit.protectiveDeviceType),
         rcdRating: requiresRCD ? '30mA' : '',

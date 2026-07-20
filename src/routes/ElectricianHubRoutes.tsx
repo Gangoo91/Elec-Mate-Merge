@@ -18,6 +18,7 @@ const HeatPumpDesigner = lazy(
   () => import('@/pages/electrician/renewables/design/HeatPumpDesigner')
 );
 const ProjectsPage = lazy(() => import('@/pages/electrician/ProjectsPage'));
+const RenewalsBookPage = lazy(() => import('@/pages/electrician/RenewalsBookPage'));
 const ProjectDetailPage = lazy(() => import('@/pages/electrician/ProjectDetailPage'));
 const BusinessAdmin = lazy(() => import('@/pages/electrician/BusinessAdmin'));
 const SafetyShares = lazy(() => import('@/pages/electrician/SafetyShares'));
@@ -553,6 +554,14 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <ProjectsPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewals"
+      element={
+        <LazyRoute>
+          <RenewalsBookPage />
         </LazyRoute>
       }
     />

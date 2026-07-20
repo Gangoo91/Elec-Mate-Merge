@@ -288,17 +288,25 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
       .reduce((sum, ts) => sum + (ts.total_hours || 0), 0);
   }, [timesheets]);
 
+  // Same 12h staleness rule as Worker Tracking — a fortnight-old "On Site"
+  // row must not light up the hub's "on-site right now" hero.
+  const freshLocations = useMemo(() => {
+    const staleCutoff = Date.now() - 12 * 60 * 60 * 1000;
+    return locations.filter(
+      (l) => l.last_updated && new Date(l.last_updated).getTime() >= staleCutoff
+    );
+  }, [locations]);
   const onSiteCount = useMemo(
-    () => locations.filter((l) => l.status === 'On Site').length,
-    [locations]
+    () => freshLocations.filter((l) => l.status === 'On Site').length,
+    [freshLocations]
   );
   const travellingCount = useMemo(
-    () => locations.filter((l) => l.status === 'En Route').length,
-    [locations]
+    () => freshLocations.filter((l) => l.status === 'En Route').length,
+    [freshLocations]
   );
   const onLeaveCount = useMemo(
-    () => locations.filter((l) => l.status === 'On Leave').length,
-    [locations]
+    () => freshLocations.filter((l) => l.status === 'On Leave').length,
+    [freshLocations]
   );
 
   const complianceScore = useMemo(() => {

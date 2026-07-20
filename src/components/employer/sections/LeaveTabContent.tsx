@@ -23,6 +23,8 @@ import {
   useTeamAllowances,
   useAddTeamLeave,
   useDecideLeave,
+  useTeamAssignments,
+  type TeamLeaveRequest,
 } from '@/hooks/useTeamLeave';
 import {
   format,
@@ -35,6 +37,8 @@ import {
   eachDayOfInterval as getDays,
   addMonths,
   subMonths,
+  addDays,
+  startOfDay,
 } from 'date-fns';
 import {
   Palmtree,
@@ -85,8 +89,41 @@ export function LeaveTabContent() {
   const { data: employees = [] } = useEmployees();
   const { data: leaveRequests = [] } = useTeamLeaveRequests();
   const { data: holidayAllowances = [] } = useTeamAllowances();
+  const { data: allAssignments = [] } = useTeamAssignments();
   const addLeave = useAddTeamLeave();
   const decideLeave = useDecideLeave();
+
+  // Belt-and-braces roster scoping on top of the table's per-company RLS.
+  // Live assignment statuses are 'assigned' | 'confirmed' | 'declined' — a
+  // declined assignment is not a booking, so it must not flag a clash.
+  const rosterIds = new Set(employees.map((e) => e.id));
+  const assignments = allAssignments.filter(
+    (a) =>
+      rosterIds.has(a.employeeId) &&
+      !['declined', 'removed', 'completed', 'cancelled', 'ended'].includes(a.status)
+  );
+
+  /**
+   * What the owner needs BEFORE hitting Approve: is this worker booked on a
+   * job for those dates, and who else is already off at the same time?
+   */
+  const getConflicts = (lr: TeamLeaveRequest) => {
+    const jobClashes = assignments.filter(
+      (a) =>
+        a.employeeId === lr.employeeId &&
+        a.startDate <= lr.endDate &&
+        (a.endDate === null || a.endDate >= lr.startDate)
+    );
+    const alsoOff = leaveRequests.filter(
+      (other) =>
+        other.id !== lr.id &&
+        other.employeeId !== lr.employeeId &&
+        other.status === 'approved' &&
+        other.startDate <= lr.endDate &&
+        other.endDate >= lr.startDate
+    );
+    return { jobClashes, alsoOff };
+  };
 
   const [showRequestForm, setShowRequestForm] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<string>('');
@@ -97,6 +134,7 @@ export function LeaveTabContent() {
   const [halfDayPeriod, setHalfDayPeriod] = useState<'am' | 'pm'>('am');
   const [reason, setReason] = useState('');
   const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [selectedCalDay, setSelectedCalDay] = useState<Date | null>(null);
 
   // Calculate business days for the request
   const calculateDays = (): number => {
@@ -107,7 +145,9 @@ export function LeaveTabContent() {
   };
 
   const handleSubmitRequest = async () => {
-    if (!selectedEmployee || !startDate || !endDate) {
+    // A half day is a single date — don't demand (or trust) a range
+    const effectiveEnd = isHalfDay ? startDate : endDate;
+    if (!selectedEmployee || !startDate || !effectiveEnd) {
       toast({
         title: 'Missing Information',
         description: 'Please select an employee and dates.',
@@ -129,7 +169,7 @@ export function LeaveTabContent() {
         employeeName: employee.name,
         type: leaveType,
         startDate: format(startDate, 'yyyy-MM-dd'),
-        endDate: format(endDate, 'yyyy-MM-dd'),
+        endDate: format(effectiveEnd, 'yyyy-MM-dd'),
         halfDay: isHalfDay ? halfDayPeriod : undefined,
         totalDays,
         reason,
@@ -184,6 +224,13 @@ export function LeaveTabContent() {
   const monthEnd = endOfMonth(calendarMonth);
   const monthDays = getDays({ start: monthStart, end: monthEnd });
 
+  // Next-7-days coverage — the owner's "can I staff next week?" answer
+  // without opening a calendar and decoding dots.
+  // Midnight-normalised: getEmployeesOffOnDate compares against parseISO
+  // (midnight) leave bounds, so a clock-time "today" would miss leave that
+  // ends today and show a worker as in when they're off.
+  const next7Days = Array.from({ length: 7 }, (_, i) => addDays(startOfDay(new Date()), i));
+
   const getEmployeesOffOnDate = (date: Date) => {
     return leaveRequests.filter((lr) => {
       if (lr.status !== 'approved' && lr.status !== 'pending') return false;
@@ -205,6 +252,64 @@ export function LeaveTabContent() {
           Request Leave
         </Button>
       </div>
+
+      {/* Next-7-days coverage strip */}
+      <Card className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
+        <CardContent className="p-3">
+          <h4 className="text-sm font-medium text-white mb-2">Coverage — next 7 days</h4>
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {next7Days.map((day) => {
+              const off = getEmployeesOffOnDate(day);
+              const weekend = isWeekend(day);
+              const today = isSameDay(day, new Date());
+              return (
+                <div
+                  key={day.toISOString()}
+                  className={cn(
+                    'min-w-[92px] flex-1 rounded-xl border p-2',
+                    weekend
+                      ? 'border-white/[0.04] bg-white/[0.02] opacity-60'
+                      : off.length > 0
+                        ? 'border-warning/30 bg-warning/[0.06]'
+                        : 'border-white/[0.06] bg-white/[0.02]',
+                    today && 'ring-1 ring-elec-yellow/50'
+                  )}
+                >
+                  <p
+                    className={cn(
+                      'text-[10px] font-semibold uppercase tracking-wide mb-1',
+                      today ? 'text-elec-yellow' : 'text-white/60'
+                    )}
+                  >
+                    {today ? 'Today' : format(day, 'EEE d')}
+                  </p>
+                  {off.length === 0 ? (
+                    <p className="text-xs text-success">All in</p>
+                  ) : (
+                    <div className="space-y-0.5">
+                      {off.slice(0, 3).map((lr) => (
+                        <p
+                          key={lr.id}
+                          className={cn(
+                            'text-[11px] truncate',
+                            lr.status === 'approved' ? 'text-white' : 'text-warning'
+                          )}
+                        >
+                          {lr.employeeName.split(' ')[0]}
+                          {lr.status === 'pending' ? '?' : ''}
+                        </p>
+                      ))}
+                      {off.length > 3 && (
+                        <p className="text-[10px] text-white/60">+{off.length - 3} more</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Request Form */}
       {showRequestForm && (
@@ -420,6 +525,7 @@ export function LeaveTabContent() {
 
           {pendingRequests.map((lr) => {
             const typeInfo = getLeaveTypeInfo(lr.type);
+            const { jobClashes, alsoOff } = getConflicts(lr);
             return (
               <Card key={lr.id} className="bg-[hsl(0_0%_12%)] border-warning/30">
                 <CardContent className="p-4">
@@ -440,6 +546,32 @@ export function LeaveTabContent() {
                       </p>
                       {lr.reason && (
                         <p className="text-sm text-white italic mb-3">"{lr.reason}"</p>
+                      )}
+                      {(jobClashes.length > 0 || alsoOff.length > 0) && (
+                        <div className="rounded-lg border border-warning/30 bg-warning/10 p-2.5 mb-3 space-y-1.5">
+                          {jobClashes.map((a) => (
+                            <p
+                              key={a.id}
+                              className="text-xs text-warning flex items-start gap-1.5"
+                            >
+                              <Briefcase className="h-3.5 w-3.5 mt-px flex-shrink-0" />
+                              <span>
+                                Booked on <span className="font-medium">{a.jobTitle}</span>{' '}
+                                {format(parseISO(a.startDate), 'd MMM')}
+                                {a.endDate ? ` – ${format(parseISO(a.endDate), 'd MMM')}` : ' onwards'}
+                              </span>
+                            </p>
+                          ))}
+                          {alsoOff.length > 0 && (
+                            <p className="text-xs text-warning flex items-start gap-1.5">
+                              <AlertCircle className="h-3.5 w-3.5 mt-px flex-shrink-0" />
+                              <span>
+                                Also off then:{' '}
+                                {[...new Set(alsoOff.map((o) => o.employeeName))].join(', ')}
+                              </span>
+                            </p>
+                          )}
+                        </div>
                       )}
                       <div className="flex gap-2">
                         <Button
@@ -570,15 +702,20 @@ export function LeaveTabContent() {
                 const employeesOff = getEmployeesOffOnDate(day);
                 const isWeekendDay = isWeekend(day);
                 const isToday = isSameDay(day, new Date());
+                const isSelected = selectedCalDay && isSameDay(day, selectedCalDay);
 
                 return (
-                  <div
+                  <button
                     key={day.toISOString()}
+                    onClick={() =>
+                      setSelectedCalDay(isSelected ? null : day)
+                    }
                     className={cn(
-                      'aspect-square rounded-md flex flex-col items-center justify-center relative text-xs',
+                      'aspect-square rounded-md flex flex-col items-center justify-center relative text-xs touch-manipulation',
                       isWeekendDay && 'bg-white/[0.04] text-white',
                       isToday && 'ring-2 ring-elec-yellow',
-                      employeesOff.length > 0 && !isWeekendDay && 'bg-warning/10'
+                      employeesOff.length > 0 && !isWeekendDay && 'bg-warning/10',
+                      isSelected && 'bg-elec-yellow/20 ring-2 ring-elec-yellow'
                     )}
                   >
                     <span className={cn('font-medium', isToday && 'text-elec-yellow')}>
@@ -602,10 +739,45 @@ export function LeaveTabContent() {
                         )}
                       </div>
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>
+
+            {/* Tapped-day detail — names, not just dots */}
+            {selectedCalDay && (
+              <div className="mt-2 rounded-lg bg-white/[0.04] border border-white/[0.08] p-2.5">
+                <p className="text-xs font-medium text-white mb-1.5">
+                  {format(selectedCalDay, 'EEEE, d MMMM')}
+                </p>
+                {getEmployeesOffOnDate(selectedCalDay).length === 0 ? (
+                  <p className="text-xs text-success">Everyone in</p>
+                ) : (
+                  <div className="space-y-1">
+                    {getEmployeesOffOnDate(selectedCalDay).map((lr) => {
+                      const typeInfo = getLeaveTypeInfo(lr.type);
+                      return (
+                        <div key={lr.id} className="flex items-center gap-2">
+                          <div
+                            className={cn(
+                              'w-1.5 h-1.5 rounded-full',
+                              lr.status === 'approved' ? 'bg-success' : 'bg-warning'
+                            )}
+                          />
+                          <span className="text-xs text-white">{lr.employeeName}</span>
+                          <Badge className={cn('text-[10px]', typeInfo.colour)}>
+                            {typeInfo.label}
+                          </Badge>
+                          {lr.status === 'pending' && (
+                            <span className="text-[10px] text-warning">pending</span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Legend */}
             <div className="flex justify-center gap-4 mt-3 pt-2 border-t border-white/[0.08]">

@@ -55,6 +55,14 @@ export interface HasRationale {
   rationale?: string;
 }
 
+export interface AddMaterialPayload {
+  projectId: string;
+  name: string;
+  quantity?: number;
+  unit?: string;
+  unitPrice?: number;
+}
+
 export type ProposedAction = HasRationale &
   (
     | {
@@ -96,6 +104,16 @@ export type ProposedAction = HasRationale &
         type: 'amend-customer';
         id: string;
         patch: CustomerPatch;
+      }
+    | {
+        type: 'add-material';
+        tempId: string;
+        payload: AddMaterialPayload;
+      }
+    | {
+        type: 'draft-invoice';
+        tempId: string;
+        payload: { projectId: string };
       }
     | { type: 'complete-task'; id: string }
     | { type: 'complete-project'; id: string }

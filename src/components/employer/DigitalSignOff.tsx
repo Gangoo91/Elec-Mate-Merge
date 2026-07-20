@@ -26,9 +26,12 @@ import {
   useSignOffAttendee,
   useUploadSignature,
   useAddBriefingAttendee,
+  signedViaLabel,
   type BriefingAttendee,
 } from '@/hooks/useBriefingSignatures';
-import { type Briefing } from '@/hooks/useBriefings';
+import { useAddMultipleAttendees, type Briefing } from '@/hooks/useBriefings';
+import { useEmployees } from '@/hooks/useEmployees';
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -47,18 +50,26 @@ interface DigitalSignOffProps {
   onComplete?: () => void;
 }
 
-type ViewMode = 'list' | 'sign' | 'add-guest';
+type ViewMode = 'list' | 'sign' | 'add-guest' | 'add-team';
 
 export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: DigitalSignOffProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [selectedAttendee, setSelectedAttendee] = useState<BriefingAttendee | null>(null);
   const [guestName, setGuestName] = useState('');
   const [guestCompany, setGuestCompany] = useState('');
+  const [selectedTeamIds, setSelectedTeamIds] = useState<Set<string>>(new Set());
   const [captureLocation] = useState(true);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const { data: attendees = [], isLoading } = useBriefingAttendees(briefing.id);
+  const { data: employees = [] } = useEmployees();
+  const addTeamMembers = useAddMultipleAttendees();
+
+  // Team members not already on the register — the roster you can still add.
+  const rosteredIds = new Set(attendees.map((a) => a.employee_id).filter(Boolean));
+  const availableEmployees = employees.filter((e) => !rosteredIds.has(e.id));
   // Resolve stored signature references — legacy rows hold full public URLs
   // (pass through), new rows hold bare storage paths (signed on demand).
   const { urls: signatureSrcs } = useStorageUrls(
@@ -141,6 +152,32 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
     }
   };
 
+  // Add the selected team members to the register in one batch
+  const handleAddTeam = async () => {
+    if (selectedTeamIds.size === 0) return;
+    try {
+      await addTeamMembers.mutateAsync({
+        briefingId: briefing.id,
+        employeeIds: [...selectedTeamIds],
+      });
+      // The batch hook invalidates ['briefings'] only — refresh this register too.
+      queryClient.invalidateQueries({ queryKey: ['briefing-attendees', briefing.id] });
+      setSelectedTeamIds(new Set());
+      setViewMode('list');
+    } catch {
+      // Error handled by mutation
+    }
+  };
+
+  const toggleTeamMember = (id: string) => {
+    setSelectedTeamIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   // Handle adding guest
   const handleAddGuest = async () => {
     if (!guestName.trim()) return;
@@ -196,7 +233,9 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
       ? 'Sign Attendance'
       : viewMode === 'add-guest'
         ? 'Add Guest'
-        : 'Attendance Sign-Off';
+        : viewMode === 'add-team'
+          ? 'Add Team Members'
+          : 'Attendance Sign-Off';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -207,10 +246,44 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
           description={briefing.title}
           footer={
             viewMode === 'list' ? (
-              <PrimaryButton onClick={() => setViewMode('add-guest')} fullWidth size="lg">
-                <UserPlus className="h-4 w-4 mr-2" />
-                Add Guest / Visitor
-              </PrimaryButton>
+              <>
+                {availableEmployees.length > 0 && (
+                  <PrimaryButton onClick={() => setViewMode('add-team')} fullWidth size="lg">
+                    <Users className="h-4 w-4 mr-2" />
+                    Add Team
+                  </PrimaryButton>
+                )}
+                <SecondaryButton onClick={() => setViewMode('add-guest')} fullWidth size="lg">
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Add Guest
+                </SecondaryButton>
+              </>
+            ) : viewMode === 'add-team' ? (
+              <>
+                <SecondaryButton
+                  onClick={() => {
+                    setViewMode('list');
+                    setSelectedTeamIds(new Set());
+                  }}
+                  fullWidth
+                  size="lg"
+                >
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleAddTeam}
+                  disabled={selectedTeamIds.size === 0 || addTeamMembers.isPending}
+                  fullWidth
+                  size="lg"
+                >
+                  {addTeamMembers.isPending ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <Users className="h-4 w-4 mr-2" />
+                  )}
+                  Add {selectedTeamIds.size > 0 ? `${selectedTeamIds.size} ` : ''}to register
+                </PrimaryButton>
+              </>
             ) : viewMode === 'add-guest' ? (
               <>
                 <SecondaryButton
@@ -349,7 +422,8 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                                     {attendee.acknowledged_at
                                       ? format(new Date(attendee.acknowledged_at), 'HH:mm')
                                       : ''}
-                                    {attendee.signed_via && ` via ${attendee.signed_via}`}
+                                    {attendee.signed_via &&
+                                      ` via ${signedViaLabel(attendee.signed_via)}`}
                                   </p>
                                 </div>
                               </div>
@@ -429,6 +503,69 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                   </div>
                 )}
               </div>
+            </>
+          )}
+
+          {viewMode === 'add-team' && (
+            <>
+              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <p className="text-sm text-white flex items-center gap-2">
+                  <Users className="h-4 w-4 text-blue-400" />
+                  Pick who is at this briefing — they sign against their own name
+                </p>
+              </div>
+
+              <ScrollArea className="flex-1">
+                <div className="space-y-2">
+                  {availableEmployees.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Users className="h-12 w-12 text-white mx-auto mb-4" />
+                      <p className="text-sm text-white">
+                        Everyone on the team is already on the register
+                      </p>
+                    </div>
+                  ) : (
+                    availableEmployees.map((employee) => {
+                      const isSelected = selectedTeamIds.has(employee.id);
+                      return (
+                        <button
+                          key={employee.id}
+                          type="button"
+                          onClick={() => toggleTeamMember(employee.id)}
+                          className={cn(
+                            'w-full flex items-center justify-between p-3 min-h-[44px] rounded-xl border transition-colors touch-manipulation',
+                            isSelected
+                              ? 'bg-elec-yellow/10 border-elec-yellow/50'
+                              : 'bg-[hsl(0_0%_12%)] border-white/[0.06] hover:bg-[hsl(0_0%_15%)]'
+                          )}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={cn(
+                                'p-2 rounded-lg',
+                                isSelected ? 'bg-elec-yellow/20' : 'bg-white/[0.06]'
+                              )}
+                            >
+                              <Users
+                                className={cn(
+                                  'h-4 w-4',
+                                  isSelected ? 'text-elec-yellow' : 'text-white'
+                                )}
+                              />
+                            </div>
+                            <p className="font-medium text-sm text-white text-left">
+                              {employee.name}
+                            </p>
+                          </div>
+                          {isSelected && (
+                            <CheckCircle2 className="h-5 w-5 text-elec-yellow shrink-0" />
+                          )}
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              </ScrollArea>
             </>
           )}
 

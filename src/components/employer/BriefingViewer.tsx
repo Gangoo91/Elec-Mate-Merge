@@ -21,6 +21,7 @@ import {
   Copy,
   QrCode,
   Trash2,
+  Briefcase,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useStorageUrl, useStorageUrls } from '@/utils/storageUrls';
@@ -28,6 +29,7 @@ import { useBriefingWithAttendees, type Briefing } from '@/hooks/useBriefings';
 import { getOrCreateBriefingSignLink } from '@/hooks/useBriefingSignatures';
 import { BriefingQRCode } from './BriefingQRCode';
 import { BriefingPhotoUpload } from './BriefingPhotoUpload';
+import { signedViaLabel } from '@/hooks/useBriefingSignatures';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { SheetShell, PrimaryButton, SecondaryButton } from './editorial';
@@ -39,7 +41,7 @@ interface BriefingViewerProps {
   onEdit?: (briefing: Briefing) => void;
   onSignOff?: (briefing: Briefing) => void;
   onExportPdf?: (briefing: Briefing) => void;
-  onComplete?: (briefing: Briefing) => void;
+  onComplete?: (briefing: Briefing) => void | Promise<void>;
   onDelete?: (briefing: Briefing) => void;
 }
 
@@ -57,6 +59,10 @@ export function BriefingViewer({
   const [activeTab, setActiveTab] = useState('content');
   const [showQR, setShowQR] = useState(false);
   const [showPhotoUpload, setShowPhotoUpload] = useState(false);
+  // Guards a double-tap on "Mark completed" — for recurring briefings the
+  // handler also schedules the next occurrence, so firing twice would create
+  // a duplicate in the series.
+  const [completing, setCompleting] = useState(false);
 
   const { data: briefing, isLoading } = useBriefingWithAttendees(briefingId);
 
@@ -206,6 +212,12 @@ export function BriefingViewer({
                   <span className="truncate">{briefing.presenter}</span>
                 </span>
               )}
+              {briefing.job?.title && (
+                <span className="flex items-center gap-1.5 text-white min-w-0">
+                  <Briefcase className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{briefing.job.title}</span>
+                </span>
+              )}
               {briefing.duration_minutes && (
                 <span className="flex items-center gap-1.5 text-white min-w-0">
                   <Clock className="h-4 w-4 shrink-0" />
@@ -219,9 +231,21 @@ export function BriefingViewer({
           {(onComplete || onDelete) && (
             <div className="flex gap-2">
               {onComplete && briefing.status === 'Scheduled' && (
-                <SecondaryButton onClick={() => onComplete(briefing)} fullWidth>
+                <SecondaryButton
+                  disabled={completing}
+                  onClick={async () => {
+                    if (completing) return;
+                    setCompleting(true);
+                    try {
+                      await onComplete(briefing);
+                    } finally {
+                      setCompleting(false);
+                    }
+                  }}
+                  fullWidth
+                >
                   <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
-                  Mark completed
+                  {completing ? 'Completing…' : 'Mark completed'}
                 </SecondaryButton>
               )}
               {onDelete && (
@@ -363,7 +387,7 @@ export function BriefingViewer({
                               <p className="text-xs text-white">
                                 {attendee.guest_company && `${attendee.guest_company} • `}
                                 {attendee.acknowledged && attendee.acknowledged_at
-                                  ? `Signed ${format(new Date(attendee.acknowledged_at), 'HH:mm')} via ${attendee.signed_via || 'manual'}`
+                                  ? `Signed ${format(new Date(attendee.acknowledged_at), 'HH:mm')} via ${signedViaLabel(attendee.signed_via)}`
                                   : 'Pending'}
                               </p>
                             </div>

@@ -1,48 +1,30 @@
-import { Mail, MessageCircle, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Mail, ArrowRight } from 'lucide-react';
 
+/**
+ * Support strip under the plans. One honest action — email — in the page's
+ * quiet card language. (A "Live Chat" link used to live here but the product
+ * has no live chat; it was a disguised mailto and got removed 2026-07-20.)
+ */
 const SupportSection = () => {
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 py-4 border-t border-white/[0.06]">
-      <span className="text-xs text-white shrink-0">Need help?</span>
-
-      <div className="flex flex-wrap gap-2 sm:gap-3">
-        <a
-          href="mailto:info@elec-mate.com?subject=Subscription%20Support"
-          className={cn(
-            'inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm touch-manipulation min-h-[44px]',
-            'text-white hover:text-white hover:bg-white/[0.04] active:scale-[0.98]',
-            'transition-all duration-200'
-          )}
-        >
-          <Mail className="h-3.5 w-3.5 text-blue-400" />
-          Email Support
-          <ArrowRight className="h-3 w-3 text-white" />
-        </a>
-
-        <a
-          href="mailto:info@elec-mate.com?subject=Live%20Chat%20Request"
-          className={cn(
-            'inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm touch-manipulation min-h-[44px]',
-            'text-white hover:text-white hover:bg-white/[0.04] active:scale-[0.98]',
-            'transition-all duration-200'
-          )}
-        >
-          <MessageCircle className="h-3.5 w-3.5 text-green-400" />
-          Live Chat
-          <ArrowRight className="h-3 w-3 text-white" />
-        </a>
+    <div className="flex flex-col sm:flex-row sm:items-center gap-4 py-6 border-t border-white/[0.06]">
+      <div className="min-w-0">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/60">
+          Need help?
+        </p>
+        <p className="mt-1 text-sm text-white/75 leading-relaxed">
+          Questions about plans or billing — email us and a real person replies.
+        </p>
       </div>
 
-      <span className="text-[11px] text-white sm:ml-auto">
-        Billing:{' '}
-        <a
-          href="mailto:info@elec-mate.com"
-          className="text-white hover:text-elec-yellow touch-manipulation"
-        >
-          info@elec-mate.com
-        </a>
-      </span>
+      <a
+        href="mailto:info@elec-mate.com?subject=Subscription%20Support"
+        className="sm:ml-auto inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg text-sm font-medium touch-manipulation bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1] active:scale-[0.99] transition-colors shrink-0"
+      >
+        <Mail className="h-4 w-4 text-white/60" />
+        Email support
+        <ArrowRight className="h-3.5 w-3.5 text-white/45" />
+      </a>
     </div>
   );
 };

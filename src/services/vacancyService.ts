@@ -108,6 +108,13 @@ export interface VacancyApplication {
   cv_url: string | null;
   status: 'New' | 'Reviewing' | 'Shortlisted' | 'Interviewed' | 'Offered' | 'Hired' | 'Rejected';
   notes: string | null;
+  // First-class interview booking columns (live in the DB, not yet in the
+  // generated types — optional so legacy fetches/inserts stay valid). The
+  // structured "Interview booked: …" notes line remains for readability and
+  // as the only record on legacy rows.
+  interview_at?: string | null;
+  interview_type?: string | null;
+  interview_location?: string | null;
   applied_at: string;
   updated_at: string;
   // Joined data
@@ -391,7 +398,8 @@ async function notifyVacancyOwner(vacancyId: string, applicantName: string, appl
 export const updateApplicationStatus = async (
   id: string,
   status: VacancyApplication['status'],
-  notes?: string
+  notes?: string,
+  interview?: { at: string; type: string; location: string | null }
 ): Promise<VacancyApplication> => {
   // Get application details for notification
   const { data: existingApp } = await supabase
@@ -415,9 +423,19 @@ export const updateApplicationStatus = async (
     updates.notes = notes;
   }
 
+  // Booking details land as first-class columns alongside the notes line —
+  // the columns are read preferentially; the line stays for readability and
+  // as the only record on legacy rows.
+  if (interview !== undefined) {
+    updates.interview_at = interview.at;
+    updates.interview_type = interview.type;
+    updates.interview_location = interview.location;
+  }
+
   const { data, error } = await supabase
     .from('employer_vacancy_applications')
-    .update(updates)
+    // interview_* columns are live in the DB but not yet in the generated types
+    .update(updates as never)
     .eq('id', id)
     .select()
     .single();

@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
-import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,11 +40,13 @@ import {
   useRAMSDocuments,
   useRAMSDocumentStats,
   useCreateRAMSDocument,
+  useUpdateRAMSDocument,
   useUpdateRAMSStatus,
   useDeleteRAMSDocument,
   type RAMSDocument,
   type RAMSStatus,
 } from '@/hooks/useRAMSDocuments';
+import { useJobs } from '@/hooks/useJobs';
 import { format, formatDistanceToNow } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
@@ -85,19 +86,27 @@ const STATUS_OPTIONS: { value: RAMSStatus; label: string; tone: Tone }[] = [
   { value: 'rejected', label: 'Rejected', tone: 'red' },
 ];
 
-const statusToneFor = (status: RAMSStatus): Tone =>
-  STATUS_OPTIONS.find((s) => s.value === status)?.tone ?? 'amber';
+const statusToneFor = (status: RAMSStatus): Tone => {
+  // AI-produced documents land as 'generated' — awaiting review, not a draft.
+  if ((status as string) === 'generated') return 'orange';
+  return STATUS_OPTIONS.find((s) => s.value === status)?.tone ?? 'amber';
+};
 
-const statusLabelFor = (status: RAMSStatus): string =>
-  STATUS_OPTIONS.find((s) => s.value === status)?.label ?? status;
+const statusLabelFor = (status: RAMSStatus): string => {
+  if ((status as string) === 'generated') return 'AI generated';
+  return STATUS_OPTIONS.find((s) => s.value === status)?.label ?? status;
+};
 
 export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const { toast } = useToast();
   const { data: ramsDocuments = [], isLoading, error, refetch } = useRAMSDocuments();
   const { data: stats } = useRAMSDocumentStats();
   const createRAMS = useCreateRAMSDocument();
+  const updateRAMS = useUpdateRAMSDocument();
   const updateStatus = useUpdateRAMSStatus();
   const deleteRAMS = useDeleteRAMSDocument();
+  const { data: jobs = [] } = useJobs();
+  const jobTitleById = useMemo(() => new Map(jobs.map((j) => [j.id, j.title])), [jobs]);
 
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showDetailSheet, setShowDetailSheet] = useState(false);
@@ -123,11 +132,16 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
     }[],
     required_ppe: [] as string[],
     job_scale: '',
+    employer_job_id: '',
   });
   const [activityInput, setActivityInput] = useState('');
 
   const approvedCount = stats?.approved ?? 0;
-  const submittedCount = stats?.submitted ?? 0;
+  // Awaiting approval = submitted + AI 'generated' — the same definition the
+  // Safety hub landing and Safety & HR overview use, so the figures never drift.
+  const submittedCount = ramsDocuments.filter(
+    (d) => d.status === 'submitted' || (d.status as string) === 'generated',
+  ).length;
   const totalCount = stats?.total ?? ramsDocuments.length;
   const draftCount = ramsDocuments.filter((d) => d.status === 'draft').length;
   const activeCount = ramsDocuments.filter(
@@ -142,11 +156,15 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   }, [ramsDocuments]);
 
   const filteredDocuments = ramsDocuments.filter((doc) => {
+    const linkedJobTitle = doc.employer_job_id
+      ? jobTitleById.get(doc.employer_job_id)
+      : undefined;
     const matchesSearch =
       searchQuery === '' ||
       doc.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.assessor.toLowerCase().includes(searchQuery.toLowerCase());
+      doc.assessor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (linkedJobTitle ?? '').toLowerCase().includes(searchQuery.toLowerCase());
 
     if (!matchesSearch) return false;
 
@@ -164,6 +182,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
       ...formData,
       // job_scale has a CHECK (domestic/commercial/industrial) — omit if unset
       job_scale: formData.job_scale || undefined,
+      employer_job_id: formData.employer_job_id || undefined,
       status: 'draft',
     });
     setShowCreateSheet(false);
@@ -182,6 +201,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
       risks: [],
       required_ppe: [],
       job_scale: '',
+      employer_job_id: '',
     });
     setActivityInput('');
   };
@@ -296,11 +316,17 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
               const timeAgo = formatDistanceToNow(new Date(doc.updated_at), {
                 addSuffix: true,
               });
+              const jobTitle = doc.employer_job_id
+                ? jobTitleById.get(doc.employer_job_id)
+                : undefined;
+              const subtitleParts = [jobTitle, doc.location, doc.assessor, timeAgo].filter(
+                Boolean,
+              );
               return (
                 <ListRow
                   key={doc.id}
                   title={doc.project_name}
-                  subtitle={`${doc.location} · ${doc.assessor} · ${timeAgo}`}
+                  subtitle={subtitleParts.join(' · ')}
                   trailing={<Pill tone={tone}>{statusLabelFor(status)}</Pill>}
                   onClick={() => openRAMSDetail(doc)}
                 />
@@ -360,6 +386,30 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   />
                 </Field>
               </FormGrid>
+
+              <Field label="Link job (optional)">
+                <Select
+                  value={formData.employer_job_id || '__none__'}
+                  onValueChange={(v) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      employer_job_id: v === '__none__' ? '' : v,
+                    }))
+                  }
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Link to a job" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="__none__">No job</SelectItem>
+                    {jobs.map((job) => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
             </FormCard>
 
             <FormCard eyebrow="People">
@@ -526,6 +576,42 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                       title="Assessment date"
                       subtitle={format(new Date(selectedRAMS.date), 'dd MMM yyyy')}
                     />
+                    {selectedRAMS.employer_job_id &&
+                      jobTitleById.get(selectedRAMS.employer_job_id) && (
+                        <ListRow
+                          title="On job"
+                          subtitle={jobTitleById.get(selectedRAMS.employer_job_id) ?? ''}
+                          trailing={<Pill tone="cyan">Job linked</Pill>}
+                        />
+                      )}
+                    {!selectedRAMS.employer_job_id && jobs.length > 0 && (
+                      <div className="px-5 sm:px-6 py-3">
+                        <Select
+                          value="__none__"
+                          onValueChange={async (v) => {
+                            if (v === '__none__') return;
+                            const updated = await updateRAMS.mutateAsync({
+                              id: selectedRAMS.id,
+                              employer_job_id: v,
+                            });
+                            setSelectedRAMS(updated);
+                          }}
+                          disabled={updateRAMS.isPending}
+                        >
+                          <SelectTrigger className={selectTriggerClass}>
+                            <SelectValue placeholder="Link to a job" />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            <SelectItem value="__none__">Link to a job…</SelectItem>
+                            {jobs.map((job) => (
+                              <SelectItem key={job.id} value={job.id}>
+                                {job.title}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
                     {selectedRAMS.contractor && (
                       <ListRow
                         title="Contractor"

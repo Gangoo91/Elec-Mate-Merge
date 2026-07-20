@@ -34,6 +34,8 @@ export interface RAMSDocument {
   job_scale?: string;
   required_ppe: string[];
   ppe_details?: Record<string, unknown>[];
+  /** Link to employer_jobs — powers the per-job safety pack. */
+  employer_job_id?: string | null;
 }
 
 export type CreateRAMSDocumentInput = Omit<
@@ -156,7 +158,8 @@ export function useCreateRAMSDocument() {
 
       const { data, error } = await supabase
         .from('rams_documents')
-        .insert({ ...input, user_id: user.id, version: 1 })
+        // employer_job_id is live in the DB but not yet in the generated types
+        .insert({ ...input, user_id: user.id, version: 1 } as never)
         .select()
         .single();
 
@@ -192,7 +195,8 @@ export function useUpdateRAMSDocument() {
     }: UpdateRAMSDocumentInput & { id: string }): Promise<RAMSDocument> => {
       const { data, error } = await supabase
         .from('rams_documents')
-        .update({ ...input, updated_at: new Date().toISOString() })
+        // employer_job_id is live in the DB but not yet in the generated types
+        .update({ ...input, updated_at: new Date().toISOString() } as never)
         .eq('id', id)
         .select()
         .single();
@@ -229,11 +233,12 @@ export function useAutosaveRAMSDocument() {
     }: UpdateRAMSDocumentInput & { id: string }): Promise<RAMSDocument> => {
       const { data, error } = await supabase
         .from('rams_documents')
+        // employer_job_id is live in the DB but not yet in the generated types
         .update({
           ...input,
           updated_at: new Date().toISOString(),
           last_autosave_at: new Date().toISOString(),
-        })
+        } as never)
         .eq('id', id)
         .select()
         .single();

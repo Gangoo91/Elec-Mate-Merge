@@ -1561,7 +1561,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       rcdRating?: string | null;
       rcdType?: string | null;
       protectiveDeviceType?: string | null;
-    }
+    },
+    // Circuit description (+ type) so distribution / sub-main feeds resolve to
+    // the 5 s disconnection column (Reg 411.3.2.3 / Table 41.4) instead of the
+    // 0.4 s final-circuit table. Without this, a BS 88 board feed ≥ 80 A finds
+    // no 0.4 s entry (Table 41.2 stops at 63 A) and Max Zs comes back blank —
+    // ELE-1365 (fuse limits verified vs bs7671_facets; only the routing changed).
+    circuitDescription: string = ''
   ): string => {
     if (!bsStandard || !rating) return '';
 
@@ -1578,6 +1584,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       protectiveDeviceType: rcdContext?.protectiveDeviceType ?? null,
       boardHasMainRcd,
       boardMainRcdRating,
+      circuitDescription,
     });
     return lookup.maxZs !== null ? lookup.maxZs.toFixed(2) : '';
   };
@@ -1687,7 +1694,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               rcdRating: null,
               rcdType: null,
               protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
-            }
+            },
+            `${circuitDesc} ${circuitType}`
           ),
           ringContinuityLive: isRingCircuit ? '' : 'N/A',
           ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
@@ -1777,7 +1785,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             rcdRating: circuit.rcdRating || (requiresRCD ? '30mA' : null),
             rcdType: circuit.rcdType || null,
             protectiveDeviceType: circuit.protectiveDeviceType,
-          }
+          },
+          `${circuitDesc} ${circuitType}`
         ),
         pointsServed: calculatePointsServed(circuitDesc, circuitType, circuit.protectiveDeviceType),
         rcdRating: requiresRCD ? '30mA' : '',
@@ -2086,7 +2095,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     rcdRating: updatedResult.rcdRating || null,
                     rcdType: updatedResult.rcdType || null,
                     protectiveDeviceType: deviceType,
-                  }
+                  },
+                  `${updatedResult.circuitDescription || ''} ${updatedResult.circuitType || updatedResult.type || ''}`
                 );
                 if (newMaxZs) updatedResult.maxZs = newMaxZs;
               }

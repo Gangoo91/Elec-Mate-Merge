@@ -1,0 +1,3 @@
+-- B1 (ELE-1351): booked stage derives from calendar_events.job_id too.
+-- Applied via MCP 2026-07-20. Adds idx_calendar_events_job (partial) and
+-- extends get_jobs_overview booked_slot = greatest(quote booked slot, next linked calendar event).

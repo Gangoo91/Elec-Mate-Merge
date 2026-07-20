@@ -20,6 +20,8 @@ export function accentForAction(action: ProposedAction): string {
   if (action.type === 'create-project') return 'border-purple-500/30 bg-purple-500/[0.05]';
   if (action.type === 'create-customer') return 'border-cyan-500/30 bg-cyan-500/[0.05]';
   if (action.type === 'create-task') return 'border-elec-yellow/30 bg-elec-yellow/[0.04]';
+  if (action.type === 'add-material') return 'border-emerald-500/30 bg-emerald-500/[0.05]';
+  if (action.type === 'draft-invoice') return 'border-elec-yellow/30 bg-elec-yellow/[0.04]';
   if (action.type === 'draft-message') return 'border-indigo-400/30 bg-indigo-500/[0.05]';
   return 'border-blue-400/30 bg-blue-500/[0.05]';
 }
@@ -44,6 +46,10 @@ export function labelForType(type: ProposedAction['type']): string {
       return 'New customer';
     case 'draft-message':
       return 'Draft email';
+    case 'add-material':
+      return 'Add material';
+    case 'draft-invoice':
+      return 'Draft invoice';
     case 'amend-task':
       return 'Update task';
     case 'amend-project':
@@ -78,6 +84,13 @@ export function primaryLine(
       return action.payload.name || '(no name)';
     case 'draft-message':
       return action.payload.subject || '(no subject)';
+    case 'add-material': {
+      const qty = action.payload.quantity ?? 1;
+      const unit = action.payload.unit ? ` ${action.payload.unit}` : '×';
+      return `${qty}${unit} ${action.payload.name}`;
+    }
+    case 'draft-invoice':
+      return lookupProject(action.payload.projectId)?.title ?? '(unknown job)';
     case 'amend-task':
     case 'complete-task':
     case 'delete-task':
@@ -132,6 +145,17 @@ export function secondaryLine(
   if (action.type === 'draft-message') {
     const p = action.payload;
     return `To: ${p.toName}${p.to ? ` <${p.to}>` : ''}`;
+  }
+  if (action.type === 'add-material') {
+    const p = action.payload;
+    const bits: string[] = [];
+    const proj = lookupProject(p.projectId);
+    if (proj) bits.push(`→ ${proj.title}`);
+    if (p.unitPrice != null) bits.push(`£${Number(p.unitPrice).toFixed(2)} each`);
+    return bits.length ? bits.join(' · ') : null;
+  }
+  if (action.type === 'draft-invoice') {
+    return 'Opens the invoice composer with this job’s unbilled time + materials';
   }
   if (
     action.type === 'amend-task' ||
@@ -215,6 +239,10 @@ export function summarise(
       return `Created customer: ${action.payload.name}`;
     case 'draft-message':
       return `Email ready: ${action.payload.subject}`;
+    case 'add-material':
+      return `Added material: ${action.payload.name}`;
+    case 'draft-invoice':
+      return `Invoice composer opened: ${lookupProject(action.payload.projectId)?.title ?? 'job'}`;
     case 'complete-task':
       return `Marked task done: ${lookupTask(action.id)?.title ?? action.id}`;
     case 'complete-project':

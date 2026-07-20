@@ -37,6 +37,8 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     'Overtime Hours',
     'Hourly Rate',
     'Gross Pay',
+    'Leave Days',
+    'Leave Detail',
   ];
 
   const rows = entries.map((e) => [
@@ -48,6 +50,8 @@ export const formatForXero = (entries: PayrollEntry[]): string => {
     e.overtimeHours.toFixed(2),
     e.hourlyRate.toFixed(2),
     e.grossPay.toFixed(2),
+    e.leaveDays.toFixed(1),
+    `"${e.leaveDetail}"`,
   ]);
 
   return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
@@ -64,6 +68,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
     'OT Hours',
     'Rate',
     'Total',
+    'Hol Days',
   ];
 
   const rows = entries.map((e) => [
@@ -75,6 +80,7 @@ export const formatForSage = (entries: PayrollEntry[]): string => {
     e.overtimeHours.toFixed(2),
     e.hourlyRate.toFixed(2),
     e.grossPay.toFixed(2),
+    e.leaveDays.toFixed(1),
   ]);
 
   return [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
@@ -89,6 +95,7 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
     'Overtime Hours',
     'Pay Rate',
     'Gross Wages',
+    'Leave Days',
     'Job Allocations',
   ];
 
@@ -102,6 +109,7 @@ export const formatForQuickBooks = (entries: PayrollEntry[]): string => {
       e.overtimeHours.toFixed(2),
       e.hourlyRate.toFixed(2),
       e.grossPay.toFixed(2),
+      e.leaveDays.toFixed(1),
       `"${jobAllocations}"`,
     ];
   });
@@ -116,6 +124,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
     'Employee Name',
     'Period Start',
     'Period End',
+    'Pay Type',
     'Regular Hours',
     'Overtime Hours',
     'Hourly Rate',
@@ -123,7 +132,15 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
     'Regular Pay',
     'Overtime Pay',
     'Gross Pay',
+    'Leave Days',
+    'Leave Detail',
   ];
+
+  const payTypeLabel: Record<PayrollEntry['payType'], string> = {
+    hourly: 'Hourly',
+    annual: 'Salaried',
+    day_rate: 'Day rate',
+  };
 
   const rows = entries.map((e) => {
     const regularPay = e.regularHours * e.hourlyRate;
@@ -134,6 +151,7 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
       `"${e.employeeName}"`,
       e.periodStart,
       e.periodEnd,
+      payTypeLabel[e.payType] ?? e.payType,
       e.regularHours.toFixed(2),
       e.overtimeHours.toFixed(2),
       e.hourlyRate.toFixed(2),
@@ -141,6 +159,8 @@ export const formatForGenericCSV = (entries: PayrollEntry[]): string => {
       regularPay.toFixed(2),
       overtimePay.toFixed(2),
       e.grossPay.toFixed(2),
+      e.leaveDays.toFixed(1),
+      `"${e.leaveDetail}"`,
     ];
   });
 

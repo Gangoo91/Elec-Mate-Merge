@@ -744,6 +744,14 @@ const BusinessHub = () => {
 
   const grow: ToolCard[] = [
     {
+      id: 'renewals',
+      eyebrow: 'Repeat work',
+      title: 'Renewal book',
+      description: 'Certs due for re-inspection — booked from your past work.',
+      to: '/electrician/renewals',
+      meta: 'Email or book in one tap',
+    },
+    {
       id: 'start-grow',
       eyebrow: 'Guides',
       title: 'Start & Grow',

@@ -21,7 +21,10 @@ import { AddCertificationDialog } from '@/components/employer/dialogs/AddCertifi
 import { AddSkillDialog } from '@/components/employer/dialogs/AddSkillDialog';
 import { AddWorkHistoryDialog } from '@/components/employer/dialogs/AddWorkHistoryDialog';
 import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
-import { RefreshCw, QrCode, UserPlus, Loader2 } from 'lucide-react';
+import { CompetenceMatrix } from '@/components/employer/CompetenceMatrix';
+import { getQualificationLabel } from '@/data/uk-electrician-constants';
+import { useCreateCommunication } from '@/hooks/useCommunications';
+import { RefreshCw, QrCode, UserPlus, Loader2, Send } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -106,6 +109,9 @@ export const ElecIDSection = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTab, setFilterTab] = useState<FilterValue>('all');
+  // Workers = per-person credential view; Matrix = the workforce competence
+  // grid principal contractors ask for (with PDF/CSV export)
+  const [view, setView] = useState<'workers' | 'matrix'>('workers');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -259,6 +265,86 @@ export const ElecIDSection = () => {
     }
   };
 
+  // One-tap "nudge to renew" — a targeted high-priority comms message listing
+  // exactly what this worker must renew. Rides the existing comms rails, so
+  // the DB push triggers deliver it to their phone; before this, expiring
+  // credentials only glowed amber at the employer and never reached the worker.
+  const createCommunication = useCreateCommunication();
+  const handleNudgeRenewals = async () => {
+    const p = effectiveSelectedProfile;
+    if (!p) return;
+    const lines: string[] = [];
+    const ecsStatus = getEcsStatus(p.ecs_expiry_date);
+    if (p.ecs_expiry_date && (ecsStatus === 'Expired' || ecsStatus === 'Expiring')) {
+      lines.push(
+        `• ECS card${p.ecs_card_type ? ` (${p.ecs_card_type})` : ''} — ${
+          ecsStatus === 'Expired' ? 'EXPIRED' : `expires ${formatDate(p.ecs_expiry_date)}`
+        }`
+      );
+    }
+    // Renewed-already guard: if the worker holds a current record with the
+    // same name (the 2026 First Aid superseding the expired 2023 row), the
+    // newest expiry governs — don't nag them about the old record. Also
+    // dedupe repeated names so one credential never becomes three bullets.
+    const norm = (s: string) => s.trim().toLowerCase();
+    const currentNames = new Set<string>([
+      ...allTraining
+        .filter((t) => t.workerId === p.employee_id && t.status === 'Active')
+        .map((t) => norm(t.training_name)),
+      ...employeeCerts
+        .filter((c) => getCertStatus(c.expiry_date) === 'Active')
+        .map((c) => norm(c.name)),
+    ]);
+    const listed = new Set<string>();
+    for (const t of [...expiredItems, ...warningItems]) {
+      const key = norm(t.training_name);
+      if (currentNames.has(key) || listed.has(key)) continue;
+      listed.add(key);
+      lines.push(
+        `• ${t.training_name} — ${
+          t.status === 'Expired' ? 'EXPIRED' : `expires ${formatDate(t.expiry_date)}`
+        }`
+      );
+    }
+    for (const c of employeeCerts) {
+      const s = getCertStatus(c.expiry_date);
+      if (s === 'Expired' || s === 'Warning') {
+        const key = norm(c.name);
+        if (currentNames.has(key) || listed.has(key)) continue;
+        listed.add(key);
+        lines.push(
+          `• ${c.name} — ${s === 'Expired' ? 'EXPIRED' : `expires ${formatDate(c.expiry_date)}`}`
+        );
+      }
+    }
+    if (lines.length === 0) {
+      toast({ title: 'Nothing to renew', description: 'All credentials are in date.' });
+      return;
+    }
+    try {
+      await createCommunication.mutateAsync({
+        type: 'message',
+        title: 'Credential renewal needed',
+        content: `The following need renewing so you stay site-ready:\n\n${lines.join(
+          '\n'
+        )}\n\nPlease book the renewal and get the new certificate added to your record.`,
+        priority: 'high',
+        target_audience: 'specific',
+        target_employee_ids: [p.employee_id],
+        is_pinned: false,
+        expires_at: null,
+        sender_id: null,
+        attachments: null,
+      });
+      toast({
+        title: 'Renewal nudge sent',
+        description: `${p.employee?.name || 'Worker'} has been asked to renew ${lines.length} credential${lines.length === 1 ? '' : 's'}.`,
+      });
+    } catch {
+      toast({ title: 'Nudge failed', description: 'Message was not sent.', variant: 'destructive' });
+    }
+  };
+
   const handleProfileSelect = (profile: ElecIdProfile) => {
     setSelectedProfile(profile);
     if (isMobile) {
@@ -374,7 +460,8 @@ export const ElecIDSection = () => {
         })) || [],
       qualifications:
         effectiveSelectedProfile.qualifications?.map((q) => ({
-          name: q.qualification_name,
+          // Stored as picker slugs (e.g. `2391_52`) — resolve to display labels
+          name: getQualificationLabel(q.qualification_name),
           issuer: q.awarding_body || '',
           year: q.date_achieved ? new Date(q.date_achieved).getFullYear().toString() : '',
         })) || [],
@@ -523,7 +610,7 @@ export const ElecIDSection = () => {
               qualifications.map((qual) => (
                 <ListRow
                   key={qual.id}
-                  title={qual.qualification_name}
+                  title={getQualificationLabel(qual.qualification_name)}
                   subtitle={qual.awarding_body || 'Issuer unknown'}
                   trailing={
                     <Pill tone="purple">
@@ -600,6 +687,16 @@ export const ElecIDSection = () => {
                 );
               })}
             </ListBody>
+            <div className="px-5 py-4 border-t border-white/[0.06]">
+              <SecondaryButton
+                fullWidth
+                onClick={handleNudgeRenewals}
+                disabled={createCommunication.isPending}
+              >
+                <Send className="h-4 w-4 mr-2" />
+                {createCommunication.isPending ? 'Sending…' : 'Nudge to renew'}
+              </SecondaryButton>
+            </div>
           </ListCard>
         )}
       </div>
@@ -626,6 +723,33 @@ export const ElecIDSection = () => {
         ]}
       />
 
+      {/* Workers ↔ competence matrix — the matrix is the grid principal
+          contractors ask for, exportable as a branded PDF or CSV */}
+      <div className="grid grid-cols-2 gap-2 sm:inline-grid sm:w-auto">
+        {(
+          [
+            { value: 'workers', label: 'Workers' },
+            { value: 'matrix', label: 'Competence matrix' },
+          ] as const
+        ).map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => setView(opt.value)}
+            className={`h-11 px-5 rounded-full border text-[13px] font-medium touch-manipulation transition-colors ${
+              view === opt.value
+                ? 'bg-elec-yellow text-black border-elec-yellow'
+                : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08]'
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      {view === 'matrix' && <CompetenceMatrix profiles={profiles ?? []} />}
+
+      {view === 'workers' && (
+      <>
       <FilterBar
         tabs={[
           { value: 'all', label: 'All', count: totalCount },
@@ -713,6 +837,8 @@ export const ElecIDSection = () => {
           </div>
         )}
       </div>
+      </>
+      )}
 
       {isMobile && (
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>

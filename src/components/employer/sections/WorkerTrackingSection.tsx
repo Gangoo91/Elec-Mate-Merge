@@ -237,19 +237,28 @@ export function WorkerTrackingSection() {
   // so a fortnight-old position can't render as a live green marker.
   const mapLocations = useMemo(
     () =>
-      workerLocations.map((loc) => {
-        const isStale =
-          !loc.last_updated ||
-          Date.now() - new Date(loc.last_updated).getTime() > STALE_AFTER_HOURS * 60 * 60 * 1000;
-        return isStale ? { ...loc, status: 'Off Duty' as typeof loc.status } : loc;
-      }),
+      workerLocations
+        // Archived leavers keep their historic rows — don't plot them
+        .filter((loc) => (loc.employees?.status || '').toLowerCase() !== 'archived')
+        .map((loc) => {
+          const isStale =
+            !loc.last_updated ||
+            Date.now() - new Date(loc.last_updated).getTime() > STALE_AFTER_HOURS * 60 * 60 * 1000;
+          return isStale ? { ...loc, status: 'Off Duty' as typeof loc.status } : loc;
+        }),
     [workerLocations]
   );
 
   const workerCheckIns = useMemo(() => {
     const locationMap = new Map(workerLocations.map((loc) => [loc.employee_id, loc]));
 
-    return employees.map((emp) => {
+    // Leavers are not a workforce to track — an archived employee showing as
+    // "in the office" is a straight lie to the owner scanning this at 7am.
+    const trackableEmployees = employees.filter(
+      (emp) => (emp.status || '').toLowerCase() !== 'archived'
+    );
+
+    return trackableEmployees.map((emp) => {
       const location = locationMap.get(emp.id);
       const jobData = location?.jobs as { title?: string } | null | undefined;
 
@@ -258,9 +267,12 @@ export function WorkerTrackingSection() {
       // biggest lie. Stale rows demote to Off Duty with a dated "last seen".
       const lastUpdatedMs = location?.last_updated ? new Date(location.last_updated).getTime() : 0;
       const isStale = !!location && Date.now() - lastUpdatedMs > STALE_AFTER_HOURS * 60 * 60 * 1000;
+      // No location row at all = we simply don't know where they are. That is
+      // "Off Duty" (no check-in), never "Office" — defaulting everyone to
+      // Office fabricated a full office and hid who hadn't turned up.
       const liveStatus = isStale
         ? 'Off Duty'
-        : location?.status || (emp.status === 'On Leave' ? 'On Leave' : 'Office');
+        : location?.status || (emp.status === 'On Leave' ? 'On Leave' : 'Off Duty');
       const stamp = location?.checked_in_at || location?.last_updated;
 
       return {
@@ -529,11 +541,12 @@ export function WorkerTrackingSection() {
                               >
                                 <MessageSquare className="h-4 w-4" />
                               </button>
-                              {/* Stale rows demote to Off Duty but the DB row is
-                                  still open — keep check-out available so the
-                                  forgotten shift can actually be closed */}
+                              {/* Any open row can be closed — On Site, En Route
+                                  and Office are all live shifts, and stale rows
+                                  (forgotten check-outs) especially need it */}
                               {checkIn.locationId &&
-                                (checkIn.status === 'On Site' || checkIn.isStale) && (
+                                (['On Site', 'En Route', 'Office'].includes(checkIn.status) ||
+                                  checkIn.isStale) && (
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();

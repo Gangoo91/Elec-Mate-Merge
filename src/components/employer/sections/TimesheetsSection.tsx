@@ -33,6 +33,7 @@ import {
   parseISO,
   eachDayOfInterval,
   isToday,
+  getDay,
 } from 'date-fns';
 import {
   Download,
@@ -48,6 +49,9 @@ import {
   X,
   Check,
   Loader2,
+  AlertTriangle,
+  LayoutGrid,
+  List,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { AccountingProvider, PayrollEntry } from '@/services/types';
@@ -187,6 +191,9 @@ export const TimesheetsSection = () => {
 
   const [selectedTimesheetIds, setSelectedTimesheetIds] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
+  // Payroll people think in week-per-person grids — list is the tap-friendly
+  // mobile default, grid is the desktop reconciliation view.
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
 
   const timesheets: DisplayTimesheet[] = useMemo(() => {
@@ -284,6 +291,19 @@ export const TimesheetsSection = () => {
   const settledTimesheets = useMemo(() => weekTimesheets.filter((ts) => !ts.isLive), [weekTimesheets]);
   const liveCount = weekTimesheets.length - settledTimesheets.length;
 
+  const { data: teamLeave = [] } = useTeamLeaveRequests();
+  const approvedLeave = useMemo(
+    () => teamLeave.filter((lr) => lr.status === 'approved'),
+    [teamLeave]
+  );
+  const isOnLeave = useCallback(
+    (employeeId: string, dateStr: string) =>
+      approvedLeave.some(
+        (lr) => lr.employeeId === employeeId && lr.startDate <= dateStr && lr.endDate >= dateStr
+      ),
+    [approvedLeave]
+  );
+
   const workersWithoutRate = useMemo(() => {
     const ids = new Set(settledTimesheets.map((ts) => ts.employeeId));
     return [...ids].filter((id) => getHourlyRate(id) === null).length;
@@ -346,7 +366,6 @@ export const TimesheetsSection = () => {
     };
   }, [settledTimesheets, costOfEntries, getHourlyRate, getOvertimeTerms]);
 
-  const { data: teamLeave = [] } = useTeamLeaveRequests();
   const onLeaveToday = useMemo(() => {
     const today = new Date().toISOString().slice(0, 10);
     return teamLeave.filter(
@@ -354,7 +373,144 @@ export const TimesheetsSection = () => {
     ).length;
   }, [teamLeave]);
 
-  const weekDays = eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd });
+  const weekDays = useMemo(
+    () => eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd }),
+    [currentWeekStart, currentWeekEnd]
+  );
+
+  // ── Exceptions engine ────────────────────────────────────────────────────
+  // Payroll runs on exceptions, not rows: surface long days, weekend work,
+  // missing rates/jobs and forgotten clock-ins so nobody hunts through 75
+  // entries to find the three that matter.
+  const LONG_DAY_HOURS = 10;
+  const todayStr = format(new Date(), 'yyyy-MM-dd');
+
+  const entryFlags = useMemo(() => {
+    const flags = new Map<string, string[]>();
+    const dayTotals = new Map<string, number>();
+    settledTimesheets.forEach((ts) => {
+      const key = `${ts.employeeId}|${ts.date}`;
+      dayTotals.set(key, (dayTotals.get(key) ?? 0) + ts.totalHours);
+    });
+    settledTimesheets.forEach((ts) => {
+      const list: string[] = [];
+      const dayTotal = dayTotals.get(`${ts.employeeId}|${ts.date}`) ?? 0;
+      if (dayTotal > LONG_DAY_HOURS) list.push(`${dayTotal.toFixed(1)}h day`);
+      const dow = getDay(parseISO(ts.date));
+      if (dow === 0 || dow === 6) list.push('Weekend');
+      if (!ts.jobId) list.push('No job');
+      if (getHourlyRate(ts.employeeId) === null) list.push('No rate');
+      if (list.length > 0) flags.set(ts.id, list);
+    });
+    return flags;
+  }, [settledTimesheets, getHourlyRate]);
+
+  // Past weekdays this week with no entry and no approved leave — the classic
+  // "forgot to clock in" hole that otherwise only shows up as a short pay packet.
+  const missingDaysByEmployee = useMemo(() => {
+    const map = new Map<string, string[]>();
+    const entryDays = new Set(
+      weekTimesheets.map((ts) => `${ts.employeeId}|${format(parseISO(ts.date), 'yyyy-MM-dd')}`)
+    );
+    const workerIds = new Set(weekTimesheets.map((ts) => ts.employeeId));
+    workerIds.forEach((empId) => {
+      // Days before the worker joined are not "missing" — a Wednesday starter
+      // must not open with two phantom holes in their first week.
+      const joined = employeesById.get(empId)?.join_date?.slice(0, 10) ?? null;
+      const missing: string[] = [];
+      weekDays.forEach((day) => {
+        const dow = getDay(day);
+        if (dow === 0 || dow === 6) return;
+        const dStr = format(day, 'yyyy-MM-dd');
+        if (dStr >= todayStr) return;
+        if (joined && dStr < joined) return;
+        if (entryDays.has(`${empId}|${dStr}`)) return;
+        if (isOnLeave(empId, dStr)) return;
+        missing.push(dStr);
+      });
+      if (missing.length > 0) map.set(empId, missing);
+    });
+    return map;
+  }, [weekTimesheets, weekDays, isOnLeave, todayStr, employeesById]);
+
+  // Active workers with zero entries in an elapsed part of the week and no
+  // leave covering it — silent all week is a bigger hole than a missing day.
+  const silentWorkers = useMemo(() => {
+    if (format(currentWeekStart, 'yyyy-MM-dd') > todayStr) return [];
+    const withEntries = new Set(weekTimesheets.map((ts) => ts.employeeId));
+    return employees.filter(
+      (e) =>
+        (e.status === 'Active' || e.status === 'active') &&
+        !withEntries.has(e.id) &&
+        weekDays.some((day) => {
+          const dow = getDay(day);
+          const dStr = format(day, 'yyyy-MM-dd');
+          const joined = e.join_date?.slice(0, 10) ?? null;
+          return (
+            dow !== 0 &&
+            dow !== 6 &&
+            dStr < todayStr &&
+            (!joined || dStr >= joined) &&
+            !isOnLeave(e.id, dStr)
+          );
+        })
+    );
+  }, [employees, weekTimesheets, weekDays, currentWeekStart, isOnLeave, todayStr]);
+
+  const pendingSettled = useMemo(
+    () => settledTimesheets.filter((ts) => ts.status === 'Pending'),
+    [settledTimesheets]
+  );
+  const cleanPendingIds = useMemo(
+    () => pendingSettled.filter((ts) => !entryFlags.has(ts.id)).map((ts) => ts.id),
+    [pendingSettled, entryFlags]
+  );
+  const flaggedPendingCount = pendingSettled.length - cleanPendingIds.length;
+
+  const exceptionSummary = useMemo(() => {
+    const counts = { longDays: 0, weekend: 0, noJob: 0, noRate: 0 };
+    const longDayKeys = new Set<string>();
+    entryFlags.forEach((flags, id) => {
+      const ts = settledTimesheets.find((t) => t.id === id);
+      flags.forEach((f) => {
+        if (f.endsWith('h day') && ts) longDayKeys.add(`${ts.employeeId}|${ts.date}`);
+        else if (f === 'Weekend') counts.weekend += 1;
+        else if (f === 'No job') counts.noJob += 1;
+        else if (f === 'No rate') counts.noRate += 1;
+      });
+    });
+    counts.longDays = longDayKeys.size;
+    const missingDays = [...missingDaysByEmployee.values()].reduce((s, v) => s + v.length, 0);
+    return { ...counts, missingDays, silent: silentWorkers.length };
+  }, [entryFlags, settledTimesheets, missingDaysByEmployee, silentWorkers]);
+
+  const hasExceptions =
+    exceptionSummary.longDays > 0 ||
+    exceptionSummary.weekend > 0 ||
+    exceptionSummary.noJob > 0 ||
+    exceptionSummary.noRate > 0 ||
+    exceptionSummary.missingDays > 0 ||
+    exceptionSummary.silent > 0;
+
+  const handleApproveClean = () => {
+    batchApproveMutation.mutate(
+      { ids: cleanPendingIds },
+      {
+        onSuccess: (count) => {
+          toast.success(
+            `${count} clean timesheet${count === 1 ? '' : 's'} approved${
+              flaggedPendingCount > 0
+                ? ` — ${flaggedPendingCount} flagged left for review`
+                : ''
+            }`
+          );
+        },
+        onError: (err) =>
+          toast.error(err instanceof Error ? err.message : 'Failed to approve timesheets'),
+      }
+    );
+  };
+
   const dailyBreakdown = weekDays.map((day) => {
     const dayTimesheets = weekTimesheets.filter(
       (ts) => format(parseISO(ts.date), 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd')
@@ -405,6 +561,43 @@ export const TimesheetsSection = () => {
     [employees, weekTimesheets, getOvertimeTerms, getHourlyRate]
   );
 
+  // Approved leave falling inside the export week, per worker — weekday count,
+  // halves honoured — so leave lands IN the payroll file instead of forcing a
+  // cross-reference against the leave screen.
+  const leaveInPeriod = useCallback(
+    (employeeId: string): { days: number; detail: string } => {
+      const start = format(currentWeekStart, 'yyyy-MM-dd');
+      const end = format(currentWeekEnd, 'yyyy-MM-dd');
+      const byType = new Map<string, number>();
+      approvedLeave
+        .filter((lr) => lr.employeeId === employeeId && lr.startDate <= end && lr.endDate >= start)
+        .forEach((lr) => {
+          if (lr.halfDay) {
+            if (lr.startDate >= start && lr.startDate <= end) {
+              byType.set(lr.type, (byType.get(lr.type) ?? 0) + 0.5);
+            }
+            return;
+          }
+          const overlapStart = lr.startDate > start ? lr.startDate : start;
+          const overlapEnd = lr.endDate < end ? lr.endDate : end;
+          let d = 0;
+          eachDayOfInterval({ start: parseISO(overlapStart), end: parseISO(overlapEnd) }).forEach(
+            (day) => {
+              const dow = getDay(day);
+              if (dow !== 0 && dow !== 6) d += 1;
+            }
+          );
+          if (d > 0) byType.set(lr.type, (byType.get(lr.type) ?? 0) + d);
+        });
+      const days = [...byType.values()].reduce((s, v) => s + v, 0);
+      const detail = [...byType.entries()]
+        .map(([t, v]) => `${v} ${t.replace(/_/g, ' ')}`)
+        .join(', ');
+      return { days, detail };
+    },
+    [approvedLeave, currentWeekStart, currentWeekEnd]
+  );
+
   const generatePayrollEntries = (): PayrollEntry[] => {
     const approvedTimesheets = settledTimesheets.filter((ts) => ts.status === 'Approved');
 
@@ -417,10 +610,20 @@ export const TimesheetsSection = () => {
       byEmployee.set(ts.employeeId, list);
     });
 
-    return [...byEmployee.entries()].map(([employeeId, entries]) => {
+    // Workers with approved leave but no hours still belong in the payroll run —
+    // a week off must not mean a missing pay line.
+    const allIds = new Set(byEmployee.keys());
+    employees.forEach((e) => {
+      if (leaveInPeriod(e.id).days > 0) allIds.add(e.id);
+    });
+
+    return [...allIds].map((employeeId) => {
+      const entries = byEmployee.get(employeeId) ?? [];
+      const emp = employeesById.get(employeeId);
       const hourlyRate = getHourlyRate(employeeId) ?? 0;
       const { multiplier, threshold } = getOvertimeTerms(employeeId);
       const { regularHours, overtimeHours } = splitDailyOvertime(entries, threshold);
+      const leave = leaveInPeriod(employeeId);
 
       const jobBreakdown: PayrollEntry['jobBreakdown'] = [];
       entries.forEach((ts) => {
@@ -436,12 +639,15 @@ export const TimesheetsSection = () => {
 
       return {
         employeeId,
-        employeeName: entries[0].employeeName,
+        employeeName: entries[0]?.employeeName ?? emp?.name ?? 'Unknown',
         regularHours,
         overtimeHours,
         hourlyRate,
         overtimeMultiplier: multiplier,
         grossPay: grossPay(regularHours, overtimeHours, hourlyRate, multiplier),
+        payType: emp?.pay_type ?? 'hourly',
+        leaveDays: leave.days,
+        leaveDetail: leave.detail,
         periodStart: format(currentWeekStart, 'yyyy-MM-dd'),
         periodEnd: format(currentWeekEnd, 'yyyy-MM-dd'),
         jobBreakdown,
@@ -545,7 +751,10 @@ export const TimesheetsSection = () => {
     }
     // Never ship £0.00 pay lines into accounting software — a missing rate
     // must be fixed on the team record, not laundered through an export.
-    const noRate = entries.filter((e) => e.hourlyRate <= 0);
+    // (Leave-only lines with no hours are fine — payroll prices the leave.)
+    const noRate = entries.filter(
+      (e) => e.hourlyRate <= 0 && e.regularHours + e.overtimeHours > 0
+    );
     if (noRate.length > 0) {
       toast.error(
         `${noRate.map((e) => e.employeeName).join(', ')} ${noRate.length === 1 ? 'has' : 'have'} no hourly rate set — add rates in Team before exporting payroll`
@@ -859,6 +1068,98 @@ export const TimesheetsSection = () => {
             </div>
           </ListCard>
 
+          {/* Only run the payroll check once the week has any entries — a firm
+              that doesn't use timesheets must not see "133 workers no hours" */}
+          {weekTimesheets.length > 0 &&
+            (hasExceptions || cleanPendingIds.length > 0) &&
+            activeTab !== 'leave' && (
+            <ListCard>
+              <ListCardHeader
+                tone={hasExceptions ? 'orange' : 'emerald'}
+                title={
+                  <span className="flex items-center gap-2">
+                    {hasExceptions && <AlertTriangle className="h-4 w-4 text-orange-400" />}
+                    Payroll check
+                  </span>
+                }
+                meta={
+                  <span className="text-[11.5px] text-white tabular-nums">
+                    {pendingSettled.length} pending · {cleanPendingIds.length} clean
+                  </span>
+                }
+              />
+              <div className="px-5 sm:px-6 py-4 space-y-3">
+                {hasExceptions && (
+                  <div className="flex flex-wrap gap-2">
+                    {exceptionSummary.missingDays > 0 && (
+                      <Pill tone="orange">
+                        {exceptionSummary.missingDays} missing day
+                        {exceptionSummary.missingDays === 1 ? '' : 's'}
+                      </Pill>
+                    )}
+                    {exceptionSummary.silent > 0 && (
+                      <Pill tone="orange">
+                        {exceptionSummary.silent} worker{exceptionSummary.silent === 1 ? '' : 's'} no
+                        hours
+                      </Pill>
+                    )}
+                    {exceptionSummary.longDays > 0 && (
+                      <Pill tone="amber">
+                        {exceptionSummary.longDays} long day
+                        {exceptionSummary.longDays === 1 ? '' : 's'} (&gt;{LONG_DAY_HOURS}h)
+                      </Pill>
+                    )}
+                    {exceptionSummary.weekend > 0 && (
+                      <Pill tone="amber">
+                        {exceptionSummary.weekend} weekend entr
+                        {exceptionSummary.weekend === 1 ? 'y' : 'ies'}
+                      </Pill>
+                    )}
+                    {exceptionSummary.noJob > 0 && (
+                      <Pill tone="red">
+                        {exceptionSummary.noJob} no job
+                      </Pill>
+                    )}
+                    {exceptionSummary.noRate > 0 && (
+                      <Pill tone="red">
+                        {exceptionSummary.noRate} no rate
+                      </Pill>
+                    )}
+                  </div>
+                )}
+                {silentWorkers.length > 0 && (
+                  <p className="text-[12px] text-white/60">
+                    No hours logged:{' '}
+                    <span className="text-white">
+                      {silentWorkers.map((w) => w.name).join(', ')}
+                    </span>
+                  </p>
+                )}
+                {cleanPendingIds.length > 0 && (
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <PrimaryButton
+                      onClick={handleApproveClean}
+                      disabled={batchApproveMutation.isPending}
+                    >
+                      {batchApproveMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Check className="h-4 w-4 mr-2" />
+                      )}
+                      Approve {cleanPendingIds.length} clean
+                    </PrimaryButton>
+                    {flaggedPendingCount > 0 && (
+                      <span className="text-[12px] text-white/60">
+                        {flaggedPendingCount} flagged entr
+                        {flaggedPendingCount === 1 ? 'y stays' : 'ies stay'} pending for review
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </ListCard>
+          )}
+
           <FilterBar
             tabs={tabs}
             activeTab={activeTab}
@@ -868,6 +1169,22 @@ export const TimesheetsSection = () => {
             searchPlaceholder="Search worker or job…"
             actions={
               <>
+                <SecondaryButton
+                  onClick={() => setViewMode(viewMode === 'list' ? 'grid' : 'list')}
+                  aria-label={viewMode === 'list' ? 'Switch to week grid' : 'Switch to list'}
+                >
+                  {viewMode === 'list' ? (
+                    <>
+                      <LayoutGrid className="h-4 w-4 mr-1.5" />
+                      Grid
+                    </>
+                  ) : (
+                    <>
+                      <List className="h-4 w-4 mr-1.5" />
+                      List
+                    </>
+                  )}
+                </SecondaryButton>
                 <SecondaryButton onClick={() => setIsFiltersOpen(true)}>Filters</SecondaryButton>
                 {isSelectMode ? (
                   <PrimaryButton
@@ -948,6 +1265,180 @@ export const TimesheetsSection = () => {
 
           {activeTab === 'leave' ? (
             <LeaveTabContent />
+          ) : viewMode === 'grid' ? (
+            employeeBreakdown.length === 0 ? (
+              <EmptyState
+                title="No timesheets this week"
+                description="Add a manual entry or have your team clock in to populate this week."
+              />
+            ) : (
+              <ListCard>
+                <ListCardHeader
+                  tone="amber"
+                  title="Week per worker"
+                  meta={
+                    <span className="text-[11.5px] text-white tabular-nums">{weekLabel}</span>
+                  }
+                />
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[820px] border-collapse text-[12px]">
+                    <thead>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="text-left font-semibold text-white/60 uppercase tracking-[0.12em] text-[10px] px-5 sm:px-6 py-3">
+                          Worker
+                        </th>
+                        {weekDays.map((day, idx) => (
+                          <th
+                            key={idx}
+                            className={cn(
+                              'text-center font-semibold uppercase tracking-[0.12em] text-[10px] px-2 py-3',
+                              isToday(day) ? 'text-elec-yellow' : 'text-white/60'
+                            )}
+                          >
+                            {DAYS_OF_WEEK[idx]} {format(day, 'd')}
+                          </th>
+                        ))}
+                        <th className="text-right font-semibold text-white/60 uppercase tracking-[0.12em] text-[10px] px-3 py-3">
+                          Total
+                        </th>
+                        <th className="text-right font-semibold text-white/60 uppercase tracking-[0.12em] text-[10px] px-3 py-3">
+                          OT
+                        </th>
+                        <th className="text-right font-semibold text-white/60 uppercase tracking-[0.12em] text-[10px] px-5 sm:px-6 py-3">
+                          £
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {employeeBreakdown
+                        .filter(
+                          (emp) =>
+                            (filterEmployee === 'all' || emp.id === filterEmployee) &&
+                            emp.name.toLowerCase().includes(searchQuery.toLowerCase())
+                        )
+                        .map((emp) => (
+                          <tr key={emp.id} className="border-b border-white/[0.04]">
+                            <td className="px-5 sm:px-6 py-2">
+                              <span className="flex items-center gap-2 min-w-[140px]">
+                                <Avatar initials={getInitials(emp.name)} size="sm" />
+                                <span className="flex flex-col">
+                                  <span className="text-[12.5px] font-semibold text-white whitespace-nowrap">
+                                    {emp.name}
+                                  </span>
+                                  {emp.pay_type !== 'hourly' && (
+                                    <span className="text-[10px] text-white/50">
+                                      {emp.pay_type === 'annual' ? 'Salaried' : 'Day rate'}
+                                    </span>
+                                  )}
+                                </span>
+                              </span>
+                            </td>
+                            {weekDays.map((day, idx) => {
+                              const dayStr = format(day, 'yyyy-MM-dd');
+                              const cellEntries = weekTimesheets.filter(
+                                (ts) =>
+                                  ts.employeeId === emp.id &&
+                                  format(parseISO(ts.date), 'yyyy-MM-dd') === dayStr
+                              );
+                              const settled = cellEntries.filter((e) => !e.isLive);
+                              const hours = settled.reduce((s, e) => s + e.totalHours, 0);
+                              const live = cellEntries.some((e) => e.isLive);
+                              const missing =
+                                missingDaysByEmployee.get(emp.id)?.includes(dayStr) ?? false;
+                              const onLeave = isOnLeave(emp.id, dayStr);
+                              const flagged = settled.some((e) => entryFlags.has(e.id));
+                              const anyPending = settled.some((e) => e.status === 'Pending');
+                              const anyApproved = settled.some((e) => e.status === 'Approved');
+
+                              return (
+                                <td key={idx} className="px-1 py-2 text-center">
+                                  {cellEntries.length > 0 ? (
+                                    <button
+                                      onClick={() => {
+                                        if (settled.length === 1 && !live) {
+                                          setDetailTimesheet(settled[0]);
+                                        } else {
+                                          setSelectedDay(day);
+                                          setFilterEmployee(emp.id);
+                                          setViewMode('list');
+                                        }
+                                      }}
+                                      className={cn(
+                                        'relative inline-flex h-11 min-w-[52px] items-center justify-center gap-1 rounded-lg px-1.5 tabular-nums font-semibold touch-manipulation transition-colors',
+                                        anyPending
+                                          ? 'bg-amber-500/10 text-amber-300 hover:bg-amber-500/20'
+                                          : anyApproved
+                                            ? 'bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
+                                            : live
+                                              ? 'bg-emerald-500/10 text-emerald-300'
+                                              : 'bg-red-500/10 text-red-300 hover:bg-red-500/20'
+                                      )}
+                                    >
+                                      {live && <PulseDot tone="emerald" />}
+                                      {hours > 0 ? `${hours.toFixed(1)}` : live ? 'now' : '0.0'}
+                                      {flagged && (
+                                        <AlertTriangle className="h-3 w-3 text-orange-400" />
+                                      )}
+                                    </button>
+                                  ) : onLeave ? (
+                                    <span className="inline-flex h-11 min-w-[52px] items-center justify-center rounded-lg bg-blue-500/10 px-1.5 text-[11px] font-medium text-blue-300">
+                                      Leave
+                                    </span>
+                                  ) : missing ? (
+                                    <span
+                                      className="inline-flex h-11 min-w-[52px] items-center justify-center rounded-lg border border-orange-500/40 px-1.5 text-orange-400"
+                                      title="No entry — worker may have forgotten to clock in"
+                                    >
+                                      !
+                                    </span>
+                                  ) : (
+                                    <span className="inline-flex h-11 min-w-[52px] items-center justify-center text-white/25">
+                                      –
+                                    </span>
+                                  )}
+                                </td>
+                              );
+                            })}
+                            <td className="px-3 py-2 text-right tabular-nums font-semibold text-white">
+                              {emp.totalHours.toFixed(1)}h
+                            </td>
+                            <td className="px-3 py-2 text-right tabular-nums text-emerald-300">
+                              {emp.overtime > 0 ? `${emp.overtime.toFixed(1)}h` : '–'}
+                            </td>
+                            <td className="px-5 sm:px-6 py-2 text-right tabular-nums font-semibold text-white">
+                              £{Math.round(emp.cost).toLocaleString()}
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td className="px-5 sm:px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/60">
+                          Team
+                        </td>
+                        {dailyBreakdown.map((d, idx) => (
+                          <td
+                            key={idx}
+                            className="px-2 py-3 text-center tabular-nums text-white/70"
+                          >
+                            {d.hours > 0 ? d.hours.toFixed(1) : '–'}
+                          </td>
+                        ))}
+                        <td className="px-3 py-3 text-right tabular-nums font-semibold text-white">
+                          {totalHours.toFixed(1)}h
+                        </td>
+                        <td className="px-3 py-3 text-right tabular-nums text-emerald-300">
+                          {overtimeHours > 0 ? `${overtimeHours.toFixed(1)}h` : '–'}
+                        </td>
+                        <td className="px-5 sm:px-6 py-3 text-right tabular-nums font-semibold text-white">
+                          £{Math.round(totalLabourCost).toLocaleString()}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </ListCard>
+            )
           ) : (
             <>
               {employeeBreakdown.length === 0 ? (
@@ -979,6 +1470,16 @@ export const TimesheetsSection = () => {
                           }
                           meta={
                             <span className="flex items-center gap-2 text-[11.5px] text-white tabular-nums">
+                              {emp.pay_type !== 'hourly' && (
+                                <Pill tone="blue">
+                                  {emp.pay_type === 'annual' ? 'Salaried' : 'Day rate'}
+                                </Pill>
+                              )}
+                              {missingDaysByEmployee.has(emp.id) && (
+                                <Pill tone="orange">
+                                  {missingDaysByEmployee.get(emp.id)!.length} missing
+                                </Pill>
+                              )}
                               <span>{emp.totalHours.toFixed(1)}h</span>
                               <span className="text-white/30">·</span>
                               <span>{emp.days}d</span>
@@ -1040,6 +1541,9 @@ export const TimesheetsSection = () => {
                                     <Pill tone="emerald">On the clock</Pill>
                                   ) : (
                                     <>
+                                      {entryFlags.has(ts.id) && (
+                                        <Pill tone="orange">{entryFlags.get(ts.id)![0]}</Pill>
+                                      )}
                                       <span className="hidden sm:inline text-[12px] tabular-nums text-white/60">
                                         £{Math.round(rowBaseCost).toLocaleString()} base
                                       </span>
@@ -1161,7 +1665,7 @@ export const TimesheetsSection = () => {
           </SheetHeader>
           <div className="p-5 space-y-4">
             <StatStrip
-              columns={2}
+              columns={3}
               stats={[
                 {
                   label: 'Approved hours',
@@ -1174,8 +1678,25 @@ export const TimesheetsSection = () => {
                   tone: 'amber',
                   accent: true,
                 },
+                {
+                  label: 'Leave days',
+                  value: employees
+                    .reduce((s, e) => s + leaveInPeriod(e.id).days, 0)
+                    .toFixed(1),
+                  tone: 'blue',
+                  sub: 'Included in export',
+                },
               ]}
             />
+            {pendingCount > 0 && (
+              <div className="flex items-start gap-2.5 rounded-2xl border border-amber-500/30 bg-amber-500/[0.08] px-4 py-3">
+                <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                <span className="text-[12.5px] text-amber-300">
+                  {pendingCount} pending entr{pendingCount === 1 ? 'y is' : 'ies are'} NOT in this
+                  export — only approved hours ship to payroll
+                </span>
+              </div>
+            )}
 
             <ListCard>
               <ListCardHeader tone="amber" title="Providers" />
@@ -1317,7 +1838,13 @@ export const TimesheetsSection = () => {
                         <span className="text-[13px] text-white tabular-nums">
                           {(() => {
                             const rate = getHourlyRate(detailTimesheet.employeeId);
-                            return rate !== null ? `£${rate.toFixed(2)}/hr` : 'No rate set';
+                            if (rate === null) return 'No rate set';
+                            const payType = employeesById.get(detailTimesheet.employeeId)?.pay_type;
+                            return payType === 'annual'
+                              ? `£${rate.toFixed(2)}/hr (salaried equiv.)`
+                              : payType === 'day_rate'
+                                ? `£${rate.toFixed(2)}/hr (day-rate equiv.)`
+                                : `£${rate.toFixed(2)}/hr`;
                           })()}
                         </span>
                       }
@@ -1339,7 +1866,16 @@ export const TimesheetsSection = () => {
                     </span>
                   </div>
                 ) : detailTimesheet.status === 'Pending' ? (
-                  <div className="flex gap-2">
+                  <>
+                    {entryFlags.has(detailTimesheet.id) && (
+                      <div className="flex items-start gap-2.5 rounded-2xl border border-orange-500/30 bg-orange-500/[0.08] px-4 py-3">
+                        <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                        <span className="text-[12.5px] text-orange-300">
+                          Flagged: {entryFlags.get(detailTimesheet.id)!.join(' · ')}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex gap-2">
                     <SecondaryButton
                       onClick={() => handleReject(detailTimesheet.id)}
                       fullWidth
@@ -1364,7 +1900,8 @@ export const TimesheetsSection = () => {
                       )}
                       Approve
                     </PrimaryButton>
-                  </div>
+                    </div>
+                  </>
                 ) : null}
               </div>
             </>

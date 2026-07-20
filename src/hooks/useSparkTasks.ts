@@ -334,7 +334,8 @@ export const useSparkTasks = (view: TaskView = 'all') => {
       if (error) throw error;
 
       // Optimistic: add to local state immediately
-      setAllTasks((prev) => [...prev, mapRow(data)]);
+      const created = mapRow(data);
+      setAllTasks((prev) => [...prev, created]);
       logEvent(user.id, data.id, 'created');
 
       toast({
@@ -342,7 +343,7 @@ export const useSparkTasks = (view: TaskView = 'all') => {
         description: `"${input.title}" has been added.`,
       });
 
-      return data.id as string;
+      return created;
     } catch (error: unknown) {
       console.error('Task save error:', error);
       toast({

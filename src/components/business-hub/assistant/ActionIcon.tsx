@@ -9,6 +9,8 @@ import {
   CheckCircle2,
   Trash2,
   Users,
+  Package,
+  Receipt,
 } from 'lucide-react';
 import type { ProposedAction } from './types';
 
@@ -25,6 +27,10 @@ export function ActionIcon({ action }: { action: ProposedAction }) {
       return <UserPlus className={cn(cls, 'text-cyan-300')} />;
     case 'draft-message':
       return <Mail className={cn(cls, 'text-indigo-300')} />;
+    case 'add-material':
+      return <Package className={cn(cls, 'text-emerald-300')} />;
+    case 'draft-invoice':
+      return <Receipt className={cn(cls, 'text-elec-yellow')} />;
     case 'amend-task':
     case 'amend-project':
     case 'amend-customer':

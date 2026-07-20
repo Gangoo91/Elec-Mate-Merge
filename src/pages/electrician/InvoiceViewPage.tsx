@@ -383,11 +383,18 @@ const InvoiceViewPage = () => {
     return (
       <div className="min-h-screen bg-background p-4">
         <button onClick={() => navigate('/electrician/invoices')} className="flex items-center gap-2 text-white mb-8 touch-manipulation">
-          <ArrowLeft className="h-5 w-5" /> Back to Invoices
+          <ArrowLeft className="h-5 w-5 h-11 inline-flex items-center" /> Back to Invoices
         </button>
         <div className="text-center py-12">
           <p className="text-lg font-semibold text-white">Invoice not found</p>
-          <p className="text-sm text-white mt-1">It may have been deleted.</p>
+          <p className="text-sm text-white/60 mt-1">It may have been deleted.</p>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/invoice-builder/create')}
+            className="mt-4 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
+          >
+            Draft a new invoice
+          </button>
         </div>
       </div>
     );

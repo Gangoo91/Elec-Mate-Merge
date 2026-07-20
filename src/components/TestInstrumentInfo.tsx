@@ -324,6 +324,11 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               </button>
             </div>
           )}
+          {/* One instrument covers everything — no need to enter a tester per
+              test (Jordan Dick / ELE-1367). Makes the single-MFT workflow explicit. */}
+          <p className="text-[11px] leading-snug text-white/70">
+            Used for all tests on this cert — continuity, insulation, Zs &amp; RCD.
+          </p>
         </div>
 
         {/* Serial Number - Full Width */}

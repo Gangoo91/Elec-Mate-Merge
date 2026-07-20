@@ -23,6 +23,9 @@ export interface Employee {
   join_date: string | null;
   certifications_count: number;
   active_jobs_count: number;
+  emergency_contact_name: string | null;
+  emergency_contact_phone: string | null;
+  emergency_contact_relationship: string | null;
   created_at: string;
   updated_at: string;
 }

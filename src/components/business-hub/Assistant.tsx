@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import {
@@ -86,6 +87,7 @@ export function Assistant({
   onDeleteCustomer,
 }: Props) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
@@ -356,11 +358,20 @@ export function Assistant({
       const projectSlice = currentProjects.slice(0, 25).map((p) => ({
         id: p.id,
         status: p.status,
+        stage: p.stage,
         priority: p.priority,
         dueDate: p.dueDate,
+        startDate: p.startDate,
         title: p.title,
         customerName: p.customerName,
         location: p.location,
+        estimatedValue: p.estimatedValue,
+        quoteCount: p.quoteCount,
+        invoiceCount: p.invoiceCount,
+        unpaidInvoiceCount: p.unpaidInvoiceCount,
+        certCount: p.certCount,
+        totalTasks: p.totalTasks,
+        completedTasks: p.completedTasks,
       }));
 
       const customerSlice = currentCustomers.slice(0, 50).map((c) => ({
@@ -709,6 +720,49 @@ export function Assistant({
             title: 'Email sent',
             description: `Delivered to ${toName || to}`,
           });
+          break;
+        }
+        case 'add-material': {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (!user) throw new Error('Not signed in');
+          const p = action.payload;
+          if (!p.projectId || !p.name?.trim()) throw new Error('Missing job or material name');
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: created, error: matErr } = await (supabase as any)
+            .from('job_materials')
+            .insert({
+              user_id: user.id,
+              project_id: p.projectId,
+              name: p.name.trim(),
+              quantity: p.quantity ?? 1,
+              unit: p.unit || null,
+              unit_price: p.unitPrice ?? null,
+              status: 'needed',
+              source: 'manual',
+            })
+            .select('id, name')
+            .single();
+          if (matErr) throw matErr;
+          window.dispatchEvent(new CustomEvent('job-materials-changed'));
+          if (created?.id) {
+            undo = {
+              label: `Material "${created.name}" added`,
+              run: async () => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await (supabase as any).from('job_materials').delete().eq('id', created.id);
+                window.dispatchEvent(new CustomEvent('job-materials-changed'));
+              },
+            };
+          }
+          break;
+        }
+        case 'draft-invoice': {
+          const pid = action.payload.projectId;
+          if (!pid) throw new Error('Missing job');
+          navigate(`/electrician/invoice-builder/create?projectId=${pid}`);
+          onClose();
           break;
         }
         case 'amend-task': {

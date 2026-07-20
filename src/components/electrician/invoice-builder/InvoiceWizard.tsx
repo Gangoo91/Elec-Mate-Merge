@@ -97,7 +97,8 @@ export const InvoiceWizard = ({
 
   // Merge certificate data into existing invoice for proper initialization
   const mergedExistingInvoice =
-    initialCertificateData && !existingInvoice && !sourceQuote
+    initialCertificateData && !sourceQuote &&
+    !(existingInvoice?.items?.length || existingInvoice?.client?.name)
       ? {
           client: initialCertificateData.client,
           jobDetails: initialCertificateData.jobDetails,
@@ -197,16 +198,18 @@ export const InvoiceWizard = ({
 
   const handleGenerate = async () => {
     setIsGenerating(true);
-    const success = await saveInvoice(invoiceBuilder.invoice);
+    // saveInvoice returns the REAL row id (or false) — the client-side invoice.id
+    // is not the DB id on the insert path (audit P0)
+    const savedId = await saveInvoice(invoiceBuilder.invoice);
     setIsGenerating(false);
 
-    if (success) {
+    if (savedId) {
       // Clear the draft since invoice was successfully saved
       draftStorage.clearDraft('invoice', invoiceBuilder.invoice.id || null);
       draftStorage.clearDraft('invoice', null); // Also clear the "new" draft
 
       if (onInvoiceGenerated) {
-        onInvoiceGenerated(invoiceBuilder.invoice.id || '');
+        onInvoiceGenerated(savedId);
       } else {
         navigate('/electrician/invoices');
       }

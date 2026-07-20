@@ -32,6 +32,8 @@ export interface ProjectQuote {
 
 export interface ProjectInvoice {
   id: string;
+  /** UI invoices are quotes rows (invoice_raised) — navigate with quote_id when set. */
+  quote_id?: string | null;
   payment_status: string;
   total: number;
   invoice_number?: string;
@@ -41,6 +43,7 @@ export interface ProjectInvoice {
 
 export interface ProjectCertificate {
   id: string;
+  report_id?: string;
   report_type: string;
   status: string;
   client_name?: string;
@@ -125,7 +128,7 @@ export function useProjectEntities(projectId: string | undefined) {
 
       if (error || !proj) throw error || new Error('Project not found');
 
-      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes, circuitRes, costRes, floorPlanRes] =
+      const [tasksRes, quotesRes, invoicesRes, certsRes, ramsRes, visitsRes, circuitRes, costRes, floorPlanRes, quoteInvoicesRes] =
         await Promise.all([
           s()
             .from('spark_tasks')
@@ -142,11 +145,11 @@ export function useProjectEntities(projectId: string | undefined) {
             .eq('invoice_raised', false),
           s()
             .from('invoices')
-            .select('id, status, total, invoice_number, client_data, created_at')
+            .select('id, quote_id, deposit_for_quote, status, total, invoice_number, client_data, created_at')
             .eq('project_id', projectId),
           s()
             .from('reports')
-            .select('id, report_type, status, client_name, created_at')
+            .select('id, report_id, report_type, status, client_name, created_at')
             .eq('project_id', projectId),
           s()
             .from('rams_generation_jobs')
@@ -171,6 +174,12 @@ export function useProjectEntities(projectId: string | undefined) {
             .from('floor_plans')
             .select('id, name, status, total_items, created_at')
             .eq('project_id', projectId),
+          // The app's real invoices are quotes rows with invoice_raised (audit P0-2)
+          s()
+            .from('quotes')
+            .select('id, invoice_status, total, invoice_number, client_data, created_at')
+            .eq('project_id', projectId)
+            .eq('invoice_raised', true),
         ]);
 
       setProject({
@@ -234,6 +243,8 @@ export function useProjectEntities(projectId: string | undefined) {
           (r: {
             id: string;
             status: string;
+            acceptance_status?: string | null;
+            booked_slot_start?: string | null;
             total: number;
             quote_number?: string;
             client_data?: Record<string, unknown>;
@@ -241,6 +252,8 @@ export function useProjectEntities(projectId: string | undefined) {
           }) => ({
             id: r.id,
             status: r.status,
+            acceptance_status: r.acceptance_status || undefined,
+            booked_slot_start: r.booked_slot_start || undefined,
             total: Number(r.total) || 0,
             quote_number: r.quote_number,
             client_data: r.client_data,
@@ -249,25 +262,37 @@ export function useProjectEntities(projectId: string | undefined) {
         )
       );
 
-      setInvoices(
-        (invoicesRes.data || []).map(
-          (r: {
-            id: string;
-            status: string;
-            total: number;
-            invoice_number?: string;
-            client_data?: Record<string, unknown>;
-            created_at: string;
-          }) => ({
+      {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const quoteInvoices = ((quoteInvoicesRes.data || []) as any[]).map((r) => ({
+          id: r.id,
+          quote_id: r.id, // opens via the invoice view, which loads quotes rows
+          payment_status: r.invoice_status || 'draft',
+          total: Number(r.total) || 0,
+          invoice_number: r.invoice_number,
+          client_data: r.client_data,
+          created_at: r.created_at,
+        }));
+        const quoteInvoiceIds = new Set(quoteInvoices.map((q) => q.id));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const tableInvoices = ((invoicesRes.data || []) as any[])
+          // keep deposits; drop mirror rows that duplicate a quote-invoice
+          .filter((r) => r.deposit_for_quote || !r.quote_id || !quoteInvoiceIds.has(r.quote_id))
+          .map((r) => ({
             id: r.id,
+            quote_id: r.quote_id,
             payment_status: r.status,
             total: Number(r.total) || 0,
             invoice_number: r.invoice_number,
             client_data: r.client_data,
             created_at: r.created_at,
-          })
-        )
-      );
+          }));
+        setInvoices(
+          [...quoteInvoices, ...tableInvoices].sort(
+            (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          )
+        );
+      }
 
       setCertificates(certsRes.data || []);
       setRams(ramsRes.data || []);
@@ -320,8 +345,9 @@ export function useProjectEntities(projectId: string | undefined) {
 
   const linkQuote = (id: string) => linkEntity('quotes', id);
   const unlinkQuote = (id: string) => unlinkEntity('quotes', id);
-  const linkInvoice = (id: string) => linkEntity('invoices', id);
-  const unlinkInvoice = (id: string) => unlinkEntity('invoices', id);
+  // Quote-invoices live on quotes; linking there also cascades to deposit mirrors
+  const linkInvoice = (id: string) => linkEntity('quotes', id);
+  const unlinkInvoice = (id: string) => unlinkEntity('quotes', id);
   const linkCertificate = (id: string) => linkEntity('reports', id);
   const unlinkCertificate = (id: string) => unlinkEntity('reports', id);
   const linkRams = (id: string) => linkEntity('rams_generation_jobs', id);
@@ -383,23 +409,25 @@ export function useProjectEntities(projectId: string | undefined) {
   }
 
   async function fetchUnlinkedInvoices(): Promise<UnlinkedItem[]> {
+    // Real invoices are quotes rows with invoice_raised (audit P0-2)
     const rows = await fetchUnlinked(
-      'invoices',
-      'id, invoice_number, client_data, total, status, created_at'
+      'quotes',
+      'id, invoice_number, invoice_status, total, client_data, created_at',
+      (q) => q.eq('invoice_raised', true)
     );
     return rows.map(
       (r: {
         id: string;
         invoice_number?: string;
-        client_data?: { name?: string };
+        invoice_status?: string;
         total?: number;
-        status?: string;
+        client_data?: { name?: string };
       }) => ({
         id: r.id,
-        label: r.invoice_number
-          ? `#${r.invoice_number}`
-          : (r.client_data?.name as string) || 'Unnamed invoice',
-        sublabel: r.total ? `£${Number(r.total).toLocaleString()} — ${r.status}` : r.status,
+        label: r.invoice_number || 'Invoice',
+        sublabel: [r.client_data?.name, r.invoice_status || 'draft']
+          .filter(Boolean)
+          .join(' · '),
       })
     );
   }
@@ -456,13 +484,28 @@ export function useProjectEntities(projectId: string | undefined) {
     return rows.map(
       (r: {
         id: string;
-        job_inputs?: { project_name?: string; description?: string };
+        job_inputs?: { project_name?: string; description?: string; query?: string };
         status?: string;
-      }) => ({
-        id: r.id,
-        label: r.job_inputs?.project_name || r.job_inputs?.description || 'Circuit Design',
-        sublabel: r.status,
-      })
+        created_at?: string;
+      }) => {
+        const detail =
+          r.job_inputs?.project_name ||
+          r.job_inputs?.description ||
+          r.job_inputs?.query;
+        const when = r.created_at
+          ? new Date(r.created_at).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })
+          : undefined;
+        return {
+          id: r.id,
+          // Never render identical anonymous rows (ELE-1353)
+          label: detail ? detail.slice(0, 60) : `Circuit design — ${when || 'undated'}`,
+          sublabel: detail ? when : r.status,
+        };
+      }
     );
   }
 
@@ -470,11 +513,20 @@ export function useProjectEntities(projectId: string | undefined) {
     const rows = await fetchUnlinked('cost_engineer_jobs', 'id, query, status, created_at', (q) =>
       q.eq('status', 'complete')
     );
-    return rows.map((r: { id: string; query?: string; status?: string }) => ({
-      id: r.id,
-      label: r.query || 'Cost Estimate',
-      sublabel: r.status,
-    }));
+    return rows.map((r: { id: string; query?: string; status?: string; created_at?: string }) => {
+      const when = r.created_at
+        ? new Date(r.created_at).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          })
+        : undefined;
+      return {
+        id: r.id,
+        label: r.query ? r.query.slice(0, 60) : `Cost estimate — ${when || 'undated'}`,
+        sublabel: r.query ? when : r.status,
+      };
+    });
   }
 
   async function fetchUnlinkedFloorPlans(): Promise<UnlinkedItem[]> {

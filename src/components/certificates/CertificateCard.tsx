@@ -150,6 +150,11 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   const statusColor = getStatusText(certificate.status);
   const typeLabel = getTypeLabel(certificate.reportType);
   const title = certificate.clientName || `Untitled ${typeLabel}`;
+  // Version number lives in the report-id suffix (…-V2, …-V3) from an Amend —
+  // NOT edit_version, which is the autosave concurrency counter (resets to 1
+  // on each new version).
+  const versionMatch = certificate.id.match(/-V(\d+)$/);
+  const version = versionMatch ? parseInt(versionMatch[1], 10) : 1;
   const qs = certificate.qsReviewStatus && QS_CHIP[certificate.qsReviewStatus];
 
   return (
@@ -183,6 +188,14 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </span>
         )}
         <span className="flex items-center gap-1.5 shrink-0">
+          {version > 1 && (
+            <span
+              className="text-[9px] font-bold uppercase tracking-[0.1em] text-blue-300 border border-blue-400/30 bg-blue-400/[0.08] rounded px-1.5 py-0.5"
+              title={`Amended — version ${version}`}
+            >
+              V{version}
+            </span>
+          )}
           {certificate.lockedAt && (
             <span
               className="inline-flex items-center justify-center h-[18px] w-[18px] border border-emerald-400/40 bg-emerald-400/[0.06] text-emerald-300 rounded"

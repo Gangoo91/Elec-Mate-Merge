@@ -74,11 +74,14 @@ export const useUpdateApplicationStatus = () => {
       id,
       status,
       notes,
+      interview,
     }: {
       id: string;
       status: VacancyApplication['status'];
       notes?: string;
-    }) => updateApplicationStatus(id, status, notes),
+      /** First-class booking columns written alongside the notes line. */
+      interview?: { at: string; type: string; location: string | null };
+    }) => updateApplicationStatus(id, status, notes, interview),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: APPLICATIONS_KEY });
     },

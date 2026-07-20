@@ -11,7 +11,9 @@ export type BriefingType =
   | 'PPE Reminder';
 export type BriefingStatus = 'Scheduled' | 'Completed' | 'Cancelled';
 export type RiskLevel = 'low' | 'medium' | 'high';
-export type RecurringPattern = 'daily' | 'weekly' | 'monthly';
+// Matches the live CHECK constraint on briefings.recurring_pattern exactly
+// (constraint widened 2026-07-20 to include the fortnightly site cadence).
+export type RecurringPattern = 'daily' | 'weekly' | 'biweekly' | 'monthly';
 
 export interface BriefingAttendee {
   id: string;
@@ -87,6 +89,7 @@ export type CreateBriefingInput = Omit<
   | 'created_at'
   | 'updated_at'
   | 'job'
+  | 'toolbox_template'
   | 'attendees'
   | 'attendee_count'
   | 'acknowledged_count'

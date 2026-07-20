@@ -246,7 +246,10 @@ export const useInvoiceStorage = () => {
     };
   }, [fetchInvoices]);
 
-  const saveInvoice = async (invoice: Partial<Invoice>, retryCount = 0): Promise<boolean> => {
+  const saveInvoice = async (
+    invoice: Partial<Invoice>,
+    retryCount = 0
+  ): Promise<string | false> => {
     const MAX_RETRIES = 3;
     const RETRY_DELAY = 500;
 
@@ -493,7 +496,7 @@ export const useInvoiceStorage = () => {
         total: invoice.total,
         isStandalone: isStandaloneInvoice,
       });
-      return true;
+      return updatedQuote.id;
     } catch (error: any) {
       // Check if it's a duplicate key error (PostgreSQL error code 23505)
       const isDuplicateKeyError =

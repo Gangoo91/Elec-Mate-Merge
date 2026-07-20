@@ -63,9 +63,11 @@ export type CreateIncidentInput = Omit<
 >;
 export type UpdateIncidentInput = Partial<CreateIncidentInput>;
 
-// The employer_incidents table is narrower than the report form. The mapper
-// folds the extra detail into description/actions_taken on write, and
-// reverse-maps on read so the UI keeps its shape.
+// witnesses / injuries_sustained / first_aid_given / supervisor_* are live
+// first-class columns on employer_incidents — written and read as such.
+// Fields the table genuinely lacks (equipment, consequences, follow-up) are
+// folded into the description on write. Legacy rows that predate the columns
+// keep their detail inside the description text, which still renders.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rowToIncident = (row: any): Incident => ({
   id: row.id,
@@ -81,18 +83,19 @@ const rowToIncident = (row: any): Incident => ({
   severity: row.severity,
   status: row.status,
   immediate_action_taken: row.actions_taken || undefined,
+  witnesses: row.witnesses || undefined,
+  supervisor_notified: row.supervisor_notified ?? undefined,
+  supervisor_name: row.supervisor_name || undefined,
+  injuries_sustained: row.injuries_sustained || undefined,
+  first_aid_given: row.first_aid_given ?? undefined,
   created_at: row.created_at,
   updated_at: row.updated_at,
 });
 
 const incidentToRow = (input: Partial<CreateIncidentInput>) => {
+  // Only fields with no column of their own get folded into the description.
   const extras: string[] = [];
-  if (input.witnesses) extras.push(`Witnesses: ${input.witnesses}`);
   if (input.equipment_involved) extras.push(`Equipment involved: ${input.equipment_involved}`);
-  if (input.injuries_sustained) extras.push(`Injuries: ${input.injuries_sustained}`);
-  if (input.first_aid_given) extras.push('First aid given');
-  if (input.supervisor_notified)
-    extras.push(`Supervisor notified${input.supervisor_name ? `: ${input.supervisor_name}` : ''}`);
   if (input.potential_consequences)
     extras.push(`Potential consequences: ${input.potential_consequences}`);
   if (input.follow_up_required)
@@ -112,6 +115,14 @@ const incidentToRow = (input: Partial<CreateIncidentInput>) => {
   if (input.location !== undefined) row.location = input.location;
   if (input.date_occurred !== undefined) row.reported_at = input.date_occurred;
   if (input.immediate_action_taken !== undefined) row.actions_taken = input.immediate_action_taken;
+  // Structured columns — live on employer_incidents
+  if (input.witnesses !== undefined) row.witnesses = input.witnesses || null;
+  if (input.injuries_sustained !== undefined)
+    row.injuries_sustained = input.injuries_sustained || null;
+  if (input.first_aid_given !== undefined) row.first_aid_given = input.first_aid_given;
+  if (input.supervisor_notified !== undefined)
+    row.supervisor_notified = input.supervisor_notified;
+  if (input.supervisor_name !== undefined) row.supervisor_name = input.supervisor_name || null;
   return row;
 };
 

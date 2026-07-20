@@ -430,9 +430,9 @@ const TimeTrackerPage = () => {
     try {
       const success = await saveInvoice(newInvoice);
       if (success) {
-        // Mark time session as invoiced
+        // Mark time session as invoiced — use the REAL saved id (audit P0)
         try {
-          await markInvoiced(sess.id, invoiceId);
+          await markInvoiced(sess.id, typeof success === 'string' ? success : invoiceId);
         } catch {
           /* non-blocking */
         }

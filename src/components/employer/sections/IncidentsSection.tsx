@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Sheet,
@@ -17,7 +16,9 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, MapPin, Calendar, Briefcase } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { RefreshCw, MapPin, Calendar, Briefcase, AlertTriangle, ExternalLink } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import {
   PageFrame,
   PageHero,
@@ -93,6 +94,16 @@ const FILTER_TABS = [
 const OPEN_STATUSES: IncidentStatus[] = ['open', 'draft', 'submitted', 'under_review'];
 const CLOSED_STATUSES: IncidentStatus[] = ['resolved', 'closed'];
 
+// Honest heuristic only — RIDDOR reportability is a legal judgement the employer
+// must make. We flag likely candidates (serious injuries) so the deadline is
+// never missed, and point at the official HSE route for the actual F2508.
+function isRiddorCandidate(incident: Incident): boolean {
+  return (
+    incident.incident_type === 'injury' &&
+    (incident.severity === 'high' || incident.severity === 'critical')
+  );
+}
+
 function getInitials(name?: string | null): string {
   if (!name) return 'NA';
   const parts = name.trim().split(/\s+/);
@@ -162,6 +173,8 @@ export function IncidentsSection() {
     witnesses: '',
     supervisor_notified: false,
     supervisor_name: '',
+    injuries_sustained: '',
+    first_aid_given: false,
   });
 
   const lastIncidentDate = incidents
@@ -216,6 +229,8 @@ export function IncidentsSection() {
       witnesses: '',
       supervisor_notified: false,
       supervisor_name: '',
+      injuries_sustained: '',
+      first_aid_given: false,
     });
   };
 
@@ -328,6 +343,7 @@ export function IncidentsSection() {
                   subtitle={`${incident.location} · ${reporter} · ${timeAgo}`}
                   trailing={
                     <>
+                      {isRiddorCandidate(incident) && <Pill tone="red">RIDDOR?</Pill>}
                       <Pill tone={severityTone(incident.severity)}>{incident.severity}</Pill>
                       <Pill tone={statusTone(incident.status)}>
                         {incident.status.replace('_', ' ')}
@@ -447,6 +463,67 @@ className={inputClass}
               />
             </div>
 
+            {formData.incident_type === 'injury' && (
+              <div className="space-y-4 p-4 rounded-xl bg-red-500/5 border border-red-500/20">
+                <div className="space-y-2">
+                  <Label className="text-white">Injuries sustained</Label>
+                  <Textarea
+                    value={formData.injuries_sustained}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        injuries_sustained: e.target.value,
+                      }))
+                    }
+                    placeholder="Who was injured and what the injury is — needed if this becomes RIDDOR-reportable"
+                    rows={2}
+                    className={textareaClass}
+                  />
+                </div>
+                <label className="flex items-center gap-3 min-h-[44px] touch-manipulation cursor-pointer">
+                  <Checkbox
+                    checked={formData.first_aid_given}
+                    onCheckedChange={(checked) =>
+                      setFormData((prev) => ({ ...prev, first_aid_given: checked === true }))
+                    }
+                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                  />
+                  <span className="text-sm text-white">First aid given</span>
+                </label>
+                {(formData.severity === 'high' || formData.severity === 'critical') && (
+                  <p className="text-xs text-red-300 flex items-start gap-2">
+                    <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                    Serious injuries may be RIDDOR-reportable. Check the criteria after
+                    saving — deadlines are short.
+                  </p>
+                )}
+              </div>
+            )}
+
+            <label className="flex items-center gap-3 min-h-[44px] touch-manipulation cursor-pointer">
+              <Checkbox
+                checked={formData.supervisor_notified}
+                onCheckedChange={(checked) =>
+                  setFormData((prev) => ({ ...prev, supervisor_notified: checked === true }))
+                }
+                className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+              />
+              <span className="text-sm text-white">Supervisor notified</span>
+            </label>
+            {formData.supervisor_notified && (
+              <div className="space-y-2">
+                <Label className="text-white">Supervisor name</Label>
+                <Input
+                  value={formData.supervisor_name}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, supervisor_name: e.target.value }))
+                  }
+                  placeholder="Who was notified?"
+                  className={inputClass}
+                />
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label className="text-white">Immediate action taken</Label>
               <Textarea
@@ -527,6 +604,50 @@ className={inputClass}
                   ]}
                 />
 
+                {selectedIncident.incident_type === 'injury' && (
+                  <div
+                    className={
+                      isRiddorCandidate(selectedIncident)
+                        ? 'p-4 rounded-xl bg-red-500/10 border border-red-500/30 space-y-3'
+                        : 'p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-3'
+                    }
+                  >
+                    <p className="text-sm font-semibold text-white flex items-center gap-2">
+                      <AlertTriangle
+                        className={
+                          isRiddorCandidate(selectedIncident)
+                            ? 'h-4 w-4 text-red-400'
+                            : 'h-4 w-4 text-amber-400'
+                        }
+                      />
+                      {isRiddorCandidate(selectedIncident)
+                        ? 'Likely RIDDOR-reportable — check now'
+                        : 'Injury — check RIDDOR criteria'}
+                    </p>
+                    {selectedIncident.injuries_sustained && (
+                      <p className="text-xs text-white/80 leading-relaxed">
+                        <span className="font-semibold text-white">Injuries: </span>
+                        {selectedIncident.injuries_sustained}
+                      </p>
+                    )}
+                    {selectedIncident.first_aid_given && (
+                      <p className="text-xs text-white/80">First aid was given at the scene.</p>
+                    )}
+                    <ul className="text-xs text-white/80 space-y-1 list-disc pl-4">
+                      <li>Deaths and specified injuries: report without delay, F2508 within 10 days</li>
+                      <li>Over-7-day incapacitation: report within 15 days of the incident</li>
+                      <li>Keep a record of over-3-day injuries even if not reportable</li>
+                    </ul>
+                    <SecondaryButton
+                      fullWidth
+                      onClick={() => openExternalUrl('https://www.hse.gov.uk/riddor/report.htm')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Report to HSE (RIDDOR)
+                    </SecondaryButton>
+                  </div>
+                )}
+
                 <ListCard>
                   <ListCardHeader title="Description" />
                   <div className="px-5 sm:px-6 py-4">
@@ -564,6 +685,13 @@ className={inputClass}
                       title="Reporter"
                       subtitle={reporterName(selectedIncident)}
                     />
+                    {selectedIncident.supervisor_notified && (
+                      <ListRow
+                        lead={<AlertTriangle className="h-4 w-4 text-white" />}
+                        title="Supervisor notified"
+                        subtitle={selectedIncident.supervisor_name || 'Yes'}
+                      />
+                    )}
                   </ListBody>
                 </ListCard>
 

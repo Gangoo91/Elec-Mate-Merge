@@ -83,9 +83,11 @@ export function SafetyHRSection() {
   };
 
   const openIncidents = incidentStats?.open ?? 0;
-  // "Pending" = awaiting approval (submitted). Drafts and rejected RAMS are not
-  // pending — this matches the RAMS section's own "Awaiting approval" figure.
-  const pendingRams = ramsStats?.submitted ?? 0;
+  // "Pending" = awaiting approval (submitted + AI 'generated'). Drafts and
+  // rejected RAMS are not pending — matches the Safety hub landing figure.
+  const pendingRams = (ramsDocuments ?? []).filter(
+    (r) => r.status === 'submitted' || (r.status as string) === 'generated'
+  ).length;
 
   const { data: trainingStats } = useTrainingStats();
   const trainingDue30d = trainingStats?.expiringsSoon ?? 0;
@@ -103,7 +105,9 @@ export function SafetyHRSection() {
   }, [incidents]);
 
   const pendingRamsList = useMemo(() => {
-    return (ramsDocuments ?? []).filter((r) => r.status === 'submitted').slice(0, 3);
+    return (ramsDocuments ?? [])
+      .filter((r) => r.status === 'submitted' || (r.status as string) === 'generated')
+      .slice(0, 3);
   }, [ramsDocuments]);
 
   const alertRows: {

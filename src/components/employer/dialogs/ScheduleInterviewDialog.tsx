@@ -35,12 +35,13 @@ interface ScheduleInterviewDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   candidateName: string;
+  /** May throw — the success toast only fires after this resolves. */
   onSchedule: (details: {
     date: string;
     time: string;
     type: 'In-person' | 'Phone' | 'Video';
     location?: string;
-  }) => void;
+  }) => void | Promise<void>;
 }
 
 export function ScheduleInterviewDialog({
@@ -54,6 +55,7 @@ export function ScheduleInterviewDialog({
   const [time, setTime] = useState('');
   const [interviewType, setInterviewType] = useState<'In-person' | 'Phone' | 'Video'>('In-person');
   const [location, setLocation] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const timeSlots = [
     '09:00',
@@ -75,7 +77,7 @@ export function ScheduleInterviewDialog({
     '17:00',
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!date || !time) {
@@ -96,12 +98,26 @@ export function ScheduleInterviewDialog({
       return;
     }
 
-    onSchedule({
-      date: format(date, 'yyyy-MM-dd'),
-      time,
-      type: interviewType,
-      location: interviewType === 'In-person' ? location : undefined,
-    });
+    // Await the caller's write — toasting success before the save lands
+    // would lie to the employer if the update fails.
+    setSubmitting(true);
+    try {
+      await onSchedule({
+        date: format(date, 'yyyy-MM-dd'),
+        time,
+        type: interviewType,
+        location: interviewType === 'In-person' ? location : undefined,
+      });
+    } catch {
+      toast({
+        title: 'Could not book the interview',
+        description: 'Nothing was saved — please try again.',
+        variant: 'destructive',
+      });
+      return;
+    } finally {
+      setSubmitting(false);
+    }
 
     toast({
       title: 'Interview Scheduled',
@@ -261,9 +277,9 @@ export function ScheduleInterviewDialog({
             <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
               Cancel
             </SecondaryButton>
-            <PrimaryButton type="submit" fullWidth>
+            <PrimaryButton type="submit" fullWidth disabled={submitting}>
               <CalendarIcon className="h-4 w-4 mr-1.5" />
-              Schedule
+              {submitting ? 'Booking…' : 'Schedule'}
             </PrimaryButton>
           </div>
           </form>

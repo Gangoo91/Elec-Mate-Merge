@@ -400,24 +400,14 @@ export function ExpenseAddSheet({
                     <div className="grid grid-cols-2 gap-2">
                       {EXPENSE_CATEGORIES.slice(0, 8).map((category) => {
                         const Icon = CATEGORY_ICONS[category.id] || MoreHorizontal;
-                        const colours =
-                          COLOUR_CLASSES[category.colour] || COLOUR_CLASSES['gray-500'];
                         return (
                           <button
                             key={category.id}
                             onClick={() => handleCategorySelect(category.id)}
-                            className={cn(
-                              'flex items-center gap-2.5 px-3 h-12 rounded-xl border bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.97] transition-all',
-                              colours.border
-                            )}
+                            className="flex items-center gap-2.5 px-3 h-12 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.97] transition-all"
                           >
-                            <span
-                              className={cn(
-                                'w-7 h-7 rounded-lg flex items-center justify-center shrink-0',
-                                colours.bg
-                              )}
-                            >
-                              <Icon className={cn('h-4 w-4', colours.text)} />
+                            <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0">
+                              <Icon className="h-4 w-4 text-white/70" />
                             </span>
                             <span className="text-[13.5px] font-medium text-white/90 truncate">
                               {category.label}

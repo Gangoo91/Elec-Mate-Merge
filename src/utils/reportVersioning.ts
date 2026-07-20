@@ -84,14 +84,28 @@ export const createNewVersion = async (
 
     if (createError) throw createError;
 
-    // Mark the original superseded and ensure it remains locked/immutable.
+    // Supersede EVERY still-current version in the chain (the root + all prior
+    // children), not just the row that was amended. The new version's
+    // parent_report_id points at the chain root, so amending the root twice —
+    // or amending from any non-tip version — otherwise leaves an orphaned
+    // middle version with superseded_by = null, which then shows as a second
+    // "current" cert in the list (verified live: Rob Such had V2 AND V3 both
+    // visible). After this, exactly one row — the new tip — is current.
     await supabase
       .from('reports')
-      .update({
-        superseded_by: newReport.id,
-        locked_at: originalReport.locked_at || new Date().toISOString(),
-      })
-      .eq('id', originalReportId);
+      .update({ superseded_by: newReport.id })
+      .or(`id.eq.${rootId},parent_report_id.eq.${rootId}`)
+      .neq('id', newReport.id)
+      .is('superseded_by', null);
+
+    // Ensure the amended-from version is locked/immutable (it may still have
+    // been an unlocked draft tip).
+    if (!originalReport.locked_at) {
+      await supabase
+        .from('reports')
+        .update({ locked_at: new Date().toISOString() })
+        .eq('id', originalReportId);
+    }
 
     return {
       success: true,

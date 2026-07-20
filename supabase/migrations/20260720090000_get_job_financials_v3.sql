@@ -1,0 +1,4 @@
+-- A2 (ELE-1364/1360): materials_quoted from quote line items — estimate fallback.
+-- Applied via MCP 2026-07-20. Full body in Supabase migration 'get_job_financials_v3'.
+-- v3 adds: materials_quoted numeric (sum of quotes.items category='materials').
+-- Client uses it when neither materials expenses nor ticked materials exist yet.

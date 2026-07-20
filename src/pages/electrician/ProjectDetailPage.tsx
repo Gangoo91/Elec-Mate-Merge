@@ -82,6 +82,8 @@ import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { ProjectSafetyPack } from '@/components/electrician/project-detail/ProjectSafetyPack';
 import { useVoiceDictation } from '@/components/business-hub/assistant/useVoiceDictation';
 import JobMaterialsSection from '@/components/project-management/JobMaterialsSection';
+import BookJobSheet from '@/components/project-management/BookJobSheet';
+import JobMilestones from '@/components/project-management/JobMilestones';
 import { ProjectSuggestedLinks } from '@/components/project-management/ProjectSuggestedLinks';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -333,6 +335,7 @@ const ProjectDetailPage = () => {
   // job's ticked-off materials list to the client-known figures.
   const [serverFin, setServerFin] = useState<{
     materials_got: number;
+    materials_quoted: number;
     quoted_all: number;
     invoiced: number;
     paid: number;
@@ -351,6 +354,7 @@ const ProjectDetailPage = () => {
       if (!cancelled && !error && data && data[0]) {
         setServerFin({
           materials_got: Number(data[0].materials_got) || 0,
+          materials_quoted: Number(data[0].materials_quoted) || 0,
           quoted_all: Number(data[0].quoted_all) || 0,
           invoiced: Number(data[0].invoiced) || 0,
           paid: Number(data[0].paid) || 0,
@@ -362,7 +366,7 @@ const ProjectDetailPage = () => {
     return () => {
       cancelled = true;
     };
-  }, [id, invoices.length, quotes.length, finVersion]);
+  }, [id, invoices.length, quotes.length, invoiceTotal, quoteTotal, finVersion]);
 
   // Materials section lives in its own component — it pings this event after
   // any mutation so the P&L refreshes without a page reload.
@@ -375,18 +379,28 @@ const ProjectDetailPage = () => {
   const financials = useMemo(() => {
     // Receipt-scanned materials and ticked list materials are usually the SAME
     // spend recorded two ways — take the larger, never both.
+    // Actuals first (receipts / ticked list, deduped); when neither exists yet,
+    // fall back to the quote's priced materials as an ESTIMATE (ELE-1364).
+    const materialActuals = serverFin
+      ? Math.max(serverFin.expenses_materials, serverFin.materials_got)
+      : 0;
+    const materialsAreEstimated =
+      !!serverFin && materialActuals === 0 && serverFin.materials_quoted > 0;
     const realCosts = serverFin
       ? serverFin.expenses -
         serverFin.expenses_materials +
-        Math.max(serverFin.expenses_materials, serverFin.materials_got)
+        (materialsAreEstimated ? serverFin.materials_quoted : materialActuals)
       : projectSpend;
-    return computeProjectFinancials({
-      invoiceTotal,
-      quoteTotal,
-      estimatedValue: project?.estimated_value,
-      expenses: realCosts,
-      totalSeconds: timeSummary.totalSec,
-    });
+    return {
+      ...computeProjectFinancials({
+        invoiceTotal,
+        quoteTotal,
+        estimatedValue: project?.estimated_value,
+        expenses: realCosts,
+        totalSeconds: timeSummary.totalSec,
+      }),
+      materialsAreEstimated,
+    };
   }, [invoiceTotal, quoteTotal, project?.estimated_value, projectSpend, serverFin, timeSummary.totalSec]);
 
   // Quoted vs invoiced — the "did the job drift?" number. Uses quoted_all so
@@ -437,6 +451,7 @@ const ProjectDetailPage = () => {
 
   // ─── S7 Capture — one button: photo, voice note, receipt, timer ──────
   const [captureOpen, setCaptureOpen] = useState(false);
+  const [bookSheetOpen, setBookSheetOpen] = useState(false);
   const voiceNoteRef = useRef('');
   const voiceStopIntent = useRef<'file' | 'discard' | null>(null);
   const wasListening = useRef(false);
@@ -461,13 +476,15 @@ const ProjectDetailPage = () => {
   // React to listening ending — whether the user tapped stop OR the
   // recogniser auto-stopped on silence (web runs continuous=false, so the
   // transcript would otherwise strand and be wiped by the next start()).
+  const fileTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (wasListening.current && !voice.listening) {
       const intent = voiceStopIntent.current ?? 'file';
       voiceStopIntent.current = null;
       if (intent === 'file') {
         // small grace so the final transcript callback lands first
-        setTimeout(fileVoiceNote, 350);
+        if (fileTimer.current) clearTimeout(fileTimer.current);
+        fileTimer.current = setTimeout(fileVoiceNote, 350);
       } else {
         voiceNoteRef.current = '';
       }
@@ -484,6 +501,7 @@ const ProjectDetailPage = () => {
       voiceStopIntent.current = 'file';
       voice.stop();
     } else {
+      if (fileTimer.current) clearTimeout(fileTimer.current);
       voiceNoteRef.current = '';
       voiceStopIntent.current = null;
       voice.start();
@@ -503,6 +521,7 @@ const ProjectDetailPage = () => {
   // Leaving the page mid-dictation: stop and discard (native has no auto-stop on unmount).
   useEffect(() => {
     return () => {
+      if (fileTimer.current) clearTimeout(fileTimer.current);
       if (wasListening.current) {
         voiceStopIntent.current = 'discard';
         voice.stop();
@@ -761,20 +780,27 @@ const ProjectDetailPage = () => {
     (i) => i.payment_status === 'sent' || i.payment_status === 'overdue'
   );
 
+  // Export-pack reads live data (profile, expenses, certs) — route through a ref so
+  // the memo can't capture a stale closure (audit P2-7).
+  const exportPackRef = useRef(handleExportPack);
+  exportPackRef.current = handleExportPack;
+
   // ─── Next action — ONE stage-driven primary, mirrors the get_jobs_overview ladder ───
   const nextAction = useMemo(() => {
     if (!project) return null;
     const nonDraft = invoices.filter((i) => i.payment_status !== 'draft');
     const allPaid = nonDraft.length > 0 && nonDraft.every((i) => i.payment_status === 'paid');
-    const bookedFuture = quotes.some(
-      (q) => q.booked_slot_start && new Date(q.booked_slot_start) > new Date()
-    );
+    const today = new Date();
+    const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const bookedFuture =
+      quotes.some((q) => q.booked_slot_start && new Date(q.booked_slot_start) > new Date()) ||
+      (!!project.start_date && new Date(project.start_date) >= startOfToday);
     if (isCompleted && allPaid)
       return {
         eyebrow: 'Paid',
         headline: 'All paid up — wrap it with a handover pack',
         cta: 'Export pack',
-        run: handleExportPack,
+        run: () => exportPackRef.current(),
       };
     if (unpaidInvoice)
       return {
@@ -783,7 +809,15 @@ const ProjectDetailPage = () => {
         cta: 'View invoices',
         run: () => openAndScrollTo('invoices'),
       };
-    if (isCompleted)
+    if (isCompleted) {
+      const hasDraftInvoice = invoices.some((i) => i.payment_status === 'draft');
+      if (hasDraftInvoice)
+        return {
+          eyebrow: 'Bill it',
+          headline: 'Finish and send the draft invoice',
+          cta: 'View invoices',
+          run: () => openAndScrollTo('invoices'),
+        };
       return {
         eyebrow: 'Bill it',
         headline: project.estimated_value
@@ -792,7 +826,10 @@ const ProjectDetailPage = () => {
         cta: 'Draft invoice',
         run: () => navigate(`/electrician/invoice-builder/create?projectId=${project.id}`),
       };
-    if (doneTasks > 0 || project.status === 'active')
+    }
+    const startArrived =
+      !!project.start_date && new Date(project.start_date) <= new Date();
+    if (doneTasks > 0 || project.status === 'active' || (hasAcceptedQuote && startArrived))
       return {
         eyebrow: 'In progress',
         headline: 'On the tools — keep the time logged',
@@ -810,13 +847,20 @@ const ProjectDetailPage = () => {
       return {
         eyebrow: 'Won',
         headline: 'Quote accepted — get it booked in',
-        cta: 'Set the date',
-        run: openEditSheet,
+        cta: 'Book it in',
+        run: () => setBookSheetOpen(true),
+      };
+    if (awaitingQuote)
+      return {
+        eyebrow: 'Quoted',
+        headline: 'Waiting on the client — worth a chase?',
+        cta: 'View quote',
+        run: () => openAndScrollTo('quotes'),
       };
     if (quotes.length > 0)
       return {
         eyebrow: 'Quoted',
-        headline: 'Waiting on the client — worth a chase?',
+        headline: 'Quote drafted — send it to the client',
         cta: 'View quote',
         run: () => openAndScrollTo('quotes'),
       };
@@ -827,7 +871,7 @@ const ProjectDetailPage = () => {
       run: () => navigate(`/electrician/quote-builder/create?projectId=${project.id}`),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [project, quotes, invoices, isCompleted, unpaidInvoice, hasAcceptedQuote, doneTasks, openSections]);
+  }, [project, quotes, invoices, isCompleted, awaitingQuote, unpaidInvoice, hasAcceptedQuote, doneTasks]);
 
   // Smart default sections — open what the stage says matters, once per load
   const smartOpenApplied = useRef(false);
@@ -1308,12 +1352,38 @@ const ProjectDetailPage = () => {
               </p>
             )}
 
-            {(project.project_type || project.due_date) && (
-              <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11.5px] text-white/40">
+            {(project.project_type || project.due_date || project.start_date) && (
+              <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11.5px] text-white/40 flex-wrap">
                 {project.project_type && <span className="capitalize">{project.project_type}</span>}
+                {project.start_date && (
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" /> Starts {formatShortDate(project.start_date)}
+                  </span>
+                )}
                 {project.due_date && (
                   <span className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" /> Due {formatShortDate(project.due_date)}
+                    {!project.start_date && <Calendar className="h-3 w-3" />}
+                    Due {formatShortDate(project.due_date)}
+                    {project.status !== 'completed' &&
+                      (() => {
+                        const days = Math.ceil(
+                          (new Date(project.due_date).getTime() - Date.now()) / 86400000
+                        );
+                        return (
+                          <span
+                            className={cn(
+                              'tabular-nums',
+                              days < 0
+                                ? 'text-red-300'
+                                : days <= 2
+                                  ? 'text-amber-300'
+                                  : 'text-white/40'
+                            )}
+                          >
+                            {days < 0 ? `· ${Math.abs(days)}d over` : `· ${days}d left`}
+                          </span>
+                        );
+                      })()}
                   </span>
                 )}
               </div>
@@ -1346,25 +1416,25 @@ const ProjectDetailPage = () => {
             </div>
             <div className="px-3 py-3 sm:px-4 border-t sm:border-t-0 sm:border-l border-white/[0.06]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-                {project.estimated_value && project.estimated_value > 0 ? 'Value' : 'Unbilled'}
+                {financials.revenue > 0 ? 'Value' : 'Unbilled'}
               </p>
               <p
                 className={cn(
                   'mt-1 text-[17px] sm:text-[18px] font-bold tabular-nums leading-none',
-                  project.estimated_value && project.estimated_value > 0
+                  financials.revenue > 0
                     ? 'text-emerald-400'
                     : timeSummary.unbilledValue > 0
                       ? 'text-elec-yellow'
                       : 'text-white/40'
                 )}
               >
-                {project.estimated_value && project.estimated_value > 0
-                  ? formatGBP(project.estimated_value)
+                {financials.revenue > 0
+                  ? formatGBP(financials.revenue)
                   : formatGBP(timeSummary.unbilledValue)}
               </p>
               <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
-                {project.estimated_value && project.estimated_value > 0
-                  ? 'estimated'
+                {financials.revenue > 0
+                  ? revenueSourceLabel(financials.revenueSource)
                   : timeSummary.unbilledSec > 0
                     ? `${formatHoursMinutes(timeSummary.unbilledSec)} to bill`
                     : 'nothing to bill'}
@@ -1470,6 +1540,9 @@ const ProjectDetailPage = () => {
                 <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-orange-300 tabular-nums leading-none">
                   {formatGBPexact(financials.materials)}
                 </p>
+                {financials.materialsAreEstimated && (
+                  <p className="mt-1 text-[11.5px] text-white/45">estimated from quote</p>
+                )}
               </div>
               <div className="px-3 py-3 sm:px-4 border-t sm:border-t-0 sm:border-l border-white/[0.06]">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
@@ -1603,6 +1676,11 @@ const ProjectDetailPage = () => {
             </div>
           </motion.div>
         )}
+
+        {/* ── Job stages — electrical milestones, tap to complete (ELE-1359) ── */}
+        <motion.div variants={itemVariants}>
+          <JobMilestones projectId={project.id} projectStatus={project.status} />
+        </motion.div>
 
         {/* ── Needs attention — derived flags, only when something applies ── */}
         {visibleFlags.length > 0 && (
@@ -2416,6 +2494,8 @@ const ProjectDetailPage = () => {
         <motion.div variants={itemVariants}>
           <JobMaterialsSection
             projectId={project.id}
+            projectTitle={project.title}
+            projectLocation={project.location}
             open={openSections.has('materials')}
             onToggle={() => toggleSection('materials')}
             quoteCount={quotes.length}
@@ -2761,7 +2841,7 @@ const ProjectDetailPage = () => {
                     <button
                       key={inv.id}
                       type="button"
-                      onClick={() => navigate(`/electrician/invoices/${inv.id}/view`)}
+                      onClick={() => navigate(`/electrician/invoices/${inv.quote_id || inv.id}/view`)}
                       className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                     >
                       <div className="min-w-0 text-left">
@@ -2991,6 +3071,16 @@ const ProjectDetailPage = () => {
         </section>
         </div>
       </motion.div>
+
+      {/* Book-it-in sheet (ELE-1351) */}
+      <BookJobSheet
+        open={bookSheetOpen}
+        onOpenChange={setBookSheetOpen}
+        projectId={project.id}
+        projectTitle={project.title}
+        location={project.location}
+        onBooked={refresh}
+      />
 
       {/* Edit Job Sheet */}
       <Sheet open={editProjectOpen} onOpenChange={setEditProjectOpen}>
@@ -3284,7 +3374,7 @@ const ProjectDetailPage = () => {
                 label: 'Photo',
                 icon: Camera,
                 onTap: () => {
-                  setCaptureOpen(false);
+                  closeCapture();
                   setPhotoSheetOpen(true);
                 },
               },
@@ -3299,7 +3389,7 @@ const ProjectDetailPage = () => {
                 label: 'Receipt',
                 icon: Receipt,
                 onTap: () => {
-                  setCaptureOpen(false);
+                  closeCapture();
                   setExpenseSheetOpen(true);
                 },
               },
@@ -3308,7 +3398,7 @@ const ProjectDetailPage = () => {
                 label: 'Start timer',
                 icon: Timer,
                 onTap: () => {
-                  setCaptureOpen(false);
+                  closeCapture();
                   handleStartTimerForProject();
                 },
               },

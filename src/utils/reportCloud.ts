@@ -126,7 +126,12 @@ export const reportCloud = {
         .from('reports')
         .select('id', { count: 'exact', head: true })
         .eq('user_id', userId)
-        .is('deleted_at', null);
+        .is('deleted_at', null)
+        // Hide superseded originals: Amending a locked cert marks the old
+        // version superseded_by the new one. Showing both puts an identical-
+        // looking old V1 next to its V2 — a real "sent the wrong one" hazard.
+        // The current version always has superseded_by = null.
+        .is('superseded_by', null);
 
       // ELE-1305 — 'draft' means both manual drafts and auto-saves: a filter
       // tab literally named "Drafts" showing 0 while 12 auto-saved forms exist
@@ -154,6 +159,7 @@ export const reportCloud = {
         .select(LIST_SELECT)
         .eq('user_id', userId)
         .is('deleted_at', null)
+        .is('superseded_by', null) // current version only (see count query above)
         .order('updated_at', { ascending: false });
 
       if (!includeAutoDrafts && !draftFilter) {

@@ -193,7 +193,8 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                     <div
                       className={cn(
                         'p-1.5 rounded-lg',
-                        `bg-${category === 'electrical_safety' ? 'yellow' : 'blue'}-500/10`
+                        // Static classes — template-literal Tailwind classes never compile
+                        category === 'electrical_safety' ? 'bg-yellow-500/10' : 'bg-blue-500/10'
                       )}
                     >
                       <Icon

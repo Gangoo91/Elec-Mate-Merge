@@ -23,6 +23,10 @@ export interface StockItem {
   id: string;
   name: string;
   quantity: number;
+  /** Physical minus what's committed to OTHER active jobs (ELE-1362). */
+  available: number;
+  committed_elsewhere: number;
+  committed_jobs?: string[] | null;
   unit?: string | null;
   unit_cost?: number | null;
   supplier?: string | null;
@@ -31,6 +35,7 @@ export interface StockItem {
 export interface AddMaterialInput {
   name: string;
   quantity?: number;
+  status?: JobMaterialStatus;
   unit?: string;
   unitPrice?: number;
   supplier?: string;
@@ -93,6 +98,7 @@ export const useJobMaterials = (projectId?: string) => {
         unit_price: input.unitPrice ?? null,
         supplier: input.supplier || null,
         inventory_item_id: input.inventoryItemId || null,
+        status: input.status || 'needed',
         source: input.source || 'manual',
         source_item_id: input.sourceItemId || null,
       });
@@ -150,6 +156,7 @@ export const useJobMaterials = (projectId?: string) => {
           if (item.category !== 'materials' || !item.description?.trim()) continue;
           const sourceId = item.id || `${q.id}:${item.description}`;
           if (existing.has(`quote:${sourceId}`)) continue;
+          existing.add(`quote:${sourceId}`); // in-batch dedupe too (audit P1)
           rows.push({
             user_id: user.id,
             project_id: projectId,
@@ -236,25 +243,25 @@ export const useJobMaterials = (projectId?: string) => {
     }
   };
 
-  /** Search own stock for the "from the van" picker. */
+  /** Search own stock — allocation-aware: what's genuinely available for THIS job. */
   const searchStock = async (query: string): Promise<StockItem[]> => {
+    if (!projectId) return [];
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let q = (supabase as any)
-        .from('personal_inventory')
-        .select('id, name, quantity, unit, unit_cost, supplier')
-        .eq('user_id', user.id)
-        .order('name')
-        .limit(12);
-      if (query.trim()) q = q.ilike('name', `%${query.trim()}%`);
-      const { data, error } = await q;
+      const { data, error } = await (supabase as any).rpc('get_stock_availability', {
+        p_project_id: projectId,
+        p_query: query.trim() || null,
+      });
       if (error) throw error;
-      return (data || []) as StockItem[];
-    } catch {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return ((data || []) as any[]).map((r) => ({
+        ...r,
+        quantity: Number(r.quantity) || 0,
+        available: Number(r.available) || 0,
+        committed_elsewhere: Number(r.committed_elsewhere) || 0,
+      })) as StockItem[];
+    } catch (err) {
+      console.error('Stock availability lookup failed:', err);
       return [];
     }
   };

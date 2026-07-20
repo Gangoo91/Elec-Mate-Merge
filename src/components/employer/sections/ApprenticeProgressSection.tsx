@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Send, Loader2 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { format, parseISO } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useCreateCommunication } from '@/hooks/useCommunications';
 import {
   PageFrame,
   PageHero,
@@ -43,6 +46,24 @@ const epaTone = (status: string | null): Tone => {
   return 'blue';
 };
 
+/** Tone for the college's recorded risk rating (RAG or high/medium/low). */
+const riskTone = (level: string): Tone => {
+  const s = level.toLowerCase();
+  if (s.includes('high') || s.includes('red') || s.includes('at risk')) return 'red';
+  if (s.includes('med') || s.includes('amber')) return 'amber';
+  if (s.includes('low') || s.includes('green') || s.includes('on track')) return 'emerald';
+  return 'blue';
+};
+
+/** Honest programme-dates fragment — renders only what the college recorded. */
+const programmeDates = (start: string | null, end: string | null): string | null => {
+  const f = (iso: string) => format(parseISO(iso), 'MMM yyyy');
+  if (start && end) return `${f(start)} → ${f(end)}`;
+  if (start) return `Started ${f(start)}`;
+  if (end) return `Due to complete ${f(end)}`;
+  return null;
+};
+
 export function ApprenticeProgressSection() {
   const isMobile = useIsMobile();
   const { data, isLoading, isError, refetch, isFetching } = useApprenticeProgress();
@@ -52,6 +73,58 @@ export function ApprenticeProgressSection() {
   // person twice (linked to two employer_employees rows), so ids don't
   // uniquely identify a row.
   const [selected, setSelected] = useState<(typeof rows)[number] | null>(null);
+
+  // Overdue review → one-tap message to the apprentice through the comms
+  // rails (push included). The RPC keys rows by the student's auth uid, so
+  // resolve the employer_employees row here — comms recipients FK to it.
+  const createCommunication = useCreateCommunication();
+  const [nudging, setNudging] = useState(false);
+  const sendReviewNudge = async (row: NonNullable<typeof selected>) => {
+    setNudging(true);
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const { data: emp } = await supabase
+        .from('employer_employees')
+        .select('id')
+        .eq('user_id', row.studentUserId)
+        .eq('employer_id', user?.id ?? '')
+        .maybeSingle();
+      if (!emp) {
+        toast({
+          title: 'Not linked to your roster',
+          description: "This apprentice isn't linked to a team member yet, so they can't be messaged.",
+          variant: 'destructive',
+        });
+        return;
+      }
+      await createCommunication.mutateAsync({
+        type: 'message',
+        title: 'Progress review due',
+        content: `Your 12-weekly apprenticeship progress review is due${
+          row.lastReviewDate
+            ? ` — the last one was on ${format(parseISO(row.lastReviewDate), 'd MMM yyyy')}`
+            : ''
+        }. Reply with the days that work for you this week and we'll book it in.`,
+        priority: 'high',
+        target_audience: 'specific',
+        target_employee_ids: [emp.id],
+        is_pinned: false,
+        expires_at: null,
+        sender_id: null,
+        attachments: null,
+      });
+      toast({
+        title: 'Review nudge sent',
+        description: `${row.name} has been asked to arrange their progress review.`,
+      });
+    } catch {
+      toast({ title: 'Nudge failed', description: 'Message was not sent.', variant: 'destructive' });
+    } finally {
+      setNudging(false);
+    }
+  };
 
   const stats = useMemo(() => {
     const total = rows.length;
@@ -174,6 +247,33 @@ export function ApprenticeProgressSection() {
               }
               title={selected.name}
             >
+              {/* Programme line + college risk rating — rendered only from
+                  facts the college has recorded; nothing is invented */}
+              {(() => {
+                const dates = programmeDates(selected.startDate, selected.expectedEndDate);
+                const programme = [
+                  [selected.courseLevel, selected.awardingBody].filter(Boolean).join(' · ') ||
+                    null,
+                  dates,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
+                if (!programme && !selected.riskLevel) return null;
+                return (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {selected.riskLevel && (
+                      <Pill tone={riskTone(selected.riskLevel)}>
+                        {/risk/i.test(selected.riskLevel)
+                          ? selected.riskLevel
+                          : `${selected.riskLevel} risk`}
+                      </Pill>
+                    )}
+                    {programme && (
+                      <p className="text-[12.5px] text-white/60 leading-relaxed">{programme}</p>
+                    )}
+                  </div>
+                );
+              })()}
               <StatStrip
                 columns={2}
                 stats={[
@@ -200,6 +300,90 @@ export function ApprenticeProgressSection() {
                   },
                 ]}
               />
+              {/* Off-the-job hours — verified college-signed hours against the
+                  course requirement. The bar shows only what the college has
+                  verified; nothing pro-rata is invented client-side. */}
+              {(() => {
+                const otjPct =
+                  selected.otjRequiredHours > 0
+                    ? Math.min(
+                        100,
+                        Math.round((100 * selected.otjVerifiedHours) / selected.otjRequiredHours)
+                      )
+                    : 0;
+                const otjRemaining = Math.max(
+                  0,
+                  selected.otjRequiredHours - selected.otjVerifiedHours
+                );
+                return (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="blue"
+                      title="Off-the-job hours"
+                      meta={<Pill tone={selected.otjOnTrack ? 'emerald' : 'amber'}>{otjPct}%</Pill>}
+                    />
+                    <div className="px-5 py-4 space-y-2.5">
+                      <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${
+                            selected.otjOnTrack ? 'bg-emerald-500' : 'bg-amber-500'
+                          }`}
+                          style={{ width: `${otjPct}%` }}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between text-[12px]">
+                        <span className="text-white/60 tabular-nums">
+                          {selected.otjVerifiedHours}h verified
+                        </span>
+                        <span className="text-white/60 tabular-nums">
+                          {selected.otjRequiredHours}h required
+                        </span>
+                      </div>
+                      {selected.otjTotalHours > selected.otjVerifiedHours && (
+                        <p className="text-[12px] text-amber-300/90 tabular-nums">
+                          {selected.otjTotalHours - selected.otjVerifiedHours}h logged awaiting
+                          verification
+                        </p>
+                      )}
+                      <p className="text-[12px] text-white/50 leading-relaxed">
+                        {otjRemaining > 0
+                          ? `${otjRemaining}h of verified off-the-job training still to log — the full requirement must be evidenced before EPA gateway.`
+                          : 'Full off-the-job requirement met and verified by the college.'}
+                      </p>
+                    </div>
+                  </ListCard>
+                );
+              })()}
+              {/* End-point assessment — only when the college has recorded a
+                  gateway or assessment date (the status already sits in the
+                  strip above) */}
+              {(selected.epaGatewayDate || selected.epaDate) && (
+                <ListCard>
+                  <ListCardHeader
+                    tone="yellow"
+                    title="End-point assessment"
+                    meta={
+                      selected.epaStatus ? (
+                        <Pill tone={epaTone(selected.epaStatus)}>{selected.epaStatus}</Pill>
+                      ) : undefined
+                    }
+                  />
+                  <ListBody>
+                    {selected.epaGatewayDate && (
+                      <ListRow
+                        title={format(parseISO(selected.epaGatewayDate), 'd MMM yyyy')}
+                        subtitle="Gateway date"
+                      />
+                    )}
+                    {selected.epaDate && (
+                      <ListRow
+                        title={format(parseISO(selected.epaDate), 'd MMM yyyy')}
+                        subtitle="End-point assessment date"
+                      />
+                    )}
+                  </ListBody>
+                </ListCard>
+              )}
               <ListCard>
                 <ListCardHeader tone="emerald" title="Progress reviews" />
                 <ListBody>
@@ -222,7 +406,32 @@ export function ApprenticeProgressSection() {
                       )
                     }
                   />
+                  {selected.nextReviewDate && (
+                    <ListRow
+                      title={`Next review ${format(parseISO(selected.nextReviewDate), 'd MMM yyyy')}`}
+                      subtitle="Scheduled by the college"
+                    />
+                  )}
+                  {selected.tutorName && (
+                    <ListRow title={selected.tutorName} subtitle="College tutor" />
+                  )}
                 </ListBody>
+                {selected.reviewOverdue && (
+                  <div className="px-5 py-4 border-t border-white/[0.06]">
+                    <button
+                      onClick={() => sendReviewNudge(selected)}
+                      disabled={nudging}
+                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {nudging ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                      Ask to arrange review
+                    </button>
+                  </div>
+                )}
               </ListCard>
             </SheetShell>
           )}

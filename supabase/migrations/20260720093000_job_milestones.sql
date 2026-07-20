@@ -1,0 +1,3 @@
+-- E1 (ELE-1359): job_milestones table + seed_job_milestones(project_id).
+-- Applied via MCP 2026-07-20. RLS user-scoped; seeds trade-specific stage sets
+-- (rewire/new-build/eicr/ev-charging/consumer-unit/default) idempotently.

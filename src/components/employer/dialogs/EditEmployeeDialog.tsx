@@ -82,6 +82,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     dayRate: '',
     overtimeMultiplier: '1.5',
     overtimeThreshold: '8',
+    emergencyName: '',
+    emergencyPhone: '',
+    emergencyRelationship: '',
   });
 
   useEffect(() => {
@@ -108,6 +111,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
         dayRate,
         overtimeMultiplier: (employee.overtime_multiplier ?? 1.5).toString(),
         overtimeThreshold: (employee.overtime_threshold_hours ?? 8).toString(),
+        emergencyName: employee.emergency_contact_name || '',
+        emergencyPhone: employee.emergency_contact_phone || '',
+        emergencyRelationship: employee.emergency_contact_relationship || '',
       });
       setPhotoUrl(employee.photo_url);
     }
@@ -230,6 +236,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           overtime_threshold_hours: Number.isFinite(parseFloat(formData.overtimeThreshold))
             ? parseFloat(formData.overtimeThreshold)
             : 8,
+          emergency_contact_name: formData.emergencyName.trim() || null,
+          emergency_contact_phone: formData.emergencyPhone.trim() || null,
+          emergency_contact_relationship: formData.emergencyRelationship.trim() || null,
         },
       });
 
@@ -350,6 +359,43 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                       value={formData.phone}
                       onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                       placeholder="07700 900000"
+                      className={inputClass}
+                    />
+                  </Field>
+                </FormGrid>
+              </FormCard>
+
+              <FormCard eyebrow="Emergency contact">
+                <FormGrid>
+                  <Field label="Contact name">
+                    <Input
+                      value={formData.emergencyName}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, emergencyName: e.target.value }))
+                      }
+                      placeholder="Next of kin"
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Contact phone">
+                    <Input
+                      type="tel"
+                      inputMode="tel"
+                      value={formData.emergencyPhone}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, emergencyPhone: e.target.value }))
+                      }
+                      placeholder="07700 900000"
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Relationship">
+                    <Input
+                      value={formData.emergencyRelationship}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, emergencyRelationship: e.target.value }))
+                      }
+                      placeholder="Partner, parent…"
                       className={inputClass}
                     />
                   </Field>

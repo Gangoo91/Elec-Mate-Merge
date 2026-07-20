@@ -269,15 +269,14 @@ export const StartCertificateDialog = ({
     if (!projectTitle.trim()) return;
     setCreatingProject(true);
     try {
-      const projectId = await createProject({
+      const createdProject = await createProject({
         title: projectTitle.trim(),
         projectType: projectType || undefined,
         customerId: customer.id,
-        customerName: customer.name,
         location: customer.address || undefined,
       });
       onOpenChange(false);
-      navigate(`/electrician/projects/${projectId}`);
+      if (createdProject) navigate(`/electrician/projects/${createdProject.id}`);
     } catch (e) {
       console.error(e);
     } finally {

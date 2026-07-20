@@ -126,6 +126,7 @@ const ProjectsPage = () => {
   const navigate = useNavigate();
   const [view, setViewState] = useState<ProjectView>('active');
   const [stageFilter, setStageFilter] = useState<JobStage | 'all'>('all');
+  const [boardMode, setBoardMode] = useState(false);
   const [search, setSearch] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const {
@@ -277,11 +278,16 @@ const ProjectsPage = () => {
     let toBillCount = 0;
     let wonThisMonthCount = 0;
     let wonThisMonthValue = 0;
-    for (const p of projects) {
+    // Whole book, not the current tab (audit P1) — and "to bill" means genuinely
+    // uninvoiced completed work, not everything completed.
+    for (const p of allProjects) {
+      if (p.status === 'cancelled') continue;
       const val = Number(p.estimatedValue ?? 0);
       if (p.status === 'completed') {
-        toBillCount += 1;
-        toBillValue += val;
+        if (p.invoiceCount === 0) {
+          toBillCount += 1;
+          toBillValue += val;
+        }
         const updated = p.updatedAt ? new Date(p.updatedAt) : null;
         if (updated && updated >= monthStart) {
           wonThisMonthCount += 1;
@@ -300,7 +306,7 @@ const ProjectsPage = () => {
       wonThisMonthCount,
       wonThisMonthValue,
     };
-  }, [projects]);
+  }, [allProjects]);
 
   // ─── Completed-project profit ─────────────────────────────────────
   // When viewing completed work, pull batched financials (revenue / spend /
@@ -402,12 +408,12 @@ const ProjectsPage = () => {
       dueDate: newDueDate || undefined,
       estimatedValue: newEstimatedValue ? parseFloat(newEstimatedValue) : undefined,
     };
-    const id = await createProject(input);
+    const created = await createProject(input);
     setCreating(false);
-    if (id) {
+    if (created) {
       setShowCreate(false);
       resetForm();
-      navigate(`/electrician/projects/${id}`);
+      navigate(`/electrician/projects/${created.id}`);
     }
   };
 
@@ -505,7 +511,7 @@ const ProjectsPage = () => {
             >
               <span className="text-[12px] text-white/80">
                 <span className="font-semibold text-elec-yellow tabular-nums">{formatCurrency(metrics.toBillValue)}</span>{' '}
-                of finished work hasn\u2019t been invoiced yet
+                of finished work hasn’t been invoiced yet
               </span>
               <ChevronRight className="h-4 w-4 text-white/40" />
             </button>
@@ -620,15 +626,32 @@ const ProjectsPage = () => {
               </button>
             ))}
           </div>
-          <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search jobs…"
-              className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30 touch-manipulation"
-            />
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search jobs…"
+                className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[14px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30 touch-manipulation"
+              />
+            </div>
+            {/* Pipeline board — desktop only (ELE-1347) */}
+            <button
+              type="button"
+              onClick={() => setBoardMode((v) => !v)}
+              aria-pressed={boardMode}
+              className={cn(
+                'hidden lg:flex h-11 px-3.5 rounded-xl border text-[13px] font-medium items-center gap-2 touch-manipulation',
+                boardMode
+                  ? 'bg-elec-yellow/[0.12] border-elec-yellow/[0.35] text-elec-yellow'
+                  : 'bg-white/[0.04] border-white/[0.08] text-white/70'
+              )}
+            >
+              <LayoutGrid className="h-4 w-4" />
+              {boardMode ? 'List' : 'Board'}
+            </button>
           </div>
         </div>
       )}
@@ -724,11 +747,84 @@ const ProjectsPage = () => {
               </div>
             </div>
           ) : (
+            <>
+            {boardMode && (
+              /* ── Pipeline board — one column per live stage (desktop) ── */
+              <div className="hidden lg:flex gap-3 overflow-x-auto pb-4 items-start">
+                {(
+                  ['enquiry', 'quoted', 'won', 'booked', 'in_progress', 'awaiting_payment', 'bill_it', 'paid', 'cancelled'] as JobStage[]
+                )
+                  .map((stage) => ({
+                    stage,
+                    jobs: visibleProjects.filter((pr) => pr.stage === stage),
+                  }))
+                  .filter((col) => col.jobs.length > 0)
+                  .map(({ stage, jobs }) => (
+                    <div key={stage} className="w-64 flex-shrink-0">
+                      <div className="flex items-center gap-1.5 px-1 mb-2">
+                        <span
+                          aria-hidden="true"
+                          className={cn('h-1.5 w-1.5 rounded-full', JOB_STAGE_META[stage].dot)}
+                        />
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/60">
+                          {JOB_STAGE_META[stage].label}
+                        </span>
+                        <span className="text-[10px] text-white/40 tabular-nums ml-auto">
+                          {jobs.length}
+                          {(() => {
+                            const v = jobs.reduce((s, j) => s + (j.estimatedValue || 0), 0);
+                            return v > 0 ? ` · ${formatCurrency(v)}` : '';
+                          })()}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        {jobs.map((pr) => (
+                          <button
+                            key={pr.id}
+                            type="button"
+                            onClick={() => navigate(`/electrician/projects/${pr.id}`)}
+                            className={cn(
+                              PANEL,
+                              'w-full p-3 text-left touch-manipulation hover:bg-white/[0.04] active:scale-[0.99] transition-all'
+                            )}
+                          >
+                            <p className="text-[13px] font-semibold text-white line-clamp-2 leading-snug">
+                              {pr.title}
+                            </p>
+                            {(pr.customerName || pr.location) && (
+                              <p className="mt-0.5 text-[11px] text-white/45 truncate">
+                                {[pr.customerName, pr.location].filter(Boolean).join(' · ')}
+                              </p>
+                            )}
+                            <div className="mt-1.5 flex items-center justify-between">
+                              {pr.estimatedValue ? (
+                                <span className="text-[12px] font-bold text-elec-yellow tabular-nums">
+                                  {formatCurrency(pr.estimatedValue)}
+                                </span>
+                              ) : (
+                                <span />
+                              )}
+                              {pr.dueDate && (
+                                <span className="text-[10.5px] text-white/40">
+                                  Due {formatDate(pr.dueDate)}
+                                </span>
+                              )}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"
+              className={cn(
+                'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3',
+                boardMode && visibleProjects.length > 0 && 'lg:hidden'
+              )}
             >
               <AnimatePresence mode="popLayout">
                 {visibleProjects.length === 0 && (
@@ -830,9 +926,56 @@ const ProjectsPage = () => {
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
                               Due {formatDate(project.dueDate)}
+                              {(() => {
+                                const days = Math.ceil(
+                                  (new Date(project.dueDate).getTime() - Date.now()) / 86400000
+                                );
+                                if (project.status === 'completed') return null;
+                                return (
+                                  <span
+                                    className={cn(
+                                      'ml-0.5 tabular-nums',
+                                      days < 0
+                                        ? 'text-red-300'
+                                        : days <= 2
+                                          ? 'text-amber-300'
+                                          : 'text-white/40'
+                                    )}
+                                  >
+                                    {days < 0
+                                      ? `· ${Math.abs(days)}d over`
+                                      : `· ${days}d left`}
+                                  </span>
+                                );
+                              })()}
                             </span>
                           )}
                         </div>
+
+                        {/* time-elapsed track when both dates known */}
+                        {project.startDate &&
+                          project.dueDate &&
+                          project.status !== 'completed' &&
+                          (() => {
+                            const start = new Date(project.startDate).getTime();
+                            const end = new Date(project.dueDate).getTime();
+                            if (end <= start) return null;
+                            const t = Math.min(
+                              1,
+                              Math.max(0, (Date.now() - start) / (end - start))
+                            );
+                            return (
+                              <div className="mt-2 ml-5 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                                <div
+                                  className={cn(
+                                    'h-full rounded-full',
+                                    t >= 1 ? 'bg-red-400' : t > 0.75 ? 'bg-amber-400' : 'bg-white/25'
+                                  )}
+                                  style={{ width: `${Math.round(t * 100)}%` }}
+                                />
+                              </div>
+                            );
+                          })()}
 
                         {/* Profit chip — completed view only, from shared calc */}
                         {fin && (
@@ -966,6 +1109,7 @@ const ProjectsPage = () => {
                 })}
               </AnimatePresence>
             </motion.div>
+            </>
           )}
         </div>
       </PullToRefresh>

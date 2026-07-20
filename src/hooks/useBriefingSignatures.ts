@@ -6,6 +6,21 @@ import { useToast } from '@/hooks/use-toast';
 
 export type SignedVia = 'manual' | 'qr_code' | 'app' | 'link';
 
+/** Human label for how a signature was captured (DB also stores 'remote_link'). */
+export function signedViaLabel(via?: string | null): string {
+  switch (via) {
+    case 'qr_code':
+      return 'QR code';
+    case 'link':
+    case 'remote_link':
+      return 'shared link';
+    case 'app':
+      return 'app';
+    default:
+      return 'in person';
+  }
+}
+
 export interface BriefingAttendee {
   id: string;
   briefing_id: string;
@@ -249,11 +264,15 @@ export function useUploadSignature() {
 export async function getOrCreateBriefingSignLink(briefingId: string): Promise<string> {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
+  // Only reuse tokens that are still comfortably inside their window — the
+  // public page treats past-expiry tokens as dead even though they stay active.
   const { data: existing } = await supabase
     .from('briefing_signing_tokens')
     .select('public_token')
     .eq('briefing_id', briefingId)
     .eq('is_active', true)
+    .gt('expires_at', new Date(Date.now() + 60 * 60 * 1000).toISOString())
+    .limit(1)
     .maybeSingle();
 
   if (existing?.public_token) {

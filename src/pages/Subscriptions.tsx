@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
+import NumberFlow from '@number-flow/react';
+import { ArrowLeft, ArrowRight, Check, ChevronDown, ExternalLink, Loader2 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -519,7 +520,7 @@ const Subscriptions = () => {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="animate-fade-in min-h-screen bg-background">
+    <div className="theme-v2 animate-fade-in min-h-screen bg-background">
       <div className="pt-[env(safe-area-inset-top)]" />
 
       {/* Back */}
@@ -734,20 +735,15 @@ const Subscriptions = () => {
 
         {/* Hero */}
         <header className="text-center space-y-4 pt-4 sm:pt-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
-            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow animate-pulse" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
-              Pricing
-            </span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.05]">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-white/60">
+            Pricing
+          </p>
+          <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold tracking-[-0.03em] text-white leading-[1.05]">
             Built for every stage
             <br />
-            <span className="bg-gradient-to-r from-elec-yellow via-amber-300 to-elec-yellow bg-clip-text text-transparent">
-              of your trade.
-            </span>
+            <span className="text-elec-yellow">of your trade.</span>
           </h1>
-          <p className="text-base sm:text-lg text-white max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-white/80 max-w-xl mx-auto">
             From first-year apprentice to running the whole firm. Free 7-day trial on every plan —
             no charge until day 8.
           </p>
@@ -1011,7 +1007,7 @@ const Subscriptions = () => {
               <Button
                 onClick={handleConfirmMatePhone}
                 disabled={waitlistLoading.mate}
-                className="w-full h-14 rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-bold text-base shadow-[0_20px_60px_-20px_rgba(250,204,21,0.5)] touch-manipulation active:scale-[0.98] transition-all"
+                className="w-full h-12 rounded-lg bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base shadow-none touch-manipulation active:scale-[0.99] transition-colors"
               >
                 {waitlistLoading.mate ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -1064,76 +1060,95 @@ const PlanCard = ({
   const joined = waitlistKey ? waitlistJoined[waitlistKey] : false;
   const joining = waitlistKey ? waitlistLoading[waitlistKey] : false;
 
+  // Mobile: feature lists collapse behind the "What's included" row so four
+  // stacked plans don't make the page a scroll marathon. Always open on sm+.
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const featureCount = plan.featureGroups?.length
+    ? plan.featureGroups.reduce((n, g) => n + g.items.length, 0)
+    : plan.features.length;
+
+  // Observed spec (Linear/Supabase pricing, July 2026): quiet 1px panels,
+  // no gradients or glow shadows; the recommended plan is signalled by a
+  // slightly stronger border + its CTA being the page's single yellow fill.
+  // Proper cards on every breakpoint (Andrew: pricing is a card-picking UI —
+  // the mobile-flat pattern is for forms, not plan selection). Depth comes
+  // from an inset top highlight + soft black shadow — physical elevation,
+  // never coloured glow.
   const cardClasses = cn(
-    'group relative rounded-3xl border overflow-hidden flex flex-col h-full',
-    'bg-gradient-to-b from-white/[0.04] via-white/[0.02] to-transparent',
-    'transition-all duration-300 hover:border-white/20',
+    'group relative rounded-2xl border flex flex-col h-full bg-white/[0.03]',
+    'shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_10px_30px_-14px_rgba(0,0,0,0.7)]',
+    'transition-colors duration-200',
     isCurrentPlan
-      ? 'border-green-500/50 shadow-[0_0_0_1px_rgba(34,197,94,0.15)]'
+      ? 'border-green-500/40'
       : plan.popular
-        ? 'border-elec-yellow/50 shadow-[0_0_40px_-12px_rgba(250,204,21,0.35),0_0_0_1px_rgba(250,204,21,0.2)]'
-        : plan.earlyAccess
-          ? 'border-amber-500/30'
-          : 'border-white/10'
+        ? 'border-elec-yellow/45'
+        : 'border-white/[0.09] hover:border-white/[0.15]'
   );
 
   // Parse price into main + period halves for big display
   const priceMain = plan.pricingOnRequest ? plan.price : plan.price;
+  // Numeric price for the animated NumberFlow figure; null → plain text
+  // fallback (e.g. "Pricing on request").
+  const priceParsed = parseFloat(String(plan.price).replace(/[^0-9.]/g, ''));
+  const priceValue = Number.isFinite(priceParsed) ? priceParsed : null;
   const showBigPrice = !plan.pricingOnRequest;
 
   return (
     <div className={cardClasses}>
-      {/* Top accent bar on popular */}
-      {plan.popular && !isCurrentPlan && (
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-elec-yellow to-transparent" />
-      )}
-
-      <div className="p-6 sm:p-7 flex-1 flex flex-col">
-        {/* Badge row */}
-        <div className="flex items-center justify-between mb-5 min-h-[22px]">
-          <h3 className="text-xl font-bold tracking-tight text-white">{plan.name}</h3>
-          {isCurrentPlan ? (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/15 border border-green-500/30">
-              <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-green-400">
-                Your plan
-              </span>
-            </span>
-          ) : plan.popular ? (
-            <span className="px-2.5 py-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold uppercase tracking-wider">
-              Most popular
-            </span>
-          ) : plan.earlyAccess ? (
-            <span className="px-2.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/35 text-[10px] font-bold uppercase tracking-wider text-amber-400">
-              Early access
-            </span>
-          ) : null}
+      <div className="p-5 sm:p-7 flex-1 flex flex-col">
+        {/* Status eyebrow on its own line, then the plan name as hero —
+            never sharing a row (labels were colliding with long names). */}
+        <div className="mb-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] min-h-[16px] mb-1.5">
+            {isCurrentPlan ? (
+              <span className="text-green-400">Your plan</span>
+            ) : plan.popular ? (
+              <span className="text-elec-yellow">Recommended</span>
+            ) : plan.earlyAccess ? (
+              <span className="text-amber-400">Early access</span>
+            ) : (
+              '\u00A0'
+            )}
+          </p>
+          <h3 className="text-[26px] font-semibold tracking-[-0.02em] text-white leading-tight">
+            {plan.name}
+          </h3>
         </div>
 
         {/* Price — fixed height so all cards align regardless of whether
             the tier shows a numeric price or "Pricing on request" */}
-        <div className="mb-2 flex items-end min-h-[3rem] sm:min-h-[3.5rem]">
+        <div className="mb-2 flex items-end min-h-[2.25rem]">
           {showBigPrice ? (
-            <div className="flex items-baseline gap-1">
-              <span className="text-4xl sm:text-[40px] font-extrabold tracking-tight text-white leading-none">
-                {priceMain}
+            <div className="flex items-baseline gap-1.5">
+              <span className="price-figure text-[22px] font-semibold tracking-[-0.01em] text-white leading-none">
+                {priceValue !== null ? (
+                  <NumberFlow
+                    value={priceValue}
+                    format={{ style: 'currency', currency: 'GBP' }}
+                    locales="en-GB"
+                  />
+                ) : (
+                  priceMain
+                )}
               </span>
-              {plan.period && <span className="text-sm text-white font-medium">{plan.period}</span>}
+              {plan.period && (
+                <span className="text-[13px] text-white/65 font-normal">{plan.period}</span>
+              )}
             </div>
           ) : (
-            <div className="text-2xl sm:text-[28px] font-extrabold tracking-tight text-white leading-tight">
+            <div className="text-[22px] font-semibold tracking-[-0.01em] text-white/90 leading-tight">
               {plan.price}
             </div>
           )}
         </div>
 
         {/* Savings line — reserve a constant row even when blank */}
-        <p className="text-xs font-semibold text-green-400 mb-4 min-h-[1rem]">
+        <p className="text-[12px] text-green-400/90 mb-4 min-h-[1rem]">
           {plan.savings ?? '\u00A0'}
         </p>
 
         {/* Description — fixed height so CTA aligns across cards */}
-        <p className="text-sm text-white leading-relaxed mb-6 min-h-[3.25rem] sm:min-h-[3.5rem]">
+        <p className="text-[14px] text-white/75 leading-relaxed mb-6 min-h-[3.25rem] sm:min-h-[3.5rem]">
           {plan.description}
         </p>
 
@@ -1142,14 +1157,14 @@ const PlanCard = ({
           {isCurrentPlan ? (
             <Button
               disabled
-              className="w-full h-12 text-sm font-semibold rounded-xl bg-green-500/10 text-green-400 border border-green-500/30 cursor-default shadow-none hover:bg-green-500/10"
+              className="w-full h-11 text-sm font-medium rounded-lg bg-transparent text-green-400 border border-green-500/30 cursor-default shadow-none hover:bg-transparent"
             >
               Current plan
             </Button>
           ) : plan.pricingOnRequest ? (
             <Button
               onClick={() => onCollegeContact(plan.contactEmail || 'founder@elec-mate.com')}
-              className="w-full h-12 text-sm font-bold rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation shadow-[0_8px_24px_-8px_rgba(250,204,21,0.5)]"
+              className="w-full h-11 text-sm font-medium rounded-lg bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] active:scale-[0.99] touch-manipulation shadow-none"
             >
               {plan.ctaLabel || 'Get in touch'}
             </Button>
@@ -1158,10 +1173,10 @@ const PlanCard = ({
               onClick={() => onJoinWaitlist(waitlistKey)}
               disabled={joined || joining}
               className={cn(
-                'w-full h-12 text-sm font-bold rounded-xl active:scale-[0.98] touch-manipulation transition-all',
+                'w-full h-11 text-sm font-medium rounded-lg active:scale-[0.99] touch-manipulation transition-colors shadow-none',
                 joined
-                  ? 'bg-amber-500/10 text-amber-300 border border-amber-500/35 cursor-default hover:bg-amber-500/10'
-                  : 'bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-white shadow-[0_8px_24px_-8px_rgba(245,158,11,0.5)]'
+                  ? 'bg-transparent text-amber-300 border border-amber-500/35 cursor-default hover:bg-transparent'
+                  : 'bg-white/[0.06] text-amber-300 border border-amber-500/35 hover:bg-amber-500/10'
               )}
             >
               {joining ? (
@@ -1179,10 +1194,10 @@ const PlanCard = ({
               }
               disabled={isLoading}
               className={cn(
-                'w-full h-12 text-sm font-bold rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black active:scale-[0.98] touch-manipulation transition-all',
+                'w-full h-11 text-sm font-semibold rounded-lg active:scale-[0.99] touch-manipulation transition-colors shadow-none',
                 plan.popular
-                  ? 'shadow-[0_10px_28px_-8px_rgba(250,204,21,0.7)]'
-                  : 'shadow-[0_8px_24px_-8px_rgba(250,204,21,0.45)]'
+                  ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-black'
+                  : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1]'
               )}
             >
               {isLoading ? (
@@ -1197,43 +1212,50 @@ const PlanCard = ({
         </div>
 
         {/* Inheritance hint */}
-        {plan.inheritsFrom && (
-          <p className="text-xs font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="h-px flex-1 bg-white/10" />
-            Everything in {plan.inheritsFrom}, plus
-            <span className="h-px flex-1 bg-white/10" />
-          </p>
-        )}
-        {!plan.inheritsFrom && (
-          <p className="text-xs font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="h-px flex-1 bg-white/10" />
-            What's included
-            <span className="h-px flex-1 bg-white/10" />
-          </p>
-        )}
+        <button
+          type="button"
+          onClick={() => setFeaturesOpen((o) => !o)}
+          className="w-full border-t border-white/[0.06] pt-4 mb-3 flex items-center justify-between gap-2 touch-manipulation text-left sm:pointer-events-none"
+          aria-expanded={featuresOpen}
+        >
+          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/60">
+            {plan.inheritsFrom ? `Everything in ${plan.inheritsFrom}, plus` : "What's included"}
+          </span>
+          <span className="flex items-center gap-1.5 sm:hidden">
+            <span className="text-[11px] font-medium text-white/45 tabular-nums">{featureCount}</span>
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/45 transition-transform duration-200',
+                featuresOpen && 'rotate-180'
+              )}
+            />
+          </span>
+        </button>
 
-        {/* Feature groups */}
-        <div className="space-y-5 flex-1">
+        {/* Feature groups — collapsed on mobile until toggled; always open sm+ */}
+        <div className={cn('space-y-5 flex-1', featuresOpen ? 'block' : 'hidden', 'sm:block')}>
           {plan.featureGroups && plan.featureGroups.length > 0 ? (
             plan.featureGroups.map((group, gi) => (
               <div key={gi} className="space-y-2">
-                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/60">
                   {group.heading}
                 </p>
-                <ul className="space-y-1.5">
+                <ul className="space-y-2">
                   {group.items.map((item, ii) => (
-                    <li key={ii} className="text-[13px] text-white leading-relaxed">
-                      {item}
+                    <li key={ii} className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-relaxed">
+                      <Check className="h-3.5 w-3.5 text-white/55 shrink-0 mt-0.5" strokeWidth={2.5} />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             ))
           ) : (
-            <ul className="space-y-1.5">
+            <ul className="space-y-2">
               {plan.features.map((item, i) => (
-                <li key={i} className="text-[13px] text-white leading-relaxed">
-                  {item}
+                <li key={i} className="flex items-start gap-2.5 text-[13.5px] text-white/85 leading-relaxed">
+                  <Check className="h-3.5 w-3.5 text-white/55 shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>

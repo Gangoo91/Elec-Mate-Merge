@@ -23,6 +23,19 @@ export interface ApprenticeProgressRow {
   epaStatus: string | null;
   lastReviewDate: string | null;
   reviewOverdue: boolean;
+  // Extended college record — every field is nullable and only rendered
+  // when the college has actually recorded it.
+  courseLevel: string | null;
+  awardingBody: string | null;
+  startDate: string | null;
+  expectedEndDate: string | null;
+  riskLevel: string | null;
+  /** Total OTJ hours logged (verified + awaiting verification); 0 = unknown/none. */
+  otjTotalHours: number;
+  epaGatewayDate: string | null;
+  epaDate: string | null;
+  nextReviewDate: string | null;
+  tutorName: string | null;
 }
 
 export function useApprenticeProgress() {
@@ -50,6 +63,16 @@ export function useApprenticeProgress() {
         epaStatus: (r.epa_status as string) ?? null,
         lastReviewDate: (r.last_review_date as string) ?? null,
         reviewOverdue: Boolean(r.review_overdue),
+        courseLevel: (r.course_level as string) ?? null,
+        awardingBody: (r.awarding_body as string) ?? null,
+        startDate: (r.start_date as string) ?? null,
+        expectedEndDate: (r.expected_end_date as string) ?? null,
+        riskLevel: (r.risk_level as string) ?? null,
+        otjTotalHours: Number(r.otj_total_hours ?? 0),
+        epaGatewayDate: (r.epa_gateway_date as string) ?? null,
+        epaDate: (r.epa_date as string) ?? null,
+        nextReviewDate: (r.next_review_date as string) ?? null,
+        tutorName: (r.tutor_name as string) ?? null,
       }));
     },
     staleTime: 60_000,

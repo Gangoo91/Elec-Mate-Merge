@@ -1,0 +1,18 @@
+-- AUDIT FIXES 2026-07-20 (applied via MCP: audit_fixes_batch1, audit_fixes_batch2_invoice_truth + brief update).
+-- Authoritative bodies live in Supabase migration history. Summary of what is live:
+--  SECURITY: create_project_from_quote EXECUTE revoked from public/anon/authenticated (was anon-callable
+--    SECURITY DEFINER write primitive — P0).
+--  INVOICE TRUTH (P0): get_jobs_overview / get_job_financials(v4) / queue_daily_job_nudges derive invoice
+--    counts+sums from quotes(invoice_raised=true, status=invoice_status) UNION ALL invoices table —
+--    the app's real invoices are quotes rows; the invoices table is mostly deposits.
+--  get_jobs_overview: quote_count now excludes invoice_raised quotes (matches detail page).
+--  Morning brief: won_unbooked requires status='open'; booked = greatest(quote slot, linked calendar event);
+--    today_jobs excludes completed; renewal radar unchanged (next_inspection_due, −30d..+60d).
+--  STOCK CONSERVATION: job_materials.stock_taken records the actual decrement; mark_job_material_got is
+--    idempotent (early-return when already got/fitted), ledgers only what left stock; mark_job_material_needed
+--    restocks exactly stock_taken and clears it (no drift across tick/untick cycles).
+--  job_materials.invoice_id + partial index (composer marks billed materials; double-billing prevented).
+--  job_milestones: unique (project_id, stage_key) + on-conflict-do-nothing seeding (concurrency-safe).
+--  create_project_from_quote: date parse exception-guarded; handle_quote_acceptance additionally guards
+--    coalesce(invoice_raised,false)=false.
+--  get_job_financials v4 numeric guards: quantity AND unitPrice must match ^[0-9]+(\.[0-9]+)?$.

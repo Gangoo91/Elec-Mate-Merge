@@ -4,9 +4,8 @@ import { Drawer, DrawerContent, DrawerTitle } from '@/components/ui/drawer';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useStorageUrl } from '@/utils/storageUrls';
 // View-model the Team section maps real employer_employees rows into
 export type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 export interface TeamMemberView {
@@ -29,11 +28,14 @@ export interface TeamMemberView {
   currentJobLocation?: string;
 }
 import { useEmployeeAssignments, useDeleteJobAssignment } from '@/hooks/useJobAssignments';
+import { useUpdateEmployee } from '@/hooks/useEmployees';
 import { useCertificationsByEmployee } from '@/hooks/useCertifications';
 import { useEmployeeTimesheets } from '@/hooks/useTimesheets';
 import { useMyExpenses } from '@/hooks/useExpenses';
-import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
+import { useTeamLeaveRequests, useTeamAllowances } from '@/hooks/useTeamLeave';
+import { useCompanyTools } from '@/hooks/useCompanyTools';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
+import { checkOutWorker } from '@/services/locationService';
 import { differenceInDays, parseISO, format } from 'date-fns';
 import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -49,16 +51,17 @@ import {
   Clock,
   ChevronRight,
   UserCog,
-  Star,
   AlertTriangle,
   X,
   PoundSterling,
   AlertCircle,
-  StickyNote,
   Plus,
-  Zap,
   IdCard,
   ExternalLink,
+  Archive,
+  ArchiveRestore,
+  Loader2,
+  CheckCircle2,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -77,13 +80,6 @@ const availabilityColors: Record<AvailabilityStatus, string> = {
   'On Job': 'bg-blue-500',
   'On Leave': 'bg-amber-500',
   Unavailable: 'bg-white/20',
-};
-
-const noteTypeColors: Record<string, string> = {
-  General: 'border-white/20',
-  Performance: 'border-blue-500',
-  Incident: 'border-amber-500',
-  Positive: 'border-emerald-500',
 };
 
 interface TeamMemberSheetProps {
@@ -114,9 +110,14 @@ export function TeamMemberSheet({
   const { expenses: rawExpenses = [] } = useMyExpenses(employee?.id);
   const { data: allLeave = [] } = useTeamLeaveRequests();
   const { data: workerLocations = [] } = useWorkerLocations();
+  // Offboarding pre-flight sources — tools signed out + holiday balance
+  const { data: companyTools = [] } = useCompanyTools();
+  const { data: teamAllowances = [] } = useTeamAllowances();
   const [activeTab, setActiveTab] = useState('details');
   const [createElecIdOpen, setCreateElecIdOpen] = useState(false);
   const [resending, setResending] = useState(false);
+  const [confirmArchive, setConfirmArchive] = useState(false);
+  const updateEmployee = useUpdateEmployee();
 
   const { data: elecIdProfile, isLoading: elecIdLoading } = useElecIdProfileByEmployee(
     employee?.id || ''
@@ -232,15 +233,118 @@ export function TeamMemberSheet({
     }
   };
 
-  const handleCall = () => (window.location.href = `tel:${employee.phone}`);
+  const handleCall = () => {
+    if (employee.phone) window.location.href = `tel:${employee.phone}`;
+  };
   const handleEmergencyCall = () => {
     if (employee.emergencyContact) {
       window.location.href = `tel:${employee.emergencyContact.phone}`;
     }
   };
 
-  // Shared content for both Sheet and Drawer
-  const ProfileContent = () => (
+  // Leaver / rejoiner flow — archive keeps every timesheet, cert and Elec-ID
+  // (hard deletes are FK-RESTRICTed at the DB) and releases the paid seat via
+  // the seat resync inside updateEmployee. Restore reverses it.
+  const isArchived = (employee.status ?? '').toLowerCase() === 'archived';
+
+  // Offboarding pre-flight — everything still hanging off this person, checked
+  // against live data before the archive is confirmed. NON-BLOCKING: it informs
+  // the decision, it never gates it.
+  const unapprovedTimesheets = rawTimesheets.filter((t) => {
+    const s = (t.status || '').toLowerCase();
+    return s !== 'approved' && s !== 'rejected';
+  }).length;
+  const assignedTools = companyTools.filter(
+    (t) => t.assigned_to_employee_id === employee.id
+  ).length;
+  const holidayAllowance = teamAllowances.find((a) => a.employeeId === employee.id);
+  const remainingHoliday = holidayAllowance
+    ? Math.max(
+        0,
+        holidayAllowance.totalDays + holidayAllowance.carriedOver - holidayAllowance.usedDays
+      )
+    : null;
+  const offboardingChecklist: Array<{
+    key: string;
+    label: string;
+    count: number;
+    onGo?: () => void;
+  }> = [
+    {
+      key: 'timesheets',
+      label: 'Timesheets awaiting approval',
+      count: unapprovedTimesheets,
+      onGo: () => {
+        onOpenChange(false);
+        navigate('/employer?section=timesheets');
+      },
+    },
+    {
+      key: 'jobs',
+      label: 'Active job assignments',
+      count: employeeAssignments.length,
+      onGo: () => {
+        setConfirmArchive(false);
+        setActiveTab('jobs');
+      },
+    },
+    {
+      key: 'tools',
+      label: 'Company tools signed out',
+      count: assignedTools,
+      onGo: () => {
+        onOpenChange(false);
+        navigate('/employer?section=procurement');
+      },
+    },
+    {
+      key: 'leave',
+      label: 'Leave requests pending',
+      count: pendingLeave,
+      onGo: () => {
+        onOpenChange(false);
+        navigate('/employer?section=timesheets');
+      },
+    },
+  ];
+  const outstandingCount = offboardingChecklist.filter((i) => i.count > 0).length;
+  const allClear = outstandingCount === 0;
+  const handleArchiveToggle = async () => {
+    try {
+      // Close any open shift first — a leaver must not stay "On Site" on the
+      // tracking map for a fortnight after they've gone.
+      if (!isArchived && presence && !presence.checked_out_at) {
+        try {
+          await checkOutWorker(presence.id);
+        } catch {
+          // Best-effort: the stale-demotion rule catches it if this fails
+        }
+      }
+      await updateEmployee.mutateAsync({
+        id: employee.id,
+        updates: { status: isArchived ? 'Active' : 'Archived' },
+      });
+      toast({
+        title: isArchived ? 'Restored to team' : 'Archived',
+        description: isArchived
+          ? `${employee.name} is back on the active roster.`
+          : `${employee.name} moved to Archived — history kept, seat released.`,
+      });
+      setConfirmArchive(false);
+      onOpenChange(false);
+    } catch {
+      toast({
+        title: isArchived ? 'Could not restore' : 'Could not archive',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  // Shared content for both Sheet and Drawer. Plain JSX, NOT a nested
+  // component — an inline component gets a new identity every render, which
+  // remounts the whole subtree (scroll jumps to top on each state change).
+  const profileContent = (
     <>
       {/* Header with large photo - fixed height, no shrink */}
       <div className="px-4 md:px-6 pt-4 pb-2 flex-shrink-0">
@@ -424,38 +528,55 @@ export function TeamMemberSheet({
                 </div>
               )}
 
-              {/* Contact */}
+              {/* Contact — only render channels that exist; a tappable row
+                  dialling tel:undefined is worse than an honest gap */}
               <div className="space-y-2">
                 <p className="text-[11px] uppercase tracking-wider text-white/40 font-medium px-0.5">
                   Contact
                 </p>
-                <button
-                  onClick={handleCall}
-                  className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-                >
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                    <Phone className="h-5 w-5 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-white">{employee.phone}</p>
-                    <p className="text-xs text-white/50">Mobile</p>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-white" />
-                </button>
+                {employee.phone ? (
+                  <button
+                    onClick={handleCall}
+                    className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                      <Phone className="h-5 w-5 text-emerald-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-white">{employee.phone}</p>
+                      <p className="text-xs text-white/50">Mobile</p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-white" />
+                  </button>
+                ) : null}
 
-                <button
-                  onClick={() => (window.location.href = `mailto:${employee.email}`)}
-                  className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-                >
-                  <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                    <Mail className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white truncate">{employee.email}</p>
-                    <p className="text-xs text-white/50">Email</p>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-white" />
-                </button>
+                {employee.email ? (
+                  <button
+                    onClick={() => (window.location.href = `mailto:${employee.email}`)}
+                    className="flex items-center gap-3 w-full text-left p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                      <Mail className="h-5 w-5 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-white truncate">{employee.email}</p>
+                      <p className="text-xs text-white/50">Email</p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-white" />
+                  </button>
+                ) : null}
+
+                {!employee.phone && !employee.email && (
+                  <button
+                    onClick={onEdit}
+                    className="w-full p-3 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors text-left touch-manipulation"
+                  >
+                    <p className="text-[13px] font-medium text-white">No contact details on file</p>
+                    <p className="text-[11.5px] text-white/50">
+                      Add a phone or email so you can reach {employee.name.split(' ')[0]} from site.
+                    </p>
+                  </button>
+                )}
               </div>
 
               {/* Emergency Contact */}
@@ -813,11 +934,130 @@ export function TeamMemberSheet({
       </Tabs>
 
       {/* Footer actions - fixed at bottom */}
-      <div className="p-4 md:p-6 border-t border-white/[0.06] flex gap-2 flex-shrink-0">
-        <SecondaryButton fullWidth onClick={onEdit}>
-          <UserCog className="h-4 w-4 mr-2" />
-          Edit Profile
-        </SecondaryButton>
+      <div className="p-4 md:p-6 border-t border-white/[0.06] flex-shrink-0">
+        {confirmArchive ? (
+          <div className="space-y-2.5 max-h-[55vh] overflow-y-auto">
+            {/* Pre-flight checklist — live counts of everything still hanging
+                off this person. Informative, never blocking. */}
+            <p className="text-[13px] font-semibold text-white">
+              Before {employee.name.split(' ')[0]} leaves
+            </p>
+            {allClear ? (
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-3.5 py-3 flex items-center gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                <p className="text-[12.5px] text-emerald-200/90">
+                  Nothing outstanding — timesheets, jobs, tools and leave are all clear.
+                </p>
+              </div>
+            ) : (
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_11%)] divide-y divide-white/[0.06]">
+                {offboardingChecklist.map((item) =>
+                  item.count > 0 ? (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onClick={item.onGo}
+                      className="w-full min-h-[44px] px-3.5 py-2.5 flex items-center gap-2.5 text-left touch-manipulation hover:bg-white/[0.03] transition-colors"
+                    >
+                      <span className="h-5 min-w-5 px-1 rounded-full bg-amber-500/15 text-amber-400 text-[11px] font-bold flex items-center justify-center flex-shrink-0">
+                        {item.count}
+                      </span>
+                      <span className="flex-1 text-[12.5px] text-white">{item.label}</span>
+                      <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                    </button>
+                  ) : (
+                    <div
+                      key={item.key}
+                      className="min-h-[44px] px-3.5 py-2.5 flex items-center gap-2.5"
+                    >
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                      <span className="flex-1 text-[12.5px] text-white/55">{item.label}</span>
+                      <span className="text-[11px] text-emerald-400/80 font-medium">Clear</span>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+            {/* Holiday balance — display only, for the final pay calculation */}
+            {remainingHoliday !== null && remainingHoliday > 0 && (
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_11%)] px-3.5 py-2.5 flex items-center gap-2.5">
+                <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <p className="flex-1 text-[12.5px] text-white/70">
+                  <span className="font-semibold text-white">
+                    {remainingHoliday} day{remainingHoliday === 1 ? '' : 's'}
+                  </span>{' '}
+                  unused holiday — settle in final pay.
+                </p>
+              </div>
+            )}
+            <p className="text-[12.5px] text-white/70 leading-relaxed">
+              {allClear ? (
+                <>
+                  Archive <span className="font-semibold text-white">{employee.name}</span>?{' '}
+                </>
+              ) : (
+                <>
+                  {outstandingCount} item{outstandingCount === 1 ? '' : 's'} outstanding —
+                  archive <span className="font-semibold text-white">{employee.name}</span>{' '}
+                  anyway?{' '}
+                </>
+              )}
+              Their timesheets, certs and Elec-ID are kept, their worker access is switched off
+              and their seat is released. You can restore them any time from the Archived tab.
+            </p>
+            <div className="flex gap-2">
+              <SecondaryButton
+                fullWidth
+                onClick={() => setConfirmArchive(false)}
+                disabled={updateEmployee.isPending}
+              >
+                Keep on team
+              </SecondaryButton>
+              <PrimaryButton
+                fullWidth
+                onClick={handleArchiveToggle}
+                disabled={updateEmployee.isPending}
+              >
+                {updateEmployee.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Archive className="h-4 w-4 mr-2" />
+                )}
+                {allClear ? 'Archive' : 'Archive anyway'}
+              </PrimaryButton>
+            </div>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <SecondaryButton fullWidth onClick={onEdit}>
+              <UserCog className="h-4 w-4 mr-2" />
+              Edit Profile
+            </SecondaryButton>
+            {isArchived ? (
+              <PrimaryButton
+                fullWidth
+                onClick={handleArchiveToggle}
+                disabled={updateEmployee.isPending}
+              >
+                {updateEmployee.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <ArchiveRestore className="h-4 w-4 mr-2" />
+                )}
+                Restore to team
+              </PrimaryButton>
+            ) : (
+              <SecondaryButton
+                fullWidth
+                onClick={() => setConfirmArchive(true)}
+                className="text-red-300 hover:text-red-200"
+              >
+                <Archive className="h-4 w-4 mr-2" />
+                Archive
+              </SecondaryButton>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
@@ -829,7 +1069,7 @@ export function TeamMemberSheet({
         <Drawer open={open} onOpenChange={onOpenChange}>
           <DrawerContent className="max-h-[92vh] flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
             <DrawerTitle className="sr-only">{employee.name} — team member</DrawerTitle>
-            <ProfileContent />
+            {profileContent}
           </DrawerContent>
         </Drawer>
         <CreateElecIDForEmployeeDialog
@@ -851,7 +1091,7 @@ export function TeamMemberSheet({
           className="w-full sm:max-w-lg p-0 flex flex-col bg-[hsl(0_0%_8%)] border-l border-white/[0.06]"
         >
           <SheetTitle className="sr-only">{employee.name} — team member</SheetTitle>
-          <ProfileContent />
+          {profileContent}
         </SheetContent>
       </Sheet>
       <CreateElecIDForEmployeeDialog

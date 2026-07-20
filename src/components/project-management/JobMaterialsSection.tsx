@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Package,
+  Mail,
   ChevronDown,
   ChevronUp,
   Plus,
@@ -21,6 +22,8 @@ const gbp = (n: number) =>
 
 interface JobMaterialsSectionProps {
   projectId: string;
+  projectTitle?: string;
+  projectLocation?: string | null;
   open: boolean;
   onToggle: () => void;
   /** Number of quotes linked to the job — shows the import shortcut when > 0. */
@@ -34,6 +37,8 @@ interface JobMaterialsSectionProps {
  */
 export const JobMaterialsSection = ({
   projectId,
+  projectTitle,
+  projectLocation,
   open,
   onToggle,
   quoteCount,
@@ -81,6 +86,7 @@ export const JobMaterialsSection = ({
   const openStockSearch = async () => {
     setStockOpen((v) => !v);
     if (!stockOpen) {
+      setNewQty('1'); // a leftover manual qty must not silently size stock picks (audit P2)
       setStockLoading(true);
       setStockResults(await searchStock(''));
       setStockLoading(false);
@@ -95,16 +101,43 @@ export const JobMaterialsSection = ({
   };
 
   const addStockItem = async (item: StockItem) => {
+    // Honour the qty field; anything beyond genuine availability goes on as "to order"
+    const qty = Math.max(1, Number(newQty) || 1);
+    const short = qty > item.available;
     await addMaterial({
       name: item.name,
-      quantity: 1,
+      quantity: qty,
       unit: item.unit || undefined,
       unitPrice: item.unit_cost ?? undefined,
       supplier: item.supplier || undefined,
       inventoryItemId: item.id,
+      status: short ? 'ordered' : 'needed',
     });
     setStockOpen(false);
     setStockQuery('');
+    setNewQty('1');
+  };
+
+  // D3 (ELE-1363): fire the outstanding list at a wholesaler as an RFQ
+  const outstanding = materials.filter((m) => m.status === 'needed' || m.status === 'ordered');
+  const handleRfq = () => {
+    if (outstanding.length === 0) return;
+    const lines = outstanding.map(
+      (m) => `• ${Number(m.quantity)}${m.unit ? ` ${m.unit}` : '×'} — ${m.name}`
+    );
+    const subject = `Request for Quotation${projectTitle ? ` — ${projectTitle}` : ''}`;
+    const body = [
+      subject,
+      projectLocation ? `Site: ${projectLocation}` : null,
+      '',
+      'Please price the following materials:',
+      ...lines,
+      '',
+      'Sent from Elec-Mate',
+    ]
+      .filter((l) => l !== null)
+      .join('\n');
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const ticked = (s: string) => s === 'got' || s === 'fitted';
@@ -186,7 +219,7 @@ export const JobMaterialsSection = ({
                         <p className="text-[11px] text-white/45">
                           {Number(m.quantity)}
                           {m.unit ? ` ${m.unit}` : '×'}
-                          {m.inventory_item_id ? ' · from stock' : ''}
+                          {m.status === 'ordered' ? ' · to order' : m.inventory_item_id ? ' · from stock' : ''}
                           {m.source === 'quote' ? ' · quoted' : ''}
                         </p>
                       </div>
@@ -265,6 +298,16 @@ export const JobMaterialsSection = ({
                   <Boxes className="h-3.5 w-3.5" />
                   From my stock
                 </button>
+                {outstanding.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleRfq}
+                    className="flex-1 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[12px] font-medium text-white/75 flex items-center justify-center gap-2 touch-manipulation active:bg-white/[0.06]"
+                  >
+                    <Mail className="h-3.5 w-3.5" />
+                    Price it up
+                  </button>
+                )}
               </div>
 
               {/* Stock picker */}
@@ -295,8 +338,20 @@ export const JobMaterialsSection = ({
                       >
                         <span className="flex-1 min-w-0">
                           <span className="block text-[13px] text-white truncate">{item.name}</span>
-                          <span className="block text-[11px] text-white/45">
-                            {Number(item.quantity)} in stock
+                          <span
+                            className={cn(
+                              'block text-[11px]',
+                              item.available <= 0 ? 'text-red-300' : 'text-white/45'
+                            )}
+                          >
+                            {item.available} available
+                            {item.committed_elsewhere > 0
+                              ? ` · ${item.committed_elsewhere} spoken for${
+                                  item.committed_jobs?.length
+                                    ? ` (${item.committed_jobs.slice(0, 2).join(', ')})`
+                                    : ''
+                                }`
+                              : ''}
                             {item.unit_cost ? ` · ${gbp(Number(item.unit_cost))} each` : ''}
                           </span>
                         </span>

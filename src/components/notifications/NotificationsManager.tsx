@@ -20,7 +20,6 @@ import { useTaskAlerts } from '@/hooks/useTaskAlerts';
 import { useSafetyEquipmentAlerts } from '@/hooks/useSafetyEquipmentAlerts';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, ChevronDown } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
@@ -38,44 +37,79 @@ const CROSS_APP_ROUTES: Record<string, string> = {
   'safety-equipment': '/electrician-tools/site-safety',
 };
 
-// ── KPI Card (HubCard pattern) ──────────────────────────────────────
-interface KPICardProps {
-  label: string;
-  value: string;
-  highlight: 'green' | 'amber' | 'red' | 'neutral';
+// ── Compliance status ───────────────────────────────────────────────
+// One plain-English card that answers the only question that matters —
+// "am I compliant right now?" — instead of a four-metric dashboard grid.
+interface ComplianceStatusProps {
+  pending: number;
+  overdue: number;
+  submitted: number;
+  nextDays: number | null;
   isLoading: boolean;
 }
 
-// Urgency accent dot — the one colour signal; numbers stay mono.
-const highlightDot: Record<KPICardProps['highlight'], string> = {
-  green: 'bg-emerald-400',
-  amber: 'bg-amber-400',
-  red: 'bg-red-400',
-  neutral: 'bg-white/25',
-};
+function ComplianceStatus({ pending, overdue, submitted, nextDays, isLoading }: ComplianceStatusProps) {
+  if (isLoading) {
+    return (
+      <div className="rounded-2xl border border-white/[0.09] bg-white/[0.02] p-5">
+        <Skeleton className="h-3 w-24 mb-3" />
+        <Skeleton className="h-7 w-40 mb-2.5" />
+        <Skeleton className="h-4 w-56" />
+      </div>
+    );
+  }
 
-// Flat seam-grid cell — sits inside the framed KPI grid below.
-function KPICard({ label, value, highlight, isLoading }: KPICardProps) {
+  const state =
+    overdue > 0
+      ? {
+          dot: 'bg-red-400',
+          border: 'border-red-400/25',
+          tint: 'bg-red-400/[0.05]',
+          word: 'Action needed',
+          wordColor: 'text-red-300',
+          headline: `${overdue} overdue`,
+          sub: 'Past the 30-day Building Regs deadline — submit to your scheme or Building Control now.',
+        }
+      : pending > 0
+        ? {
+            dot: 'bg-amber-400',
+            border: 'border-amber-400/25',
+            tint: 'bg-amber-400/[0.04]',
+            word: 'To submit',
+            wordColor: 'text-amber-300',
+            headline: `${pending} to notify`,
+            sub:
+              nextDays === null
+                ? 'Submit to your scheme or Building Control within 30 days of completion.'
+                : nextDays <= 0
+                  ? 'The next one is due today.'
+                  : `Next deadline in ${nextDays} day${nextDays === 1 ? '' : 's'}.`,
+          }
+        : {
+            dot: 'bg-emerald-400',
+            border: 'border-emerald-400/25',
+            tint: 'bg-emerald-400/[0.04]',
+            word: 'Up to date',
+            wordColor: 'text-emerald-300',
+            headline: 'All clear',
+            sub: 'No notifiable work waiting to be submitted.',
+          };
+
   return (
-    <div className="relative flex flex-col p-4 bg-[hsl(0_0%_11%)]">
-      {isLoading ? (
-        <>
-          <Skeleton className="h-3 w-16 mb-2.5" />
-          <Skeleton className="h-6 w-12" />
-        </>
-      ) : (
-        <>
-          <div className="flex items-center gap-1.5 min-w-0">
-            <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', highlightDot[highlight])} aria-hidden />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/45 truncate">
-              {label}
-            </span>
-          </div>
-          <span className="mt-2.5 text-[26px] font-semibold tracking-tight tabular-nums leading-none text-white">
-            {value}
+    <div className={cn('rounded-2xl border p-5', state.border, state.tint)}>
+      <div className="flex items-center gap-2">
+        <span className={cn('w-2 h-2 rounded-full shrink-0', state.dot)} aria-hidden />
+        <span className={cn('text-[12px] font-semibold tracking-tight', state.wordColor)}>{state.word}</span>
+        {submitted > 0 && (
+          <span className="ml-auto text-[11.5px] tabular-nums text-white/60">
+            {submitted} submitted
           </span>
-        </>
-      )}
+        )}
+      </div>
+      <p className="mt-2.5 text-[23px] sm:text-[25px] font-semibold tracking-tight leading-none text-white">
+        {state.headline}
+      </p>
+      <p className="mt-2.5 text-[13px] leading-relaxed text-white/80">{state.sub}</p>
     </div>
   );
 }
@@ -84,9 +118,9 @@ function KPICard({ label, value, highlight, isLoading }: KPICardProps) {
 function SectionHeading({ title, count }: { title: string; count?: number }) {
   return (
     <div className="flex items-end justify-between gap-3 px-0.5">
-      <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">{title}</h2>
+      <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/65">{title}</h2>
       {count !== undefined && count > 0 && (
-        <span className="text-[10.5px] text-white/30 tabular-nums">{count}</span>
+        <span className="text-[10.5px] text-white/75 tabular-nums">{count}</span>
       )}
     </div>
   );
@@ -198,52 +232,30 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
   if (partPOnly) {
     return (
       <>
-        {/* KPI Strip — editorial seam grid */}
+        {/* Compliance status — the one thing that matters, in plain English */}
         <motion.div variants={iv}>
-          <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-[1.5px] bg-white/[0.14] border border-white/[0.14] rounded-2xl overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-            <KPICard
-              label="Pending"
-              value={String(pendingCount)}
-              highlight={pendingCount > 0 ? 'amber' : 'neutral'}
-              isLoading={isLoading}
-            />
-            <KPICard
-              label="Overdue"
-              value={String(overdueCount)}
-              highlight={overdueCount > 0 ? 'red' : 'neutral'}
-              isLoading={isLoading}
-            />
-            <KPICard
-              label="Submitted"
-              value={String(submittedCount)}
-              highlight={submittedCount > 0 ? 'green' : 'neutral'}
-              isLoading={isLoading}
-            />
-            <KPICard
-              label="Next Deadline"
-              value={nextDeadlineDays !== null ? `${nextDeadlineDays}d` : '--'}
-              highlight={nextDeadlineDays !== null && nextDeadlineDays <= 7 ? 'red' : nextDeadlineDays !== null && nextDeadlineDays <= 14 ? 'amber' : 'neutral'}
-              isLoading={isLoading}
-            />
-          </div>
+          <ComplianceStatus
+            pending={pendingCount}
+            overdue={overdueCount}
+            submitted={submittedCount}
+            nextDays={nextDeadlineDays}
+            isLoading={isLoading}
+          />
         </motion.div>
 
-        {/* YOUR SCHEME */}
+        {/* Scheme — one compact strip, portal a tap away */}
         {!compact && isRegistered !== null && (
-          <motion.section variants={iv} className="space-y-3">
-            <SectionHeading title="Your Scheme" />
+          <motion.div variants={iv}>
             {isRegistered ? (
               <RegisteredUserGuide showNiceic={showNiceic} showNapit={showNapit} />
             ) : (
               <NonRegisteredUserGuide onFindBuildingControl={() => setShowBuildingControlFinder(true)} />
             )}
-          </motion.section>
+          </motion.div>
         )}
 
-        {/* NOTIFICATIONS */}
-        <motion.section variants={iv} className="space-y-3">
-          <SectionHeading title="Notifications" />
+        {/* The work — notifications lead the page, no shouty label needed */}
+        <motion.div variants={iv}>
           <NotificationsList
             notifications={notifications}
             onUpdate={updateNotification}
@@ -253,33 +265,28 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
             showNiceic={showNiceic}
             showNapit={showNapit}
           />
-        </motion.section>
+        </motion.div>
 
-        {/* RESOURCES */}
+        {/* Building Control guide — quiet reference at the foot */}
         {!compact && (
-          <motion.section variants={iv} className="space-y-3">
-            <SectionHeading title="Resources" />
+          <motion.div variants={iv}>
             <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_11%)] p-4 touch-manipulation transition-colors hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
+                <button className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4 touch-manipulation transition-colors hover:bg-white/[0.04] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
                   <div className="text-left">
-                    <p className="text-[15px] font-semibold tracking-tight text-white">Building Control Guide</p>
-                    <p className="text-[12px] text-white/55">What to submit</p>
+                    <p className="text-[14px] font-semibold tracking-tight text-white">Building Control guide</p>
+                    <p className="text-[12px] text-white/75">What to submit, and how</p>
                   </div>
                   <ChevronDown
-                    className={cn('h-5 w-5 text-white/40 transition-transform', isFormGuideOpen && 'rotate-180')}
+                    className={cn('h-5 w-5 text-white/60 transition-transform', isFormGuideOpen && 'rotate-180')}
                   />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-3">
-                <div className="card-surface rounded-2xl p-4">
-                  <ScrollArea className="h-[400px]">
-                    <BuildingControlFormGuide />
-                  </ScrollArea>
-                </div>
+                <BuildingControlFormGuide />
               </CollapsibleContent>
             </Collapsible>
-          </motion.section>
+          </motion.div>
         )}
 
         {/* Modals */}
@@ -389,19 +396,15 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
             <button className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_11%)] p-4 touch-manipulation transition-colors hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
               <div className="text-left">
                 <p className="text-[15px] font-semibold tracking-tight text-white">Building Control Guide</p>
-                <p className="text-[12px] text-white/55">What to submit</p>
+                <p className="text-[12px] text-white/80">What to submit</p>
               </div>
               <ChevronDown
-                className={cn('h-5 w-5 text-white/40 transition-transform', isFormGuideOpen && 'rotate-180')}
+                className={cn('h-5 w-5 text-white/60 transition-transform', isFormGuideOpen && 'rotate-180')}
               />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3">
-            <div className="card-surface rounded-2xl p-4">
-              <ScrollArea className="h-[400px]">
-                <BuildingControlFormGuide />
-              </ScrollArea>
-            </div>
+            <BuildingControlFormGuide />
           </CollapsibleContent>
         </Collapsible>
       )}

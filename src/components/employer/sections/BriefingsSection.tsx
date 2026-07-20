@@ -33,10 +33,17 @@ import {
   useDeleteBriefing,
   type Briefing,
   type BriefingType,
+  type RecurringPattern,
 } from '@/hooks/useBriefings';
+import {
+  useCreateNextOccurrence,
+  getPatternLabel,
+  RECURRING_PATTERNS,
+} from '@/hooks/useRecurringBriefings';
 import { useBriefingAttendees } from '@/hooks/useBriefingSignatures';
 import { type ToolboxTalkTemplate } from '@/hooks/useToolboxTalkTemplates';
 import { useEmployees } from '@/hooks/useEmployees';
+import { useJobs } from '@/hooks/useJobs';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -127,7 +134,8 @@ function statusLabelFor(briefing: Briefing): string {
   return status;
 }
 
-type FilterTab = 'all' | 'live' | 'draft' | 'completed';
+// 'draft' removed — BriefingStatus has no Draft state, so the tab could never match.
+type FilterTab = 'all' | 'live' | 'completed';
 
 export function BriefingsSection() {
   const { toast } = useToast();
@@ -149,14 +157,18 @@ export function BriefingsSection() {
   const [location, setLocation] = useState('');
   const [presenter, setPresenter] = useState('');
   const [content, setContent] = useState('');
+  const [jobId, setJobId] = useState('');
+  const [repeatPattern, setRepeatPattern] = useState<'none' | RecurringPattern>('none');
 
   const { data: briefings, isLoading, error, refetch } = useBriefings();
   const { data: stats } = useBriefingStats();
   const { data: employees } = useEmployees();
+  const { data: jobs = [] } = useJobs();
   const { companyProfile } = useCompanyProfile();
   const createBriefing = useCreateBriefing();
   const createFromTemplate = useCreateBriefingFromTemplate();
   const completeBriefing = useCompleteBriefing();
+  const createNextOccurrence = useCreateNextOccurrence();
   const deleteBriefing = useDeleteBriefing();
   const { data: attendees } = useBriefingAttendees(selectedBriefingId || undefined);
 
@@ -172,6 +184,7 @@ export function BriefingsSection() {
           briefing: b,
           leader,
           topic: b.title,
+          job_title: b.job?.title,
           signed_count: signed,
           attendee_count: total,
           time_ago: timeAgo(b.date ?? b.created_at),
@@ -185,13 +198,13 @@ export function BriefingsSection() {
     return enriched.filter(({ briefing }) => {
       if (filterTab === 'live' && briefing.status !== 'Scheduled') return false;
       if (filterTab === 'completed' && briefing.status !== 'Completed') return false;
-      if (filterTab === 'draft' && briefing.status !== 'Draft') return false;
       if (!q) return true;
       return (
         briefing.title.toLowerCase().includes(q) ||
         briefing.briefing_type?.toLowerCase().includes(q) ||
         briefing.location?.toLowerCase().includes(q) ||
-        briefing.presenter?.toLowerCase().includes(q)
+        briefing.presenter?.toLowerCase().includes(q) ||
+        briefing.job?.title?.toLowerCase().includes(q)
       );
     });
   }, [enriched, filterTab, searchQuery]);
@@ -238,15 +251,13 @@ export function BriefingsSection() {
         acc.all += 1;
         if (b.status === 'Scheduled') acc.live += 1;
         else if (b.status === 'Completed') acc.completed += 1;
-        else if (b.status === 'Draft') acc.draft += 1;
         return acc;
       },
-      { all: 0, live: 0, draft: 0, completed: 0 }
+      { all: 0, live: 0, completed: 0 }
     );
     return [
       { value: 'all', label: 'All', count: counts.all },
       { value: 'live', label: 'Live', count: counts.live },
-      { value: 'draft', label: 'Draft', count: counts.draft },
       { value: 'completed', label: 'Completed', count: counts.completed },
     ];
   }, [list]);
@@ -261,6 +272,9 @@ export function BriefingsSection() {
       location: location || undefined,
       presenter: presenter || undefined,
       content: content || undefined,
+      job_id: jobId || undefined,
+      recurring: repeatPattern !== 'none' || undefined,
+      recurring_pattern: repeatPattern !== 'none' ? repeatPattern : undefined,
       status: 'Scheduled',
     });
     setTitle('');
@@ -270,6 +284,8 @@ export function BriefingsSection() {
     setLocation('');
     setPresenter('');
     setContent('');
+    setJobId('');
+    setRepeatPattern('none');
     setShowNewBriefing(false);
   };
 
@@ -301,7 +317,9 @@ export function BriefingsSection() {
     try {
       await downloadBriefingPDF({
         briefing,
-        attendees: attendees || [],
+        // Prefer the attendees loaded with the briefing itself (viewer flow) so a
+        // fast tap can never export an empty attendance register.
+        attendees: briefing.attendees ?? attendees ?? [],
         companyName: companyProfile?.company_name || 'Your Company',
       });
       toast({
@@ -393,12 +411,16 @@ export function BriefingsSection() {
             meta={<Pill tone="amber">{filtered.length}</Pill>}
           />
           <ListBody>
-            {filtered.map(({ briefing, leader, topic, signed_count, attendee_count, time_ago }) => {
+            {filtered.map(({ briefing, leader, topic, job_title, signed_count, attendee_count, time_ago }) => {
               const tone = statusToneFor(briefing);
               const label = statusLabelFor(briefing);
               const subtitleParts = [
+                job_title,
                 leader,
                 attendee_count > 0 ? `${signed_count}/${attendee_count} signed` : null,
+                briefing.recurring && briefing.recurring_pattern
+                  ? `Repeats ${getPatternLabel(briefing.recurring_pattern).toLowerCase()}`
+                  : null,
                 time_ago,
               ].filter(Boolean);
               return (
@@ -493,6 +515,25 @@ export function BriefingsSection() {
                 </Field>
               </FormGrid>
 
+              <Field label="Repeat">
+                <Select
+                  value={repeatPattern}
+                  onValueChange={(v) => setRepeatPattern(v as 'none' | RecurringPattern)}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="none">Does not repeat</SelectItem>
+                    {RECURRING_PATTERNS.map((p) => (
+                      <SelectItem key={p.value} value={p.value}>
+                        {p.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+
               <Field label="Location">
                 <Input
                   placeholder="Site address or meeting point…"
@@ -511,6 +552,25 @@ export function BriefingsSection() {
                     {employees?.map((emp) => (
                       <SelectItem key={emp.id} value={emp.name}>
                         {emp.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+
+              <Field label="Link job (optional)">
+                <Select
+                  value={jobId || '__none__'}
+                  onValueChange={(v) => setJobId(v === '__none__' ? '' : v)}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Link to a job" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="__none__">No job</SelectItem>
+                    {jobs.map((job) => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.title}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -568,6 +628,11 @@ export function BriefingsSection() {
           onExportPdf={handleExportPdf}
           onComplete={async (briefing) => {
             await completeBriefing.mutateAsync(briefing.id);
+            // Keep the cadence going — a completed recurring talk immediately
+            // schedules its next occurrence.
+            if (briefing.recurring && briefing.recurring_pattern) {
+              await createNextOccurrence.mutateAsync(briefing.id);
+            }
           }}
           onDelete={(briefing) => setBriefingToDelete(briefing)}
         />

@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { JobSafetyPack } from '@/components/employer/JobSafetyPack';
 import { useIncidentStats } from '@/hooks/useIncidents';
 import { useRAMSDocuments } from '@/hooks/useRAMSDocuments';
 import { usePolicyStats } from '@/hooks/usePolicies';
@@ -16,18 +18,25 @@ interface SafetyHubProps {
 }
 
 export function SafetyHub({ onNavigate }: SafetyHubProps) {
+  // Job Safety Pack — the per-site "show the principal contractor" view
+  const [packOpen, setPackOpen] = useState(false);
   // Real stats — these were props that no caller ever passed (permanent zeros)
   const { data: incidentStats, isLoading: incidentsLoading } = useIncidentStats();
   const { data: ramsDocs = [], isLoading: ramsLoading } = useRAMSDocuments();
   const { data: policyStats, isLoading: policiesLoading } = usePolicyStats();
   const { data: trainingRecords = [], isLoading: trainingLoading } = useTrainingRecords();
   const openIncidentsCount = incidentStats?.open ?? 0;
-  // 'generated' = AI-produced, not yet approved — still awaiting sign-off
+  // Awaiting sign-off = submitted + AI 'generated'. Drafts are WIP, not pending —
+  // counting them made this stat useless for anyone with a big draft pile.
   const pendingRamsCount = ramsDocs.filter((d) =>
-    ['draft', 'submitted', 'generated'].includes(d.status)
+    ['submitted', 'generated'].includes(d.status)
   ).length;
   const policiesCount = policyStats?.total ?? 0;
   const trainingCount = trainingRecords.length;
+
+  if (packOpen) {
+    return <JobSafetyPack onNavigate={onNavigate} onBack={() => setPackOpen(false)} />;
+  }
 
   if (incidentsLoading || ramsLoading || policiesLoading || trainingLoading) {
     return (
@@ -75,6 +84,21 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
         },
       ]}
     >
+      <section className="space-y-5">
+        <SectionHeader eyebrow="For the principal contractor" title="Prove a site is ready" />
+        <HubGrid columns={1}>
+          <HubCard
+            eyebrow="One screen per site"
+            title="Job Safety Pack"
+            description="Crew competence, RAMS, briefing sign-offs and compliance for one job — everything a principal contractor asks for before your crew starts, with a branded PDF summary."
+            tone="yellow"
+            onClick={() => setPackOpen(true)}
+            meta="Live records · PDF export"
+            cta="Build pack"
+          />
+        </HubGrid>
+      </section>
+
       <section className="space-y-5">
         <SectionHeader eyebrow="Stay compliant" title="Keep everyone safe" />
         <HubGrid columns={2}>

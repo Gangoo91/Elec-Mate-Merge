@@ -31,6 +31,9 @@ const InvoiceBuilderCreate = () => {
     jobDetails?: { title: string; description: string; location: string };
   } | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
+  const [composedSessionIds, setComposedSessionIds] = useState<string[]>([]);
+  const [composedItems, setComposedItems] = useState<any[]>([]);
+  const [composedMaterialIds, setComposedMaterialIds] = useState<string[]>([]);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
   // Read projectId and timeSessionId from URL
@@ -67,13 +70,72 @@ const InvoiceBuilderCreate = () => {
     if (projectId && !quoteSessionId && !certificateSessionId) {
       (async () => {
         try {
-          const { data: project } = await supabase
-            .from('spark_projects')
-            .select(
-              'title, description, location, customer_id, customers(name, email, phone, address)'
-            )
-            .eq('id', projectId)
-            .single();
+          const [{ data: project }, { data: sessions }, { data: gotMaterials }] =
+            await Promise.all([
+              supabase
+                .from('spark_projects')
+                .select(
+                  'title, description, location, customer_id, customers(name, email, phone, address)'
+                )
+                .eq('id', projectId)
+                .single(),
+              (supabase as any)
+                .from('time_sessions')
+                .select('id, duration_seconds, hourly_rate')
+                .eq('project_id', projectId)
+                .is('invoice_id', null),
+              (supabase as any)
+                .from('job_materials')
+                .select('id, name, quantity, unit, unit_price')
+                .eq('project_id', projectId)
+                .is('invoice_id', null)
+                .in('status', ['got', 'fitted']),
+            ]);
+
+          // Compose line items from the job's actuals (ELE-1357)
+          const items: any[] = [];
+          const byRate = new Map<number, { secs: number; ids: string[] }>();
+          for (const s of (sessions as any[]) || []) {
+            const rate = Number(s.hourly_rate) || 0;
+            const cur = byRate.get(rate) || { secs: 0, ids: [] };
+            cur.secs += Number(s.duration_seconds) || 0;
+            cur.ids.push(s.id);
+            byRate.set(rate, cur);
+          }
+          const sessionIds: string[] = [];
+          for (const [rate, { secs, ids }] of byRate) {
+            if (secs <= 0 || rate <= 0) continue;
+            const hours = Math.round((secs / 3600) * 100) / 100;
+            sessionIds.push(...ids);
+            items.push({
+              id: `labour-${rate}`,
+              description: `Labour — ${hours} hrs @ £${rate}/hr`,
+              quantity: hours,
+              unit: 'hours',
+              unitPrice: rate,
+              totalPrice: Math.round(hours * rate * 100) / 100,
+              category: 'labour',
+            });
+          }
+          const materialIds: string[] = [];
+          for (const m of (gotMaterials as any[]) || []) {
+            const qty = m.quantity == null ? 1 : Number(m.quantity);
+            const price = Number(m.unit_price) || 0;
+            if (qty <= 0 || price <= 0) continue;
+            materialIds.push(m.id);
+            items.push({
+              id: `mat-${m.id}`,
+              description: m.name,
+              quantity: qty,
+              unit: m.unit || 'each',
+              unitPrice: price,
+              totalPrice: Math.round(qty * price * 100) / 100,
+              category: 'materials',
+            });
+          }
+          setComposedItems(items);
+          setComposedSessionIds(sessionIds);
+          setComposedMaterialIds(materialIds);
 
           if (project) {
             const customer = (project as any).customers;
@@ -119,6 +181,23 @@ const InvoiceBuilderCreate = () => {
         .from('time_sessions')
         .update({ invoice_id: invoiceId })
         .eq('id', timeSessionId);
+    }
+    // Composer path: sessions + materials rolled into the invoice are now billed
+    if (composedSessionIds.length > 0 && invoiceId) {
+      const { error } = await (supabase as any)
+        .from('time_sessions')
+        .update({ invoice_id: invoiceId })
+        .in('id', composedSessionIds);
+      if (error)
+        toast({ title: 'Could not mark time as billed', variant: 'destructive' });
+    }
+    if (composedMaterialIds.length > 0 && invoiceId) {
+      const { error } = await (supabase as any)
+        .from('job_materials')
+        .update({ invoice_id: invoiceId })
+        .in('id', composedMaterialIds);
+      if (error)
+        toast({ title: 'Could not mark materials as billed', variant: 'destructive' });
     }
     if (projectId) {
       navigate(`/electrician/projects/${projectId}`);
@@ -204,8 +283,12 @@ const InvoiceBuilderCreate = () => {
         {projectContext?.client && (
           <div className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20">
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-semibold text-purple-400">Imported from project</p>
-              <p className="text-[11px] text-white mt-0.5">Client &amp; job details pre-filled</p>
+              <p className="text-[13px] font-semibold text-purple-400">Composed from the job</p>
+              <p className="text-[11px] text-white mt-0.5">
+                {composedItems.length > 0
+                  ? `Client, job details and ${composedItems.length} line item${composedItems.length === 1 ? '' : 's'} from logged time & materials`
+                  : 'Client & job details pre-filled'}
+              </p>
             </div>
           </div>
         )}
@@ -227,6 +310,7 @@ const InvoiceBuilderCreate = () => {
                       project_id: projectId,
                       ...(projectContext?.client && { client: projectContext.client }),
                       ...(projectContext?.jobDetails && { jobDetails: projectContext.jobDetails }),
+                      ...(composedItems.length > 0 && { items: composedItems }),
                     }
                   : undefined
               }

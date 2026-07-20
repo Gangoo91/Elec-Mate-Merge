@@ -76,6 +76,51 @@ export const useTeamLeaveRequests = () => {
   });
 };
 
+export interface TeamAssignment {
+  id: string;
+  jobId: string;
+  employeeId: string;
+  startDate: string;
+  endDate: string | null;
+  status: string;
+  jobTitle: string;
+}
+
+/**
+ * Every job assignment for the roster — used to warn when leave being
+ * approved clashes with dates a worker is booked on a job. RLS scopes rows
+ * to the employer's own team; callers also filter to their roster ids as
+ * belt and braces. Status is lowercased here ('assigned'/'confirmed'/'declined').
+ */
+export const useTeamAssignments = () => {
+  return useQuery({
+    queryKey: ['team-job-assignments'],
+    queryFn: async (): Promise<TeamAssignment[]> => {
+      const { data, error } = await supabase
+        .from('employer_job_assignments')
+        .select('id, job_id, employee_id, start_date, end_date, status, job:employer_jobs(title)')
+        .order('start_date', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching team assignments:', error);
+        return [];
+      }
+
+      return (data || []).map((item) => ({
+        id: item.id,
+        jobId: item.job_id,
+        employeeId: item.employee_id,
+        startDate: item.start_date,
+        endDate: item.end_date,
+        status: (item.status || '').toLowerCase(),
+        jobTitle:
+          (item.job as unknown as { title?: string } | null)?.title || 'Unknown job',
+      }));
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
 export const useTeamAllowances = () => {
   return useQuery({
     queryKey: ['team-holiday-allowances'],

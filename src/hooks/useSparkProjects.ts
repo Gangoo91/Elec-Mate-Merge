@@ -322,13 +322,14 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
 
       if (error) throw error;
 
-      setAllProjects((prev) => [mapRow(data, { total: 0, done: 0 }), ...prev]);
+      const created = mapRow(data, { total: 0, done: 0 });
+      setAllProjects((prev) => [created, ...prev]);
       toast({
         title: 'Job created',
         description: `"${input.title}" has been created.`,
       });
 
-      return data.id as string;
+      return created;
     } catch (error: unknown) {
       console.error('Project create error:', error);
       toast({

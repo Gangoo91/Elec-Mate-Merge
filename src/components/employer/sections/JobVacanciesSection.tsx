@@ -33,6 +33,7 @@ import {
   Divider,
   PrimaryButton,
   SecondaryButton,
+  DestructiveButton,
   selectTriggerClass,
   selectContentClass,
   type Tone,
@@ -42,12 +43,22 @@ import { ConversationList } from '@/components/employer/vacancies/ConversationLi
 import { ChatView } from '@/components/employer/messaging/ChatView';
 import { VacancyFormWizard } from '@/components/employer/vacancy-form/VacancyFormWizard';
 import { BulkActionBar } from '@/components/employer/vacancies/BulkActionBar';
+import { CandidateNotesSection } from '@/components/employer/vacancies/CandidateNotesSection';
+import {
+  PipelineStrip,
+  stageTone,
+  type PipelineStage,
+} from '@/components/employer/vacancies/PipelineStrip';
+import { CandidateCard, interviewSummary } from '@/components/employer/vacancies/CandidateCard';
+import { RejectCandidateDialog } from '@/components/employer/vacancies/RejectCandidateDialog';
+import { ScheduleInterviewDialog } from '@/components/employer/dialogs/ScheduleInterviewDialog';
 
 import { useVacancies, useToggleVacancyStatus } from '@/hooks/useVacancies';
 import {
   useVacancyApplications,
   useUpdateApplicationStatus,
   useBulkUpdateApplicationStatus,
+  useUpdateApplicationNotes,
 } from '@/hooks/useVacancyApplications';
 import { useConversations } from '@/hooks/useConversations';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
@@ -58,17 +69,9 @@ import { Vacancy, VacancyApplication, notifyApplicantOfStatus } from '@/services
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { Conversation } from '@/services/conversationService';
 
-type StatusFilter =
-  | 'all'
-  | 'New'
-  | 'Reviewing'
-  | 'Shortlisted'
-  | 'Interviewed'
-  | 'Offered'
-  | 'Hired'
-  | 'Rejected';
+type StatusFilter = 'all' | PipelineStage;
 type TierFilter = 'all' | 'basic' | 'verified' | 'premium';
-type SortOption = 'date-desc' | 'date-asc' | 'name';
+type SortOption = 'date-desc' | 'date-asc' | 'stale' | 'name';
 type TopTab = 'vacancies' | 'applications' | 'conversations';
 type VacancyTab = 'live' | 'draft' | 'closed';
 
@@ -78,14 +81,46 @@ const vacancyStatusTone: Record<string, Tone> = {
   Draft: 'amber',
 };
 
-const candidateStatusTone: Record<string, Tone> = {
-  New: 'cyan',
-  Reviewing: 'blue',
-  Shortlisted: 'yellow',
-  Interviewed: 'purple',
-  Offered: 'amber',
-  Hired: 'emerald',
-  Rejected: 'red',
+/** One-tap advance labels per stage. Shortlisted deliberately routes through
+ *  the booking dialog — the applicant push for 'Interviewed' says "Interview
+ *  Scheduled", so entering the stage without a booking would mislead them. */
+const advanceLabels: Partial<Record<VacancyApplication['status'], string>> = {
+  New: 'Shortlist',
+  Reviewing: 'Shortlist',
+  Shortlisted: 'Interview…',
+  Interviewed: 'Make offer',
+  Offered: 'Hire & onboard',
+};
+
+const stageEmptyCopy: Record<PipelineStage, { title: string; description: string }> = {
+  New: {
+    title: 'No new applications',
+    description: 'New applicants land here the moment they apply to one of your live vacancies.',
+  },
+  Reviewing: {
+    title: 'Nothing under review',
+    description: 'Applications you are actively considering sit in this stage.',
+  },
+  Shortlisted: {
+    title: 'No one shortlisted yet',
+    description: 'Shortlist promising applicants to build your interview list — they get notified.',
+  },
+  Interviewed: {
+    title: 'No interviews in progress',
+    description: 'Book an interview with a shortlisted candidate to move them here.',
+  },
+  Offered: {
+    title: 'No offers out',
+    description: 'Make an offer after interview — the candidate is notified straight away.',
+  },
+  Hired: {
+    title: 'No hires from this pipeline yet',
+    description: 'Hired candidates join your team roster automatically.',
+  },
+  Rejected: {
+    title: 'No rejected candidates',
+    description: 'Candidates you turn down are kept here for your records.',
+  },
 };
 
 const tierTone: Record<string, Tone> = {
@@ -131,6 +166,7 @@ export function JobVacanciesSection() {
   const toggleVacancyStatus = useToggleVacancyStatus();
   const updateApplicationStatus = useUpdateApplicationStatus();
   const bulkUpdateStatus = useBulkUpdateApplicationStatus();
+  const updateApplicationNotes = useUpdateApplicationNotes();
 
   const [topTab, setTopTab] = useState<TopTab>('vacancies');
   const [vacancyTab, setVacancyTab] = useState<VacancyTab>('live');
@@ -141,6 +177,8 @@ export function JobVacanciesSection() {
   const [duplicatingVacancy, setDuplicatingVacancy] = useState<Vacancy | null>(null);
   const [viewingVacancy, setViewingVacancy] = useState<Vacancy | null>(null);
   const [viewingApplication, setViewingApplication] = useState<VacancyApplication | null>(null);
+  const [schedulingApp, setSchedulingApp] = useState<VacancyApplication | null>(null);
+  const [rejectingApp, setRejectingApp] = useState<VacancyApplication | null>(null);
 
   // Full Elec-ID credentials for the open applicant (employer-readable under RLS)
   const { data: applicantCredentials } = useQuery({
@@ -182,12 +220,26 @@ export function JobVacanciesSection() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const totalApplicants = applications.length;
-  const newApplicants = applications.filter((a) => a.status === 'New').length;
   const openVacancies = vacancies.filter((v) => v.status === 'Open').length;
   const draftVacancies = vacancies.filter((v) => v.status === 'Draft').length;
   const closedVacancies = vacancies.filter((v) => v.status === 'Closed').length;
-  const shortlistedCount = applications.filter((a) => a.status === 'Shortlisted').length;
-  const hiredCount = applications.filter((a) => a.status === 'Hired').length;
+
+  const stageCounts = useMemo(() => {
+    const counts: Record<PipelineStage, number> = {
+      New: 0,
+      Reviewing: 0,
+      Shortlisted: 0,
+      Interviewed: 0,
+      Offered: 0,
+      Hired: 0,
+      Rejected: 0,
+    };
+    for (const a of applications) {
+      if (a.status in counts) counts[a.status as PipelineStage]++;
+    }
+    return counts;
+  }, [applications]);
+  const shortlistedCount = stageCounts.Shortlisted;
 
   const hiredLast30 = useMemo(() => {
     const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
@@ -247,6 +299,10 @@ export function JobVacanciesSection() {
           return new Date(b.applied_at).getTime() - new Date(a.applied_at).getTime();
         case 'date-asc':
           return new Date(a.applied_at).getTime() - new Date(b.applied_at).getTime();
+        case 'stale':
+          // Quietest first — real updated_at only (also moves on notes edits,
+          // which is why the card labels it "last activity")
+          return new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime();
         case 'name':
           return a.applicant_name.localeCompare(b.applicant_name);
         default:
@@ -334,6 +390,80 @@ export function JobVacanciesSection() {
     } finally {
       setIsHiring(false);
     }
+  };
+
+  /** One-tap advance to the next pipeline stage. */
+  const handleAdvance = (app: VacancyApplication) => {
+    if (app.status === 'New' || app.status === 'Reviewing') {
+      handleUpdateStatus(app.id, 'Shortlisted', app.applicant_name);
+    } else if (app.status === 'Shortlisted') {
+      // Interview entry always goes through the booking dialog — the
+      // applicant push for this stage says "Interview Scheduled"
+      setSchedulingApp(app);
+    } else if (app.status === 'Interviewed') {
+      handleUpdateStatus(app.id, 'Offered', app.applicant_name);
+    } else if (app.status === 'Offered') {
+      handleHire(app);
+    }
+  };
+
+  const appendNote = (existing: string | null | undefined, line: string) =>
+    [existing?.trim(), line].filter(Boolean).join('\n\n');
+
+  // Awaited by ScheduleInterviewDialog — a throw keeps its success toast
+  // honest. The booking is written to the first-class interview_* columns
+  // (read preferentially by the chip and detail sheet) AND appended to notes
+  // as a human-readable line; the status change fires the applicant's push
+  // via the service.
+  const handleScheduleInterview = async (details: {
+    date: string;
+    time: string;
+    type: 'In-person' | 'Phone' | 'Video';
+    location?: string;
+  }) => {
+    if (!schedulingApp) return;
+    const app = schedulingApp;
+    const line = `Interview booked: ${formatDate(details.date)}, ${details.time} · ${details.type}${
+      details.location ? ` · ${details.location}` : ''
+    }`;
+    const notes = appendNote(app.notes, line);
+    const interview = {
+      // Local wall-clock booking → timestamptz
+      at: new Date(`${details.date}T${details.time}:00`).toISOString(),
+      type: details.type,
+      location: details.location ?? null,
+    };
+    await updateApplicationStatus.mutateAsync({
+      id: app.id,
+      status: 'Interviewed',
+      notes,
+      interview,
+    });
+    if (viewingApplication?.id === app.id) {
+      setViewingApplication({
+        ...viewingApplication,
+        status: 'Interviewed',
+        notes,
+        interview_at: interview.at,
+        interview_type: interview.type,
+        interview_location: interview.location,
+      });
+    }
+    setSchedulingApp(null);
+  };
+
+  // Awaited by RejectCandidateDialog — only toasts after the write lands.
+  const handleRejectConfirm = async (reason: string) => {
+    if (!rejectingApp) return;
+    const app = rejectingApp;
+    const notes = reason ? appendNote(app.notes, `Rejected — ${reason}`) : undefined;
+    await updateApplicationStatus.mutateAsync({ id: app.id, status: 'Rejected', notes });
+    toast({
+      title: 'Candidate rejected',
+      description: `${app.applicant_name} has been sent a standard update.`,
+    });
+    setRejectingApp(null);
+    if (viewingApplication?.id === app.id) setViewingApplication(null);
   };
 
   const handleToggleVacancy = async (vacancy: Vacancy) => {
@@ -480,33 +610,6 @@ export function JobVacanciesSection() {
     { value: 'closed', label: 'Closed', count: closedVacancies },
   ];
 
-  const candidateStatusTabs = [
-    { value: 'all', label: 'All', count: applications.length },
-    { value: 'New', label: 'New', count: newApplicants },
-    {
-      value: 'Reviewing',
-      label: 'Reviewing',
-      count: applications.filter((a) => a.status === 'Reviewing').length,
-    },
-    { value: 'Shortlisted', label: 'Shortlisted', count: shortlistedCount },
-    {
-      value: 'Interviewed',
-      label: 'Interview',
-      count: applications.filter((a) => a.status === 'Interviewed').length,
-    },
-    {
-      value: 'Offered',
-      label: 'Offered',
-      count: applications.filter((a) => a.status === 'Offered').length,
-    },
-    { value: 'Hired', label: 'Hired', count: hiredCount },
-    {
-      value: 'Rejected',
-      label: 'Rejected',
-      count: applications.filter((a) => a.status === 'Rejected').length,
-    },
-  ];
-
   return (
     <PageFrame>
       <PageHero
@@ -589,10 +692,14 @@ export function JobVacanciesSection() {
 
           {topTab === 'applications' && (
             <div className="space-y-5">
+              <PipelineStrip
+                counts={stageCounts}
+                total={totalApplicants}
+                active={statusFilter}
+                onChange={(v) => setStatusFilter(v)}
+              />
+
               <FilterBar
-                tabs={candidateStatusTabs}
-                activeTab={statusFilter}
-                onTabChange={(v) => setStatusFilter(v as StatusFilter)}
                 search={searchQuery}
                 onSearchChange={setSearchQuery}
                 searchPlaceholder="Search candidates…"
@@ -634,6 +741,7 @@ export function JobVacanciesSection() {
                   <SelectContent className={selectContentClass}>
                     <SelectItem value="date-desc">Newest first</SelectItem>
                     <SelectItem value="date-asc">Oldest first</SelectItem>
+                    <SelectItem value="stale">Waiting longest</SelectItem>
                     <SelectItem value="name">Name A–Z</SelectItem>
                   </SelectContent>
                 </Select>
@@ -651,85 +759,54 @@ export function JobVacanciesSection() {
               </div>
 
               {filteredApplications.length === 0 ? (
-                <EmptyState
-                  title="No candidates found"
-                  description={
-                    statusFilter !== 'all' ||
-                    tierFilter !== 'all' ||
-                    vacancyFilter !== 'all' ||
-                    searchQuery
-                      ? 'Try adjusting your filters or search query.'
-                      : 'Applications will appear here when candidates apply to your vacancies.'
-                  }
-                />
-              ) : (
-                <ListCard>
-                  <ListCardHeader
-                    tone="cyan"
-                    title="Candidates"
-                    meta={<Pill tone="cyan">{filteredApplications.length}</Pill>}
+                tierFilter !== 'all' || vacancyFilter !== 'all' || searchQuery ? (
+                  <EmptyState
+                    title="No candidates found"
+                    description="Try adjusting your filters or search query."
                   />
-                  <ListBody>
-                    {filteredApplications.map((app) => {
-                      const vacancy = vacancies.find((v) => v.id === app.vacancy_id);
-                      const tone = candidateStatusTone[app.status] ?? 'blue';
-                      const tier = app.elec_id_profile?.verification_tier;
-                      const isSelected = selectedApplicants.has(app.id);
-                      return (
-                        <ListRow
-                          key={app.id}
-                          lead={
-                            <Avatar
-                              initials={getInitials(app.applicant_name)}
-                              size="md"
-                            />
-                          }
-                          title={app.applicant_name}
-                          subtitle={`${vacancy?.title || 'Unknown role'} · ${formatDate(app.applied_at)}`}
-                          trailing={
-                            <>
-                              {tier && (
-                                <Pill tone={tierTone[tier] ?? 'blue'}>
-                                  {tier}
-                                </Pill>
-                              )}
-                              <Pill tone={tone}>{app.status}</Pill>
-                              {/* 44px hit area via negative-margin padding; the
-                                  visible circle stays compact */}
-                              {selectionMode && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleSelectionChange(app.id, !isSelected);
-                                  }}
-                                  className="p-2 -m-2 touch-manipulation"
-                                  aria-label={isSelected ? 'Deselect candidate' : 'Select candidate'}
-                                >
-                                  <span
-                                    className={`h-7 w-7 rounded-full border flex items-center justify-center text-[12px] font-semibold ${
-                                      isSelected
-                                        ? 'bg-elec-yellow text-black border-elec-yellow'
-                                        : 'bg-transparent text-white border-white/[0.2]'
-                                    }`}
-                                  >
-                                    {isSelected ? '✓' : ''}
-                                  </span>
-                                </button>
-                              )}
-                            </>
-                          }
-                          onClick={() => {
-                            if (selectionMode) {
-                              handleSelectionChange(app.id, !isSelected);
-                            } else {
-                              setViewingApplication(app);
-                            }
-                          }}
-                        />
-                      );
-                    })}
-                  </ListBody>
-                </ListCard>
+                ) : statusFilter !== 'all' ? (
+                  <EmptyState
+                    title={stageEmptyCopy[statusFilter].title}
+                    description={stageEmptyCopy[statusFilter].description}
+                  />
+                ) : (
+                  <EmptyState
+                    title="No candidates yet"
+                    description="Applications will appear here when candidates apply to your vacancies."
+                  />
+                )
+              ) : (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                  {filteredApplications.map((app) => {
+                    const isSelected = selectedApplicants.has(app.id);
+                    return (
+                      <CandidateCard
+                        key={app.id}
+                        app={app}
+                        vacancyTitle={
+                          vacancies.find((v) => v.id === app.vacancy_id)?.title || 'Unknown role'
+                        }
+                        selectionMode={selectionMode}
+                        isSelected={isSelected}
+                        onToggleSelect={() => handleSelectionChange(app.id, !isSelected)}
+                        onOpen={() => setViewingApplication(app)}
+                        advanceLabel={advanceLabels[app.status] ?? null}
+                        onAdvance={() => handleAdvance(app)}
+                        onReject={
+                          app.status !== 'Hired' && app.status !== 'Rejected'
+                            ? () => setRejectingApp(app)
+                            : undefined
+                        }
+                        onReinstate={
+                          app.status === 'Rejected'
+                            ? () => handleUpdateStatus(app.id, 'New', app.applicant_name)
+                            : undefined
+                        }
+                        actionPending={updateApplicationStatus.isPending || isHiring}
+                      />
+                    );
+                  })}
+                </div>
               )}
             </div>
           )}
@@ -915,7 +992,7 @@ export function JobVacanciesSection() {
                             title={app.applicant_name}
                             subtitle={formatDate(app.applied_at)}
                             trailing={
-                              <Pill tone={candidateStatusTone[app.status] ?? 'blue'}>
+                              <Pill tone={stageTone[app.status] ?? 'blue'}>
                                 {app.status}
                               </Pill>
                             }
@@ -1037,6 +1114,20 @@ export function JobVacanciesSection() {
                     </ListBody>
                   </ListCard>
                 )}
+
+                {/* Booking reads the first-class interview_* columns, falling
+                    back to the structured notes line on legacy rows */}
+                {(() => {
+                  const booked = interviewSummary(viewingApplication);
+                  return booked ? (
+                    <ListCard>
+                      <ListCardHeader tone="purple" title="Interview" />
+                      <ListBody>
+                        <ListRow title={booked} subtitle="Booked" />
+                      </ListBody>
+                    </ListCard>
+                  ) : null;
+                })()}
 
                 {/* The one document the candidate explicitly submitted — it was
                     sitting in the DB unreachable from the hire decision */}
@@ -1161,13 +1252,32 @@ export function JobVacanciesSection() {
                   </div>
                 )}
 
+                {/* Interview notes — the notes column existed in the DB (and a
+                    finished notes component sat orphaned in the repo) but was
+                    unreachable from the review flow. At 20 applicants, "who
+                    said what on the phone" lives here, not in someone's head. */}
+                <CandidateNotesSection
+                  notes={viewingApplication.notes}
+                  updatedAt={viewingApplication.updated_at}
+                  onSave={async (notes) => {
+                    await updateApplicationNotes.mutateAsync({
+                      id: viewingApplication.id,
+                      notes,
+                    });
+                    // Keep the open sheet in sync — the list refetch doesn't
+                    // reach this locally-held copy
+                    setViewingApplication({ ...viewingApplication, notes });
+                    toast({ title: 'Notes saved' });
+                  }}
+                />
+
                 <StatStrip
                   columns={2}
                   stats={[
                     {
                       label: 'Status',
                       value: viewingApplication.status,
-                      tone: candidateStatusTone[viewingApplication.status] ?? 'blue',
+                      tone: stageTone[viewingApplication.status] ?? 'blue',
                     },
                     {
                       label: 'Applied',
@@ -1177,24 +1287,19 @@ export function JobVacanciesSection() {
                 />
               </div>
 
-              <SheetFooter className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex-row gap-2">
-                {viewingApplication.status === 'New' && (
-                  <>
-                    <SecondaryButton
-                      fullWidth
-                      onClick={() => {
-                        handleUpdateStatus(
-                          viewingApplication.id,
-                          'Rejected',
-                          viewingApplication.applicant_name
-                        );
-                        setViewingApplication(null);
-                      }}
-                    >
+              {viewingApplication.status !== 'Hired' && (
+                <SheetFooter className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex-row gap-2">
+                  {/* Reject is destructive and separated; reason captured via
+                      dialog and kept in private notes */}
+                  {viewingApplication.status !== 'Rejected' && (
+                    <DestructiveButton onClick={() => setRejectingApp(viewingApplication)}>
                       Reject
-                    </SecondaryButton>
+                    </DestructiveButton>
+                  )}
+                  {(viewingApplication.status === 'New' ||
+                    viewingApplication.status === 'Reviewing') && (
                     <PrimaryButton
-                      fullWidth
+                      className="flex-1"
                       onClick={() => {
                         handleUpdateStatus(
                           viewingApplication.id,
@@ -1206,48 +1311,58 @@ export function JobVacanciesSection() {
                     >
                       Shortlist
                     </PrimaryButton>
-                  </>
-                )}
-                {viewingApplication.status === 'Shortlisted' && (
-                  <PrimaryButton
-                    fullWidth
-                    onClick={() => {
-                      handleUpdateStatus(
-                        viewingApplication.id,
-                        'Interviewed',
-                        viewingApplication.applicant_name
-                      );
-                      setViewingApplication(null);
-                    }}
-                  >
-                    Mark as interviewed
-                  </PrimaryButton>
-                )}
-                {viewingApplication.status === 'Interviewed' && (
-                  <PrimaryButton
-                    fullWidth
-                    onClick={() => {
-                      handleUpdateStatus(
-                        viewingApplication.id,
-                        'Offered',
-                        viewingApplication.applicant_name
-                      );
-                      setViewingApplication(null);
-                    }}
-                  >
-                    Make offer
-                  </PrimaryButton>
-                )}
-                {viewingApplication.status === 'Offered' && (
-                  <PrimaryButton
-                    fullWidth
-                    disabled={isHiring}
-                    onClick={() => handleHire(viewingApplication)}
-                  >
-                    {isHiring ? 'Hiring…' : 'Hire & onboard'}
-                  </PrimaryButton>
-                )}
-              </SheetFooter>
+                  )}
+                  {viewingApplication.status === 'Shortlisted' && (
+                    // Entering Interview always books — the applicant push for
+                    // this stage says "Interview Scheduled"
+                    <PrimaryButton
+                      className="flex-1"
+                      onClick={() => setSchedulingApp(viewingApplication)}
+                    >
+                      Schedule interview
+                    </PrimaryButton>
+                  )}
+                  {viewingApplication.status === 'Interviewed' && (
+                    <PrimaryButton
+                      className="flex-1"
+                      onClick={() => {
+                        handleUpdateStatus(
+                          viewingApplication.id,
+                          'Offered',
+                          viewingApplication.applicant_name
+                        );
+                        setViewingApplication(null);
+                      }}
+                    >
+                      Make offer
+                    </PrimaryButton>
+                  )}
+                  {viewingApplication.status === 'Offered' && (
+                    <PrimaryButton
+                      className="flex-1"
+                      disabled={isHiring}
+                      onClick={() => handleHire(viewingApplication)}
+                    >
+                      {isHiring ? 'Hiring…' : 'Hire & onboard'}
+                    </PrimaryButton>
+                  )}
+                  {viewingApplication.status === 'Rejected' && (
+                    <SecondaryButton
+                      className="flex-1"
+                      onClick={() => {
+                        handleUpdateStatus(
+                          viewingApplication.id,
+                          'New',
+                          viewingApplication.applicant_name
+                        );
+                        setViewingApplication(null);
+                      }}
+                    >
+                      Reinstate to New
+                    </SecondaryButton>
+                  )}
+                </SheetFooter>
+              )}
             </div>
           )}
         </SheetContent>
@@ -1266,6 +1381,22 @@ export function JobVacanciesSection() {
         onRejectAll={handleBulkReject}
         onClearSelection={clearSelection}
         isProcessing={bulkUpdateStatus.isPending}
+      />
+
+      {/* Booking is the only door into the Interview stage — the dialog awaits
+          the write, so its success toast can't lie */}
+      <ScheduleInterviewDialog
+        open={!!schedulingApp}
+        onOpenChange={(open) => !open && setSchedulingApp(null)}
+        candidateName={schedulingApp?.applicant_name ?? ''}
+        onSchedule={handleScheduleInterview}
+      />
+
+      <RejectCandidateDialog
+        open={!!rejectingApp}
+        onOpenChange={(open) => !open && setRejectingApp(null)}
+        candidateName={rejectingApp?.applicant_name ?? ''}
+        onConfirm={handleRejectConfirm}
       />
     </PageFrame>
   );

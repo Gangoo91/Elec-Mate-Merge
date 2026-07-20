@@ -43,6 +43,14 @@ import type { Employee } from '@/services/employeeService';
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 type FilterTab = 'all' | 'active' | 'leave' | 'pending';
+type SortKey = 'name' | 'team_role' | 'rate' | 'newest';
+
+const SORT_OPTIONS: { value: SortKey; label: string }[] = [
+  { value: 'name', label: 'Name (A–Z)' },
+  { value: 'team_role', label: 'Team role' },
+  { value: 'rate', label: 'Hourly rate (high first)' },
+  { value: 'newest', label: 'Recently added' },
+];
 
 const ROLE_TONE: Record<TeamRole, Tone> = {
   QS: 'yellow',
@@ -85,11 +93,16 @@ export function EmployeesSection() {
   const { data: employees = [], isLoading, error, refetch, isRefetching } = useEmployees();
   // Live on-site presence (clock-in derived) keyed by employee id — drives the
   // real-time "On site" pill so the roster shows who's actually working now.
+  // Rows older than 12h are history, not presence — same staleness rule as the
+  // Worker Tracking page, so the roster and the map tell one truth.
   const { data: workerLocations = [] } = useWorkerLocations();
   const liveStatusByEmployee = useMemo(() => {
     const m = new Map<string, string>();
+    const staleCutoff = Date.now() - 12 * 60 * 60 * 1000;
     for (const loc of workerLocations) {
-      if (loc.employee_id && loc.status) m.set(loc.employee_id, loc.status);
+      if (!loc.employee_id || !loc.status) continue;
+      if (!loc.last_updated || new Date(loc.last_updated).getTime() < staleCutoff) continue;
+      m.set(loc.employee_id, loc.status);
     }
     return m;
   }, [workerLocations]);
@@ -119,14 +132,15 @@ export function EmployeesSection() {
     staleTime: 60 * 1000,
   });
   const activeSeatCount = seatInfo?.active ?? 0;
-  // Live seat summary — "3 of 5 seats · £X/mo" (or "free" for comped partners).
+  // Live seat summary — "3 of 5 seats in use". No £ figure: seat billing is
+  // dormant until EMPLOYER_SEAT_PRICE_ID is configured (manage-employer-seats
+  // no-ops), and the client can't see that secret — quoting a monthly cost
+  // nobody is charged would be a fabricated number.
   const seatSummary = (() => {
     if (activeSeatCount === 0) return '';
     const ofCap = seatInfo?.cap != null ? ` of ${seatInfo.cap}` : '';
-    const cost = seatInfo?.comped
-      ? ' · free on your plan'
-      : ` · £${(activeSeatCount * 9.99).toFixed(2)}/mo`;
-    return ` ${activeSeatCount}${ofCap} seat${activeSeatCount === 1 ? '' : 's'}${cost}.`;
+    const comped = seatInfo?.comped ? ' · free on your plan' : '';
+    return ` ${activeSeatCount}${ofCap} seat${activeSeatCount === 1 ? '' : 's'} in use${comped}.`;
   })();
 
   const handleRefresh = useCallback(async () => {
@@ -138,6 +152,7 @@ export function EmployeesSection() {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [selectedRoles, setSelectedRoles] = useState<TeamRole[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState<AvailabilityStatus[]>([]);
+  const [sortBy, setSortBy] = useState<SortKey>('name');
   const [multiSelectMode, setMultiSelectMode] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>([]);
@@ -191,17 +206,42 @@ export function EmployeesSection() {
   }, [activeTab, activeEmployees, employees]);
 
   const filteredEmployees = useMemo(() => {
-    return tabFilteredEmployees.filter((emp) => {
+    const q = searchQuery.trim().toLowerCase();
+    const matched = tabFilteredEmployees.filter((emp) => {
+      // Search the whole record — owners look people up by email and phone as
+      // often as by name ("who's on 07700…?")
       const matchesSearch =
-        emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        emp.role.toLowerCase().includes(searchQuery.toLowerCase());
+        !q ||
+        emp.name.toLowerCase().includes(q) ||
+        emp.role.toLowerCase().includes(q) ||
+        (emp.email ?? '').toLowerCase().includes(q) ||
+        (emp.phone ?? '').replace(/\s+/g, '').includes(q.replace(/\s+/g, ''));
       const matchesRole =
         selectedRoles.length === 0 || selectedRoles.includes(getTeamRole(emp.team_role));
       const matchesAvailability =
         selectedAvailability.length === 0 || selectedAvailability.includes(getAvailability(emp));
       return matchesSearch && matchesRole && matchesAvailability;
     });
-  }, [tabFilteredEmployees, searchQuery, selectedRoles, selectedAvailability]);
+    const sorted = [...matched];
+    switch (sortBy) {
+      case 'team_role':
+        sorted.sort(
+          (a, b) =>
+            getTeamRole(a.team_role).localeCompare(getTeamRole(b.team_role)) ||
+            a.name.localeCompare(b.name)
+        );
+        break;
+      case 'rate':
+        sorted.sort((a, b) => (b.hourly_rate ?? 0) - (a.hourly_rate ?? 0));
+        break;
+      case 'newest':
+        sorted.sort((a, b) => (b.created_at ?? '').localeCompare(a.created_at ?? ''));
+        break;
+      default:
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return sorted;
+  }, [tabFilteredEmployees, searchQuery, selectedRoles, selectedAvailability, sortBy]);
 
   const handleItemClick = (employee: Employee) => {
     if (multiSelectMode) {
@@ -323,7 +363,7 @@ export function EmployeesSection() {
         <PageHero
           eyebrow="People"
           title="Team"
-          description="Manage every operative, supervisor and PM on your books."
+          description={`Manage every operative, supervisor and PM on your books.${seatSummary}`}
           tone="blue"
           actions={
             <>
@@ -422,9 +462,11 @@ export function EmployeesSection() {
 
         {filteredEmployees.length === 0 ? (
           <EmptyState
-            title="No team members yet"
+            title={
+              hasActiveFilters || searchQuery.trim() ? 'No matches' : 'No team members yet'
+            }
             description={
-              hasActiveFilters
+              hasActiveFilters || searchQuery.trim()
                 ? 'Try adjusting your filters or search.'
                 : 'Add your first operative, supervisor or PM to get started.'
             }
@@ -517,6 +559,29 @@ export function EmployeesSection() {
 
             <ScrollArea className="h-[calc(80vh-160px)]">
               <div className="px-5 sm:px-6 py-5 space-y-6">
+                <div>
+                  <Eyebrow>Sort by</Eyebrow>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {SORT_OPTIONS.map((opt) => {
+                      const active = sortBy === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => setSortBy(opt.value)}
+                          className={`h-11 px-3 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation text-left ${
+                            active
+                              ? 'bg-elec-yellow text-black border-elec-yellow'
+                              : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-white/[0.05]'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <div>
                   <Eyebrow>Availability</Eyebrow>
                   <ListCard className="mt-3">
@@ -616,21 +681,39 @@ export function EmployeesSection() {
         <TeamMemberSheet
           employee={
             selectedEmployee
-              ? {
-                  id: selectedEmployee.id,
-                  userId: selectedEmployee.user_id,
-                  name: selectedEmployee.name,
-                  role: selectedEmployee.role,
-                  teamRole: getTeamRole(selectedEmployee.team_role),
-                  status: selectedEmployee.status,
-                  phone: selectedEmployee.phone || '',
-                  email: selectedEmployee.email || '',
-                  joinDate: selectedEmployee.join_date || '',
-                  avatar: selectedEmployee.avatar_initials,
-                  photo: selectedEmployee.photo_url || undefined,
-                  availability: getAvailability(selectedEmployee),
-                  hourlyRate: selectedEmployee.hourly_rate,
-                }
+              ? (() => {
+                  // Emergency-contact columns are read optimistically — the row
+                  // comes from select('*'), so the sheet lights up the moment
+                  // the DB migration lands, with no further FE change.
+                  const extra = selectedEmployee as Employee & {
+                    emergency_contact_name?: string | null;
+                    emergency_contact_phone?: string | null;
+                    emergency_contact_relationship?: string | null;
+                  };
+                  return {
+                    id: selectedEmployee.id,
+                    userId: selectedEmployee.user_id,
+                    name: selectedEmployee.name,
+                    role: selectedEmployee.role,
+                    teamRole: getTeamRole(selectedEmployee.team_role),
+                    status: selectedEmployee.status,
+                    phone: selectedEmployee.phone || '',
+                    email: selectedEmployee.email || '',
+                    joinDate: selectedEmployee.join_date || '',
+                    avatar: selectedEmployee.avatar_initials,
+                    photo: selectedEmployee.photo_url || undefined,
+                    availability: getAvailability(selectedEmployee),
+                    hourlyRate: selectedEmployee.hourly_rate,
+                    emergencyContact:
+                      extra.emergency_contact_name && extra.emergency_contact_phone
+                        ? {
+                            name: extra.emergency_contact_name,
+                            phone: extra.emergency_contact_phone,
+                            relationship: extra.emergency_contact_relationship ?? undefined,
+                          }
+                        : undefined,
+                  };
+                })()
               : null
           }
           open={profileSheetOpen}

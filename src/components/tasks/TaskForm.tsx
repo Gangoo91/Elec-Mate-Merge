@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 interface TaskFormProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (input: SaveTaskInput) => Promise<string | null>;
+  onSave: (input: SaveTaskInput) => Promise<SparkTask | string | null>;
   onUpdate?: (id: string, input: Partial<SaveTaskInput>) => Promise<void>;
   editTask?: SparkTask | null;
   projectId?: string;

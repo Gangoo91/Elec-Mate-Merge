@@ -1,0 +1,7 @@
+-- S8b: cert renewal foundation (applied via MCP 2026-07-20).
+-- next_inspection_due promoted from form JSONB (data->>'nextInspectionDue' / 'nextTestDue',
+-- ISO-date-guarded) — 151 certs backfilled from 0. trg_sync_report_next_due keeps it in
+-- sync on insert/update (fill-only, never overwrites a manual value).
+-- queue_daily_job_nudges certs radar: coalesce(next_inspection_due, expiry_date)
+-- within [now−30d, now+60d] — catches recently-overdue renewals too.
+-- Full bodies in Supabase migrations 'cert_renewal_dates' + follow-up via execute_sql.
