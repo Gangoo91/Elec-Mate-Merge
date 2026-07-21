@@ -25,11 +25,16 @@ interface OverdueInvoice {
   invoice_number: string;
   client_data: any;
   total: number;
+  total_paid: number | null;
+  partial_payments: Array<{ amount?: number }> | null;
   invoice_due_date: string;
   invoice_status: string;
   user_id: string;
   reminder_count: number;
   last_reminder_sent_at: string | null;
+  stripe_payment_link_url: string | null;
+  external_invoice_url: string | null;
+  settings: any;
 }
 
 serve(async (req: Request) => {
@@ -60,7 +65,7 @@ serve(async (req: Request) => {
     const { data: overdueInvoices, error: queryError } = await supabase
       .from('quotes')
       .select(
-        'id, invoice_number, client_data, total, invoice_due_date, invoice_status, user_id, reminder_count, last_reminder_sent_at, invoice_sent_at'
+        'id, invoice_number, client_data, total, total_paid, partial_payments, invoice_due_date, invoice_status, user_id, reminder_count, last_reminder_sent_at, invoice_sent_at, stripe_payment_link_url, external_invoice_url, settings'
       )
       .not('invoice_number', 'is', null)
       .not('invoice_status', 'eq', 'paid')
@@ -103,6 +108,23 @@ serve(async (req: Request) => {
       if (!clientEmail) {
         skipped++;
         results.push({ invoice: invoice.invoice_number, status: 'skipped', reason: 'no email' });
+        continue;
+      }
+
+      // Partial payments — chase the BALANCE, never the full total (Alex,
+      // 2026-07-20). Skip entirely if recorded payments already cover it.
+      const partialSum = Array.isArray(invoice.partial_payments)
+        ? invoice.partial_payments.reduce((sum, p) => sum + (Number(p?.amount) || 0), 0)
+        : 0;
+      const amountPaid = Math.max(Number(invoice.total_paid) || 0, partialSum);
+      const invoiceTotal = Number(invoice.total) || 0;
+      if (invoiceTotal > 0 && amountPaid >= invoiceTotal) {
+        skipped++;
+        results.push({
+          invoice: invoice.invoice_number,
+          status: 'skipped',
+          reason: 'fully paid by recorded payments',
+        });
         continue;
       }
 
@@ -200,6 +222,40 @@ serve(async (req: Request) => {
         console.warn('[automated-invoice-reminders] token mint exception', mintErr);
       }
 
+      // Pay-now link. A link minted before partial payments were recorded
+      // charges the FULL total — when anything has been paid, re-mint at the
+      // current balance (create-invoice-payment-link is balance-aware); on
+      // failure drop the button and let bank details carry the payment.
+      let payNowUrl: string | null =
+        invoice.stripe_payment_link_url || invoice.external_invoice_url || null;
+      if (amountPaid > 0) {
+        payNowUrl = null;
+        try {
+          const mintResp = await fetch(
+            `${Deno.env.get('SUPABASE_URL')}/functions/v1/create-invoice-payment-link`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+              },
+              body: JSON.stringify({ invoiceId: invoice.id }),
+            }
+          );
+          if (mintResp.ok) {
+            const minted = await mintResp.json();
+            if (minted?.url) payNowUrl = minted.url;
+          } else {
+            console.warn(
+              `[automated-invoice-reminders] balance link re-mint failed for ${invoice.invoice_number}:`,
+              mintResp.status
+            );
+          }
+        } catch (mintLinkErr) {
+          console.warn('[automated-invoice-reminders] balance link re-mint exception', mintLinkErr);
+        }
+      }
+
       // Generate email content via shared payment-reminder template.
       const bankDetails = company?.bank_details || invoice.settings?.bankDetails || null;
       const emailContent = buildPaymentReminderEmail({
@@ -216,9 +272,10 @@ serve(async (req: Request) => {
         },
         clientName,
         invoiceNumber: invoice.invoice_number || 'N/A',
-        total: Number(invoice.total) || 0,
+        total: invoiceTotal,
+        amountPaid,
         dueDate: invoice.invoice_due_date || null,
-        payNowUrl: invoice.stripe_payment_link_url || invoice.external_invoice_url || null,
+        payNowUrl,
         bankDetails: bankDetails
           ? {
               bankName: bankDetails.bankName || null,
@@ -229,6 +286,7 @@ serve(async (req: Request) => {
           : null,
         tone: reminderType,
         markPaidUrl,
+        trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoice.id}`,
       });
 
       // ELE-662 + ELE-880 — Send via Brevo (Resend banned us at the domain
@@ -317,7 +375,6 @@ serve(async (req: Request) => {
       functionName: 'automated-invoice-reminders',
       requestUrl: req.url,
       requestMethod: req.method,
-      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoice.id}`,
     });
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

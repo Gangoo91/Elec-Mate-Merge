@@ -245,9 +245,21 @@ const handler = async (req: Request): Promise<Response> => {
     const stripeConnectActive =
       companyProfile?.stripe_account_id && companyProfile?.stripe_account_status === 'active';
 
+    // A stored link minted before partial payments were recorded charges the
+    // FULL total — when anything has been paid, always re-mint at the current
+    // balance (create-invoice-payment-link is balance-aware).
+    const resendPaidSoFar = Math.max(
+      Number(invoice.total_paid) || 0,
+      Array.isArray(invoice.partial_payments)
+        ? invoice.partial_payments.reduce(
+            (sum: number, p: any) => sum + (Number(p?.amount) || 0),
+            0
+          )
+        : 0
+    );
     if (stripeConnectActive) {
       try {
-        if (invoice.stripe_payment_link_url) {
+        if (invoice.stripe_payment_link_url && resendPaidSoFar <= 0) {
           stripePaymentUrl = invoice.stripe_payment_link_url;
           console.log('✅ Using existing Stripe payment link');
         } else {
@@ -453,6 +465,17 @@ const handler = async (req: Request): Promise<Response> => {
       clientName,
       invoiceNumber,
       total: Number(invoice.total) || 0,
+      // Partial payments — resent invoices lead with the balance, and the
+      // (re)minted Stripe link charges the balance too (Alex, 2026-07-20).
+      amountPaid: Math.max(
+        Number(invoice.total_paid) || 0,
+        Array.isArray(invoice.partial_payments)
+          ? invoice.partial_payments.reduce(
+              (sum: number, p: any) => sum + (Number(p?.amount) || 0),
+              0
+            )
+          : 0
+      ),
       subtotal: typeof invoice.subtotal === 'number' ? invoice.subtotal : Number(invoice.subtotal) || null,
       vatAmount: typeof invoice.vat_amount === 'number' ? invoice.vat_amount : Number(invoice.vat_amount) || null,
       invoiceDate: invoice.invoice_date || null,

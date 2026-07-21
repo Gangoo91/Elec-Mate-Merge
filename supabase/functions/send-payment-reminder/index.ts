@@ -72,6 +72,29 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Partial payments — chase the BALANCE, never the full total (Alex,
+    // 2026-07-20: customer had paid £800 of £1,200 and the reminder said
+    // "£1,200 due"). total_paid is maintained by PartialPaymentDialog; fall
+    // back to summing the partial_payments jsonb for older rows.
+    const partialSum = Array.isArray(invoice.partial_payments)
+      ? invoice.partial_payments.reduce(
+          (sum: number, p: any) => sum + (Number(p?.amount) || 0),
+          0
+        )
+      : 0;
+    const amountPaid = Math.max(Number(invoice.total_paid) || 0, partialSum);
+    const invoiceTotal = Number(invoice.total) || 0;
+    const balanceDue = Math.max(0, invoiceTotal - amountPaid);
+
+    if (invoiceTotal > 0 && balanceDue <= 0) {
+      return new Response(
+        JSON.stringify({
+          error: 'Invoice is fully paid by recorded payments — mark it paid instead of sending a reminder',
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Parse client data
     const clientData =
       typeof invoice.client_data === 'string' ? JSON.parse(invoice.client_data) : invoice.client_data;
@@ -124,6 +147,39 @@ const handler = async (req: Request): Promise<Response> => {
       console.warn('[send-payment-reminder] token mint exception', mintErr);
     }
 
+    // Pay-now link. A link minted before partial payments were recorded
+    // charges the FULL total — worse than no link. When anything has been
+    // paid, re-mint at the current balance (create-invoice-payment-link is
+    // balance-aware); if the re-mint fails, drop the button and let the
+    // bank-details card carry the payment.
+    let payNowUrl: string | null =
+      invoice.stripe_payment_link_url || invoice.external_invoice_url || null;
+    if (amountPaid > 0) {
+      payNowUrl = null;
+      try {
+        const mintResp = await fetch(`${supabaseUrl}/functions/v1/create-invoice-payment-link`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${supabaseKey}`,
+          },
+          body: JSON.stringify({ invoiceId }),
+        });
+        if (mintResp.ok) {
+          const minted = await mintResp.json();
+          if (minted?.url) payNowUrl = minted.url;
+        } else {
+          console.warn(
+            '[send-payment-reminder] balance link re-mint failed:',
+            mintResp.status,
+            await mintResp.text()
+          );
+        }
+      } catch (mintLinkErr) {
+        console.warn('[send-payment-reminder] balance link re-mint exception', mintLinkErr);
+      }
+    }
+
     // Generate email content via shared template
     const bankDetails = companyProfile?.bank_details || invoice.settings?.bankDetails || null;
     const emailContent = buildPaymentReminderEmail({
@@ -140,9 +196,10 @@ const handler = async (req: Request): Promise<Response> => {
       },
       clientName: clientData?.name || 'there',
       invoiceNumber: invoice.invoice_number || 'N/A',
-      total: Number(invoice.total) || 0,
+      total: invoiceTotal,
+      amountPaid,
       dueDate: invoice.invoice_due_date || null,
-      payNowUrl: invoice.stripe_payment_link_url || invoice.external_invoice_url || null,
+      payNowUrl,
       bankDetails: bankDetails
         ? {
             bankName: bankDetails.bankName || null,

@@ -43,7 +43,20 @@ interface QuoteRow {
   invoice_status: string;
   invoice_sent_at: string;
   total: number | string | null;
+  total_paid: number | string | null;
+  partial_payments: Array<{ amount?: number }> | null;
   client_data: Record<string, unknown> | null;
+}
+
+/** Amount still owed — partial payments reduce what we nag about. */
+function outstandingOf(q: QuoteRow): number {
+  const paid = Math.max(
+    Number(q.total_paid) || 0,
+    Array.isArray(q.partial_payments)
+      ? q.partial_payments.reduce((s, p) => s + (Number(p?.amount) || 0), 0)
+      : 0
+  );
+  return Math.max(0, (Number(q.total) || 0) - paid);
 }
 
 function clientNameFromQuote(q: QuoteRow): string {
@@ -73,7 +86,7 @@ interface PushBuild {
 function buildSingleInvoicePush(quote: QuoteRow): PushBuild {
   const sentMs = new Date(quote.invoice_sent_at).getTime();
   const daysOpen = Math.floor((Date.now() - sentMs) / (1000 * 60 * 60 * 24));
-  const amount = fmtGBP(Number(quote.total || 0));
+  const amount = fmtGBP(outstandingOf(quote));
   const client = clientNameFromQuote(quote);
   const invNum = quote.invoice_number ? ` (${quote.invoice_number})` : '';
 
@@ -93,7 +106,7 @@ function buildSingleInvoicePush(quote: QuoteRow): PushBuild {
 
 function buildDigestPush(quotes: QuoteRow[]): PushBuild {
   const count = quotes.length;
-  const totalAmount = quotes.reduce((sum, q) => sum + Number(q.total || 0), 0);
+  const totalAmount = quotes.reduce((sum, q) => sum + outstandingOf(q), 0);
   const totalLabel = fmtGBP(totalAmount);
   const oldestDays = Math.floor(
     (Date.now() -
@@ -138,7 +151,7 @@ serve(async (req) => {
     const { data: rows, error: pullErr } = await supabase
       .from('quotes')
       .select(
-        'id, user_id, invoice_number, invoice_status, invoice_sent_at, total, client_data, last_payment_prompt_pushed_at'
+        'id, user_id, invoice_number, invoice_status, invoice_sent_at, total, total_paid, partial_payments, client_data, last_payment_prompt_pushed_at'
       )
       .in('invoice_status', ['sent', 'overdue'])
       .not('invoice_sent_at', 'is', null)
@@ -148,7 +161,9 @@ serve(async (req) => {
       .limit(2000); // upper bound on quotes pulled
 
     if (pullErr) throw new Error(`Query failed: ${pullErr.message}`);
-    const allQuotes = (rows ?? []) as QuoteRow[];
+    // Drop invoices already covered by recorded partial payments — nothing
+    // left to chase (and "£0 overdue" pushes are worse than silence).
+    const allQuotes = ((rows ?? []) as QuoteRow[]).filter((q) => outstandingOf(q) > 0.005);
 
     // Group by user_id
     const byUser = new Map<string, QuoteRow[]>();

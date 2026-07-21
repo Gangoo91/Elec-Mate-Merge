@@ -82,7 +82,7 @@ serve(async (req) => {
       let query = supabaseAdmin
         .from('invoices')
         .select(
-          'id, user_id, invoice_number, total, client_data, job_details, parent_quote_id, deposit_for_quote'
+          'id, user_id, invoice_number, total, total_paid, partial_payments, client_data, job_details, parent_quote_id, deposit_for_quote'
         )
         .eq('id', invoiceId);
       if (!isServiceRoleCaller) query = query.eq('user_id', userId);
@@ -147,12 +147,32 @@ serve(async (req) => {
         ? JSON.parse(invoice.job_details)
         : invoice.job_details;
 
+    // Charge the OUTSTANDING BALANCE, not the invoice total. Recorded
+    // partial payments (quotes.total_paid / partial_payments jsonb) reduce
+    // what the customer owes — a checkout minted at the full total after a
+    // part-payment would double-charge them (Alex, 2026-07-20). Rows from
+    // the `invoices` table (deposits) have neither column, so paidSoFar is 0
+    // there and behaviour is unchanged.
+    const paidSoFar = Math.max(
+      Number(invoice.total_paid) || 0,
+      Array.isArray(invoice.partial_payments)
+        ? invoice.partial_payments.reduce(
+            (sum: number, p: any) => sum + (Number(p?.amount) || 0),
+            0
+          )
+        : 0
+    );
+    const chargeableTotal = Math.max(0, Number(invoice.total) - paidSoFar);
+    if (chargeableTotal <= 0) {
+      throw new Error('Invoice is already fully paid — no balance left to charge');
+    }
+
     // Calculate platform fee (1% in pence)
-    const invoiceAmountPence = Math.round(invoice.total * 100);
-    const platformFeePence = Math.round(invoice.total * PLATFORM_FEE_PERCENT);
+    const invoiceAmountPence = Math.round(chargeableTotal * 100);
+    const platformFeePence = Math.round(chargeableTotal * PLATFORM_FEE_PERCENT);
 
     console.log(
-      `💰 Invoice: £${invoice.total}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`
+      `💰 Invoice: £${invoice.total}, charging balance: £${chargeableTotal}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`
     );
 
     // Create Stripe Checkout Session
@@ -166,7 +186,9 @@ serve(async (req) => {
           price_data: {
             currency: 'gbp',
             product_data: {
-              name: `Invoice ${invoice.invoice_number}`,
+              name: paidSoFar > 0
+                ? `Invoice ${invoice.invoice_number} — remaining balance`
+                : `Invoice ${invoice.invoice_number}`,
               description: jobDetails?.title || 'Electrical Work',
             },
             unit_amount: invoiceAmountPence,
@@ -232,7 +254,7 @@ serve(async (req) => {
         url: session.url,
         sessionId: session.id,
         invoiceNumber: invoice.invoice_number,
-        amount: invoice.total,
+        amount: chargeableTotal,
         platformFee: platformFeePence / 100,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

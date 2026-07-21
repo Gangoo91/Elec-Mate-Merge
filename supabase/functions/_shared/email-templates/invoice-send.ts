@@ -22,6 +22,12 @@ export interface InvoiceSendData {
   clientName: string;
   invoiceNumber: string;
   total: number;
+  /**
+   * Sum already received against this invoice (partial payments). When > 0
+   * the email leads with the BALANCE — a resent invoice must never ask a
+   * part-paid customer for the full total again.
+   */
+  amountPaid?: number;
   subtotal?: number | null;
   vatAmount?: number | null;
   invoiceDate?: string | Date | null;
@@ -68,14 +74,20 @@ const formatDateLong = (d: string | Date | null | undefined): string => {
 
 export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
   const totalStr = formatGbp(data.total);
+  const amountPaid = Math.max(0, Number(data.amountPaid) || 0);
+  const isPartiallyPaid = amountPaid > 0 && amountPaid < (Number(data.total) || 0);
+  const balance = Math.max(0, (Number(data.total) || 0) - amountPaid);
+  const balanceStr = formatGbp(balance);
+  const paidStr = formatGbp(amountPaid);
   const dueDateStr = formatDateLong(data.dueDate);
   const issueDateStr = formatDateLong(data.invoiceDate);
   const firstName = (data.clientName || 'there').split(' ')[0] || 'there';
 
+  // Subject/preheader lead with the amount actually being asked for.
   const subject =
     data.customSubject?.trim() ||
-    `Invoice ${data.invoiceNumber} from ${data.company.name} — ${totalStr}`;
-  const preheader = `${totalStr}${dueDateStr ? ` due ${dueDateStr}` : ''} · Invoice ${data.invoiceNumber}${data.jobTitle ? ` · ${data.jobTitle}` : ''}`;
+    `Invoice ${data.invoiceNumber} from ${data.company.name} — ${balanceStr}`;
+  const preheader = `${balanceStr}${dueDateStr ? ` due ${dueDateStr}` : ''} · Invoice ${data.invoiceNumber}${data.jobTitle ? ` · ${data.jobTitle}` : ''}`;
 
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
   // Defensive: strip a leading greeting / trailing sign-off if the caller
@@ -104,10 +116,18 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
       value: `<span style="font-family:'SF Mono',Menlo,Consolas,monospace;">${data.invoiceNumber}</span>`,
     },
   ];
+  if (isPartiallyPaid) {
+    meta.push({ label: 'Invoice total', value: totalStr });
+    meta.push({ label: 'Received', value: paidStr });
+  }
   if (dueDateStr) meta.push({ label: 'Due', value: dueDateStr });
   if (data.paymentTerms) meta.push({ label: 'Terms', value: data.paymentTerms });
 
-  const hero = renderHero({ label: 'Amount due', value: totalStr, meta });
+  const hero = renderHero({
+    label: isPartiallyPaid ? 'Balance due' : 'Amount due',
+    value: balanceStr,
+    meta,
+  });
 
   // Primary CTA — Pay Now (brand-coloured). If no payment link, fall
   // back to a "View invoice online" link or just rely on bank details +
@@ -122,7 +142,7 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
       );
     cta = renderButton({
       href: data.payNowUrl,
-      label: `Pay ${totalStr} now`,
+      label: `Pay ${balanceStr} now`,
       background: data.company.primaryColor || '#0f172a',
       microcopy: microParts.join(' · '),
     });
@@ -166,6 +186,14 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
   subtotalRows.push(
     `<tr><td style="padding:10px 0 0;border-top:1px solid #e2e8f0;font-size:14px;color:#0f172a;font-weight:600;">Total</td><td style="padding:10px 0 0;border-top:1px solid #e2e8f0;font-size:14px;color:#0f172a;text-align:right;font-weight:700;">${totalStr}</td></tr>`
   );
+  if (isPartiallyPaid) {
+    subtotalRows.push(
+      `<tr><td style="padding:4px 0 0;font-size:13px;color:#64748b;">Received so far</td><td style="padding:4px 0 0;font-size:13px;color:#166534;text-align:right;font-weight:500;">−${paidStr}</td></tr>`
+    );
+    subtotalRows.push(
+      `<tr><td style="padding:6px 0 0;font-size:14px;color:#0f172a;font-weight:600;">Balance due</td><td style="padding:6px 0 0;font-size:14px;color:#0f172a;text-align:right;font-weight:700;">${balanceStr}</td></tr>`
+    );
+  }
   const totalsCard = renderCard({
     label: 'Summary',
     body: `<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">${subtotalRows.join('')}</table>`,

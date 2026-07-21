@@ -2265,31 +2265,85 @@ async function queryOutstandingInvoices(
 ): Promise<string> {
   if (!userId) return '[no userId]';
   const today = new Date().toISOString().split('T')[0];
+  // Invoice truth: real invoices are QUOTES rows with invoice_raised=true —
+  // the `invoices` table is mostly deposit invoices. Query both (same union
+  // as get_jobs_overview / the FE), and report the outstanding BALANCE where
+  // partial payments have been recorded, never just the total.
   let q = supabase
-    .from('invoices')
-    .select('id, invoice_number, client_data, total, due_date, status, paid_at, created_at')
+    .from('quotes')
+    .select(
+      'id, invoice_number, client_data, total, total_paid, partial_payments, invoice_due_date, invoice_status'
+    )
     .eq('user_id', userId)
-    .is('paid_at', null)
-    .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
-    .order('due_date', { ascending: true })
+    .eq('invoice_raised', true)
+    .not('invoice_status', 'in', '("paid","cancelled")')
+    .is('deleted_at', null)
+    .order('invoice_due_date', { ascending: true, nullsFirst: false })
     .limit(limit);
-  if (overdueOnly) q = q.lt('due_date', today);
+  if (overdueOnly) q = q.lt('invoice_due_date', today);
   const { data, error } = await q;
   if (error) {
     console.error('[query_outstanding_invoices]', error);
     return '[query failed]';
   }
-  if (!data || data.length === 0) return '[no unpaid invoices]';
-  return data
-    .map((inv: any, i: number) => {
-      const clientName = inv.client_data?.name || inv.client_data?.clientName || 'Unknown';
-      const clientEmail = inv.client_data?.email || '';
-      const due = inv.due_date ? String(inv.due_date).split('T')[0] : 'no due date';
-      const daysOverdue = inv.due_date
-        ? Math.floor((Date.now() - new Date(inv.due_date).getTime()) / 86400000)
+  let depositRows: any[] = [];
+  {
+    let dq = supabase
+      .from('invoices')
+      .select('id, invoice_number, client_data, total, due_date, status, paid_at, quote_id, deposit_for_quote')
+      .eq('user_id', userId)
+      .is('paid_at', null)
+      .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
+      .order('due_date', { ascending: true })
+      .limit(limit);
+    if (overdueOnly) dq = dq.lt('due_date', today);
+    const { data: deposits } = await dq;
+    // Keep only rows that aren't shadows of a quote-invoice (deposits etc.).
+    depositRows = (deposits || []).filter((r: any) => r.deposit_for_quote || !r.quote_id);
+  }
+  const rows = [
+    ...(data || []).map((inv: any) => {
+      const paidSum = Array.isArray(inv.partial_payments)
+        ? inv.partial_payments.reduce((s: number, pp: any) => s + (Number(pp?.amount) || 0), 0)
+        : 0;
+      const paid = Math.max(Number(inv.total_paid) || 0, paidSum);
+      return {
+        id: inv.id,
+        number: inv.invoice_number,
+        client: inv.client_data,
+        total: Number(inv.total) || 0,
+        paid,
+        due: inv.invoice_due_date,
+        status: inv.invoice_status || 'sent',
+      };
+    }),
+    ...depositRows.map((inv: any) => ({
+      id: inv.id,
+      number: inv.invoice_number,
+      client: inv.client_data,
+      total: Number(inv.total) || 0,
+      paid: 0,
+      due: inv.due_date,
+      status: `${inv.status || 'unpaid'}${inv.deposit_for_quote ? ' (deposit)' : ''}`,
+    })),
+  ].filter((r) => r.total - r.paid > 0.005 || r.total === 0);
+  if (rows.length === 0) return '[no unpaid invoices]';
+  return rows
+    .slice(0, limit)
+    .map((inv, i) => {
+      const clientName = inv.client?.name || inv.client?.clientName || 'Unknown';
+      const clientEmail = inv.client?.email || '';
+      const due = inv.due ? String(inv.due).split('T')[0] : 'no due date';
+      const daysOverdue = inv.due
+        ? Math.floor((Date.now() - new Date(inv.due).getTime()) / 86400000)
         : null;
       const overdueTag = daysOverdue && daysOverdue > 0 ? ` · ${daysOverdue}d OVERDUE` : '';
-      return `${i + 1}. id=${inv.id} · #${inv.invoice_number} · ${clientName}${clientEmail ? ` <${clientEmail}>` : ''} · £${inv.total} · due ${due}${overdueTag} · status=${inv.status}`;
+      const outstanding = Math.max(0, inv.total - inv.paid);
+      const moneyBit =
+        inv.paid > 0
+          ? `£${outstanding.toFixed(2)} outstanding of £${inv.total} (£${inv.paid.toFixed(2)} paid)`
+          : `£${inv.total}`;
+      return `${i + 1}. id=${inv.id} · #${inv.number} · ${clientName}${clientEmail ? ` <${clientEmail}>` : ''} · ${moneyBit} · due ${due}${overdueTag} · status=${inv.status}`;
     })
     .join('\n');
 }

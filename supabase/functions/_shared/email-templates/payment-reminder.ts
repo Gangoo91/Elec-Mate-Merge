@@ -20,6 +20,12 @@ export interface PaymentReminderData {
   clientName: string;
   invoiceNumber: string;
   total: number;
+  /**
+   * Sum already received against this invoice (partial payments). When > 0
+   * the email chases the BALANCE, never the full total — a customer who has
+   * paid £800 of £1,200 must be asked for £400, not £1,200.
+   */
+  amountPaid?: number;
   /** ISO/Date — invoice due date */
   dueDate?: string | Date | null;
   /** Stripe Checkout / external payment URL. If set, primary CTA. */
@@ -50,6 +56,11 @@ const formatDateLong = (d: string | Date | null | undefined): string => {
 
 export function buildPaymentReminderEmail(data: PaymentReminderData): PaymentReminderEmail {
   const totalStr = formatGbp(data.total);
+  const amountPaid = Math.max(0, Number(data.amountPaid) || 0);
+  const isPartiallyPaid = amountPaid > 0 && amountPaid < data.total;
+  const balance = Math.max(0, (Number(data.total) || 0) - amountPaid);
+  const balanceStr = formatGbp(balance);
+  const paidStr = formatGbp(amountPaid);
   const dueDateStr = formatDateLong(data.dueDate);
   const firstName = (data.clientName || 'there').split(' ')[0] || 'there';
 
@@ -72,21 +83,25 @@ export function buildPaymentReminderEmail(data: PaymentReminderData): PaymentRem
       ? `Final notice — invoice ${data.invoiceNumber} (${overdueLabel})`
       : `Final notice — invoice ${data.invoiceNumber}`,
   };
+  // Preheaders always quote the amount still owed — the balance, not the total.
   const preheaders: Record<PaymentReminderTone, string> = {
-    gentle: `${totalStr}${dueDateStr ? ` due ${dueDateStr}` : ''} · Invoice ${data.invoiceNumber} from ${data.company.name}`,
-    firm: `${totalStr}${overdueLabel ? ` · ${overdueLabel}` : ''} · Invoice ${data.invoiceNumber}`,
-    final: `Final notice · ${totalStr}${overdueLabel ? ` · ${overdueLabel}` : ''} · ${data.company.name}`,
+    gentle: `${balanceStr}${dueDateStr ? ` due ${dueDateStr}` : ''} · Invoice ${data.invoiceNumber} from ${data.company.name}`,
+    firm: `${balanceStr}${overdueLabel ? ` · ${overdueLabel}` : ''} · Invoice ${data.invoiceNumber}`,
+    final: `Final notice · ${balanceStr}${overdueLabel ? ` · ${overdueLabel}` : ''} · ${data.company.name}`,
   };
 
   // Tone-aware body copy.
+  const partialNote = isPartiallyPaid
+    ? ` Thank you for the <strong style="color:#0f172a">${paidStr}</strong> received so far — the remaining balance is <strong style="color:#0f172a">${balanceStr}</strong>.`
+    : '';
   const bodies: Record<PaymentReminderTone, string> = {
-    gentle: `Just a quick note — invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong> is due for payment. Whenever you get a chance to settle it, that'd be much appreciated. If you've already arranged this, please ignore this email — and thank you.`,
+    gentle: `Just a quick note — invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong> is due for payment. Whenever you get a chance to settle it, that'd be much appreciated. If you've already arranged this, please ignore this email — and thank you.${partialNote}`,
     firm: overdueLabel
-      ? `Just following up on invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong> — it's now <strong style="color:#0f172a">${overdueLabel}</strong>. Could you settle when you get a moment, or let me know if there's an issue?`
-      : `Just following up on invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong>. Could you settle when you get a moment, or let me know if there's an issue?`,
+      ? `Just following up on invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong> — it's now <strong style="color:#0f172a">${overdueLabel}</strong>. Could you settle when you get a moment, or let me know if there's an issue?${partialNote}`
+      : `Just following up on invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong>. Could you settle when you get a moment, or let me know if there's an issue?${partialNote}`,
     final: overdueLabel
-      ? `This is a final reminder for invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong>, which is now <strong style="color:#0f172a">${overdueLabel}</strong>. I need to get this resolved — please either pay now using the link below, or get in touch today so we can discuss.`
-      : `This is a final reminder for invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong>. I need to get this resolved — please either pay now using the link below, or get in touch today so we can discuss.`,
+      ? `This is a final reminder for invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong>, which is now <strong style="color:#0f172a">${overdueLabel}</strong>. I need to get this resolved — please either pay now using the link below, or get in touch today so we can discuss.${partialNote}`
+      : `This is a final reminder for invoice <strong style="color:#0f172a">${data.invoiceNumber}</strong>. I need to get this resolved — please either pay now using the link below, or get in touch today so we can discuss.${partialNote}`,
   };
 
   // Overdue pill — subtle escalation. Gentle = neutral, firm = amber, final = red.
@@ -108,11 +123,15 @@ export function buildPaymentReminderEmail(data: PaymentReminderData): PaymentRem
       value: `<span style="font-family:'SF Mono',Menlo,Consolas,monospace;">${data.invoiceNumber}</span>`,
     },
   ];
+  if (isPartiallyPaid) {
+    meta.push({ label: 'Invoice total', value: totalStr });
+    meta.push({ label: 'Received', value: paidStr });
+  }
   if (dueDateStr) meta.push({ label: 'Due', value: dueDateStr });
 
   const hero = renderHero({
-    label: 'Amount due',
-    value: totalStr,
+    label: isPartiallyPaid ? 'Balance due' : 'Amount due',
+    value: balanceStr,
     meta,
     pill,
   });
@@ -121,7 +140,7 @@ export function buildPaymentReminderEmail(data: PaymentReminderData): PaymentRem
   const cta = data.payNowUrl
     ? renderButton({
         href: data.payNowUrl,
-        label: `Pay ${totalStr} now`,
+        label: `Pay ${balanceStr} now`,
         background: data.company.primaryColor || '#0f172a',
         microcopy: 'Secure payment by card · powered by Stripe',
       })
