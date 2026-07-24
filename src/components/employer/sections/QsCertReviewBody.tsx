@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
+import { formatUKDate } from '@/utils/collegeHelpers';
 
 /**
  * Read-only technical rendering of a certificate inside the QS review sheet —
@@ -52,8 +53,8 @@ function SectionTitle({ dot, children }: { dot: string; children: React.ReactNod
 function ValueChip({ label, value }: { label: string; value: string }) {
   return (
     <span className="inline-flex items-baseline gap-1 text-[11.5px]">
-      <span className="text-white/40">{label}</span>
-      <span className="text-white/85 tabular-nums">{value}</span>
+      <span className="text-white/55">{label}</span>
+      <span className="text-white font-medium tabular-nums">{value}</span>
     </span>
   );
 }
@@ -73,7 +74,7 @@ function SignatureRow({ label, name, signed }: { label: string; name?: string; s
   return (
     <div className="flex items-center justify-between gap-3 py-2">
       <div className="min-w-0">
-        <p className="text-[10px] uppercase tracking-[0.14em] text-white/40">{label}</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] text-white/65">{label}</p>
         <p className="text-sm text-white truncate">{name || '—'}</p>
       </div>
       <span
@@ -106,7 +107,7 @@ function Observations({ reportType, data, onAddComment }: QsCertReviewBodyProps)
         Observations{raw.length > 0 ? ` (${raw.length})` : ''}
       </SectionTitle>
       {raw.length === 0 ? (
-        <p className="text-sm text-white/50">No observations recorded.</p>
+        <p className="text-sm text-white/70">No observations recorded.</p>
       ) : (
         <div className="space-y-2">
           {raw.map((obs, i) => {
@@ -132,11 +133,11 @@ function Observations({ reportType, data, onAddComment }: QsCertReviewBodyProps)
                   )}
                 </div>
                 {(obs.item || obs.location) && (
-                  <p className="text-[11.5px] text-white/45">{obs.item || obs.location}</p>
+                  <p className="text-[11.5px] text-white/65">{obs.item || obs.location}</p>
                 )}
                 {obs.recommendation && (
-                  <p className="text-[11.5px] text-white/60">
-                    <span className="text-white/40">Action: </span>
+                  <p className="text-[11.5px] text-white/75">
+                    <span className="text-white/65">Action: </span>
                     {obs.recommendation}
                   </p>
                 )}
@@ -220,7 +221,7 @@ function CircuitSchedule({
           : ''}
       </SectionTitle>
       {circuits.length === 0 ? (
-        <p className="text-sm text-white/50">No test results recorded.</p>
+        <p className="text-sm text-white/70">No test results recorded.</p>
       ) : (
         <>
           <div className="divide-y divide-white/[0.06] rounded-lg border border-white/[0.08] bg-white/[0.03]">
@@ -361,15 +362,15 @@ function MinorWorksTests({ data }: { data: CertData }) {
     <div className="space-y-3">
       <SectionTitle dot="bg-blue-400">Work & test results</SectionTitle>
       {workDescription && (
-        <p className="text-sm text-white/85 whitespace-pre-wrap">{workDescription}</p>
+        <p className="text-sm text-white/95 whitespace-pre-wrap">{workDescription}</p>
       )}
       {rows.length === 0 ? (
-        <p className="text-sm text-white/50">No test results recorded.</p>
+        <p className="text-sm text-white/70">No test results recorded.</p>
       ) : (
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5">
           {rows.map((t) => (
             <div key={t.key} className="min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.14em] text-white/40">{t.label}</p>
+              <p className="text-[10px] uppercase tracking-[0.14em] text-white/65">{t.label}</p>
               <p className="text-sm text-white tabular-nums truncate">
                 {t.value}
                 {t.unit ? ` ${t.unit}` : ''}
@@ -459,17 +460,21 @@ function Limitations({ data }: { data: CertData }) {
 
 function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
   if (rows.length === 0) return null;
+  // Stacked label-over-value cells in a tidy grid — the old justify-between rows
+  // marooned each value at the far right of a wide column. White values, no
+  // grey (Craig, 24 Jul).
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-1.5">
-      {rows.map((r) => (
-        <div
-          key={r.label}
-          className="flex items-baseline justify-between gap-3 border-b border-white/[0.04] pb-1"
-        >
-          <span className="text-[11px] text-white/40 shrink-0">{r.label}</span>
-          <span className="text-[12.5px] text-white/85 text-right break-words">{r.value}</span>
-        </div>
-      ))}
+    <div className="rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3.5">
+        {rows.map((r) => (
+          <div key={r.label} className="min-w-0">
+            <p className="text-[10.5px] uppercase tracking-[0.1em] text-white/55">{r.label}</p>
+            <p className="mt-0.5 text-[13px] font-medium text-white break-words leading-snug">
+              {r.value}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -477,14 +482,15 @@ function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
 // Build a label/value list, skipping blank fields.
 function buildRows(
   data: CertData,
-  spec: { label: string; keys: string[]; suffix?: string; join?: string }[]
+  spec: { label: string; keys: string[]; suffix?: string; join?: string; date?: boolean }[]
 ): { label: string; value: string }[] {
   const rows: { label: string; value: string }[] = [];
   for (const s of spec) {
     const parts = s.keys
       .map((k) => data?.[k])
       .filter((v) => present(v))
-      .map(asText);
+      .map(asText)
+      .map((v) => (s.date ? formatUKDate(v) : v)); // dates → DD/MM/YYYY
     if (parts.length === 0) continue;
     rows.push({ label: s.label, value: parts.join(s.join ?? ' ') + (s.suffix ?? '') });
   }
@@ -502,7 +508,7 @@ function InstallationDetails({ data }: { data: CertData }) {
     { label: 'Property', keys: ['propertyType'] },
     { label: 'Purpose', keys: ['purposeOfInspection', 'otherPurpose'] },
     { label: 'Extent', keys: ['extentOfInspection'] },
-    { label: 'Last inspection', keys: ['dateOfLastInspection'] },
+    { label: 'Last inspection', keys: ['dateOfLastInspection'], date: true },
   ]);
   if (rows.length === 0) return null;
   return (
@@ -585,7 +591,7 @@ function OutcomeBadge({ outcome }: { outcome: unknown }) {
     style = CODE_STYLE.FI;
     label = 'FI';
   } else if (o === 'na' || o === 'notapplicable') {
-    style = 'border-white/15 text-white/40';
+    style = 'border-white/15 text-white/65';
     label = 'N/A';
   } else if (o === 'lim' || o === 'limitation') {
     style = 'bg-amber-500/10 border-amber-500/30 text-amber-200';
@@ -633,7 +639,7 @@ function ScheduleOfInspections({ reportType, data }: QsCertReviewBodyProps) {
       </SectionTitle>
 
       {visible.length === 0 ? (
-        <p className="text-sm text-white/50">
+        <p className="text-sm text-white/70">
           No items flagged.{' '}
           <button
             type="button"
@@ -647,17 +653,17 @@ function ScheduleOfInspections({ reportType, data }: QsCertReviewBodyProps) {
         <div className="space-y-3">
           {[...groups.entries()].map(([section, rows]) => (
             <div key={section} className="space-y-1.5">
-              <p className="text-[10px] uppercase tracking-[0.12em] text-white/40">{section}</p>
+              <p className="text-[10px] uppercase tracking-[0.12em] text-white/65">{section}</p>
               {rows.map((it, i) => (
                 <div
                   key={it?.id || i}
                   className="flex items-start gap-2.5 border-b border-white/[0.04] pb-1.5"
                 >
-                  <span className="text-[11px] text-white/40 tabular-nums shrink-0 w-8">
+                  <span className="text-[11px] text-white/65 tabular-nums shrink-0 w-8">
                     {asText(it?.number)}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12.5px] text-white/85">{asText(it?.item)}</p>
+                    <p className="text-[12.5px] text-white/95">{asText(it?.item)}</p>
                     {present(it?.clause) && (
                       <p className="text-[10px] text-white/35">Reg {asText(it.clause)}</p>
                     )}
@@ -736,7 +742,7 @@ function OverallOutcome({ reportType, data }: QsCertReviewBodyProps) {
   const satisfactory = a === 'satisfactory' || a === 'yes';
   const unsatisfactory = a === 'unsatisfactory' || a === 'no';
   const rows = buildRows(data, [
-    { label: 'Next inspection', keys: ['nextInspectionDate'] },
+    { label: 'Next inspection', keys: ['nextInspectionDate'], date: true },
     { label: 'Interval', keys: ['inspectionInterval'] },
     { label: 'Reason', keys: ['intervalReasons'] },
   ]);

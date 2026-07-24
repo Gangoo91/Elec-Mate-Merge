@@ -13,14 +13,12 @@ import { cn } from '@/lib/utils';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { useCombinedUnreadWithNotifications } from '@/hooks/useCombinedUnread';
 import { MessagesSheet } from './MessagesSheet';
-import { NotificationsSheet } from './NotificationsSheet';
 
 const UserProfileDropdown = () => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
 
   const [messagesOpen, setMessagesOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -42,17 +40,13 @@ const UserProfileDropdown = () => {
 
   const { unreadCount: notificationUnread } = useNotifications();
   const { messageUnread } = useCombinedUnreadWithNotifications(notificationUnread);
-  const totalUnread = notificationUnread + messageUnread;
-  const bellBadgeCount = notificationUnread;
+  // Notifications (events + Part P) now live in the single global header bell
+  // (ELE-1379); the avatar badge reflects unread MESSAGES only.
+  const totalUnread = messageUnread;
 
   const handleOpenMessages = () => {
     setDropdownOpen(false);
     setTimeout(() => setMessagesOpen(true), 150);
-  };
-
-  const handleOpenNotifications = () => {
-    setDropdownOpen(false);
-    setTimeout(() => setNotificationsOpen(true), 150);
   };
 
   const handleSignOut = async () => {
@@ -167,7 +161,6 @@ const UserProfileDropdown = () => {
 
           {/* Menu */}
           <div className="p-1.5">
-            <MenuItem icon={Bell} label="Notifications" badge={bellBadgeCount} onClick={handleOpenNotifications} />
             <MenuItem icon={MessageSquare} label="Messages" badge={messageUnread} onClick={handleOpenMessages} />
           </div>
 
@@ -180,7 +173,6 @@ const UserProfileDropdown = () => {
       </DropdownMenu>
 
       <MessagesSheet open={messagesOpen} onOpenChange={setMessagesOpen} />
-      <NotificationsSheet open={notificationsOpen} onOpenChange={setNotificationsOpen} />
     </>
   );
 };

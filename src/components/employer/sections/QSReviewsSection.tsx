@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { Loader2, ShieldCheck, Undo2 } from 'lucide-react';
+import { Loader2, ShieldCheck, Undo2, Pencil } from 'lucide-react';
 import { useToast, toast } from '@/hooks/use-toast';
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,6 +14,7 @@ import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
 import TeamCertificatesSection from '@/components/inspection/TeamCertificatesSection';
 import { QsReviewComments } from '@/components/employer/sections/QsReviewComments';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
+import { formatUKDate } from '@/utils/collegeHelpers';
 import {
   ListCard,
   ListCardHeader,
@@ -238,14 +239,15 @@ export function QSReviewsSection() {
 function DetailField({ label, value }: { label: string; value: string | null | undefined }) {
   return (
     <div className="min-w-0">
-      <p className="text-[10px] uppercase tracking-[0.14em] text-white/40">{label}</p>
-      <p className="text-sm text-white truncate">{value || '—'}</p>
+      <p className="text-[10.5px] uppercase tracking-[0.12em] text-white/55">{label}</p>
+      <p className="text-sm font-medium text-white truncate">{value || '—'}</p>
     </div>
   );
 }
 
 function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onClose: () => void }) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { data: detail, isLoading, isError } = useQsReviewReport(item?.review_id ?? null);
   const approveMutation = useApproveQsReview();
   const returnMutation = useReturnQsReview();
@@ -292,6 +294,22 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
   const handleClose = () => {
     reset();
     onClose();
+  };
+
+  // Open the team member's cert in the normal editable I&T form — as if it were
+  // the QS's own. Load + save already work for a team QS (getReportDataWithId
+  // has no user filter, and the "QS can update team reports" RLS policy grants
+  // the write via is_team_qs_of). Same route TeamCertificatesSection uses.
+  const handleEdit = () => {
+    if (!item) return;
+    const t = item.report_type;
+    const id = encodeURIComponent(item.report_id);
+    onClose();
+    if (['pat-testing', 'testing-only'].includes(t)) {
+      navigate(`/electrician/inspection-testing/${t}/${id}`);
+    } else {
+      navigate(`/electrician/inspection-testing?section=${t}&reportId=${id}`);
+    }
   };
 
   const handleApprove = async () => {
@@ -356,9 +374,28 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.08]">
-            <SheetTitle className="text-left text-base">
-              {item ? `${TYPE_LABEL[item.report_type] || item.report_type} review` : ''}
-            </SheetTitle>
+            <div className="flex items-center justify-between gap-3 pr-7">
+              <div className="min-w-0 text-left">
+                <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
+                  {item ? `${TYPE_LABEL[item.report_type] || item.report_type} review` : ''}
+                </SheetTitle>
+                {item?.certificate_number && (
+                  <p className="mt-0.5 text-[12px] font-mono text-white/60 truncate">
+                    {item.certificate_number}
+                  </p>
+                )}
+              </div>
+              {item && (
+                <button
+                  type="button"
+                  onClick={handleEdit}
+                  className="shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-transform active:scale-[0.98]"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                  Edit cert
+                </button>
+              )}
+            </div>
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
@@ -381,46 +418,47 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
               <>
                 {/* Certificate summary */}
                 <div className="space-y-3">
-                  <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+                  <h3 className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
                     Certificate
                   </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    <DetailField label="Client" value={item.client_name} />
-                    <DetailField label="Certificate no." value={item.certificate_number} />
-                    <DetailField label="Address" value={item.installation_address} />
-                    <DetailField label="Inspection date" value={item.inspection_date} />
-                    <DetailField label="Submitted by" value={item.electrician_name} />
-                    <DetailField label="Inspector on cert" value={item.inspector_name} />
-                  </div>
-                  {item.submitted_note && (
-                    <div className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
-                      <p className="text-[10px] uppercase tracking-[0.14em] text-white/40">
-                        Note from electrician
-                      </p>
-                      <p className="text-sm text-white/80 whitespace-pre-wrap">
-                        {item.submitted_note}
-                      </p>
+                  <div className="rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-3.5">
+                      <DetailField label="Client" value={item.client_name} />
+                      <DetailField label="Inspection date" value={formatUKDate(item.inspection_date)} />
+                      <DetailField label="Address" value={item.installation_address} />
+                      <DetailField label="Submitted by" value={item.electrician_name} />
+                      <DetailField label="Inspector on cert" value={item.inspector_name} />
                     </div>
-                  )}
-                  {item?.report_id && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => setPdfOpen(true)}
-                        className="text-[12px] font-medium text-elec-yellow touch-manipulation"
-                      >
-                        View PDF →
-                      </button>
-                      {/* Shared I&T viewer — generates the cert PDF on demand,
-                          so it works even when pdf_url was never pre-stored. */}
-                      <ReportPdfViewer
-                        reportId={item.report_id}
-                        open={pdfOpen}
-                        onOpenChange={setPdfOpen}
-                      />
-                    </>
-                  )}
+                    {item.submitted_note && (
+                      <div className="mt-3.5 pt-3.5 border-t border-white/[0.07]">
+                        <p className="text-[10.5px] uppercase tracking-[0.12em] text-white/55">
+                          Note from electrician
+                        </p>
+                        <p className="mt-0.5 text-sm text-white/90 whitespace-pre-wrap">
+                          {item.submitted_note}
+                        </p>
+                      </div>
+                    )}
+                    {item?.report_id && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setPdfOpen(true)}
+                          className="mt-3.5 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.06] active:scale-[0.98]"
+                        >
+                          View PDF
+                        </button>
+                        {/* Shared I&T viewer — generates the cert PDF on demand,
+                            so it works even when pdf_url was never pre-stored. */}
+                        <ReportPdfViewer
+                          reportId={item.report_id}
+                          open={pdfOpen}
+                          onOpenChange={setPdfOpen}
+                        />
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 {/* Full technical review — observations, test schedule, declarations */}

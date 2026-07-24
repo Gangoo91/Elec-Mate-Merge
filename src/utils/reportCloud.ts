@@ -67,6 +67,11 @@ export interface ReportsResponse {
   hasMore: boolean;
 }
 
+// Reports we've already pinged the originator about this session (a QS editing a
+// team member's cert). Keeps the "your cert was edited" notification to once per
+// report per session — the RPC also dedupes server-side (6h) as a backstop.
+const qsEditNotified = new Set<string>();
+
 export const reportCloud = {
   /**
    * Get all reports for a user with pagination
@@ -605,6 +610,22 @@ export const reportCloud = {
         .eq('report_id', reportId);
 
       if (error) throw error;
+
+      // If a QS/team member (not the owner) just edited this cert, tell the
+      // originator. Fire-and-forget, once per report per session; the RPC no-ops
+      // for own certs and for non-QS callers, and dedupes server-side. Called
+      // loosely — the RPC isn't in the generated Supabase types yet.
+      if (!qsEditNotified.has(reportId)) {
+        qsEditNotified.add(reportId);
+        (
+          supabase.rpc as unknown as (
+            fn: string,
+            args: Record<string, unknown>
+          ) => Promise<{ error: unknown }>
+        )('notify_report_owner_of_qs_edit', { p_report_id: reportId }).then(({ error: rpcError }) => {
+          if (rpcError) qsEditNotified.delete(reportId); // allow a retry next save
+        });
+      }
 
       return { success: true };
     } catch (error) {

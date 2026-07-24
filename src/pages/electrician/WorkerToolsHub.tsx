@@ -25,7 +25,6 @@ import { useMyTasks } from '@/hooks/useJobTasks';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
-import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
 import { MessagesSheet } from '@/components/auth/MessagesSheet';
 
 // Dev mode whitelist - allows access without employee record (dev builds only;
@@ -260,9 +259,11 @@ export default function WorkerToolsHub() {
   const { data: myTasks = [] } = useMyTasks();
   const openTaskCount = myTasks.filter((t) => t.status !== 'Done').length;
 
-  // QS reviews — only surfaced to workers who are a QS (or owner/principal QS).
+  // QS reviews — surfaced to any team worker (originator-first: see the QS's
+  // feedback on your certs). A worker who's also a QS gets the reviewer side too.
   const { data: qsCtx } = useQsTeamContext();
   const amIQs = Boolean(qsCtx?.am_i_qs);
+  const isTeamMember = Boolean(qsCtx?.is_team_member);
   const qsPending = useQsPendingCount();
 
   // Push deep-links land here with ?task=<id> / ?signoff — redirect to the page
@@ -388,16 +389,18 @@ export default function WorkerToolsHub() {
 
   // Section 02 · WORK
   const workCards: ToolCard[] = [
-    ...(amIQs
+    ...(isTeamMember || amIQs
       ? [
           {
             id: 'qs-reviews',
             eyebrow: 'Quality',
             title: 'QS Reviews',
-            description: 'Review and authorise certificates awaiting QS sign-off.',
-            meta: qsPending > 0 ? `${qsPending} to review` : 'All reviewed',
-            metaTone: qsPending > 0 ? 'text-amber-400' : undefined,
-            badge: qsPending,
+            description: amIQs
+              ? 'Your QS feedback, plus certificates awaiting your sign-off.'
+              : "Your QS's feedback on your certificates — edit and resubmit.",
+            meta: amIQs && qsPending > 0 ? `${qsPending} to review` : 'QS feedback',
+            metaTone: amIQs && qsPending > 0 ? 'text-amber-400' : undefined,
+            badge: amIQs ? qsPending : undefined,
             to: `${BASE}/qs-reviews`,
           },
         ]
@@ -559,7 +562,8 @@ export default function WorkerToolsHub() {
                 Worker Tools
               </h1>
             </div>
-            <WorkerNotificationsBell />
+            {/* Notifications live in the single global header bell (ELE-1379) —
+                the per-hub bell was a duplicate and has been removed. */}
           </div>
         </div>
       </div>

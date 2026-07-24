@@ -14,7 +14,7 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, ShieldCheck, Undo2, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Loader2, ShieldCheck, Undo2, ArrowLeft, ExternalLink, Pencil } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { openPrintRegister } from '@/utils/printRegister';
@@ -44,11 +44,13 @@ import {
 } from '@/components/employer/editorial';
 import {
   useQsReviewQueue,
+  useMyQsReviews,
   useQsReviewReport,
   useApproveQsReview,
   useReturnQsReview,
   type QsQueueItem,
 } from '@/hooks/useQsReviewQueue';
+import { useQsTeamContext, useSubmitForQsReview } from '@/hooks/useQsReview';
 
 const TYPE_LABEL: Record<string, string> = {
   eicr: 'EICR',
@@ -98,13 +100,28 @@ export default function QsReviewPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // We always load the full queue so counts and tab switches are instant; the
-  // hook's RPC + realtime subscription + query key are reused unchanged.
-  const { data: allItems = [], isLoading } = useQsReviewQueue('all');
+  // Worker Tools is originator-first: the default view is the worker's OWN certs
+  // + the QS's feedback on them. A worker who is ALSO a QS gets the reviewer
+  // queue as a second tab, so they see both sides.
+  const { data: teamCtx } = useQsTeamContext();
+  const amIQs = !!teamCtx?.am_i_qs;
+  const [side, setSide] = useState<'mine' | 'review'>('mine');
+  const effectiveSide = side === 'review' && amIQs ? 'review' : 'mine';
+  const isReview = effectiveSide === 'review';
+
+  const mineQuery = useMyQsReviews();
+  const reviewQuery = useQsReviewQueue('all');
+  const { data: allItems = [], isLoading } = isReview ? reviewQuery : mineQuery;
 
   const [tab, setTab] = useState<ScopeTab>('pending');
   const [search, setSearch] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const switchSide = (next: 'mine' | 'review') => {
+    setSide(next);
+    setSelectedId(null);
+    setTab('pending');
+  };
 
   const counts = useMemo(() => {
     const c = { pending: 0, approved: 0, returned: 0, cancelled: 0 };
@@ -182,10 +199,14 @@ export default function QsReviewPage() {
       <WorkerToolPage
         eyebrow="Quality"
         title="QS Reviews"
-        description="Review the certificate, then countersign or return it to the electrician."
+        description={
+          effectiveSide === 'mine'
+            ? "Your QS's feedback on certificates you submitted — see the comments, edit, and resend."
+            : 'Review the certificate, then countersign or return it to the electrician.'
+        }
       >
         <div className="lg:hidden">
-          <QsReviewDetail item={selectedItem} onBack={() => setSelectedId(null)} />
+          <QsReviewDetail item={selectedItem} onBack={() => setSelectedId(null)} side={effectiveSide} />
         </div>
         {/* Desktop falls through to the split queue+detail layout. */}
         <div className="hidden lg:block">
@@ -202,6 +223,9 @@ export default function QsReviewPage() {
             setSelectedId={setSelectedId}
             selectedItem={selectedItem}
             onSetupTeam={() => navigate('/employer?section=team')}
+            side={effectiveSide}
+            amIQs={amIQs}
+            onSwitchSide={switchSide}
           />
         </div>
       </WorkerToolPage>
@@ -213,7 +237,11 @@ export default function QsReviewPage() {
     <WorkerToolPage
       eyebrow="Quality"
       title="QS Reviews"
-      description="Certificates submitted for Qualifying Supervisor sign-off. Review the full technical detail, then approve and countersign — or return with comments."
+      description={
+        effectiveSide === 'mine'
+          ? 'Certificates you sent for QS sign-off — see the QS’s comments, edit the cert, and resubmit.'
+          : 'Certificates submitted for Qualifying Supervisor sign-off. Review the full technical detail, then approve and countersign — or return with comments.'
+      }
       actions={
         allItems.length > 0 ? (
           <SecondaryButton size="sm" onClick={handleExport}>
@@ -235,6 +263,9 @@ export default function QsReviewPage() {
         setSelectedId={setSelectedId}
         selectedItem={selectedItem}
         onSetupTeam={() => navigate('/employer?section=team')}
+        side={effectiveSide}
+        amIQs={amIQs}
+        onSwitchSide={switchSide}
       />
     </WorkerToolPage>
   );
@@ -262,6 +293,9 @@ interface QueueAndDetailProps {
   setSelectedId: (id: string | null) => void;
   selectedItem: QsQueueItem | null;
   onSetupTeam: () => void;
+  side: 'mine' | 'review';
+  amIQs: boolean;
+  onSwitchSide: (s: 'mine' | 'review') => void;
 }
 
 function QueueAndDetail({
@@ -277,22 +311,65 @@ function QueueAndDetail({
   setSelectedId,
   selectedItem,
   onSetupTeam,
+  side,
+  amIQs,
+  onSwitchSide,
 }: QueueAndDetailProps) {
-  if (isLoading) return <LoadingBlocks />;
+  // Originator ⇄ reviewer toggle — only shown to a worker who is also a QS.
+  const sideToggle = amIQs ? (
+    <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
+      {(
+        [
+          { key: 'mine', label: 'My certificates' },
+          { key: 'review', label: 'To review' },
+        ] as const
+      ).map(({ key, label }) => (
+        <button
+          key={key}
+          type="button"
+          onClick={() => onSwitchSide(key)}
+          className={
+            side === key
+              ? 'h-9 rounded-lg bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow text-[13px] font-semibold touch-manipulation'
+              : 'h-9 rounded-lg text-white/70 text-[13px] font-semibold touch-manipulation'
+          }
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  ) : null;
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        {sideToggle}
+        <LoadingBlocks />
+      </div>
+    );
+  }
 
   if (allItems.length === 0) {
     return (
-      <EmptyState
-        title="No certificates awaiting review"
-        description="When a team member submits an EICR, EIC or Minor Works certificate for Qualifying Supervisor sign-off, it will appear here. Team members link automatically when they sign in with the email on their roster entry."
-        action="Set up your team"
-        onAction={onSetupTeam}
-      />
+      <div className="space-y-4">
+        {sideToggle}
+        <EmptyState
+          title={side === 'mine' ? 'No QS feedback yet' : 'No certificates awaiting review'}
+          description={
+            side === 'mine'
+              ? 'Certificates you send to your Qualifying Supervisor for sign-off show here — with their comments and what to action.'
+              : 'When a team member submits an EICR, EIC or Minor Works certificate for Qualifying Supervisor sign-off, it will appear here. Team members link automatically when they sign in with the email on their roster entry.'
+          }
+          action={side === 'review' ? 'Set up your team' : undefined}
+          onAction={side === 'review' ? onSetupTeam : undefined}
+        />
+      </div>
     );
   }
 
   const queue = (
     <div className="space-y-6">
+      {sideToggle}
       {/* Filter + search */}
       <FilterBar
         tabs={[
@@ -362,7 +439,7 @@ function QueueAndDetail({
 
   // Right-hand pane (desktop only): the selected review, or a prompt to pick one.
   const detailPane = selectedItem ? (
-    <QsReviewDetail item={selectedItem} onBack={() => setSelectedId(null)} />
+    <QsReviewDetail item={selectedItem} onBack={() => setSelectedId(null)} side={side} />
   ) : (
     <div className="rounded-2xl border border-dashed border-white/[0.10] bg-[hsl(0_0%_10%)] px-6 py-16 text-center">
       <p className="text-sm font-medium text-white/70">Select a certificate to review</p>
@@ -431,11 +508,50 @@ function DetailField({ label, value }: { label: string; value: string | null | u
    over unchanged in behaviour.
    ──────────────────────────────────────────────────────── */
 
-function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => void }) {
+function QsReviewDetail({
+  item,
+  onBack,
+  side = 'review',
+}: {
+  item: QsQueueItem;
+  onBack: () => void;
+  /** 'review' = QS reviewing someone's cert (approve/return); 'mine' = the
+   *  originator acting on QS feedback (edit + resubmit). */
+  side?: 'review' | 'mine';
+}) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { data: detail, isLoading, isError } = useQsReviewReport(item.review_id);
   const approveMutation = useApproveQsReview();
   const returnMutation = useReturnQsReview();
+  const submitMutation = useSubmitForQsReview();
+
+  const handleResubmit = async () => {
+    try {
+      await submitMutation.mutateAsync({ reportId: item.report_id });
+      toast({ title: 'Sent to your QS', description: 'Your QS will re-review the certificate.' });
+      onBack();
+    } catch (err) {
+      toast({
+        title: 'Resubmit failed',
+        description: err instanceof Error ? err.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  // Open the team member's cert in the normal editable I&T form — load + save
+  // already work for a team QS (see reportCloud + the "QS can update team
+  // reports" RLS policy). Mirrors the QS Review bench's Edit action.
+  const handleEdit = () => {
+    const t = item.report_type;
+    const id = encodeURIComponent(item.report_id);
+    if (['pat-testing', 'testing-only'].includes(t)) {
+      navigate(`/electrician/inspection-testing/${t}/${id}`);
+    } else {
+      navigate(`/electrician/inspection-testing?section=${t}&reportId=${id}`);
+    }
+  };
 
   const [reviewerName, setReviewerName] = useState('');
   const [signature, setSignature] = useState<string | null>(null);
@@ -541,10 +657,20 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
       </button>
 
       <div className="flex items-center justify-between gap-3">
-        <h3 className="text-lg font-semibold text-white">
-          {TYPE_LABEL[item.report_type] || item.report_type} review
-        </h3>
-        <Pill tone={STATUS_TONE[item.status]}>{STATUS_LABEL[item.status] ?? item.status}</Pill>
+        <div className="flex items-center gap-2.5 min-w-0">
+          <h3 className="text-lg font-semibold text-white truncate">
+            {TYPE_LABEL[item.report_type] || item.report_type} review
+          </h3>
+          <Pill tone={STATUS_TONE[item.status]}>{STATUS_LABEL[item.status] ?? item.status}</Pill>
+        </div>
+        <button
+          type="button"
+          onClick={handleEdit}
+          className="shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-transform active:scale-[0.98]"
+        >
+          <Pencil className="h-3.5 w-3.5" />
+          Edit cert
+        </button>
       </div>
 
       {isLoading && (
@@ -639,8 +765,46 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
             </div>
           )}
 
+          {/* Originator — act on the QS's feedback (edit + resubmit) */}
+          {side === 'mine' && (
+            <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5 space-y-3">
+              <h4 className="text-[15px] font-semibold text-white flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                {item.status === 'returned'
+                  ? 'Action your QS feedback'
+                  : item.status === 'approved'
+                    ? 'Approved by your QS'
+                    : 'Awaiting your QS'}
+              </h4>
+              <p className="text-[13px] text-white/70">
+                {item.status === 'returned'
+                  ? 'Edit the certificate to address the comments above, then send it back for review.'
+                  : item.status === 'approved'
+                    ? 'Your QS has countersigned this certificate.'
+                    : 'Your QS has this for review. You can still edit and re-send if needed.'}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <PrimaryButton size="lg" fullWidth onClick={handleEdit}>
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit certificate
+                </PrimaryButton>
+                {item.status !== 'approved' && (
+                  <SecondaryButton
+                    size="lg"
+                    fullWidth
+                    onClick={handleResubmit}
+                    disabled={submitMutation.isPending}
+                  >
+                    <ShieldCheck className="h-4 w-4 mr-2" />
+                    {submitMutation.isPending ? 'Sending…' : 'Resubmit to QS'}
+                  </SecondaryButton>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Decision */}
-          {isPending && mode === 'view' && (
+          {side === 'review' && isPending && mode === 'view' && (
             <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5 space-y-4">
               <h4 className="text-[15px] font-semibold text-white flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
@@ -659,7 +823,7 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
             </div>
           )}
 
-          {isPending && mode === 'approve' && (
+          {side === 'review' && isPending && mode === 'approve' && (
             <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5 space-y-4">
               <h4 className="text-[15px] font-semibold text-white flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
@@ -705,7 +869,7 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
             </div>
           )}
 
-          {isPending && mode === 'return' && (
+          {side === 'review' && isPending && mode === 'return' && (
             <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5 space-y-4">
               <h4 className="text-[15px] font-semibold text-white flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />

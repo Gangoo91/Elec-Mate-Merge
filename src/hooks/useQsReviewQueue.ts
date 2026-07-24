@@ -42,6 +42,49 @@ export interface QsReviewReportDetail {
 }
 
 /** The company's QS review queue (employer account or active QS team member). */
+/**
+ * The ORIGINATOR side of the QS loop — the signed-in worker's OWN certs that
+ * went through QS review (returned-first, so what needs action leads). Same row
+ * shape as the reviewer queue, so the review detail UI is reused. RLS-safe RPC
+ * (get_my_qs_reviews) scoped to the caller as the electrician.
+ */
+export const useMyQsReviews = (enabled = true) => {
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
+    queryKey: ['my-qs-reviews'],
+    queryFn: async (): Promise<QsQueueItem[]> => {
+      const { data, error } = await (
+        supabase.rpc as unknown as (fn: string) => Promise<{ data: unknown; error: unknown }>
+      )('get_my_qs_reviews');
+      if (error) {
+        console.error('[my QS reviews] fetch failed:', error);
+        throw new Error('Failed to load your QS feedback');
+      }
+      return (data ?? []) as QsQueueItem[];
+    },
+    enabled,
+    refetchInterval: 60000,
+  });
+
+  useEffect(() => {
+    if (!enabled) return;
+    const channel = supabase
+      .channel(realtimeChannelName('my-qs-reviews'))
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'report_qs_reviews' },
+        () => queryClient.invalidateQueries({ queryKey: ['my-qs-reviews'] })
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient, enabled]);
+
+  return query;
+};
+
 export const useQsReviewQueue = (status: 'pending' | 'all' = 'pending') => {
   const queryClient = useQueryClient();
 

@@ -18,7 +18,6 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
-import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
 
 // Keep in sync with WorkerToolsHub's dev whitelist (dev builds only; never
 // bypasses the team gate in production bundles).
@@ -93,7 +92,7 @@ export function WorkerToolPage({
                 {title}
               </h1>
             </div>
-            <WorkerNotificationsBell />
+            {/* Notifications live in the single global header bell (ELE-1379). */}
           </div>
         </div>
       </div>
