@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -165,16 +166,13 @@ const InvoiceSettingsSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Invoices</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Invoice settings
@@ -192,7 +190,7 @@ const InvoiceSettingsSheet = ({
                   value={latePaymentInterestRate}
                   onChange={(e) => setLatePaymentInterestRate(e.target.value)}
                   placeholder="8% p.a."
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
               <div className="space-y-1.5">
@@ -203,7 +201,7 @@ const InvoiceSettingsSheet = ({
                   value={preferredPaymentMethod}
                   onChange={(e) => setPreferredPaymentMethod(e.target.value)}
                   placeholder="Bank Transfer"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
             </div>
@@ -355,7 +353,7 @@ const InvoiceSettingsSheet = ({
                   value={newCustomInvoiceTerm}
                   onChange={(e) => setNewCustomInvoiceTerm(e.target.value)}
                   placeholder="Add custom invoice term…"
-                  className="flex-1 h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="flex-1 h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && newCustomInvoiceTerm.trim()) {
                       e.preventDefault();
@@ -402,7 +400,7 @@ const InvoiceSettingsSheet = ({
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

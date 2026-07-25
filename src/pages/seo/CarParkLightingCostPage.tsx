@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote car park lighting with per-column pricing and ancillary costs.',
     icon: Calculator,

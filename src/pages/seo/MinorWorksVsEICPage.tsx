@@ -78,7 +78,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate App',
     description: 'Digital Minor Works certificates with auto-fill and instant PDF export.',
     icon: FileText,
@@ -99,7 +99,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Complete guide to notifiable vs non-notifiable work, competent person schemes, and penalties.',
@@ -139,7 +139,7 @@ const sections = [
           device (MCB, RCBO, or fuse), you are installing a new circuit and a full{' '}
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is required. If the work is
           an addition or alteration to an existing circuit — without creating a new one — a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works certificate
           </SEOInternalLink>{' '}
           is the correct document.
@@ -357,7 +357,7 @@ const sections = [
       <>
         <p>
           The choice between Minor Works and EIC also intersects with{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (Approved Document P), which governs electrical safety in dwellings in England and Wales.

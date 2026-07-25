@@ -1,6 +1,6 @@
 // EIC PDF Generator
 // Generates Electrical Installation Certificate - Schedule of Test Results
-// BS 7671:2018+A3:2024 compliant format
+// BS 7671:2018+A4:2026 compliant format
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -128,7 +128,7 @@ export async function generateEICPDF(schedule: EICScheduleOfTests): Promise<Blob
 
   pdf.setFont('helvetica', 'normal');
   pdf.setFontSize(8);
-  pdf.text('Tested in accordance with BS 7671:2018+A3:2024', margin, finalY + 5);
+  pdf.text('Tested in accordance with BS 7671:2018+A4:2026', margin, finalY + 5);
   pdf.text('Part 6 - Inspection and Testing', margin, finalY + 10);
 
   // Signature Section

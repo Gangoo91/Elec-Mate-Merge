@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 — inspection and testing qualifications valued by defence and industrial contractors.',
@@ -544,7 +544,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Barrow jobs accurately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Account for asbestos survey costs on pre-1985 properties, Walney Island coastal
                   installation premiums, and travel time for rural Furness Peninsula jobs. Send
                   professional PDF quotes to clients from the survey.

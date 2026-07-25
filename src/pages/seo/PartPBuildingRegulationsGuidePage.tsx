@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Issue Minor Electrical Installation Works Certificates instantly.',
     icon: ClipboardCheck,
@@ -323,7 +323,7 @@ const sections = [
           Even for non-notifiable work, all electrical installations in dwellings must comply with
           BS 7671. The absence of a notification requirement does not mean the work is exempt from
           technical standards. A{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Electrical Installation Works Certificate
           </SEOInternalLink>{' '}
           should still be issued for any work that adds to or alters an existing circuit, to provide
@@ -585,7 +585,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Minor Works Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   For additions and alterations to existing circuits, issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Electrical Installation Works Certificate
                   </SEOInternalLink>{' '}
                   instantly from your phone. Required for Part P compliance on non-EIC jobs.

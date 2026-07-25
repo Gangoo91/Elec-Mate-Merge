@@ -209,70 +209,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // ── Notifications ──────────────────────────────────────────────────
-    // 1) Bell-icon feed log. Writes to `push_notification_log` — the
-    //    table NotificationProvider reads + subscribes to. Previously
-    //    wrote to `ojt_notifications` which has check constraints
-    //    rejecting non-OJT types and silently dropped the row.
-    const pushTitle = `Quote ${quote.quote_number} accepted`;
-    const pushBody = depositRequired
-      ? `${name} accepted · awaiting £${(depositAmountPennies / 100).toFixed(2)} deposit`
-      : `${name} accepted your quote · £${(quote.total || 0).toFixed(2)}`;
+    // The electrician's bell + push are fired by the DB trigger
+    // trigger_quote_signed_push (on accepted_at, which we set above) → notify_user,
+    // giving exactly ONE bell + ONE push per acceptance across every accept path
+    // (public link or manual mark-accepted). See migration
+    // phase2_transactional_through_notify_user. ELE-226.
 
-    await supabase
-      .from('push_notification_log')
-      .insert({
-        user_id: quote.user_id,
-        type: 'quote_accepted',
-        reference_id: quote.id,
-        title: pushTitle,
-        body: pushBody,
-      })
-      .then(({ error }) => {
-        if (error) console.warn('push_notification_log insert failed:', error);
-      });
-
-    // 1b) In-app bell (user_notifications) so the accepted quote shows in the
-    //     notification centre, not only as a device push.
-    await supabase
-      .from('user_notifications')
-      .insert({
-        user_id: quote.user_id,
-        type: 'quote_accepted',
-        title: pushTitle,
-        message: pushBody,
-        link: `/electrician/quote-builder/${quote.id}`,
-        metadata: { quote_id: quote.id, quote_number: quote.quote_number },
-        is_read: false,
-      })
-      .then(({ error }) => {
-        if (error) console.warn('user_notifications insert failed:', error);
-      });
-
-    // 2) Device push — direct fetch with explicit service-role auth.
-    //    `supabase.functions.invoke` from inside an edge fn doesn't
-    //    forward auth reliably and was silently 401'ing.
-    fetch(`${supabaseUrl}/functions/v1/send-push-notification`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${serviceRoleKey}`,
-      },
-      body: JSON.stringify({
-        userId: quote.user_id,
-        title: pushTitle,
-        body: pushBody,
-        type: 'default',
-        data: {
-          deep_link: `/electrician/quote-builder/${quote.id}`,
-          category: 'quote_accepted',
-          quote_id: quote.id,
-          quote_number: quote.quote_number,
-        },
-        skipQuietHours: true,
-      }),
-    }).catch((e) => console.warn('Push notification fetch threw:', e));
-
-    // 3) Confirmation email to client (the shared template — looks like the
+    // Confirmation email to client (the shared template — looks like the
     //    same brand they saw on the page)
     supabase.functions
       .invoke('quote-acceptance-confirmation', {

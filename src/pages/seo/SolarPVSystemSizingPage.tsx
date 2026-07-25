@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificates',
     description: 'EIC and MCS handover documentation required for a compliant PV installation.',
     icon: FileCheck2,

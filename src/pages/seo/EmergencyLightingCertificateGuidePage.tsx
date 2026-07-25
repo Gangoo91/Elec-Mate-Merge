@@ -25,7 +25,7 @@ const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
   {
     label: 'Emergency Lighting Certificate Guide',
-    href: '/emergency-lighting-certificate-guide',
+    href: '/guides/emergency-lighting-certificate-guide',
   },
 ];
 
@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate App',
     description:
       'Create digital emergency lighting certificates on your phone with BS 5266 compliance and professional PDF export.',
@@ -589,7 +589,7 @@ const sections = [
         <p>
           The logbook must be kept at the premises and available for inspection. Elec-Mate replaces
           the paper logbook with a{' '}
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             digital emergency lighting record system
           </SEOInternalLink>{' '}
           that stores all records securely in the cloud while remaining accessible from any device.

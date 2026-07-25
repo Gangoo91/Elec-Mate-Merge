@@ -87,7 +87,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P covers, what work is notifiable, and how competent person schemes work.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 qualification covering BS 7671:2018+A4:2026 on the Elec-Mate platform.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with diagrams and fault path analysis.',
@@ -305,7 +305,7 @@ const sections = [
         </div>
         <p>
           The introduction of{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> in 2005 was
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink> in 2005 was
           the most significant regulatory change in the modern era. It transformed domestic
           electrical work from an unregulated activity to one requiring notification and
           certification. This single change drove the growth of competent person schemes and
@@ -463,7 +463,7 @@ const sections = [
           In practice, many modern MCBs and RCBOs from established manufacturers (Hager, Schneider,
           ABB) are already rated for bidirectional use. But the regulation makes it explicit: you
           must check and confirm, not assume. The{' '}
-          <SEOInternalLink href="/guides/wiring-colours-uk">data plate</SEOInternalLink> on the
+          <SEOInternalLink href="/guides/cable-colour-codes-uk">data plate</SEOInternalLink> on the
           device will indicate whether it is bidirectional.
         </p>
       </>

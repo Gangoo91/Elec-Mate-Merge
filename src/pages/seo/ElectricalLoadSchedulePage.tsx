@@ -445,7 +445,7 @@ export default function ElectricalLoadSchedulePage() {
           category: 'Certificates',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

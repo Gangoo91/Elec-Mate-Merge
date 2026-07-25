@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing — critical for outdoor circuits where PME restrictions may apply.',

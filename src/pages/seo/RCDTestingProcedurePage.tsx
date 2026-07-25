@@ -628,7 +628,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'The dead test that must pass before live testing — including RCD testing.',
     icon: Gauge,
@@ -658,7 +658,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'RCD discrimination calculator, Zs lookup, R1+R2, cable sizing, and dozens more.',
     icon: Calculator,

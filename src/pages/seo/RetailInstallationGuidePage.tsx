@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'Guide to emergency lighting testing, certification, and BS 5266 compliance for commercial premises.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Understanding where Part P applies and does not apply in mixed-use commercial and residential buildings.',
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules on the Elec-Mate platform.',
@@ -304,7 +304,7 @@ const sections = [
           Emergency lighting must be tested monthly (short functional test) and annually (full
           3-hour duration test). All test results must be recorded and available for inspection by
           the fire authority. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             emergency lighting certificate
           </SEOInternalLink>{' '}
           template is designed for exactly this purpose.
@@ -641,7 +641,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Multiple Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete EIC, EICR,{' '}
-                  <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                  <SEOInternalLink href="/emergency-lighting-certificate">
                     emergency lighting
                   </SEOInternalLink>
                   , and{' '}

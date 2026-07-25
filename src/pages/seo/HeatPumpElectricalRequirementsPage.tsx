@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote heat pump electrical packages including dedicated circuit, immersion, and controls wiring.',

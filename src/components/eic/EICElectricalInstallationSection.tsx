@@ -525,7 +525,7 @@ const EICElectricalInstallationSection = ({
       </div>
 
       {/* Distribution Boards */}
-      <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} />
+      <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} certType="eic" />
     </div>
   );
 };

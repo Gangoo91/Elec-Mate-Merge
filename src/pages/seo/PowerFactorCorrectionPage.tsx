@@ -648,7 +648,7 @@ const sections = [
                   When completing an EICR or motor installation at an industrial site, check the
                   power factor using your power quality analyser and calculate the savings
                   potential. Quote the PFC bank immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . A well-presented 2–3 year payback calculation makes PFC an easy decision for a

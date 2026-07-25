@@ -423,7 +423,7 @@ const sections = [
         </div>
         <p>
           For electricians, a definitive diagnosis requires{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-testing">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance testing
           </SEOInternalLink>{' '}
           at 500 V DC on the affected circuit with all equipment disconnected. The acceptance
@@ -624,7 +624,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'How to carry out IR testing to confirm short circuits and insulation faults.',
     icon: Gauge,
@@ -645,7 +645,7 @@ const relatedPages = [
     category: 'Calculator',
   },
   {
-    href: '/guides/earth-fault-loop-impedance-explained-too-high',
+    href: '/guides/earth-fault-loop-impedance-explained',
     title: 'Earth Fault Loop Impedance Too High',
     description: 'When Zs exceeds the maximum for the protective device — causes and solutions.',
     icon: Activity,

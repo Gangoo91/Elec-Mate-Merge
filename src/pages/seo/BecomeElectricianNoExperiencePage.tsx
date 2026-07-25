@@ -287,7 +287,7 @@ const sections = [
               <span className="flex-1 text-left">
                 <strong>C&G 2391 (Inspection & Testing):</strong> How to inspect and test electrical
                 installations and complete certificates. See our{' '}
-                <SEOInternalLink href="/training/city-guilds-2391">2391 guide</SEOInternalLink> for exam tips.
+                <SEOInternalLink href="/city-guilds2391">2391 guide</SEOInternalLink> for exam tips.
               </span>
             </li>
             <li className="flex items-start gap-3">

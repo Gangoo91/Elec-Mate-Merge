@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 covering testing of new circuits and alterations.',
     icon: GraduationCap,
@@ -416,7 +416,7 @@ const sections = [
         </div>
         <p>
           Use the <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works certificate app
           </SEOInternalLink>{' '}
           to complete certification on site.
@@ -492,7 +492,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Kitchen island work often has weeks or months between first fix and second fix.
                   Quote them as separate visits in the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> so
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> so
                   the customer understands the timeline and cost breakdown.
                 </p>
               </div>

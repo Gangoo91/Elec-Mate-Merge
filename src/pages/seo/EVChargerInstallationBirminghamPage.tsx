@@ -455,7 +455,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Pricing Birmingham Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes. Factor in cable run distance, board upgrade
                   likelihood, and earth rod requirements.
                 </p>

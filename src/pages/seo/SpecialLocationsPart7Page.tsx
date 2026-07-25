@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study all Part 7 special locations with structured training modules on the Elec-Mate platform.',
@@ -175,11 +175,11 @@ const sections = [
         <p>
           Every electrician working in the UK must be familiar with Part 7. These sections are
           heavily tested in the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             C&G 2382 (18th Edition)
           </SEOInternalLink>{' '}
           and{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             C&G 2391 (Inspection & Testing)
           </SEOInternalLink>{' '}
           exams, and failure to apply the correct special location regulations on site can result in
@@ -745,9 +745,9 @@ const sections = [
       <>
         <p>
           Part 7 is one of the most examination-heavy areas of BS 7671. Whether you are studying for
-          the <SEOInternalLink href="/training/18th-edition-course">18th Edition exam</SEOInternalLink>{' '}
+          the <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink>{' '}
           or preparing for the{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             C&G 2391 inspection and testing qualification
           </SEOInternalLink>
           , you need to know the zone dimensions, IP ratings, disconnection times, and permitted

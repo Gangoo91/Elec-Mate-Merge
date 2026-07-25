@@ -531,7 +531,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/pat-testing',
+    href: '/pat-testing',
     title: 'PAT Testing App',
     description:
       'Digital PAT testing with equipment registers, scheduling, and certificate export.',

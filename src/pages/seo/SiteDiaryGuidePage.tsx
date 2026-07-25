@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking and AI-powered criteria mapping for your portfolio.',
     icon: FolderOpen,
@@ -151,7 +151,7 @@ const sections = [
           documents that record progress, delays, instructions, and safety incidents. As an
           apprentice, your site diary is simpler — but no less valuable. It is the foundation of
           your{' '}
-          <SEOInternalLink href="/training/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             apprentice portfolio
           </SEOInternalLink>{' '}
           and a powerful tool for tracking your growth over the four years of your apprenticeship.
@@ -410,7 +410,7 @@ const sections = [
       <>
         <p>
           Your{' '}
-          <SEOInternalLink href="/training/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             apprentice portfolio
           </SEOInternalLink>{' '}
           needs evidence mapped against the apprenticeship standard criteria. Many apprentices
@@ -549,7 +549,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Portfolio Linking</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Tag each entry to apprenticeship standard criteria. Your{' '}
-                  <SEOInternalLink href="/training/apprentice-portfolio">
+                  <SEOInternalLink href="/apprentice-portfolio-guide">
                     portfolio builder
                   </SEOInternalLink>{' '}
                   automatically pulls in relevant diary entries, so evidence accumulates naturally

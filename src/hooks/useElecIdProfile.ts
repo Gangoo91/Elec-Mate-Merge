@@ -13,6 +13,7 @@ export interface ElecIdProfile {
   ecs_card_type: string | null;
   ecs_card_number: string | null;
   ecs_expiry_date: string | null;
+  job_title: string | null;
   bio: string | null;
   specialisations: string[] | null;
   profile_views: number;
@@ -73,12 +74,19 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
     setError(null);
 
     try {
-      // First find the employee record for this user
-      const { data: employee } = await supabase
+      // First find the employee record for this user. A worker can appear on
+      // multiple employers' rosters — pick deterministically: active first,
+      // then most recent, so the profile doesn't flip between rows.
+      const { data: employees } = await supabase
         .from('employer_employees')
-        .select('id')
+        .select('id, status, created_at')
         .eq('user_id', user.id)
-        .maybeSingle();
+        .order('created_at', { ascending: false });
+
+      const employee =
+        (employees || []).find((e) => (e.status || '').toLowerCase() === 'active') ||
+        (employees || [])[0] ||
+        null;
 
       if (!employee) {
         // No employee record means no Elec-ID profile

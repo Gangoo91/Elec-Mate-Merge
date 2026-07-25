@@ -491,7 +491,7 @@ export default function ElectricianAccountingSoftwarePage() {
                       quoting and pricing tools
                     </SEOInternalLink>{' '}
                     calculate material costs, labour, and margins for every job. The{' '}
-                    <SEOInternalLink href="/tools/electrician-invoice-app">
+                    <SEOInternalLink href="/electrician-invoice-app">
                       invoicing features
                     </SEOInternalLink>{' '}
                     generate professional invoices on site. This data feeds into your accounting
@@ -573,7 +573,7 @@ export default function ElectricianAccountingSoftwarePage() {
           category: 'Business',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Generate professional invoices from the job site.',
           icon: FileText,

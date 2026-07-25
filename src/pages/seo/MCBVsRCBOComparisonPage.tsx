@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Master MCB, RCD, and RCBO testing for C&G 2391.',
     icon: GraduationCap,
@@ -476,7 +476,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price consumer unit upgrades with itemised RCBO costs using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Show the customer the cost difference between split-load and RCBO boards with

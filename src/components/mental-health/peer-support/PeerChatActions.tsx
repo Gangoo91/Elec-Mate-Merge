@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreVertical, ShieldAlert, Flag, UserX } from 'lucide-react';
+import { MoreVertical, ShieldAlert, Flag, CheckCircle2 } from 'lucide-react';
 import { BlockUserDialog } from './BlockUserDialog';
 import { ReportUserDialog } from './ReportUserDialog';
 
@@ -16,6 +16,8 @@ interface PeerChatActionsProps {
   otherUserName?: string;
   conversationId?: string;
   onBlocked?: () => void;
+  /** Render an "End chat" item — marks the conversation ended for both sides. */
+  onEndChat?: () => void;
 }
 
 export function PeerChatActions({
@@ -23,6 +25,7 @@ export function PeerChatActions({
   otherUserName = 'this user',
   conversationId,
   onBlocked,
+  onEndChat,
 }: PeerChatActionsProps) {
   const [showBlockDialog, setShowBlockDialog] = useState(false);
   const [showReportDialog, setShowReportDialog] = useState(false);
@@ -42,13 +45,22 @@ export function PeerChatActions({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-white hover:text-white"
+            className="h-11 w-11 text-white hover:text-white touch-manipulation"
           >
             <MoreVertical className="h-5 w-5" />
             <span className="sr-only">Chat actions</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
+          {onEndChat && (
+            <>
+              <DropdownMenuItem onClick={onEndChat} className="gap-2 cursor-pointer">
+                <CheckCircle2 className="h-4 w-4 text-white/85" />
+                <span>End chat</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          )}
           <DropdownMenuItem
             onClick={() => setShowReportDialog(true)}
             className="gap-2 cursor-pointer"

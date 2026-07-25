@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description: 'BS 5266 compliant emergency lighting certificates for commercial premises.',
     icon: AlertTriangle,
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A4:2026 with structured training modules on the Elec-Mate platform.',
@@ -284,7 +284,7 @@ const sections = [
                 <strong>Testing:</strong> Monthly functional tests (brief switch to battery mode —
                 often automated with self-test luminaires) and annual 3-hour duration tests. All
                 results must be recorded in a log book. An{' '}
-                <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   emergency lighting certificate
                 </SEOInternalLink>{' '}
                 is required for new installations.
@@ -353,7 +353,7 @@ const sections = [
         <p>
           When quoting an LED retrofit, include a detailed cost-benefit analysis showing the energy
           savings, maintenance savings, and payback period. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> lets you
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets you
           build a professional quote with materials, labour, and projected savings — and send it to
           the client from your phone.
         </p>
@@ -512,7 +512,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency Lighting Certificate:</strong> A separate certificate to{' '}
-                <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   BS 5266-1
                 </SEOInternalLink>{' '}
                 for the emergency lighting system. This covers the design, installation,
@@ -597,7 +597,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Build detailed commercial lighting quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemise luminaires, cables, controls, labour, and projected energy savings. Send
                   professional PDF quotes from site.
                 </p>

@@ -596,7 +596,7 @@ export default function ElectricalSafetyAuditPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/ai-health-safety-agent',
+          href: '/ai-health-safety-agent',
           title: 'AI Health and Safety Agent',
           description:
             'Generate risk assessments, method statements, and safety documentation with AI.',

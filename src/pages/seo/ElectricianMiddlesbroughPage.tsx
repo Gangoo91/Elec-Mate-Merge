@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Send professional PDF quotes for rewires, EICRs, and consumer unit replacements across Teesside.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 — the qualification needed to carry out and issue EICRs in Middlesbrough and across the Tees Valley.',
@@ -499,7 +499,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Stand out with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Send professional PDF quotes to Middlesbrough customers before a competitor does —
                   useful for rewire estimates in the older terraced streets and consumer unit
                   replacements across the Tees Valley.

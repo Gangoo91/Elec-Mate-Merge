@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Appendix 4 Tables', href: '/guides/appendix-4-tables-bs-7671' },
 ];
 
@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables',
     description: 'End-to-end cable sizing process from design current to final cable selection.',
     icon: Cable,

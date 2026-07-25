@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate App',
     description: 'Generate MCS-aligned Solar PV commissioning certificates on site with Elec-Mate.',
     icon: Sun,
@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Solar PV Installation Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/solar-pv-certificate">
+                  <SEOInternalLink href="/solar-pv-certificate">
                     Elec-Mate Solar PV certificate app
                   </SEOInternalLink>{' '}
                   to generate commissioning certificates on site. Covers system design, test

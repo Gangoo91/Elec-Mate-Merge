@@ -107,7 +107,7 @@ const sections = [
         <p>
           For electrical work, NAPIT operates as a Government-authorised competent person scheme
           under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . This means NAPIT-registered electricians can self-certify notifiable domestic electrical
@@ -369,7 +369,7 @@ const sections = [
         <p>
           One of the primary benefits of NAPIT registration is the ability to self-certify
           notifiable domestic electrical work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . When you complete notifiable work, you notify NAPIT through their online portal rather
@@ -588,7 +588,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Notifiable vs non-notifiable work, competent person schemes, and compliance requirements.',

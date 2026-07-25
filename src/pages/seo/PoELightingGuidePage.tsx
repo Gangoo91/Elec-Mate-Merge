@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -606,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote PoE lighting electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Mains supply circuits, switch installation, containment, and testing — all
                   itemised.
                 </p>

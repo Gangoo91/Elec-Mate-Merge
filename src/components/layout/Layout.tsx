@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import { useState, useEffect } from 'react';
 import { PageTransition } from '@/components/layout/PageTransition';
 import AnnouncementBanner from '@/components/announcements/AnnouncementBanner';
+import MaintenanceBanner from '@/components/layout/MaintenanceBanner';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { AchievementListener } from '@/components/study-centre/AchievementListener';
 
@@ -75,6 +76,9 @@ const Layout = () => {
         >
           {/* iOS Native: Zero gap on mobile, content sits DIRECTLY below header */}
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-3 md:pt-6 pb-4">
+            {/* Maintenance banner — feature flag, toggled from Admin → System */}
+            <MaintenanceBanner />
+
             {/* Announcements Banner */}
             <AnnouncementBanner />
 

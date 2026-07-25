@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/data-centre-electrical-installation',
+    href: '/guides/data-centre-electrical-installation',
     title: 'Data Centre Electrical Installation',
     description: 'UPS systems, N+1 redundancy, TN-S earthing, and critical power calculations.',
     icon: Zap,
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote healthcare and commercial electrical projects with instant PDF proposals.',
     icon: PoundSterling,

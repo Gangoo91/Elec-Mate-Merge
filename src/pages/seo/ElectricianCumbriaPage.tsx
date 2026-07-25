@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Cumbrian electrical jobs accurately — including rural travel time and specialist industrial work.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules including TT earthing system testing.',
@@ -587,7 +587,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Cumbrian jobs accurately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Factor travel time premiums for rural jobs, material lead times for remote sites,
                   and specialist rates for industrial work. Send professional PDF quotes to clients
                   from the survey.

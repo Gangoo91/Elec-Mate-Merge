@@ -7,6 +7,7 @@ import GoalSettingTracker from '@/components/mental-health/interactive/GoalSetti
 import { useMentalHealth } from '@/contexts/MentalHealthContext';
 import { cn } from '@/lib/utils';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { gratitudeService } from '@/services/mentalHealthService';
 import {
   PageHero,
   StatStrip,
@@ -92,8 +93,19 @@ const GratitudeTool = () => {
   const save = () => {
     const valid = items.filter((g) => g.trim());
     if (valid.length === 0) return;
-    const existing = storageGetJSONSync<any[]>('gratitudes', []);
-    storageSetJSONSync('gratitudes', [...existing, { date: new Date().toISOString().split('T')[0], items: valid }]);
+    // Same store as GratitudeJournal: one entry per day, newest first, cap 30.
+    const existing = storageGetJSONSync<{ date: string; items: string[] }[]>(
+      'elec-mate-gratitude',
+      []
+    );
+    const today = new Date().toISOString().split('T')[0];
+    const todays = existing.find((e) => e.date === today);
+    const merged = { date: today, items: [...(todays?.items ?? []), ...valid] };
+    storageSetJSONSync(
+      'elec-mate-gratitude',
+      [merged, ...existing.filter((e) => e.date !== today)].slice(0, 30)
+    );
+    gratitudeService.syncDay(today, merged.items).catch(() => {});
     setSaved(true);
     setTimeout(() => { setSaved(false); setItems(['', '', '']); }, 2000);
   };
@@ -243,15 +255,15 @@ const InteractiveToolsTab = () => {
                   <span
                     aria-hidden
                     className={cn('w-[3px] h-10 rounded-full shrink-0',
-                      t.tone === 'red' && 'bg-white/[0.02]',
-                      t.tone === 'blue' && 'bg-white/[0.02]',
-                      t.tone === 'cyan' && 'bg-white/[0.02]',
-                      t.tone === 'orange' && 'bg-white/[0.02]',
-                      t.tone === 'emerald' && 'bg-white/[0.02]',
-                      t.tone === 'indigo' && 'bg-white/[0.02]',
-                      t.tone === 'purple' && 'bg-white/[0.02]',
-                      t.tone === 'green' && 'bg-white/[0.02]',
-                      t.tone === 'amber' && 'bg-white/[0.02]'
+                      t.tone === 'red' && 'bg-red-400/70',
+                      t.tone === 'blue' && 'bg-blue-400/70',
+                      t.tone === 'cyan' && 'bg-cyan-400/70',
+                      t.tone === 'orange' && 'bg-orange-400/70',
+                      t.tone === 'emerald' && 'bg-emerald-400/70',
+                      t.tone === 'indigo' && 'bg-indigo-400/70',
+                      t.tone === 'purple' && 'bg-purple-400/70',
+                      t.tone === 'green' && 'bg-green-400/70',
+                      t.tone === 'amber' && 'bg-amber-400/70'
                     )}
                   />
                   <div className="flex-1 min-w-0">

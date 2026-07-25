@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs quickly and accurately as your team grows. Consistent pricing across your business.',
@@ -129,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/electrician-van-setup-guide',
+    href: '/guides/electrician-van-setup',
     title: 'Electrician Van Setup Guide',
     description:
       'Setting up a second van? Racking, tools, security, and branding for your growing fleet.',
@@ -682,7 +682,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Consistent Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to ensure every team member quotes accurately and consistently. No more
@@ -699,7 +699,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Your team can complete{' '}
                   <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works
                   </SEOInternalLink>{' '}
                   on site with Elec-Mate. Professional certificates from every member of your team,

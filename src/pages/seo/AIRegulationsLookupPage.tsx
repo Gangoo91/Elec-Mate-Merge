@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Regulations Lookup', href: '/tools/ai-regulations-lookup' },
 ];
 
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements UK',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with regulation references and practical guidance.',

@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'C&G 2391 training including safe isolation procedures and test instrument use.',
     icon: BookOpen,
@@ -757,7 +757,7 @@ const sections = [
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. For the wider
           inspection workflow, see the{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             inspection and testing course
           </SEOInternalLink>
           .

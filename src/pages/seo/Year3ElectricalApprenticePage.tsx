@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Detailed guide to the AM2 practical assessment with tips from electricians who have passed.',
@@ -352,7 +352,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/training/am2-exam-preparation">
+          <SEOInternalLink href="/am2-exam-preparation">
             AM2 (Achievement Measurement 2)
           </SEOInternalLink>{' '}
           is the practical assessment that proves you can work as a competent electrician. Although
@@ -459,7 +459,7 @@ const sections = [
           Many apprentices find the 18th Edition exam challenging because it is the first time they
           face BS 7671 as a standalone assessment. Give yourself at least 6 to 8 weeks of dedicated
           study. Use the{' '}
-          <SEOInternalLink href="/guides/mock-exams-electrical">
+          <SEOInternalLink href="/guides/mock-exams-electrician">
             Elec-Mate mock exams
           </SEOInternalLink>{' '}
           to test yourself under timed conditions before the real exam.

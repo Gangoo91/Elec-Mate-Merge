@@ -211,7 +211,7 @@ export default function HowToPriceElectricalJobsPage() {
               </ul>
               <p>
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
                 lets you choose either approach. The AI generates a full itemised breakdown with
                 trade prices and your chosen markup for your records, and you decide whether the
                 customer sees the itemised version or a bundled price.
@@ -532,11 +532,11 @@ export default function HowToPriceElectricalJobsPage() {
                 </SEOInternalLink>{' '}
                 tracks actual costs against quoted prices for every job, showing your true profit
                 margin. The{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">Cash Flow Planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">Cash Flow Planner</SEOInternalLink>{' '}
                 forecasts incoming payments and outgoing costs so you can see potential cash flow
                 gaps before they become crises. Combined with the{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> and{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">invoice builder</SEOInternalLink>,
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> and{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice builder</SEOInternalLink>,
                 you have a complete financial management system built specifically for electrical
                 contractors.
               </p>
@@ -589,7 +589,7 @@ export default function HowToPriceElectricalJobsPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, material pricing, and one-tap send. Win more work with faster, better quotes.',
@@ -597,7 +597,7 @@ export default function HowToPriceElectricalJobsPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Create and send professional invoices from site. Track payments, chase overdue invoices, and sync with Xero or QuickBooks.',
@@ -613,7 +613,7 @@ export default function HowToPriceElectricalJobsPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Describe any job and get an itemised estimate with real UK trade pricing and labour hours in under a minute.',
@@ -621,7 +621,7 @@ export default function HowToPriceElectricalJobsPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description:
             'Forecast incoming payments and outgoing costs. Spot cash flow gaps before they become crises.',

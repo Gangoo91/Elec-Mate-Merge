@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Gangoo91/Elec-Mate-Merge/security/policy
+    about: Please report security issues privately per our Security Policy — never in a public issue.
+  - name: Customer support
+    url: https://www.elec-mate.com
+    about: For product help or account questions, contact info@elec-mate.com.

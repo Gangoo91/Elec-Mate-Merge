@@ -179,7 +179,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <p>
                 This is not hypothetical technology. Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI Board Scanner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-electrician-tools">AI Board Scanner</SEOInternalLink>{' '}
                 does exactly this. You take a photo of the consumer unit with your phone, the AI
                 processes the image, and the circuit data appears in your EICR or EIC form ready for
                 review. You still verify the data — the AI is not perfect, especially with older or
@@ -271,10 +271,10 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <p>
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
                 uses live UK trade pricing data updated weekly and labour timing benchmarks from
                 real-world installations. The AI also includes an{' '}
-                <SEOInternalLink href="/tools/ai-electrician">
+                <SEOInternalLink href="/ai-electrician-tools">
                   AI Remedial Cost Estimator
                 </SEOInternalLink>{' '}
                 that takes the defects from an EICR and generates a priced remedial works quotation
@@ -374,12 +374,12 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <p>
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-health-safety-agent">
+                <SEOInternalLink href="/ai-health-safety-agent">
                   AI Health and Safety agent
                 </SEOInternalLink>{' '}
                 generates risk assessments, method statements, COSHH assessments, and toolbox talk
                 documents. The{' '}
-                <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> exports
+                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports
                 professional PDF documents ready for submission. Documents reference the Health and
                 Safety at Work Act 1974, the Management of Health and Safety at Work Regulations
                 1999, the CDM Regulations 2015, and the Electricity at Work Regulations 1989 where
@@ -421,7 +421,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <p>
                 The platform also includes a{' '}
-                <SEOInternalLink href="/tools/ai-electrician">Client Explainer</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-electrician-tools">Client Explainer</SEOInternalLink>{' '}
                 that translates your technical diagnosis into plain English the homeowner can
                 understand. Instead of saying "you have a 0.3 megohm IR reading on the shower
                 circuit suggesting cable insulation breakdown," you can generate a clear explanation
@@ -614,7 +614,7 @@ export default function AIToolsForElectriciansPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/ai-electrician',
+          href: '/ai-electrician-tools',
           title: 'AI Electrician Hub',
           description:
             '8 specialist AI agents and 12 AI tools built for UK electricians. Board scanner, defect classification, cost estimation, and more.',
@@ -630,7 +630,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Describe a job and get an itemised quote with real UK trade pricing, labour estimates, and profit margins.',
@@ -638,7 +638,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-health-safety-agent',
+          href: '/ai-health-safety-agent',
           title: 'AI Health and Safety Agent',
           description:
             'Site-specific RAMS, risk assessments, COSHH assessments, and toolbox talks generated from a job description.',
@@ -646,7 +646,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/rams-generator',
+          href: '/rams-generator',
           title: 'RAMS Generator',
           description:
             'Professional risk assessment and method statement documents with all relevant hazards, control measures, and legal references.',
@@ -654,7 +654,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'Health & Safety',
         },
         {
-          href: '/tools/best-electrician-app-uk',
+          href: '/best-electrician-app',
           title: 'Best Electrician App UK',
           description:
             'Compare electrician apps for certificates, testing, AI tools, quoting, and business management.',

@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Understand which electrical work is notifiable and what compliance means.',
     icon: ShieldCheck,
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Leeds customers.',
     icon: PoundSterling,
@@ -159,7 +159,7 @@ const sections = [
         </p>
         <p>
           Not all domestic electrical work requires notification — only certain work is notifiable
-          under <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>
+          under <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>
           . Notifiable work includes new circuits, consumer unit replacements, and additions to
           circuits in kitchens, bathrooms, and outdoors. Like-for-like replacements of fittings and
           accessories on existing circuits are generally not notifiable (OSG 9th Ed:2022). For
@@ -402,7 +402,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Leeds is overseen by Leeds City Council building
           control or an approved inspector. If your electrician is registered with a competent
           person scheme, they handle the notification directly.

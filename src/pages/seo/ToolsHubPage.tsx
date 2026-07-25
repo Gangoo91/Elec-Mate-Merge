@@ -66,14 +66,14 @@ const toolCollections = [
       { href: '/tools/digital-certificates-app', label: 'Digital Certificates App' },
       { href: '/tools/eicr-certificate', label: 'EICR Certificate' },
       { href: '/eic-certificate', label: 'EIC Certificate' },
-      { href: '/tools/minor-works-certificate', label: 'Minor Works Certificate' },
+      { href: '/minor-works-certificate', label: 'Minor Works Certificate' },
     ],
   },
   {
     heading: 'Calculators and reference tools',
     description: 'Check figures quickly and work with current BS 7671-based calculator tools.',
     links: [
-      { href: '/tools/electrical-testing-calculators', label: 'Electrical Testing Calculators' },
+      { href: '/electrical-testing-calculators', label: 'Electrical Testing Calculators' },
       { href: '/tools/cable-sizing-calculator', label: 'Cable Sizing Calculator' },
       { href: '/tools/voltage-drop-calculator', label: 'Voltage Drop Calculator' },
       { href: '/tools/earth-loop-impedance-calculator', label: 'Earth Loop Impedance Calculator' },
@@ -83,10 +83,10 @@ const toolCollections = [
     heading: 'AI, quoting, and invoicing',
     description: 'Move from technical work into pricing, paperwork, and faster admin.',
     links: [
-      { href: '/tools/ai-electrician', label: 'AI Electrician Tools' },
-      { href: '/tools/electrical-quoting-app', label: 'Electrical Quoting App' },
-      { href: '/tools/electrician-invoice-app', label: 'Electrician Invoice App' },
-      { href: '/tools/rams-generator', label: 'RAMS Generator' },
+      { href: '/ai-electrician-tools', label: 'AI Electrician Tools' },
+      { href: '/electrical-quoting-app', label: 'Electrical Quoting App' },
+      { href: '/electrician-invoice-app', label: 'Electrician Invoice App' },
+      { href: '/rams-generator', label: 'RAMS Generator' },
     ],
   },
   {
@@ -94,9 +94,9 @@ const toolCollections = [
     description: 'Support apprentices, teams, and wider business workflows from the same platform.',
     links: [
       { href: '/study-centre', label: 'Study Centre' },
-      { href: '/training/electrical-apprentice', label: 'Electrical Apprentice Training' },
+      { href: '/apprentice-training', label: 'Electrical Apprentice Training' },
       { href: '/tools/employer-electrical-platform', label: 'Employer Electrical Platform' },
-      { href: '/tools/best-electrician-app-uk', label: 'Why Electricians Choose Elec-Mate' },
+      { href: '/best-electrician-app', label: 'Why Electricians Choose Elec-Mate' },
     ],
   },
 ];
@@ -179,8 +179,8 @@ export default function ToolsHubPage() {
             Whether you need an{' '}
             <SEOInternalLink href="/tools/eicr-certificate">EICR certificate</SEOInternalLink>, a{' '}
             <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>,
-            an <SEOInternalLink href="/tools/ai-electrician">AI assistant</SEOInternalLink>, or a{' '}
-            <SEOInternalLink href="/tools/electrical-quoting-app">quoting workflow</SEOInternalLink>,
+            an <SEOInternalLink href="/ai-electrician-tools">AI assistant</SEOInternalLink>, or a{' '}
+            <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>,
             this page helps you get to the right part of Elec-Mate quickly.
           </p>
           <SEOFeatureGrid features={features} />
@@ -222,9 +222,9 @@ export default function ToolsHubPage() {
           <p>
             Elec-Mate is not just one tool. You can move from{' '}
             <SEOInternalLink href="/tools/digital-certificates-app">digital certificates</SEOInternalLink>{' '}
-            into <SEOInternalLink href="/tools/electrical-testing-calculators">calculators</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/tools/electrician-invoice-app">invoicing</SEOInternalLink>, and{' '}
+            into <SEOInternalLink href="/electrical-testing-calculators">calculators</SEOInternalLink>,{' '}
+            <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>,{' '}
+            <SEOInternalLink href="/electrician-invoice-app">invoicing</SEOInternalLink>, and{' '}
             <SEOInternalLink href="/study-centre">training</SEOInternalLink> without jumping across
             separate apps.
           </p>

@@ -94,6 +94,25 @@ function buildInstallationDescription(
   return parts.join(' — ');
 }
 
+// ELE-1390 — map the stored designStandard code to the standard string printed
+// on the certificate. New certs default to the current amendment (A4:2026); the
+// legacy 'BS7671' value stays A3:2024 so certs issued under Amendment 3 aren't
+// retrospectively relabelled.
+function formatDesignStandard(value: unknown): string {
+  const v = String(value || '').trim();
+  switch (v) {
+    case '':
+    case 'BS7671-A4':
+      return 'BS 7671:2018+A4:2026';
+    case 'BS7671':
+      return 'BS 7671:2018+A3:2024';
+    case 'other':
+      return 'Other';
+    default:
+      return v;
+  }
+}
+
 // Cover-page certification status. workType is a multi-select (comma-joined),
 // so a raw `work_type == 'new'` string match blanks everything when several are
 // ticked (e.g. "db-upgrade,alteration"). Pick the most significant statutory
@@ -117,10 +136,13 @@ function normalisePartPCompliance(raw: string): string {
 
 function normaliseElectrodeType(raw: string): string {
   if (!raw) return '';
-  // Capitalise known abbreviations fully; title-case everything else
   const upper = raw.toUpperCase();
+  // 'na' is the explicit "no electrode fitted" option. 'pme' is legacy — it was
+  // removed from the electrode picker (PME is a supply arrangement, not an
+  // electrode), so map any saved value to N/A on the PDF. (ELE-1389)
+  if (upper === 'NA' || upper === 'PME') return 'N/A';
+  // Capitalise known abbreviations fully; title-case everything else
   if (
-    upper === 'PME' ||
     upper === 'ROD' ||
     upper === 'PLATE' ||
     upper === 'TAPE' ||
@@ -304,14 +326,24 @@ export async function formatEicJson(
         formData.installationType,
         formData.workType
       ),
-      extent_of_installation: formData.extentOfInstallation || '',
+      // ELE-1387 — Description and Extent are now a single input. Mirror the
+      // description into the Extent box so both model-form entries print the
+      // same text; fall back to a distinct legacy extentOfInstallation value on
+      // certs saved before the merge.
+      extent_of_installation:
+        formData.extentOfInstallation ||
+        buildInstallationDescription(
+          formData.description,
+          formData.installationType,
+          formData.workType
+        ),
       installation_date: formData.installationDate || '',
       test_date: formData.testDate || '',
       construction_date: formData.constructionDate || '',
     },
 
     standards_compliance: {
-      design_standard: formData.designStandard || '',
+      design_standard: formatDesignStandard(formData.designStandard),
       part_p_compliance: normalisePartPCompliance(formData.partPCompliance || ''),
     },
 
@@ -412,8 +444,11 @@ export async function formatEicJson(
       db_reference: board.dbReference || board.reference || `DB${index + 1}`,
       location: board.location || '',
       board_type: board.boardType || board.type || '',
-      board_make: board.make || board.boardMake || '',
+      // ELE-1388 — the EIC now captures one free-text "Board details" line
+      // (e.g. "Wylex 10way"); fall back to it for make so the board still prints.
+      board_make: board.make || board.boardMake || board.boardDetails || '',
       board_model: board.model || board.boardModel || '',
+      board_details: board.boardDetails || '',
       total_ways: getBoardWays(board) || board.ways || '',
       used_ways: board.usedWays || '',
       spare_ways: board.spareWays || '',
@@ -457,11 +492,15 @@ export async function formatEicJson(
         ? 'N/A'
         : normaliseElectrodeType(formData.earthElectrodeType || ''),
       earth_electrode_location:
-        formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
+        formData.earthElectrodeNA ||
+        formData.earthElectrodeType === 'pme' ||
+        formData.earthElectrodeType === 'na'
           ? 'N/A'
           : formData.earthElectrodeLocation || '',
       earth_electrode_resistance:
-        formData.earthElectrodeNA || formData.earthElectrodeType === 'pme'
+        formData.earthElectrodeNA ||
+        formData.earthElectrodeType === 'pme' ||
+        formData.earthElectrodeType === 'na'
           ? 'N/A'
           : formData.earthElectrodeResistance || '',
       earth_electrode_na: formData.earthElectrodeNA ?? false,
@@ -854,11 +893,15 @@ export async function formatEicJson(
     })(),
     has_departures: !!(formData.designerDepartures || '').trim(),
     has_permitted_exceptions: !!(formData.permittedExceptions || '').trim(),
-    has_earth_electrode: !!(
-      formData.earthElectrodeType ||
-      formData.earthElectrodeResistance ||
-      ''
-    ).trim(),
+    has_earth_electrode:
+      !formData.earthElectrodeNA &&
+      formData.earthElectrodeType !== 'na' &&
+      formData.earthElectrodeType !== 'pme' &&
+      !!(
+        formData.earthElectrodeType ||
+        formData.earthElectrodeResistance ||
+        ''
+      ).trim(),
     has_additional_boards: (() => {
       const boards = formData.distributionBoards || [];
       return Array.isArray(boards) && boards.length > 1;

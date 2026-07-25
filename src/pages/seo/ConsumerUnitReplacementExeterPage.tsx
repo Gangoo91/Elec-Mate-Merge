@@ -453,7 +453,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When an Exeter EICR identifies C2 consumer unit deficiencies, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send a quote on the same day. Landlords must act within 28 days — the first

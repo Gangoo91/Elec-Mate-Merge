@@ -100,7 +100,7 @@ export default function SWACableInstallationPage() {
             <>
               <p>
                 Selecting the correct SWA cable follows the same{' '}
-                <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+                <SEOInternalLink href="/how-to-size-cables">
                   BS 7671 cable sizing process
                 </SEOInternalLink>{' '}
                 as any other cable type, but with specific tables for SWA current-carrying capacity
@@ -218,7 +218,7 @@ export default function SWACableInstallationPage() {
                 replacement without excavation. The duct should extend at least 300 mm beyond the
                 edge of the hard surface on each side.
               </p>
-              <SEOInternalLink href="/guides/earthing-arrangements">
+              <SEOInternalLink href="/earthing-arrangements">
                 Earthing arrangements for outdoor installations
               </SEOInternalLink>{' '}
               — check PME restrictions for supplies extending outside the main equipotential zone.
@@ -388,7 +388,7 @@ export default function SWACableInstallationPage() {
                 consumer unit or distribution board enclosure. At the load end, if the cable
                 terminates at a non-metallic enclosure (such as a plastic isolator or junction box),
                 an{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">earth tail</SEOInternalLink>{' '}
+                <SEOInternalLink href="/earthing-arrangements">earth tail</SEOInternalLink>{' '}
                 must be connected from the gland earth tag to the circuit earth terminal.
               </p>
             </>
@@ -585,14 +585,14 @@ export default function SWACableInstallationPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/how-to-size-cables-bs-7671',
+          href: '/how-to-size-cables',
           title: 'Cable Sizing Guide',
           description: 'Complete BS 7671 cable sizing process with correction factors.',
           icon: Calculator,
           category: 'Guide',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT systems and PME restrictions.',
           icon: ShieldCheck,

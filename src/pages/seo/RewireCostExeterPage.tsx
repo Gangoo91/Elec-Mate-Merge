@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win More Exeter Rewires</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional rewire quotes in minutes with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Win more work with clear, itemised quotes that give Exeter homeowners and

@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate professional Risk Assessments and Method Statements with AI for industrial projects.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with structured training courses on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -315,7 +315,7 @@ const sections = [
         <p>
           Fault-finding motor circuits is a core skill for industrial electricians. Common faults
           include overload trips (check motor current against nameplate rating), earth faults ({' '}
-          <SEOInternalLink href="/guides/insulation-resistance-testing">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance testing
           </SEOInternalLink>{' '}
           of motor windings), contactor coil failure, thermal overload relay settings, VSD parameter

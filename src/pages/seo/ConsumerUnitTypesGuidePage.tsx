@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Electrical Guides', href: '/home-office-electrical-guide' },
-  { label: 'Consumer Unit Types Guide', href: '/consumer-unit-types-guide' },
+  { label: 'Consumer Unit Types Guide', href: '/guides/consumer-unit-types' },
 ];
 
 const tocItems = [

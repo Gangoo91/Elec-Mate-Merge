@@ -543,7 +543,7 @@ const sections = [
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   for new installations or a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   for like-for-like replacements.

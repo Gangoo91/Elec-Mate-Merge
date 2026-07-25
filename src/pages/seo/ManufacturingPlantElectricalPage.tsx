@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/data-centre-electrical-installation',
+    href: '/guides/data-centre-electrical-installation',
     title: 'Data Centre Electrical Installation',
     description: 'UPS systems, N+1 redundancy, TN-S earthing, and critical power for data centres.',
     icon: Zap,
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote manufacturing and industrial electrical projects with instant PDF proposals.',

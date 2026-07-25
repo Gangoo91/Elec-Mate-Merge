@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs professionally and maximise your day rate as a self-employed electrician.',

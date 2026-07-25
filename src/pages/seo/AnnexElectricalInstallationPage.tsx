@@ -138,7 +138,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with modules covering special locations and domestic installation testing.',
@@ -704,7 +704,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete annex electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Sub-main, consumer unit, all circuits, heating, testing, and certification — all
                   itemised with your margins. A professional PDF quote wins the job against
                   competitors who send a text message with a single number.

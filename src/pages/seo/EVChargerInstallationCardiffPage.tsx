@@ -489,7 +489,7 @@ const sections = [
                   Factor in Welsh labour rates (£38 to £52/hour), site survey time for Victorian
                   terrace properties, earth rod costs, SP Manweb G98 notification, and EIC
                   certification costs. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised, professional quotes that cover all job-specific variables.
                 </p>
               </div>

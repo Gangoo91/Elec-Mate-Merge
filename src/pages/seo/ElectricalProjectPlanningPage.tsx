@@ -469,7 +469,7 @@ const sections = [
         </p>
         <p>
           The testing phase requires qualified testers (holding{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">City & Guilds 2391</SEOInternalLink> or
+          <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink> or
           equivalent), calibrated test instruments, completed installation work (testing incomplete
           circuits is pointless), and adequate time in the programme. On larger projects, a
           dedicated testing team is engaged, and their access must be coordinated so they can test
@@ -602,7 +602,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate CDM-compliant risk assessments and method statements.',
     icon: Brain,

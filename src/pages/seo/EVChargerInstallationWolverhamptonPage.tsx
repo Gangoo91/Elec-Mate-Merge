@@ -588,7 +588,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote EV Jobs in Minutes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional, itemised EV charger installation quotes using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include OZEV grant deductions, consumer unit upgrades, and earth electrode

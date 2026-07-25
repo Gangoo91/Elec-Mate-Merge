@@ -23,7 +23,7 @@ const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
   {
     label: 'Electrical Handover Documentation Guide',
-    href: '/guides/electrical-handover-documentation-guide',
+    href: '/guides/electrical-handover-documentation',
   },
 ];
 
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Issue MEIWCs for additions and alterations to existing circuits.',
     icon: FileText,
@@ -396,7 +396,7 @@ const sections = [
         </div>
         <p>
           Issue the{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           on site and provide it to the client before leaving. Even for non-notifiable work, the
@@ -693,7 +693,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Minor Works Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Electrical Installation Works Certificate
                   </SEOInternalLink>{' '}
                   for every addition and alteration to an existing circuit. Even for non-notifiable

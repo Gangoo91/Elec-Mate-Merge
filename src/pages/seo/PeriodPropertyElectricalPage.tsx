@@ -603,7 +603,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Period property EICRs almost always identify significant work. Quote the consumer
                   unit replacement, bonding, and any rewire work on the day using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Clients who have just received a detailed EICR showing the hazards in their

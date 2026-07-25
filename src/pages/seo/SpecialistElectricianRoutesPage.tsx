@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-working-abroad-uk',
+    href: '/guides/electrician-working-abroad',
     title: 'Working Abroad as a UK Electrician',
     description: 'Specialist skills that command premium rates in the Middle East and beyond.',
     icon: Globe,
@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Training',
     description: 'C&G 2391 — a foundation qualification for many specialist routes.',
     icon: GraduationCap,

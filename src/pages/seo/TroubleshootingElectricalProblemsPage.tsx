@@ -176,7 +176,7 @@ const sections = [
         <p>
           The key rule: if you have reset a protective device once and it trips again, stop. There
           is an active fault that requires testing with professional instruments —{' '}
-          <SEOInternalLink href="/insulation-resistance-testing-guide">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance testing
           </SEOInternalLink>
           , continuity testing, and earth fault loop impedance testing. These tests identify the
@@ -237,7 +237,7 @@ const sections = [
           appliances), faulty appliances with internal short circuits, water ingress into sockets or
           junction boxes, and deteriorated cable insulation in older properties. An electrician will
           use an{' '}
-          <SEOInternalLink href="/insulation-resistance-testing-guide">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance test
           </SEOInternalLink>{' '}
           to identify exactly where the breakdown is.
@@ -617,7 +617,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Instant Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Fixed the fault? Generate a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   on site with voice-dictated test results. Send it to the customer by email or

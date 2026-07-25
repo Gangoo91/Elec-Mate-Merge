@@ -176,7 +176,7 @@ export default function InspectorProfileForm() {
               {completion}%
             </span>
           </div>
-          <div className="w-full bg-[#0a0a0a] rounded-full h-1.5 overflow-hidden">
+          <div className="w-full bg-white/[0.04] rounded-full h-1.5 overflow-hidden">
             <div
               className="bg-elec-yellow h-1.5 rounded-full transition-all duration-300"
               style={{ width: `${completion}%` }}
@@ -202,7 +202,7 @@ export default function InspectorProfileForm() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Full name of inspector"
-                className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
               />
             </div>
 
@@ -230,7 +230,7 @@ export default function InspectorProfileForm() {
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                   placeholder="Company or organisation name"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
               <div className="space-y-1.5">
@@ -244,7 +244,7 @@ export default function InspectorProfileForm() {
                   value={formData.companyPhone}
                   onChange={(e) => setFormData({ ...formData, companyPhone: e.target.value })}
                   placeholder="Company phone number"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
             </div>
@@ -261,7 +261,7 @@ export default function InspectorProfileForm() {
                   value={formData.companyEmail}
                   onChange={(e) => setFormData({ ...formData, companyEmail: e.target.value })}
                   placeholder="Company email address"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
               <div className="space-y-1.5">
@@ -273,7 +273,7 @@ export default function InspectorProfileForm() {
                   value={formData.companyWebsite}
                   onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
                   placeholder="www.example.co.uk"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
             </div>
@@ -288,7 +288,7 @@ export default function InspectorProfileForm() {
                 onChange={(e) => setFormData({ ...formData, companyAddress: e.target.value })}
                 placeholder="Full company address"
                 rows={3}
-                className="bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus-visible:ring-0 touch-manipulation"
+                className="bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus-visible:ring-0 touch-manipulation"
               />
             </div>
 
@@ -304,7 +304,7 @@ export default function InspectorProfileForm() {
                     setFormData({ ...formData, companyRegistrationNumber: e.target.value })
                   }
                   placeholder="e.g., 12345678"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
               <div className="space-y-1.5">
@@ -316,7 +316,7 @@ export default function InspectorProfileForm() {
                   value={formData.vatNumber}
                   onChange={(e) => setFormData({ ...formData, vatNumber: e.target.value })}
                   placeholder="e.g., GB123456789"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
             </div>
@@ -349,7 +349,7 @@ export default function InspectorProfileForm() {
                       'flex items-start gap-3 p-4 min-h-[56px] rounded-2xl border transition-colors text-left touch-manipulation',
                       isSelected
                         ? 'border-elec-yellow/60 bg-elec-yellow/10'
-                        : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
+                        : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
                     )}
                   >
                     <Checkbox
@@ -421,7 +421,7 @@ export default function InspectorProfileForm() {
           description="Create your signature for inspection certificates"
         >
           <Tabs defaultValue="draw" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-[#0a0a0a] border border-white/[0.08] p-1 rounded-xl">
+            <TabsList className="grid w-full grid-cols-2 bg-white/[0.04] border border-white/[0.10] p-1 rounded-xl">
               <TabsTrigger
                 value="draw"
                 className="rounded-lg data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
@@ -467,7 +467,7 @@ export default function InspectorProfileForm() {
           </Tabs>
 
           {formData.signatureData && (
-            <div className="mt-5 p-4 bg-[#0a0a0a] border border-white/[0.08] rounded-2xl">
+            <div className="mt-5 p-4 bg-white/[0.04] border border-white/[0.10] rounded-2xl">
               <Eyebrow>Current signature</Eyebrow>
               <div className="mt-3 bg-white rounded-xl p-4">
                 <img
@@ -489,7 +489,7 @@ export default function InspectorProfileForm() {
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 h-12 rounded-xl border border-white/[0.08] bg-[#0a0a0a] text-white text-[14px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              className="flex-1 h-12 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white text-[14px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
             >
               Cancel
             </button>
@@ -510,7 +510,7 @@ export default function InspectorProfileForm() {
             <button
               type="button"
               onClick={handleCancel}
-              className="h-12 px-6 rounded-xl border border-white/[0.08] bg-[#0a0a0a] text-white text-[14px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              className="h-12 px-6 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white text-[14px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
             >
               Cancel
             </button>

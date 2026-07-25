@@ -186,11 +186,11 @@ export default function AIForElectricalApprenticesPage() {
                 3:2024 which added Regulation 530.3.2 for bidirectional protective devices. It also
                 covers the IET On-Site Guide and all eight IET Guidance Notes, which are essential
                 study materials for{' '}
-                <SEOInternalLink href="/training/city-guilds-2391">
+                <SEOInternalLink href="/city-guilds2391">
                   City and Guilds 2391
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/training/am2-exam-preparation">
+                <SEOInternalLink href="/am2-exam-preparation">
                   AM2 preparation
                 </SEOInternalLink>
                 .
@@ -248,11 +248,11 @@ export default function AIForElectricalApprenticesPage() {
                 This adaptive approach to exam preparation is significantly more effective than
                 working through a static revision book, because it focuses your study time on the
                 areas where you need the most improvement. See our guides on{' '}
-                <SEOInternalLink href="/training/level-2-electrical">
+                <SEOInternalLink href="/level2-electrical">
                   Level 2 electrical qualifications
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/training/level-3-electrical">
+                <SEOInternalLink href="/level3-electrical">
                   Level 3 electrical qualifications
                 </SEOInternalLink>{' '}
                 for more on the curriculum structure.
@@ -337,7 +337,7 @@ export default function AIForElectricalApprenticesPage() {
                   need to complete an EIC correctly as part of the AM2. The AI helps you practise
                   filling in all sections of the certificate, including the schedule of test results
                   and the schedule of circuits. See our guide on{' '}
-                  <SEOInternalLink href="/guides/how-to-fill-in-eicr">
+                  <SEOInternalLink href="/how-to-fill-in-eicr">
                     completing certificates
                   </SEOInternalLink>
                   .
@@ -351,7 +351,7 @@ export default function AIForElectricalApprenticesPage() {
               </ul>
               <p>
                 For comprehensive AM2 guidance, see our dedicated{' '}
-                <SEOInternalLink href="/training/am2-exam-preparation">
+                <SEOInternalLink href="/am2-exam-preparation">
                   AM2 exam preparation guide
                 </SEOInternalLink>{' '}
                 and <SEOInternalLink href="/guides/am2-exam-tips">AM2 exam tips</SEOInternalLink>.
@@ -394,7 +394,7 @@ export default function AIForElectricalApprenticesPage() {
                 <li>
                   <span className="font-semibold text-white">Portfolio evidence</span> — the AI can
                   help you write up your on-site experience for your{' '}
-                  <SEOInternalLink href="/training/apprentice-portfolio">
+                  <SEOInternalLink href="/apprentice-portfolio-guide">
                     apprentice portfolio
                   </SEOInternalLink>
                   , ensuring you include the technical detail and regulation references that
@@ -447,12 +447,12 @@ export default function AIForElectricalApprenticesPage() {
                 </SEOInternalLink>{' '}
                 covering the full apprenticeship curriculum from Level 2 through Level 3, plus
                 specialist courses for{' '}
-                <SEOInternalLink href="/training/18th-edition-course">18th Edition</SEOInternalLink>,{' '}
-                <SEOInternalLink href="/training/inspection-and-testing">
+                <SEOInternalLink href="/eighteenth-edition-course">18th Edition</SEOInternalLink>,{' '}
+                <SEOInternalLink href="/inspection-testing-course">
                   inspection and testing
                 </SEOInternalLink>
                 , and{' '}
-                <SEOInternalLink href="/training/epa-preparation">EPA preparation</SEOInternalLink>.
+                <SEOInternalLink href="/epa-preparation">EPA preparation</SEOInternalLink>.
                 The AI tutor and study planner work across all of these courses.
               </p>
             </>
@@ -499,7 +499,7 @@ export default function AIForElectricalApprenticesPage() {
       faqHeading="AI for Apprentices FAQs"
       relatedPages={[
         {
-          href: '/training/am2-exam-preparation',
+          href: '/am2-exam-preparation',
           title: 'AM2 Exam Preparation',
           description:
             'Complete guide to the AM2 practical assessment, including planning, installation, testing, and safe isolation.',
@@ -507,7 +507,7 @@ export default function AIForElectricalApprenticesPage() {
           category: 'Training',
         },
         {
-          href: '/training/level-2-electrical',
+          href: '/level2-electrical',
           title: 'Level 2 Electrical',
           description:
             'Guide to Level 2 electrical qualifications — NVQ, City and Guilds 2365, and the apprenticeship pathway.',
@@ -515,7 +515,7 @@ export default function AIForElectricalApprenticesPage() {
           category: 'Training',
         },
         {
-          href: '/training/level-3-electrical',
+          href: '/level3-electrical',
           title: 'Level 3 Electrical',
           description:
             'Guide to Level 3 electrical qualifications — NVQ, City and Guilds 2365, and the progression to qualified electrician status.',

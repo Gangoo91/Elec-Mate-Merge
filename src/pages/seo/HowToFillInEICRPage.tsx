@@ -291,7 +291,7 @@ export default function HowToFillInEICRPage() {
               This guide walks through every section of the EICR form in the order you should
               complete it on site, with practical tips for avoiding the most common mistakes. Before
               you start the inspection, ensure you have carried out{' '}
-              <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+              <SEOInternalLink href="/how-to-do-safe-isolation">
                 safe isolation
               </SEOInternalLink>{' '}
               and understand how to carry out{' '}

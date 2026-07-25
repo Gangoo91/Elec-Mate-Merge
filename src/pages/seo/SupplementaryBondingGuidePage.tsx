@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description:
       'Step-by-step guide to completing every section of the EICR, including bonding inspections.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 covering continuity, bonding, and all dead and live testing procedures.',
@@ -546,7 +546,7 @@ const sections = [
         <p>
           Testing supplementary bonding is part of the standard inspection and testing sequence,
           both for initial verification of new work and for periodic inspection (
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink>
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>
           ).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

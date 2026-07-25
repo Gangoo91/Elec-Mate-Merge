@@ -6,16 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { RefreshCw, Check, X, Flag, Loader2 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
@@ -243,11 +233,7 @@ export default function AdminEmployerModeration() {
           description="Review job postings before they go live."
           tone="purple"
           actions={
-            <IconButton
-              onClick={() => refetch()}
-              aria-label="Refresh"
-              disabled={isFetching}
-            >
+            <IconButton onClick={() => refetch()} aria-label="Refresh" disabled={isFetching}>
               <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
             </IconButton>
           }
@@ -327,9 +313,7 @@ export default function AdminEmployerModeration() {
                         ].join(' · ')}
                       </span>
                     }
-                    trailing={
-                      <Pill tone={tone}>{statusLabel(vacancy.moderation_status)}</Pill>
-                    }
+                    trailing={<Pill tone={tone}>{statusLabel(vacancy.moderation_status)}</Pill>}
                     accent={tone}
                     onClick={() => setSelectedVacancy(vacancy)}
                   />
@@ -339,7 +323,14 @@ export default function AdminEmployerModeration() {
           </ListCard>
         )}
 
-        <Sheet open={!!selectedVacancy} onOpenChange={() => setSelectedVacancy(null)}>
+        <Sheet
+          open={!!selectedVacancy}
+          onOpenChange={() => {
+            setSelectedVacancy(null);
+            setModerationAction(null);
+            setModerationReason('');
+          }}
+        >
           <SheetContent
             side="bottom"
             className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
@@ -417,10 +408,7 @@ export default function AdminEmployerModeration() {
                     <ListCardHeader tone="yellow" title="Requirements" />
                     <ListBody>
                       {selectedVacancy.requirements.map((req, i) => (
-                        <ListRow
-                          key={i}
-                          title={<span className="text-white">{req}</span>}
-                        />
+                        <ListRow key={i} title={<span className="text-white">{req}</span>} />
                       ))}
                     </ListBody>
                   </ListCard>
@@ -431,10 +419,7 @@ export default function AdminEmployerModeration() {
                     <ListCardHeader tone="emerald" title="Benefits" />
                     <ListBody>
                       {selectedVacancy.benefits.map((b, i) => (
-                        <ListRow
-                          key={i}
-                          title={<span className="text-white">{b}</span>}
-                        />
+                        <ListRow key={i} title={<span className="text-white">{b}</span>} />
                       ))}
                     </ListBody>
                   </ListCard>
@@ -465,88 +450,85 @@ export default function AdminEmployerModeration() {
 
               {selectedVacancy?.moderation_status === 'pending' && (
                 <SheetFooter className="p-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
-                  <div className="grid grid-cols-3 gap-2 w-full">
-                    <Button
-                      className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
-                      onClick={() => setModerationAction('approve')}
-                    >
-                      <Check className="h-4 w-4 mr-1.5" />
-                      Approve
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
-                      onClick={() => setModerationAction('flag')}
-                    >
-                      <Flag className="h-4 w-4 mr-1.5" />
-                      Flag
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
-                      onClick={() => setModerationAction('reject')}
-                    >
-                      <X className="h-4 w-4 mr-1.5" />
-                      Reject
-                    </Button>
-                  </div>
+                  {moderationAction ? (
+                    /* Inline confirm — no nested modal over the open Sheet
+                       (that pattern froze the app in Elec-ID moderation). */
+                    <div className="w-full space-y-3">
+                      <p className="text-[13px] font-semibold text-white flex items-center gap-2">
+                        {moderationAction === 'approve' && (
+                          <Check className="h-4 w-4 text-emerald-400" />
+                        )}
+                        {moderationAction === 'reject' && <X className="h-4 w-4 text-red-400" />}
+                        {moderationAction === 'flag' && <Flag className="h-4 w-4 text-amber-400" />}
+                        {moderationAction === 'approve'
+                          ? 'Approve vacancy — visible to all users'
+                          : moderationAction === 'reject'
+                            ? 'Reject vacancy — hidden, employer notified'
+                            : 'Flag vacancy for further review'}
+                      </p>
+                      <Textarea
+                        placeholder="Reason (optional) — kept with the decision…"
+                        value={moderationReason}
+                        onChange={(e) => setModerationReason(e.target.value)}
+                        className="min-h-[70px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/50 focus:border-elec-yellow/60"
+                      />
+                      <div className="flex gap-3 w-full">
+                        <Button
+                          variant="outline"
+                          className="flex-1 h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]"
+                          onClick={() => setModerationAction(null)}
+                          disabled={moderateMutation.isPending}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          className="flex-1 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+                          onClick={handleModerate}
+                          disabled={moderateMutation.isPending}
+                        >
+                          {moderateMutation.isPending ? (
+                            <>
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              Processing…
+                            </>
+                          ) : (
+                            'Confirm'
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-2 w-full">
+                      <Button
+                        className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+                        onClick={() => setModerationAction('approve')}
+                      >
+                        <Check className="h-4 w-4 mr-1.5" />
+                        Approve
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                        onClick={() => setModerationAction('flag')}
+                      >
+                        <Flag className="h-4 w-4 mr-1.5" />
+                        Flag
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                        onClick={() => setModerationAction('reject')}
+                      >
+                        <X className="h-4 w-4 mr-1.5" />
+                        Reject
+                      </Button>
+                    </div>
+                  )}
                 </SheetFooter>
               )}
             </div>
           </SheetContent>
         </Sheet>
-
-        <AlertDialog open={!!moderationAction} onOpenChange={() => setModerationAction(null)}>
-          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] text-white">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2 text-white">
-                {moderationAction === 'approve' && <Check className="h-5 w-5 text-emerald-400" />}
-                {moderationAction === 'reject' && <X className="h-5 w-5 text-red-400" />}
-                {moderationAction === 'flag' && <Flag className="h-5 w-5 text-amber-400" />}
-                {moderationAction === 'approve'
-                  ? 'Approve vacancy'
-                  : moderationAction === 'reject'
-                    ? 'Reject vacancy'
-                    : 'Flag vacancy'}
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-white">
-                {moderationAction === 'approve'
-                  ? 'This vacancy will be visible to all users.'
-                  : moderationAction === 'reject'
-                    ? 'This vacancy will be hidden and the employer notified.'
-                    : 'This vacancy will be flagged for further review.'}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <div className="space-y-2 py-2">
-              <Label className="text-white">Reason (optional)</Label>
-              <Textarea
-                placeholder="Add a note about this moderation decision…"
-                value={moderationReason}
-                onChange={(e) => setModerationReason(e.target.value)}
-                className="min-h-[80px] touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
-              />
-            </div>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]">
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
-                onClick={handleModerate}
-                disabled={moderateMutation.isPending}
-              >
-                {moderateMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Processing…
-                  </>
-                ) : (
-                  'Confirm'
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </PageFrame>
     </PullToRefresh>
   );

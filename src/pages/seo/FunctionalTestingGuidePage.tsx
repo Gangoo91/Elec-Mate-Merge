@@ -434,7 +434,7 @@ const sections = [
         <p>
           Elec-Mate includes a comprehensive functional testing checklist integrated into every EIC,
           EICR, and{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works</SEOInternalLink>{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works</SEOInternalLink>{' '}
           certificate. The checklist covers RCD test button verification, switching device
           operation, isolator checks, interlocking, circuit identification, labelling, and all other
           functional test items required by BS 7671.
@@ -446,7 +446,7 @@ const sections = [
         />
         <p>
           The app also auto-generates the circuit schedule from the{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             board scanner
           </SEOInternalLink>
           , so your functional test checklist is already populated with the correct circuit
@@ -500,7 +500,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. All built to BS 7671.',

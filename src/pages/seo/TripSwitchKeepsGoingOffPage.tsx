@@ -619,7 +619,7 @@ const sections = [
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   is required. For repairs to existing circuits, issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>
                   .

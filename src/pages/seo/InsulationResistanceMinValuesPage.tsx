@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Test Guide',
     description: 'Step-by-step procedure for performing insulation resistance tests.',
     icon: Activity,
@@ -153,7 +153,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-testing">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance test
           </SEOInternalLink>{' '}
           applies a DC voltage (typically 500V for standard circuits) between the conductors and

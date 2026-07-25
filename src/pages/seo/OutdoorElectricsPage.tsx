@@ -677,7 +677,7 @@ export default function OutdoorElectricsPage() {
             <>
               <p>
                 Most outdoor electrical work is notifiable under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 . The following outdoor installations are notifiable:
@@ -807,7 +807,7 @@ export default function OutdoorElectricsPage() {
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'PME vs TT earthing — essential for outdoor installations.',
           icon: Cable,
@@ -821,7 +821,7 @@ export default function OutdoorElectricsPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'Notification requirements for outdoor electrical work.',
           icon: FileText,

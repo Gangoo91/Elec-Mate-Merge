@@ -401,7 +401,7 @@ const sections = [
                 protective conductor for the external section, it must be terminated correctly at
                 both ends. Some installations use a separate earth electrode at the outdoor unit for
                 additional protection — check the manufacturer requirements and the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 of the supply.

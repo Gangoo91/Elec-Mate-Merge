@@ -533,7 +533,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Consumer unit replacements are one of the most common remedial jobs following an
                   EICR in Bradford's older housing stock. Quote immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   while the landlord is already thinking about the 28-day deadline — your conversion

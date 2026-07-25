@@ -215,7 +215,7 @@ const sections = [
           <SEOInternalLink href="/tools/cable-sizing-calculator">circuit design</SEOInternalLink>,
           accurate fault diagnosis, and the ability to explain technical concepts to clients and
           colleagues. It is also essential for passing the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">inspection and testing</SEOInternalLink>{' '}
+          <SEOInternalLink href="/city-guilds2391">inspection and testing</SEOInternalLink>{' '}
           examination (2391/2394/2395) where electrical science questions feature prominently.
         </p>
       </>
@@ -481,7 +481,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Electrical science is essential for understanding and interpreting test results.',
     icon: ClipboardCheck,

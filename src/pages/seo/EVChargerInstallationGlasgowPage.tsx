@@ -430,7 +430,7 @@ const sections = [
                   Factor in Glasgow day rates (£300 to £400), cable routing challenges in tenement
                   and stone-built properties, earthing requirements on PME supplies, and factor
                   consent requirements for tenement flats. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>

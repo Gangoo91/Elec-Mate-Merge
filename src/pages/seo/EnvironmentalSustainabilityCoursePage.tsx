@@ -270,7 +270,7 @@ const sections = [
                 Solar photovoltaic systems convert sunlight into electricity. A typical domestic
                 system (3.5 to 4kWp) generates 3,000 to 4,000kWh per year, offsetting 30% to 50% of
                 household electricity consumption. The{' '}
-                <SEOInternalLink href="/tools/solar-pv-certificate">
+                <SEOInternalLink href="/solar-pv-certificate">
                   solar PV installation course
                 </SEOInternalLink>{' '}
                 covers design, DC wiring, inverter selection, and MCS certification.
@@ -308,7 +308,7 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 Electric vehicle adoption is accelerating, and every EV needs a charger. Domestic,
                 commercial, and public charging installations are a growing market. The{' '}
-                <SEOInternalLink href="/training/ev-charger-installation">
+                <SEOInternalLink href="/guides/ev-charger-installation">
                   EV charger installation course
                 </SEOInternalLink>{' '}
                 covers the IET Code of Practice, load management, and smart charging.
@@ -479,7 +479,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description:
       'Solar PV system design, DC wiring, inverter selection, and MCS certification training.',
@@ -487,7 +487,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description:
       'Electric vehicle charger installation — IET Code of Practice, load management, and smart charging.',

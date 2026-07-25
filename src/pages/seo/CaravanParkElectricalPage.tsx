@@ -541,7 +541,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   The recommended annual inspection interval means repeat business for the
                   electrician. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   offer multi-year maintenance contracts to park operators, building predictable
                   recurring revenue.
                 </p>

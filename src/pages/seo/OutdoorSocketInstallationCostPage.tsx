@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Price outdoor socket installations accurately with itemised professional quotes.',
     icon: PoundSterling,
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -495,7 +495,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete job with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   IP66 socket, SWA cable (per metre), RCBO, glands, trenching labour, testing, and
                   Part P notification — all itemised with your margins.
                 </p>
@@ -509,7 +509,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Minor Works Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   on site after testing. AI-assisted test entry and instant PDF export. Send the

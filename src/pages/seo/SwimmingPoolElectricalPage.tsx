@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — critical knowledge for pool installations.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study Section 702 in detail with structured training modules and practice exam questions.',

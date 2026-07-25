@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Documentation required when replacing or repairing outdoor lighting.',
     icon: FileCheck2,
@@ -645,7 +645,7 @@ const sections = [
           An electrician will test insulation resistance on the outdoor circuit, check all
           connections and IP-rated enclosures, verify RCD protection is present and operational, and
           ensure cables are properly routed and protected. They should issue a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           for any repair or replacement work.
@@ -718,7 +718,7 @@ const sections = [
                   correct size and properly sealed. Verify RCD protection is present — if not,
                   recommend installation. Test the completed circuit (IR, Zs, RCD operation time).
                   Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   documenting the fault, repair, and test results.

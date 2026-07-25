@@ -602,7 +602,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work immediately using
-                  the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Edinburgh landlords are motivated to act quickly given the Tribunal process — the
                   electrician who quotes on the day of the EICR wins the remedial work.
                 </p>

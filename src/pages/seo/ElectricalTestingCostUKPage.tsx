@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'How to carry out insulation resistance testing to BS 7671 with test voltages and pass/fail values.',
@@ -543,7 +543,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">70 Electrical Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Zs verification, prospective fault current, voltage drop, cable sizing,{' '}
-                  <SEOInternalLink href="/guides/insulation-resistance-testing">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     insulation resistance
                   </SEOInternalLink>
                   , and dozens more. All built to BS 7671:2018+A4:2026.

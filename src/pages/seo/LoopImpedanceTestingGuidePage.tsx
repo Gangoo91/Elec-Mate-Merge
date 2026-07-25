@@ -83,6 +83,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/tools/earth-loop-impedance-calculator',
+    title: 'Earth Fault Loop Impedance Calculator',
+    description:
+      'Calculate Zs and check it against BS 7671 maximum values in seconds.',
+    icon: FileCheck2,
+    category: 'Calculator',
+  },
+  {
     href: '/guides/earth-fault-loop-impedance-calculation',
     title: 'Earth Fault Loop Impedance Calculation',
     description:
@@ -91,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/insulation-resistance-testing-guide',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing Guide',
     description:
       'Test earth fault loop impedance per BS 7671 + GN3: Ze, Zs, max values from Table 41.3/4, PFC, 0.8 correction. Pass/fail criteria for UK electricians.',
@@ -106,14 +114,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5× current RCD test procedures.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/earth-electrode-testing',
+    href: '/guides/earth-electrode-testing',
     title: 'Earth Electrode Testing Guide',
     description: 'Fall of potential method, stakeless clamp method, and TT system requirements.',
     icon: CircleDot,
@@ -605,7 +613,7 @@ const sections = [
 export default function LoopImpedanceTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Ze vs Zs: What's the Difference? Max Zs Values (BS 7671)"
+      title="Loop Impedance Testing: Ze vs Zs, Max Values + Site Method"
       description="The difference between Ze and Zs explained simply: what each one measures, how to test loop impedance on site, and max Zs values for Type B + C MCBs."
       datePublished="2026-03-27"
       dateModified="2026-07-02"

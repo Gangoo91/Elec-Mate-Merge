@@ -330,7 +330,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description:
       'Step-by-step guide to completing the full EICR, including schedules and observations.',

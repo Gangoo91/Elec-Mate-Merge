@@ -18,7 +18,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Polarity Testing', href: '/guides/polarity-testing-guide-bs7671' },
+  { label: 'Polarity Testing', href: '/polarity-test-guide' },
 ];
 
 const tocItems = [
@@ -81,7 +81,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/continuity-testing-electricians-guide',
+    href: '/continuity-testing-guide',
     title: 'Continuity Testing Guide',
     description: 'R1+R2 measurement, ring circuit testing, and CPC continuity procedures.',
     icon: ClipboardCheck,
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with modules covering all initial verification tests.',
     icon: GraduationCap,

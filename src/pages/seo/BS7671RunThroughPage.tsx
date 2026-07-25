@@ -177,7 +177,7 @@ const sections = [
         </p>
         <p>
           Spend time reading Part 2 carefully. Mark definitions you find confusing and use the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             Elec-Mate 18th Edition course
           </SEOInternalLink>{' '}
           flashcards to practise them until they are second nature.
@@ -317,7 +317,7 @@ const sections = [
         <p>
           <strong>Chapter 62 — Periodic inspection and testing.</strong> Existing installations must
           be periodically inspected and tested to confirm they remain safe for continued use. The{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">
+          <SEOInternalLink href="/how-to-fill-in-eicr">
             EICR (Electrical Installation Condition Report)
           </SEOInternalLink>{' '}
           documents the findings, using observation codes C1 (Danger Present), C2 (Potentially
@@ -480,7 +480,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'C&G 2391 study course — builds on BS 7671 knowledge with practical testing skills.',
@@ -488,7 +488,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Full structured study course for the C&G 2382 exam with interactive quizzes and mock exams.',

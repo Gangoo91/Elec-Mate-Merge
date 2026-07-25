@@ -6,16 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { RefreshCw, Check, X, Flag, Loader2 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
@@ -97,11 +87,16 @@ export default function AdminPricingModeration() {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('pending');
-  const [typeFilter, setTypeFilter] = useState<'all' | 'material' | 'labour' | 'equipment' | 'flagged'>('all');
+  const [typeFilter, setTypeFilter] = useState<
+    'all' | 'material' | 'labour' | 'equipment' | 'flagged'
+  >('all');
   const [selectedSubmission, setSelectedSubmission] = useState<PricingSubmission | null>(null);
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [otherReason, setOtherReason] = useState('');
-  const [showRejectDialog, setShowRejectDialog] = useState(false);
+  // Inline reject panel inside the sheet footer. Deliberately NOT a nested
+  // AlertDialog — stacking a second Radix modal over the open Sheet froze the
+  // whole app (double focus-trap / body pointer-events lock, 2026-07-25).
+  const [rejectMode, setRejectMode] = useState(false);
   const haptic = useHaptic();
 
   const toggleReason = (reasonId: string, checked: boolean) => {
@@ -257,7 +252,7 @@ export default function AdminPricingModeration() {
       queryClient.invalidateQueries({ queryKey: ['admin-pricing-submissions'] });
       queryClient.invalidateQueries({ queryKey: ['admin-pricing-stats'] });
       setSelectedSubmission(null);
-      setShowRejectDialog(false);
+      setRejectMode(false);
       setSelectedReasons([]);
       setOtherReason('');
       toast({ title: 'Submission deleted' });
@@ -448,7 +443,12 @@ export default function AdminPricingModeration() {
                 const statusLabel = r.verification_status || 'pending';
                 const tone = statusToTone(r.verification_status);
                 const submitter = r.profiles?.full_name || 'Unknown';
-                const unit = typeLabel === 'labour' ? '/hr' : r.postcode_district ? `· ${r.postcode_district}` : '';
+                const unit =
+                  typeLabel === 'labour'
+                    ? '/hr'
+                    : r.postcode_district
+                      ? `· ${r.postcode_district}`
+                      : '';
                 return (
                   <ListRow
                     key={r.id}
@@ -481,7 +481,15 @@ export default function AdminPricingModeration() {
           </ListCard>
         )}
 
-        <Sheet open={!!selectedSubmission} onOpenChange={() => setSelectedSubmission(null)}>
+        <Sheet
+          open={!!selectedSubmission}
+          onOpenChange={() => {
+            setSelectedSubmission(null);
+            setRejectMode(false);
+            setSelectedReasons([]);
+            setOtherReason('');
+          }}
+        >
           <SheetContent
             side="bottom"
             className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
@@ -563,9 +571,7 @@ export default function AdminPricingModeration() {
                       </div>
                       <div className="flex items-center justify-between px-5 py-3.5">
                         <span className="text-[12px] text-white">Role</span>
-                        <Pill tone="blue">
-                          {selectedSubmission?.profiles?.role || 'unknown'}
-                        </Pill>
+                        <Pill tone="blue">{selectedSubmission?.profiles?.role || 'unknown'}</Pill>
                       </div>
                       <div className="flex items-center justify-between px-5 py-3.5">
                         <span className="text-[12px] text-white">Submitted</span>
@@ -654,126 +660,115 @@ export default function AdminPricingModeration() {
               {(!selectedSubmission?.verification_status ||
                 selectedSubmission?.verification_status === 'pending') && (
                 <SheetFooter className="p-4 border-t border-white/[0.06]">
-                  <div className="grid grid-cols-3 gap-2 w-full">
-                    <Button
-                      className="h-12 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                      onClick={() =>
-                        selectedSubmission && approveMutation.mutate(selectedSubmission.id)
-                      }
-                      disabled={approveMutation.isPending || flagMutation.isPending}
-                    >
-                      {approveMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <Check className="h-4 w-4 mr-2" />
+                  {rejectMode ? (
+                    <div className="w-full space-y-3">
+                      <div>
+                        <p className="text-[13px] font-semibold text-white">Reject & delete?</p>
+                        <p className="text-[12px] text-white/70 mt-0.5">
+                          Select reason(s). This permanently deletes the submission.
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        {REJECTION_REASONS.map((reason) => (
+                          <label
+                            key={reason.id}
+                            className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] cursor-pointer hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                          >
+                            <Checkbox
+                              checked={selectedReasons.includes(reason.id)}
+                              onCheckedChange={(checked) => toggleReason(reason.id, !!checked)}
+                              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                            />
+                            <span className="text-[13px] text-white">{reason.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                      {selectedReasons.includes('other') && (
+                        <Textarea
+                          value={otherReason}
+                          onChange={(e) => setOtherReason(e.target.value)}
+                          placeholder="Additional notes..."
+                          className="min-h-[80px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/50"
+                        />
                       )}
-                      {approveMutation.isPending ? '...' : 'Approve'}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="h-12 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
-                      onClick={() =>
-                        selectedSubmission && flagMutation.mutate(selectedSubmission.id)
-                      }
-                      disabled={flagMutation.isPending || approveMutation.isPending}
-                    >
-                      {flagMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <Flag className="h-4 w-4 mr-2" />
-                      )}
-                      {flagMutation.isPending ? '...' : 'Flag'}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="h-12 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
-                      onClick={() => setShowRejectDialog(true)}
-                      disabled={approveMutation.isPending || flagMutation.isPending}
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Reject
-                    </Button>
-                  </div>
+                      <div className="flex gap-3 w-full">
+                        <button
+                          className="flex-1 h-12 rounded-full border border-white/[0.08] bg-white/[0.04] text-white text-[13px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
+                          onClick={() => {
+                            setRejectMode(false);
+                            setSelectedReasons([]);
+                            setOtherReason('');
+                          }}
+                          disabled={rejectMutation.isPending}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="flex-1 h-12 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[13px] font-semibold hover:bg-red-500/30 transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                          onClick={() =>
+                            selectedSubmission &&
+                            rejectMutation.mutate({
+                              id: selectedSubmission.id,
+                              reasons: selectedReasons,
+                              otherText: selectedReasons.includes('other')
+                                ? otherReason
+                                : undefined,
+                            })
+                          }
+                          disabled={selectedReasons.length === 0 || rejectMutation.isPending}
+                        >
+                          {rejectMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+                          {rejectMutation.isPending ? 'Deleting...' : 'Delete'}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-2 w-full">
+                      <Button
+                        className="h-12 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                        onClick={() =>
+                          selectedSubmission && approveMutation.mutate(selectedSubmission.id)
+                        }
+                        disabled={approveMutation.isPending || flagMutation.isPending}
+                      >
+                        {approveMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <Check className="h-4 w-4 mr-2" />
+                        )}
+                        {approveMutation.isPending ? '...' : 'Approve'}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-12 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                        onClick={() =>
+                          selectedSubmission && flagMutation.mutate(selectedSubmission.id)
+                        }
+                        disabled={flagMutation.isPending || approveMutation.isPending}
+                      >
+                        {flagMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <Flag className="h-4 w-4 mr-2" />
+                        )}
+                        {flagMutation.isPending ? '...' : 'Flag'}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-12 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                        onClick={() => setRejectMode(true)}
+                        disabled={approveMutation.isPending || flagMutation.isPending}
+                      >
+                        <X className="h-4 w-4 mr-2" />
+                        Reject
+                      </Button>
+                    </div>
+                  )}
                 </SheetFooter>
               )}
             </div>
           </SheetContent>
         </Sheet>
-
-        <AlertDialog
-          open={showRejectDialog}
-          onOpenChange={(open) => {
-            setShowRejectDialog(open);
-            if (!open) {
-              setSelectedReasons([]);
-              setOtherReason('');
-            }
-          }}
-        >
-          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Reject & Delete</AlertDialogTitle>
-              <AlertDialogDescription className="text-white">
-                Select reason(s) for rejection. This will permanently delete the submission.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-
-            <div className="space-y-2 py-2">
-              {REJECTION_REASONS.map((reason) => (
-                <label
-                  key={reason.id}
-                  className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] cursor-pointer hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-                >
-                  <Checkbox
-                    checked={selectedReasons.includes(reason.id)}
-                    onCheckedChange={(checked) => toggleReason(reason.id, !!checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <span className="text-[13px] text-white">{reason.label}</span>
-                </label>
-              ))}
-            </div>
-
-            {selectedReasons.includes('other') && (
-              <Textarea
-                value={otherReason}
-                onChange={(e) => setOtherReason(e.target.value)}
-                placeholder="Additional notes..."
-                className="min-h-[80px] text-sm bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white"
-              />
-            )}
-
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]"
-                disabled={rejectMutation.isPending}
-              >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                onClick={() =>
-                  selectedSubmission &&
-                  rejectMutation.mutate({
-                    id: selectedSubmission.id,
-                    reasons: selectedReasons,
-                    otherText: selectedReasons.includes('other') ? otherReason : undefined,
-                  })
-                }
-                disabled={selectedReasons.length === 0 || rejectMutation.isPending}
-              >
-                {rejectMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
-                  </>
-                ) : (
-                  'Delete'
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </PageFrame>
     </PullToRefresh>
   );

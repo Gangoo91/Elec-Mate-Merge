@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -93,16 +94,13 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Reviews</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">Ask for reviews</h2>
             <p className="mt-1 text-[13px] text-white/60">
@@ -140,7 +138,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
                     value={url}
                     onChange={(e) => updateLink(i, e.target.value)}
                     placeholder="Paste a review link (Google, Checkatrade…)"
-                    className="flex-1 min-w-0 h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="flex-1 min-w-0 h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                   <button
                     type="button"
@@ -174,7 +172,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={DEFAULT_REVIEW_MESSAGE}
-                className="min-h-[96px] bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation text-[13px]"
+                className="min-h-[96px] bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation text-[13px]"
               />
               <p className="text-[11.5px] text-white/45">Leave blank to use our default wording.</p>
             </div>
@@ -191,7 +189,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

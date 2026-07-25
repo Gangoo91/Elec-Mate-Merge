@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P covers, which work is notifiable, and why competent person scheme registration matters.',
@@ -147,7 +147,7 @@ const sections = [
           tradespeople to self-certify that their work complies with the Building Regulations —
           without needing to involve the local authority Building Control. For electricians in
           England and Wales, this means you can carry out notifiable electrical work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           and self-certify it through your scheme.

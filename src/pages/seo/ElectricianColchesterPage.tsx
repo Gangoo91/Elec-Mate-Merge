@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Colchester electrical jobs at accurate South East rates — send professional quotes on site.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 — essential for EICR and HMO inspection work in Colchester.',
     icon: GraduationCap,
@@ -426,7 +426,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional PDF quotes from Colchester surveys. Accurate South East rates
                   built in — close jobs faster by quoting on site.
                 </p>

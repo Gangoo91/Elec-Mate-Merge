@@ -70,7 +70,7 @@ export default function WhenIsEICRequiredPage() {
                 The EIC is defined in Appendix 6 of BS 7671 and follows the model forms published in
                 the standard. It is the most comprehensive of the three electrical certificates —
                 the EIC, the{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>
                 , and the{' '}
@@ -188,7 +188,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     In England and Wales, all notifiable work under{' '}
-                    <SEOInternalLink href="/guides/part-p-building-regulations">
+                    <SEOInternalLink href="/part-p-building-regulations">
                       Part P of the Building Regulations
                     </SEOInternalLink>{' '}
                     requires an EIC. This includes any new circuit in a dwelling, any work in a
@@ -209,7 +209,7 @@ export default function WhenIsEICRequiredPage() {
             <>
               <p>
                 There are situations where a full EIC is not required. In these cases, a{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 is the appropriate document. The key distinction is that a Minor Works Certificate
@@ -618,7 +618,7 @@ export default function WhenIsEICRequiredPage() {
           category: 'Certification',
         },
         {
-          href: '/tools/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'When to use a Minor Works Certificate and how to fill it in.',
           icon: ClipboardCheck,
@@ -632,7 +632,7 @@ export default function WhenIsEICRequiredPage() {
           category: 'Certification',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'Which electrical work is notifiable and how to comply.',
           icon: ShieldCheck,

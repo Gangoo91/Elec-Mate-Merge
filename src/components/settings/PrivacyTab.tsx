@@ -25,7 +25,6 @@ import {
 import {
   ListCard,
   ListRow,
-  SectionHeader,
   Arrow,
   Dot,
   Eyebrow,
@@ -34,6 +33,7 @@ import {
   toneText,
   type Tone,
 } from '@/components/college/primitives';
+import { SettingsCard } from '@/components/settings/rows';
 import { cn } from '@/lib/utils';
 
 const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
@@ -80,7 +80,7 @@ const PrivacyTab = () => {
           .select('value')
           .eq('user_id', userId)
           .eq('key', 'cookie_preferences')
-          .single();
+          .maybeSingle();
         if (data?.value && typeof data.value === 'object') {
           setCookiePrefs(data.value as CookiePreferences);
           return;
@@ -338,12 +338,11 @@ const PrivacyTab = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-8"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"
     >
       {/* ── YOUR DATA ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow="01" title="Your Data" />
-        <ListCard>
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="01" title="Your Data">
           <ListRow
             title="Data Retention"
             subtitle="Kept while active. Deleted within 30 days of account removal."
@@ -383,60 +382,59 @@ const PrivacyTab = () => {
               {showRights ? '▴' : '▾'}
             </span>
           </button>
-        </ListCard>
 
-        <AnimatePresence>
-          {showRights && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden"
-            >
-              <ListCard>
-                {gdprRights.map((right) => (
-                  <ListRow
-                    key={right.article}
-                    title={
-                      <span className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            'text-[10px] font-medium uppercase tracking-[0.15em]',
-                            toneText[right.tone]
-                          )}
-                        >
-                          {right.article}
+          <AnimatePresence>
+            {showRights && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <ListCard>
+                  {gdprRights.map((right) => (
+                    <ListRow
+                      key={right.article}
+                      title={
+                        <span className="flex items-center gap-2">
+                          <span
+                            className={cn(
+                              'text-[10px] font-medium uppercase tracking-[0.15em]',
+                              toneText[right.tone]
+                            )}
+                          >
+                            {right.article}
+                          </span>
+                          <span className="truncate">{right.title}</span>
                         </span>
-                        <span className="truncate">{right.title}</span>
-                      </span>
-                    }
-                    subtitle={right.description}
-                    onClick={right.action}
-                    trailing={<Arrow />}
-                  />
-                ))}
-              </ListCard>
-              <div className="mt-2 px-1 text-[11.5px] text-white/65 leading-relaxed">
-                To exercise any right, contact{' '}
-                <button
-                  onClick={() => openExternalUrl('mailto:info@elec-mate.com')}
-                  className="text-elec-yellow hover:underline touch-manipulation"
-                >
-                  info@elec-mate.com
-                </button>
-                . We respond within one month as required by law.
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                      }
+                      subtitle={right.description}
+                      onClick={right.action}
+                      trailing={<Arrow />}
+                    />
+                  ))}
+                </ListCard>
+                <div className="px-5 sm:px-6 py-3 text-[11.5px] text-white/65 leading-relaxed">
+                  To exercise any right, contact{' '}
+                  <button
+                    onClick={() => openExternalUrl('mailto:info@elec-mate.com')}
+                    className="text-elec-yellow hover:underline touch-manipulation"
+                  >
+                    info@elec-mate.com
+                  </button>
+                  . We respond within one month as required by law.
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </SettingsCard>
       </motion.section>
 
       {/* ── COOKIES (web only) ── */}
       {!isNative && (
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader eyebrow="02" title="Cookies" />
-          <ListCard>
+        <motion.section variants={itemVariants} className="h-full">
+          <SettingsCard eyebrow="02" title="Cookies">
             <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
@@ -469,14 +467,13 @@ const PrivacyTab = () => {
                 onCheckedChange={() => handleCookieToggle('analytics')}
               />
             </div>
-          </ListCard>
+          </SettingsCard>
         </motion.section>
       )}
 
       {/* ── LEGAL ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow={isNative ? '02' : '03'} title="Legal" />
-        <ListCard>
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow={isNative ? '02' : '03'} title="Legal">
           {legalLinks.map((link) => (
             <Link
               key={link.to}
@@ -489,23 +486,19 @@ const PrivacyTab = () => {
               <Arrow />
             </Link>
           ))}
-        </ListCard>
-        <div className="flex items-center gap-2 px-1 pt-2">
-          <Dot tone="green" />
-          <p className="text-[11.5px] text-white/65">
-            Registered with the Information Commissioner&apos;s Office · ICO Reg: ZB935897
-          </p>
-        </div>
+          <div className="flex items-center gap-2 px-5 sm:px-6 py-3">
+            <Dot tone="green" />
+            <p className="text-[11.5px] text-white/65">
+              Registered with the Information Commissioner&apos;s Office · ICO Reg: ZB935897
+            </p>
+          </div>
+        </SettingsCard>
       </motion.section>
 
       {/* ── ACTIVITY ── */}
       {auditLog.length > 0 && (
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader
-            eyebrow={isNative ? '03' : '04'}
-            title="Activity"
-          />
-          <ListCard>
+        <motion.section variants={itemVariants} className="h-full">
+          <SettingsCard eyebrow={isNative ? '03' : '04'} title="Activity">
             {auditLog.map((entry, i) => (
               <div
                 key={i}
@@ -526,7 +519,7 @@ const PrivacyTab = () => {
                 </span>
               </div>
             ))}
-          </ListCard>
+          </SettingsCard>
         </motion.section>
       )}
 
@@ -574,7 +567,7 @@ const PrivacyTab = () => {
                   onChange={(e) => setDeleteConfirmText(e.target.value)}
                   placeholder="Type DELETE to confirm"
                   className={cn(
-                    'font-mono bg-[#0a0a0a] border-white/[0.08] focus:border-red-500/50',
+                    'font-mono bg-white/[0.06] border-white/[0.12] focus:border-red-500/50',
                     'text-white placeholder:text-white h-11 touch-manipulation'
                   )}
                   autoCapitalize="none"
@@ -586,7 +579,7 @@ const PrivacyTab = () => {
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel
               disabled={isDeleting}
-              className="min-h-[44px] bg-[#0a0a0a] border-white/[0.08] rounded-full text-white touch-manipulation"
+              className="min-h-[44px] bg-white/[0.06] border-white/[0.12] rounded-full text-white touch-manipulation"
             >
               Cancel
             </AlertDialogCancel>

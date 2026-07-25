@@ -81,14 +81,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'Detailed preparation strategies for every component of the End Point Assessment.',
     icon: Target,
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Portfolio Building Guide',
     description: 'How to build a comprehensive portfolio that impresses the EPAO assessor.',
     icon: FolderOpen,
@@ -216,7 +216,7 @@ const sections = [
               <span>
                 <strong>Portfolio building</strong> — collecting evidence of your work throughout
                 the apprenticeship. This includes{' '}
-                <SEOInternalLink href="/training/apprentice-portfolio">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   photos, work logs, witness testimonies, and reflective accounts
                 </SEOInternalLink>
                 .
@@ -438,7 +438,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/training/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             portfolio builder
           </SEOInternalLink>{' '}
           maps every entry to the apprenticeship standard criteria, so you know exactly which areas

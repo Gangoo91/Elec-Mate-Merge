@@ -280,7 +280,7 @@ export default function PricingStrategyElectricianPage() {
                 If you are NICEIC, NAPIT, or ELECSA registered, include the logo on your quote. It
                 signals competence and compliance, and many clients specifically look for registered
                 electricians. Use the{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">best quoting app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">best quoting app</SEOInternalLink>{' '}
                 features in Elec-Mate to add these automatically.
               </p>
               <p>
@@ -288,7 +288,7 @@ export default function PricingStrategyElectricianPage() {
                 payment is due (on completion, 7 days, 14 days), whether you require a deposit, and
                 what payment methods you accept. Offering card payment via Stripe significantly
                 reduces the time to get paid. The{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 tracks payment timelines automatically.
               </p>
               <p>
@@ -403,7 +403,7 @@ export default function PricingStrategyElectricianPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Best Quoting App for Electricians',
           description:
             'Build and send professional quotes from your phone. Win more work with branded PDF quotes.',
@@ -419,7 +419,7 @@ export default function PricingStrategyElectricianPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description: 'Forecast income from accepted quotes and plan your cash position ahead.',
           icon: Briefcase,

@@ -328,7 +328,7 @@ export default function ElectricalRetrofitGuidePage() {
               <p>
                 Earthing deficiencies are among the most common findings during inspections of older
                 properties. The{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangements guide
                 </SEOInternalLink>{' '}
                 covers the theory in detail. In a retrofit context, the practical considerations
@@ -396,7 +396,7 @@ export default function ElectricalRetrofitGuidePage() {
             <>
               <p>
                 Not all retrofit work is notifiable under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 , but several common retrofit activities are. Understanding what requires
@@ -474,7 +474,7 @@ export default function ElectricalRetrofitGuidePage() {
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>
                 . Adding a spur or replacing accessories requires a{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>
                 . A larger retrofit involving multiple new circuits and a consumer unit change
@@ -637,7 +637,7 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: ShieldCheck,
@@ -651,7 +651,7 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Certification',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'Which electrical work requires notification.',
           icon: FileText,

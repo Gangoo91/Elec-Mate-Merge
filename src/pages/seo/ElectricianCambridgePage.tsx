@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, commercial fit-outs, and maintenance contracts with professional itemised PDFs.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -507,7 +507,7 @@ const sections = [
         <p>
           These rates reflect 2026 Cambridge market conditions. Commercial and biotech work commands
           significantly higher rates — laboratory fit-out day rates of £400 to £550 are common. Use
-          Elec-Mate's <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+          Elec-Mate's <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
           to produce accurate, itemised quotes that reflect Cambridge pricing levels.
         </p>
       </>
@@ -565,7 +565,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Quote heritage rewires, laboratory fit-outs, and maintenance contracts with
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>

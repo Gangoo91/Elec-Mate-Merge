@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'BS 5266-1 compliant emergency lighting certificates with test schedules, battery duration records, and lux level documentation.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description:
       'Step-by-step guide to completing every section of the EICR form correctly for commercial inspections.',
@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training courses covering commercial inspection and testing on the Elec-Mate platform.',
@@ -164,7 +164,7 @@ const sections = [
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations), the Electricity at Work Regulations 1989, the Health and
           Safety at Work Act 1974,{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Building Regulations Part P
           </SEOInternalLink>{' '}
           (electrical safety), Part B (fire safety), Part F (ventilation), Part L (energy
@@ -398,7 +398,7 @@ const sections = [
         <p>
           Emergency lighting is a legal requirement for all restaurants and commercial food premises
           under the Regulatory Reform (Fire Safety) Order 2005. The system must comply with{' '}
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             BS 5266-1:2016
           </SEOInternalLink>{' '}
           and provide illumination along all escape routes, at exit doors, and in high-risk areas
@@ -747,7 +747,7 @@ const sections = [
           Elec-Mate supports the full range of certificates needed for restaurant work —{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works</SEOInternalLink>, Fire
+          <SEOInternalLink href="/minor-works-certificate">Minor Works</SEOInternalLink>, Fire
           Alarm, Emergency Lighting, and PAT Testing. Complete every certificate on your phone,
           generate professional PDFs, and deliver them to the restaurant owner before you leave the
           premises.

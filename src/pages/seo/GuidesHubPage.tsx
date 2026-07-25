@@ -65,9 +65,9 @@ const guideCollections = [
     links: [
       { href: '/guides/bs-7671-18th-edition-guide', label: 'BS 7671 18th Edition Guide' },
       { href: '/bs7671-observation-codes', label: 'BS 7671 Observation Codes' },
-      { href: '/guides/part-p-building-regulations', label: 'Part P Building Regulations' },
+      { href: '/part-p-building-regulations', label: 'Part P Building Regulations' },
       { href: '/consumer-unit-regulations', label: 'Consumer Unit Regulations' },
-      { href: '/guides/earthing-arrangements', label: 'Earthing Arrangements' },
+      { href: '/earthing-arrangements', label: 'Earthing Arrangements' },
       { href: '/guides/special-locations-part-7-bs-7671', label: 'Special Locations (Part 7)' },
       { href: '/guides/appendix-4-tables-bs-7671', label: 'Appendix 4 Tables' },
     ],
@@ -90,7 +90,7 @@ const guideCollections = [
     links: [
       { href: '/guides/testing-sequence-guide', label: 'Testing Sequence Guide' },
       { href: '/guides/safe-isolation-procedure', label: 'Safe Isolation Procedure' },
-      { href: '/guides/how-to-fill-in-eicr', label: 'How to Fill in an EICR' },
+      { href: '/how-to-fill-in-eicr', label: 'How to Fill in an EICR' },
       { href: '/loop-impedance-testing-guide', label: 'Ze vs Zs: Loop Impedance Testing' },
       { href: '/guides/ze-values-uk', label: 'Maximum Ze Values' },
       { href: '/polarity-test-guide', label: 'Polarity Testing' },
@@ -284,8 +284,8 @@ export default function GuidesHubPage() {
           </h2>
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             If you need a quick answer on{' '}
-            <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/guides/earthing-arrangements">
+            <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>,{' '}
+            <SEOInternalLink href="/earthing-arrangements">
               earthing arrangements
             </SEOInternalLink>
             ,{' '}
@@ -293,7 +293,7 @@ export default function GuidesHubPage() {
               testing sequence
             </SEOInternalLink>
             , or{' '}
-            <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR workflows</SEOInternalLink>,
+            <SEOInternalLink href="/how-to-fill-in-eicr">EICR workflows</SEOInternalLink>,
             this page gives you a clear route into the right guide without digging through unrelated
             pages.
           </p>
@@ -367,7 +367,7 @@ export default function GuidesHubPage() {
               testing sequence
             </SEOInternalLink>{' '}
             should be able to move into the{' '}
-            <SEOInternalLink href="/tools/electrical-testing-calculators">
+            <SEOInternalLink href="/electrical-testing-calculators">
               calculator suite
             </SEOInternalLink>
             . Someone reading about EICR completion should be able to move into the{' '}

@@ -402,7 +402,7 @@ export default function SmokeAlarmRegsPage() {
               <p>
                 For professional electricians, mains-powered installations are the recommended
                 approach. The{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P notification
                 </SEOInternalLink>{' '}
                 requirement applies if new permanent wiring is installed for the alarm system. A
@@ -732,14 +732,14 @@ export default function SmokeAlarmRegsPage() {
           category: 'Certification',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'When is smoke alarm installation notifiable?',
           icon: ShieldCheck,
           category: 'Regulations',
         },
         {
-          href: '/tools/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'Certifying mains-powered smoke alarm installations.',
           icon: FileText,

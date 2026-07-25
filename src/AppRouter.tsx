@@ -91,6 +91,7 @@ const AdminSystem = lazy(() => import('@/pages/Admin/AdminSystem'));
 const AdminAnnouncements = lazy(() => import('@/pages/Admin/AdminAnnouncements'));
 const AdminSupport = lazy(() => import('@/pages/Admin/AdminSupport'));
 const AdminUserMessages = lazy(() => import('@/pages/Admin/AdminUserMessages'));
+const AdminPeerSafety = lazy(() => import('@/pages/Admin/AdminPeerSafety'));
 const AdminAuditLogs = lazy(() => import('@/pages/Admin/AdminAuditLogs'));
 const AdminFeatureFlags = lazy(() => import('@/pages/Admin/AdminFeatureFlags'));
 const AdminSettings = lazy(() => import('@/pages/Admin/AdminSettings'));
@@ -1737,6 +1738,14 @@ const AppRouter = () => {
                 element={
                   <LazyRoute>
                     <AdminUserMessages />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="peer-safety"
+                element={
+                  <LazyRoute>
+                    <AdminPeerSafety />
                   </LazyRoute>
                 }
               />

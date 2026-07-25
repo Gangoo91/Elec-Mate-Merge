@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/continuity-testing-electricians-guide',
+    href: '/continuity-testing-guide',
     title: 'Continuity Testing Guide',
     description: 'CPC continuity, main bonding continuity, and R1+R2 measurement.',
     icon: ClipboardCheck,
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'C&G 2391 training covering earthing systems and testing methods.',
     icon: GraduationCap,

@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/insulation-resistance-testing-guide',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing Guide',
     description:
       'Test voltages, minimum values, disconnecting components, and interpreting IR results.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5× current RCD test procedures.',
     icon: ShieldCheck,

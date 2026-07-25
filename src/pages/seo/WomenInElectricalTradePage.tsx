@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician-uk' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'Women in Electrical', href: '/guides/women-in-electrical-trade' },
 ];
 
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/how-to-become-electrician-uk',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Step-by-step route from school leaver or career changer to qualified electrician.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/mock-exams-electrical',
+    href: '/guides/mock-exams-electrician',
     title: 'Mock Exams for Electricians',
     description:
       'Practice tests for 18th Edition, 2391, AM2, and EPA to build confidence before exam day.',
@@ -153,7 +153,7 @@ const sections = [
           apprenticeships, passing the{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">18th Edition</SEOInternalLink>{' '}
           exam, gaining their{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             2391 inspection and testing qualification
           </SEOInternalLink>
           , and building successful careers as employed and self-employed electricians. Some are
@@ -386,7 +386,7 @@ const sections = [
               <span>
                 <strong>Build your portfolio from day one.</strong> Document your work with photos,
                 descriptions, and evidence of competence. The{' '}
-                <SEOInternalLink href="/training/apprentice-portfolio">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 is a requirement for your NVQ — start it early and keep it up to date throughout
@@ -504,7 +504,7 @@ const sections = [
               <span>
                 <strong>Specialisation.</strong> After gaining your core qualifications, you can
                 specialise in{' '}
-                <SEOInternalLink href="/training/inspection-and-testing">
+                <SEOInternalLink href="/inspection-testing-course">
                   inspection and testing (C&G 2391)
                 </SEOInternalLink>
                 ,{' '}

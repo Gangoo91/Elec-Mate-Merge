@@ -695,14 +695,14 @@ export default function BathroomElectricalRegsPage() {
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'Understanding earthing — essential for bonding decisions.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/tools/rcd-testing-guide',
+          href: '/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description: 'How to test RCDs correctly — mandatory for all bathroom circuits.',
           icon: ShieldCheck,

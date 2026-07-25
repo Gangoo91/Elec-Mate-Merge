@@ -1,73 +1,111 @@
-# Welcome to your Lovable project
+# Elec-Mate
 
-## Project info
+**The all-in-one platform for UK electricians.** Certification, AI site tools, BS 7671
+calculators, business management and training — built for the van, on one subscription.
 
-**URL**: https://lovable.dev/projects/f214c814-3a85-4c4a-8139-3d81ec8b7efb
+Elec-Mate combines electrical certification (16 certificate types to BS 7671:2018+A4:2026),
+an AI suite (board scanning, voice test entry, defect coding, RAMS, cost estimation),
+70+ calculators, quoting/invoicing with payments, and a full apprentice-to-CPD training
+centre in a single mobile-first application.
 
-## How can I edit this code?
+> © Elec-Mate. Proprietary and confidential. All rights reserved. This is a private
+> repository — see [LICENSE](./LICENSE).
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## Tech stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f214c814-3a85-4c4a-8139-3d81ec8b7efb) and start prompting.
+| Layer      | Technology                                                        |
+| ---------- | ----------------------------------------------------------------- |
+| Frontend   | React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui               |
+| Mobile     | Capacitor (native iOS & Android)                                  |
+| Backend    | Supabase — Postgres, Auth, Storage, Edge Functions (Deno)         |
+| Payments   | Stripe (incl. Connect), RevenueCat (App Store / Play billing)     |
+| AI         | LLM tool-calling agents + retrieval over grounded BS 7671 sources |
+| Hosting    | Vercel (web), Supabase (backend)                                  |
+| Testing    | Playwright, ESLint, Prettier                                      |
 
-Changes made via Lovable will be committed automatically to this repo.
+## Requirements
 
-**Use your preferred IDE**
+- **Node.js 20** (see `.nvmrc`)
+- npm
+- A Supabase project and the environment variables listed in [`.env.example`](./.env.example)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# 1. Clone
+git clone git@github.com:Gangoo91/Elec-Mate-Merge.git
+cd Elec-Mate-Merge
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Install
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Configure environment
+cp .env.example .env      # then fill in the values
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Run the dev server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+If `npm install` reports peer-dependency conflicts, use `npm install --legacy-peer-deps`
+(this is what the deploy pipeline runs).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Common scripts
 
-**Use GitHub Codespaces**
+| Script                 | Purpose                                              |
+| ---------------------- | ---------------------------------------------------- |
+| `npm run dev`          | Start the Vite dev server                            |
+| `npm run build`        | Production build + SEO HTML generation               |
+| `npm run build:seo`    | Full build with real-browser SEO pre-render          |
+| `npm run lint`         | ESLint over the project                              |
+| `npm run format`       | Prettier write over `src/`                            |
+| `npm test`             | Playwright end-to-end tests                          |
+| `npm run cap:ios`      | Build + sync + open the native iOS project           |
+| `npm run cap:android`  | Build + sync + open the native Android project       |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project structure
 
-## What technologies are used for this project?
+```
+src/                     Application code
+  components/            Feature components (inspection-app, testing, business-hub, …)
+  pages/                 Route-level pages (electrician, study-centre, seo, …)
+  hooks/                 Data hooks (RPC-backed)
+  integrations/supabase  Supabase client + generated types
+supabase/
+  functions/             Edge Functions (Deno)
+  migrations/            SQL migrations
+scripts/                 Build, SEO engine and tooling
+```
 
-This project is built with:
+## Backend
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Single Supabase project. Schema changes go through migrations in `supabase/migrations/`.
+Edge Functions deploy with:
 
-## How can I deploy this project?
+```sh
+npx supabase functions deploy <function-name> --project-ref <project-ref>
+```
 
-Simply open [Lovable](https://lovable.dev/projects/f214c814-3a85-4c4a-8139-3d81ec8b7efb) and click on Share -> Publish.
+Server-side secrets live in **Supabase Function secrets** and **Vercel environment
+variables** — never in this repository. The committed `.env.example` documents the
+client-side (`VITE_`) variables only.
 
-## Can I connect a custom domain to my Lovable project?
+## Deployment
 
-Yes, you can!
+The web app deploys on Vercel from `main`. The native apps are built via Capacitor and
+released through App Store Connect and Google Play.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Contributing
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This is a private, proprietary codebase. Internal contributors should branch from `main`,
+keep changes scoped and reviewed, and run `npm run lint` before opening a PR.
+
+## Security
+
+Found a vulnerability? Please follow the disclosure process in [SECURITY.md](./SECURITY.md).
+Do not open a public issue for security reports.
+
+## Licence
+
+Proprietary. © Elec-Mate. All rights reserved. See [LICENSE](./LICENSE).

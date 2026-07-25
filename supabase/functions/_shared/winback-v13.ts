@@ -14,7 +14,9 @@
  * Cadence
  *   Touch 1 — day +1  | sincere check-in, no offer
  *   Touch 2 — day +7  | 25% off for life, tier-matched
- *   Touch 3 — day +30 | final attempt + what's shipped since they left
+ *   Touch 3 — day +30 | final attempt, DEEPEST offer (electrician £9.99/mo
+ *                        for life via WINBACK999; apprentice holds £5.24).
+ *                        Evergreen copy — no dated "what's new" list.
  *
  * Offer (Stripe assets created 2026-07-17)
  *   25% off FOR LIFE via coupon sSf4XaAS / promo code WINBACK25,
@@ -60,6 +62,13 @@ const PAYMENT_LINK_APPRENTICE =
   'https://buy.stripe.com/4gMaEQcZ49jm6U9e7IbjW0d?prefilled_promo_code=WINBACK25';
 const PAYMENT_LINK_ELECTRICIAN =
   'https://buy.stripe.com/28E00c5wC2UY2DT9RsbjW0e?prefilled_promo_code=WINBACK25';
+
+// Touch-3 FINAL offer (created 2026-07-25): electrician only, £9.99/mo for life
+// via coupon ZVpraGjW (£10 amount-off, forever) / promo code WINBACK999 on the
+// 2026 electrician price (£19.99 − £10 = £9.99). Apprentice is already £5.24 at
+// 25% off, so its final touch keeps that price rather than going lower.
+const PAYMENT_LINK_ELECTRICIAN_FINAL =
+  'https://buy.stripe.com/bJe28k6AG9jmguJaVwbjW0f?prefilled_promo_code=WINBACK999';
 
 export interface WinbackEmail {
   subject: string;
@@ -121,9 +130,15 @@ function withIdentity(url: string, ctx: WinbackContext): string {
 }
 
 // ─── Shared HTML chrome ──────────────────────────────────────────────────
-// Mobile-safe table layout, dark theme matching the app, single column,
-// preheader (hidden) for the inbox preview line.
-const LOGO_URL = 'https://www.elec-mate.com/logo.jpg';
+// Mobile-safe table layout. Light, branded theme matching Elec-Mate's
+// transactional emails (welcome / quote / invoice): light slate body, white
+// rounded card, yellow brand ribbon + CTA, proper logo badge. Single column,
+// hidden preheader for the inbox preview line.
+const LOGO_URL = 'https://www.elec-mate.com/images/elec-mate-logo-512.png';
+const BRAND = '#facc15'; // Elec-Mate yellow
+const INK = '#0f172a'; // headings
+const BODY = '#334155'; // body copy
+const MUTED = '#64748b'; // footer / small print
 
 function shell(opts: { preheader: string; bodyHtml: string }): string {
   return `<!DOCTYPE html>
@@ -133,33 +148,36 @@ function shell(opts: { preheader: string; bodyHtml: string }): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elec-Mate</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
-  <span style="display:none !important; visibility:hidden; mso-hide:all; font-size:1px; color:#0a0a0a; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+<body style="margin: 0; padding: 0; background: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; color: ${BODY};">
+  <span style="display:none !important; visibility:hidden; mso-hide:all; font-size:1px; color:#f1f5f9; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
     ${escapeHtml(opts.preheader)}
   </span>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: #f1f5f9;">
     <tr>
       <td align="center" style="padding: 32px 16px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #111111; border-radius: 16px; overflow: hidden; border: 1px solid #262626;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 560px; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 3px rgba(15,23,42,0.06);">
           <tr>
-            <td style="padding: 32px 28px 12px; text-align: center;">
-              <img src="${LOGO_URL}" alt="Elec-Mate" width="120" style="display: block; margin: 0 auto; max-width: 120px; height: auto; border: 0;" />
+            <td style="background: ${BRAND}; height: 4px; line-height: 4px; font-size: 4px;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="padding: 34px 28px 8px; text-align: center;">
+              <img src="${LOGO_URL}" alt="Elec-Mate" width="64" height="64" style="display: block; margin: 0 auto; width: 64px; height: 64px; border-radius: 15px; border: 0;" />
             </td>
           </tr>
           <tr>
-            <td style="padding: 16px 28px 24px;">
+            <td style="padding: 20px 32px 28px;">
               ${opts.bodyHtml}
             </td>
           </tr>
           <tr>
-            <td style="padding: 22px 28px 28px; border-top: 1px solid #1f1f1f;">
-              <p style="margin: 0 0 6px; font-size: 12px; line-height: 1.6; color: #ffffff; text-align: center;">
+            <td style="padding: 22px 32px 30px; background: #fafafa; border-top: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 6px; font-size: 12px; line-height: 1.6; color: ${MUTED}; text-align: center;">
                 You&apos;re getting this because you used to have an Elec-Mate subscription.
               </p>
-              <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #ffffff; text-align: center;">
-                <a href="mailto:founder@elec-mate.com?subject=unsubscribe%20winback" style="color: #ffffff; text-decoration: underline;">Stop these emails</a>
+              <p style="margin: 0; font-size: 12px; line-height: 1.6; color: ${MUTED}; text-align: center;">
+                <a href="mailto:founder@elec-mate.com?subject=unsubscribe%20winback" style="color: ${MUTED}; text-decoration: underline;">Stop these emails</a>
                 &nbsp;·&nbsp;
-                <a href="https://www.elec-mate.com" style="color: #ffffff; text-decoration: underline;">elec-mate.com</a>
+                <a href="https://www.elec-mate.com" style="color: ${MUTED}; text-decoration: underline;">elec-mate.com</a>
               </p>
             </td>
           </tr>
@@ -191,10 +209,10 @@ function attr(url: string): string {
 
 function ctaButton(href: string, label: string): string {
   return `
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 22px 0;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 24px 0;">
   <tr>
     <td align="center">
-      <a href="${attr(href)}" style="display: inline-block; padding: 16px 32px; background-color: #facc15; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 12px; letter-spacing: -0.01em;">
+      <a href="${attr(href)}" style="display: inline-block; padding: 16px 36px; background-color: ${BRAND}; color: #111827; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 12px; letter-spacing: -0.01em; box-shadow: 0 1px 2px rgba(15,23,42,0.10);">
         ${label}
       </a>
     </td>
@@ -203,21 +221,21 @@ function ctaButton(href: string, label: string): string {
 }
 
 function p(text: string): string {
-  return `<p style="margin: 0 0 16px; font-size: 16px; line-height: 1.65; color: #ffffff;">${text}</p>`;
+  return `<p style="margin: 0 0 16px; font-size: 16px; line-height: 1.65; color: ${BODY};">${text}</p>`;
 }
 
 function pSmall(text: string): string {
-  return `<p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #ffffff;">${text}</p>`;
+  return `<p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: ${MUTED};">${text}</p>`;
 }
 
 function h1(text: string): string {
-  return `<h1 style="margin: 0 0 18px; font-size: 24px; font-weight: 700; line-height: 1.25; color: #ffffff; letter-spacing: -0.01em;">${text}</h1>`;
+  return `<h1 style="margin: 0 0 18px; font-size: 25px; font-weight: 800; line-height: 1.22; color: ${INK}; letter-spacing: -0.02em;">${text}</h1>`;
 }
 
 function sig(): string {
   return `
-<p style="margin: 22px 0 4px; font-size: 16px; line-height: 1.5; color: #ffffff;">Andrew</p>
-<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #ffffff;">Founder, Elec-Mate</p>`;
+<p style="margin: 24px 0 4px; font-size: 16px; line-height: 1.5; color: ${INK}; font-weight: 600;">Andrew</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: ${MUTED};">Founder, Elec-Mate</p>`;
 }
 
 // ─── Touch 1 — Day +1, sincere check-in, no offer ────────────────────────
@@ -240,30 +258,30 @@ export function winbackTouch1(ctx: WinbackContext): WinbackEmail {
 ${h1(ctx.wasTrial ? `Quick one, ${escapeHtml(name)}.` : `Sorry to see you go, ${escapeHtml(name)}.`)}
 ${p('Andrew here. ' + opening)}
 ${p('No hard feelings — but I&rsquo;d genuinely love to know why. Two reasons:')}
-<ul style="margin: 0 0 16px; padding-left: 22px; font-size: 16px; line-height: 1.7; color: #ffffff;">
+<ul style="margin: 0 0 16px; padding-left: 22px; font-size: 16px; line-height: 1.7; color: ${BODY};">
   <li>If something&rsquo;s broken, I want to fix it.</li>
   <li>If something&rsquo;s missing, I want to build it.</li>
 </ul>
 ${p('Just hit reply on this email. One line is plenty. It comes straight to my inbox — I&rsquo;m a working spark too, so I&rsquo;ll know what you mean.')}
 
 <!-- Free GPT — goodwill + share angle -->
-<div style="margin: 26px 0 18px; padding: 22px; background-color: #181818; border: 1px solid #2a2a2a; border-radius: 14px;">
-  <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #facc15;">Even if you don&rsquo;t come back</p>
-  <p style="margin: 0 0 10px; font-size: 17px; font-weight: 700; line-height: 1.3; color: #ffffff;">
+<div style="margin: 26px 0 18px; padding: 22px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;">
+  <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">Even if you don&rsquo;t come back</p>
+  <p style="margin: 0 0 10px; font-size: 17px; font-weight: 700; line-height: 1.3; color: ${INK};">
     Use the free Elec-Mate AI on ChatGPT.
   </p>
-  <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #ffffff;">
+  <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: ${BODY};">
     Custom GPT I built for the trade — BS 7671 lookups, cable calcs, fault-finding, regs questions. Forever free, no Elec-Mate login needed.
   </p>
   <table role="presentation" cellspacing="0" cellpadding="0">
     <tr>
       <td style="padding-right: 8px;">
-        <a href="${attr(GPT_URL)}" style="display: inline-block; padding: 12px 20px; background-color: #facc15; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 10px;">
+        <a href="${attr(GPT_URL)}" style="display: inline-block; padding: 12px 20px; background-color: ${BRAND}; color: #111827; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 10px;">
           Open the GPT →
         </a>
       </td>
       <td>
-        <a href="${attr(GPT_WHATSAPP_SHARE)}" style="display: inline-block; padding: 12px 18px; background-color: transparent; color: #facc15; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid rgba(250,204,21,0.35); border-radius: 10px;">
+        <a href="${attr(GPT_WHATSAPP_SHARE)}" style="display: inline-block; padding: 12px 18px; background-color: #ffffff; color: #b45309; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid #e2e8f0; border-radius: 10px;">
           Share with a mate
         </a>
       </td>
@@ -342,14 +360,14 @@ ${sig()}`;
     return { subject, html: shell({ preheader, bodyHtml }), text };
   }
 
-  const subject = `${name}, 25% off for life if you come back`;
-  const preheader = `${offer.newPrice}/mo instead of ${offer.oldPrice} — for as long as you stay. All your data is still there.`;
+  const subject = `${name}, come back for 25% off — for life`;
+  const preheader = `${offer.newPrice}/mo instead of ${offer.oldPrice}, locked for as long as you stay. Everything you saved is still there.`;
 
   // Cost-vs-value anchor — what they actually get for that money,
   // versus piecing the same workflow together from disconnected tools.
   const valueListHtml = ctx.tier.startsWith('apprentice')
     ? `
-<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: #ffffff;">
+<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: ${BODY};">
   <li>Level 2 / 3 / AM2 / HNC mock exams &amp; 500+ practice questions</li>
   <li>75 curated training videos, 29 flashcard sets, BS 7671 study guide</li>
   <li>75 calculators (cable, Zs, voltage drop, three-phase, EV…)</li>
@@ -357,7 +375,7 @@ ${sig()}`;
   <li>Site diary, OJT logbook, portfolio builder, EPA simulator</li>
 </ul>`
     : `
-<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: #ffffff;">
+<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.8; color: ${BODY};">
   <li>19 certificate types (EICR, EIC, Minor Works, PAT, solar, fire alarm…)</li>
   <li>70+ calculators + live materials pricing + price book</li>
   <li>Quote + invoice builder, customer CRM, photo docs, expenses with OCR</li>
@@ -370,31 +388,32 @@ ${sig()}`;
     ? 'vs ~£40–60/mo for a college add-on subscription + separate revision app'
     : 'vs ~£60–120/mo for separate cert software + CRM + quote tool + accounting connector';
 
+  const savingPerYear = ctx.tier.startsWith('apprentice') ? '£21' : '£60';
+
   const bodyHtml = `
-${h1(`${escapeHtml(name)}, come back at 25% off — for life.`)}
-${p('It&rsquo;s been a week since you cancelled. I&rsquo;ve been thinking about it.')}
-${p(`If you want to come back, I&rsquo;ve locked in a price just for you:`)}
-<div style="margin: 4px 0 22px; padding: 22px; background: linear-gradient(135deg, rgba(250,204,21,0.10), rgba(250,204,21,0.02)); border: 1px solid rgba(250,204,21,0.30); border-radius: 14px;">
-  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #facc15;">25% off — for life</p>
-  <p style="margin: 0 0 6px; font-size: 36px; font-weight: 800; line-height: 1; color: #ffffff; letter-spacing: -0.02em;">
-    ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: #ffffff;">/month</span>
+${h1(`${escapeHtml(name)}, your seat&rsquo;s still here — now 25% off for life.`)}
+${p('It&rsquo;s been a week since you cancelled, and I&rsquo;ve been thinking about it. Rather than let you go, I&rsquo;d rather earn you back — so here&rsquo;s the best price I can give anyone, and it&rsquo;s yours to keep.')}
+<div style="margin: 6px 0 22px; padding: 24px; background: #fffdf5; border: 1px solid rgba(250,204,21,0.55); border-radius: 14px; text-align: center;">
+  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">Your price — locked for life</p>
+  <p style="margin: 0 0 6px; font-size: 40px; font-weight: 800; line-height: 1; color: ${INK}; letter-spacing: -0.02em;">
+    ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: ${MUTED};">/month</span>
   </p>
-  <p style="margin: 0; font-size: 13px; color: #ffffff;">
-    Instead of <span style="text-decoration: line-through; opacity: 0.7;">${escapeHtml(offer.oldPrice)}</span>
-    · Never goes up, for as long as you stay subscribed
+  <p style="margin: 0; font-size: 13px; color: ${BODY};">
+    Instead of <span style="text-decoration: line-through; color: ${MUTED};">${escapeHtml(offer.oldPrice)}</span>
+    · saves you about ${savingPerYear}/year · never goes up
   </p>
 </div>
 
-<p style="margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #facc15;">What you get for ${escapeHtml(offer.newPrice)}/month</p>
+<p style="margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #b45309;">Everything switches back on for ${escapeHtml(offer.newPrice)}/month</p>
 ${valueListHtml}
-<p style="margin: -4px 0 22px; font-size: 13px; line-height: 1.6; color: #ffffff;">
-  <em style="opacity: 0.9;">${escapeHtml(compareLabel)}.</em>
+<p style="margin: -4px 0 22px; font-size: 13px; line-height: 1.6; color: ${MUTED};">
+  <em>${escapeHtml(compareLabel)}.</em>
 </p>
 
-${p('No tricks. No 3-month teaser that goes back up. 25% off every month, forever, as long as you keep the subscription.')}
-${p('All your old data, customers, certs and quotes are still there — they&rsquo;ve been sat waiting for you.')}
+${p('No tricks, no three-month teaser that jumps back up. It&rsquo;s 25% off every single month for as long as you stay — the kind of price I can only really justify offering the people who&rsquo;ve already backed us once.')}
+${p('And nothing&rsquo;s been lost: every customer, cert, quote and calc you saved is exactly where you left it, waiting for you to log back in.')}
 ${ctaButton(primaryCtaUrl, `Come back at ${offer.newPrice}/mo →`)}
-${pSmall('One click takes you straight to Stripe — no logging in, no faffing about. The discount is already on.')}
+${pSmall('One tap takes you straight to Stripe — no login, no faffing, the discount&rsquo;s already applied. Or just hit reply if you&rsquo;ve a question first.')}
 ${sig()}`;
 
   const text = [
@@ -421,67 +440,105 @@ ${sig()}`;
   return { subject, html: shell({ preheader, bodyHtml }), text };
 }
 
-// ─── Touch 3 — Day +30, final attempt ────────────────────────────────────
+// Touch-3 final offer. Electrician drops DEEPER than touch 2 (£9.99/mo for life
+// vs the 25%-off £14.99), the last and lowest price. Apprentice is already
+// £5.24 at 25% off, so its final touch holds that price (deeper=false → "last
+// chance" framing rather than "even lower").
+function tierFinalOffer(tier: string): {
+  hasOffer: boolean;
+  newPrice: string;
+  oldPrice: string;
+  ctaUrl: string;
+  deeper: boolean;
+} {
+  const t = (tier || '').toLowerCase();
+  if (t.startsWith('electrician')) {
+    return {
+      hasOffer: true,
+      newPrice: '£9.99',
+      oldPrice: '£19.99',
+      ctaUrl: PAYMENT_LINK_ELECTRICIAN_FINAL,
+      deeper: true,
+    };
+  }
+  if (t.startsWith('apprentice')) {
+    return {
+      hasOffer: true,
+      newPrice: '£5.24',
+      oldPrice: '£6.99',
+      ctaUrl: PAYMENT_LINK_APPRENTICE,
+      deeper: false,
+    };
+  }
+  return { hasOffer: false, newPrice: '', oldPrice: '', ctaUrl: 'https://www.elec-mate.com/subscriptions', deeper: false };
+}
+
+// ─── Touch 3 — Day +30, final attempt (deepest offer, evergreen copy) ─────
 export function winbackTouch3(ctx: WinbackContext): WinbackEmail {
   const name = ctx.firstName || 'mate';
-  const offer = tierOffer(ctx.tier);
+  const offer = tierFinalOffer(ctx.tier);
   const primaryCtaUrl = withIdentity(offer.ctaUrl, ctx);
 
-  const subject = offer.hasOffer
-    ? `Last one, ${name} — 25% off for life still good for 7 days`
-    : `Last one, ${name}`;
+  const subject = !offer.hasOffer
+    ? `Last one, ${name}`
+    : offer.deeper
+      ? `Last one, ${name} — my best price, ${offer.newPrice}/mo for life`
+      : `Last one, ${name} — ${offer.newPrice}/mo for life, last chance`;
 
-  const preheader = offer.hasOffer
-    ? `Final shout — ${offer.newPrice}/mo for life still on the table for a week.`
-    : 'Final shout. We&apos;ve been busy since you left.';
+  const preheader = !offer.hasOffer
+    ? 'Final shout — the door stays open whenever you want it.'
+    : offer.deeper
+      ? `The lowest the electrician plan goes: ${offer.newPrice}/mo for life. Everything you saved is still there.`
+      : `Your ${offer.newPrice}/mo for-life price, one last time. All your data is still there.`;
 
-  const offerBlock = offer.hasOffer
-    ? `<div style="margin: 4px 0 22px; padding: 18px; background-color: rgba(250,204,21,0.06); border-left: 3px solid #facc15; border-radius: 10px;">
-        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #ffffff;">
-          Your <strong style="color: #facc15;">25% off for life</strong> price — <strong>${escapeHtml(offer.newPrice)}/month instead of ${escapeHtml(offer.oldPrice)}</strong> — is still good, but only for the next <strong>7 days</strong>.
+  // The offer card — headline price, light branded (matches touch 2).
+  const offerCard = offer.hasOffer
+    ? `<div style="margin: 6px 0 22px; padding: 24px; background: #fffdf5; border: 1px solid rgba(250,204,21,0.55); border-radius: 14px; text-align: center;">
+        <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">${offer.deeper ? 'Final price — lowest I go' : 'Your price — last chance'}</p>
+        <p style="margin: 0 0 6px; font-size: 40px; font-weight: 800; line-height: 1; color: ${INK}; letter-spacing: -0.02em;">
+          ${escapeHtml(offer.newPrice)}<span style="font-size: 16px; font-weight: 500; color: ${MUTED};">/month</span>
+        </p>
+        <p style="margin: 0; font-size: 13px; color: ${BODY};">
+          Instead of <span style="text-decoration: line-through; color: ${MUTED};">${escapeHtml(offer.oldPrice)}</span>
+          · locked for life · never goes up
         </p>
       </div>`
     : '';
 
+  const pitchLine = offer.deeper
+    ? p(`I&rsquo;ll be honest — I&rsquo;d rather have you back than not. So for this last email I&rsquo;ve dropped your price as low as it goes: <strong style="color:${INK};">half price, ${escapeHtml(offer.newPrice)} a month, locked for life.</strong> I can only really justify that for someone who&rsquo;s already backed us once.`)
+    : p(`I&rsquo;ll be honest — I&rsquo;d rather have you back than not. Your <strong style="color:${INK};">25% off for life</strong> price is still here for the taking, but this is the last time I&rsquo;ll put it in front of you.`);
+
   const bodyHtml = `
 ${h1(`Last one, ${escapeHtml(name)}.`)}
-${p('This is the last email I&rsquo;ll send about coming back. Promise.')}
-${p('Since you cancelled, the team has shipped:')}
-<ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.75; color: #ffffff;">
-  <li>A <a href="${attr(GPT_URL)}" style="color: #facc15;">free Elec-Mate GPT on ChatGPT</a> for the whole trade — regs, calcs, fault-finding, no login needed</li>
-  <li>Client CRM that builds itself from your quotes, invoices and certs</li>
-  <li>MCS heat pump certification + renewables workflows</li>
-  <li>Faster cert generation with smart pre-fill from previous jobs</li>
-  <li>E-signatures on danger notices and quotes</li>
-</ul>
-${offerBlock}
-${ctaButton(primaryCtaUrl, offer.hasOffer ? `Reactivate at ${offer.newPrice}/mo →` : 'Take another look →')}
+${p('This is the last email I&rsquo;ll send about coming back — I won&rsquo;t keep chasing you.')}
+${pitchLine}
+${offerCard}
+${p('Nothing&rsquo;s been lost: every customer, cert, quote and calc you saved is exactly where you left it. And the app keeps getting better — we ship updates most weeks, so you&rsquo;d be walking back into a sharper tool than the one you left.')}
+${ctaButton(primaryCtaUrl, offer.hasOffer ? `Come back at ${offer.newPrice}/mo →` : 'Take another look →')}
 ${pSmall(
   offer.hasOffer
-    ? 'If it&rsquo;s a no, all good — thanks for trying us. Best of luck out there.'
-    : 'If it&rsquo;s a no, all good — thanks for trying us.'
+    ? 'One tap to Stripe — no login, the discount&rsquo;s already on. Or hit reply if it&rsquo;s a maybe. Either way, thanks for giving us a go.'
+    : 'If it&rsquo;s a no, all good — thanks for trying us. Best of luck out there.'
 )}
 ${sig()}`;
 
   const text = [
     `Last one, ${name}.`,
     '',
-    "This is the last email I'll send about coming back. Promise.",
+    "This is the last email I'll send about coming back — I won't keep chasing you.",
     '',
-    "Since you cancelled, we've shipped:",
-    `- A free Elec-Mate GPT on ChatGPT for the whole trade — regs, calcs, fault-finding, no login: ${GPT_URL}`,
-    '- Client CRM that builds itself from your quotes, invoices and certs',
-    '- MCS heat pump certification + renewables workflows',
-    '- Faster cert generation with smart pre-fill from previous jobs',
-    '- E-signatures on danger notices and quotes',
+    offer.deeper
+      ? `I'd rather have you back than not. So I've dropped your price as low as it goes: half price, ${offer.newPrice} a month, locked for life — instead of ${offer.oldPrice}. I can only really justify that for someone who's already backed us once.`
+      : offer.hasOffer
+        ? `I'd rather have you back than not. Your 25% off for life price — ${offer.newPrice}/month instead of ${offer.oldPrice} — is still here, but this is the last time I'll put it in front of you.`
+        : "I'd rather have you back than not. The door stays open whenever you want it.",
     '',
-    offer.hasOffer
-      ? `Your 25% off for life price — ${offer.newPrice}/month instead of ${offer.oldPrice} — is still good, but only for the next 7 days.`
-      : '',
+    "Nothing's been lost: every customer, cert, quote and calc you saved is exactly where you left it. And the app keeps getting better — we ship updates most weeks.",
     '',
-    `${offer.hasOffer ? `Reactivate at ${offer.newPrice}/mo` : 'Take another look'}: ${primaryCtaUrl}`,
+    `${offer.hasOffer ? `Come back at ${offer.newPrice}/mo` : 'Take another look'}: ${primaryCtaUrl}`,
     '',
-    "If it's a no, all good — thanks for trying us.",
+    "Either way, thanks for giving us a go.",
     '',
     'Andrew',
     'Founder, Elec-Mate',

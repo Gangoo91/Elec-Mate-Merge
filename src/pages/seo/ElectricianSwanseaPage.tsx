@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Understand which electrical work is notifiable and what compliance means.',
     icon: ShieldCheck,
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Swansea customers with accurate local pricing.',
     icon: PoundSterling,
@@ -159,7 +159,7 @@ const sections = [
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
           same. Every electrician carrying out notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and

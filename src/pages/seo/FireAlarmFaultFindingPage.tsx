@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/emergency-lighting-fault-finding',
+    href: '/emergency-lighting-fault-finding',
     title: 'Emergency Lighting Fault Finding',
     description: 'Battery failure, charging circuit faults, and BS 5266 testing requirements.',
     icon: ShieldCheck,

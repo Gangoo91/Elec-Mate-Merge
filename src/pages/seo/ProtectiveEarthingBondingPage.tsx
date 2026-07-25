@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and testing requirements.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description:
       'Step-by-step guide to completing every section of the EICR, including earthing and bonding checks.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with modules on earth fault loop impedance, continuity, and bonding tests.',
@@ -243,7 +243,7 @@ const sections = [
         </div>
         <p>
           Identifying the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink> is
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> is
           one of the first steps in any inspection. It determines the expected earth fault loop
           impedance values, the bonding requirements, and the type of fault protection that should
           be in place. Record the earthing arrangement on the EICR and verify it by measuring Ze at
@@ -495,7 +495,7 @@ const sections = [
         </p>
         <p>
           During an{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>, you
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>, you
           must assess whether all extraneous-conductive-parts are correctly bonded. Missing bonding
           on a gas or water pipe is a C2 (Potentially Dangerous) observation. Missing bonding on a
           service that is not actually an extraneous-conductive-part (for example, internal copper

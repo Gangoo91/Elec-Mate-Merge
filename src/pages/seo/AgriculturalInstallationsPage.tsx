@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'In-depth guide to TN-S, TN-C-S, and TT earthing systems with practical guidance for each type.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'Step-by-step guide to RCD testing including trip times, test currents, and recording results.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training modules on the Elec-Mate platform.',

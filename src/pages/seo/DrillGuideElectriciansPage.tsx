@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/electrical-apprentice',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Practical tool use, installation techniques, and theory modules.',
     icon: GraduationCap,

@@ -553,7 +553,7 @@ const sections = [
         </div>
         <p>
           For detailed guidance on{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
           including TN-S, TN-C-S, and TT systems, see our dedicated guide.
         </p>
       </>
@@ -601,7 +601,7 @@ const sections = [
         </div>
         <p>
           If the three phase installation is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (for example, a new installation in a dwelling or the installation of a new consumer

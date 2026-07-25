@@ -72,7 +72,7 @@ export function SchemeLogoPicker({
             'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
             scheme === 'none' || !scheme
               ? 'border-elec-yellow/60 bg-elec-yellow/10'
-              : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
+              : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
           )}
         >
           {(scheme === 'none' || !scheme) && (
@@ -95,7 +95,7 @@ export function SchemeLogoPicker({
                 'relative flex items-center justify-center rounded-2xl border p-2 h-16 transition-colors touch-manipulation',
                 isSelected
                   ? 'bg-elec-yellow/10'
-                  : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
+                  : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
               )}
               style={isSelected ? { borderColor: s.brandColor } : undefined}
             >
@@ -125,7 +125,7 @@ export function SchemeLogoPicker({
             'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
             scheme === 'other'
               ? 'border-elec-yellow/60 bg-elec-yellow/10'
-              : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
+              : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
           )}
         >
           {scheme === 'other' && (
@@ -148,7 +148,7 @@ export function SchemeLogoPicker({
               value={registrationNumber}
               onChange={(e) => onNumberChange(e.target.value)}
               placeholder="Enter registration number"
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
@@ -161,7 +161,7 @@ export function SchemeLogoPicker({
               type="date"
               value={registrationExpiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
         </div>

@@ -494,7 +494,7 @@ const sections = [
                   Factor in East Midlands labour rates (£38 to £50/hour), site survey time for older
                   properties, earth rod costs, NGED G98 notification, and EIC certification. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes that clearly show all costs to the customer.
                 </p>
               </div>

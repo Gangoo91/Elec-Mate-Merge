@@ -742,7 +742,15 @@ serve(async (req: Request) => {
           statusCode: pushErr.statusCode,
         });
 
-        if (pushErr.statusCode === 410 || pushErr.statusCode === 404) {
+        // Dead-token pruning. 410/404 = gone. A 403 VAPID mismatch is equally
+        // permanent — the browser subscription was created under old VAPID
+        // keys and can never be delivered to again (3 such fossils were
+        // erroring on every send, found 2026-07-25).
+        if (
+          pushErr.statusCode === 410 ||
+          pushErr.statusCode === 404 ||
+          (pushErr.statusCode === 403 && String(pushErr.message).includes('VAPID credentials'))
+        ) {
           await supabase
             .from('push_subscriptions')
             .update({ is_active: false })

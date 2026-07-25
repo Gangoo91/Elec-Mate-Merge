@@ -208,7 +208,7 @@ const sections = [
           The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued after new
           installation work or a significant alteration to confirm that the work complies with BS
           7671 at the time of completion. It is required for all notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> of
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink> of
           the Building Regulations and must be issued before the installation is put into service.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
@@ -284,7 +284,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           (formally the Minor Electrical Installation Works Certificate, or MEIWC) is used for
@@ -437,7 +437,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             Emergency lighting certificates
           </SEOInternalLink>{' '}
           document the design, installation, and testing of emergency escape lighting systems in
@@ -493,7 +493,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/tools/solar-pv-certificate">
+          <SEOInternalLink href="/solar-pv-certificate">
             Solar PV installations
           </SEOInternalLink>{' '}
           require both an Electrical Installation Certificate (EIC) for the AC wiring and a separate
@@ -556,7 +556,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/tools/pat-testing">PAT testing</SEOInternalLink> (Portable
+          <SEOInternalLink href="/pat-testing">PAT testing</SEOInternalLink> (Portable
           Appliance Testing) is the in-service inspection and testing of electrical equipment,
           including portable appliances, movable equipment, and IT equipment. While there is no
           single regulation that mandates PAT testing by name, the Electricity at Work Regulations
@@ -716,7 +716,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'BS 7671 compliant Minor Works certificates for additions to existing circuits.',
     icon: ClipboardCheck,
@@ -737,7 +737,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description: 'BS 5266 emergency lighting design, installation, and test certificates.',
     icon: Lightbulb,

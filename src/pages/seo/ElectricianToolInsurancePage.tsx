@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Business', href: '/guides/how-to-get-first-electrical-customer' },
-  { label: 'Tool Insurance', href: '/guides/electrician-tool-insurance' },
+  { label: 'Tool Insurance', href: '/electrician-tool-insurance-2025' },
 ];
 
 const tocItems = [
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-van-setup-guide',
+    href: '/guides/electrician-van-setup',
     title: 'Electrician Van Setup Guide',
     description:
       'Van racking, security, and organisation — protect your tools and work efficiently.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Professional PDF quotes with itemised pricing — include insurance overhead in your rates.',

@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { useEICObservations, EICObservation } from '@/hooks/useEICObservations';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
+import { useUiPreferences } from '@/hooks/useUiPreferences';
 import { useCloudSync } from '@/hooks/useCloudSync';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useCertLock } from '@/hooks/useCertLock';
@@ -375,6 +376,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     currentReportId,
   });
 
+  // User preference: auto-save drafts (Settings → Preferences). Manual saves are unaffected.
+  const { preferences: uiPrefs } = useUiPreferences();
+
   // Auto-save hook
   const {
     isSaving,
@@ -387,7 +391,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     formData,
     interval: 30,
     reportType: 'eic',
-    enabled: true,
+    enabled: uiPrefs.autosave_drafts,
   });
 
   // Load saved data from IndexedDB on mount

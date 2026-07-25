@@ -626,7 +626,7 @@ export default function UPSInstallationGuidePage() {
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing explained.',
           icon: Zap,

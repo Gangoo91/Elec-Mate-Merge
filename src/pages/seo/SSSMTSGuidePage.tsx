@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   { label: 'SSSTS & SMSTS Guide', href: '/guides/sssts-smsts-site-supervisor-guide' },
 ];
 
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing',
     description: 'The C&G 2391 — another key qualification for site supervisors.',
     icon: GraduationCap,

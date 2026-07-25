@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
@@ -138,16 +139,13 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Scheduling</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Booking availability
@@ -185,14 +183,14 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                             type="time"
                             value={window.start}
                             onChange={(e) => updateDayTime(key, 'start', e.target.value)}
-                            className="h-10 bg-[#0a0a0a] border-white/[0.08] text-white text-[13px] touch-manipulation"
+                            className="h-10 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white text-[13px] touch-manipulation"
                           />
                           <span className="text-white/40 text-[13px]">to</span>
                           <Input
                             type="time"
                             value={window.end}
                             onChange={(e) => updateDayTime(key, 'end', e.target.value)}
-                            className="h-10 bg-[#0a0a0a] border-white/[0.08] text-white text-[13px] touch-manipulation"
+                            className="h-10 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white text-[13px] touch-manipulation"
                           />
                         </div>
                       ) : (
@@ -217,7 +215,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                       step={15}
                       value={bufferMinutes}
                       onChange={(e) => setBufferMinutes(Number(e.target.value) || 0)}
-                      className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white pr-12 touch-manipulation"
+                      className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white pr-12 touch-manipulation"
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-white/40">
                       min
@@ -232,7 +230,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                     max={20}
                     value={maxPerDay}
                     onChange={(e) => setMaxPerDay(Number(e.target.value) || 1)}
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white touch-manipulation"
+                    className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white touch-manipulation"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -246,7 +244,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                       max={168}
                       value={minNoticeHours}
                       onChange={(e) => setMinNoticeHours(Number(e.target.value) || 0)}
-                      className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white pr-12 touch-manipulation"
+                      className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white pr-12 touch-manipulation"
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-white/40">
                       hrs
@@ -272,7 +270,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

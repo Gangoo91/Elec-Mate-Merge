@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'BS 5266 requirements, testing schedules, and emergency lighting certification for commercial buildings.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description:
       'Step-by-step guide to completing every section of the EICR form correctly, including commercial installations.',

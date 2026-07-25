@@ -442,7 +442,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR reveals C2 consumer unit deficiencies, quote the replacement
                   immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords must act within 28 days — the first quote wins.

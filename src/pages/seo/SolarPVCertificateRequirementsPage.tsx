@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate App',
     description:
       'Create digital solar PV certificates on your phone with EIC, MCS, and commissioning record templates.',

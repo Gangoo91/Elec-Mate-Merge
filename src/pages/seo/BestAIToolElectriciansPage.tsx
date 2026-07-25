@@ -97,7 +97,7 @@ export default function BestAIToolElectriciansPage() {
                 The question is not whether to use AI, but which AI. General-purpose chatbots like
                 ChatGPT and Gemini know something about everything but lack the deep, verified
                 knowledge needed for safety-critical electrical work. See our{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI Electrician Hub</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-electrician-tools">AI Electrician Hub</SEOInternalLink>{' '}
                 for a deeper look at trade-specific AI.
               </p>
             </>
@@ -117,7 +117,7 @@ export default function BestAIToolElectriciansPage() {
                   AI Circuit Designer
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.{' '}
                 From £6.99/month.
               </p>
               <p>
@@ -307,7 +307,7 @@ export default function BestAIToolElectriciansPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/ai-electrician',
+          href: '/ai-electrician-tools',
           title: 'AI Electrician Hub',
           description: '8 specialist AI agents and 12 AI tools built for UK electricians.',
           icon: Brain,
@@ -322,7 +322,7 @@ export default function BestAIToolElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Accurate job costing using real UK trade pricing data and labour timing intelligence.',
@@ -346,7 +346,7 @@ export default function BestAIToolElectriciansPage() {
           category: 'Comparison',
         },
         {
-          href: '/tools/rams-generator',
+          href: '/rams-generator',
           title: 'RAMS Generator',
           description:
             'AI-powered risk assessments and method statements tailored to electrical work.',

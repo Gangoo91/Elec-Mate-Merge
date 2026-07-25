@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and EV charger installations with accurate Grimsby pricing.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 — inspection and testing for domestic and commercial properties in Grimsby.',
@@ -487,7 +487,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional, detailed quotes to Grimsby homeowners and landlords. Itemised
                   quotes with accurate local pricing win more work in a competitive and
                   price-sensitive market.

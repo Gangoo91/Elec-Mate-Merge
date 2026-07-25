@@ -224,7 +224,7 @@ export default function SolarPanelInstallationPage() {
               <p>
                 Installing a solar PV system involves adding new electrical circuits to the
                 property, which is notifiable work under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 . The work must be either self-certified through a Competent Person Scheme (such as
@@ -293,7 +293,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <p>
                 Always verify the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 by inspecting the supply and measuring Ze before designing the PV installation
@@ -698,7 +698,7 @@ export default function SolarPanelInstallationPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/solar-pv-certificate',
+          href: '/solar-pv-certificate',
           title: 'Solar PV Certificate',
           description:
             'How to complete a solar PV installation certificate to BS 7671 Section 712.',
@@ -720,7 +720,7 @@ export default function SolarPanelInstallationPage() {
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing — critical for PV installations.',
           icon: Cable,

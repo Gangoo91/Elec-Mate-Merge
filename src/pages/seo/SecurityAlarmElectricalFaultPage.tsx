@@ -88,7 +88,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/emergency-lighting-fault-finding',
+    href: '/emergency-lighting-fault-finding',
     title: 'Emergency Lighting Fault Finding',
     description: 'Battery failure, charging circuit faults, and BS 5266 testing requirements.',
     icon: ShieldCheck,
@@ -404,7 +404,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Replacing a fused spur, adding surge protection, or rectifying a supply cable
                   fault on an alarm circuit requires a Minor Works Certificate. Use the{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Elec-Mate Minor Works app
                   </SEOInternalLink>{' '}
                   to generate compliant documentation on site.

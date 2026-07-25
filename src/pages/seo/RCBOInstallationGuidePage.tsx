@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/consumer-unit-types-guide',
+    href: '/guides/consumer-unit-types',
     title: 'Consumer Unit Types Guide',
     description:
       'Metal clad, split-load, high-integrity, and RCBO boards explained with upgrade costs.',
@@ -188,7 +188,7 @@ const sections = [
           switch, one or two RCDs each protecting a group of MCBs. The alternative — now widely
           adopted for new installations and replacements — is an RCBO board, where every circuit has
           its own RCBO and a main switch only (no shared RCDs). See our{' '}
-          <SEOInternalLink href="/consumer-unit-types-guide">
+          <SEOInternalLink href="/guides/consumer-unit-types">
             consumer unit types guide
           </SEOInternalLink>{' '}
           for how RCBO boards compare with split-load and high-integrity boards.

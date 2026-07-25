@@ -97,7 +97,7 @@ const relatedPages = [
     category: 'Calculator' as const,
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: ShieldCheck,
@@ -184,7 +184,7 @@ const sections = [
           </p>
         </div>
         <p>
-          The <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
           of an installation directly determines the significance of earth electrode resistance. For
           TN-S and TN-C-S systems, the supply company provides the earth path and RA is not
           relevant. For TT systems, RA is a critical measurement that must be tested and verified.
@@ -637,7 +637,7 @@ const sections = [
           </li>
         </ul>
         <p>
-          The <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> should also
+          The <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> should also
           note any seasonal factors that may affect the reading. If the test was performed during a
           wet period, note that the reading may increase during dry weather and that periodic
           retesting during summer is recommended.

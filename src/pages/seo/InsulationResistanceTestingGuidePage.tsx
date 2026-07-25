@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Testing Guides', href: '/guides/electrical-testing' },
-  { label: 'Insulation Resistance Testing Guide', href: '/insulation-resistance-testing-guide' },
+  { label: 'Insulation Resistance Testing Guide', href: '/guides/insulation-resistance-testing-bs7671' },
 ];
 
 const tocItems = [
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5× current RCD test procedures.',
     icon: ShieldCheck,

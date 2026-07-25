@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/house-extension-electrical-cost',
+    href: '/guides/house-extension-electrical-cost',
     title: 'House Extension Electrical Cost',
     description: 'Single and double-storey house extension electrical installation costs.',
     icon: Home,
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional garage and outbuilding electrical quotes from your phone.',
     icon: FileCheck2,
@@ -504,7 +504,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the customer has a car, offer the EV charger option. On a new garage
                   installation, adding a 32A EV circuit costs far less than a standalone job. Use
-                  the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                   to show the cost with and without the EV charger option — most customers choose
                   the upgrade when the price difference is clear.
                 </p>

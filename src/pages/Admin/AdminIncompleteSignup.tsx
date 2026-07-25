@@ -13,13 +13,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import {
-  RefreshCw,
-  Send,
-  Loader2,
-  Eye,
-  RotateCcw,
-} from 'lucide-react';
+import { RefreshCw, Send, Loader2, Eye, RotateCcw } from 'lucide-react';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -340,8 +334,6 @@ export default function AdminIncompleteSignup() {
   const conversionRate = stats?.conversionRate ?? '0%';
 
   const recoveredPill = conversions > 0;
-  const openRate = totalSent > 0 ? Math.min(100, Math.round((conversions / totalSent) * 100)) : 0;
-  const clickRate = totalSent > 0 ? Math.min(100, Math.round((conversions / Math.max(1, totalSent)) * 100)) : 0;
 
   const statusToneFor = (u: IncompleteUser): Tone => {
     if (selectedIds.has(u.id)) return 'yellow';
@@ -396,9 +388,7 @@ export default function AdminIncompleteSignup() {
                 }}
                 className={cn(
                   'group relative rounded-2xl border p-4 text-left transition-colors touch-manipulation bg-[hsl(0_0%_12%)] overflow-hidden',
-                  active
-                    ? 'border-elec-yellow/40'
-                    : 'border-white/[0.06] hover:bg-[hsl(0_0%_15%)]'
+                  active ? 'border-elec-yellow/40' : 'border-white/[0.06] hover:bg-[hsl(0_0%_15%)]'
                 )}
               >
                 {active && (
@@ -695,23 +685,22 @@ export default function AdminIncompleteSignup() {
             meta={<Pill tone={C.tone}>{C.label}</Pill>}
           />
           <div className="mt-4">
+            {/* Honest metrics — the backend tracks completed signups only.
+                The old strip showed the same conversions number twice,
+                dressed up as separate "open" and "click" rates. */}
             <StatStrip
               columns={3}
               stats={[
                 { label: 'Sent', value: totalSent },
-                { label: 'Opened', value: conversions, sub: `${openRate}% open rate` },
                 {
-                  label: 'Clicked',
+                  label: 'Recovered',
                   value: conversions,
-                  sub: `${clickRate}% click rate`,
+                  sub: 'Completed signup after email',
                   accent: recoveredPill,
                 },
+                { label: 'Conversion', value: conversionRate },
               ]}
             />
-            <div className="mt-3 flex items-center justify-between text-[11px] text-white">
-              <span>Conversion rate</span>
-              <span className="tabular-nums text-white font-semibold">{conversionRate}</span>
-            </div>
           </div>
         </div>
 
@@ -819,7 +808,9 @@ export default function AdminIncompleteSignup() {
                     }}
                     className="w-full h-11 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation"
                   >
-                    {selectedIds.has(selectedUser.id) ? 'Remove from selection' : 'Add to selection'}
+                    {selectedIds.has(selectedUser.id)
+                      ? 'Remove from selection'
+                      : 'Add to selection'}
                   </button>
                 )}
               </div>

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -318,11 +318,7 @@ export default function AdminSubscriptions() {
               <IconButton onClick={exportCSV} aria-label="Export CSV">
                 <Download className="h-4 w-4" />
               </IconButton>
-              <IconButton
-                onClick={() => refetch()}
-                disabled={isFetching}
-                aria-label="Refresh"
-              >
+              <IconButton onClick={() => refetch()} disabled={isFetching} aria-label="Refresh">
                 <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
               </IconButton>
             </>
@@ -332,20 +328,58 @@ export default function AdminSubscriptions() {
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Active', value: stats.subscribed, tone: 'emerald', sub: fmtGBP(stats.mrr) + ' MRR' },
-            { label: 'Trialing', value: totalTrials, tone: 'blue', sub: `${rcActiveTrials} mobile · ${stripeTrials} web` },
-            { label: 'Past Due', value: rcCancelledTrials, tone: 'orange', sub: 'Cancelled trials' },
-            { label: 'Cancelled', value: 0, tone: 'red', sub: `${stats.conversionRate}% conversion` },
+            {
+              label: 'Active',
+              value: stats.subscribed,
+              tone: 'emerald',
+              sub: fmtGBP(stats.mrr) + ' MRR',
+            },
+            {
+              label: 'Trialing',
+              value: totalTrials,
+              tone: 'blue',
+              sub: `${rcActiveTrials} mobile · ${stripeTrials} web`,
+            },
+            {
+              label: 'Past Due',
+              value: rcCancelledTrials,
+              tone: 'orange',
+              sub: 'Cancelled trials',
+            },
+            {
+              label: 'Cancelled',
+              value: 0,
+              tone: 'red',
+              sub: `${stats.conversionRate}% conversion`,
+            },
           ]}
         />
 
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Combined MRR', value: fmtGBP(stats.mrr), accent: true, sub: `ARR ${fmtGBP(arr)}` },
-            { label: 'Stripe', value: fmtGBP(stats.stripeMrr), tone: 'purple', sub: `${stats.stripeActive} active` },
-            { label: 'App Store', value: fmtGBP(stats.rcMrr), tone: 'blue', sub: `${stats.appStoreActive} active` },
-            { label: 'Play Store', value: fmtGBP(0), tone: 'green', sub: `${stats.playStoreActive} active` },
+            {
+              label: 'Combined MRR',
+              value: fmtGBP(stats.mrr),
+              accent: true,
+              sub: `ARR ${fmtGBP(arr)}`,
+            },
+            {
+              label: 'Stripe',
+              value: fmtGBP(stats.stripeMrr),
+              tone: 'purple',
+              sub: `${stats.stripeActive} active`,
+            },
+            // RevenueCat reports ONE mobile MRR — it doesn't split App Store vs
+            // Play Store revenue. The old UI showed all of it as "App Store" and
+            // hardcoded £0 for Play Store: one inflated, one fabricated.
+            {
+              label: 'Mobile (RC)',
+              value: fmtGBP(stats.rcMrr),
+              tone: 'blue',
+              sub: `${stats.appStoreActive} iOS · ${stats.playStoreActive} Android`,
+            },
+            { label: 'Active subs', value: stats.subscribed, tone: 'green', sub: 'All channels' },
           ]}
         />
 
@@ -492,9 +526,7 @@ export default function AdminSubscriptions() {
               meta={
                 <>
                   <Pill tone="green">{rcActiveTrials + stripeTrials} active</Pill>
-                  {rcCancelledTrials > 0 && (
-                    <Pill tone="red">{rcCancelledTrials} cancelled</Pill>
-                  )}
+                  {rcCancelledTrials > 0 && <Pill tone="red">{rcCancelledTrials} cancelled</Pill>}
                 </>
               }
             />
@@ -633,7 +665,10 @@ export default function AdminSubscriptions() {
         )}
 
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 rounded-full bg-white/20" />
@@ -654,7 +689,11 @@ export default function AdminSubscriptions() {
                 <StatStrip
                   columns={2}
                   stats={[
-                    { label: 'Status', value: <span className="text-[20px]">Active</span>, tone: 'emerald' },
+                    {
+                      label: 'Status',
+                      value: <span className="text-[20px]">Active</span>,
+                      tone: 'emerald',
+                    },
                     {
                       label: 'Plan',
                       value: (

@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Carlisle electrical jobs accurately — from city centre consumer unit replacements to rural rewires.',
@@ -501,7 +501,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Carlisle and north Cumbria jobs accurately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Account for travel time premiums on rural jobs and building warrant administration
                   time on cross-border Scottish work.
                 </p>

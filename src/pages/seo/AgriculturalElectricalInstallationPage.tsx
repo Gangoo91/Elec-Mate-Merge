@@ -570,7 +570,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Three-Year Inspection Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Agricultural installations require inspection every 3 years. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   offer 3-year maintenance and inspection packages to farm operators. A large farm
                   with multiple buildings represents a substantial single-client contract.
                 </p>

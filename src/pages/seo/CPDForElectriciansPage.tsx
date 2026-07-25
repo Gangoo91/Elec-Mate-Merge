@@ -77,14 +77,14 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description: 'BS 7671:2018+A4:2026 wiring regulations course with practice exams.',
     icon: BookOpen,
     category: 'Course',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing',
     description: 'C&G 2391 preparation with testing sequence guides and practice questions.',
     icon: ClipboardCheck,
@@ -105,7 +105,7 @@ const relatedPages = [
     category: 'Course',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Course',
     description: 'Solar PV installation and commissioning for domestic and commercial systems.',
     icon: Sun,
@@ -164,7 +164,7 @@ const sections = [
         </p>
         <p>
           <strong>Regulatory changes:</strong>{' '}
-          <SEOInternalLink href="/training/18th-edition-course">BS 7671</SEOInternalLink> is amended
+          <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is amended
           regularly. Amendment 3 (A3:2024) was issued on 31 July 2024, introducing two new
           definitions and one new regulation covering bidirectional and unidirectional devices.
           Amendment 4 (A4:2026) was issued on 15 April 2026, adding the new Chapter 82 for
@@ -338,7 +338,7 @@ const sections = [
         </ul>
         <p>
           The{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course on Elec-Mate
           </SEOInternalLink>{' '}
           covers the full regulations including all amendments.
@@ -371,7 +371,7 @@ const sections = [
         </p>
         <p>
           <strong>Inspection and Testing Update:</strong> If you hold the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink> and want to stay
+          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> and want to stay
           current with testing practices, a refresher course covers the latest requirements, common
           EICR issues, and changes introduced by Amendment 4.
         </p>

@@ -22,7 +22,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Regulations', href: '/guides/bs-7671-18th-edition-guide' },
-  { label: 'SPD Guide', href: '/guides/spd-surge-protection-guide' },
+  { label: 'SPD Guide', href: '/guides/spd-surge-protection' },
 ];
 
 const tocItems = [
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules covering all BS 7671 requirements.',
@@ -372,7 +372,7 @@ const sections = [
         </p>
         <p>
           For electricians studying for the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification
           </SEOInternalLink>
           , Section 534 and Regulation 443.4 are commonly examined topics. Understanding the risk
@@ -544,7 +544,7 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR recording</strong> — record the SPD status on the{' '}
-                <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink>. If the
+                <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>. If the
                 SPD indicator shows failure, record it as a C2 observation. If an SPD is absent
                 where the risk assessment would require one, record it as C3.
               </span>
@@ -621,7 +621,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             Elec-Mate calculators
           </SEOInternalLink>{' '}
           to verify conductor sizes, earth fault loop impedance, and{' '}

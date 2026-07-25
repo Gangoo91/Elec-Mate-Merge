@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Full guide to Part P requirements, notifiable work, and self-certification through competent person schemes.',
@@ -166,7 +166,7 @@ const sections = [
         </p>
         <p>
           The regulatory framework for domestic work centres on{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (England and Wales), which requires that electrical work in dwellings is safe and carried
@@ -272,7 +272,7 @@ const sections = [
         <p>
           Every one of these jobs requires certification. The type of certificate depends on the
           work: an EIC for new installations and rewires, a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           for smaller alterations, and an EICR for periodic inspections. Elec-Mate handles all 8
           certificate types that a domestic electrician needs, directly from your phone.
         </p>
@@ -290,7 +290,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           is the section that governs electrical safety in dwellings in England and Wales. It was

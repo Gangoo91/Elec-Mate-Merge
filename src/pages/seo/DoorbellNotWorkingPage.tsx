@@ -433,7 +433,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   A transformer replacement involves work on the mains side — issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>
                   . A new doorbell installation with transformer may be covered under a Minor Works

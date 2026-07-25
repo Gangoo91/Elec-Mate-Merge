@@ -324,16 +324,7 @@ const InvoiceCardList = ({
 
                 {invoice.invoice_status !== 'paid' ? (
                   <>
-                    <button
-                      onClick={() => onShareWhatsApp?.(invoice)}
-                      disabled={sharingWhatsAppId === invoice.id}
-                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
-                    >
-                      <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">
-                        {sharingWhatsAppId === invoice.id ? 'Loading...' : 'WhatsApp'}
-                      </span>
-                    </button>
+                    {/* ELE-1377 — WhatsApp share removed. */}
 
                     <button
                       onClick={() => onShareEmail?.(invoice)}
@@ -374,16 +365,7 @@ const InvoiceCardList = ({
                   </>
                 ) : (
                   <>
-                    <button
-                      onClick={() => onShareWhatsApp?.(invoice)}
-                      disabled={sharingWhatsAppId === invoice.id}
-                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
-                    >
-                      <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">
-                        {sharingWhatsAppId === invoice.id ? 'Loading...' : 'WhatsApp'}
-                      </span>
-                    </button>
+                    {/* ELE-1377 — WhatsApp share removed. */}
 
                     <button
                       onClick={() => onShareEmail?.(invoice)}

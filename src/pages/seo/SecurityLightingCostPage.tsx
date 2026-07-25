@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price security lighting installations accurately with itemised professional quotes.',
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Complete Minor Works Certificates for security lighting installations on your phone.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -512,7 +512,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price security lighting installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. PIR
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. PIR
                   floodlights, SWA cable, RCBO, glands, fixings, CCTV preparation, labour, and
                   testing — all itemised with your margins. Send a professional PDF quote from the
                   survey.
@@ -527,7 +527,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Minor Works Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   on site after testing the security lighting circuit. Instant PDF export and

@@ -155,7 +155,7 @@ const sections = [
           Accurate cost estimating starts with knowing your numbers: your true labour cost per hour,
           your overhead rate, your materials procurement costs, and your target profit margin. Once
           you know these, pricing any job becomes a methodical process rather than a guess. The{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">
+          <SEOInternalLink href="/electrical-quoting-app">
             Elec-Mate quoting tool
           </SEOInternalLink>{' '}
           automates this process, but understanding the underlying methodology is essential for
@@ -535,7 +535,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">
+          <SEOInternalLink href="/electrical-quoting-app">
             Elec-Mate AI quoting tool
           </SEOInternalLink>{' '}
           streamlines this entire process. Enter the job details and it calculates the estimated
@@ -555,7 +555,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'AI-powered quoting tool that calculates labour, materials, and profit for any electrical job.',
@@ -586,7 +586,7 @@ const relatedPages = [
     category: 'Business Tool',
   },
   {
-    href: '/tools/cash-flow-planner',
+    href: '/cash-flow-planner',
     title: 'Cash Flow Planner',
     description:
       'Forecast cash position, track invoices, and ensure profitable jobs convert to cash in the bank.',

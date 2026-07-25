@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'C&G 2391 training covering fault finding methodology and safe isolation.',
     icon: GraduationCap,
@@ -472,7 +472,7 @@ const sections = [
         </p>
         <p>
           Issue appropriate documentation for any remedial work: a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           for simple repairs or replacements, or an updated{' '}

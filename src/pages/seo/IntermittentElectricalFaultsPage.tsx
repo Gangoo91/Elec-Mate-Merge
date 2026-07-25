@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training modules on the Elec-Mate platform.',
@@ -510,7 +510,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">testing calculators</SEOInternalLink> help you
+          <SEOInternalLink href="/electrical-testing-calculators">testing calculators</SEOInternalLink> help you
           compare measured values against expected values for each circuit type, making it easier to
           spot abnormal readings that point to a developing fault.
         </p>

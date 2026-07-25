@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business',
   },
   {
-    href: '/tools/ai-cost-engineer',
+    href: '/ai-cost-engineer',
     title: 'AI Cost Engineer',
     description:
       'Produce itemised quotes with real UK trade pricing and labour estimates. Ensure consistent pricing across your team.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'AI Tool',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate site-specific risk assessments and method statements for your team. Consistent H&S documentation across all sites.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Health & Safety',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Guide to building an apprentice evidence portfolio. Help your apprentices meet their qualification requirements.',
@@ -592,7 +592,7 @@ const sections = [
               <span>
                 <strong>Standardise pricing</strong> — use the same pricing tool across your team so
                 that quotes are consistent regardless of who produces them. Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
                 produces itemised quotes from a job description, ensuring consistent pricing with
                 real UK trade data.
               </span>
@@ -605,7 +605,7 @@ const sections = [
           <SEOInternalLink href="/guides/rewire-cost-uk">rewire pricing</SEOInternalLink>. If one
           operative consistently takes longer than others on the same job types, investigate whether
           the issue is speed, quality, or scope management. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink> to
+          <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink> to
           track your business finances alongside job profitability.
         </p>
         <SEOAppBridge
@@ -654,7 +654,7 @@ const sections = [
               <span>
                 <strong>Health and safety documentation</strong> — generate RAMS for every job.
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink>{' '}
                 produces site-specific risk assessments from a job description, ensuring your team
                 has compliant H&S documentation on every site.
               </span>

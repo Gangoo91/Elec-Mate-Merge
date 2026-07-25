@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { CompanyProfile } from '@/types/company';
@@ -160,16 +161,13 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Finance</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Payment & banking
@@ -216,7 +214,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                     type="button"
                     onClick={handleOpenStripeDashboard}
                     disabled={connecting}
-                    className="h-11 px-4 rounded-xl border border-white/[0.08] bg-[#0a0a0a] text-white text-[13px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50 shrink-0"
+                    className="h-11 px-4 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] text-white text-[13px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50 shrink-0"
                   >
                     Dashboard <span aria-hidden>↗</span>
                   </button>
@@ -252,7 +250,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                       setBankDetails({ ...bankDetails, accountName: e.target.value })
                     }
                     placeholder="ABC Electrical Ltd"
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -263,7 +261,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                       setBankDetails({ ...bankDetails, bankName: e.target.value })
                     }
                     placeholder="e.g. Barclays"
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -274,7 +272,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                       setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })
                     }
                     placeholder="12-34-56"
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                     inputMode="numeric"
                   />
                 </div>
@@ -289,7 +287,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                       })
                     }
                     placeholder="12345678"
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                     inputMode="numeric"
                   />
                 </div>
@@ -302,7 +300,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                   value={paymentLink}
                   onChange={(e) => setPaymentLink(e.target.value)}
                   placeholder="https://pay.yourfirm.com/…"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   inputMode="url"
                 />
                 <p className="text-[11px] text-white/40">
@@ -323,7 +321,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

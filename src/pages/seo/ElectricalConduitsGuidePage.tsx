@@ -595,7 +595,7 @@ export default function ElectricalConduitsGuidePage() {
           category: 'Installation',
         },
         {
-          href: '/guides/how-to-size-cables-bs-7671',
+          href: '/how-to-size-cables',
           title: 'Cable Sizing Guide',
           description: 'BS 7671 cable sizing including singles in conduit.',
           icon: Calculator,

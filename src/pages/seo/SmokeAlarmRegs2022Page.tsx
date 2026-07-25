@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Regulations', href: '/guides/bs-7671-18th-edition-guide' },
-  { label: 'Smoke Alarm Regs', href: '/guides/smoke-alarm-regulations-uk-2022' },
+  { label: 'Smoke Alarm Regs', href: '/guides/smoke-alarm-regulations-uk' },
 ];
 
 const tocItems = [
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Structured training for C&G 2391 covering all aspects of periodic inspection and testing.',

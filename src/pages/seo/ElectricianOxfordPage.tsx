@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, HMO conversions, and commercial work with professional itemised PDFs.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -507,7 +507,7 @@ const sections = [
           domestic rates; Cowley and Blackbird Leys are more price-sensitive. Commercial rates vary
           significantly by sector — retail fit-outs at £300 to £400 per day, laboratory work at £380
           to £500. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate, itemised quotes tailored to the Oxford market.
         </p>
       </>
@@ -562,7 +562,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote heritage rewires, HMO conversions, and commercial fit-outs with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>

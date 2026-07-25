@@ -78,7 +78,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/wiring-colours-uk',
+    href: '/guides/cable-colour-codes-uk',
     title: 'Wiring Colours UK',
     description: 'Detailed guide to all UK wiring colours with diagrams.',
     icon: Cable,
@@ -106,7 +106,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/polarity-testing-guide',
+    href: '/polarity-test-guide',
     title: 'Polarity Testing Guide',
     description: 'Verify correct conductor connections at every point.',
     icon: ClipboardCheck,
@@ -384,7 +384,7 @@ const sections = [
           During an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, missing
           or incorrect conductor identification is recorded as an observation. Missing earth
           sleeving is typically C3. Missing switch wire sleeving where it creates a{' '}
-          <SEOInternalLink href="/guides/polarity-testing-guide">polarity</SEOInternalLink>{' '}
+          <SEOInternalLink href="/polarity-test-guide">polarity</SEOInternalLink>{' '}
           identification risk may be C2.
         </p>
       </>
@@ -437,7 +437,7 @@ const sections = [
         </p>
         <p>
           During a{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>,
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>,
           check for the presence of this notice at every distribution board in a mixed-colour
           installation. Following the OSG recommendation to affix such a notice remains good
           practice, though the deleted Reg 514.14 no longer provides a regulatory basis for the

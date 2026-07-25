@@ -559,7 +559,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/guides/insulation-resistance-testing">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   Insulation resistance.
                 </SEOInternalLink>
               </strong>{' '}
@@ -580,7 +580,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/tools/rcd-testing-guide">RCD operation.</SEOInternalLink>
+                <SEOInternalLink href="/rcd-testing-guide">RCD operation.</SEOInternalLink>
               </strong>{' '}
               If the circuit is RCD-protected, test using an alternating current test at the rated
               residual operating current (IΔn — 30mA for domestic circuits), as required by BS

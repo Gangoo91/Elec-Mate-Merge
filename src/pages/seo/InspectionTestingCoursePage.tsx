@@ -261,11 +261,11 @@ export default function InspectionTestingCoursePage() {
             <p>
               For working electricians, the 2391 is one of the most important qualifications after
               the{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition (C&G 2382)
               </SEOInternalLink>{' '}
               and the{' '}
-              <SEOInternalLink href="/training/level-3-electrical">Level 3 NVQ</SEOInternalLink>.
+              <SEOInternalLink href="/level3-electrical">Level 3 NVQ</SEOInternalLink>.
               Without it, you cannot join a competent person scheme (NICEIC, NAPIT, ELECSA) as a
               qualified supervisor, and you cannot independently sign off{' '}
               <SEOInternalLink href="/eic-certificate">
@@ -667,7 +667,7 @@ export default function InspectionTestingCoursePage() {
             <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
             <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT Testing Guide UK 2026</SEOInternalLink>
             <SEOInternalLink href="/guides/periodic-inspection">Periodic Inspection Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/polarity-testing-guide">Polarity Testing Procedure</SEOInternalLink>
+            <SEOInternalLink href="/polarity-test-guide">Polarity Testing Procedure</SEOInternalLink>
           </div>
         </div>
       </section>

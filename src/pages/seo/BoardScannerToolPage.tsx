@@ -227,7 +227,7 @@ export default function BoardScannerToolPage() {
                 and{' '}
                 <SEOInternalLink href="/eic-certificate">EIC certificates</SEOInternalLink>.
                 For{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works certificates
                 </SEOInternalLink>
                 , the scanner can identify the specific circuit being worked on and pre-fill its
@@ -312,7 +312,7 @@ export default function BoardScannerToolPage() {
                 </SEOInternalLink>{' '}
                 page for full details on offline capabilities. You can also explore our full range
                 of{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 that work without an internet connection.
@@ -456,7 +456,7 @@ export default function BoardScannerToolPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',

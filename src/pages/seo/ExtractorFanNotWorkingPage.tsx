@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Documentation required when replacing or repairing an extractor fan installation.',
@@ -605,7 +605,7 @@ const sections = [
                   When replacing a fan, ensure the new unit meets the IP rating for the zone,
                   matches or exceeds the Part F extract rate, and is compatible with the existing
                   wiring configuration (2-wire, 3-wire, or 4-wire). Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   for the replacement. Test RCD operation after installation.

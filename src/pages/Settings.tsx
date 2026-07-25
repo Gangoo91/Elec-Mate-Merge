@@ -19,19 +19,20 @@ import {
 import AccountTab from '@/components/settings/AccountTab';
 import ElecIdTab from '@/components/settings/ElecIdTab';
 import BusinessTab from '@/components/settings/BusinessTab';
-import MateTab from '@/components/settings/MateTab';
+import NotificationsTab from '@/components/settings/NotificationsTab';
 import PreferencesTab from '@/components/settings/PreferencesTab';
 import PrivacyTab from '@/components/settings/PrivacyTab';
 import BillingTab from '@/components/settings/BillingTab';
 import ReferralsTab from '@/components/settings/ReferralsTab';
 import SettingsNavGrid from '@/components/settings/SettingsNavGrid';
+import SettingsReadiness from '@/components/settings/SettingsReadiness';
 
 const SETTINGS_TABS = [
   { id: 'account', label: 'Account', component: AccountTab },
-  { id: 'mate', label: 'Mate', component: MateTab },
   { id: 'elec-id', label: 'Elec-ID', component: ElecIdTab },
   { id: 'business', label: 'Business', component: BusinessTab },
-  { id: 'preferences', label: 'Preferences', component: PreferencesTab },
+  { id: 'notifications', label: 'Notifications', component: NotificationsTab },
+  { id: 'preferences', label: 'App', component: PreferencesTab },
   { id: 'privacy', label: 'Privacy', component: PrivacyTab },
   { id: 'billing', label: 'Billing', component: BillingTab },
   { id: 'referrals', label: 'Refer a Mate', component: ReferralsTab },
@@ -108,7 +109,6 @@ const SettingsPage = () => {
 
   const displayName = profile?.full_name || user?.email?.split('@')[0] || '';
   const tierLabel = isSubscribed ? subscriptionTier || 'Pro' : 'Free';
-  const tierToneClass = isSubscribed ? 'text-elec-yellow' : 'text-blue-400';
 
   /* ────────────────────────────────────────────
      Mobile view
@@ -139,21 +139,40 @@ const SettingsPage = () => {
 
               {/* Hero */}
               <div className="relative px-5 pt-4 pb-6">
-                <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/40 to-transparent" />
                 <Eyebrow>Account</Eyebrow>
-                <h1 className="mt-1.5 text-3xl font-semibold text-white tracking-tight leading-[1.05]">
+                <h1 className="mt-1.5 text-3xl font-semibold text-white tracking-[-0.02em] leading-[1.05]">
                   Settings
                 </h1>
-                <div className="mt-3 flex items-center flex-wrap gap-2">
-                  <span className="text-[13px] text-white truncate">
-                    {displayName || 'Your account'}
-                  </span>
-                  <span className={cn('text-[11px] font-medium uppercase tracking-[0.15em]', tierToneClass)}>
-                    {tierLabel}
-                  </span>
-                </div>
-                <div className="mt-1 text-[12px] text-white/65 truncate">
-                  {user?.email || 'user@example.com'}
+                <div className="mt-4 flex items-center gap-3 min-w-0">
+                  <div className="h-10 w-10 rounded-full overflow-hidden bg-white/[0.06] border border-white/[0.08] shrink-0 flex items-center justify-center">
+                    {profile?.avatar_url ? (
+                      <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <span className="text-[15px] font-semibold text-white">
+                        {(displayName || user?.email || '?').charAt(0).toUpperCase()}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-[14px] font-semibold text-white tracking-tight truncate">
+                        {displayName || 'Your account'}
+                      </span>
+                      <span
+                        className={cn(
+                          'shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded border',
+                          isSubscribed
+                            ? 'text-elec-yellow border-elec-yellow/30'
+                            : 'text-white/70 border-white/[0.12]'
+                        )}
+                      >
+                        {tierLabel}
+                      </span>
+                    </div>
+                    <div className="mt-0.5 text-[12px] text-white/60 truncate">
+                      {user?.email || 'user@example.com'}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-5 flex items-center gap-2">
@@ -174,6 +193,15 @@ const SettingsPage = () => {
                   </Button>
                 </div>
               </div>
+
+              {/* Business readiness — electricians and employers only */}
+              {(profile?.role === 'electrician' || profile?.role === 'employer') && (
+                <div className="px-5 pb-5">
+                  <SettingsReadiness
+                    onOpenBusiness={(sheet) => setSearchParams({ tab: 'business', sheet })}
+                  />
+                </div>
+              )}
 
               {/* Grid */}
               <div className="px-5 pb-20">
@@ -267,26 +295,49 @@ const SettingsPage = () => {
 
       <PageFrame className="px-6 sm:px-8">
         {/* Hero */}
-        <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-2 flex items-end justify-between gap-4 sm:gap-6">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/40 to-transparent" />
+        <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-6 flex items-end justify-between gap-4 sm:gap-6">
           <div className="min-w-0 flex-1">
             <Eyebrow>Account</Eyebrow>
-            <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
+            <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-[44px] font-semibold text-white tracking-[-0.02em] leading-[1.05]">
               Settings
             </h1>
-            <div className="mt-3 flex items-center flex-wrap gap-2">
-              <span className="text-[13px] sm:text-sm text-white truncate">
-                {displayName || 'Your account'}
-              </span>
-              <span className={cn('text-[11px] font-medium uppercase tracking-[0.15em]', tierToneClass)}>
-                {tierLabel}
-              </span>
-            </div>
-            <div className="mt-1 text-[12px] sm:text-[13px] text-white/65 truncate">
-              {user?.email || 'user@example.com'}
+            <div className="mt-4 flex items-center gap-3 min-w-0">
+              <div className="h-10 w-10 rounded-full overflow-hidden bg-white/[0.06] border border-white/[0.08] shrink-0 flex items-center justify-center">
+                {profile?.avatar_url ? (
+                  <img
+                    src={profile.avatar_url}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-[15px] font-semibold text-white">
+                    {(displayName || user?.email || '?').charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-[14px] font-semibold text-white tracking-tight truncate">
+                    {displayName || 'Your account'}
+                  </span>
+                  <span
+                    className={cn(
+                      'shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded border',
+                      isSubscribed
+                        ? 'text-elec-yellow border-elec-yellow/30'
+                        : 'text-white/70 border-white/[0.12]'
+                    )}
+                  >
+                    {tierLabel}
+                  </span>
+                </div>
+                <div className="mt-0.5 text-[12.5px] text-white/60 truncate">
+                  {user?.email || 'user@example.com'}
+                </div>
+              </div>
             </div>
           </div>
-          <div className="shrink-0 flex items-center gap-2">
+          <div className="shrink-0 flex items-center gap-2 pb-1">
             {!isSubscribed && (
               <Button
                 onClick={() => navigate('/subscriptions')}
@@ -296,16 +347,25 @@ const SettingsPage = () => {
               </Button>
             )}
             <Button
+              variant="outline"
               onClick={handleSignOut}
-              className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-full px-5 touch-manipulation"
+              className="h-11 rounded-full px-5 bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white font-medium touch-manipulation"
             >
               Sign Out
             </Button>
           </div>
         </div>
 
-        {/* Desktop tabs — underline style */}
-        <div className="border-b border-white/[0.06]">
+        {/* Business readiness — electricians and employers only */}
+        {(profile?.role === 'electrician' || profile?.role === 'employer') && (
+          <SettingsReadiness
+            className="mb-6"
+            onOpenBusiness={(sheet) => setSearchParams({ tab: 'business', sheet })}
+          />
+        )}
+
+        {/* Desktop tabs — underline style, sticky so long tabs keep their bearings */}
+        <div className="sticky top-0 z-30 -mx-6 sm:-mx-8 px-6 sm:px-8 bg-[#0a0a0a]/90 backdrop-blur border-b border-white/[0.06]">
           <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar -mb-px">
             {SETTINGS_TABS.map((tab) => {
               const isActive = tab.id === activeDesktopTab;
@@ -314,11 +374,11 @@ const SettingsPage = () => {
                   key={tab.id}
                   onClick={() => handleDesktopTabSelect(tab.id)}
                   className={cn(
-                    'relative px-4 py-3 text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation min-h-[44px]',
+                    'relative px-4 py-3.5 text-[13px] whitespace-nowrap transition-colors touch-manipulation min-h-[44px] tracking-tight',
                     'border-b-2',
                     isActive
-                      ? 'text-elec-yellow border-elec-yellow'
-                      : 'text-white border-transparent hover:text-white'
+                      ? 'text-white font-semibold border-elec-yellow'
+                      : 'text-white/60 font-medium border-transparent hover:text-white'
                   )}
                 >
                   {tab.label}

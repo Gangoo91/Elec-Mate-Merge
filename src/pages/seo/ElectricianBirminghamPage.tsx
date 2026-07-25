@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Understand which electrical work is notifiable and what compliance means.',
     icon: ShieldCheck,
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Birmingham customers.',
     icon: PoundSterling,
@@ -158,7 +158,7 @@ const sections = [
         </p>
         <p>
           For any electrical work in Birmingham, you need a qualified electrician registered with a{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           competent person scheme. The main schemes are{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT, and
           ELECSA. Birmingham has strong representation on all three, and many local electricians are
@@ -391,7 +391,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Birmingham is overseen by Birmingham City
           Council building control or an approved inspector. If your electrician is registered with
           a competent person scheme, they self-certify and notify the council directly.

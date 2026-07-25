@@ -17,16 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -76,7 +66,10 @@ export default function AdminConversations() {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [selectedMessage, setSelectedMessage] = useState<ChatMessage | null>(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  // Inline two-step confirm in the sheet footer. Deliberately NOT a nested
+  // AlertDialog — stacking a second Radix modal over the open Sheet froze the
+  // whole app in Elec-ID moderation (2026-07-25).
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
@@ -144,7 +137,7 @@ export default function AdminConversations() {
       haptic.success();
       queryClient.invalidateQueries({ queryKey: ['admin-chat-messages'] });
       queryClient.invalidateQueries({ queryKey: ['admin-chat-stats'] });
-      setDeleteConfirmId(null);
+      setConfirmingDelete(false);
       setSelectedMessage(null);
       toast({
         title: 'Message deleted',
@@ -164,6 +157,7 @@ export default function AdminConversations() {
   // Memoized callback for message click
   const handleMessageClick = useCallback((message: ChatMessage) => {
     setSelectedMessage(message);
+    setConfirmingDelete(false);
   }, []);
 
   return (
@@ -262,7 +256,10 @@ export default function AdminConversations() {
         {isLoading ? (
           <div className="space-y-3 animate-pulse">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+              <div
+                key={i}
+                className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3"
+              >
                 <div className="flex items-center gap-3">
                   <Skeleton className="w-9 h-9 rounded-lg" />
                   <div className="space-y-1.5 flex-1">
@@ -297,7 +294,13 @@ export default function AdminConversations() {
         )}
 
         {/* Message Detail Sheet */}
-        <Sheet open={!!selectedMessage} onOpenChange={() => setSelectedMessage(null)}>
+        <Sheet
+          open={!!selectedMessage}
+          onOpenChange={() => {
+            setSelectedMessage(null);
+            setConfirmingDelete(false);
+          }}
+        >
           <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
               {/* Drag Handle */}
@@ -365,60 +368,59 @@ export default function AdminConversations() {
                 </Card>
               </div>
 
-              {/* Actions Footer */}
+              {/* Actions Footer — inline two-step confirm, no nested modal */}
               {isSuperAdmin && (
                 <SheetFooter className="p-4 border-t border-border">
-                  <Button
-                    variant="destructive"
-                    className="w-full h-12 touch-manipulation gap-2"
-                    onClick={() => setDeleteConfirmId(selectedMessage?.id || null)}
-                    disabled={deleteMessageMutation.isPending}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Delete Message
-                  </Button>
+                  {confirmingDelete ? (
+                    <div className="w-full space-y-3">
+                      <p className="text-[13px] text-white flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-red-400 shrink-0" />
+                        Permanently delete this message? This cannot be undone.
+                      </p>
+                      <div className="flex gap-3">
+                        <Button
+                          variant="outline"
+                          className="flex-1 h-12 touch-manipulation"
+                          onClick={() => setConfirmingDelete(false)}
+                          disabled={deleteMessageMutation.isPending}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          className="flex-1 h-12 touch-manipulation gap-2"
+                          onClick={() =>
+                            selectedMessage && deleteMessageMutation.mutate(selectedMessage.id)
+                          }
+                          disabled={deleteMessageMutation.isPending}
+                        >
+                          {deleteMessageMutation.isPending ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Deleting...
+                            </>
+                          ) : (
+                            'Confirm delete'
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="destructive"
+                      className="w-full h-12 touch-manipulation gap-2"
+                      onClick={() => setConfirmingDelete(true)}
+                      disabled={deleteMessageMutation.isPending}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      Delete Message
+                    </Button>
+                  )}
                 </SheetFooter>
               )}
             </div>
           </SheetContent>
         </Sheet>
-
-        {/* Delete Confirmation */}
-        <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-500" />
-                Delete Message?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. The message will be permanently removed from the chat.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation"
-                disabled={deleteMessageMutation.isPending}
-              >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
-                onClick={() => deleteConfirmId && deleteMessageMutation.mutate(deleteConfirmId)}
-                disabled={deleteMessageMutation.isPending}
-              >
-                {deleteMessageMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
-                  </>
-                ) : (
-                  'Delete'
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </div>
     </PullToRefresh>
   );

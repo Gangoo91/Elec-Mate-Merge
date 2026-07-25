@@ -7,7 +7,7 @@ import {
 } from '@/hooks/usePublicElecId';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/utils/clipboard';
-import { getQualificationLabel, getJobTitleLabel } from '@/data/uk-electrician-constants';
+import { getQualificationLabel, getJobTitleLabel, getECSCardType } from '@/data/uk-electrician-constants';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -63,7 +63,12 @@ const getECSCardStyle = (cardType: string | null) => {
       textColor: '#1a1a2e',
       accent: '#9CA3AF',
     };
-  return { bg: '#6B7280', label: cardType, textColor: 'white', accent: '#9CA3AF' };
+  return {
+    bg: '#6B7280',
+    label: getECSCardType(n)?.label || cardType,
+    textColor: 'white',
+    accent: '#9CA3AF',
+  };
 };
 
 const formatDate = (date: string | null) => {

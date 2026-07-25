@@ -435,7 +435,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description:
       'Smart EV chargers require data connectivity for load management and billing systems.',

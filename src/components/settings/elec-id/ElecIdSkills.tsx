@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Drawer } from 'vaul';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UK_ELECTRICAL_SKILLS, SKILL_LEVELS, SkillLevel } from '@/data/uk-electrician-constants';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
@@ -74,7 +73,6 @@ const SkillsSkeleton = () => (
 const ElecIdSkills = () => {
   const { addNotification } = useNotifications();
   const { profile } = useElecIdProfile();
-  const isMobile = useIsMobile();
 
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
@@ -487,96 +485,56 @@ const ElecIdSkills = () => {
       />
 
       {/* Add */}
-      {isMobile ? (
-        <Drawer.Root
-          open={isAddSheetOpen}
-          onOpenChange={setIsAddSheetOpen}
-          shouldScaleBackground={false}
-          noBodyStyles
-        >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[92vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
-              </div>
-              <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-                <Drawer.Title className="text-lg font-semibold text-white">Add skill</Drawer.Title>
-                <button
-                  onClick={() => {
-                    setIsAddSheetOpen(false);
-                    resetForm();
-                  }}
-                  className="h-11 w-11 -mr-2 rounded-full text-white hover:bg-white/[0.04] touch-manipulation text-xl leading-none"
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto px-5 py-5">{renderFormContent(false)}</div>
-              <div className="p-5 border-t border-white/[0.06]">
-                {renderFooter(false, () => setIsAddSheetOpen(false))}
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      ) : (
-        <Dialog open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
-          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-white">Add skill</DialogTitle>
-            </DialogHeader>
-            <div className="max-h-[60vh] overflow-y-auto pr-1">{renderFormContent(false)}</div>
-            <div className="pt-4">{renderFooter(false, () => setIsAddSheetOpen(false))}</div>
-          </DialogContent>
-        </Dialog>
-      )}
+      <Sheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
+        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+          <div className="lg:hidden flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+          </div>
+          <div className="flex items-center justify-between px-5 pt-4 lg:pt-6 pb-4 border-b border-white/[0.06]">
+            <h3 className="text-lg font-semibold text-white">Add skill</h3>
+            <button
+              onClick={() => {
+                setIsAddSheetOpen(false);
+                resetForm();
+              }}
+              className="h-11 w-11 -mr-2 rounded-full text-white hover:bg-white/[0.04] touch-manipulation text-xl leading-none"
+              aria-label="Close"
+            >
+              ×
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto px-5 py-5">{renderFormContent(false)}</div>
+          <div className="p-5 border-t border-white/[0.06]">
+            {renderFooter(false, () => setIsAddSheetOpen(false))}
+          </div>
+        </SettingsSheetContent>
+      </Sheet>
 
       {/* Edit */}
-      {isMobile ? (
-        <Drawer.Root
-          open={isEditSheetOpen}
-          onOpenChange={setIsEditSheetOpen}
-          shouldScaleBackground={false}
-          noBodyStyles
-        >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[92vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
-              </div>
-              <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-                <Drawer.Title className="text-lg font-semibold text-white">Edit skill</Drawer.Title>
-                <button
-                  onClick={() => {
-                    setIsEditSheetOpen(false);
-                    resetForm();
-                  }}
-                  className="h-11 w-11 -mr-2 rounded-full text-white hover:bg-white/[0.04] touch-manipulation text-xl leading-none"
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto px-5 py-5">{renderFormContent(true)}</div>
-              <div className="p-5 border-t border-white/[0.06]">
-                {renderFooter(true, () => setIsEditSheetOpen(false))}
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      ) : (
-        <Dialog open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-white">Edit skill</DialogTitle>
-            </DialogHeader>
-            <div className="max-h-[60vh] overflow-y-auto pr-1">{renderFormContent(true)}</div>
-            <div className="pt-4">{renderFooter(true, () => setIsEditSheetOpen(false))}</div>
-          </DialogContent>
-        </Dialog>
-      )}
+      <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+          <div className="lg:hidden flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+          </div>
+          <div className="flex items-center justify-between px-5 pt-4 lg:pt-6 pb-4 border-b border-white/[0.06]">
+            <h3 className="text-lg font-semibold text-white">Edit skill</h3>
+            <button
+              onClick={() => {
+                setIsEditSheetOpen(false);
+                resetForm();
+              }}
+              className="h-11 w-11 -mr-2 rounded-full text-white hover:bg-white/[0.04] touch-manipulation text-xl leading-none"
+              aria-label="Close"
+            >
+              ×
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto px-5 py-5">{renderFormContent(true)}</div>
+          <div className="p-5 border-t border-white/[0.06]">
+            {renderFooter(true, () => setIsEditSheetOpen(false))}
+          </div>
+        </SettingsSheetContent>
+      </Sheet>
 
       <SectionHeader
         eyebrow="Expertise"

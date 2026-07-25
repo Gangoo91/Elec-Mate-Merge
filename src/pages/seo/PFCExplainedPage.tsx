@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'PFC Explained', href: '/guides/prospective-fault-current-explained' },
 ];
 

@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 covering testing of special location installations.',
     icon: GraduationCap,
@@ -697,7 +697,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote with Specialist Materials</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   itemise the heat-resistant cable, silicone fixings, fireproof junction box, and
                   specialist luminaires. These cost more than standard materials — make sure the
                   quote reflects this.

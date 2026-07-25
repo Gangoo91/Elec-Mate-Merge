@@ -172,7 +172,7 @@ const sections = [
         <p>
           Domestic electricians work in houses, flats, bungalows, and residential properties. The
           work is governed by{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (in England and Wales) and{' '}

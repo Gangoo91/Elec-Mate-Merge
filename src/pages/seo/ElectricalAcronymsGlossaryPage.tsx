@@ -151,7 +151,7 @@ const sections = [
           in practice, and why it matters. Use it as a reference whenever you encounter an
           unfamiliar term — whether you are studying for your{' '}
           <SEOInternalLink href="/guides/18th-edition-exam-tips">18th Edition exam</SEOInternalLink>
-          , filling in an <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink>
+          , filling in an <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>
           , or explaining something to a customer.
         </p>
       </>
@@ -265,7 +265,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Protects the installation and connected equipment against transient overvoltages
                   (voltage spikes) caused by lightning or switching operations. Required by{' '}
-                  <SEOInternalLink href="/guides/spd-surge-protection-guide">
+                  <SEOInternalLink href="/guides/spd-surge-protection">
                     BS 7671 Regulation 443
                   </SEOInternalLink>{' '}
                   in most new installations and rewires where the consequence of an overvoltage
@@ -353,7 +353,7 @@ const sections = [
                 influence the test result or be damaged by 500V DC, the regulation now permits — and
                 requires — a 250V DC insulation resistance test to be used instead, after the
                 equipment is connected. This is a redraft introduced by Amendment 4. See{' '}
-                <SEOInternalLink href="/guides/insulation-resistance-testing">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   insulation resistance testing
                 </SEOInternalLink>
                 .

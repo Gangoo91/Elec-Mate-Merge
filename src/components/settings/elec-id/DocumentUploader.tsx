@@ -11,11 +11,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogFooter,
 } from '@/components/ui/dialog';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Drawer } from 'vaul';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { toast } from '@/hooks/use-toast';
@@ -156,7 +155,6 @@ interface DocumentUploaderProps {
 
 const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) => {
   const { profile } = useElecIdProfile();
-  const isMobile = useIsMobile();
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -1114,48 +1112,23 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
       </div>
 
       {/* Upload drawer / dialog */}
-      {isMobile ? (
-        <Drawer.Root
-          open={isUploadDialogOpen}
-          onOpenChange={setIsUploadDialogOpen}
-          shouldScaleBackground={false}
-          noBodyStyles
-        >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[92vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
-              </div>
-              <div className="px-5 pb-2">
-                <h3 className="text-lg font-semibold text-white">
-                  Upload {selectedDocConfig?.label}
-                </h3>
-                <p className="text-sm text-white">
-                  Upload a clear photo or scan of your document. AI will verify it automatically.
-                </p>
-              </div>
-              <div className="flex-1 overflow-y-auto px-5 pb-4">{uploadContent}</div>
-              <div className="p-5 border-t border-white/[0.06]">{uploadFooter}</div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      ) : (
-        <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
-          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-white">
-                Upload {selectedDocConfig?.label}
-              </DialogTitle>
-              <DialogDescription className="text-white">
-                Upload a clear photo or scan of your document. AI will verify it automatically.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="pt-4">{uploadContent}</div>
-            <DialogFooter className="pt-2">{uploadFooter}</DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+      <Sheet open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
+        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+          <div className="lg:hidden flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+          </div>
+          <div className="px-5 pb-2">
+            <h3 className="text-lg font-semibold text-white">
+              Upload {selectedDocConfig?.label}
+            </h3>
+            <p className="text-sm text-white">
+              Upload a clear photo or scan of your document. AI will verify it automatically.
+            </p>
+          </div>
+          <div className="flex-1 overflow-y-auto px-5 pb-4">{uploadContent}</div>
+          <div className="p-5 border-t border-white/[0.06]">{uploadFooter}</div>
+        </SettingsSheetContent>
+      </Sheet>
 
       <DocumentCamera
         open={isCameraOpen}

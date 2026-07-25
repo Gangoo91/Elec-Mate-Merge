@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study ring continuity testing and all other inspection and testing methods.',
     icon: GraduationCap,
@@ -456,7 +456,7 @@ const sections = [
 export default function RingVsRadialCircuitsPage() {
   return (
     <GuideTemplate
-      title="Ring vs Radial Final Circuits: BS 7671:2018+A4:2026 Guide"
+      title="Ring vs Radial Circuits: Which to Use + the BS 7671 Rules"
       description="Ring vs radial final circuits: A1 ring (32A), A2/A3 radial, cable sizes, load limits, ring continuity test (r1+r2/4 method). Appendix 15 of BS 7671."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

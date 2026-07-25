@@ -85,7 +85,7 @@ export default function ElectricalCertificateSoftwarePage() {
                 the test readings, let the software validate them against BS 7671 maximum values,
                 capture signatures on screen, and send the PDF by email or WhatsApp from the
                 client&apos;s hallway. The certificate then feeds the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">invoice</SEOInternalLink> or a
+                <SEOInternalLink href="/electrician-invoice-app">invoice</SEOInternalLink> or a
                 priced remedial quote, so the paperwork becomes part of getting paid rather than an
                 evening job.
               </p>
@@ -440,14 +440,14 @@ export default function ElectricalCertificateSoftwarePage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Turn completed certificates into invoices and collect payment.',
           icon: Mail,
           category: 'Business',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description: 'Convert EICR defects into priced remedial quotes.',
           icon: Sparkles,
@@ -461,7 +461,7 @@ export default function ElectricalCertificateSoftwarePage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description: '70+ BS 7671 calculators for cable sizing, voltage drop, and Zs checks.',
           icon: Calculator,

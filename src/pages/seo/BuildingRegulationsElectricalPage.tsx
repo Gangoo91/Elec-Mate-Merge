@@ -104,7 +104,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Detailed Guide',
     description: 'In-depth Part P requirements and exemptions.',
     icon: BookOpen,
@@ -118,7 +118,7 @@ const relatedPages = [
     category: 'Certificate' as const,
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'When and how to issue a Minor Works Certificate.',
     icon: FileCheck2,
@@ -227,7 +227,7 @@ const sections = [
         <p>
           When a registered person completes notifiable work, they issue the appropriate certificate
           ( <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works</SEOInternalLink>),
+          <SEOInternalLink href="/minor-works-certificate">Minor Works</SEOInternalLink>),
           notify the scheme electronically, and the scheme notifies building control on their
           behalf. A Building Regulations Compliance Certificate is then issued to the homeowner.
         </p>
@@ -532,7 +532,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">Notifiable minor work:</strong>{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 for small notifiable jobs. Building Regulations Compliance Certificate via the

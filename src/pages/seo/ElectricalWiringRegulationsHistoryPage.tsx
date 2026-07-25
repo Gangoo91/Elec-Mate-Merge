@@ -170,14 +170,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course Guide',
     description: 'Everything you need to know about the City and Guilds 2382 18th Edition course.',
     icon: GraduationCap,
     category: 'Course',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'How Part P of the Building Regulations applies to domestic electrical work in England and Wales.',

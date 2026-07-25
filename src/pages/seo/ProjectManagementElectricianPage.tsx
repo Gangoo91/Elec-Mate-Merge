@@ -418,7 +418,7 @@ export default function ProjectManagementElectricianPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description:
             'Forecast cash flow based on project timelines, staged payments, and expense schedules.',

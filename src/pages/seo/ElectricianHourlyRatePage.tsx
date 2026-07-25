@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes and invoices on your phone in under 3 minutes.',
     icon: FileCheck2,
@@ -518,7 +518,7 @@ const sections = [
               <span>
                 <strong>Always confirm in writing</strong> — a written quote protects both parties.
                 Use the{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">
+                <SEOInternalLink href="/electrical-quoting-app">
                   Elec-Mate quoting app
                 </SEOInternalLink>{' '}
                 to produce a professional written quote before you start work.
@@ -549,7 +549,7 @@ const sections = [
                   Clients who receive a professional, written quote on the day of a site visit are
                   significantly more likely to accept than those who receive one a day later. Use
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce itemised, professional quotes from your phone in under three minutes.

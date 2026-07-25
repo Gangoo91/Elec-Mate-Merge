@@ -59,18 +59,41 @@ const features = [
 
 const comparisonCollections = [
   {
-    heading: 'Core competitor pages',
+    heading: 'Certification software',
     links: [
       { href: '/elec-mate-vs-i-certifi', label: 'Elec-Mate vs iCertifi' },
-      { href: '/compare/elec-mate-vs-certsapp', label: 'Elec-Mate vs CertsApp' },
+      { href: '/elec-mate-vs-certs-app', label: 'Elec-Mate vs CertsApp' },
       { href: '/compare/elec-mate-vs-simply-eicr', label: 'Elec-Mate vs Simply EICR' },
       { href: '/compare/elec-mate-vs-electrical-om', label: 'Elec-Mate vs Electrical OM' },
+      { href: '/compare/elec-mate-vs-tradecert', label: 'Elec-Mate vs Tradecert' },
+      { href: '/compare/elec-mate-vs-speedcert', label: 'Elec-Mate vs SpeedCert' },
+      { href: '/compare/elec-mate-vs-certsuite', label: 'Elec-Mate vs CertSuite' },
+      { href: '/compare/elec-mate-vs-napit-fasttest', label: 'Elec-Mate vs NAPIT FastTest' },
+    ],
+  },
+  {
+    heading: 'Job management software',
+    links: [
+      { href: '/compare/elec-mate-vs-tradify', label: 'Elec-Mate vs Tradify' },
+      { href: '/compare/elec-mate-vs-powered-now', label: 'Elec-Mate vs Powered Now' },
+      { href: '/compare/elec-mate-vs-jobber', label: 'Elec-Mate vs Jobber' },
+      { href: '/compare/elec-mate-vs-servicem8', label: 'Elec-Mate vs ServiceM8' },
+      { href: '/compare/elec-mate-vs-simpro', label: 'Elec-Mate vs Simpro' },
+      { href: '/compare/elec-mate-vs-commusoft', label: 'Elec-Mate vs Commusoft' },
+    ],
+  },
+  {
+    heading: 'Health & safety / RAMS',
+    links: [
+      { href: '/compare/best-rams-app-electricians', label: 'Best RAMS App for Electricians' },
+      { href: '/ai-health-safety-agent', label: 'AI Health & Safety Agent' },
+      { href: '/rams-generator', label: 'RAMS Generator' },
     ],
   },
   {
     heading: 'Best-of comparison pages',
     links: [
-      { href: '/tools/best-electrician-app-uk', label: 'Best Electrician App' },
+      { href: '/best-electrician-app', label: 'Best Electrician App' },
       { href: '/compare/best-invoice-app-electricians', label: 'Best Invoice App for Electricians' },
       { href: '/compare/best-ai-tool-electricians', label: 'Best AI Tool for Electricians' },
       { href: '/tools/digital-certificates-app', label: 'Digital Certificates App' },
@@ -79,9 +102,9 @@ const comparisonCollections = [
   {
     heading: 'Commercial follow-through',
     links: [
-      { href: '/tools/electrical-quoting-app', label: 'Electrical Quoting App' },
-      { href: '/tools/electrician-invoice-app', label: 'Electrician Invoice App' },
-      { href: '/tools/ai-electrician', label: 'AI Electrician Tools' },
+      { href: '/electrical-quoting-app', label: 'Electrical Quoting App' },
+      { href: '/electrician-invoice-app', label: 'Electrician Invoice App' },
+      { href: '/ai-electrician-tools', label: 'AI Electrician Tools' },
       { href: '/tools/employer-electrical-platform', label: 'Employer Electrical Platform' },
     ],
   },
@@ -164,9 +187,9 @@ export default function CompareHubPage() {
             If you are already weighing up options, this page brings the main comparisons together
             in one place. Start with{' '}
             <SEOInternalLink href="/elec-mate-vs-i-certifi">Elec-Mate vs iCertifi</SEOInternalLink>{' '}
-            and <SEOInternalLink href="/compare/elec-mate-vs-certsapp">Elec-Mate vs CertsApp</SEOInternalLink>{' '}
+            and <SEOInternalLink href="/elec-mate-vs-certs-app">Elec-Mate vs CertsApp</SEOInternalLink>{' '}
             or jump into broader pages like{' '}
-            <SEOInternalLink href="/tools/best-electrician-app-uk">Best Electrician App</SEOInternalLink> and{' '}
+            <SEOInternalLink href="/best-electrician-app">Best Electrician App</SEOInternalLink> and{' '}
             <SEOInternalLink href="/tools/digital-certificates-app">Digital Certificates</SEOInternalLink>.
           </p>
           <SEOFeatureGrid features={features} />

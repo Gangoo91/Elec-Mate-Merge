@@ -2,6 +2,14 @@
   "name": "elec-mate",
   "private": true,
   "version": "1.0.0",
+  "description": "The all-in-one platform for UK electricians — BS 7671 certification, AI site tools, calculators, business management and training.",
+  "author": "Elec-Mate",
+  "license": "UNLICENSED",
+  "homepage": "https://www.elec-mate.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gangoo91/Elec-Mate-Merge.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=8192' vite",

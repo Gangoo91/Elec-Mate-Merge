@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A4:2026 with structured training modules on the Elec-Mate platform.',

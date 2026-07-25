@@ -550,7 +550,7 @@ export default function HouseRewireGuidePage() {
             <>
               <p>
                 A full house rewire is notifiable under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 . This is one of the most significant categories of notifiable work — it involves

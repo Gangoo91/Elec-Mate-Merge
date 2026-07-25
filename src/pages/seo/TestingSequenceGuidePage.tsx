@@ -624,7 +624,7 @@ export default function TestingSequenceGuidePage() {
               <p className="text-white/60 text-xs">
                 BS 7671 Table 41.5 — maximum earth fault loop impedance for non-delayed and ‘S’ type
                 RCDs at Uo of 230 V. See the{' '}
-                <SEOInternalLink href="/earth-electrode-testing">
+                <SEOInternalLink href="/guides/earth-electrode-testing">
                   earth electrode testing guide
                 </SEOInternalLink>{' '}
                 for the fall-of-potential method.
@@ -858,7 +858,7 @@ export default function TestingSequenceGuidePage() {
                 within 300 ms (130–500 ms for ‘S’ type) at rated IΔn. The 0.5× and 5× multiples and
                 their limits derive from the RCD product standards (BS EN 61008-1 / 61009-1). See
                 the{' '}
-                <SEOInternalLink href="/tools/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
+                <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
                 the full procedure.
               </p>
               <p>

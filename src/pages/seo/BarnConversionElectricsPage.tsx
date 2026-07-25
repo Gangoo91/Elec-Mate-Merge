@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Price barn conversion electrical packages with itemised materials, labour, and heritage accessories.',
@@ -136,7 +136,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with modules covering three-phase testing and complex installations.',
@@ -714,7 +714,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Detailed Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete barn conversion electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Every circuit, every accessory, every metre of cable — itemised with your margins.
                   A detailed, professional quote differentiates you from competitors who submit a
                   one-line price.

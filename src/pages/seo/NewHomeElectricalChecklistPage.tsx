@@ -624,7 +624,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   New homeowners often want upgrades as well as remedial work — extra sockets, EV
                   charger points, outdoor circuits. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to provide comprehensive quotes on the day and win the full scope of work.

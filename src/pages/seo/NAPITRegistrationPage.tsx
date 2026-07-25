@@ -677,7 +677,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P means for electricians — notifiable work, compliance, and self-certification.',

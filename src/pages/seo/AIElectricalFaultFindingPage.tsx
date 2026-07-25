@@ -459,7 +459,7 @@ export default function AIElectricalFaultFindingPage() {
                 explanation suitable for communicating with the client. This dual output saves time
                 and helps you explain the fault and required repair to homeowners who do not
                 understand electrical terminology. The{' '}
-                <SEOInternalLink href="/tools/ai-electrician">Client Explainer</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-electrician-tools">Client Explainer</SEOInternalLink>{' '}
                 feature produces even more detailed client-facing explanations when needed.
               </p>
               <SEOAppBridge
@@ -578,7 +578,7 @@ export default function AIElectricalFaultFindingPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/insulation-resistance-testing',
+          href: '/guides/insulation-resistance-testing-bs7671',
           title: 'Insulation Resistance Testing',
           description:
             'How to carry out insulation resistance tests correctly, interpret results, and identify cable deterioration and moisture ingress.',

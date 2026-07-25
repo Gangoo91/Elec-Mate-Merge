@@ -95,7 +95,7 @@ const sections = [
       <>
         <p>
           Correction factors are multipliers used in the{' '}
-          <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+          <SEOInternalLink href="/how-to-size-cables">
             cable sizing process
           </SEOInternalLink>{' '}
           to account for real-world installation conditions that reduce a cable's ability to carry
@@ -791,7 +791,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables to BS 7671',
     description:
       'The complete 6-step cable sizing process with correction factors, voltage drop, and fault current verification.',

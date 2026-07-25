@@ -20,7 +20,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Cost Guides', href: '/guides/electrical-cost-guides' },
-  { label: 'House Extension Electrical Cost', href: '/house-extension-electrical-cost' },
+  { label: 'House Extension Electrical Cost', href: '/guides/house-extension-electrical-cost' },
 ];
 
 const tocItems = [
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional extension electrical quotes in minutes with Elec-Mate.',
     icon: FileCheck2,
@@ -465,7 +465,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   At the first-fix stage, you can see exactly what the consumer unit situation is.
                   Quote the upgrade immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   — customers almost always accept when the need is clearly explained on site.

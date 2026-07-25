@@ -532,7 +532,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Safe lifting and carrying techniques — essential when transporting tools and materials onto scaffolding.',

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/training/electrical-apprentice' },
+  { label: 'Training', href: '/apprentice-training' },
   { label: 'Learning Videos', href: '/tools/learning-videos-electrician' },
 ];
 
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Structured C&G 2391 course with modules and assessments. Videos complement the written course materials.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Structured AM2 preparation covering all practical tasks. Videos show the installation and testing techniques required.',
@@ -359,11 +359,11 @@ const sections = [
         <p>
           The exam preparation videos are designed for electricians preparing for City & Guilds
           examinations, particularly the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink> (18th
+          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink> (18th
           Edition),{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>{' '}
+          <SEOInternalLink href="/inspection-testing-course">C&G 2391</SEOInternalLink>{' '}
           (Inspection and Testing), and the{' '}
-          <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> practical
+          <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> practical
           assessment.
         </p>
         <p>

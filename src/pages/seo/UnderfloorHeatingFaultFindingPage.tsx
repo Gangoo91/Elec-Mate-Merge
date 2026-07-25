@@ -290,7 +290,7 @@ const sections = [
           Thermostat replacement costs £60 to £150 all-in (thermostat £30 to £100, labour £30 to £50
           for a straightforward like-for-like replacement). If the replacement thermostat is in a
           bathroom, the work is notifiable under Part P and an{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Electrical Installation Works Certificate
           </SEOInternalLink>{' '}
           must be issued.
@@ -558,7 +558,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Floor Replacement Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When diagnosing a mat fault, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a detailed quote covering the electrical work element. Present it

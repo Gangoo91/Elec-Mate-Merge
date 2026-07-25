@@ -76,8 +76,9 @@ export interface DistributionBoard {
   spdRatedCurrentKa?: string;
 
   // Board details (for wizard collection)
-  make?: string; // Manufacturer (from BOARD_MANUFACTURERS)
+  make?: string; // Manufacturer (free text)
   model?: string; // Model number/name
+  boardDetails?: string; // ELE-1388 — EIC single free-text board line, e.g. "Wylex 10way". Falls back into make on the PDF.
   type?: BoardType; // Board enclosure type
   totalWays?: number; // Board size (from BOARD_SIZES)
   totalWaysCustom?: string; // Custom board size when "Other" is selected

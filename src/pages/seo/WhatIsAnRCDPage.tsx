@@ -490,7 +490,7 @@ const sections = [
                   In older properties, the PVC insulation on cables can degrade over time —
                   especially in hot locations (near boilers, in lofts during summer) or where cables
                   have been damaged during building work. The{' '}
-                  <SEOInternalLink href="/guides/insulation-resistance-testing">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     insulation resistance test
                   </SEOInternalLink>{' '}
                   during an EICR identifies this.

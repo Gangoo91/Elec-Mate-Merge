@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'Price garage conversion electrical packages with itemised materials and labour.',
     icon: Wrench,
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with modules covering domestic installation testing and certification.',
@@ -167,7 +167,7 @@ const sections = [
         </p>
         <p>
           The work is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . A registered electrician can self-certify the electrical work, but the overall garage
@@ -723,7 +723,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   First fix, second fix, consumer unit, lighting, sockets, heating, smoke detection,
                   testing — all itemised. Send a professional PDF quote that wins work.
                 </p>

@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop on lighting circuits to check whether long cable runs are the cause.',
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with structured training covering lighting circuit diagnosis.',
     icon: GraduationCap,
@@ -265,7 +265,7 @@ const sections = [
           Loose connections that arc are a serious fire risk. If you find evidence of arcing
           (blackened terminals, melted plastic, burnt insulation), the connection point must be
           replaced, not just re-tightened. Record the finding on the{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 (Danger
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 (Danger
           Present) or C2 (Potentially Dangerous) observation depending on severity.
         </p>
       </>

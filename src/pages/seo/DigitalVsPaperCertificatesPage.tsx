@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form correctly.',
     icon: ClipboardCheck,
@@ -249,7 +249,7 @@ const sections = [
             Electrical Installation Condition Report (EICR)
           </SEOInternalLink>
           , and the{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>
           . These model forms specify the information that must be included — they do not specify

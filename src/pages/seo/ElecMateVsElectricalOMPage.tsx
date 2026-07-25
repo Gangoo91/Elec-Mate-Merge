@@ -297,7 +297,7 @@ export default function ElecMateVsElectricalOMPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/ai-electrician',
+          href: '/ai-electrician-tools',
           title: 'AI Electrician Hub',
           description: '8 specialist AI agents and 12 AI tools built for UK electricians.',
           icon: Brain,

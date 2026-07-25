@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Master RCD testing and type selection for C&G 2391.',
     icon: GraduationCap,

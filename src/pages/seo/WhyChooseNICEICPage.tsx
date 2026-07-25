@@ -116,14 +116,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form correctly.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -633,7 +633,7 @@ const sections = [
                 <td className="p-3 font-medium text-yellow-400">Inspection &amp; testing</td>
                 <td className="p-3">
                   A recognised initial verification and periodic inspection qualification — see the{' '}
-                  <SEOInternalLink href="/training/inspection-and-testing">Inspection &amp; Testing course</SEOInternalLink>
+                  <SEOInternalLink href="/inspection-testing-course">Inspection &amp; Testing course</SEOInternalLink>
                 </td>
               </tr>
               <tr className="border-t border-white/10">

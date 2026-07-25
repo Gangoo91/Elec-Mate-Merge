@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description: 'Complete solar PV installation certificates on site on your phone.',
     icon: Sun,
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study RCD testing, earthing verification, and solar PV inspection.',
     icon: GraduationCap,

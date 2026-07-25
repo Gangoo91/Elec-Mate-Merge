@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Issue Minor Works Certificates for smoke detector additions to existing lighting circuits.',
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'When electrical work is notifiable and how competent person schemes handle self-certification.',
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with structured training on testing and certification procedures.',
@@ -533,7 +533,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Full System</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to price the complete smoke detection package: detectors, cables, fixings, labour,

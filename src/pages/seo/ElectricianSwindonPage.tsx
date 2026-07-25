@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Swindon electrical jobs accurately with the right South West pricing — send professional quotes on site.',
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 — structured training modules covering inspection and testing of electrical installations.',
@@ -445,7 +445,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win More Swindon Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send professional PDF quotes from site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Accurate pricing for the Swindon market — quote consumer unit upgrades, EV
                   chargers, and rewires and win work before the competition.
                 </p>

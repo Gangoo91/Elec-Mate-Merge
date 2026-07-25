@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Portfolio Building Guide',
     description: 'Document your tool skills as portfolio evidence for the EPA.',
     icon: FolderOpen,

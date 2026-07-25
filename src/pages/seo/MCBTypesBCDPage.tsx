@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -523,7 +523,7 @@ const sections = [
         <p>
           This is why MCB type selection is not just an academic exercise — it directly determines
           whether circuits will pass or fail during{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR testing</SEOInternalLink>.
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR testing</SEOInternalLink>.
           Specifying the correct (lowest appropriate) MCB type at the design stage avoids compliance
           problems at the testing stage.
         </p>

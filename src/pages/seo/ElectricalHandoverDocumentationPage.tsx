@@ -378,7 +378,7 @@ const sections = [
               <span>
                 <strong>Maintenance requirements</strong> -- what routine maintenance the client is
                 responsible for (monthly{' '}
-                <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   emergency lighting
                 </SEOInternalLink>{' '}
                 function tests, quarterly RCD tests, keeping ventilation clear around distribution

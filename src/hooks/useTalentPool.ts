@@ -199,12 +199,31 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     }
 
     if (options.ecsCardFilter && options.ecsCardFilter.length > 0) {
+      // Each filter chip matches a meaning-group: legacy colour values (what the
+      // old picker stored, grouped by the label users chose them under) plus the
+      // official role-based values the picker stores now.
+      const ECS_FILTER_GROUPS: Record<string, string[]> = {
+        gold: [
+          'gold',
+          'blue',
+          'black',
+          'installation_electrician',
+          'maintenance_electrician',
+          'domestic_electrician',
+          'approved_electrician',
+        ],
+        'experienced worker': ['experienced_worker', 'white', 'yellow'],
+        trainee: ['red', 'trainee_electrician'],
+        apprentice: ['green', 'apprentice'],
+        labourer: ['electrical_labourer'],
+      };
       result = result.filter((w) =>
         options.ecsCardFilter!.some((cardType) => {
           const wanted = cardType.toLowerCase();
-          if ((w.ecsCardType || '').toLowerCase() === wanted) return true;
-          // No live profile stores 'apprentice' as a card type — apprentices
-          // declare it in their job title instead, so match on that too.
+          const stored = (w.ecsCardType || '').toLowerCase();
+          const group = ECS_FILTER_GROUPS[wanted] ?? [wanted];
+          if (group.includes(stored)) return true;
+          // Apprentices often declare it in their job title rather than a card.
           if (wanted === 'apprentice') {
             return (w.jobTitle || '').toLowerCase().includes('apprentice');
           }

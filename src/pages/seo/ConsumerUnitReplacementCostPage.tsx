@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote consumer unit replacements with itemised materials, labour, and professional PDF output.',
@@ -778,7 +778,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes with real trade pricing data. The AI cost engineer checks
                   your material costs against current wholesaler prices and flags anything that
                   looks too high or too low.

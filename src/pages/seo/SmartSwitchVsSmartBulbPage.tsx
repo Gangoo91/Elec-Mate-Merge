@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study lighting circuit inspection and test requirements for C&G 2391.',
     icon: GraduationCap,

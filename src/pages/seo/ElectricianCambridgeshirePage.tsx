@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate App',
     description: 'Issue compliant MWCs instantly on your phone.',
     icon: FileCheck2,

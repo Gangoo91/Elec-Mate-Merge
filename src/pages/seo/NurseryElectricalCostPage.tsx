@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote nursery electrical work with fire alarm, emergency lighting, and heating.',
     icon: Calculator,

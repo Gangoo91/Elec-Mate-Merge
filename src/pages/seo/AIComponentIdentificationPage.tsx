@@ -92,13 +92,13 @@ export default function AIComponentIdentificationPage() {
               </p>
               <p>
                 The tool is part of Elec-Mate's broader AI toolkit, which includes the{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI Board Scanner</SEOInternalLink>,
+                <SEOInternalLink href="/ai-electrician-tools">AI Board Scanner</SEOInternalLink>,
                 the{' '}
                 <SEOInternalLink href="/ai-circuit-designer">
                   AI Circuit Designer
                 </SEOInternalLink>
                 , and the{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.
                 Together, these tools handle identification, design, and costing of electrical
                 components and circuits from a single platform.
               </p>
@@ -244,7 +244,7 @@ export default function AIComponentIdentificationPage() {
                 wholesalers. This means you can provide the customer with a remedial cost on the
                 spot — "this MCB needs replacing, a suitable replacement costs approximately X, and
                 the labour to fit it would be Y." Combined with Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>,
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>,
                 you can generate a formal quotation for component replacements directly from the
                 identification results.
               </p>
@@ -429,7 +429,7 @@ export default function AIComponentIdentificationPage() {
       faqHeading="AI Component Identification FAQs"
       relatedPages={[
         {
-          href: '/tools/ai-electrician',
+          href: '/ai-electrician-tools',
           title: 'AI Board Scanner',
           description:
             'Photograph a complete consumer unit and extract all circuit data, device ratings, and board layout in seconds.',
@@ -445,7 +445,7 @@ export default function AIComponentIdentificationPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Generate itemised quotes with real UK trade pricing, labour estimates, and profit margins from a job description.',

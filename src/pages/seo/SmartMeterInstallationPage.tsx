@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/consumer-unit-types-guide',
+    href: '/guides/consumer-unit-types',
     title: 'Consumer Unit Types Guide',
     description:
       'Metal clad, split-load, high-integrity, and RCBO boards explained with upgrade costs.',
@@ -487,7 +487,7 @@ const sections = [
               <span>
                 <strong>Consumer unit upgrade</strong> — typically £300 to £900 for a full consumer
                 unit replacement in a domestic property. See the{' '}
-                <SEOInternalLink href="/consumer-unit-types-guide">
+                <SEOInternalLink href="/guides/consumer-unit-types">
                   consumer unit types guide
                 </SEOInternalLink>{' '}
                 for a detailed cost breakdown by unit type and property size.

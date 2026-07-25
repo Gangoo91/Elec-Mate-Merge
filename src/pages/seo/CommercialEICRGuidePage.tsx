@@ -629,7 +629,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: '2391 Inspection & Testing Course',
     description: 'Guide to the City & Guilds 2391 qualification for inspection and testing.',
     icon: Award,

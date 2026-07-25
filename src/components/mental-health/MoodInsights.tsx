@@ -284,7 +284,7 @@ const MoodInsights = () => {
                       key={day}
                       className={`p-1.5 sm:p-2 rounded-lg text-center ${
                         isBest
-                          ? 'bg-white/[0.02] border border-white/[0.06]'
+                          ? 'bg-emerald-500/15 border border-emerald-500/30'
                           : isWorst
                             ? 'bg-red-500/15 border border-red-500/30'
                             : 'bg-[hsl(0_0%_9%)] border border-white/[0.08]'

@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs professionally from your van — materials, labour, and margins calculated automatically.',

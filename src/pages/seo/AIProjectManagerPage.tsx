@@ -25,7 +25,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Project Manager', href: '/tools/ai-project-manager' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-cost-engineer',
+    href: '/ai-cost-engineer',
     title: 'AI Cost Engineer',
     description:
       'Get accurate job cost estimates with itemised materials, labour rates, and regional pricing for UK electrical work.',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate site-specific risk assessments and method statements for your project before work begins.',
@@ -224,18 +224,18 @@ const sections = [
           breakdown with realistic durations, resource requirements for each phase, a material list
           with ordering timelines, coordination milestones for other trades, and regulatory
           milestones such as{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P building control notifications
           </SEOInternalLink>{' '}
           and DNO applications where applicable.
         </p>
         <p>
           The AI Project Manager integrates with other Elec-Mate tools. The{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
           price the project plan to produce an accurate quotation. The{' '}
           <SEOInternalLink href="/ai-circuit-designer">Circuit Designer</SEOInternalLink> can
           feed circuit specifications into the material list. And the{' '}
-          <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> produces
+          <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> produces
           the health and safety documentation you need before starting work.
         </p>
       </>
@@ -309,7 +309,7 @@ const sections = [
         <p>
           The AI also considers skill requirements for specialist work. EV charger installations may
           require an installer with the{' '}
-          <SEOInternalLink href="/training/ev-charger-installation">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger training qualification
           </SEOInternalLink>
           . Solar PV work requires MCS-qualified personnel. The AI flags these requirements in the
@@ -347,7 +347,7 @@ const sections = [
         </p>
         <p>
           The material list integrates with the{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> to
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> to
           produce accurate cost projections. And as prices change or you find better deals from
           alternative suppliers, you can update the costs and the AI recalculates the project budget
           automatically.

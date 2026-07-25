@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured modules covering Part P, BS 7671, and certification.',
@@ -354,7 +354,7 @@ const sections = [
         <p>
           Even though non-notifiable work does not require formal notification, it must still comply
           with BS 7671 and should be documented. For additions and alterations, a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           should be issued. For like-for-like replacements, a certificate is not legally required
           but is good practice — particularly for rented properties where the landlord may need
           evidence of compliance.
@@ -550,11 +550,11 @@ const sections = [
         </div>
         <p>
           For electricians, the special location rules are examined in the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification
           </SEOInternalLink>{' '}
           and the{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             C&G 2391 inspection and testing course
           </SEOInternalLink>
           . Getting them wrong can result in failed inspections, remedial work, and complaints to

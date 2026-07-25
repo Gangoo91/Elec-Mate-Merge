@@ -704,7 +704,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Invoice Like a Professional</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Going self-employed means quoting and invoicing from day one. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written, itemised quotes and turn them into invoices in one tap.

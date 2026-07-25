@@ -446,7 +446,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/training/level-3-electrical',
+    href: '/level3-electrical',
     title: 'Level 3 Electrical Course',
     description: 'NVQ Level 3 study support — the qualification you need before starting the HNC.',
     icon: GraduationCap,
@@ -475,7 +475,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'BS 7671 training — the wiring regulations you will apply in your HNC design modules.',

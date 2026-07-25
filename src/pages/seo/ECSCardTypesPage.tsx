@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician-uk' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'ECS Card Types', href: '/guides/ecs-card-types' },
 ];
 
@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/how-to-become-electrician-uk',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete pathway from school leaver to qualified electrician, including all qualifications needed.',
@@ -595,7 +595,7 @@ const sections = [
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
               <strong>Apprentice card (red)</strong> — start your apprenticeship, study{' '}
-              <SEOInternalLink href="/training/level-2-electrical">Level 2</SEOInternalLink> and{' '}
+              <SEOInternalLink href="/level2-electrical">Level 2</SEOInternalLink> and{' '}
               <SEOInternalLink href="/guides/nvq-level-3-electrical">Level 3</SEOInternalLink> at
               college while gaining on-site experience.
             </li>

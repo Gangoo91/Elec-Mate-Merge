@@ -680,7 +680,7 @@ const sections = [
                   Edinburgh solar installers who can navigate the World Heritage Site and
                   conservation area planning requirements command higher fees. Position your
                   business as Edinburgh planning specialists and quote using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   .

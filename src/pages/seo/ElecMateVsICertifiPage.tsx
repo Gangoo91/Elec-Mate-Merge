@@ -281,7 +281,7 @@ export default function ElecMateVsICertifiPage() {
             <div className="space-y-4 text-white leading-relaxed mb-6">
               <p>
                 Both Elec-Mate and iCertifi support the core certificate types that UK electricians
-                use regularly: <SEOInternalLink href="/eicr-certificate">EICR</SEOInternalLink>,
+                use regularly: <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,
                 EIC, and Minor Works. Both apps provide digital signature capture, observation
                 coding, and PDF export. For these standard certificates, both platforms deliver a
                 professional result.
@@ -381,7 +381,7 @@ export default function ElecMateVsICertifiPage() {
                   UK Ze (external earth fault loop impedance) values
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/guides/voltage-drop">voltage drop guidance</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">voltage drop guidance</SEOInternalLink>{' '}
                 are available in the Elec-Mate guides.
               </p>
             </div>

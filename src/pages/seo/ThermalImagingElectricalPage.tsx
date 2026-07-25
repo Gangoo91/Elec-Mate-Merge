@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate App',
     description:
       'Complete solar PV commissioning certificates including IEC 62446-3 documentation.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'C&G 2391 training covering inspection methods and supplementary techniques.',
     icon: GraduationCap,
@@ -256,7 +256,7 @@ const sections = [
         <p>
           When a hotspot is identified by thermal imaging, follow up with electrical tests to
           confirm the cause. A loose connection can be confirmed by{' '}
-          <SEOInternalLink href="/guides/continuity-testing-electricians-guide">
+          <SEOInternalLink href="/continuity-testing-guide">
             resistance measurement
           </SEOInternalLink>{' '}
           of the terminal before and after tightening. An overloaded neutral can be confirmed by

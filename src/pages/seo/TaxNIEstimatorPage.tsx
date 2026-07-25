@@ -90,7 +90,7 @@ export default function TaxNIEstimatorPage() {
                 The solution is simple: estimate your tax throughout the year and set aside the
                 right amount each month. Elec-Mate's Tax and NI Estimator does this automatically.
                 As you log income through the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">
+                <SEOInternalLink href="/electrician-invoice-app">
                   invoice tool
                 </SEOInternalLink>{' '}
                 and expenses through the expense tracker, the estimator recalculates your projected
@@ -229,7 +229,7 @@ export default function TaxNIEstimatorPage() {
               <p>
                 Elec-Mate's Tax and NI Estimator accounts for payments on account automatically,
                 showing you the exact amounts due on each payment date. Use the{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 to ensure you have sufficient funds available on 31 January and 31 July.
               </p>
             </>
@@ -447,7 +447,7 @@ export default function TaxNIEstimatorPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description:
             'Forecast your cash position and plan for tax payments, VAT, and business expenses.',

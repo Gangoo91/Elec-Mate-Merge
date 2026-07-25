@@ -25,7 +25,7 @@ export default function WiringColoursUKPage() {
       dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
-        { label: 'Wiring Colours UK', href: '/guides/wiring-colours-uk' },
+        { label: 'Wiring Colours UK', href: '/guides/cable-colour-codes-uk' },
       ]}
       tocItems={[
         { id: 'current-colours', label: 'Current Harmonised Colours' },
@@ -543,7 +543,7 @@ export default function WiringColoursUKPage() {
                 The lesson is clear: never assume a conductor's function based on colour alone
                 without first establishing which colour scheme is in use. Check the installation
                 age, look for warning notices, and always prove circuits dead with a{' '}
-                <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+                <SEOInternalLink href="/how-to-do-safe-isolation">
                   safe isolation procedure
                 </SEOInternalLink>{' '}
                 before working on them.
@@ -599,7 +599,7 @@ export default function WiringColoursUKPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,
@@ -613,7 +613,7 @@ export default function WiringColoursUKPage() {
           category: 'Certification',
         },
         {
-          href: '/guides/how-to-do-safe-isolation',
+          href: '/how-to-do-safe-isolation',
           title: 'Safe Isolation Procedure',
           description: 'GS38 prove-test-prove method step by step.',
           icon: Zap,

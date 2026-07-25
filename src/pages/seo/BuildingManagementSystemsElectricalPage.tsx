@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'C&G 2391 provides the inspection and testing foundation for BMS electrical commissioning.',

@@ -336,7 +336,7 @@ export default function ElectricalExtensionGuidePage() {
               <p>
                 All lighting switch positions should be agreed with the homeowner during the design
                 phase. Consider{' '}
-                <SEOInternalLink href="/guides/wiring-colours-uk">
+                <SEOInternalLink href="/guides/cable-colour-codes-uk">
                   wiring colour conventions
                 </SEOInternalLink>{' '}
                 for switched live and two-way switching installations.
@@ -450,7 +450,7 @@ export default function ElectricalExtensionGuidePage() {
                     <span>
                       <strong className="text-yellow-400">Part P notification</strong> — New outdoor
                       circuits are notifiable under{' '}
-                      <SEOInternalLink href="/guides/part-p-building-regulations">
+                      <SEOInternalLink href="/part-p-building-regulations">
                         Part P
                       </SEOInternalLink>{' '}
                       and must be included on the EIC for the extension work.
@@ -473,7 +473,7 @@ export default function ElectricalExtensionGuidePage() {
             <>
               <p>
                 All new electrical work in a house extension is notifiable under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 . This includes every new circuit, the connection to the existing distribution, and
@@ -601,7 +601,7 @@ export default function ElectricalExtensionGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'Which electrical work requires Part P notification.',
           icon: FileText,

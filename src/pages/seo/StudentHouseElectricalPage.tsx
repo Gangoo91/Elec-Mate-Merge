@@ -614,7 +614,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Landlords facing a tenancy start date need remedial works completed urgently.
                   Quote on site with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   and convert inspection clients into remedial work clients before they look

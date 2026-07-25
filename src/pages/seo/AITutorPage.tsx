@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Tutor', href: '/tools/ai-tutor' },
 ];
 
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Structured C&G 2391 course content with modules, assessments, and practical exercises.',
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Structured preparation for the AM2 practical assessment covering installation tasks, testing, and time management.',
@@ -311,7 +311,7 @@ const sections = [
         <p>
           For the <strong>C&G 2391 (Inspection and Testing)</strong> exam, the AI generates
           scenario-based questions about{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR completion</SEOInternalLink>,
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR completion</SEOInternalLink>,
           test procedures, instrument selection, result interpretation, and fault-finding. It also
           covers the written report element of the 2391, where candidates must describe their
           findings and recommendations clearly.
@@ -415,7 +415,7 @@ const sections = [
           For apprentices, this "study while you earn" approach is particularly effective. It
           connects classroom learning to real-world application — when you encounter a regulation on
           site, you understand it more deeply than if you had only read it in a textbook. Many{' '}
-          <SEOInternalLink href="/training/electrical-apprentice">electrical apprentices</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-training">electrical apprentices</SEOInternalLink>{' '}
           using Elec-Mate report that the AI Tutor helped them understand regulations they had
           struggled with in college, because the AI explains them in the context of actual
           installation work.

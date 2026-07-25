@@ -475,7 +475,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description:
       'IET Code of Practice for EV charging, earthing requirements, and load management.',

@@ -53,11 +53,11 @@ export function InsuranceDetailsForm({
         <Select value={provider} onValueChange={onProviderChange}>
           <SelectTrigger
             id="insuranceProvider"
-            className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+            className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
           >
             <SelectValue placeholder="Select a provider" />
           </SelectTrigger>
-          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+          <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
             {UK_INSURANCE_PROVIDERS.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
@@ -78,7 +78,7 @@ export function InsuranceDetailsForm({
               value={policyNumber}
               onChange={(e) => onPolicyNumberChange(e.target.value)}
               placeholder="Enter policy number"
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
@@ -92,7 +92,7 @@ export function InsuranceDetailsForm({
               onChange={(e) => onCoverageChange(e.target.value)}
               placeholder="e.g., 1000000"
               inputMode="numeric"
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
@@ -105,7 +105,7 @@ export function InsuranceDetailsForm({
               type="date"
               value={expiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
         </div>

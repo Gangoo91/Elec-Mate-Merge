@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   { label: 'JIB Grading', href: '/guides/jib-grading-explained' },
 ];
 
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'The C&G 2391 — required for Approved Electrician grade.',
     icon: GraduationCap,
@@ -429,7 +429,7 @@ const sections = [
           contracts manager), design and consulting, or running your own business. Each step
           increases your earning potential and the range of work you can take on. If you want to
           plan which qualification to tackle next, the{' '}
-          <SEOInternalLink href="/guides/electrical-training-courses-uk">
+          <SEOInternalLink href="/training">
             electrical training courses guide
           </SEOInternalLink>{' '}
           maps each step in detail.

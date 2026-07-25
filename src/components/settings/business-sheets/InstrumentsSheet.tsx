@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -91,16 +92,13 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Equipment</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Testing instruments
@@ -139,10 +137,10 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                           handleInstrumentChange(instrument.id, 'instrument_type', value)
                         }
                       >
-                        <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                        <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                        <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                           {INSTRUMENT_TYPES.map((type) => (
                             <SelectItem key={type.value} value={type.value}>
                               {type.label}
@@ -159,7 +157,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                           handleInstrumentChange(instrument.id, 'make', e.target.value)
                         }
                         placeholder="e.g. Megger"
-                        className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -170,7 +168,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                           handleInstrumentChange(instrument.id, 'model', e.target.value)
                         }
                         placeholder="e.g. MFT1741"
-                        className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -181,7 +179,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                           handleInstrumentChange(instrument.id, 'serial_number', e.target.value)
                         }
                         placeholder="Serial number"
-                        className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -196,7 +194,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                             e.target.value
                           )
                         }
-                        className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -211,7 +209,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                             e.target.value
                           )
                         }
-                        className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       />
                     </div>
                   </div>
@@ -239,7 +237,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

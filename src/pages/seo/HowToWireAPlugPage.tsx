@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/wiring-colours-uk',
+    href: '/guides/cable-colour-codes-uk',
     title: 'UK Wiring Colours Guide',
     description:
       'Complete reference for old and new UK wiring colours with harmonisation explained.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'Step-by-step safe isolation procedure following GS38 and best practice.',
     icon: ShieldCheck,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/level-2-electrical',
+    href: '/level2-electrical',
     title: 'Level 2 Electrical Course',
     description: 'Start your electrical career with Level 2 training on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -152,7 +152,7 @@ const sections = [
         </p>
         <p>
           Understanding{' '}
-          <SEOInternalLink href="/guides/wiring-colours-uk">UK wiring colours</SEOInternalLink> is
+          <SEOInternalLink href="/guides/cable-colour-codes-uk">UK wiring colours</SEOInternalLink> is
           the foundation. Once you know which wire goes where and why, wiring a plug takes less than
           five minutes.
         </p>
@@ -537,7 +537,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Client Reference Library</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Share plug wiring diagrams, fuse selection guides, and{' '}
-                  <SEOInternalLink href="/guides/wiring-colours-uk">
+                  <SEOInternalLink href="/guides/cable-colour-codes-uk">
                     UK wiring colour charts
                   </SEOInternalLink>{' '}
                   with your clients by WhatsApp or email. Professional-quality reference material

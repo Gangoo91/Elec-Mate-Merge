@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { Eyebrow } from '@/components/college/primitives';
@@ -29,16 +30,13 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Integrations</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Accounting software
@@ -204,7 +202,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
             </div>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

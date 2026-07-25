@@ -5,6 +5,7 @@ import {
   ListRow,
   Pill,
 } from '@/components/college/primitives';
+import { openExternalUrl } from '@/utils/open-external-url';
 
 const PHONE_PRIMARY =
   'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25 text-[13px] font-semibold touch-manipulation';
@@ -44,23 +45,24 @@ const quickContacts = [
 const industryContacts = [
   {
     name: 'Electrical Industries Charity',
-    phone: '01895 823 726',
-    href: 'tel:01895823726',
+    cta: '0800 652 1618',
+    href: 'tel:08006521618',
     description:
-      'Support for electrical workers and families, including financial and emotional help.',
-  },
-  {
-    name: 'Mates in Mind',
-    phone: '0203 510 5960',
-    href: 'tel:02035105960',
-    description:
-      'Trade-focused mental health support across construction and related industries.',
+      'Free support for electrical workers and families — emotional, practical and financial. 9am–5pm, Mon–Fri.',
   },
   {
     name: 'Lighthouse Charity',
-    phone: '0345 605 1956',
+    cta: '0345 605 1956',
     href: 'tel:03456051956',
-    description: '24/7 help for construction workers and their families.',
+    description: '24/7 helpline for construction workers and their families.',
+  },
+  {
+    name: 'Mates in Mind',
+    cta: 'Visit',
+    href: 'https://www.matesinmind.org/',
+    isLink: true,
+    description:
+      'Workplace mental health for construction — training, toolbox talks and resources for crews.',
   },
 ];
 
@@ -135,9 +137,21 @@ const SupportNetworkTab = () => {
               title={c.name}
               subtitle={c.description}
               trailing={
-                <a href={c.href} className={PHONE_SECONDARY} aria-label={`Call ${c.name}`}>
-                  {c.phone}
-                </a>
+                c.isLink ? (
+                  <a
+                    href={c.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={PHONE_SECONDARY}
+                    aria-label={`Visit ${c.name}`}
+                  >
+                    {c.cta} →
+                  </a>
+                ) : (
+                  <a href={c.href} className={PHONE_SECONDARY} aria-label={`Call ${c.name}`}>
+                    {c.cta}
+                  </a>
+                )
               }
             />
           ))}
@@ -154,7 +168,7 @@ const SupportNetworkTab = () => {
               title={r.name}
               subtitle={r.description}
               trailing={<Pill tone="cyan">Open</Pill>}
-              onClick={() => window.open(r.url, '_blank', 'noopener,noreferrer')}
+              onClick={() => openExternalUrl(r.url)}
             />
           ))}
         </ListCard>

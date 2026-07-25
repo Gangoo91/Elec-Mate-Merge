@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer } from 'vaul';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import {
   Select,
   SelectContent,
@@ -19,7 +19,6 @@ import { getExpiryStatus, getDaysUntilExpiry } from '@/utils/elecIdGenerator';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 import { useElecIdProfile } from '@/hooks/useElecIdProfile';
-import { useIsMobile } from '@/hooks/use-mobile';
 import {
   getQualificationsByProfileId,
   addElecIdQualification,
@@ -80,7 +79,6 @@ const QualificationSkeleton = () => (
 const ElecIdQualifications = () => {
   const { addNotification } = useNotifications();
   const { profile } = useElecIdProfile();
-  const isMobile = useIsMobile();
 
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
@@ -470,79 +468,39 @@ const ElecIdQualifications = () => {
         isLoading={isLoading}
       />
 
-      {isMobile ? (
-        <Drawer.Root
-          open={isAddSheetOpen}
-          onOpenChange={setIsAddSheetOpen}
-          shouldScaleBackground={false}
-          noBodyStyles
-        >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
-              </div>
-              <div className="px-5 pb-2">
-                <h3 className="text-lg font-semibold text-white">Add qualification</h3>
-                <p className="text-sm text-white">Add a new credential to your profile</p>
-              </div>
-              <div className="flex-1 overflow-y-auto px-5 pb-4">{FormContent({})}</div>
-              <div className="p-5 border-t border-white/[0.06]">
-                {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      ) : (
-        <Dialog open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
-          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-white">Add qualification</DialogTitle>
-            </DialogHeader>
-            {FormContent({})}
+      <Sheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
+        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+          <div className="lg:hidden flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+          </div>
+          <div className="px-5 pb-2">
+            <h3 className="text-lg font-semibold text-white">Add qualification</h3>
+            <p className="text-sm text-white">Add a new credential to your profile</p>
+          </div>
+          <div className="flex-1 overflow-y-auto px-5 pb-4">{FormContent({})}</div>
+          <div className="p-5 border-t border-white/[0.06]">
             {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
-          </DialogContent>
-        </Dialog>
-      )}
+          </div>
+        </SettingsSheetContent>
+      </Sheet>
 
-      {isMobile ? (
-        <Drawer.Root
-          open={isEditSheetOpen}
-          onOpenChange={setIsEditSheetOpen}
-          shouldScaleBackground={false}
-          noBodyStyles
-        >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
-              </div>
-              <div className="px-5 pb-2">
-                <h3 className="text-lg font-semibold text-white">Edit qualification</h3>
-                <p className="text-sm text-white">Update your credential details</p>
-              </div>
-              <div className="flex-1 overflow-y-auto px-5 pb-4">
-                {FormContent({ isEdit: true })}
-              </div>
-              <div className="p-5 border-t border-white/[0.06]">
-                {FormFooter({ isEdit: true, onClose: () => setIsEditSheetOpen(false) })}
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      ) : (
-        <Dialog open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-white">Edit qualification</DialogTitle>
-            </DialogHeader>
+      <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+          <div className="lg:hidden flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+          </div>
+          <div className="px-5 pb-2">
+            <h3 className="text-lg font-semibold text-white">Edit qualification</h3>
+            <p className="text-sm text-white">Update your credential details</p>
+          </div>
+          <div className="flex-1 overflow-y-auto px-5 pb-4">
             {FormContent({ isEdit: true })}
+          </div>
+          <div className="p-5 border-t border-white/[0.06]">
             {FormFooter({ isEdit: true, onClose: () => setIsEditSheetOpen(false) })}
-          </DialogContent>
-        </Dialog>
-      )}
+          </div>
+        </SettingsSheetContent>
+      </Sheet>
 
       <SectionHeader
         eyebrow="Credentials"

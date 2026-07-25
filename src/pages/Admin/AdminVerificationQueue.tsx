@@ -4,16 +4,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { RefreshCw, Loader2 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
@@ -83,7 +73,10 @@ export default function AdminVerificationQueue() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [rejectReason, setRejectReason] = useState('');
-  const [showRejectDialog, setShowRejectDialog] = useState(false);
+  // Inline reject panel inside the sheet footer. Deliberately NOT a nested
+  // AlertDialog — stacking a second Radix modal over the open Sheet froze the
+  // whole app (double focus-trap / body pointer-events lock, 2026-07-25).
+  const [rejectMode, setRejectMode] = useState(false);
 
   const {
     data: queue,
@@ -145,7 +138,7 @@ export default function AdminVerificationQueue() {
       haptic.success();
       queryClient.invalidateQueries({ queryKey: ['admin-verification-queue'] });
       setSelectedProfile(null);
-      setShowRejectDialog(false);
+      setRejectMode(false);
       setRejectReason('');
       toast({ title: 'Profile rejected' });
     },
@@ -174,7 +167,11 @@ export default function AdminVerificationQueue() {
   }, [queue, typeFilter]);
 
   return (
-    <PullToRefresh onRefresh={async () => { await refetch(); }}>
+    <PullToRefresh
+      onRefresh={async () => {
+        await refetch();
+      }}
+    >
       <PageFrame>
         <PageHero
           eyebrow="Moderation"
@@ -250,9 +247,7 @@ export default function AdminVerificationQueue() {
                     lead={<Avatar initials={getInitials(name)} />}
                     title={name}
                     subtitle={`${type} · ${timeAgo}`}
-                    trailing={
-                      <Pill tone={tone}>{item.verification_status.replace('_', ' ')}</Pill>
-                    }
+                    trailing={<Pill tone={tone}>{item.verification_status.replace('_', ' ')}</Pill>}
                     onClick={() => setSelectedProfile(item)}
                   />
                 );
@@ -261,7 +256,14 @@ export default function AdminVerificationQueue() {
           </ListCard>
         )}
 
-        <Sheet open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
+        <Sheet
+          open={!!selectedProfile}
+          onOpenChange={() => {
+            setSelectedProfile(null);
+            setRejectMode(false);
+            setRejectReason('');
+          }}
+        >
           <SheetContent
             side="bottom"
             className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
@@ -402,74 +404,74 @@ export default function AdminVerificationQueue() {
 
               {selectedProfile?.verification_status === 'pending' && (
                 <SheetFooter className="p-4 border-t border-white/[0.06]">
-                  <div className="flex gap-3 w-full">
-                    <button
-                      className="flex-1 h-12 rounded-full border border-white/[0.08] bg-white/[0.04] text-white text-[13px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
-                      onClick={() => setShowRejectDialog(true)}
-                      disabled={approveMutation.isPending}
-                    >
-                      Reject
-                    </button>
-                    <button
-                      className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:brightness-110 transition touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
-                      onClick={() =>
-                        selectedProfile && approveMutation.mutate(selectedProfile.id)
-                      }
-                      disabled={approveMutation.isPending}
-                    >
-                      {approveMutation.isPending && (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      )}
-                      {approveMutation.isPending ? 'Approving…' : 'Approve'}
-                    </button>
-                  </div>
+                  {rejectMode ? (
+                    <div className="w-full space-y-3">
+                      <div>
+                        <p className="text-[13px] font-semibold text-white">Reject verification?</p>
+                        <p className="text-[12px] text-white/70 mt-0.5">
+                          The reason is sent to the user so they can fix it and resubmit.
+                        </p>
+                      </div>
+                      <Textarea
+                        value={rejectReason}
+                        onChange={(e) => setRejectReason(e.target.value)}
+                        placeholder="Enter rejection reason…"
+                        autoFocus
+                        className="min-h-[90px] text-base touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white/50 focus:border-elec-yellow/60"
+                      />
+                      <div className="flex gap-3 w-full">
+                        <button
+                          className="flex-1 h-12 rounded-full border border-white/[0.08] bg-white/[0.04] text-white text-[13px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
+                          onClick={() => {
+                            setRejectMode(false);
+                            setRejectReason('');
+                          }}
+                          disabled={rejectMutation.isPending}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="flex-1 h-12 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[13px] font-semibold hover:bg-red-500/30 transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                          onClick={() =>
+                            selectedProfile &&
+                            rejectMutation.mutate({
+                              id: selectedProfile.id,
+                              reason: rejectReason,
+                            })
+                          }
+                          disabled={!rejectReason.trim() || rejectMutation.isPending}
+                        >
+                          {rejectMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+                          {rejectMutation.isPending ? 'Rejecting…' : 'Confirm reject'}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-3 w-full">
+                      <button
+                        className="flex-1 h-12 rounded-full border border-white/[0.08] bg-white/[0.04] text-white text-[13px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
+                        onClick={() => setRejectMode(true)}
+                        disabled={approveMutation.isPending}
+                      >
+                        Reject
+                      </button>
+                      <button
+                        className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:brightness-110 transition touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                        onClick={() =>
+                          selectedProfile && approveMutation.mutate(selectedProfile.id)
+                        }
+                        disabled={approveMutation.isPending}
+                      >
+                        {approveMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+                        {approveMutation.isPending ? 'Approving…' : 'Approve'}
+                      </button>
+                    </div>
+                  )}
                 </SheetFooter>
               )}
             </div>
           </SheetContent>
         </Sheet>
-
-        <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
-          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Reject verification?</AlertDialogTitle>
-              <AlertDialogDescription className="text-white">
-                Please provide a reason for rejection. This will be sent to the user.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <Textarea
-              value={rejectReason}
-              onChange={(e) => setRejectReason(e.target.value)}
-              placeholder="Enter rejection reason…"
-              className="min-h-[100px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
-            />
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
-                disabled={rejectMutation.isPending}
-              >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-elec-yellow text-black hover:brightness-110"
-                onClick={() =>
-                  selectedProfile &&
-                  rejectMutation.mutate({ id: selectedProfile.id, reason: rejectReason })
-                }
-                disabled={!rejectReason.trim() || rejectMutation.isPending}
-              >
-                {rejectMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Rejecting…
-                  </>
-                ) : (
-                  'Reject'
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </PageFrame>
     </PullToRefresh>
   );

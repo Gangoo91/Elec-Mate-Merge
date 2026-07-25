@@ -114,7 +114,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form.',
     icon: ClipboardCheck,
@@ -382,7 +382,7 @@ const sections = [
           </li>
           <li>
             If alterations are made to existing circuits without new circuits, a{' '}
-            <SEOInternalLink href="/tools/minor-works-certificate">
+            <SEOInternalLink href="/minor-works-certificate">
               Minor Works certificate
             </SEOInternalLink>{' '}
             covers each alteration

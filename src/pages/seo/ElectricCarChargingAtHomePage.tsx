@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-C-S (PME) considerations for EV charger installations including earth rod requirements.',
@@ -606,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Invoice from Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the EV charger installation using Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Charger unit, cable, RCBO, earth rod, labour, and margin. Send a professional PDF
                   quote from the survey visit. Do the job. Send the invoice. All from your phone.
                 </p>

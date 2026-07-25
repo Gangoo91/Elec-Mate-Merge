@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   { label: 'Level 4 Qualification', href: '/guides/level-4-electrical-qualification' },
 ];
 

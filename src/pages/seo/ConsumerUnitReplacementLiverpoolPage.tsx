@@ -511,7 +511,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you discover old wiring, bonding deficiencies, or additional circuits needed,
                   use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote the additional work on site. Liverpool landlords are far more likely to

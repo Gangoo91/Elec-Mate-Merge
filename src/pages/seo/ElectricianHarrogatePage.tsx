@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Harrogate electrical jobs at accurate Yorkshire premium rates — send professional quotes on site.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       "Study for C&G 2391 — essential for EICR work in Harrogate's period property market.",
@@ -445,7 +445,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Harrogate Jobs Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes for Harrogate customers. Quote Victorian property
                   rewires, EV charger installations, and consumer unit upgrades at accurate North
                   Yorkshire rates — send quotes before you leave the survey.

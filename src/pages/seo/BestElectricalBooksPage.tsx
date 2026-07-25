@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course Guide',
     description:
       'Everything about the City and Guilds 2382 18th Edition course — content, cost, and preparation.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Course',
   },
   {
-    href: '/training/city-guilds-2391',
+    href: '/city-guilds2391',
     title: '2391 Inspection and Testing',
     description:
       'Guide to the City and Guilds 2391 qualification — what it covers, exam tips, and career benefits.',
@@ -246,10 +246,10 @@ const sections = [
           Every electrician must own the current edition. It is referenced on every{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, every EIC, and
           every Minor Works Certificate. It is required for{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             the 18th Edition course
           </SEOInternalLink>{' '}
-          and the <SEOInternalLink href="/training/city-guilds-2391">2391 exam</SEOInternalLink>. When a
+          and the <SEOInternalLink href="/city-guilds2391">2391 exam</SEOInternalLink>. When a
           competent person scheme auditor visits, BS 7671 should be on your shelf.
         </p>
         <p>
@@ -393,7 +393,7 @@ const sections = [
         <p>
           The OSG is small enough to carry in your tool bag or van and is the book most electricians
           reach for most often. It is also permitted in the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">2391 exam</SEOInternalLink> alongside BS 7671 and
+          <SEOInternalLink href="/city-guilds2391">2391 exam</SEOInternalLink> alongside BS 7671 and
           GN3 — tab the key tables in advance so you can find them quickly under exam conditions.
         </p>
         <SEOAppBridge
@@ -450,7 +450,7 @@ const sections = [
         </p>
         <p>
           GN3 is essential reading for the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">2391 qualification</SEOInternalLink> and is
+          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and is
           permitted in the exam. It provides worked examples of test procedures, guidance on
           interpreting marginal results, and advice on the professional judgement required when
           assigning observation codes. Even experienced inspectors refer to GN3 when they encounter
@@ -499,7 +499,7 @@ const sections = [
         <p>
           This IET publication bridges the gap between BS 7671 and the Building Regulations —
           specifically{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           (Electrical Safety in Dwellings). It explains which domestic electrical work is
           notifiable, which work can be done without notification, and how competent person schemes
           operate.
@@ -587,11 +587,11 @@ const sections = [
       <>
         <p>
           Whether you are preparing for the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course (2382)
           </SEOInternalLink>
           , the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             2391 inspection and testing exam
           </SEOInternalLink>
           , or the{' '}

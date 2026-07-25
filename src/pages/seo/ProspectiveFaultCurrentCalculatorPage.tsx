@@ -298,7 +298,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               installation. Both measurements and device checks are mandatory parts of initial
               verification and periodic inspection, and the values must be recorded on the
               electrical installation certificate or condition report. Use the{' '}
-              <SEOInternalLink href="/tools/earth-fault-loop-impedance-calculator">
+              <SEOInternalLink href="/tools/earth-loop-impedance-calculator">
                 earth fault loop impedance calculator
               </SEOInternalLink>{' '}
               to determine Zs at each point, the{' '}

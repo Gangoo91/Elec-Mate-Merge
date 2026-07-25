@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rewire-cost-leeds',
+    href: '/guides/full-rewire-cost-guide',
     title: 'Rewire Cost Leeds',
     description: 'Leeds rewire costs — how they compare with Sheffield pricing.',
     icon: PoundSterling,

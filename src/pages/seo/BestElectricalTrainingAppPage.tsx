@@ -181,12 +181,12 @@ export default function BestElectricalTrainingAppPage() {
               <p>
                 What makes Elec-Mate's training unique is that it sits alongside professional tools.
                 You can study the 18th Edition during your lunch break, then use the{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   70+ BS 7671 calculators
                 </SEOInternalLink>{' '}
                 to apply what you have learned on site. You can revise safe isolation in the
                 morning, then use the{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI tools</SEOInternalLink> to help
+                <SEOInternalLink href="/ai-electrician-tools">AI tools</SEOInternalLink> to help
                 with a real inspection in the afternoon. The learning and the doing happen in the
                 same app.
               </p>
@@ -502,7 +502,7 @@ export default function BestElectricalTrainingAppPage() {
       ]}
       relatedPages={[
         {
-          href: '/training/18th-edition-course',
+          href: '/eighteenth-edition-course',
           title: '18th Edition Course',
           description:
             'Complete BS 7671:2018+A4:2026 course with practice questions, flashcards, and AI study assistant.',
@@ -510,7 +510,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Training',
         },
         {
-          href: '/training/am2-exam-preparation',
+          href: '/am2-exam-preparation',
           title: 'AM2 Exam Preparation',
           description:
             'AM2 simulator with practical scenarios, testing sequences, and assessor expectations.',
@@ -533,7 +533,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, maximum demand, and more.',

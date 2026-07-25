@@ -598,7 +598,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'Full guide to performing IR tests — test voltages, conductor combinations, procedure.',
@@ -613,7 +613,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/earth-fault-loop-impedance-explained-too-high',
+    href: '/guides/earth-fault-loop-impedance-explained',
     title: 'Earth Fault Loop Impedance Too High',
     description: 'When Zs exceeds the maximum for the protective device — related fault scenarios.',
     icon: Activity,
@@ -636,7 +636,7 @@ const relatedPages = [
     category: 'Certification',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'Zs lookup, R1+R2, cable sizing, voltage drop, and more built-in calculators.',
     icon: Calculator,

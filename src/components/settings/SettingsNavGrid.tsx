@@ -41,21 +41,12 @@ const SETTINGS_SECTIONS: SettingsNavSection[] = [
         id: 'elec-id',
         label: 'Elec-ID',
         description: 'Your digital identity card',
-        badge: 'Gamified',
-        badgeTone: 'yellow',
       },
     ],
   },
   {
     title: 'Business',
     items: [
-      {
-        id: 'mate',
-        label: 'Mate (WhatsApp)',
-        description: 'Your AI assistant — number, save to contacts, prompts',
-        badge: '⚡',
-        badgeTone: 'yellow',
-      },
       {
         id: 'business',
         label: 'Business Settings',
@@ -80,9 +71,14 @@ const SETTINGS_SECTIONS: SettingsNavSection[] = [
     title: 'App Settings',
     items: [
       {
+        id: 'notifications',
+        label: 'Notifications',
+        description: 'Push alerts, categories and quiet hours',
+      },
+      {
         id: 'preferences',
-        label: 'Preferences',
-        description: 'Theme, notifications, AI assistant',
+        label: 'App',
+        description: 'Dashboard hubs and certificate defaults',
       },
       { id: 'privacy', label: 'Privacy', description: 'Data controls and analytics' },
     ],

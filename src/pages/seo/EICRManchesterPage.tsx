@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering periodic inspection.',
@@ -680,7 +680,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work on the spot using
-                  the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Landlords must act within 28 days — the electrician who provides the quote
                   immediately is most likely to get the job.
                 </p>

@@ -285,13 +285,7 @@ const InvoiceTableView = ({
                             Download PDF
                           </DropdownMenuItem>
 
-                          {onShareWhatsApp && (
-                            <DropdownMenuItem onClick={() => onShareWhatsApp(invoice)}>
-                              <Send className="h-4 w-4 mr-2" />
-                              Send to WhatsApp
-                            </DropdownMenuItem>
-                          )}
-
+                          {/* ELE-1377 — WhatsApp share removed. */}
                           {onShareEmail && (
                             <DropdownMenuItem onClick={() => onShareEmail(invoice)}>
                               <Mail className="h-4 w-4 mr-2" />

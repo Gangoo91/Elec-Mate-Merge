@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrician-invoice-app',
+    href: '/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Create professional CIS invoices with correct labour and materials split. Send from your phone.',
@@ -534,7 +534,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Elec-Mate's <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
+          Elec-Mate's <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
           separates labour and materials automatically when you create CIS invoices. This ensures
           the correct deduction is applied and you do not overpay.
         </p>
@@ -660,7 +660,7 @@ const sections = [
           The simplest way to avoid these mistakes is to use proper invoicing software that handles
           CIS formatting automatically, keep digital records of every payment and deduction, and
           review your CIS position with your accountant at least quarterly. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink> handles the
+          <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> handles the
           labour/materials split, CIS formatting, and DRC notation automatically — so you get it
           right every time.
         </p>

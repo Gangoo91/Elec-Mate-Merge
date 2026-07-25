@@ -677,7 +677,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Holiday let owners need annual PAT testing, five-yearly EICRs, and ongoing
                   remedial work. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   provide professional quotes on the day and convert inspection clients into
                   long-term maintenance relationships.
                 </p>

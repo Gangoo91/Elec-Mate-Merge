@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Apprentice',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Complete guide to building your apprentice evidence portfolio. Organisation, formatting, and what assessors look for.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with structured training courses on the Elec-Mate platform.',
     icon: ClipboardCheck,
@@ -309,7 +309,7 @@ const sections = [
           Take photos on every job, every day. It only takes 30 seconds to photograph your work, but
           trying to reconstruct evidence months later when you realise you have a gap in your
           portfolio is nearly impossible. For more on building a complete portfolio, see our{' '}
-          <SEOInternalLink href="/training/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             apprentice portfolio guide
           </SEOInternalLink>
           .

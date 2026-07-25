@@ -132,7 +132,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 covering testing of special location installations.',
     icon: GraduationCap,
@@ -631,7 +631,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately with Elec-Mate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   itemise materials (SWA cable per metre, RCBO, isolator, glands, clips, warning
                   tape) and labour. Send a professional PDF quote from the survey.
                 </p>

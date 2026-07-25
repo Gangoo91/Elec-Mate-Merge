@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'How to perform IR testing at 500 V DC and interpret minimum values for EICR certificates.',
@@ -129,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -447,7 +447,7 @@ const sections = [
                 </p>
                 <p className="text-white text-sm leading-relaxed mt-3">
                   See the{' '}
-                  <SEOInternalLink href="/guides/insulation-resistance-testing">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     insulation resistance testing guide
                   </SEOInternalLink>{' '}
                   for detailed procedures.
@@ -561,7 +561,7 @@ const sections = [
                   the ramp test (gradually increasing current until trip) confirms the actual trip
                   current. The test uses the RCD function on a multifunction tester, connected at a
                   socket or accessory on the protected circuit. See the{' '}
-                  <SEOInternalLink href="/tools/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
+                  <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
                   detailed procedures.
                 </p>
               </div>

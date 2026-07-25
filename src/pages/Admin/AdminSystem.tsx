@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { RefreshCw, Clock } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
@@ -62,7 +63,48 @@ function formatCount(n: number): string {
 
 export default function AdminSystem() {
   const [selectedCheck, setSelectedCheck] = useState<HealthCheck | null>(null);
-  const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const queryClient = useQueryClient();
+
+  // The real maintenance_mode feature flag — the old toggle was useState-only
+  // theatre that persisted nothing and showed nothing to anyone.
+  const { data: maintenanceFlag } = useQuery({
+    queryKey: ['maintenance-mode-flag'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('feature_flags')
+        .select('id, is_enabled')
+        .eq('name', 'maintenance_mode')
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+    staleTime: 30_000,
+  });
+  const maintenanceMode = maintenanceFlag?.is_enabled ?? false;
+
+  const maintenanceMutation = useMutation({
+    mutationFn: async (enable: boolean) => {
+      if (!maintenanceFlag?.id) throw new Error('maintenance_mode flag not found');
+      const { data, error } = await supabase.functions.invoke('admin-manage-feature-flags', {
+        body: { action: 'toggle', flag: { id: maintenanceFlag.id, is_enabled: enable } },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+    },
+    onSuccess: (_, enable) => {
+      queryClient.invalidateQueries({ queryKey: ['maintenance-mode-flag'] });
+      queryClient.invalidateQueries({ queryKey: ['feature-flags'] });
+      toast({
+        title: enable ? 'Maintenance mode ON' : 'Maintenance mode off',
+        description: enable
+          ? 'All users now see the maintenance banner.'
+          : 'The banner has been removed for all users.',
+      });
+    },
+    onError: (error: Error) => {
+      toast({ title: 'Failed to update', description: error.message, variant: 'destructive' });
+    },
+  });
 
   const {
     data: healthChecks,
@@ -337,8 +379,14 @@ export default function AdminSystem() {
                   tone="emerald"
                   title="Database"
                   meta={
-                    <Pill tone={databaseChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}>
-                      {databaseChecks.every((c) => c.status === 'healthy') ? 'Healthy' : 'Attention'}
+                    <Pill
+                      tone={
+                        databaseChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'
+                      }
+                    >
+                      {databaseChecks.every((c) => c.status === 'healthy')
+                        ? 'Healthy'
+                        : 'Attention'}
                     </Pill>
                   }
                 />
@@ -362,7 +410,9 @@ export default function AdminSystem() {
                   tone="emerald"
                   title="Edge Functions"
                   meta={
-                    <Pill tone={edgeChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}>
+                    <Pill
+                      tone={edgeChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}
+                    >
                       {edgeChecks.every((c) => c.status === 'healthy') ? 'Healthy' : 'Attention'}
                     </Pill>
                   }
@@ -387,7 +437,9 @@ export default function AdminSystem() {
                   tone="emerald"
                   title="Storage & Activity"
                   meta={
-                    <Pill tone={infraChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}>
+                    <Pill
+                      tone={infraChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}
+                    >
                       {infraChecks.every((c) => c.status === 'healthy') ? 'Healthy' : 'Attention'}
                     </Pill>
                   }
@@ -419,14 +471,15 @@ export default function AdminSystem() {
               <ListBody>
                 <ListRow
                   title="Global maintenance banner"
-                  subtitle="Blocks writes and shows a banner to all users. Use during deploys or DB migrations."
+                  subtitle="Shows a maintenance banner to every user (feature flag, live within a minute). Use during deploys or DB migrations."
                   trailing={
                     <button
                       type="button"
                       role="switch"
                       aria-checked={maintenanceMode}
-                      onClick={() => setMaintenanceMode((v) => !v)}
-                      className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border border-white/[0.08] transition-colors touch-manipulation ${
+                      disabled={maintenanceMutation.isPending || !maintenanceFlag}
+                      onClick={() => maintenanceMutation.mutate(!maintenanceMode)}
+                      className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border border-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 ${
                         maintenanceMode ? 'bg-elec-yellow' : 'bg-white/[0.06]'
                       }`}
                     >
@@ -474,7 +527,10 @@ export default function AdminSystem() {
         )}
 
         <Sheet open={!!selectedCheck} onOpenChange={() => setSelectedCheck(null)}>
-          <SheetContent side="bottom" className="h-[60vh] rounded-t-2xl p-0 bg-[hsl(0_0%_12%)] border-white/[0.06]">
+          <SheetContent
+            side="bottom"
+            className="h-[60vh] rounded-t-2xl p-0 bg-[hsl(0_0%_12%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-12 h-1.5 bg-white/20 rounded-full" />

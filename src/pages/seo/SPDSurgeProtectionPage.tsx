@@ -301,7 +301,7 @@ export default function SPDSurgeProtectionPage() {
               </div>
               <p>
                 The{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 must be verified on site before specifying the SPD. The SPD manufacturer's
@@ -569,7 +569,7 @@ export default function SPDSurgeProtectionPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT systems and their impact on SPD selection.',
           icon: Cable,

@@ -316,7 +316,7 @@ const sections = [
         </div>
         <p>
           Even where work is non-notifiable, it must still comply with BS 7671. A{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate" label="Minor Works Certificate" /> should
+          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> should
           be issued for non-notifiable additions or alterations to record what was done and confirm
           compliance.
         </p>
@@ -535,7 +535,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works-certificate" label="Minor Works Certificate" /> —
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue minor works certificates for non-notifiable additions and alterations to give
                 clients a record of compliant work.
               </span>

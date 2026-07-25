@@ -457,7 +457,7 @@ export function MessagesDropdown() {
 
   const handleFindSupporter = () => {
     handleClose();
-    navigate('/electrician/mental-health');
+    navigate('/mental-health?section=talk');
   };
 
   // Get conversation display info

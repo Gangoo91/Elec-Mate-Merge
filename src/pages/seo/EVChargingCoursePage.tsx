@@ -24,7 +24,7 @@ const PAGE_DESCRIPTION =
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
-  { label: 'EV Charger Installation', href: '/training/ev-charger-installation' },
+  { label: 'EV Charger Installation', href: '/guides/ev-charger-installation' },
 ];
 
 const tocItems = [

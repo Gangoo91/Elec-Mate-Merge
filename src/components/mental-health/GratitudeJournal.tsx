@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Sparkles, Plus, Check, Calendar, Heart } from 'lucide-react';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { gratitudeService } from '@/services/mentalHealthService';
 import {
   Eyebrow,
   PrimaryButton,
@@ -31,19 +32,42 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
   ];
 
   useEffect(() => {
-    // Load entries from storage
+    // Local first for instant paint…
     const parsed = storageGetJSONSync<GratitudeEntry[]>('elec-mate-gratitude', []);
-    if (parsed.length > 0) {
-      setEntries(parsed);
-
-      // Check if we have an entry for today
+    const applyEntries = (all: GratitudeEntry[]) => {
+      setEntries(all);
       const today = new Date().toISOString().split('T')[0];
-      const existing = parsed.find((e: GratitudeEntry) => e.date === today);
+      const existing = all.find((e) => e.date === today);
       if (existing) {
         setTodayEntry(existing);
-        setCurrentItems(existing.items);
+        setCurrentItems(
+          existing.items.length >= 3 ? existing.items : [...existing.items, '', ''].slice(0, 3)
+        );
       }
-    }
+    };
+    if (parsed.length > 0) applyEntries(parsed);
+
+    // …then merge the cloud copy so a new phone still shows your history.
+    let cancelled = false;
+    gratitudeService
+      .getAll()
+      .then((cloud) => {
+        if (cancelled || cloud.length === 0) return;
+        const byDate = new Map<string, GratitudeEntry>();
+        for (const e of cloud) byDate.set(e.date, e);
+        for (const e of parsed) byDate.set(e.date, e); // local wins on conflict
+        const merged = [...byDate.values()]
+          .sort((a, b) => b.date.localeCompare(a.date))
+          .slice(0, 30);
+        storageSetJSONSync('elec-mate-gratitude', merged);
+        applyEntries(merged);
+      })
+      .catch(() => {
+        /* offline or signed out — local copy is the source of truth */
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleItemChange = (index: number, value: string) => {
@@ -65,6 +89,9 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
     const updatedEntries = [newEntry, ...entries.filter((e) => e.date !== today)].slice(0, 30);
     setEntries(updatedEntries);
     storageSetJSONSync('elec-mate-gratitude', updatedEntries);
+
+    // Best-effort cloud copy — never blocks the save UX.
+    gratitudeService.syncDay(today, filledItems).catch(() => {});
 
     setTodayEntry(newEntry);
     setStep('complete');

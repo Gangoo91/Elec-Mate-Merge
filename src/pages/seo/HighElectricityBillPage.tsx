@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: 'Electrical Testing Calculators',
     description:
       'Cable sizing, maximum demand, voltage drop, and earth loop impedance calculators.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training modules on the Elec-Mate platform.',
@@ -595,7 +595,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/training/18th-edition-course">training courses</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink>{' '}
           cover energy efficiency guidance and the relevant{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 requirements

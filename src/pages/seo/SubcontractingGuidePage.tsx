@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Business Guides', href: '/guides/business' },
+  { label: 'Business Guides', href: '/guides' },
   { label: 'Electrical Subcontracting Guide', href: '/subcontracting-guide' },
 ];
 

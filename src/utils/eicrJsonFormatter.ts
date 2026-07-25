@@ -1049,16 +1049,50 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     },
 
     main_protective_device: (() => {
-      // Get main board — used as fallback when top-level fields are empty
-      // (BoardSetupCard saves to distributionBoards[0] per-board fields, not top-level)
-      const mainBoard = formData.distributionBoards?.[0];
-      const mbRating = get('mainSwitchRating') || mainBoard?.mainSwitchRating || '';
+      // This is the SUPPLY protective device (the incoming device recorded in
+      // Supply Characteristics) — NOT the distribution board's main switch, which
+      // has its own per-board fields and PDF section. Reading the board's
+      // mainSwitch* here bled a DB isolator (BS EN 60947, 80 A) into the Supply
+      // Protective Device section (Craig, ELE-1382). Source ONLY from the supply
+      // characteristics form.
+      //
+      // The supply form records the device family in `mainProtectiveDevice`
+      // ("BS 88 HRC Fuse", "MCB Type B", "Isolator", "N/V"…) but no separate
+      // BS(EN) — derive it from that family so the column isn't blank/borrowed.
+      const device = get('mainProtectiveDevice');
+      const bsEnForDevice = (d: string): string => {
+        const s = (d || '').toLowerCase();
+        if (!s || s === 'n/v' || s === 'lim') return d || '';
+        if (s.includes('1361')) return 'BS 1361';
+        if (s.includes('88')) return 'BS 88';
+        if (s.includes('3036')) return 'BS 3036';
+        if (s.includes('mccb')) return 'BS EN 60947-2';
+        if (s.includes('isolator') || s.includes('switch')) return 'BS EN 60947-3';
+        if (s.includes('rcbo')) return 'BS EN 61009';
+        if (s.includes('rcd')) return 'BS EN 61008';
+        if (s.includes('mcb')) return 'BS EN 60898';
+        return '';
+      };
+      // Rated current of the supply device = its fuse rating (Fuse A). The old
+      // separate "Rating (A)" field (mainSwitchRating) was removed as it didn't
+      // belong on the supply protective device (Craig, ELE-1370). Source ONLY
+      // from fuseDeviceRating — deliberately NOT mainSwitchRating: the EICR board
+      // scanner writes the consumer-unit main switch rating into that flat field,
+      // so reading it here bled the main switch rating into the Supply Protective
+      // Device (Craig's cross-link bug, ELE-1371). The LIM/N/A limitation marker
+      // lives on its own key now (a numeric scan value can't spoof it) — surface
+      // it so the limitation still prints.
+      const legacyRating = get('mainSwitchRating');
+      const limit =
+        get('mainProtectiveDeviceLimit') ||
+        (legacyRating === 'LIM' || legacyRating === 'N/A' ? legacyRating : '');
+      const ratedCurrent = limit || get('fuseDeviceRating');
       return {
-        bs_en: mainBoard?.mainSwitchBsEn || get('mainSwitchBsEn') || '',
-        device_type: get('mainProtectiveDevice'),
-        main_switch_rating: mbRating === '__custom__' ? get('fuseDeviceRating') : mbRating,
-        main_switch_location: get('cuLocation') || mainBoard?.location || '',
-        main_switch_poles: get('mainSwitchPoles') || mainBoard?.mainSwitchPoles || '',
+        bs_en: bsEnForDevice(device),
+        device_type: device,
+        main_switch_rating: ratedCurrent,
+        main_switch_location: get('cuLocation'),
+        main_switch_poles: get('mainSwitchPoles'),
         main_switch_voltage_rating: get('mainSwitchVoltageRating'),
         fuse_device_rating: get('fuseDeviceRating'),
         fuse_sub_type: get('fuseSubType'),
@@ -1066,6 +1100,22 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           get('breakingCapacity') === '__custom__'
             ? get('breakingCapacityCustom')
             : get('breakingCapacity'),
+      };
+    })(),
+
+    // The distribution board's Main Switch / Consumer's Switch — kept SEPARATE
+    // from the supply protective device above so a DB isolator (BS EN 60947-3)
+    // no longer bleeds into the Supply Protective Device section (ELE-1382). The
+    // PDF's "Main Switch / Consumer's Switch" section reads this object.
+    main_switch: (() => {
+      const board = formData.distributionBoards?.[0];
+      return {
+        bs_en: board?.mainSwitchBsEn || get('mainSwitchBsEn') || '',
+        type: board?.mainSwitchType || '',
+        rating: board?.mainSwitchRating || get('mainSwitchRating') || '',
+        poles: board?.mainSwitchPoles || get('mainSwitchPoles') || '',
+        location: board?.location || get('cuLocation') || '',
+        voltage_rating: get('mainSwitchVoltageRating') || '',
       };
     })(),
 

@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Complete guide to Part P notification for outdoor and garden electrical work.',
     icon: ShieldCheck,
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems and their implications for outdoor electrical work.',
@@ -567,7 +567,7 @@ const sections = [
           </SEOInternalLink>{' '}
           must be issued and the work notified under Part P. If the socket is added as a spur from
           an existing circuit (without a new circuit at the consumer unit), a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           is appropriate. In either case, test results must be documented and provided to the
@@ -622,7 +622,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote outdoor socket installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Materials, cable, trenching, RCBO, testing, and certification — itemised with your
                   margins. Send a professional PDF quote on the spot.
                 </p>

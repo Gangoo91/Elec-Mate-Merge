@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Report Writer', href: '/tools/ai-report-writer' },
 ];
 
@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/ai-cost-engineer',
+    href: '/ai-cost-engineer',
     title: 'AI Cost Engineer',
     description:
       'Get accurate job cost estimates with itemised materials, labour rates, and regional pricing for UK electrical work.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with structured training covering all inspection and reporting procedures.',
@@ -225,7 +225,7 @@ const sections = [
           The tool integrates directly with the Elec-Mate certification system. When you complete an
           EICR, the observations, test results, and overall assessment flow automatically into the
           Report Writer, which generates a client-facing summary without any re-entry of data. The{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
           price remedial work identified in the report, and the{' '}
           <SEOInternalLink href="/tools/ai-project-manager">AI Project Manager</SEOInternalLink> can
           schedule it — creating a seamless workflow from inspection to quotation to completion.
@@ -338,7 +338,7 @@ const sections = [
           the scope of proposed work broken down by area or phase, the methodology (how the work
           will be carried out, the sequence, the expected disruption), an estimated timeline with
           milestones, the price (which can be pulled from the{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> or
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> or
           entered manually), payment terms, warranty information, relevant qualifications and
           accreditations, and your standard terms and conditions.
         </p>
@@ -374,7 +374,7 @@ const sections = [
           investigation required), a plain-English explanation of the deficiency and the risk it
           presents, the recommended corrective action described in terms the client can understand,
           an approximate cost range for the remedial work (drawing on UK market data from the{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>
           ), and a recommended timeframe for completion based on the urgency of the observation.
         </p>
         <p>

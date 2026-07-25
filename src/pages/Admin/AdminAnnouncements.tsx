@@ -19,15 +19,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import {
-  RefreshCw,
-  Plus,
-  Eye,
-  EyeOff,
-  Trash2,
-  Loader2,
-  Pencil,
-} from 'lucide-react';
+import { RefreshCw, Plus, Eye, EyeOff, Trash2, Loader2, Pencil } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
@@ -378,10 +370,7 @@ export default function AdminAnnouncements() {
       if (activeTab !== 'all' && classify(a) !== activeTab) return false;
       if (search.trim()) {
         const q = search.toLowerCase();
-        if (
-          !a.title.toLowerCase().includes(q) &&
-          !a.message.toLowerCase().includes(q)
-        ) {
+        if (!a.title.toLowerCase().includes(q) && !a.message.toLowerCase().includes(q)) {
           return false;
         }
       }
@@ -439,12 +428,10 @@ export default function AdminAnnouncements() {
 
         {/* Channel split — clear separation of the two delivery surfaces */}
         <div className="flex items-center gap-1 p-1 rounded-full bg-[hsl(0_0%_10%)] border border-white/[0.08] w-full max-w-md mb-4">
-          {(
-            [
-              { key: 'in_app' as const, label: 'In-app banners' },
-              { key: 'push' as const, label: 'Push notifications' },
-            ]
-          ).map((c) => (
+          {[
+            { key: 'in_app' as const, label: 'In-app banners' },
+            { key: 'push' as const, label: 'Push notifications' },
+          ].map((c) => (
             <button
               key={c.key}
               type="button"
@@ -509,13 +496,9 @@ export default function AdminAnnouncements() {
                     : 'Try a different filter or search term.'
                 }
                 action={
-                  announcements && announcements.length === 0
-                    ? 'Create announcement'
-                    : undefined
+                  announcements && announcements.length === 0 ? 'Create announcement' : undefined
                 }
-                onAction={
-                  announcements && announcements.length === 0 ? openCreate : undefined
-                }
+                onAction={announcements && announcements.length === 0 ? openCreate : undefined}
               />
             ) : (
               <ListCard>
@@ -550,9 +533,7 @@ export default function AdminAnnouncements() {
                         trailing={
                           <>
                             <Pill tone={statusTone}>{statusLabel[statusKey]}</Pill>
-                            <span className="text-[11px] text-white tabular-nums">
-                              {reach}
-                            </span>
+                            <span className="text-[11px] text-white tabular-nums">{reach}</span>
                             <div className="flex items-center gap-1 ml-1">
                               <button
                                 onClick={(e) => {
@@ -614,6 +595,7 @@ export default function AdminAnnouncements() {
               setCreateOpen(false);
               setEditAnnouncement(null);
               setFormData(defaultAnnouncement);
+              setPushConfirm(null);
             }
           }}
         >
@@ -794,40 +776,37 @@ export default function AdminAnnouncements() {
                     );
                   })()}
                   <div className="grid grid-cols-2 gap-2">
-                    {(['visitor', 'apprentice', 'electrician', 'employer'] as const).map(
-                      (role) => {
-                        const current =
-                          editAnnouncement?.target_roles || formData.target_roles;
-                        const selected = current.includes(role);
-                        return (
-                          <button
-                            key={role}
-                            type="button"
-                            onClick={() => {
-                              const next = selected
-                                ? current.filter((r) => r !== role)
-                                : [...current, role];
-                              if (editAnnouncement) {
-                                setEditAnnouncement({
-                                  ...editAnnouncement,
-                                  target_roles: next,
-                                });
-                              } else {
-                                setFormData({ ...formData, target_roles: next });
-                              }
-                            }}
-                            className={cn(
-                              'h-11 rounded-full text-[12.5px] font-medium capitalize touch-manipulation transition-colors',
-                              selected
-                                ? 'bg-elec-yellow text-black'
-                                : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04]'
-                            )}
-                          >
-                            {role}
-                          </button>
-                        );
-                      }
-                    )}
+                    {(['visitor', 'apprentice', 'electrician', 'employer'] as const).map((role) => {
+                      const current = editAnnouncement?.target_roles || formData.target_roles;
+                      const selected = current.includes(role);
+                      return (
+                        <button
+                          key={role}
+                          type="button"
+                          onClick={() => {
+                            const next = selected
+                              ? current.filter((r) => r !== role)
+                              : [...current, role];
+                            if (editAnnouncement) {
+                              setEditAnnouncement({
+                                ...editAnnouncement,
+                                target_roles: next,
+                              });
+                            } else {
+                              setFormData({ ...formData, target_roles: next });
+                            }
+                          }}
+                          className={cn(
+                            'h-11 rounded-full text-[12.5px] font-medium capitalize touch-manipulation transition-colors',
+                            selected
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04]'
+                          )}
+                        >
+                          {role}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -873,9 +852,7 @@ export default function AdminAnnouncements() {
                       <div className="px-4 pb-4">
                         <Input
                           type="datetime-local"
-                          value={
-                            editAnnouncement?.starts_at?.slice(0, 16) || formData.starts_at
-                          }
+                          value={editAnnouncement?.starts_at?.slice(0, 16) || formData.starts_at}
                           onChange={(e) =>
                             editAnnouncement
                               ? setEditAnnouncement({
@@ -914,9 +891,7 @@ export default function AdminAnnouncements() {
                       <div className="px-4 pb-4">
                         <Input
                           type="datetime-local"
-                          value={
-                            editAnnouncement?.ends_at?.slice(0, 16) || formData.ends_at
-                          }
+                          value={editAnnouncement?.ends_at?.slice(0, 16) || formData.ends_at}
                           onChange={(e) =>
                             editAnnouncement
                               ? setEditAnnouncement({
@@ -971,7 +946,10 @@ export default function AdminAnnouncements() {
                         }
                         onChange={(e) =>
                           editAnnouncement
-                            ? setEditAnnouncement({ ...editAnnouncement, image_url: e.target.value })
+                            ? setEditAnnouncement({
+                                ...editAnnouncement,
+                                image_url: e.target.value,
+                              })
                             : setFormData({ ...formData, image_url: e.target.value })
                         }
                         placeholder="Image URL (optional) — rich notification"
@@ -1002,37 +980,73 @@ export default function AdminAnnouncements() {
                     )}
 
                     {editAnnouncement ? (
-                      <>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              pushMutation.mutate({ id: editAnnouncement.id, mode: 'test' })
-                            }
-                            disabled={pushMutation.isPending}
-                            className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04] disabled:opacity-50"
-                          >
-                            Send test to me
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setPushConfirm(editAnnouncement)}
-                            disabled={pushMutation.isPending}
-                            className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
-                          >
-                            Send to audience
-                          </button>
+                      pushConfirm ? (
+                        /* Inline confirm — no nested modal over the open Sheet
+                           (that pattern froze the app in Elec-ID moderation). */
+                        <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-4 space-y-3">
+                          <p className="text-[13px] font-semibold text-white">
+                            Send &ldquo;{pushConfirm.title}&rdquo; to everyone?
+                          </p>
+                          <p className="text-[12px] text-white/70 leading-snug">
+                            Pushes to all users in the selected roles with notifications on
+                            {reachCount !== null ? ` (≈ ${reachCount} people)` : ''}. This
+                            can&rsquo;t be undone.
+                          </p>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setPushConfirm(null)}
+                              disabled={pushMutation.isPending}
+                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04] disabled:opacity-50"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                pushMutation.mutate({ id: pushConfirm.id, mode: 'audience' })
+                              }
+                              disabled={pushMutation.isPending}
+                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                            >
+                              {pushMutation.isPending ? 'Sending…' : 'Send to everyone'}
+                            </button>
+                          </div>
                         </div>
-                        <p className="text-[11px] text-white/50">
-                          Test it on your own device first. &ldquo;Send to audience&rdquo; pushes to
-                          everyone in the selected roles who has notifications on.
-                        </p>
-                      </>
+                      ) : (
+                        <>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                pushMutation.mutate({ id: editAnnouncement.id, mode: 'test' })
+                              }
+                              disabled={pushMutation.isPending}
+                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04] disabled:opacity-50"
+                            >
+                              Send test to me
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setPushConfirm(editAnnouncement)}
+                              disabled={pushMutation.isPending}
+                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                            >
+                              Send to audience
+                            </button>
+                          </div>
+                          <p className="text-[11px] text-white/50">
+                            Test it on your own device first. &ldquo;Send to audience&rdquo; pushes
+                            to everyone in the selected roles who has notifications on.
+                          </p>
+                        </>
+                      )
                     ) : (
                       <p className="text-[11px] text-white/50">
                         Tap <span className="text-white/80">Create Announcement</span> below — it
                         saves and the <span className="text-white/80">Send test to me</span> /
-                        <span className="text-white/80"> Send to everyone</span> buttons appear next.
+                        <span className="text-white/80"> Send to everyone</span> buttons appear
+                        next.
                       </p>
                     )}
                   </div>
@@ -1068,35 +1082,6 @@ export default function AdminAnnouncements() {
             </div>
           </SheetContent>
         </Sheet>
-
-        <AlertDialog open={!!pushConfirm} onOpenChange={() => setPushConfirm(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Send this push to everyone?</AlertDialogTitle>
-              <AlertDialogDescription>
-                &ldquo;{pushConfirm?.title}&rdquo; will be pushed to all users in the selected roles
-                who have notifications enabled. This can&rsquo;t be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation rounded-full"
-                disabled={pushMutation.isPending}
-              >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 rounded-full"
-                onClick={() =>
-                  pushConfirm && pushMutation.mutate({ id: pushConfirm.id, mode: 'audience' })
-                }
-                disabled={pushMutation.isPending}
-              >
-                {pushMutation.isPending ? 'Sending…' : 'Send to everyone'}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
 
         <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
           <AlertDialogContent>

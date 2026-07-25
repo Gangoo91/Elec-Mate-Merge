@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Client Explainer', href: '/tools/ai-client-explainer' },
 ];
 
@@ -428,7 +428,7 @@ const sections = [
           Many Elec-Mate users report that using the AI Client Explainer has directly increased
           their remedial work conversion rate. When clients understand what needs to be done and
           why, they are far more likely to approve the quote for{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">remedial work</SEOInternalLink> than when
+          <SEOInternalLink href="/ai-cost-engineer">remedial work</SEOInternalLink> than when
           they receive a technical report they cannot interpret.
         </p>
         <SEOAppBridge

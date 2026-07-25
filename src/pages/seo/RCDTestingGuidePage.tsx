@@ -20,7 +20,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Testing Guides', href: '/guides/electrical-testing' },
-  { label: 'RCD Testing Guide', href: '/tools/rcd-testing-guide' },
+  { label: 'RCD Testing Guide', href: '/rcd-testing-guide' },
 ];
 
 const tocItems = [
@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/insulation-resistance-testing-guide',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing Guide',
     description:
       'Test voltages, minimum values, disconnecting components, and interpreting IR results.',

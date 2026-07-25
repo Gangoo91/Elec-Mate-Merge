@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Continuity Testing', href: '/guides/continuity-testing-electricians-guide' },
+  { label: 'Continuity Testing', href: '/continuity-testing-guide' },
 ];
 
 const tocItems = [
@@ -112,14 +112,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/polarity-testing-guide-bs7671',
+    href: '/polarity-test-guide',
     title: 'Polarity Testing Guide',
     description: 'Visual inspection first, live polarity checks, and Regulation 643.5.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with structured training covering all test methods.',
     icon: GraduationCap,

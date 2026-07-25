@@ -257,7 +257,7 @@ export default function HowToDoSafeIsolationPage() {
                 insulation resistance testing
               </SEOInternalLink>{' '}
               and issue the appropriate certificate — whether that is a{' '}
-              <SEOInternalLink href="/tools/minor-works-certificate">
+              <SEOInternalLink href="/minor-works-certificate">
                 Minor Works Certificate
               </SEOInternalLink>{' '}
               or a full{' '}

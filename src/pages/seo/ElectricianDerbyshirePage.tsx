@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/consumer-unit-types-guide',
+    href: '/guides/consumer-unit-types',
     title: 'Consumer Unit Types Guide',
     description:
       'Metal clad, split-load, high-integrity, and RCBO boards explained with upgrade costs.',

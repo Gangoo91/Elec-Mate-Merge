@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Reference Methods', href: '/guides/reference-methods-cable-installation' },
 ];
 
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables',
     description:
       'Complete cable sizing process from design current through to final cable selection.',

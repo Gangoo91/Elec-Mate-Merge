@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/mock-exams-electrical',
+    href: '/guides/mock-exams-electrician',
     title: 'Mock Exams',
     description:
       'Test your electrical science knowledge with timed practice exams and instant results.',

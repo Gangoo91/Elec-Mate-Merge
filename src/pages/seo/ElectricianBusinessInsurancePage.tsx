@@ -93,7 +93,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrician-tool-insurance',
+    href: '/electrician-tool-insurance-2025',
     title: 'Tool Insurance Guide',
     description:
       'Dedicated tool cover — types, providers, van security discounts, and claims process.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Professional PDF quotes with itemised pricing — include insurance overhead in your rates.',
@@ -398,7 +398,7 @@ const sections = [
                   Covers your tools and test equipment against theft, accidental damage, and
                   sometimes breakdown. Essential for electricians carrying £5,000+ of kit. See our
                   dedicated{' '}
-                  <SEOInternalLink href="/guides/electrician-tool-insurance">
+                  <SEOInternalLink href="/electrician-tool-insurance-2025">
                     tool insurance guide
                   </SEOInternalLink>{' '}
                   for full details.
@@ -615,7 +615,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Insurance is a cost of doing business. Factor it into your hourly rate or job
                   pricing using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   so customers are paying for your professionalism, not eating into your profit.

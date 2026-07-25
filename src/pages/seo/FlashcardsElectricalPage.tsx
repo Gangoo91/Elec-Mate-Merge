@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/mock-exams-electrical',
+    href: '/guides/mock-exams-electrician',
     title: 'Mock Exams for Electricians',
     description:
       'Practice tests for 18th Edition, 2391, AM2, and EPA with detailed answer explanations.',
@@ -98,14 +98,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Structured 2391 preparation with courses, quizzes, and progress tracking.',
     icon: GraduationCap,
     category: 'Training',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Detailed guide to the AM2 practical assessment with task breakdowns.',
     icon: Award,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'End-Point Assessment preparation for Level 3 electrical apprentices.',
     icon: Target,
@@ -158,11 +158,11 @@ const sections = [
             18th Edition (C&G 2382)
           </SEOInternalLink>
           , the{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             2391 (Inspection and Testing)
           </SEOInternalLink>
-          , the <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink>, or the{' '}
-          <SEOInternalLink href="/training/epa-preparation">EPA</SEOInternalLink>, flashcards
+          , the <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink>, or the{' '}
+          <SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>, flashcards
           transform revision from a passive, frustrating process into an active, efficient one.
         </p>
       </>
@@ -337,7 +337,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/earthing-arrangements">
+                  <SEOInternalLink href="/earthing-arrangements">
                     Earthing arrangements:
                   </SEOInternalLink>
                 </strong>{' '}
@@ -456,7 +456,7 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Before mock exams:</strong> Do a flashcard review session before each{' '}
-                <SEOInternalLink href="/guides/mock-exams-electrical">mock exam</SEOInternalLink>.
+                <SEOInternalLink href="/guides/mock-exams-electrician">mock exam</SEOInternalLink>.
                 This primes your memory and helps you recall information during the test.
               </span>
             </li>
@@ -528,7 +528,7 @@ const sections = [
                 but they do not replace understanding. You need to study the underlying concepts
                 first (from your course or textbook), then use flashcards to retain the key facts.
                 Combine flashcards with{' '}
-                <SEOInternalLink href="/guides/mock-exams-electrical">mock exams</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/mock-exams-electrician">mock exams</SEOInternalLink>{' '}
                 for a complete revision strategy.
               </span>
             </li>

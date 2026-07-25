@@ -524,7 +524,7 @@ export default function FP200CableGuidePage() {
                 construction details, and the fire performance must be verified from the
                 manufacturer's test certificates, not assumed from the cable appearance.
               </p>
-              <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+              <SEOInternalLink href="/how-to-size-cables">
                 Cable sizing for fire-resistant cables
               </SEOInternalLink>{' '}
               follows the same BS 7671 process but uses the current-carrying capacity values
@@ -601,7 +601,7 @@ export default function FP200CableGuidePage() {
           category: 'Certification',
         },
         {
-          href: '/guides/how-to-size-cables-bs-7671',
+          href: '/how-to-size-cables',
           title: 'Cable Sizing Guide',
           description: 'BS 7671 cable sizing for all cable types.',
           icon: Calculator,

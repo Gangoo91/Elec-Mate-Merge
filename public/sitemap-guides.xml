@@ -547,12 +547,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/continuity-testing-electricians-guide</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/continuity-testing-r1-r2</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -697,7 +691,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/earthing-arrangements</loc>
+    <loc>https://www.elec-mate.com/earthing-arrangements</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1088,12 +1082,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/guides/electrical-handover-documentation</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/electrical-handover-documentation-guide</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1537,12 +1525,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/electrician-tool-insurance</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/electrician-tool-list-uk</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -1555,12 +1537,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/electrician-van-setup-guide</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/electrician-wolverhampton</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -1568,12 +1544,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/guides/electrician-working-abroad</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/electrician-working-abroad-uk</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1945,13 +1915,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/how-to-do-safe-isolation</loc>
+    <loc>https://www.elec-mate.com/how-to-do-safe-isolation</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/how-to-fill-in-eicr</loc>
+    <loc>https://www.elec-mate.com/how-to-fill-in-eicr</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1975,7 +1945,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/how-to-size-cables-bs-7671</loc>
+    <loc>https://www.elec-mate.com/how-to-size-cables</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -2503,7 +2473,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/part-p-building-regulations</loc>
+    <loc>https://www.elec-mate.com/part-p-building-regulations</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -2564,18 +2534,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/guides/poe-lighting-installation</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/polarity-testing-guide</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/polarity-testing-guide-bs7671</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -2942,12 +2900,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/guides/solar-panel-installation-london</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/spd-surge-protection-guide</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -3956,12 +3908,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/guides/when-is-eic-required</loc>
-    <lastmod>2026-05-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/wiring-colours-uk</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

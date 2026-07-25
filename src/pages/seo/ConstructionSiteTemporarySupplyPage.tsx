@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description:
       'Step-by-step guide to safe isolation on construction sites and all electrical installations.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'Step-by-step guide to RCD testing including trip times, test currents, and recording results.',
@@ -137,7 +137,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules including Section 704 (Construction Sites).',
@@ -642,7 +642,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">RAMS and Site Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/rams-generator">RAMS generator</SEOInternalLink> to
+                  <SEOInternalLink href="/rams-generator">RAMS generator</SEOInternalLink> to
                   produce risk assessments and method statements for construction site electrical
                   work. Complete CDM-compliant documentation without the paperwork burden.
                 </p>

@@ -499,7 +499,7 @@ export default function LEDLightingGuidePage() {
                     <span>
                       <strong className="text-yellow-400">Emergency lighting</strong> — In
                       commercial installations, LED{' '}
-                      <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                      <SEOInternalLink href="/emergency-lighting-certificate">
                         emergency lighting
                       </SEOInternalLink>{' '}
                       must comply with BS 5266 and provide the required lux levels for the specified
@@ -612,7 +612,7 @@ export default function LEDLightingGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/emergency-lighting-certificate',
+          href: '/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description: 'Guide to emergency lighting testing and certification.',
           icon: FileText,

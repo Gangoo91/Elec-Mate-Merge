@@ -191,7 +191,7 @@ const sections = [
         <p>
           Domestic electrical work represents the largest segment of the UK electrical installation
           market. From consumer unit replacements and kitchen rewires to bathroom installations and{' '}
-          <SEOInternalLink href="/training/ev-charger-installation">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger circuits
           </SEOInternalLink>
           , the demand for qualified domestic installers is consistent and growing.
@@ -316,11 +316,11 @@ const sections = [
         </p>
         <p>
           Membership requirements typically include: Level 3 electrical qualification, current{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             BS 7671 (18th Edition) certificate
           </SEOInternalLink>
           , inspection and testing qualification (
-          <SEOInternalLink href="/training/city-guilds-2391">City & Guilds 2391</SEOInternalLink> or
+          <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink> or
           equivalent), public liability insurance, calibrated test equipment, and evidence of CPD.
         </p>
       </>
@@ -341,7 +341,7 @@ const sections = [
           A modern domestic installation typically includes: lighting circuits (one per floor, 6A
           MCB or RCBO), ring circuits for socket outlets (32A), dedicated radial circuits for
           high-power appliances (cooker, electric shower, immersion heater), a dedicated circuit for{' '}
-          <SEOInternalLink href="/training/ev-charger-installation">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             electric vehicle charging
           </SEOInternalLink>
           , and potentially circuits for{' '}
@@ -462,7 +462,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description: 'EV charger installation is notifiable domestic work requiring Part P compliance.',
     icon: GraduationCap,

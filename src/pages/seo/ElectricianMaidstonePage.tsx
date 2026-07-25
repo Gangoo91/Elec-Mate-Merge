@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Maidstone electrical jobs at South East rates — send professional quotes on site.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 — essential for EICR work across Maidstone and Mid Kent.',
     icon: GraduationCap,
@@ -414,7 +414,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win Kent Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes for Maidstone and surrounding Kent customers at
                   accurate South East rates. Quote on site and close more jobs.
                 </p>

@@ -290,8 +290,8 @@ const sections = [
         </p>
         <p>
           The section is divided into categories: core electrical qualifications (C&G 2365, 2357,{' '}
-          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>),
+          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/inspection-testing-course">C&G 2391</SEOInternalLink>),
           practical assessments (AM2), industry card details (ECS/JIB card type, number, and
           expiry), Part P registration and scheme membership, and specialist certifications (EV
           charger, solar PV, fire alarm, emergency lighting, battery storage).

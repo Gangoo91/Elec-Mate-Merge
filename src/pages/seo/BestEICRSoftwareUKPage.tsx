@@ -120,7 +120,7 @@ export default function BestEICRSoftwareUKPage() {
               </p>
               <p>
                 <strong>EICR-specific features:</strong> The EICR workflow includes an{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI Board Scanner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/ai-electrician-tools">AI Board Scanner</SEOInternalLink>{' '}
                 that photographs a consumer unit and extracts circuit data automatically, Voice Test
                 Entry that lets you speak readings aloud while holding test leads, Defect Code AI
                 that assigns C1/C2/C3/FI codes with BS 7671 regulation references, and an AI
@@ -135,7 +135,7 @@ export default function BestEICRSoftwareUKPage() {
                 <strong>Beyond EICRs:</strong> Elec-Mate includes 7 additional certificate types
                 (EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT), 70+
                 BS 7671{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators
                 </SEOInternalLink>
                 , and business tools for quoting, invoicing, and payment collection. Training
@@ -218,7 +218,7 @@ export default function BestEICRSoftwareUKPage() {
                 management. Credit-based pricing becomes expensive for busy electricians producing
                 10+ certificates per month. Calculator suite is smaller than specialist platforms
                 offering 70+ calculators. See our{' '}
-                <SEOInternalLink href="/compare/elec-mate-vs-certsapp">
+                <SEOInternalLink href="/elec-mate-vs-certs-app">
                   Elec-Mate vs CertsApp
                 </SEOInternalLink>{' '}
                 comparison for details.

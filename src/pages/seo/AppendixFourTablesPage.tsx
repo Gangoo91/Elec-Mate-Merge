@@ -8,9 +8,9 @@ import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'l
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 Appendix 4 Current-Carrying Capacity Table (4D1A, 4D5A)';
+const PAGE_TITLE = 'BS 7671 Appendix 4 Tables: Find the Right Cable Rating Fast';
 const PAGE_DESCRIPTION =
-  'BS 7671 Appendix 4 cable tables in full: Table 4D1A & 4D5A current-carrying capacity (Iz), reference methods A–G, volt drop (mV/A/m) and correction factors Ca/Cg/Ci/Cs. Free lookup.';
+  'Which Appendix 4 table to use, how reference methods A–G and the Ca/Cg/Ci/Cs correction factors stack, and how to get from Ib to the right cable size — full 4D1A/4D5A lookup plus a free calculator built on the tables.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -98,7 +98,7 @@ const sections = [
           Appendix 4 of BS 7671 is the section that every electrician turns to most frequently. It
           contains the current-carrying capacity tables for all standard cable types used in UK
           electrical installations. When you are{' '}
-          <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+          <SEOInternalLink href="/how-to-size-cables">
             sizing a cable
           </SEOInternalLink>
           , Appendix 4 is where you look up the maximum current a cable can carry under specific
@@ -785,7 +785,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables to BS 7671',
     description:
       'The complete 6-step cable sizing process from design current to fault current verification.',

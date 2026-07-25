@@ -24,7 +24,7 @@ const PAGE_DESCRIPTION =
   'Three-phase electrical calculations: power formula (P = √3·VL·IL·cosφ), line vs phase, star vs delta, current, PF, balancing, VD, cable sizing.';
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Three Phase Calculations', href: '/guides/three-phase-calculations' },
 ];
 
@@ -113,7 +113,7 @@ const sections = [
         </p>
         <p>
           Three-phase calculations are essential for{' '}
-          <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">cable sizing</SEOInternalLink>,
+          <SEOInternalLink href="/how-to-size-cables">cable sizing</SEOInternalLink>,
           protective device selection, and voltage drop verification on commercial and industrial
           installations. They are also needed for{' '}
           <SEOInternalLink href="/guides/prospective-fault-current-explained">
@@ -616,7 +616,7 @@ const sections = [
       <>
         <p>
           Cable sizing for three-phase circuits follows the same{' '}
-          <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+          <SEOInternalLink href="/how-to-size-cables">
             six-step process
           </SEOInternalLink>{' '}
           as single-phase, but with three-phase-specific values at each step.

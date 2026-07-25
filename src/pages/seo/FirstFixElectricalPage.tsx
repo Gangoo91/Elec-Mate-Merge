@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Understand which electrical work requires notification and how competent person schemes work.',
@@ -448,7 +448,7 @@ const sections = [
         </div>
         <p>
           Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce a
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce a
           clear first fix specification and quote that details every accessory position, circuit
           allocation, and containment requirement. Sharing this with the builder and other trades at
           the start of the project prevents misunderstandings and keeps the programme on track.
@@ -473,7 +473,7 @@ const sections = [
         </p>
         <p>
           First fix work that is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           includes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

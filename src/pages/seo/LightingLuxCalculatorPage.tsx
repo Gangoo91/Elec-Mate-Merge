@@ -89,7 +89,7 @@ export default function LightingLuxCalculatorPage() {
                 for indoor workplaces. These standards specify the maintained illuminance — the
                 minimum average lux level on the working plane — for every type of room and task.
                 The{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   Elec-Mate calculator suite
                 </SEOInternalLink>{' '}
                 includes all these values built in, so you do not need to look them up manually.
@@ -493,7 +493,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',
@@ -501,7 +501,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/emergency-lighting-certificate',
+          href: '/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description:
             'Complete emergency lighting certificates with built-in BS 5266-1 compliance checks.',

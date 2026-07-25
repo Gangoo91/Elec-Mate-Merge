@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote new build electrical packages with per-plot pricing and specification levels.',
@@ -455,7 +455,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Calculate your cost per house type (based on the outlet schedule), then quote the
                   development in phases. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build per-plot pricing templates that you can replicate across the development.
                 </p>
               </div>

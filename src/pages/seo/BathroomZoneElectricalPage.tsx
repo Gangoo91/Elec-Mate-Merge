@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'For additions to existing bathroom circuits — issue on site instantly.',
     icon: ClipboardCheck,

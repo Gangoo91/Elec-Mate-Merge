@@ -763,7 +763,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   As you move into engineering or grow your trade business, professional quoting and
                   invoicing becomes increasingly important. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written quotes and invoices that reflect the quality of your work.

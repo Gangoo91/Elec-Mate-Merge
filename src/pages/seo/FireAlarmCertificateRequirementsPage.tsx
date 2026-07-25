@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/emergency-lighting-certificate-guide',
+    href: '/guides/emergency-lighting-certificate-guide',
     title: 'Emergency Lighting Certificate Guide',
     description:
       'BS 5266 emergency lighting certificate requirements including completion, verification, and testing records.',

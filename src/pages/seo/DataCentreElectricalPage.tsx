@@ -21,7 +21,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Commercial Electrical', href: '/commercial-electrical-installation' },
-  { label: 'Data Centre Electrical Installation', href: '/data-centre-electrical-installation' },
+  { label: 'Data Centre Electrical Installation', href: '/guides/data-centre-electrical-installation' },
 ];
 
 const tocItems = [
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote data centre and commercial electrical projects on site with instant PDF export.',

@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { getEcsCardLabel } from '@/data/uk-electrician-constants';
 import { useQuery } from '@tanstack/react-query';
 import { getMyInvitations } from '@/services/conversationService';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -54,7 +55,7 @@ type TierFilter = 'all' | 'verified' | 'premium';
 // Matches live Elec-ID data — card colours stored on profiles, plus
 // 'Apprentice' which the hook also matches against declared job titles
 // (apprentices rarely record a card type).
-const ECS_CARD_TYPES = ['Gold', 'Blue', 'Green', 'White', 'Apprentice'];
+const ECS_CARD_TYPES = ['Gold', 'Experienced Worker', 'Trainee', 'Apprentice', 'Labourer'];
 
 const specialisms = [
   'Commercial',
@@ -591,13 +592,11 @@ export function TalentPoolSection() {
                           {worker.yearsExperience != null && (
                             <span className="text-white">{worker.yearsExperience} yrs exp</span>
                           )}
-                          {/* Stored values are mixed-case ('gold', 'GOLD', 'none') —
-                              never leak 'none ECS' or lowercase into copy */}
+                          {/* Stored values are mixed-case colours or role slugs —
+                              resolve via the canonical label map, never leak 'none' */}
                           {worker.ecsCardType && worker.ecsCardType.toLowerCase() !== 'none' && (
                             <span className="text-white">
-                              {worker.ecsCardType.charAt(0).toUpperCase() +
-                                worker.ecsCardType.slice(1).toLowerCase()}{' '}
-                              ECS
+                              {getEcsCardLabel(worker.ecsCardType)} ECS
                             </span>
                           )}
                           {worker.verifiedDocuments.length > 0 && (

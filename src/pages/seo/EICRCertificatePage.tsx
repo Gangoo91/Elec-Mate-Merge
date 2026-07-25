@@ -270,7 +270,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'BS 7671 compliant Minor Works certificates for smaller jobs.',
     icon: FileText,
@@ -298,7 +298,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with the Elec-Mate training platform.',
     icon: GraduationCap,
@@ -448,7 +448,7 @@ export default function EICRCertificatePage() {
             (the IET Wiring Regulations, 18th Edition) and follows the model forms published in
             Appendix 6 of the standard. It records the extent of the installation inspected, the
             supply characteristics, details of the{' '}
-            <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>,
+            <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>,
             the test results for every circuit, and any observations about departures from the
             current standard or defects that could pose a danger.
           </p>
@@ -759,7 +759,7 @@ export default function EICRCertificatePage() {
             a safe condition in commercial and industrial premises. While these regulations do not
             specify an EICR by name, periodic inspection and testing to BS 7671 is widely recognised
             as the standard method of demonstrating compliance. See our{' '}
-            <SEOInternalLink href="/guides/part-p-building-regulations">
+            <SEOInternalLink href="/part-p-building-regulations">
               Part P guide
             </SEOInternalLink>{' '}
             for more on notifiable work and building regulations.

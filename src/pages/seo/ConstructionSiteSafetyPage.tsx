@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Manual handling training covering lifting techniques, risk assessment, and injury prevention.',
@@ -135,7 +135,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description:
       'Generate compliant Risk Assessments and Method Statements for electrical work on site in minutes.',
@@ -159,7 +159,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Notifiable electrical work, competent person schemes, and Building Control notification requirements.',

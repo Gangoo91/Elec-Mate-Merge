@@ -615,7 +615,7 @@ export default function HowToFillInMinorWorksPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'Complete guide to the Minor Works Certificate format.',
           icon: FileText,

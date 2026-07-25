@@ -59,7 +59,7 @@ export function ProfilePhotoUpload({
       <div className="flex items-center gap-4">
         <div
           className={cn(
-            'relative bg-[#0a0a0a] border border-white/[0.08] rounded-2xl overflow-hidden flex items-center justify-center shrink-0',
+            'relative bg-white/[0.04] border border-white/[0.10] rounded-2xl overflow-hidden flex items-center justify-center shrink-0',
             isLogo ? 'w-24 h-24' : 'w-20 h-20'
           )}
         >

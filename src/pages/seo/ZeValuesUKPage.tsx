@@ -82,6 +82,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/tools/earth-loop-impedance-calculator',
+    title: 'Earth Fault Loop Impedance Calculator',
+    description:
+      'Work out Zs from Ze + (R1+R2) and check it against the BS 7671 maximums — free, instant pass/fail.',
+    icon: Zap,
+    category: 'Calculator',
+  },
+  {
     href: '/guides/earth-fault-loop-impedance-explained',
     title: 'Earth Fault Loop Impedance',
     description:
@@ -130,7 +138,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -587,7 +595,7 @@ const sections = [
         </p>
         <p>
           Record the DNO query on the{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> under
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> under
           "Observations" with a note of the measured Ze value and the action taken.
         </p>
         <SEOAppBridge
@@ -659,8 +667,8 @@ const sections = [
 export default function ZeValuesUKPage() {
   return (
     <GuideTemplate
-      title="Max Ze Values: TN-S 0.80Ω, TN-C-S 0.35Ω, TT 21Ω"
-      description="Maximum Ze (external earth fault loop impedance) per BS 7671: TN-S 0.80Ω, TN-C-S (PME) 0.35Ω, TT 21Ω. How to measure Ze and when to query the DNO."
+      title="Ze Values UK: Max Ze for TN-S, TN-C-S & TT + How to Test"
+      description="Ze values for every UK supply type and what to do when your reading is too high. How to measure Ze correctly, why PME is different, and the full BS 7671 maximum-value lookup — with worked examples."
       datePublished="2025-08-01"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

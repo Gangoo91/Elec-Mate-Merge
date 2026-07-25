@@ -118,7 +118,7 @@ const sections = [
           Each symbol is drawn to <strong>BS EN 60617</strong> — the UK adoption of the
           international IEC 60617 standard for graphical symbols on electrical diagrams. The same
           symbols appear on{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR forms</SEOInternalLink>,
           distribution board schedules, single-line schematics and installation layout drawings.
         </p>
         <p>

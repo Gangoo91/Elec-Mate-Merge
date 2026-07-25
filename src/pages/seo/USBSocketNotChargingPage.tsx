@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Documentation for socket replacement and minor electrical works.',
     icon: FileCheck2,
@@ -605,7 +605,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Like-for-like USB socket replacement is generally non-notifiable under Part P and
                   does not require a certificate. However, issuing a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   is good practice — it documents the work, provides the customer with a record, and

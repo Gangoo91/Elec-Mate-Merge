@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all inspection and testing procedures.',
@@ -170,7 +170,7 @@ const sections = [
       <>
         <p>
           Bristol is in England, so{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           applies to all notifiable domestic electrical work. The key points for Bristol
@@ -569,7 +569,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Bristol jobs accurately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemise materials, labour, testing, and certification for everything from consumer
                   unit upgrades to full eco-retrofit packages. Professional PDF quotes build trust
                   with Bristol's quality-conscious customers.

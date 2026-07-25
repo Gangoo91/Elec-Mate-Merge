@@ -16,6 +16,7 @@ import {
 } from '@/utils/dataIntegrity';
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
+import { useUiPreferences } from '@/hooks/useUiPreferences';
 import { useCloudSync } from '@/hooks/useCloudSync';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useCertLock } from '@/hooks/useCertLock';
@@ -307,6 +308,9 @@ const MinorWorksForm = ({
     setCurrentReportId(newReportId);
   }, []);
 
+  // User preference: auto-save drafts (Settings → Preferences). Manual saves are unaffected.
+  const { preferences: uiPrefs } = useUiPreferences();
+
   // Cloud sync
   const {
     loadFromCloud,
@@ -322,7 +326,7 @@ const MinorWorksForm = ({
     reportType: 'minor-works',
     data: formData,
     // Locked or QS-approved certificates never autosave — they are immutable records.
-    enabled: !isLocked && !isQsApproved,
+    enabled: !isLocked && !isQsApproved && uiPrefs.autosave_drafts,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
     // Gate autosave until cloud load finishes — prevents blank-overwrite race.
@@ -344,7 +348,7 @@ const MinorWorksForm = ({
     onSave: async (data) => {
       await syncToCloud(false);
     },
-    enabled: !isLocked && !isQsApproved,
+    enabled: !isLocked && !isQsApproved && uiPrefs.autosave_drafts,
   });
 
   // Issue & Lock — flush pending edits first, then lock.

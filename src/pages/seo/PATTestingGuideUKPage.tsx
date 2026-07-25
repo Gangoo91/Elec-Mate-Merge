@@ -532,9 +532,9 @@ export default function PATTestingGuideUKPage() {
               <p>
                 Elec-Mate's business tools are built for electricians running multiple service
                 lines. The{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                 lets you generate PAT testing quotes with per-appliance pricing, the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">
+                <SEOInternalLink href="/electrician-invoice-app">
                   invoice builder
                 </SEOInternalLink>{' '}
                 sends professional invoices from site, and the customer management system tracks
@@ -588,7 +588,7 @@ export default function PATTestingGuideUKPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/pat-testing',
+          href: '/pat-testing',
           title: 'PAT Testing App',
           description:
             'Digital PAT testing certificates with professional PDF export, asset tracking, and client reporting. Complete tests on your phone.',
@@ -620,7 +620,7 @@ export default function PATTestingGuideUKPage() {
           category: 'Guides',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional quoting for PAT testing rounds, EICR inspections, and installation work. AI-powered cost estimation.',

@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Issue Minor Electrical Installation Works Certificates instantly.',
     icon: ClipboardCheck,
@@ -475,7 +475,7 @@ const sections = [
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           or{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           issued by the electrician is separate from the Part P completion certificate but is an
@@ -558,7 +558,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Elec-Mate lets you complete your{' '}
                   <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   on your phone on site, and send the PDF to the homeowner immediately. No

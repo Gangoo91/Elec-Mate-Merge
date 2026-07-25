@@ -400,7 +400,7 @@ export default function AIvsManualDesignPage() {
                   final design feeds into the{' '}
                   <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> schedule of
                   circuits and the{' '}
-                  <SEOInternalLink href="/tools/ai-cost-engineer">cost estimate</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/ai-cost-engineer">cost estimate</SEOInternalLink>{' '}
                   for the client quotation.
                 </li>
               </ul>
@@ -520,7 +520,7 @@ export default function AIvsManualDesignPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Generate itemised quotes with real UK trade pricing from a plain-English job description.',

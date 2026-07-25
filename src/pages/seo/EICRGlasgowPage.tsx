@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering periodic inspection.',
@@ -663,7 +663,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work immediately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . The landlord (or factor) needs a quote quickly to meet their Repairing Standard

@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { useMoodData } from '@/hooks/useMentalHealthSync';
-import { storageGetJSONSync, storageSetJSONSync, storageGetSync, storageSetSync } from '@/utils/storage';
+import {
+  storageGetJSONSync,
+  storageSetJSONSync,
+  storageGetSync,
+  storageSetSync,
+} from '@/utils/storage';
+import { prefsService } from '@/services/mentalHealthService';
 
 interface MoodEntry {
   date: string;
@@ -55,14 +61,25 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
   const [weeklyReflection, setWeeklyReflection] = useState('');
   const [favoriteResources, setFavoriteResources] = useState<string[]>([]);
 
-  // Load other data from storage on mount
+  // Guards the first (hydration) run of each save effect so mounting doesn't
+  // immediately write defaults back over the cloud copy.
+  const hydrated = useRef(false);
+
+  // Load other data from storage on mount — local first, then adopt the cloud
+  // copy for anything the device doesn't have (fresh phone / reinstall).
   useEffect(() => {
-    const storedReminders = storageGetJSONSync<SelfCareReminder[]>('elec-mate-selfcare-reminders', []);
+    const storedReminders = storageGetJSONSync<SelfCareReminder[]>(
+      'elec-mate-selfcare-reminders',
+      []
+    );
     if (storedReminders.length > 0) {
       setReminders(storedReminders);
     }
 
-    const storedCheckIn = storageGetJSONSync<{ date: string; checked: boolean } | null>('elec-mate-daily-checkin', null);
+    const storedCheckIn = storageGetJSONSync<{ date: string; checked: boolean } | null>(
+      'elec-mate-daily-checkin',
+      null
+    );
     if (storedCheckIn) {
       const today = new Date().toISOString().split('T')[0];
       if (storedCheckIn.date === today) {
@@ -79,12 +96,47 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
     if (storedFavorites.length > 0) {
       setFavoriteResources(storedFavorites);
     }
+
+    let cancelled = false;
+    (async () => {
+      try {
+        if (storedReminders.length === 0) {
+          const cloud = await prefsService.get<SelfCareReminder[]>('selfcare-reminders');
+          if (!cancelled && cloud && cloud.length > 0) {
+            setReminders(cloud);
+            storageSetJSONSync('elec-mate-selfcare-reminders', cloud);
+          }
+        }
+        if (!storedReflection) {
+          const cloud = await prefsService.get<string>('weekly-reflection');
+          if (!cancelled && cloud) {
+            setWeeklyReflection(cloud);
+            storageSetSync('elec-mate-weekly-reflection', cloud);
+          }
+        }
+        if (storedFavorites.length === 0) {
+          const cloud = await prefsService.get<string[]>('favorite-resources');
+          if (!cancelled && cloud && cloud.length > 0) {
+            setFavoriteResources(cloud);
+            storageSetJSONSync('elec-mate-favorite-resources', cloud);
+          }
+        }
+      } catch {
+        /* offline or signed out — local copies are the source of truth */
+      } finally {
+        hydrated.current = true;
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Save reminders to storage
+  // Save reminders to storage (+ best-effort cloud copy after hydration)
   useEffect(() => {
     if (reminders.length > 0) {
       storageSetJSONSync('elec-mate-selfcare-reminders', reminders);
+      if (hydrated.current) prefsService.set('selfcare-reminders', reminders).catch(() => {});
     }
   }, [reminders]);
 
@@ -95,10 +147,14 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
 
   useEffect(() => {
     storageSetSync('elec-mate-weekly-reflection', weeklyReflection);
+    if (hydrated.current && weeklyReflection) {
+      prefsService.set('weekly-reflection', weeklyReflection).catch(() => {});
+    }
   }, [weeklyReflection]);
 
   useEffect(() => {
     storageSetJSONSync('elec-mate-favorite-resources', favoriteResources);
+    if (hydrated.current) prefsService.set('favorite-resources', favoriteResources).catch(() => {});
   }, [favoriteResources]);
 
   const toggleFavoriteResource = (resourceId: string) => {

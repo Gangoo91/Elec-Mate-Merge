@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Commissioning Specialist', href: '/tools/ai-commissioning-specialist' },
 ];
 
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with structured training covering all testing procedures and commissioning requirements.',
@@ -390,7 +390,7 @@ const sections = [
         </p>
         <p>
           The AI also references the{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             GN3 test procedures
           </SEOInternalLink>{' '}
           and the IET On-Site Guide for practical guidance on test methods, instrument settings, and

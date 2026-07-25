@@ -295,7 +295,7 @@ const sections = [
             electrical qualifications
           </SEOInternalLink>
           . Progressing from electrician to approved electrician requires the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             2391 inspection and testing qualification
           </SEOInternalLink>
           , and further progression to technician requires additional qualifications and experience.
@@ -412,9 +412,9 @@ const sections = [
           training courses, bursaries for members pursuing further education, and partnerships with
           training providers for discounted course fees. For electricians, this can include support
           towards the cost of{' '}
-          <SEOInternalLink href="/training/18th-edition-course">18th Edition courses</SEOInternalLink>
+          <SEOInternalLink href="/eighteenth-edition-course">18th Edition courses</SEOInternalLink>
           ,{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             2391 inspection and testing
           </SEOInternalLink>
           , and other qualifications needed for career progression through the JIB grading system.

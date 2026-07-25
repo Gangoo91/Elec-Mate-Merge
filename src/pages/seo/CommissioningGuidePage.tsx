@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'When electrical work is notifiable, how to certify it, and the role of competent person schemes.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with 50+ structured courses on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -494,7 +494,7 @@ const sections = [
         </div>
         <p>
           For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P notifiable work
           </SEOInternalLink>
           , the EIC must be registered with building control (either directly or through a competent

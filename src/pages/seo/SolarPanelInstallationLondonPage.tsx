@@ -632,7 +632,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Battery Storage Add-Ons</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When completing a solar installation, quote battery storage immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Battery retrofits are a high-margin, growing revenue stream for London solar

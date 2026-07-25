@@ -574,7 +574,7 @@ export default function EmergencyElectricalRepairsPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Create and send professional invoices with online payment links from site.',
           icon: Receipt,

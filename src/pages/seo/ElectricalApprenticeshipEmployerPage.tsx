@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Apprentice', href: '/study-centre' },
-  { label: 'Employer Guide', href: '/guides/electrical-apprenticeship-guide-employer-guide' },
+  { label: 'Employer Guide', href: '/guides/electrical-apprenticeship-guide' },
 ];
 
 const tocItems = [
@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/training/level-2-electrical',
+    href: '/level2-electrical',
     title: 'Level 2 Electrical Course',
     description:
       'Study materials for the Level 2 Diploma in Electrical Installations covering all core units.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Study',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'AM2 practical assessment preparation with simulated tasks, time management, and marking scheme guidance.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business Tool',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'BS 7671:2018+A2:2022 study materials -- the regulations your apprentice needs to know.',
@@ -175,7 +175,7 @@ const sections = [
           This guide covers everything an employer needs to know about taking on an electrical
           apprentice: funding, training providers, supervision requirements, EPA preparation, and
           how{' '}
-          <SEOInternalLink href="/training/level-2-electrical">
+          <SEOInternalLink href="/level2-electrical">
             Elec-Mate study centre
           </SEOInternalLink>{' '}
           supports apprentice learning alongside on-the-job training.
@@ -473,7 +473,7 @@ const sections = [
                 under controlled conditions. The apprentice must demonstrate competence in
                 installation, wiring, termination, and testing within a set time. This is similar in
                 format to the{' '}
-                <SEOInternalLink href="/training/am2-exam-preparation">
+                <SEOInternalLink href="/am2-exam-preparation">
                   AM2 assessment
                 </SEOInternalLink>{' '}
                 and tests the same core practical skills.
@@ -676,7 +676,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AM2 Preparation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  <SEOInternalLink href="/training/am2-exam-preparation">
+                  <SEOInternalLink href="/am2-exam-preparation">
                     AM2 preparation modules
                   </SEOInternalLink>{' '}
                   with simulated tasks, time management guidance, marking scheme breakdowns, and

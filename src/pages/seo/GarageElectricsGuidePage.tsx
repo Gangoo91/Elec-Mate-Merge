@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Complete guide to Part P notification for domestic electrical work including outbuilding supplies.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with implications for outbuilding supplies.',
@@ -155,7 +155,7 @@ const sections = [
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and notified under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           .
@@ -608,7 +608,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the garage installation with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
                   cable by the metre, trenching labour, sub-board, accessories, testing, and
                   certification — all calculated with your margins and sent to the customer as a
                   professional PDF quote.

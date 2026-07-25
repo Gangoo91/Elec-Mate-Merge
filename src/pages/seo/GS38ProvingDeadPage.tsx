@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training courses. Safe isolation, testing procedures, and GS 38 compliance.',
@@ -594,11 +594,11 @@ const sections = [
         </div>
         <p>
           Elec-Mate{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             inspection and testing training courses
           </SEOInternalLink>{' '}
           cover GS 38 compliance, test equipment requirements, and the prove-test-prove procedure in
-          detail. The <SEOInternalLink href="/tools/rams-generator">RAMS generator</SEOInternalLink>{' '}
+          detail. The <SEOInternalLink href="/rams-generator">RAMS generator</SEOInternalLink>{' '}
           includes GS 38 references in every risk assessment and method statement it produces.
         </p>
         <SEOAppBridge

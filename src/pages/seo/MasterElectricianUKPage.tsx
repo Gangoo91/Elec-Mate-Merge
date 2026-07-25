@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-working-abroad-uk',
+    href: '/guides/electrician-working-abroad',
     title: 'Working Abroad as a UK Electrician',
     description: 'Qualification equivalency, visa requirements, and overseas salaries.',
     icon: Globe,
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Training',
     description: 'Study for C&G 2391 — a key step towards mastery-level credentials.',
     icon: GraduationCap,
@@ -366,7 +366,7 @@ const sections = [
         </div>
         <p>
           For UK electricians working abroad, the relevant guide is{' '}
-          <SEOInternalLink href="/guides/electrician-working-abroad-uk">
+          <SEOInternalLink href="/guides/electrician-working-abroad">
             Working Abroad as a UK Electrician
           </SEOInternalLink>
           , which covers qualification equivalency and licensing requirements by country.

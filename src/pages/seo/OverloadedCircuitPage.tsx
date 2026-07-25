@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training modules on the Elec-Mate platform.',
@@ -549,7 +549,7 @@ const sections = [
         </div>
         <p>
           Adding a new circuit is notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           and requires either notification through a competent person scheme or a Building Control
@@ -624,7 +624,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/training/18th-edition-course">training courses</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink>{' '}
           cover circuit design, cable sizing, and maximum demand calculation in detail — essential
           knowledge for every electrician advising customers on safe circuit loading.
         </p>

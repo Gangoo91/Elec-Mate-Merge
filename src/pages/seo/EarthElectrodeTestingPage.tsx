@@ -20,7 +20,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Testing Guides', href: '/guides/electrical-testing' },
-  { label: 'Earth Electrode Testing Guide', href: '/earth-electrode-testing' },
+  { label: 'Earth Electrode Testing Guide', href: '/guides/earth-electrode-testing' },
 ];
 
 const tocItems = [
@@ -92,14 +92,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5 times current RCD test procedures — essential for TT systems.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/insulation-resistance-testing-guide',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing Guide',
     description: 'Test voltages, minimum values, disconnecting components, and interpreting results.',
     icon: Zap,

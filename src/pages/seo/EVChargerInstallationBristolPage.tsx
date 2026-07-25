@@ -441,7 +441,7 @@ const sections = [
                   Factor in Bristol day rates (£300 to £420), long cable runs in Victorian terraces,
                   steep site access, PME earthing requirements, and conservation area constraints.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>

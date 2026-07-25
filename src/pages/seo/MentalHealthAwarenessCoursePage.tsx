@@ -348,7 +348,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description: 'Physical wellbeing and injury prevention contribute to overall mental health.',
     icon: GraduationCap,

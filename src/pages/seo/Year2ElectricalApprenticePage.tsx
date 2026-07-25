@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'Detailed guide to insulation resistance testing with worked examples.',
     icon: Gauge,
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Complete guide to RCD testing procedures and acceptable values.',
     icon: ShieldCheck,

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { copyToClipboard } from '@/utils/clipboard';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { supabase } from '@/integrations/supabase/client';
+import { prefsService } from '@/services/mentalHealthService';
 
 const FALLBACK_QUOTES = [
   'Every job you sign off safely is a small act of care for someone you may never meet.',
@@ -70,7 +71,17 @@ export const DailyAffirmation = () => {
 
   useEffect(() => {
     loadAffirmation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Fresh device: adopt the cloud copy of liked affirmations when local is empty.
+    if (storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []).length === 0) {
+      prefsService
+        .get<string[]>('liked-affirmations')
+        .then((cloud) => {
+          if (cloud && cloud.length > 0) {
+            storageSetJSONSync('elec-mate-liked-affirmations', cloud);
+          }
+        })
+        .catch(() => {});
+    }
   }, []);
 
   // Sync liked state whenever text changes
@@ -84,6 +95,7 @@ export const DailyAffirmation = () => {
     if (isLiked) liked = liked.filter((t) => t !== text);
     else liked.push(text);
     storageSetJSONSync('elec-mate-liked-affirmations', liked);
+    prefsService.set('liked-affirmations', liked).catch(() => {});
     setIsLiked(!isLiked);
   };
 

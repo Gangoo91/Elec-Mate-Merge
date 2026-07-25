@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Notifiable electrical work in England — what requires notification and how the process works.',
@@ -566,7 +566,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Additional Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote earthing upgrades, smoke alarm systems, or additional circuits while

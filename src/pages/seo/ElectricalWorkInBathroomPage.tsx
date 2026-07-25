@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Full guide to Part P notification, notifiable vs non-notifiable work, and competent person schemes.',
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with structured training including special locations.',
     icon: GraduationCap,
@@ -597,7 +597,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>10.5kW+ shower:</strong> 10mm T&E cable, 45A MCB/RCBO. Check{' '}
-                <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+                <SEOInternalLink href="/how-to-size-cables">
                   cable sizing
                 </SEOInternalLink>{' '}
                 for longer runs. May require 16mm cable.
@@ -626,7 +626,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           classifies all electrical work in a bathroom as notifiable, regardless of whether it

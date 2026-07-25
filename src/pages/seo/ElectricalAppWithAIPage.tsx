@@ -149,7 +149,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-electrician',
+    href: '/ai-electrician-tools',
     title: 'AI Electrician Hub',
     description:
       '8 specialist AI agents and 12 AI-powered tools built for UK electricians. The central hub for all AI features.',
@@ -165,7 +165,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/ai-cost-engineer',
+    href: '/ai-cost-engineer',
     title: 'AI Cost Engineer',
     description:
       'Itemised quotes from a job description. Real UK trade pricing, labour estimates, and profit margins.',
@@ -181,7 +181,7 @@ const relatedPages: RelatedPage[] = [
     category: 'AI Tool',
   },
   {
-    href: '/tools/ai-health-safety-agent',
+    href: '/ai-health-safety-agent',
     title: 'AI Health and Safety Agent',
     description:
       'Site-specific RAMS, risk assessments, COSHH assessments, and toolbox talks from a job description.',
@@ -431,7 +431,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> changes
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> changes
           this completely. Describe the job:
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
@@ -468,7 +468,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/ai-health-safety-agent">
+          <SEOInternalLink href="/ai-health-safety-agent">
             AI Health and Safety agent
           </SEOInternalLink>{' '}
           generates genuinely site-specific RAMS from a description of the work and location. The
@@ -478,7 +478,7 @@ const sections = [
           at Work Regulations 1989.
         </p>
         <p>
-          The <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> exports the
+          The <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports the
           document as a professional PDF ready for submission. No more spending 30 minutes adapting
           a generic template for each job. No more RAMS that read like they were written for a
           different site. Describe the job, and the AI does the rest.

@@ -100,13 +100,13 @@ export const getDefaultKaRating = (deviceType: string, rating: string): string =
 };
 
 // Check if a BS standard requires a curve (MCB/RCBO only)
-export const bsStandardRequiresCurve = (bsStandard: string): boolean => {
-  return (
-    bsStandard === 'MCB (BS EN 60898)' ||
-    bsStandard === 'RCBO (BS EN 61009)' ||
-    bsStandard === 'MCCB (BS EN 60947)'
-  );
-};
+// A curve (B/C/D) is meaningful only for MCB / RCBO / MCCB. Match whatever form
+// the BS standard is stored in — combined ("MCB (BS EN 60898)"), raw
+// ("BS EN 60898-1", as the EICR→EIC conversion produces), or short ("MCB"). The
+// old exact-string check missed the raw form, so the curve/TYPE column went
+// blank on converted EICs (ELE-1391).
+export const bsStandardRequiresCurve = (bsStandard: string): boolean =>
+  /MCB|RCBO|MCCB|60898|61009|60947/i.test(bsStandard || '');
 
 // Protective device options with Zs limits for validation
 // BS 7671 Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009 (0.4s disconnection)

@@ -444,7 +444,7 @@ export default function FlukeVsMeggerPage() {
               <p>
                 In terms of learning curve, both instruments are straightforward for anyone who has
                 completed a{' '}
-                <SEOInternalLink href="/training/city-guilds-2391">
+                <SEOInternalLink href="/city-guilds2391">
                   City and Guilds 2391 inspection and testing course
                 </SEOInternalLink>
                 . If you trained on a Megger (which is more common in UK training centres), you may
@@ -470,7 +470,7 @@ export default function FlukeVsMeggerPage() {
                 Elec-Mate is brand-neutral — it works with Fluke, Megger, Kewtech, Metrel, or any
                 other compliant MFT. You enter test results into the app by typing, speaking (voice
                 entry), or using the{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI board scanner</SEOInternalLink> for
+                <SEOInternalLink href="/ai-electrician-tools">AI board scanner</SEOInternalLink> for
                 circuit data. The app auto-validates every result against BS 7671 limits for the
                 protective device on that circuit — no manual look-up of maximum Zs values required.
               </p>
@@ -484,7 +484,7 @@ export default function FlukeVsMeggerPage() {
                 once and printed on every{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
                 <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, and{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works certificate
                 </SEOInternalLink>{' '}
                 automatically. The app reminds you when calibration is approaching expiry so you
@@ -628,7 +628,7 @@ export default function FlukeVsMeggerPage() {
           category: 'Guide' as const,
         },
         {
-          href: '/guides/insulation-resistance-testing',
+          href: '/guides/insulation-resistance-testing-bs7671',
           title: 'Insulation Resistance Testing',
           description:
             'How to use the IR function on your MFT. Test voltages, minimum values, and troubleshooting.',
@@ -652,7 +652,7 @@ export default function FlukeVsMeggerPage() {
           category: 'Certificate' as const,
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: '70+ Electrical Calculators',
           description:
             'Zs verification, cable sizing, voltage drop, PFC, and dozens more. Verify your MFT readings on site.',

@@ -284,7 +284,7 @@ const sections = [
         </p>
         <p>
           If you are an{' '}
-          <SEOInternalLink href="/training/level-3-electrical">apprentice</SEOInternalLink> who has
+          <SEOInternalLink href="/level3-electrical">apprentice</SEOInternalLink> who has
           not yet completed your NVQ, you can apply for a Red Trainee card through your training
           provider. Your employer and training provider will normally handle this application as
           part of your apprenticeship enrolment.
@@ -338,7 +338,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Manual handling technique and risk assessment — a key HS&E test topic for construction workers.',

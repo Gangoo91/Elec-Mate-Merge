@@ -86,7 +86,15 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/wiring-colours-uk',
+    href: '/guides/cable-colour-codes-uk',
+    title: 'Cable Colour Codes UK',
+    description:
+      'Every UK cable colour code — old vs new, single and three phase, flex and fixed wiring.',
+    icon: PenTool,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/cable-colour-codes-uk',
     title: 'UK Wiring Colours Guide',
     description:
       'Complete reference for old and new UK wiring colours with harmonisation explained.',
@@ -109,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained with symbols and diagrams.',
     icon: Zap,
@@ -124,7 +132,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/level-2-electrical',
+    href: '/level2-electrical',
     title: 'Level 2 Electrical Course',
     description:
       'Start your electrical career with Level 2 training including circuit diagram interpretation.',
@@ -357,7 +365,7 @@ const sections = [
               <span>
                 <strong>Emergency luminaire:</strong> The light symbol with an additional
                 designation (often "EM" or an arrow) indicating it is an{' '}
-                <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   emergency lighting
                 </SEOInternalLink>{' '}
                 fitting with battery backup.
@@ -599,7 +607,7 @@ const sections = [
             </li>
             <li>
               <strong>Check the earthing.</strong> Identify the{' '}
-              <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
+              <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
               (TN-S, TN-C-S, or TT) and trace the main earth conductor to the earthing terminal.
             </li>
             <li>
@@ -664,7 +672,7 @@ const sections = [
 export default function ElectricalSymbolsChartPage() {
   return (
     <GuideTemplate
-      title="UK Electrical Symbols (IEC 60617): 114 Free Symbols"
+      title="Electrical Symbols Chart UK: All 114 Symbols, Free Download"
       description="114 UK electrical symbols to IEC 60617: sockets, switches, RCBOs, FCUs, lighting, fire alarm, fuse spurs. Free SVG chart + per-symbol reference. BS EN 60617 has been withdrawn and replaced by IEC 60617."
       datePublished="2025-11-01"
       dateModified="2026-06-10"

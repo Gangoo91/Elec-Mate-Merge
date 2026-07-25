@@ -629,7 +629,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   After completing a solar installation, generate a battery storage quote on the
                   spot using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Battery retrofits are growing rapidly in the North West and represent a

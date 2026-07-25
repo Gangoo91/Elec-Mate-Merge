@@ -132,7 +132,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote garden lighting projects with itemised materials, cable runs, and labour.',
     icon: Wrench,
@@ -666,7 +666,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised garden lighting quotes. List each fitting type, cable quantities,
                   junction boxes, controls, labour for trenching, installation, testing, and
                   certification. Professional PDF sent to the customer.

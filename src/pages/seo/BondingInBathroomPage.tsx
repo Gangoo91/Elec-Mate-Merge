@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-C-S, TN-S, and TT earthing systems explained with main bonding requirements.',
     icon: Zap,
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A4:2026 including Section 701 (bathrooms) on the Elec-Mate platform.',

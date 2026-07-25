@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Professional quotes in minutes — win more West Midlands jobs.',
     icon: Calculator,

@@ -92,7 +92,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description: 'Digital certificate for the AC side of a solar PV prosumer installation.',
     icon: FileCheck2,

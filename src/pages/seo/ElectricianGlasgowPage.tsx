@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Part P applies in England and Wales — see how it compares to Scottish standards.',
     icon: ShieldCheck,
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Glasgow customers.',
     icon: PoundSterling,
@@ -175,7 +175,7 @@ const sections = [
         <p>
           This is the single most important difference between hiring an electrician in Glasgow
           versus anywhere in England or Wales.{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> does
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink> does
           not apply in Scotland. The regulatory framework is different:
         </p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">

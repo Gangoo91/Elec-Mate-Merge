@@ -569,7 +569,7 @@ const sections = [
           Whatever your choice — ring or radial — the installation must comply with BS 7671, be
           properly tested, and be correctly certified. Use Elec-Mate's{' '}
           <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             minor works certificate
           </SEOInternalLink>{' '}
           to document the completed work with the full schedule of test results.

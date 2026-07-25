@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Maintenance Specialist', href: '/tools/ai-maintenance-specialist' },
 ];
 
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with structured training covering all testing procedures and periodic inspection.',
@@ -256,7 +256,7 @@ const sections = [
           boards may require annual thermographic surveys, quarterly RCD operation tests, and
           monthly visual inspections. Emergency lighting requires monthly functional tests and
           annual full-duration tests under{' '}
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">BS 5266</SEOInternalLink>.
+          <SEOInternalLink href="/emergency-lighting-certificate">BS 5266</SEOInternalLink>.
           Fire alarm systems require weekly, monthly, quarterly, and annual tests under BS 5839. The
           AI collates all these requirements into a single maintenance calendar with clear task
           lists for each scheduled visit.
@@ -378,7 +378,7 @@ const sections = [
           All maintenance records are stored securely and can be retrieved for audit purposes. This
           is particularly important for commercial clients who need to demonstrate compliance to
           insurers, health and safety inspectors, or certification bodies. The{' '}
-          <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
+          <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
           produce cost estimates for any remedial work identified during maintenance visits,
           streamlining the process from identification to quotation to completion.
         </p>

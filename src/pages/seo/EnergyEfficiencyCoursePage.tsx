@@ -188,7 +188,7 @@ const sections = [
           </SEOInternalLink>
           , and power factor correction — win more work, command premium rates, and build stronger
           client relationships. The{' '}
-          <SEOInternalLink href="/training/bms-course">BMS course</SEOInternalLink> covers the
+          <SEOInternalLink href="/bms-course">BMS course</SEOInternalLink> covers the
           building automation systems that tie energy efficiency measures together.
         </p>
         <SEOAppBridge
@@ -373,7 +373,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/bms-course',
+    href: '/bms-course',
     title: 'BMS Course',
     description:
       'Building management systems are the central control platform for energy-efficient buildings.',

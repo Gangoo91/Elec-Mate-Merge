@@ -265,7 +265,7 @@ export default function BS7671ObservationCodesPage() {
               before the certificate is issued, so there is no need for classification codes. The
               EICR, by contrast, reports on the condition of an installation as found, which may
               include defects of varying severity. Preparing for your{' '}
-              <SEOInternalLink href="/training/city-guilds-2391">
+              <SEOInternalLink href="/city-guilds2391">
                 C&G 2391-52 inspection and testing qualification
               </SEOInternalLink>{' '}
               gives you the knowledge to code observations consistently and correctly.
@@ -954,7 +954,7 @@ export default function BS7671ObservationCodesPage() {
             <SEOInternalLink href="/guides/ev-charger-error-codes">
               EV Charger Error Codes
             </SEOInternalLink>
-            <SEOInternalLink href="/guides/polarity-testing-guide-bs7671">
+            <SEOInternalLink href="/polarity-test-guide">
               Polarity Testing Guide BS 7671
             </SEOInternalLink>
             <SEOInternalLink href="/guides/bathroom-electrical-zones-bs7671">

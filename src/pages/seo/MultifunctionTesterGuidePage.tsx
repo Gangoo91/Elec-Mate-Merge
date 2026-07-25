@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'Performing IR tests at 500 V DC and interpreting minimum megohm values.',
     icon: Gauge,
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -163,7 +163,7 @@ const sections = [
         </p>
         <p>
           For anyone preparing for the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink> inspection and
+          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> inspection and
           testing qualification, mastering the MFT is fundamental. The practical exam requires you
           to demonstrate competent use of a multifunction tester on a real installation.
         </p>
@@ -206,7 +206,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Applies a DC test voltage (250 V, 500 V, or 1000 V) and measures resistance in
                   megohms. Used for{' '}
-                  <SEOInternalLink href="/guides/insulation-resistance-testing">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     insulation resistance testing
                   </SEOInternalLink>{' '}
                   between conductors. Select 500 V for standard circuits. Minimum acceptable value
@@ -497,7 +497,7 @@ const sections = [
               <strong>Insulation resistance.</strong> Switch to IR mode, select 500 V DC. Test
               between line and earth, neutral and earth, and line and neutral. Minimum value is 1.0
               megohm. Disconnect electronic equipment first. See the{' '}
-              <SEOInternalLink href="/guides/insulation-resistance-testing">
+              <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                 insulation resistance guide
               </SEOInternalLink>
               .

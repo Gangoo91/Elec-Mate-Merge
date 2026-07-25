@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Understanding Part P notification requirements and competent person self-certification.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description:
       'Certification requirements for solar PV installations — often combined with EV charging.',
@@ -329,7 +329,7 @@ const sections = [
       <>
         <p>
           EV charger installation is notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           because it involves the installation of a new circuit. This applies to domestic properties

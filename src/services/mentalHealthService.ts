@@ -180,6 +180,106 @@ export const journalService = {
 };
 
 // =====================================================
+// GRATITUDE (cloud copy)
+// =====================================================
+// Gratitude lists live in localStorage for instant UX, but that alone dies on
+// a device switch. These helpers keep a cloud copy as journal rows tagged
+// 'gratitude' — one row per day, replaced on re-save so edits don't duplicate.
+export const gratitudeService = {
+  async getAll(): Promise<{ date: string; items: string[] }[]> {
+    const { data, error } = await supabase
+      .from('mental_health_journal_entries')
+      .select('date, gratitude')
+      .contains('tags', ['gratitude'])
+      .order('date', { ascending: false })
+      .limit(60);
+
+    if (error) throw error;
+    return (data || [])
+      .filter((r) => Array.isArray(r.gratitude) && r.gratitude.length > 0)
+      .map((r) => ({ date: r.date, items: r.gratitude as string[] }));
+  },
+
+  async syncDay(date: string, items: string[]): Promise<void> {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return; // local-only for signed-out sessions
+
+    // Replace (not append) today's cloud row so edits stay idempotent.
+    const { data: existing } = await supabase
+      .from('mental_health_journal_entries')
+      .select('id')
+      .eq('date', date)
+      .eq('user_id', user.id)
+      .contains('tags', ['gratitude']);
+
+    if (existing && existing.length > 0) {
+      await supabase
+        .from('mental_health_journal_entries')
+        .delete()
+        .in(
+          'id',
+          existing.map((e) => e.id)
+        );
+    }
+
+    const { error } = await supabase.from('mental_health_journal_entries').insert({
+      user_id: user.id,
+      date,
+      time: new Date().toTimeString().slice(0, 5),
+      mood: 4,
+      mood_label: 'gratitude',
+      content: items.join(' · '),
+      gratitude: items,
+      tags: ['gratitude'],
+    });
+
+    if (error) throw error;
+  },
+};
+
+// =====================================================
+// PREFS (small KV — reminders, liked affirmations, goals…)
+// =====================================================
+// Cloud copy for wellbeing state that would otherwise die with the device.
+// Local-first semantics: consumers paint from localStorage, adopt the cloud
+// value only when local is empty, and dual-write on every save.
+// mental_health_prefs is not in the generated types yet (regen pending) —
+// untyped client until then.
+const prefsDb = supabase as unknown as import('@supabase/supabase-js').SupabaseClient;
+
+export const prefsService = {
+  async get<T>(key: string): Promise<T | null> {
+    const { data, error } = await prefsDb
+      .from('mental_health_prefs')
+      .select('value')
+      .eq('key', key)
+      .maybeSingle();
+    if (error) throw error;
+    return (data?.value as T) ?? null;
+  },
+
+  async set(key: string, value: unknown): Promise<void> {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return; // signed-out sessions stay local-only
+
+    const { error } = await prefsDb.from('mental_health_prefs').upsert(
+      {
+        user_id: user.id,
+        key,
+        value,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'user_id,key' }
+    );
+    if (error) throw error;
+  },
+};
+
+// =====================================================
 // SLEEP ENTRIES
 // =====================================================
 export const sleepService = {

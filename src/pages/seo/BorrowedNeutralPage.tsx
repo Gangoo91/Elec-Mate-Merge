@@ -558,7 +558,7 @@ const sections = [
             <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
             <span className="text-white">
               Re-perform{' '}
-              <SEOInternalLink href="/guides/insulation-resistance-testing">
+              <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                 insulation resistance testing
               </SEOInternalLink>{' '}
               on both affected circuits
@@ -783,7 +783,7 @@ const relatedPages = [
     category: 'Certification',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'Verify circuit integrity after fixing a borrowed neutral fault.',
     icon: Gauge,

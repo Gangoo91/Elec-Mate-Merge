@@ -40,6 +40,45 @@ export interface PushTemplate {
   skipQuietHours?: boolean;
 }
 
+/**
+ * Certificate type → correct display label. Notifications must read "EICR",
+ * "Minor Works", "Solar PV" — never the raw stored "eicr"/"minor-works"
+ * (ELE-226). Mirrors the SQL public.notif_cert_label used by the DB producers.
+ */
+export const certLabel = (t?: string): string => {
+  const key = (t ?? '').trim().toLowerCase();
+  const map: Record<string, string> = {
+    eicr: 'EICR',
+    eic: 'EIC',
+    'minor-works': 'Minor Works',
+    minor_works: 'Minor Works',
+    minorworks: 'Minor Works',
+    mw: 'Minor Works',
+    'solar-pv': 'Solar PV',
+    solar_pv: 'Solar PV',
+    'ev-charging': 'EV Charging',
+    ev_charging: 'EV Charging',
+  };
+  if (map[key]) return map[key];
+  if (!key) return 'Certificate';
+  return key.charAt(0).toUpperCase() + key.slice(1);
+};
+
+/**
+ * Title-case a name that may be stored ALL CAPS or all lower — fixes the
+ * "Good morning, ANDREW" digest bug (ELE-1378). Leaves mixed-case names as-is.
+ */
+export const titleCaseName = (name?: string): string => {
+  const n = (name ?? '').trim();
+  if (!n) return '';
+  if (n === n.toUpperCase() || n === n.toLowerCase()) {
+    return n
+      .toLowerCase()
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+  return n;
+};
+
 // ============================================================================
 // Tier 4 — Refer a friend
 // ============================================================================
@@ -65,7 +104,7 @@ export const referralTemplates = {
 
   /** Fired after any certificate report is marked complete. */
   cert_completed: (certType?: string): PushTemplate => ({
-    title: certType ? `${certType} signed off` : 'Certificate signed off',
+    title: certType ? `${certLabel(certType)} signed off` : 'Certificate signed off',
     body: 'Refer a colleague to Elec-Mate and you both get a month free.',
     ...referralBase(),
   }),
@@ -153,7 +192,7 @@ export const reengagementTemplates = {
     propertyAddress: string,
     reportId: string
   ): PushTemplate => ({
-    title: `Finish your ${certType}`,
+    title: `Finish your ${certLabel(certType)}`,
     body: `${propertyAddress} — about two minutes to complete.`,
     type: 'certificate',
     data: {
@@ -164,7 +203,7 @@ export const reengagementTemplates = {
   }),
 
   cert_expiring: (certType: string, daysLeft: number, propertyAddress: string): PushTemplate => ({
-    title: `${certType} expires in ${daysLeft} days`,
+    title: `${certLabel(certType)} expires in ${daysLeft} days`,
     body: `${propertyAddress} — book the renewal.`,
     type: 'certificate',
     data: {
@@ -210,7 +249,7 @@ export function buildMorningDigest(
 
   if (relevant.length === 0) return null;
 
-  const greeting = firstName ? `Good morning, ${firstName}` : 'Good morning';
+  const greeting = firstName ? `Good morning, ${titleCaseName(firstName)}` : 'Good morning';
   // One section reads as a sentence; multiple become a tidy bulleted brief.
   const body = relevant.length === 1 ? relevant[0] : relevant.map((l) => `• ${l}`).join('\n');
 

@@ -173,7 +173,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
 
   return (
     <section className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
 
       <div className="grid gap-8 px-6 py-7 sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
         {/* ── Left: header + preview pass ───────────────────────────────── */}
@@ -192,7 +192,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
 
           {/* Mini pass preview */}
           <div className="mt-6 relative rounded-2xl bg-gradient-to-br from-black via-[#0a0a0a] to-[#111] border border-white/[0.1] p-5 shadow-[0_10px_40px_rgba(0,0,0,0.4)] max-w-[320px]">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-elec-yellow/30" />
             <div className="flex items-start justify-between">
               <div>
                 <div className="text-[9px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">

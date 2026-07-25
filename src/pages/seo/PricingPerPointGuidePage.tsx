@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional PDF quotes with per-point pricing built in.',
     icon: PoundSterling,
@@ -577,7 +577,7 @@ const sections = [
 export default function PricingPerPointGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Price Per Point UK 2026: £80-£150 Rates"
+      title="Price Per Point for Electrical Work UK 2026: Rate Guide"
       description="Per-point pricing for UK electrical work 2026: £80-£150 per outlet/switch. What counts, regional variation, supply-and-fix vs labour-only rates."
       datePublished="2026-03-27"
       dateModified="2026-06-10"

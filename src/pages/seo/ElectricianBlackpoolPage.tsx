@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote guesthouse rewires, HMO electrical upgrades, and consumer unit replacements in Blackpool.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 — covering inspection and testing for domestic and commercial properties.',
@@ -461,7 +461,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting for Guesthouses</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce detailed quotes for Blackpool guesthouse rewires and HMO upgrades.
                   Professional quotes help win higher-value commercial jobs.
                 </p>

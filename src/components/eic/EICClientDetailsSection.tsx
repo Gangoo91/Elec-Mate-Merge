@@ -284,20 +284,14 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
             />
           </div>
 
-          <FormField label="Description of Installation" required>
+          {/* ELE-1387 — Description and Extent are the same thing for the vast
+              majority of jobs, so they're one field. The value populates both
+              the Description and the Extent boxes on the certificate. */}
+          <FormField label="Description of Installation & Extent Covered" required>
             <Input
               value={localValues.description || ''}
               onChange={(e) => handleFieldChange('description', e.target.value)}
-              placeholder="e.g., Full rewire of 3-bed semi-detached"
-              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-            />
-          </FormField>
-
-          <FormField label="Extent Covered by this Certificate">
-            <Input
-              value={localValues.extentOfInstallation || ''}
-              onChange={(e) => handleFieldChange('extentOfInstallation', e.target.value)}
-              placeholder="e.g., All circuits from new consumer unit"
+              placeholder="e.g., Full rewire of 3-bed semi-detached — all circuits from new consumer unit"
               className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
             />
           </FormField>

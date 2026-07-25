@@ -56,8 +56,7 @@ const categoryOrder = [
   'system',
 ];
 
-const prettyCategory = (c: string) =>
-  c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, ' ');
+const prettyCategory = (c: string) => c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, ' ');
 
 export default function AdminSettings() {
   const { profile } = useAuth();
@@ -141,7 +140,11 @@ export default function AdminSettings() {
   const trialDays = settings?.find((s) => s.key === 'trial_days');
 
   return (
-    <PullToRefresh onRefresh={async () => { await refetch(); }}>
+    <PullToRefresh
+      onRefresh={async () => {
+        await refetch();
+      }}
+    >
       <PageFrame>
         <PageHero
           eyebrow="Tools"
@@ -316,30 +319,20 @@ export default function AdminSettings() {
           </>
         )}
 
+        {/* Changes persist per-toggle via admin-manage-settings — the old
+            footer "Save" button saved nothing and just toasted success. */}
         <div className="fixed left-0 right-0 bottom-0 z-40 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]/95 backdrop-blur">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
             <span className="text-[12px] text-white">
-              {settings?.length || 0} settings loaded
+              {settings?.length || 0} settings · changes save automatically
             </span>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => refetch()}
-                className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[12px] font-medium hover:bg-white/[0.1] transition-colors touch-manipulation"
-              >
-                <RefreshCw className="h-3.5 w-3.5" />
-                Reset
-              </button>
-              <button
-                onClick={() => {
-                  haptic.success();
-                  toast({ title: 'All changes saved' });
-                }}
-                className="h-10 px-5 inline-flex items-center gap-2 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-              >
-                <Save className="h-3.5 w-3.5" />
-                Save
-              </button>
-            </div>
+            <button
+              onClick={() => refetch()}
+              className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[12px] font-medium hover:bg-white/[0.1] transition-colors touch-manipulation"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              Refresh
+            </button>
           </div>
         </div>
 
@@ -384,8 +377,7 @@ export default function AdminSettings() {
                 <Button
                   className="w-full h-11 touch-manipulation gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 rounded-full font-semibold"
                   onClick={() =>
-                    editSetting &&
-                    updateMutation.mutate({ key: editSetting.key, value: editValue })
+                    editSetting && updateMutation.mutate({ key: editSetting.key, value: editValue })
                   }
                   disabled={updateMutation.isPending}
                 >

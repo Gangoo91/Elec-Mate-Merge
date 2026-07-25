@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { Drawer } from 'vaul';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -26,7 +27,6 @@ import {
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useElecIdProfile } from '@/hooks/useElecIdProfile';
-import { useIsMobile } from '@/hooks/use-mobile';
 import {
   getExpiryStatus,
   calculateProfileCompleteness,
@@ -71,9 +71,6 @@ const TIER_META: Record<VerificationTier, { label: string; tone: Tone; descripti
 const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const { profile } = useAuth();
   const { profile: elecIdProfile, isOptedOut, setOptOut, updateProfile } = useElecIdProfile();
-  const isMobile = useIsMobile();
-
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [isOptOutDialogOpen, setIsOptOutDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -351,7 +348,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       rateType: elecIdData.rateType,
       rateAmount: elecIdData.rateAmount?.toString() || '',
     });
-    setIsEditDialogOpen(true);
+    setIsEditSheetOpen(true);
   };
 
   const handleSaveEdit = async () => {
@@ -365,7 +362,6 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         rate_type: editFormData.rateType as 'hourly' | 'daily' | 'weekly' | 'yearly',
         rate_amount: editFormData.rateAmount ? parseFloat(editFormData.rateAmount) : null,
       } as any);
-      setIsEditDialogOpen(false);
       setIsEditSheetOpen(false);
       toast({
         title: 'Profile updated',
@@ -524,71 +520,35 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* Edit drawer / dialog */}
-      {isMobile ? (
-        <Drawer.Root
-          open={isEditSheetOpen}
-          onOpenChange={setIsEditSheetOpen}
-          shouldScaleBackground={false}
-          noBodyStyles
-        >
-          <Drawer.Portal>
-            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
-              </div>
-              <div className="px-5 pb-2">
-                <h3 className="text-lg font-semibold text-white">Edit profile</h3>
-                <p className="text-sm text-white/65">Update your Elec-ID information</p>
-              </div>
-              <div className="flex-1 overflow-y-auto px-5 pb-4">{EditFormContent()}</div>
-              <div className="p-5 border-t border-white/[0.06]">
-                <div className="flex gap-3">
-                  <button
-                    className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
-                    onClick={() => setIsEditSheetOpen(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
-                    onClick={handleSaveEdit}
-                    disabled={isSaving}
-                  >
-                    {isSaving ? 'Saving…' : 'Save changes'}
-                  </button>
-                </div>
-              </div>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer.Root>
-      ) : (
-        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-white">Edit Elec-ID profile</DialogTitle>
-            </DialogHeader>
-            <div className="pt-4">
-              {EditFormContent()}
-              <div className="flex gap-3 pt-6">
-                <button
-                  className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
-                  onClick={() => setIsEditDialogOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
-                  onClick={handleSaveEdit}
-                  disabled={isSaving}
-                >
-                  {isSaving ? 'Saving…' : 'Save changes'}
-                </button>
-              </div>
+      <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+          <div className="lg:hidden flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+          </div>
+          <div className="px-5 pb-2">
+            <h3 className="text-lg font-semibold text-white">Edit profile</h3>
+            <p className="text-sm text-white/65">Update your Elec-ID information</p>
+          </div>
+          <div className="flex-1 overflow-y-auto px-5 pb-4">{EditFormContent()}</div>
+          <div className="p-5 border-t border-white/[0.06]">
+            <div className="flex gap-3">
+              <button
+                className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
+                onClick={() => setIsEditSheetOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
+                onClick={handleSaveEdit}
+                disabled={isSaving}
+              >
+                {isSaving ? 'Saving…' : 'Save changes'}
+              </button>
             </div>
-          </DialogContent>
-        </Dialog>
-      )}
+          </div>
+        </SettingsSheetContent>
+      </Sheet>
 
       {/* ── ID CARD HERO ─────────────────────────────────────── */}
       <motion.div
@@ -597,7 +557,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl"
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
+        <div className="absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
 
         <div className="p-5 sm:p-6 lg:p-7">
           <div className="flex items-start justify-between gap-4">
@@ -609,7 +569,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <p className="mt-1 text-sm text-elec-yellow font-medium">{elecIdData.jobTitleLabel}</p>
             </div>
             <button
-              onClick={() => (isMobile ? setIsEditSheetOpen(true) : handleOpenEdit())}
+              onClick={handleOpenEdit}
               className="shrink-0 h-11 px-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-[12px] font-medium text-elec-yellow hover:bg-white/[0.08] touch-manipulation"
             >
               Edit →
@@ -625,7 +585,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl object-cover border border-white/[0.08]"
                 />
               ) : (
-                <div className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl bg-gradient-to-br from-elec-yellow via-amber-400 to-orange-400 flex items-center justify-center border border-white/[0.08]">
+                <div className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl bg-elec-yellow flex items-center justify-center border border-white/[0.08]">
                   <span className="text-black font-semibold text-2xl sm:text-3xl">
                     {userInitials}
                   </span>
@@ -1061,7 +1021,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   trailing={
                     <span className="flex items-center gap-3">
                       <span className="text-xl font-semibold text-elec-yellow tabular-nums">
-                        {profile?.profile_views ?? 0}
+                        {elecIdProfile?.profile_views ?? 0}
                       </span>
                       <Arrow />
                     </span>

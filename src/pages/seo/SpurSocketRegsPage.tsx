@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'When to issue a Minor Works Certificate for spur additions and how to complete it correctly.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Which electrical work requires Building Control notification and which is exempt.',
@@ -165,7 +165,7 @@ const sections = [
         <p>
           There are two fundamental types: fused spurs and unfused spurs. The rules governing each
           type are different, and getting them wrong is one of the most common errors found during{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR inspections</SEOInternalLink>.
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR inspections</SEOInternalLink>.
           Understanding the difference is essential for every electrician.
         </p>
       </>
@@ -599,7 +599,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>
                 </strong>{' '}

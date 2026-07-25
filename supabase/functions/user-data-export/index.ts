@@ -93,6 +93,17 @@ serve(async (req: Request): Promise<Response> => {
       userSafetyDocuments,
       elecIdProfiles,
       elecIdEmployerProfiles,
+      mentalHealthMoodEntries,
+      mentalHealthJournalEntries,
+      mentalHealthSleepEntries,
+      mentalHealthSafetyPlans,
+      mentalHealthGroundingProgress,
+      mentalHealthPrefs,
+      peerSupporterProfiles,
+      peerConversationsAsSeeker,
+      peerMessagesSent,
+      peerBlocks,
+      peerReports,
     ] = await Promise.all([
       fetchTable(supabaseAdmin, 'profiles', userId, 'id'),
       fetchTable(supabaseAdmin, 'certificates', userId),
@@ -115,7 +126,32 @@ serve(async (req: Request): Promise<Response> => {
       fetchTable(supabaseAdmin, 'user_safety_documents', userId),
       fetchTable(supabaseAdmin, 'elec_id_profiles', userId),
       fetchTable(supabaseAdmin, 'employer_elec_id_profiles', userId),
+      fetchTable(supabaseAdmin, 'mental_health_mood_entries', userId),
+      fetchTable(supabaseAdmin, 'mental_health_journal_entries', userId),
+      fetchTable(supabaseAdmin, 'mental_health_sleep_entries', userId),
+      fetchTable(supabaseAdmin, 'mental_health_safety_plans', userId),
+      fetchTable(supabaseAdmin, 'mental_health_grounding_progress', userId),
+      fetchTable(supabaseAdmin, 'mental_health_prefs', userId),
+      fetchTable(supabaseAdmin, 'mental_health_peer_supporters', userId),
+      fetchTable(supabaseAdmin, 'mental_health_peer_conversations', userId, 'seeker_id'),
+      fetchTable(supabaseAdmin, 'mental_health_peer_messages', userId, 'sender_id'),
+      fetchTable(supabaseAdmin, 'mental_health_peer_blocks', userId, 'blocker_id'),
+      fetchTable(supabaseAdmin, 'mental_health_peer_reports', userId, 'reporter_id'),
     ]);
+
+    // Peer conversations reference the supporter record (mental_health_peer_supporters.id),
+    // not the auth user id — fetch the supporter side separately so the user gets every
+    // conversation they were a party to, whichever side they sat on.
+    const supporterRecordId = (peerSupporterProfiles[0] as { id?: string } | undefined)?.id;
+    const peerConversationsAsSupporter = supporterRecordId
+      ? await fetchTable(
+          supabaseAdmin,
+          'mental_health_peer_conversations',
+          supporterRecordId,
+          'supporter_id'
+        )
+      : [];
+    const peerConversations = [...peerConversationsAsSeeker, ...peerConversationsAsSupporter];
 
     // Build export object — only include sections that have data
     const exportData: Record<string, unknown> = {};
@@ -141,6 +177,17 @@ serve(async (req: Request): Promise<Response> => {
     if (userSafetyDocuments.length > 0) exportData.safetyDocuments = userSafetyDocuments;
     if (elecIdProfiles.length > 0) exportData.elecIdProfile = elecIdProfiles[0];
     if (elecIdEmployerProfiles.length > 0) exportData.elecIdEmployerProfile = elecIdEmployerProfiles[0];
+    if (mentalHealthMoodEntries.length > 0) exportData.mentalHealthMoodEntries = mentalHealthMoodEntries;
+    if (mentalHealthJournalEntries.length > 0) exportData.mentalHealthJournalEntries = mentalHealthJournalEntries;
+    if (mentalHealthSleepEntries.length > 0) exportData.mentalHealthSleepEntries = mentalHealthSleepEntries;
+    if (mentalHealthSafetyPlans.length > 0) exportData.mentalHealthSafetyPlans = mentalHealthSafetyPlans;
+    if (mentalHealthGroundingProgress.length > 0) exportData.mentalHealthGroundingProgress = mentalHealthGroundingProgress;
+    if (mentalHealthPrefs.length > 0) exportData.mentalHealthPreferences = mentalHealthPrefs;
+    if (peerSupporterProfiles.length > 0) exportData.peerSupporterProfile = peerSupporterProfiles[0];
+    if (peerConversations.length > 0) exportData.peerConversations = peerConversations;
+    if (peerMessagesSent.length > 0) exportData.peerMessagesSent = peerMessagesSent;
+    if (peerBlocks.length > 0) exportData.peerBlocks = peerBlocks;
+    if (peerReports.length > 0) exportData.peerReports = peerReports;
 
     const fullExport = {
       exportedAt,

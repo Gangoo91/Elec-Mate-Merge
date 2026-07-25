@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
@@ -72,10 +72,6 @@ const BusinessGrowth = lazy(
 const TaxFinances = lazy(() => import('@/pages/electrician/business-development/TaxFinances'));
 const DebtRecovery = lazy(() => import('@/pages/electrician/business-development/DebtRecovery'));
 const ElectricianMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
-const WorkLifeBalance = lazy(() => import('@/pages/electrician/mental-health/WorkLifeBalance'));
-const MentalHealthResources = lazy(
-  () => import('@/pages/electrician/mental-health/MentalHealthResources')
-);
 const BusinessCalculators = lazy(
   () => import('@/pages/electrician/business-development/tools/BusinessCalculators')
 );
@@ -418,21 +414,14 @@ const ElectricianHubRoutes = () => (
         </LazyRoute>
       }
     />
+    {/* Legacy sub-pages — the unified hub owns this content now */}
     <Route
       path="mental-health/work-life-balance"
-      element={
-        <LazyRoute>
-          <WorkLifeBalance />
-        </LazyRoute>
-      }
+      element={<Navigate to="/mental-health?section=resources" replace />}
     />
     <Route
       path="mental-health/resources"
-      element={
-        <LazyRoute>
-          <MentalHealthResources />
-        </LazyRoute>
-      }
+      element={<Navigate to="/mental-health?section=resources" replace />}
     />
 
     <Route

@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Target, Plus, Check, Trash2 } from 'lucide-react';
-import { useMentalHealth } from '@/contexts/MentalHealthContext';
+import { useState, useEffect } from 'react';
+import { Plus, Check, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { prefsService } from '@/services/mentalHealthService';
 
 interface Goal {
   id: string;
@@ -18,27 +19,69 @@ const categories = [
   { value: 'personal', label: 'Personal', color: 'text-white/85 bg-white/[0.02]' },
 ];
 
+const STORAGE_KEY = 'elec-mate-wellbeing-goals';
+
 const GoalSettingTracker = () => {
-  const { goals = [], addGoal, updateGoal, deleteGoal } = useMentalHealth() as any;
+  const [goals, setGoals] = useState<Goal[]>(() => storageGetJSONSync<Goal[]>(STORAGE_KEY, []));
   const [showAdd, setShowAdd] = useState(false);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('wellbeing');
 
+  // Fresh device: adopt the cloud copy when there's nothing local.
+  useEffect(() => {
+    if (storageGetJSONSync<Goal[]>(STORAGE_KEY, []).length > 0) return;
+    let cancelled = false;
+    prefsService
+      .get<Goal[]>('wellbeing-goals')
+      .then((cloud) => {
+        if (!cancelled && cloud && cloud.length > 0) {
+          setGoals(cloud);
+          storageSetJSONSync(STORAGE_KEY, cloud);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const persist = (next: Goal[]) => {
+    setGoals(next);
+    storageSetJSONSync(STORAGE_KEY, next);
+    prefsService.set('wellbeing-goals', next).catch(() => {});
+  };
+
   const handleAdd = () => {
     if (!title.trim()) return;
-    const goal: Goal = { id: crypto.randomUUID(), title: title.trim(), category, progress: 0, status: 'active' };
-    if (addGoal) addGoal(goal);
+    const goal: Goal = {
+      id: crypto.randomUUID(),
+      title: title.trim(),
+      category,
+      progress: 0,
+      status: 'active',
+    };
+    persist([goal, ...goals]);
     setTitle('');
     setShowAdd(false);
   };
 
   const handleProgress = (goal: Goal) => {
     const newProgress = Math.min(100, goal.progress + 25);
-    if (updateGoal) updateGoal(goal.id, { progress: newProgress, status: newProgress >= 100 ? 'completed' : 'active' });
+    persist(
+      goals.map((g) =>
+        g.id === goal.id
+          ? { ...g, progress: newProgress, status: newProgress >= 100 ? 'completed' : 'active' }
+          : g
+      )
+    );
   };
 
-  const activeGoals = (goals || []).filter((g: Goal) => g.status === 'active');
-  const completedGoals = (goals || []).filter((g: Goal) => g.status === 'completed');
+  const deleteGoal = (id: string) => {
+    persist(goals.filter((g) => g.id !== id));
+  };
+
+  const activeGoals = goals.filter((g) => g.status === 'active');
+  const completedGoals = goals.filter((g) => g.status === 'completed');
 
   return (
     <div className="space-y-4 pt-3">
@@ -48,17 +91,36 @@ const GoalSettingTracker = () => {
           {activeGoals.map((goal: Goal) => {
             const cat = categories.find((c) => c.value === goal.category);
             return (
-              <div key={goal.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <button onClick={() => handleProgress(goal)} className="touch-manipulation active:scale-[0.95]">
+              <div
+                key={goal.id}
+                className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
+              >
+                <button
+                  onClick={() => handleProgress(goal)}
+                  className="touch-manipulation active:scale-[0.95]"
+                >
                   <div className="w-10 h-10 rounded-xl bg-white/[0.02] flex items-center justify-center flex-shrink-0 relative">
                     <span className="text-[10px] font-bold text-white/85">{goal.progress}%</span>
                   </div>
                 </button>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-medium text-white truncate">{goal.title}</h4>
-                  {cat && <span className={cn('text-[9px] font-bold px-1.5 py-0.5 rounded mt-0.5 inline-block', cat.color)}>{cat.label}</span>}
+                  {cat && (
+                    <span
+                      className={cn(
+                        'text-[9px] font-bold px-1.5 py-0.5 rounded mt-0.5 inline-block',
+                        cat.color
+                      )}
+                    >
+                      {cat.label}
+                    </span>
+                  )}
                 </div>
-                <button onClick={() => deleteGoal?.(goal.id)} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/[0.02] touch-manipulation">
+                <button
+                  onClick={() => deleteGoal(goal.id)}
+                  aria-label={`Delete goal ${goal.title}`}
+                  className="w-11 h-11 rounded-lg flex items-center justify-center hover:bg-white/[0.04] touch-manipulation"
+                >
                   <Trash2 className="h-3.5 w-3.5 text-white hover:text-red-400" />
                 </button>
               </div>
@@ -94,14 +156,34 @@ const GoalSettingTracker = () => {
           />
           <div className="flex gap-1.5">
             {categories.map((c) => (
-              <button key={c.value} onClick={() => setCategory(c.value)} className={cn('flex-1 h-9 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
-                category === c.value ? c.color + 'border border-current/20' : 'bg-white/[0.03] border border-white/[0.06] text-white'
-              )}>{c.label}</button>
+              <button
+                key={c.value}
+                onClick={() => setCategory(c.value)}
+                className={cn(
+                  'flex-1 h-9 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
+                  category === c.value
+                    ? c.color + 'border border-current/20'
+                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
+                )}
+              >
+                {c.label}
+              </button>
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={handleAdd} disabled={!title.trim()} className="flex-1 h-11 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30">Save Goal</button>
-            <button onClick={() => setShowAdd(false)} className="h-11 px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-xs touch-manipulation active:scale-[0.98]">Cancel</button>
+            <button
+              onClick={handleAdd}
+              disabled={!title.trim()}
+              className="flex-1 h-11 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
+            >
+              Save Goal
+            </button>
+            <button
+              onClick={() => setShowAdd(false)}
+              className="h-11 px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-xs touch-manipulation active:scale-[0.98]"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       ) : (
@@ -114,7 +196,9 @@ const GoalSettingTracker = () => {
       )}
 
       {activeGoals.length === 0 && completedGoals.length === 0 && !showAdd && (
-        <p className="text-xs text-white text-center py-2">Set small, achievable goals for your wellbeing</p>
+        <p className="text-xs text-white text-center py-2">
+          Set small, achievable goals for your wellbeing
+        </p>
       )}
     </div>
   );

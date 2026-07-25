@@ -111,7 +111,7 @@ const sections = [
         </p>
         <p>
           NICEIC is one of several Government-authorised competent person schemes approved under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . Part P applies to electrical work in dwellings in England and requires that notifiable
@@ -519,7 +519,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Notifiable vs non-notifiable work, competent person schemes, and compliance requirements.',

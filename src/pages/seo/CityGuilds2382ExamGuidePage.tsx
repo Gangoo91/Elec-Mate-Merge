@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   { label: 'C&G 2382 Exam Guide', href: '/guides/city-guilds-2382-exam-guide' },
 ];
 
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for the C&G 2391 — often taken alongside or after the 2382.',
     icon: GraduationCap,

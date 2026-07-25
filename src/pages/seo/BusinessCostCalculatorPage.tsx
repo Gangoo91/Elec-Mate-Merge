@@ -452,7 +452,7 @@ export default function BusinessCostCalculatorPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description: 'Forecast your cash position and never be caught short by a cash gap.',
           icon: Briefcase,

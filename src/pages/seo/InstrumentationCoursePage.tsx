@@ -357,7 +357,7 @@ const sections = [
           from multiple PLCs and remote terminal units (RTUs) across a site or network of sites.
           SCADA provides operator interface screens, historical data logging, alarm management, and
           remote control capabilities. For electricians working on{' '}
-          <SEOInternalLink href="/training/bms-course">building management systems</SEOInternalLink>{' '}
+          <SEOInternalLink href="/bms-course">building management systems</SEOInternalLink>{' '}
           or industrial control systems, understanding SCADA architecture and communication
           protocols is increasingly important.
         </p>
@@ -432,7 +432,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/bms-course',
+    href: '/bms-course',
     title: 'BMS Course',
     description:
       'Building Management Systems training covering HVAC control, BACnet, Modbus, and system integration.',

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/training/electrical-apprentice' },
+  { label: 'Training', href: '/apprentice-training' },
   { label: 'Apprentice Training App', href: '/tools/apprentice-training-app' },
 ];
 
@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Structured preparation for the AM2 practical assessment. Installation tasks, testing procedures, and time management.',
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation',
     description:
       'Complete guide to the end-point assessment for electrical apprenticeships including knowledge test, practical, and professional discussion.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Step-by-step guide to building an apprenticeship portfolio that meets the KSB requirements for your EPA gateway.',
@@ -213,7 +213,7 @@ const sections = [
         </p>
         <p>
           The app covers the full scope of the Level 3{' '}
-          <SEOInternalLink href="/training/electrical-apprentice">electrical apprenticeship</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-training">electrical apprenticeship</SEOInternalLink>{' '}
           standard, including all knowledge, skills, and behaviours (KSBs). Content is aligned with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
@@ -250,7 +250,7 @@ const sections = [
         </p>
         <p>
           Mock exams replicate the exact format and conditions of real{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             City & Guilds examinations
           </SEOInternalLink>
           . You sit the exam under timed conditions with the same number of questions, the same
@@ -285,7 +285,7 @@ const sections = [
           highest grade.
         </p>
         <p>
-          The <SEOInternalLink href="/training/am2-exam-preparation">AM2 simulator</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/am2-exam-preparation">AM2 simulator</SEOInternalLink>{' '}
           focuses on the practical assessment, providing detailed task breakdowns, marking criteria,
           and time management guidance. While you need to physically practise installation and
           testing tasks, the simulator ensures you understand exactly what is expected before
@@ -366,7 +366,7 @@ const sections = [
         <p>
           When your portfolio is complete, you can export it as a professional PDF or share a
           digital link with your training provider and EPA organisation. The{' '}
-          <SEOInternalLink href="/training/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             apprentice portfolio guide
           </SEOInternalLink>{' '}
           provides detailed advice on what makes strong evidence for each KSB.

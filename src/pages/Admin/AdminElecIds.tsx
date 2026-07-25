@@ -5,6 +5,7 @@ import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,13 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  ShieldCheck,
-  ShieldX,
-  Loader2,
-  RefreshCw,
-  Download,
-} from 'lucide-react';
+import { ShieldCheck, ShieldX, Loader2, RefreshCw, Download } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
@@ -81,7 +76,10 @@ export default function AdminElecIds() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [rejectReason, setRejectReason] = useState('');
-  const [showRejectDialog, setShowRejectDialog] = useState(false);
+  // Inline reject panel inside the sheet footer. Deliberately NOT a nested
+  // AlertDialog — stacking a second Radix modal over the open Sheet froze the
+  // whole app (double focus-trap / body pointer-events lock, 2026-07-25).
+  const [rejectMode, setRejectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [showBulkApproveDialog, setShowBulkApproveDialog] = useState(false);
   const [showBulkRejectDialog, setShowBulkRejectDialog] = useState(false);
@@ -243,7 +241,7 @@ export default function AdminElecIds() {
       queryClient.invalidateQueries({ queryKey: ['admin-elec-ids'] });
       queryClient.invalidateQueries({ queryKey: ['admin-elec-id-stats'] });
       setSelectedProfile(null);
-      setShowRejectDialog(false);
+      setRejectMode(false);
       setRejectReason('');
       toast({ title: 'Profile rejected' });
     },
@@ -346,16 +344,21 @@ export default function AdminElecIds() {
     URL.revokeObjectURL(url);
   };
 
-  const pendingProfiles = useMemo(
-    () => elecIds?.filter((p) => !p.is_verified) || [],
-    [elecIds]
-  );
+  const pendingProfiles = useMemo(() => elecIds?.filter((p) => !p.is_verified) || [], [elecIds]);
 
   const selectAllPending = () => {
     setSelectedIds(new Set(pendingProfiles.map((p) => p.id)));
   };
   const clearSelection = () => {
     setSelectedIds(new Set());
+  };
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   };
 
   const statusTone = (profile: ElecIdProfile): Tone => {
@@ -416,11 +419,7 @@ export default function AdminElecIds() {
               <IconButton onClick={exportCSV} aria-label="Export CSV">
                 <Download className="h-4 w-4" />
               </IconButton>
-              <IconButton
-                onClick={() => refetch()}
-                disabled={isFetching}
-                aria-label="Refresh"
-              >
+              <IconButton onClick={() => refetch()} disabled={isFetching} aria-label="Refresh">
                 <RefreshCw className={isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
               </IconButton>
             </>
@@ -470,7 +469,7 @@ export default function AdminElecIds() {
           searchPlaceholder="Search name, Elec-ID, ECS..."
         />
 
-        {pendingProfiles.length > 0 && statusFilter === 'pending' && (
+        {pendingProfiles.length > 0 && (
           <div className="flex flex-wrap items-center justify-between gap-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-3">
             <div className="flex items-center gap-3">
               <button
@@ -483,10 +482,14 @@ export default function AdminElecIds() {
               >
                 {selectedIds.size === pendingProfiles.length && selectedIds.size > 0
                   ? 'Clear selection'
-                  : `Select all (${pendingProfiles.length})`}
+                  : `Select all pending (${pendingProfiles.length})`}
               </button>
-              {selectedIds.size > 0 && (
+              {selectedIds.size > 0 ? (
                 <span className="text-[12px] text-white">{selectedIds.size} selected</span>
+              ) : (
+                <span className="text-[12px] text-white/60 hidden sm:inline">
+                  Tick pending rows to approve or reject in bulk
+                </span>
               )}
             </div>
             {selectedIds.size > 0 && (
@@ -513,29 +516,35 @@ export default function AdminElecIds() {
         {isLoading ? (
           <LoadingBlocks />
         ) : elecIds?.length === 0 ? (
-          <EmptyState
-            title="Queue is empty"
-            description="All submissions reviewed."
-          />
+          <EmptyState title="Queue is empty" description="All submissions reviewed." />
         ) : (
           <ListCard>
             <ListCardHeader
               tone={headerTone}
               title={headerTitle}
-              meta={
-                <Pill tone={headerTone}>
-                  {elecIds?.length ?? 0}
-                </Pill>
-              }
+              meta={<Pill tone={headerTone}>{elecIds?.length ?? 0}</Pill>}
             />
             <ListBody>
               {elecIds?.map((profile) => (
                 <ListRow
                   key={profile.id}
                   lead={
-                    <Avatar
-                      initials={getInitials(profile.profiles?.full_name)}
-                    />
+                    <div className="flex items-center gap-3">
+                      {!profile.is_verified && (
+                        <span
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center justify-center h-11 w-8 -my-2 touch-manipulation"
+                        >
+                          <Checkbox
+                            checked={selectedIds.has(profile.id)}
+                            onCheckedChange={() => toggleSelect(profile.id)}
+                            aria-label={`Select ${profile.profiles?.full_name || 'profile'} for bulk action`}
+                            className="h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                          />
+                        </span>
+                      )}
+                      <Avatar initials={getInitials(profile.profiles?.full_name)} />
+                    </div>
                   }
                   title={profile.profiles?.full_name || 'Unknown'}
                   subtitle={
@@ -568,7 +577,14 @@ export default function AdminElecIds() {
           </ListCard>
         )}
 
-        <Sheet open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
+        <Sheet
+          open={!!selectedProfile}
+          onOpenChange={() => {
+            setSelectedProfile(null);
+            setRejectMode(false);
+            setRejectReason('');
+          }}
+        >
           <SheetContent
             side="bottom"
             className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
@@ -591,9 +607,7 @@ export default function AdminElecIds() {
                       </div>
                     </div>
                     {selectedProfile && (
-                      <Pill tone={statusTone(selectedProfile)}>
-                        {statusLabel(selectedProfile)}
-                      </Pill>
+                      <Pill tone={statusTone(selectedProfile)}>{statusLabel(selectedProfile)}</Pill>
                     )}
                   </div>
                 </SheetTitle>
@@ -713,78 +727,88 @@ export default function AdminElecIds() {
 
               {selectedProfile && !selectedProfile.is_verified && (
                 <SheetFooter className="p-4 border-t border-white/[0.06]">
-                  <div className="flex gap-3 w-full">
-                    <button
-                      onClick={() => setShowRejectDialog(true)}
-                      disabled={approveMutation.isPending}
-                      className="flex-1 h-12 rounded-full border border-white/[0.08] text-[13px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
-                    >
-                      <ShieldX className="h-4 w-4" />
-                      Reject
-                    </button>
-                    <button
-                      onClick={() =>
-                        selectedProfile && approveMutation.mutate(selectedProfile.id)
-                      }
-                      disabled={approveMutation.isPending}
-                      className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
-                    >
-                      {approveMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <ShieldCheck className="h-4 w-4" />
-                      )}
-                      {approveMutation.isPending ? 'Approving...' : 'Verify'}
-                    </button>
-                  </div>
+                  {rejectMode ? (
+                    <div className="w-full space-y-3">
+                      <div>
+                        <p className="text-[13px] font-semibold text-white">Reject verification?</p>
+                        <p className="text-[12px] text-white/70 mt-0.5">
+                          The reason is sent to the user so they can fix it and resubmit.
+                        </p>
+                      </div>
+                      <Textarea
+                        value={rejectReason}
+                        onChange={(e) => setRejectReason(e.target.value)}
+                        placeholder="Enter rejection reason..."
+                        autoFocus
+                        className="min-h-[90px] text-base touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white/50 focus:border-elec-yellow/60"
+                      />
+                      <div className="flex gap-3 w-full">
+                        <button
+                          onClick={() => {
+                            setRejectMode(false);
+                            setRejectReason('');
+                          }}
+                          disabled={rejectMutation.isPending}
+                          className="flex-1 h-12 rounded-full border border-white/[0.08] text-[13px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() =>
+                            selectedProfile &&
+                            rejectMutation.mutate({
+                              id: selectedProfile.id,
+                              reason: rejectReason,
+                            })
+                          }
+                          disabled={!rejectReason.trim() || rejectMutation.isPending}
+                          className="flex-1 h-12 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[13px] font-semibold hover:bg-red-500/30 transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                        >
+                          {rejectMutation.isPending ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Rejecting...
+                            </>
+                          ) : (
+                            <>
+                              <ShieldX className="h-4 w-4" />
+                              Confirm reject
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-3 w-full">
+                      <button
+                        onClick={() => setRejectMode(true)}
+                        disabled={approveMutation.isPending}
+                        className="flex-1 h-12 rounded-full border border-white/[0.08] text-[13px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        <ShieldX className="h-4 w-4" />
+                        Reject
+                      </button>
+                      <button
+                        onClick={() =>
+                          selectedProfile && approveMutation.mutate(selectedProfile.id)
+                        }
+                        disabled={approveMutation.isPending}
+                        className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        {approveMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <ShieldCheck className="h-4 w-4" />
+                        )}
+                        {approveMutation.isPending ? 'Approving...' : 'Verify'}
+                      </button>
+                    </div>
+                  )}
                 </SheetFooter>
               )}
-
             </div>
           </SheetContent>
         </Sheet>
-
-        <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
-          <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Reject Verification?</AlertDialogTitle>
-              <AlertDialogDescription className="text-white">
-                Please provide a reason for rejection. This will be sent to the user.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <Textarea
-              value={rejectReason}
-              onChange={(e) => setRejectReason(e.target.value)}
-              placeholder="Enter rejection reason..."
-              className="min-h-[100px] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
-            />
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04]"
-                disabled={rejectMutation.isPending}
-              >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                onClick={() =>
-                  selectedProfile &&
-                  rejectMutation.mutate({ id: selectedProfile.id, reason: rejectReason })
-                }
-                disabled={!rejectReason.trim() || rejectMutation.isPending}
-              >
-                {rejectMutation.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Rejecting...
-                  </>
-                ) : (
-                  'Reject'
-                )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
 
         <AlertDialog open={showBulkApproveDialog} onOpenChange={setShowBulkApproveDialog}>
           <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">

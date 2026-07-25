@@ -408,7 +408,7 @@ const sections = [
           periodic inspection. It is almost always classified as C2 (Potentially Dangerous) because
           the absence of bonding means that metallic services could become live in the event of a
           fault, creating a shock risk. For guidance on earthing systems, see the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangements guide
           </SEOInternalLink>
           .
@@ -679,7 +679,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form.',
     icon: ClipboardCheck,

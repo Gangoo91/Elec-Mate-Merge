@@ -163,13 +163,7 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
 
                       <DropdownMenuSeparator />
 
-                      {canShareFilesToWhatsApp() && (
-                        <DropdownMenuItem onClick={() => onShareWhatsApp(quote)}>
-                          <MessageCircle className="h-4 w-4 mr-2" />
-                          Send via WhatsApp
-                        </DropdownMenuItem>
-                      )}
-
+                      {/* ELE-1377 — WhatsApp share removed. */}
                       <DropdownMenuItem onClick={() => onShareEmail(quote)}>
                         <Mail className="h-4 w-4 mr-2" />
                         Send via Email

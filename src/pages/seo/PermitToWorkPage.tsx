@@ -709,7 +709,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate risk assessments, method statements, and PTW templates with AI.',
     icon: Brain,

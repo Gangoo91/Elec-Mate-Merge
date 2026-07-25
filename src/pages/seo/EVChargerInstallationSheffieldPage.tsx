@@ -473,7 +473,7 @@ const sections = [
                   Factor in Yorkshire labour rates (£38 to £52/hour), site survey time for complex
                   terrain, earth rod costs, Northern Powergrid notification, and certification. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     electrical quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes that account for all job-specific variables.

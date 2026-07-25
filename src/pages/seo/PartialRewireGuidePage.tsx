@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables',
     description: 'Step-by-step cable sizing guide following BS 7671 and Appendix 4.',
     icon: Cable,
@@ -396,7 +396,7 @@ const sections = [
         <p>
           If the partial rewire includes new circuits (not just replacement of existing cables on
           existing circuits), the work is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (England and Wales). The electrician must either self-certify through a competent person

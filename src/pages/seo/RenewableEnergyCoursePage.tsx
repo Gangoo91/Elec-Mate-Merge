@@ -423,7 +423,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description: 'The natural partner to solar PV — install chargers powered by renewable energy.',
     icon: GraduationCap,
@@ -452,7 +452,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate App',
     description: 'Generate professional solar PV installation certificates with Elec-Mate.',
     icon: FileCheck2,

@@ -284,7 +284,7 @@ export default function CapacityPlanningCalculatorPage() {
                 need consistent revenue to cover the new person's cost even during quiet periods. As
                 a rule of thumb, you should be able to cover three months of their salary from your
                 cash reserves. Use the{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 to model the financial impact of hiring before you commit.
               </p>
             </>

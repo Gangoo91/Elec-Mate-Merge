@@ -250,7 +250,7 @@ export default function EVChargerInstallationPage() {
                 For properties with an existing TN-S earthing system (earth provided by the cable
                 sheath) or TT system (existing earth electrode), the separate earth rod may not be
                 required — but the 30 mA RCD protection is still mandatory. Always check the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 before specifying the installation design.
@@ -520,7 +520,7 @@ export default function EVChargerInstallationPage() {
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Part P Notification</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Installing a new circuit for an EV charger is notifiable under{' '}
-                    <SEOInternalLink href="/guides/part-p-building-regulations">
+                    <SEOInternalLink href="/part-p-building-regulations">
                       Part P of the Building Regulations
                     </SEOInternalLink>
                     . The work must be either self-certified through a competent person scheme or
@@ -628,14 +628,14 @@ export default function EVChargerInstallationPage() {
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'Understanding notification requirements for electrical work.',
           icon: ShieldCheck,

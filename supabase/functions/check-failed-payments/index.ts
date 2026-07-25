@@ -102,7 +102,7 @@ serve(async (req: Request) => {
       const openInvoices = await stripe.invoices.list({
         status: 'open',
         limit: 100,
-        expand: ['data.charge'],
+        expand: ['data.charge', 'data.subscription'],
       });
 
       const results = { attempted: 0, recovered: 0, declined: 0, skipped: 0 };
@@ -125,7 +125,28 @@ serve(async (req: Request) => {
           results.skipped++;
           continue;
         }
-        const lastFailure = (invoice.charge as Stripe.Charge | null)?.failure_code;
+        // Never retry someone who has cancelled — their leftover open invoice
+        // would otherwise be re-attempted every Friday (Sarah Palmer, Jul 2026).
+        const sub = invoice.subscription as Stripe.Subscription | string;
+        if (typeof sub !== 'string' && sub.status === 'canceled') {
+          results.skipped++;
+          logger.info('Payday retry skipping cancelled subscription', {
+            invoiceId: invoice.id,
+            subscriptionId: sub.id,
+          });
+          continue;
+        }
+        const lastCharge = invoice.charge as Stripe.Charge | null;
+        // Blocked = the bank or Radar refuses future attempts; the charge is
+        // never sent to the network, so a retry can only annoy the customer.
+        if (lastCharge?.outcome?.type === 'blocked') {
+          results.skipped++;
+          logger.info('Payday retry skipping blocked card', {
+            invoiceId: invoice.id,
+          });
+          continue;
+        }
+        const lastFailure = lastCharge?.failure_code;
         if (lastFailure && HARD_DECLINES.has(lastFailure)) {
           results.skipped++;
           logger.info('Payday retry skipping hard decline', {

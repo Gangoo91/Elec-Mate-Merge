@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -101,16 +102,13 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Credentials</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Inspector details
@@ -128,7 +126,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                 value={inspectorName}
                 onChange={(e) => setInspectorName(e.target.value)}
                 placeholder="Full name"
-                className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
               />
             </div>
 
@@ -166,7 +164,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                         'px-3 py-2 rounded-xl text-[13px] font-medium transition-colors touch-manipulation border',
                         isSelected
                           ? 'bg-elec-yellow text-black border-elec-yellow'
-                          : 'bg-[#0a0a0a] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
+                          : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
                       )}
                       aria-pressed={isSelected}
                     >
@@ -187,10 +185,10 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                 <div className="space-y-1.5">
                   <Label className="text-white font-medium text-[12px]">Provider</Label>
                   <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
-                    <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                    <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                       <SelectValue placeholder="Provider" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                    <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                       {INSURANCE_PROVIDERS.map((provider) => (
                         <SelectItem key={provider} value={provider}>
                           {provider}
@@ -202,10 +200,10 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                 <div className="space-y-1.5">
                   <Label className="text-white font-medium text-[12px]">Coverage</Label>
                   <Select value={insuranceCoverage} onValueChange={setInsuranceCoverage}>
-                    <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                    <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                       <SelectValue placeholder="Coverage" />
                     </SelectTrigger>
-                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                    <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                       {INSURANCE_COVERAGE_OPTIONS.map((coverage) => (
                         <SelectItem key={coverage} value={coverage}>
                           {coverage}
@@ -220,7 +218,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                     value={insurancePolicyNumber}
                     onChange={(e) => setInsurancePolicyNumber(e.target.value)}
                     placeholder="Policy number"
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -229,7 +227,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                     type="date"
                     value={insuranceExpiry}
                     onChange={(e) => setInsuranceExpiry(e.target.value)}
-                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                 </div>
               </div>
@@ -258,7 +256,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

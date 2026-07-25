@@ -502,7 +502,7 @@ const sections = [
                   18 metres in terraced properties), frequent consumer unit upgrades, parking
                   restrictions affecting van access, and the time cost of congestion. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes on site.
                 </p>
               </div>

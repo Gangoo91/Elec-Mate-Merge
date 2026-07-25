@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create itemised quotes for smart home installations with your margins built in.',
     icon: PoundSterling,
@@ -149,7 +149,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -573,7 +573,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised quotes for smart home installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Smart switches, Cat6 cable runs, access points, patch panels, labour, testing —
                   all priced with your margins. Professional PDF sent to the client on site.
                 </p>
@@ -611,8 +611,8 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring & Installation Cost UK 2026: £500–£5,000+"
-      description="How much does smart home wiring and installation cost in the UK (2026)? Single-room smart lighting from £500, whole-house retrofit with Cat6 + lighting + hub from £5,000+. Real pricing for clients and electricians."
+      title="Smart Home Wiring Cost UK 2026: Full Price Breakdown"
+      description="What smart home wiring really costs in the UK (2026) — room-by-room prices, whole-house retrofits, Cat6 structured cabling, hubs and labour. See where the money goes, what to budget, and what electricians should charge."
       datePublished="2026-03-27"
       dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}

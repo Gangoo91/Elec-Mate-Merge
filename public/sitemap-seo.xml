@@ -1212,12 +1212,6 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/2391-exam-tips</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/ac-vs-dc-earthing-solar-ev</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -1763,12 +1757,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/continuity-testing-electricians-guide</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/guides/continuity-testing-r1-r2</loc>
@@ -3864,18 +3852,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/polarity-testing-guide</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/polarity-testing-guide-bs7671</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/power-cut-what-to-do</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -4519,12 +4495,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/wiring-colours-uk</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/women-in-electrical-trade</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -4995,7 +4965,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/tools/rcd-testing-guide</loc>
+    <loc>https://www.elec-mate.com/rcd-testing-guide</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

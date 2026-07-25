@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   { label: 'CSCS vs ECS Card', href: '/guides/cscs-vs-ecs-card-comparison' },
 ];
 
@@ -227,8 +227,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Card types:</strong> Apprentice (white), Provisional (yellow), Installation
-                Electrician (blue), Maintenance Electrician (blue), Gold Card (gold). See the{' '}
+                <strong>Card types:</strong> ECS Apprentice, Trainee Electrician, Experienced
+                Worker, Installation Electrician (gold), Maintenance Electrician (gold), and
+                Approved Electrician (gold). See the{' '}
                 <SEOInternalLink href="/guides/ecs-card-types-explained">
                   full ECS card types guide
                 </SEOInternalLink>
@@ -375,7 +376,7 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Getting an ECS Card</h3>
             <ol className="space-y-2 text-white text-sm list-decimal list-inside">
               <li>Pass the ECS Health, Safety and Environmental Assessment</li>
-              <li>Hold NVQ Level 3, C&G 2382, and AM2 (for blue card)</li>
+              <li>Hold NVQ Level 3, C&G 2382, and AM2 (for the Installation Electrician gold card)</li>
               <li>Apply online through the JIB/ECS website</li>
               <li>Upload qualification certificates and photo</li>
               <li>Pay the application fee (~36-40 pounds)</li>
@@ -446,7 +447,7 @@ const sections = [
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>If you are an electrical apprentice:</strong> Apply for the ECS Apprentice
-                card (white card). This is your first ECS card and provides site access during your
+                card. This is your first ECS card and provides site access during your
                 apprenticeship.
               </span>
             </li>

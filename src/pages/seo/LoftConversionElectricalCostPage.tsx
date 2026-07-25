@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Price loft conversion electrical packages with consumer unit upgrade options.',
     icon: Wrench,

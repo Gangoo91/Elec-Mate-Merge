@@ -13,10 +13,8 @@ import { useReferralStats } from '@/hooks/useReferralStats';
 import { QRCodeSVG } from 'qrcode.react';
 import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import {
-  ListCard,
   ListRow,
   StatStrip,
-  SectionHeader,
   Eyebrow,
   EmptyState,
   TextAction,
@@ -25,6 +23,7 @@ import {
   toneText,
   type Tone,
 } from '@/components/college/primitives';
+import { SettingsCard } from '@/components/settings/rows';
 
 const WhatsAppBrand = () => (
   <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
@@ -120,7 +119,7 @@ const ReferralsTab: React.FC = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-8"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"
     >
       <ReferralShareSheet
         open={shareSheetOpen}
@@ -129,9 +128,8 @@ const ReferralsTab: React.FC = () => {
       />
 
       {/* ── HERO — QR + Link + CTAs ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow="01" title="Share your link" />
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="01" title="Share your link">
           <div className="h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70" />
           <div className="p-6 sm:p-8 flex flex-col items-center">
             <div
@@ -162,7 +160,7 @@ const ReferralsTab: React.FC = () => {
 
             <button
               onClick={copyLink}
-              className="w-full max-w-sm flex items-center gap-3 p-3 rounded-xl bg-[#0a0a0a] border border-white/[0.08] touch-manipulation hover:bg-white/[0.04] transition-colors mb-4"
+              className="w-full max-w-sm flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.10] touch-manipulation hover:bg-white/[0.04] transition-colors mb-4"
             >
               <span className="font-mono text-[11px] text-white flex-1 truncate text-left">
                 {referralUrl || 'Loading…'}
@@ -208,30 +206,31 @@ const ReferralsTab: React.FC = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </SettingsCard>
       </motion.section>
 
       {/* ── STATS ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow="02" title="Your Referrals" />
-        <StatStrip
-          columns={3}
-          stats={[
-            { value: stats?.total_referrals || 0, label: 'Referrals', tone: 'blue' },
-            { value: successfulReferrals, label: 'Subscribed', tone: 'green' },
-            {
-              value: stats?.credits_formatted || '£0.00',
-              label: 'Earned',
-              tone: 'yellow',
-            },
-          ]}
-        />
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="02" title="Your Referrals">
+          <StatStrip
+            columns={3}
+            stats={[
+              { value: stats?.total_referrals || 0, label: 'Referrals', tone: 'blue' },
+              { value: successfulReferrals, label: 'Subscribed', tone: 'green' },
+              {
+                value: stats?.credits_formatted || '£0.00',
+                label: 'Earned',
+                tone: 'yellow',
+              },
+            ]}
+          />
+        </SettingsCard>
       </motion.section>
 
       {/* ── TIER REWARD ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow="03" title="Your Reward" />
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="03" title="Your Reward">
+          <div className="p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-3">
             <span
               className={cn(
@@ -277,15 +276,15 @@ const ReferralsTab: React.FC = () => {
               </div>
             </div>
           )}
-        </div>
+          </div>
+        </SettingsCard>
       </motion.section>
 
       {/* ── HISTORY ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow="04" title="Referral History" />
-        {stats?.recent_referrals && stats.recent_referrals.length > 0 ? (
-          <ListCard>
-            {stats.recent_referrals.map((ref) => {
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="04" title="Referral History">
+          {stats?.recent_referrals && stats.recent_referrals.length > 0 ? (
+            stats.recent_referrals.map((ref) => {
               const statusInfo = STATUS_LABELS[ref.status] || STATUS_LABELS.pending;
               return (
                 <ListRow
@@ -308,16 +307,16 @@ const ReferralsTab: React.FC = () => {
                   }
                 />
               );
-            })}
-          </ListCard>
-        ) : (
-          <EmptyState
-            title="No referrals yet"
-            description="Share your link to start earning free months."
-            action="Share now"
-            onAction={shareNative}
-          />
-        )}
+            })
+          ) : (
+            <EmptyState
+              title="No referrals yet"
+              description="Share your link to start earning free months."
+              action="Share now"
+              onAction={shareNative}
+            />
+          )}
+        </SettingsCard>
       </motion.section>
 
       {/* Share sheet trigger (surface a TextAction in case users want more formats) */}

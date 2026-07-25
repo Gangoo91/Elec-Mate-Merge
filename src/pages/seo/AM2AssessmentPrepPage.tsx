@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study the BS 7671 testing sequence used in the AM2 practical assessment.',
     icon: ClipboardCheck,

@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, EV charger installations, and HMO conversions with professional itemised PDFs.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -522,7 +522,7 @@ const sections = [
           Coventry's strength is volume. The sheer number of post-war properties needing rewires,
           the growing HMO market, and the accelerating EV charger demand mean that a well-organised
           electrician can achieve strong turnover at these rates. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate quotes quickly and convert more surveys into confirmed jobs.
         </p>
       </>
@@ -578,7 +578,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote rewires, EV charger installations, and HMO conversions with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Professional PDF quotes with clear itemisation help you convert more surveys into
                   confirmed work.
                 </p>

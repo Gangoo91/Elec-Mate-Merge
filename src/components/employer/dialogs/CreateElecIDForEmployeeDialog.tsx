@@ -38,11 +38,16 @@ interface CreateElecIDForEmployeeDialogProps {
 }
 
 const ECS_CARD_TYPES = [
-  { value: 'gold', label: 'Gold Card (Electrician)' },
-  { value: 'blue', label: 'Blue Card (Approved Electrician)' },
-  { value: 'black', label: 'Black Card (Senior/Manager)' },
-  { value: 'white', label: 'White Card (Trainee)' },
-  { value: 'green', label: 'Green Card (Labourer)' },
+  { value: 'installation electrician', label: 'Installation Electrician (Gold)' },
+  { value: 'maintenance electrician', label: 'Maintenance Electrician (Gold)' },
+  { value: 'approved electrician', label: 'Approved Electrician (Gold)' },
+  { value: 'domestic electrician', label: 'Domestic Electrician (Gold)' },
+  { value: 'experienced worker', label: 'Experienced Worker' },
+  { value: 'trainee electrician', label: 'Trainee Electrician' },
+  { value: 'apprentice', label: 'ECS Apprentice' },
+  { value: 'electrical labourer', label: 'Electrical Labourer' },
+  { value: 'manager', label: 'Manager' },
+  { value: 'related discipline', label: 'Related Discipline (White)' },
 ];
 
 export function CreateElecIDForEmployeeDialog({
@@ -55,7 +60,7 @@ export function CreateElecIDForEmployeeDialog({
   const createProfile = useCreateElecIdProfile();
 
   const [formData, setFormData] = useState({
-    ecsCardType: 'gold',
+    ecsCardType: 'installation electrician',
     ecsCardNumber: '',
     ecsExpiryDate: '',
     bio: '',
@@ -86,7 +91,7 @@ export function CreateElecIDForEmployeeDialog({
       onSuccess?.();
 
       setFormData({
-        ecsCardType: 'gold',
+        ecsCardType: 'installation electrician',
         ecsCardNumber: '',
         ecsExpiryDate: '',
         bio: '',

@@ -339,11 +339,6 @@
       "permanent": true
     },
     {
-      "source": "/guides/part-p-building-regulations-electrical",
-      "destination": "/guides/part-p-building-regulations",
-      "permanent": true
-    },
-    {
       "source": "/guides/mock-exams-electrical",
       "destination": "/guides/mock-exams-electrician",
       "permanent": true
@@ -354,98 +349,8 @@
       "permanent": true
     },
     {
-      "source": "/ai-cost-engineer",
-      "destination": "/tools/ai-cost-engineer",
-      "permanent": true
-    },
-    {
-      "source": "/ai-electrician-tools",
-      "destination": "/tools/ai-electrician",
-      "permanent": true
-    },
-    {
-      "source": "/ai-health-safety-agent",
-      "destination": "/tools/ai-health-safety-agent",
-      "permanent": true
-    },
-    {
-      "source": "/am2-exam-preparation",
-      "destination": "/training/am2-exam-preparation",
-      "permanent": true
-    },
-    {
-      "source": "/apprentice-portfolio-guide",
-      "destination": "/training/apprentice-portfolio",
-      "permanent": true
-    },
-    {
-      "source": "/apprentice-training",
-      "destination": "/training/electrical-apprentice",
-      "permanent": true
-    },
-    {
-      "source": "/best-electrician-app",
-      "destination": "/tools/best-electrician-app-uk",
-      "permanent": true
-    },
-    {
-      "source": "/bms-course",
-      "destination": "/training/bms-course",
-      "permanent": true
-    },
-    {
-      "source": "/cash-flow-planner",
-      "destination": "/tools/cash-flow-planner",
-      "permanent": true
-    },
-    {
-      "source": "/city-guilds2391",
-      "destination": "/training/city-guilds-2391",
-      "permanent": true
-    },
-    {
       "source": "/compare/elec-mate-vs-icertifi",
       "destination": "/elec-mate-vs-i-certifi",
-      "permanent": true
-    },
-    {
-      "source": "/earthing-arrangements",
-      "destination": "/guides/earthing-arrangements",
-      "permanent": true
-    },
-    {
-      "source": "/eighteenth-edition-course",
-      "destination": "/training/18th-edition-course",
-      "permanent": true
-    },
-    {
-      "source": "/elec-mate-vs-certs-app",
-      "destination": "/compare/elec-mate-vs-certsapp",
-      "permanent": true
-    },
-    {
-      "source": "/electrical-quoting-app",
-      "destination": "/tools/electrical-quoting-app",
-      "permanent": true
-    },
-    {
-      "source": "/electrical-testing-calculators",
-      "destination": "/tools/electrical-testing-calculators",
-      "permanent": true
-    },
-    {
-      "source": "/electrician-invoice-app",
-      "destination": "/tools/electrician-invoice-app",
-      "permanent": true
-    },
-    {
-      "source": "/emergency-lighting-certificate",
-      "destination": "/tools/emergency-lighting-certificate",
-      "permanent": true
-    },
-    {
-      "source": "/epa-preparation",
-      "destination": "/training/epa-preparation",
       "permanent": true
     },
     {
@@ -464,73 +369,8 @@
       "permanent": true
     },
     {
-      "source": "/how-to-do-safe-isolation",
-      "destination": "/guides/how-to-do-safe-isolation",
-      "permanent": true
-    },
-    {
-      "source": "/how-to-fill-in-eicr",
-      "destination": "/guides/how-to-fill-in-eicr",
-      "permanent": true
-    },
-    {
-      "source": "/how-to-size-cables",
-      "destination": "/guides/how-to-size-cables-bs-7671",
-      "permanent": true
-    },
-    {
       "source": "/how-to-test-insulation-resistance",
       "destination": "/guides/insulation-resistance-testing-bs7671",
-      "permanent": true
-    },
-    {
-      "source": "/inspection-testing-course",
-      "destination": "/training/inspection-and-testing",
-      "permanent": true
-    },
-    {
-      "source": "/level2-electrical",
-      "destination": "/training/level-2-electrical",
-      "permanent": true
-    },
-    {
-      "source": "/level3-electrical",
-      "destination": "/training/level-3-electrical",
-      "permanent": true
-    },
-    {
-      "source": "/manual-handling-course",
-      "destination": "/training/manual-handling",
-      "permanent": true
-    },
-    {
-      "source": "/minor-works-certificate",
-      "destination": "/tools/minor-works-certificate",
-      "permanent": true
-    },
-    {
-      "source": "/part-p-building-regulations",
-      "destination": "/guides/part-p-building-regulations",
-      "permanent": true
-    },
-    {
-      "source": "/pat-testing",
-      "destination": "/tools/pat-testing",
-      "permanent": true
-    },
-    {
-      "source": "/rams-generator",
-      "destination": "/tools/rams-generator",
-      "permanent": true
-    },
-    {
-      "source": "/rcd-testing-guide",
-      "destination": "/tools/rcd-testing-guide",
-      "permanent": true
-    },
-    {
-      "source": "/solar-pv-certificate",
-      "destination": "/tools/solar-pv-certificate",
       "permanent": true
     },
     {
@@ -606,11 +446,6 @@
     {
       "source": "/guides/electrician-van-setup-guide",
       "destination": "/guides/electrician-van-setup",
-      "permanent": true
-    },
-    {
-      "source": "/guides/emergency-lighting-certificate-guide",
-      "destination": "/tools/emergency-lighting-certificate",
       "permanent": true
     },
     {
@@ -811,6 +646,161 @@
     {
       "source": "/guides/am2-module-7-exam-strategy-and-success-tips",
       "destination": "/guides/am2-overview-and-structure",
+      "permanent": true
+    },
+    {
+      "source": "/compare/elec-mate-vs-certsapp",
+      "destination": "/elec-mate-vs-certs-app",
+      "permanent": true
+    },
+    {
+      "source": "/guides/earthing-arrangements",
+      "destination": "/earthing-arrangements",
+      "permanent": true
+    },
+    {
+      "source": "/guides/how-to-do-safe-isolation",
+      "destination": "/how-to-do-safe-isolation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/how-to-fill-in-eicr",
+      "destination": "/how-to-fill-in-eicr",
+      "permanent": true
+    },
+    {
+      "source": "/guides/how-to-size-cables-bs-7671",
+      "destination": "/how-to-size-cables",
+      "permanent": true
+    },
+    {
+      "source": "/guides/part-p-building-regulations",
+      "destination": "/part-p-building-regulations",
+      "permanent": true
+    },
+    {
+      "source": "/tools/ai-cost-engineer",
+      "destination": "/ai-cost-engineer",
+      "permanent": true
+    },
+    {
+      "source": "/tools/ai-electrician",
+      "destination": "/ai-electrician-tools",
+      "permanent": true
+    },
+    {
+      "source": "/tools/ai-health-safety-agent",
+      "destination": "/ai-health-safety-agent",
+      "permanent": true
+    },
+    {
+      "source": "/tools/best-electrician-app-uk",
+      "destination": "/best-electrician-app",
+      "permanent": true
+    },
+    {
+      "source": "/tools/cash-flow-planner",
+      "destination": "/cash-flow-planner",
+      "permanent": true
+    },
+    {
+      "source": "/tools/electrical-quoting-app",
+      "destination": "/electrical-quoting-app",
+      "permanent": true
+    },
+    {
+      "source": "/tools/electrical-testing-calculators",
+      "destination": "/electrical-testing-calculators",
+      "permanent": true
+    },
+    {
+      "source": "/tools/electrician-invoice-app",
+      "destination": "/electrician-invoice-app",
+      "permanent": true
+    },
+    {
+      "source": "/tools/emergency-lighting-certificate",
+      "destination": "/emergency-lighting-certificate",
+      "permanent": true
+    },
+    {
+      "source": "/tools/minor-works-certificate",
+      "destination": "/minor-works-certificate",
+      "permanent": true
+    },
+    {
+      "source": "/tools/pat-testing",
+      "destination": "/pat-testing",
+      "permanent": true
+    },
+    {
+      "source": "/tools/rams-generator",
+      "destination": "/rams-generator",
+      "permanent": true
+    },
+    {
+      "source": "/tools/rcd-testing-guide",
+      "destination": "/rcd-testing-guide",
+      "permanent": true
+    },
+    {
+      "source": "/tools/solar-pv-certificate",
+      "destination": "/solar-pv-certificate",
+      "permanent": true
+    },
+    {
+      "source": "/training/18th-edition-course",
+      "destination": "/eighteenth-edition-course",
+      "permanent": true
+    },
+    {
+      "source": "/training/am2-exam-preparation",
+      "destination": "/am2-exam-preparation",
+      "permanent": true
+    },
+    {
+      "source": "/training/apprentice-portfolio",
+      "destination": "/apprentice-portfolio-guide",
+      "permanent": true
+    },
+    {
+      "source": "/training/bms-course",
+      "destination": "/bms-course",
+      "permanent": true
+    },
+    {
+      "source": "/training/city-guilds-2391",
+      "destination": "/city-guilds2391",
+      "permanent": true
+    },
+    {
+      "source": "/training/electrical-apprentice",
+      "destination": "/apprentice-training",
+      "permanent": true
+    },
+    {
+      "source": "/training/epa-preparation",
+      "destination": "/epa-preparation",
+      "permanent": true
+    },
+    {
+      "source": "/training/inspection-and-testing",
+      "destination": "/inspection-testing-course",
+      "permanent": true
+    },
+    {
+      "source": "/training/level-2-electrical",
+      "destination": "/level2-electrical",
+      "permanent": true
+    },
+    {
+      "source": "/training/level-3-electrical",
+      "destination": "/level3-electrical",
+      "permanent": true
+    },
+    {
+      "source": "/training/manual-handling",
+      "destination": "/manual-handling-course",
       "permanent": true
     }
   ],

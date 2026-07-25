@@ -104,9 +104,9 @@ const sections = [
           The most common reason electricians fail their exams is not lack of knowledge — it is poor
           exam technique, particularly time management. Mock exams under timed conditions are the
           only way to develop the speed you need. If you are preparing for the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">18th Edition exam</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink>{' '}
           or the{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             2391 inspection and testing qualification
           </SEOInternalLink>
           , make mock exams the cornerstone of your revision.
@@ -240,7 +240,7 @@ const sections = [
           for general non-delay type — note that Appendix 3 Table 3A has been deleted in BS
           7671:2018+A4:2026 and the single AC test at IΔn within 300 ms is now the sole acceptance
           criterion per the Reg 643.8 NOTE), interpretation of EICR observation codes (C1, C2, C3, FI), and{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR completion</SEOInternalLink>.
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR completion</SEOInternalLink>.
         </p>
         <p>
           <strong>Scenario-based questions.</strong> The 2391 exam often presents a scenario — a
@@ -385,7 +385,7 @@ const sections = [
         </p>
         <p>
           <strong>Study groups.</strong> If you are studying with others — whether on a{' '}
-          <SEOInternalLink href="/training/18th-edition-course">training course</SEOInternalLink> or
+          <SEOInternalLink href="/eighteenth-edition-course">training course</SEOInternalLink> or
           informally — test each other with mock questions. Explaining why an answer is wrong is
           just as valuable as explaining why the correct answer is right.
         </p>
@@ -505,7 +505,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Structured study course for the C&G 2382 exam with interactive quizzes and AI tutor support.',

@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/electrical-apprentice',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Full Level 2 and Level 3 training modules with AI study support.',
     icon: GraduationCap,

@@ -505,7 +505,7 @@ const sections = [
       <>
         <p>
           Commercial EICRs are substantially more complex than{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">domestic inspections</SEOInternalLink>
+          <SEOInternalLink href="/how-to-fill-in-eicr">domestic inspections</SEOInternalLink>
           . The scope of the inspection depends on the size and type of the installation, but
           typically includes:
         </p>
@@ -590,7 +590,7 @@ const sections = [
                   continuity of protective conductors
                 </SEOInternalLink>{' '}
                 (R1+R2 and R2 for ring circuits),{' '}
-                <SEOInternalLink href="/guides/insulation-resistance-testing">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   insulation resistance
                 </SEOInternalLink>{' '}
                 (phase-to-neutral, phase-to-earth, neutral-to-earth), and polarity. Dead testing
@@ -604,7 +604,7 @@ const sections = [
                 <strong>Live testing</strong> — earth fault loop impedance (Zs) at the most remote
                 point of each circuit, prospective fault current (Ipf) at each distribution board
                 and at the origin, and{' '}
-                <SEOInternalLink href="/tools/rcd-testing-guide">RCD operation</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rcd-testing-guide">RCD operation</SEOInternalLink>{' '}
                 (trip time and trip current for all RCDs). Live testing can generally be carried out
                 without disrupting the supply.
               </span>

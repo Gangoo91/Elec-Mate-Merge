@@ -17,7 +17,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
       <div className="px-5 sm:px-6 lg:px-8 py-6 sm:py-7 lg:py-8 space-y-6 sm:space-y-8">
         {/* Header: photo + name + edit */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 pb-6 border-b border-white/[0.06]">
-          <div className="relative w-20 h-20 md:w-24 md:h-24 bg-[#0a0a0a] border border-white/[0.08] rounded-2xl overflow-hidden shrink-0">
+          <div className="relative w-20 h-20 md:w-24 md:h-24 bg-white/[0.04] border border-white/[0.10] rounded-2xl overflow-hidden shrink-0">
             {profile.photoUrl ? (
               <img
                 src={profile.photoUrl}
@@ -81,7 +81,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
                 <Eyebrow>Company</Eyebrow>
                 <div className="mt-3 flex items-start gap-3">
                   {profile.companyLogo && (
-                    <div className="w-12 h-12 bg-[#0a0a0a] border border-white/[0.08] rounded-xl overflow-hidden shrink-0">
+                    <div className="w-12 h-12 bg-white/[0.04] border border-white/[0.10] rounded-xl overflow-hidden shrink-0">
                       <img
                         src={profile.companyLogo}
                         alt={`${profile.companyName} logo`}

@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with modules on fault finding and safe isolation.',
     icon: GraduationCap,
@@ -266,7 +266,7 @@ const sections = [
               <span>
                 <strong>Open neutral on a final circuit</strong> — safe but requires repair. The
                 circuit will be completely dead. Identify the break by systematic{' '}
-                <SEOInternalLink href="/guides/continuity-testing-electricians-guide">
+                <SEOInternalLink href="/continuity-testing-guide">
                   continuity testing
                 </SEOInternalLink>{' '}
                 of the neutral conductor from the consumer unit to each accessory.

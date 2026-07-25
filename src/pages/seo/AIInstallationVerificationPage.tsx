@@ -93,7 +93,7 @@ export default function AIInstallationVerificationPage() {
               </p>
               <p>
                 This integrates with Elec-Mate's complete certification workflow, including the{' '}
-                <SEOInternalLink href="/tools/ai-electrician">AI Board Scanner</SEOInternalLink> for
+                <SEOInternalLink href="/ai-electrician-tools">AI Board Scanner</SEOInternalLink> for
                 data capture, the{' '}
                 <SEOInternalLink href="/ai-circuit-designer">
                   AI Circuit Designer
@@ -197,7 +197,7 @@ export default function AIInstallationVerificationPage() {
                 Each checklist item links to the specific BS 7671 regulation that requires the
                 check, so you can reference the standard directly if needed. The checklists also
                 align with the inspection schedule format used in{' '}
-                <SEOInternalLink href="/guides/how-to-fill-in-eicr">
+                <SEOInternalLink href="/how-to-fill-in-eicr">
                   EICR documentation
                 </SEOInternalLink>
                 , making it straightforward to transfer your findings to the certificate.
@@ -295,7 +295,7 @@ export default function AIInstallationVerificationPage() {
                 <li>
                   <span className="font-semibold text-white">Remedial cost estimate</span> — an
                   optional section that uses the{' '}
-                  <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
                   to produce an indicative cost for addressing all identified non-compliances. This
                   is valuable when providing landlords or property managers with both the inspection
                   report and a remedial quotation.
@@ -436,7 +436,7 @@ export default function AIInstallationVerificationPage() {
           category: 'Certificates',
         },
         {
-          href: '/tools/ai-electrician',
+          href: '/ai-electrician-tools',
           title: 'AI Board Scanner',
           description:
             'Photograph a consumer unit and extract circuit data automatically for verification and certification.',

@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI-Powered Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised EV installation quotes. Charger unit, cable (auto-sized for the run
                   length), RCBO, earth rod if needed, labour, testing, and DNO notification — all
                   itemised with your margins. Professional PDF sent to the customer from site.

@@ -408,14 +408,14 @@ export default function AICostEngineerPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The estimate is only the first step. Use the{' '}
-              <SEOInternalLink href="/tools/electrical-quoting-app">electrical quoting app</SEOInternalLink>{' '}
+              <SEOInternalLink href="/electrical-quoting-app">electrical quoting app</SEOInternalLink>{' '}
               to package the output professionally, sanity-check your floor price with the{' '}
               <SEOInternalLink href="/tools/minimum-charge-calculator">
                 minimum charge calculator
               </SEOInternalLink>{' '}
               and the <SEOInternalLink href="/tools/break-even-calculator">break-even calculator</SEOInternalLink>,
               then move the accepted job into the{' '}
-              <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>.
+              <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>.
             </p>
             <p>
               That cluster is where Elec-Mate becomes more than an AI demo page. It becomes a full
@@ -465,7 +465,7 @@ export default function AICostEngineerPage() {
           />
           <p className="text-white mt-4 text-sm">
             Want a complete quoting workflow?{' '}
-            <SEOInternalLink href="/tools/electrical-quoting-app">
+            <SEOInternalLink href="/electrical-quoting-app">
               See the electrical quoting app
             </SEOInternalLink>{' '}
             for job management, invoicing, and client communication.

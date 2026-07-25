@@ -260,7 +260,7 @@ const sections = [
           to any job in any industry. Tailor your personal statement to each application — if you
           are applying for a commercial role, lead with your commercial experience; if it is a
           testing-focused role, lead with your{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">2391 qualification</SEOInternalLink> and testing
+          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and testing
           experience.
         </p>
       </>

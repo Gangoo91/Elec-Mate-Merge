@@ -1,12 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  Heart,
-  Loader2,
-  ArrowLeft,
-  Send,
-  Zap,
-} from 'lucide-react';
+import { Heart, Loader2, ArrowLeft, Send, Zap, Phone, X } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
   PeerSupporter,
@@ -35,6 +30,7 @@ import { calculateStatus } from '@/services/presenceService';
 import { NativePageWrapper } from '@/components/native/NativePageWrapper';
 import AvailableSupporters from './AvailableSupporters';
 import BecomeSupporter from './BecomeSupporter';
+import { PeerChatActions } from './PeerChatActions';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -61,6 +57,12 @@ import {
 interface PeerSupportHubProps {
   onClose?: () => void;
 }
+
+// Quiet client-side crisis detection for the chat. Peer supporters are mates,
+// not counsellors — when a conversation turns this heavy, both sides get the
+// professional handoff one tap away. No AI, nothing logged, nothing sent.
+const CRISIS_PATTERNS =
+  /\b(kill(ing)? (myself|meself)|suicid\w*|end(ing)? (it all|my life)|take my own life|self.?harm\w*|hurt(ing)? myself|overdos\w*|don'?t want to (be here|live|wake up)|no (point|reason) (in )?(living|going on)|better off dead|end it (tonight|today))\b/i;
 
 type ViewState = 'hub' | 'become-supporter' | 'chat' | 'supporter-detail';
 type TabState = 'browse' | 'chats';
@@ -115,7 +117,8 @@ const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
       {online && (
         <span
           aria-hidden
-          className={cn('absolute -bottom-0.5 -right-0.5 rounded-full bg-white/[0.02] border-[3px] border-[hsl(0_0%_8%)]',
+          className={cn(
+            'absolute -bottom-0.5 -right-0.5 rounded-full bg-white/[0.02] border-[3px] border-[hsl(0_0%_8%)]',
             dot
           )}
         />
@@ -171,9 +174,20 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
   const { isOtherTyping, setTyping } = usePeerTyping(selectedConversation?.id);
 
+  // Crisis strip — shows when recent messages contain high-risk language,
+  // dismissible per conversation.
+  const [crisisStripHidden, setCrisisStripHidden] = useState(false);
+  useEffect(() => {
+    setCrisisStripHidden(false);
+  }, [selectedConversation?.id]);
+  const crisisDetected = useMemo(
+    () => chatMessages.slice(-12).some((m) => CRISIS_PATTERNS.test(m.content ?? '')),
+    [chatMessages]
+  );
+
   const partnerId = selectedConversation
     ? selectedConversation.supporter?.user_id === user?.id
-      ? (selectedConversation as any).seeker_id
+      ? selectedConversation.seeker_id
       : selectedConversation.supporter?.user_id
     : undefined;
   const { data: partnerPresence } = usePeerPresence(partnerId);
@@ -182,7 +196,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     : 'offline';
 
   const unreadCount = conversations.filter(
-    (c) => c.status === 'active' && (c as any).unread_count > 0
+    (c) => c.status === 'active' && (c.unread_count ?? 0) > 0
   ).length;
   const activeChats = conversations.filter((c) => c.status === 'active').length;
 
@@ -239,10 +253,36 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   };
 
   const handleOpenChat = (conversation: PeerConversation) => {
+    deepLinkHandled.current = true; // any open settles the ?conversation= param
     setSelectedConversation(conversation);
     setViewState('chat');
     markAsRead.mutate(conversation.id);
+    // Keep the open conversation in the URL so a refresh lands back in it.
+    setSearchParams(
+      (prev) => {
+        prev.set('conversation', conversation.id);
+        return prev;
+      },
+      { replace: true }
+    );
   };
+
+  // Deep link from a push notification tap (?conversation=<id>) — open that
+  // chat once the conversation list has loaded. One-shot so closing the chat
+  // afterwards doesn't bounce the user straight back in.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const deepLinkedConversation = searchParams.get('conversation');
+  const deepLinkHandled = useRef(false);
+  useEffect(() => {
+    if (!deepLinkedConversation || deepLinkHandled.current || conversationsLoading) return;
+    const convo = conversations.find((c) => c.id === deepLinkedConversation);
+    if (convo) {
+      deepLinkHandled.current = true;
+      handleOpenChat(convo);
+      setActiveTab('chats');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deepLinkedConversation, conversationsLoading, conversations]);
 
   const handleSendMessage = () => {
     if (!selectedConversation || !messageInput.trim() || sendMessage.isPending) return;
@@ -263,9 +303,37 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
   const handleCloseChat = () => {
     setViewState('hub');
+    setSearchParams(
+      (prev) => {
+        prev.delete('conversation');
+        return prev;
+      },
+      { replace: true }
+    );
     setTimeout(() => {
       setSelectedConversation(null);
     }, 300);
+  };
+
+  const handleEndChat = async () => {
+    if (!selectedConversation) return;
+    try {
+      const { peerConversationService } = await import('@/services/peerSupportService');
+      await peerConversationService.endConversation(selectedConversation.id);
+      toast({
+        title: 'Chat ended',
+        description: 'Thanks for looking out for each other.',
+      });
+      refetchConversations();
+      handleCloseChat();
+    } catch (error) {
+      console.error('End chat error:', error);
+      toast({
+        title: 'Could not end the chat',
+        description: 'Please try again',
+        variant: 'destructive',
+      });
+    }
   };
 
   const getChatPartnerName = () => {
@@ -330,6 +398,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   if (viewState === 'become-supporter') {
     return (
       <BecomeSupporter
+        existing={myProfile ?? undefined}
         onSuccess={() => {
           refetchProfile();
           refetchConversations();
@@ -387,9 +456,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             <PageHero
               eyebrow="Peer supporter"
               title={selectedSupporter.display_name}
-              description={
-                responseTime ?? trainingLevelLabels[selectedSupporter.training_level]
-              }
+              description={responseTime ?? trainingLevelLabels[selectedSupporter.training_level]}
               tone="yellow"
               actions={
                 <Pill tone={trainingTone}>
@@ -505,8 +572,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         contentClassName="p-0"
       >
         <div className="flex flex-col h-[calc(100vh-56px)] mx-auto max-w-3xl">
-          {/* Editorial header */}
-          <div className="px-4 pt-4 pb-4 bg-[hsl(0_0%_8%)] border-b border-white/[0.06]">
+          {/* Editorial header — sticky so the partner + actions stay reachable */}
+          <div className="sticky top-0 z-10 px-4 pt-4 pb-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur border-b border-white/[0.06]">
             <button
               onClick={handleCloseChat}
               className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation mb-3"
@@ -536,6 +603,18 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                   </span>
                 </div>
               </div>
+              {partnerId && (
+                <PeerChatActions
+                  otherUserId={partnerId}
+                  otherUserName={getChatPartnerName()}
+                  conversationId={selectedConversation.id}
+                  onBlocked={() => {
+                    refetchConversations();
+                    handleCloseChat();
+                  }}
+                  onEndChat={handleEndChat}
+                />
+              )}
             </div>
           </div>
 
@@ -543,11 +622,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           <div className="flex-1 overflow-y-auto momentum-scroll-y px-4 py-4 space-y-3 bg-[hsl(0_0%_8%)]">
             {chatMessages.length === 0 ? (
               <div className="text-center py-12">
-                <InitialsAvatar
-                  name={getChatPartnerName()}
-                  size="md"
-                  className="mx-auto mb-4"
-                />
+                <InitialsAvatar name={getChatPartnerName()} size="md" className="mx-auto mb-4" />
                 <Eyebrow>Start the conversation</Eyebrow>
                 <p className="mt-2 text-[13px] text-white/70 max-w-xs mx-auto leading-relaxed">
                   Say hello with a warm, supportive message.
@@ -560,26 +635,30 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 return (
                   <div key={msg.id} className={cn('flex', isOwn ? 'justify-end' : 'justify-start')}>
                     <div
-                      className={cn('max-w-[80%] rounded-2xl px-4 py-3',
+                      className={cn(
+                        'max-w-[80%] rounded-2xl px-4 py-3',
                         isOwn
                           ? 'bg-elec-yellow text-black rounded-br-md'
                           : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white rounded-bl-md'
                       )}
                     >
                       <p
-                        className={cn('text-[13.5px] whitespace-pre-wrap leading-relaxed',
+                        className={cn(
+                          'text-[13.5px] whitespace-pre-wrap leading-relaxed',
                           isOwn ? 'text-black' : 'text-white'
                         )}
                       >
                         {msg.content}
                       </p>
                       <div
-                        className={cn('flex items-center gap-1.5 mt-1.5',
+                        className={cn(
+                          'flex items-center gap-1.5 mt-1.5',
                           isOwn ? 'justify-end' : ''
                         )}
                       >
                         <span
-                          className={cn('text-[10px] tabular-nums',
+                          className={cn(
+                            'text-[10px] tabular-nums',
                             isOwn ? 'text-black/60' : 'text-white/50'
                           )}
                         >
@@ -592,8 +671,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                           <ReadReceipt
                             status={getReceiptStatus(
                               msg.created_at,
-                              (msg as any).delivered_at,
-                              (msg as any).read_at,
+                              msg.delivered_at,
+                              msg.read_at,
                               isOptimistic
                             )}
                             className={isOptimistic ? 'text-black/60' : 'text-black/70'}
@@ -616,6 +695,39 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               </div>
             )}
           </div>
+
+          {/* Crisis handoff — appears when the conversation turns heavy */}
+          {crisisDetected && !crisisStripHidden && (
+            <div className="px-4 py-3 bg-red-500/[0.08] border-t border-red-500/25">
+              <div className="flex items-start gap-2">
+                <p className="flex-1 text-[12.5px] text-white leading-snug">
+                  This chat sounds heavy. Being here for each other matters — and neither of you has
+                  to carry it alone.
+                </p>
+                <button
+                  onClick={() => setCrisisStripHidden(true)}
+                  aria-label="Hide crisis support bar"
+                  className="h-8 w-8 -mt-1 -mr-1 flex items-center justify-center text-white/60 hover:text-white touch-manipulation shrink-0"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <a
+                  href="tel:116123"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 h-10 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[12.5px] font-semibold touch-manipulation active:scale-[0.98]"
+                >
+                  <Phone className="h-3.5 w-3.5" /> Samaritans 116 123
+                </a>
+                <a
+                  href="tel:999"
+                  className="inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[12.5px] font-medium touch-manipulation active:scale-[0.98]"
+                >
+                  999
+                </a>
+              </div>
+            </div>
+          )}
 
           {/* Input */}
           <div className="sticky bottom-0 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-t border-white/[0.06] pb-safe">
@@ -733,7 +845,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         {/* YOUR PROFILE — toggle row */}
         {!profileLoading && myProfile && (
           <motion.section variants={itemVariants} className="space-y-5">
-            <SectionHeader eyebrow="Your profile" title="Availability" />
+            <div className="flex items-end justify-between gap-4">
+              <SectionHeader eyebrow="Your profile" title="Availability" />
+              <TextAction onClick={() => setViewState('become-supporter')}>
+                Edit profile →
+              </TextAction>
+            </div>
             <ListCard>
               <div className="flex items-center gap-4 px-5 sm:px-6 py-5">
                 <InitialsAvatar
@@ -747,8 +864,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                   </h3>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span
-                      className={cn('inline-block w-1.5 h-1.5 rounded-full',
-                        myProfile.is_available ? 'bg-white/[0.02]' : 'bg-white/30'
+                      className={cn(
+                        'inline-block w-1.5 h-1.5 rounded-full',
+                        myProfile.is_available ? 'bg-emerald-400' : 'bg-white/30'
                       )}
                     />
                     <span className="text-[12px] text-white/70">
@@ -818,7 +936,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full w-fit">
             <button
               onClick={() => setActiveTab('browse')}
-              className={cn('px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+              className={cn(
+                'px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
                 activeTab === 'browse'
                   ? 'bg-elec-yellow text-black'
                   : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
@@ -828,7 +947,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             </button>
             <button
               onClick={() => setActiveTab('chats')}
-              className={cn('px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation inline-flex items-center gap-1.5',
+              className={cn(
+                'px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation inline-flex items-center gap-1.5',
                 activeTab === 'chats'
                   ? 'bg-elec-yellow text-black'
                   : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
@@ -837,7 +957,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               My chats
               {unreadCount > 0 && (
                 <span
-                  className={cn('tabular-nums text-[11px] px-1.5 rounded-full',
+                  className={cn(
+                    'tabular-nums text-[11px] px-1.5 rounded-full',
                     activeTab === 'chats' ? 'bg-black/15 text-black' : 'bg-elec-yellow text-black'
                   )}
                 >
@@ -863,10 +984,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         {/* TAB CONTENT — My chats */}
         {activeTab === 'chats' && (
           <motion.section variants={itemVariants} className="space-y-5">
-            <SectionHeader
-              eyebrow={`My chats · ${activeChats}`}
-              title="Your conversations"
-            />
+            <SectionHeader eyebrow={`My chats · ${activeChats}`} title="Your conversations" />
             {conversationsLoading ? (
               <ConversationSkeleton />
             ) : conversationsError ? (
@@ -892,10 +1010,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                       ? convo.seeker?.full_name?.split(' ')[0] || 'Mate'
                       : convo.supporter?.display_name || 'Supporter';
                   const partnerAvatar =
-                    convo.supporter?.user_id === user?.id
-                      ? null
-                      : convo.supporter?.avatar_url;
-                  const unread = (convo as any).unread_count > 0;
+                    convo.supporter?.user_id === user?.id ? null : convo.supporter?.avatar_url;
+                  const unread = (convo.unread_count ?? 0) > 0;
                   return (
                     <ListRow
                       key={convo.id}
@@ -911,18 +1027,18 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                       title={
                         <span className="flex items-center gap-2">
                           <span className="truncate">{partnerName}</span>
-                          {unread && <Pill tone="yellow">{(convo as any).unread_count} new</Pill>}
+                          {unread && <Pill tone="yellow">{convo.unread_count} new</Pill>}
                         </span>
                       }
                       subtitle={
                         <span className="block truncate text-white/65">
-                          {(convo as any).last_message ||
+                          {convo.last_message ||
                             (isActive ? 'Start chatting…' : 'Conversation ended')}
                         </span>
                       }
                       trailing={
                         <span className="text-[10.5px] uppercase tracking-[0.12em] text-white/50 tabular-nums">
-                          {formatConversationTime((convo as any).last_message_at)}
+                          {formatConversationTime(convo.last_message_at)}
                         </span>
                       }
                     />

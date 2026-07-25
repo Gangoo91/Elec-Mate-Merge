@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and when you encounter them.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'How to perform IR testing at 500 V DC and interpret the results for EICR and EIC certificates.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -146,7 +146,7 @@ const sections = [
           An earth electrode is a conductor (usually a copper-clad steel rod) driven into the ground
           to provide a connection between the electrical installation's earthing system and the
           general mass of earth. It is the foundation of the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">TT earthing system</SEOInternalLink>, where
+          <SEOInternalLink href="/earthing-arrangements">TT earthing system</SEOInternalLink>, where
           the electricity supplier does not provide an earth terminal and the installation must
           create its own earth path.
         </p>
@@ -317,7 +317,7 @@ const sections = [
               between E and C, try to get the maximum distance possible and use the 52%/62%/72%
               verification readings to check accuracy. If the three readings do not converge, note
               the limitation on the{' '}
-              <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> and record
+              <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> and record
               the best reading you could achieve with a note about the constraint.
             </p>
           </div>

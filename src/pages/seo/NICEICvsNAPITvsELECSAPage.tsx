@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   {
     label: 'NICEIC vs NAPIT vs ELECSA vs STROMA',
     href: '/guides/niceic-vs-napit-vs-elecsa-comparison',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing',
     description: 'The C&G 2391 — required for most scheme memberships.',
     icon: GraduationCap,

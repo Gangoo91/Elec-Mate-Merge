@@ -138,7 +138,7 @@ export default function DigitalCertificatesAppPage() {
                   <span className="font-semibold text-white">Minor Works Certificate</span> —
                   quick-fill form for minor electrical works. Circuit details, test results, and
                   declarations. See the{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works page
                   </SEOInternalLink>
                   .
@@ -280,9 +280,9 @@ export default function DigitalCertificatesAppPage() {
               </p>
               <p>
                 That certificate workflow becomes even stronger when it feeds straight into the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink> or a
+                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> or a
                 priced remedial quote via the{' '}
-                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>. The
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>. The
                 point is not just sending a PDF quickly; it is turning completed certification into
                 a clean commercial workflow while the job is still live.
               </p>
@@ -503,7 +503,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Turn completed certificates into invoices quickly and collect payment without rebuilding the job admin.',
@@ -511,7 +511,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'Business',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Convert defects and follow-on work into priced remedial quotes using UK labour and material assumptions.',
@@ -519,7 +519,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',

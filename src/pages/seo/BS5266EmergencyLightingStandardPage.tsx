@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate App',
     description:
       'Create digital emergency lighting test certificates on your phone with BS 5266 compliance and professional PDF export.',

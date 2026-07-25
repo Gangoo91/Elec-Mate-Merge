@@ -1035,7 +1035,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
             <SEOInternalLink href="/guides/earth-electrode-testing">
               Earth Electrode Testing
             </SEOInternalLink>
-            <SEOInternalLink href="/earth-electrode-testing">
+            <SEOInternalLink href="/guides/earth-electrode-testing">
               Earth Electrode Testing Guide UK
             </SEOInternalLink>
           </div>

@@ -498,7 +498,7 @@ const sections = [
                   Factor in East of England labour rates (£42 to £58/hour), additional time for
                   listed building or conservation area assessments, earth rod costs, UKPN G98
                   notification, and EIC certification. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised, professional quotes that justify Cambridge pricing to informed
                   customers.
                 </p>

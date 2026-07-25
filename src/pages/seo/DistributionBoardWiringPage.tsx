@@ -168,7 +168,7 @@ const sections = [
           , domestic consumer units must be constructed from non-combustible material (metal), must
           be type-tested assemblies complying with BS EN 61439-3, and must be installed by a
           competent person. Replacing or upgrading a consumer unit is notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           and requires an{' '}
@@ -548,7 +548,7 @@ const sections = [
         </div>
         <p>
           During an{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>, the
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>, the
           inspector will check that all labelling is present, accurate, and legible. Missing or
           incorrect labelling is a C3 (Improvement Recommended) observation. Illegible or faded
           labels should be replaced — Elec-Mate can generate professional printed circuit schedules

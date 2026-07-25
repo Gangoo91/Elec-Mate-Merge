@@ -22,7 +22,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
-  { label: 'Polarity Testing Guide', href: '/guides/polarity-testing-guide' },
+  { label: 'Polarity Testing Guide', href: '/polarity-test-guide' },
 ];
 
 const tocItems = [
@@ -117,7 +117,7 @@ const relatedPages = [
     category: 'Certificate' as const,
   },
   {
-    href: '/guides/wiring-colours-uk',
+    href: '/guides/cable-colour-codes-uk',
     title: 'Wiring Colours UK',
     description: 'Current and old UK wiring colours for identification.',
     icon: Cable,
@@ -322,7 +322,7 @@ const sections = [
         <p>
           At each accessory (socket outlet, switch, light fitting, junction box), visually confirm
           that conductor colours are correctly terminated. Pay particular attention to{' '}
-          <SEOInternalLink href="/guides/wiring-colours-uk">older installations</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/cable-colour-codes-uk">older installations</SEOInternalLink>{' '}
           where the pre-2004 colour code was used (red for line, black for neutral). In switch
           drops, the black conductor may be used as a switched line and should be sleeved brown — if
           this sleeving is missing, it is a polarity-related defect.
@@ -518,7 +518,7 @@ const sections = [
                 <strong className="text-yellow-400">Additions and alterations</strong> — any new
                 circuit or modification to an existing circuit must have polarity verified. This
                 applies to{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">minor works</SEOInternalLink> as
+                <SEOInternalLink href="/minor-works-certificate">minor works</SEOInternalLink> as
                 well as full EIC work.
               </span>
             </li>
@@ -701,7 +701,7 @@ const sections = [
         </p>
         <p>
           When recording polarity on a{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink>, also note the
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>, also note the
           method used (continuity test, visual inspection, or socket tester) in the comments or
           general remarks section. This provides evidence that polarity was verified by an
           appropriate method.

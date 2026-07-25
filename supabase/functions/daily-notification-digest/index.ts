@@ -83,7 +83,28 @@ async function alreadySent(
   return (data?.length ?? 0) > 0;
 }
 
-/** Log that we sent a push */
+/** Deep-link for a digest alert, so its bell row is actionable. */
+function routeForPushType(pushType: PushAlert['pushType'], data?: Record<string, unknown>): string | null {
+  if (typeof data?.route === 'string') return data.route;
+  switch (pushType) {
+    case 'invoice': return '/electrician/invoices';
+    case 'quote': return '/electrician/quotes';
+    case 'certificate': return '/settings?tab=business';
+    case 'job': return '/electrician/jobs';
+    case 'study': return '/electrician/study-centre';
+    case 'mental_health':
+    case 'peer': return '/electrician/mental-health-hub';
+    case 'assessment': return '/apprentice';
+    case 'briefing': return '/electrician';
+    default: return null;
+  }
+}
+
+/** Log the push AND write the unified bell row (user_notifications), so the bell
+ *  and the /notifications page show the same feed. The push can nudge daily, but
+ *  the bell keeps ONE unread row per item — no "same alert every morning" pile-up
+ *  (ELE-226 / ELE-1378). The greeting summary stays push-only (the individual
+ *  actionable rows below already cover it). */
 async function logPush(
   supabase: ReturnType<typeof createClient>,
   userId: string,
@@ -96,6 +117,28 @@ async function logPush(
     title: alert.title,
     body: alert.body,
   });
+
+  if (alert.type === 'morning_briefing') return; // consolidated greeting — push only
+
+  const { data: existing } = await supabase
+    .from('user_notifications')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('type', alert.type)
+    .eq('is_read', false)
+    .filter('metadata->>ref_id', 'eq', alert.referenceId)
+    .limit(1);
+
+  if (!existing || (existing as unknown[]).length === 0) {
+    await supabase.from('user_notifications').insert({
+      user_id: userId,
+      type: alert.type,
+      title: alert.title,
+      message: alert.body,
+      link: routeForPushType(alert.pushType, alert.data),
+      metadata: { ...(alert.data ?? {}), ref_id: alert.referenceId },
+    });
+  }
 }
 
 /** Build alert list for a given user */
@@ -770,7 +813,13 @@ serve(async (req: Request): Promise<Response> => {
             .select('full_name')
             .eq('id', userId)
             .maybeSingle();
-          const firstName = (nameRow?.full_name || '').trim().split(' ')[0];
+          // ELE-1378 — names are sometimes stored ALL CAPS ("ANDREW MOORE"); the
+          // brief must read "Good morning, Andrew", never "ANDREW".
+          const firstNameRaw = (nameRow?.full_name || '').trim().split(' ')[0];
+          const firstName =
+            firstNameRaw && (firstNameRaw === firstNameRaw.toUpperCase() || firstNameRaw === firstNameRaw.toLowerCase())
+              ? firstNameRaw.charAt(0).toUpperCase() + firstNameRaw.slice(1).toLowerCase()
+              : firstNameRaw;
 
           alerts.unshift({
             type: 'morning_briefing',

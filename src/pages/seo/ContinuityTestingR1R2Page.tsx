@@ -648,7 +648,7 @@ const sections = [
         <p>
           Voice-to-test-results lets you speak R1+R2 values while on site — just say the circuit
           number and reading. The{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-testing">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance
           </SEOInternalLink>{' '}
           readings,{' '}
@@ -667,7 +667,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'Test voltages, minimum values, conductor combinations, causes of low readings, three-phase testing.',
@@ -705,7 +705,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'R1+R2 calculator, Zs lookup, cable sizing, voltage drop, PFC, and dozens more.',
     icon: Calculator,

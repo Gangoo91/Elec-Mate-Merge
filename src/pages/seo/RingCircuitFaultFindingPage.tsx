@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training modules on the Elec-Mate platform.',
@@ -594,7 +594,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             Inspection & Testing training courses
           </SEOInternalLink>{' '}
           cover ring circuit testing in detail, including worked examples of fault analysis from

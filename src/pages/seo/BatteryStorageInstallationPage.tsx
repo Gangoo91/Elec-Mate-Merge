@@ -19,7 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const breadcrumbs = [{ label: 'Energy Storage', href: '/battery-storage-installation' }];
+const breadcrumbs = [{ label: 'Energy Storage', href: '/guides/battery-storage-installation' }];
 
 const tocItems = [
   { id: 'battery-types', label: 'Battery Types' },
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote battery storage installations accurately with AI-assisted pricing.',
     icon: PoundSterling,
@@ -505,7 +505,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Every solar EICR or consumer unit upgrade is an opportunity to quote battery
                   storage. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to generate a professional battery storage proposal on site while the customer is

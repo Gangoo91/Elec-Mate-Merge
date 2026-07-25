@@ -138,7 +138,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote restaurant electrical work with equipment schedules and itemised pricing.',
     icon: Calculator,

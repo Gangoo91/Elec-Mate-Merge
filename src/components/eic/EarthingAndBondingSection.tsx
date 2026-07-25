@@ -39,7 +39,12 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
   formData,
   onUpdate,
 }) => {
-  const isPMESelected = formData.earthElectrodeType === 'pme';
+  // No physical electrode → hide Resistance/Location. Covers the new 'na' option,
+  // an empty selection, and legacy saves that stored 'pme' (removed — ELE-1389).
+  const isElectrodeAbsent =
+    !formData.earthElectrodeType ||
+    formData.earthElectrodeType === 'na' ||
+    formData.earthElectrodeType === 'pme';
 
   // Parse existing main bonding locations into checkboxes
   const parseMainBondingLocations = (value: string = ''): Set<string> => {
@@ -137,7 +142,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
               { value: 'plate', label: 'Plate' },
               { value: 'tape', label: 'Tape' },
               { value: 'foundation', label: 'Foundation' },
-              { value: 'pme', label: 'PME' },
+              { value: 'na', label: 'N/A' },
               { value: 'other', label: 'Other' },
             ].map((opt) => (
               <button
@@ -146,7 +151,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 onClick={() => {
                   const newVal = formData.earthElectrodeType === opt.value ? '' : opt.value;
                   onUpdate('earthElectrodeType', newVal);
-                  if (newVal === 'pme') onUpdate('earthElectrodeResistance', '');
+                  if (newVal === 'na') onUpdate('earthElectrodeResistance', '');
                 }}
                 className={cn(
                   'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
@@ -161,7 +166,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
           </div>
         </FormField>
 
-        {!isPMESelected && (
+        {!isElectrodeAbsent && (
           <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="Resistance (Ω)">
               <Input

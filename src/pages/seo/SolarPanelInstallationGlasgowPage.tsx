@@ -698,7 +698,7 @@ const sections = [
                   Electricians who are familiar with Scottish Building Standards notification
                   requirements command a premium in the Glasgow market. Position your business as
                   specialists and quote at appropriate rates using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   .

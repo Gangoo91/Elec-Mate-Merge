@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'AI Cost Engineer',
     description:
       'Generate accurate, profitable quotes using AI-powered cost estimation with real trade pricing data.',

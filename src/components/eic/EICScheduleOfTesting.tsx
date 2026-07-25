@@ -1106,10 +1106,18 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     setDistributionBoards(migratedBoards);
 
     if (migratedCircuits && migratedCircuits.length > 0) {
-      // Normalize legacy data - remove K/Z curves for MCB/RCBO devices
-      const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
+      // Normalize legacy data - remove K/Z curves for MCB/RCBO devices.
+      // A curve is only meaningful for MCB / RCBO. Detect that from the device
+      // type OR the BS standard, in short ('MCB') or full ('BS EN 60898-1') form —
+      // the old check compared bsStandard to 'MCB' literally, which never matched
+      // real data (stored as 'BS EN 60898-1'), so it wrongly cleared the curve on
+      // every MCB/RCBO circuit (blank TYPE after EICR→EIC conversion — ELE-1391).
+      const requiresCurve = (r: TestResult): boolean => {
+        const t = `${r.protectiveDeviceType || ''} ${r.bsStandard || ''}`.toUpperCase();
+        return /MCB|RCBO|60898|61009/.test(t);
+      };
       const normalizedResults = migratedCircuits.map((result: TestResult, index: number) => {
-        const needsCurve = bsStandardRequiresCurve(result.bsStandard || '');
+        const needsCurve = requiresCurve(result);
         const validCurves = ['B', 'C', 'D'];
 
         // Ensure every circuit has a unique ID (fix for null/missing IDs from older saves)

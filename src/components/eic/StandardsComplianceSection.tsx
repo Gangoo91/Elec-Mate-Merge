@@ -26,8 +26,14 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
       <div className="space-y-3">
         <div>
           <Label className="text-white text-xs mb-1.5 block">Design Standard</Label>
-          <div className="grid grid-cols-2 gap-1">
+          {/* ELE-1390 — BS 7671:2018+A4:2026 is the current amendment, so new
+              certs default to A4. A3 is kept as a selectable legacy value: a cert
+              designed/certified under A3 must still state A3, so existing certs
+              (stored as 'BS7671') keep showing A3 and aren't retrospectively
+              relabelled. */}
+          <div className="grid grid-cols-3 gap-1">
             {[
+              { value: 'BS7671-A4', label: 'BS 7671:2018+A4' },
               { value: 'BS7671', label: 'BS 7671:2018+A3' },
               { value: 'other', label: 'Other' },
             ].map((opt) => (
@@ -36,13 +42,13 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
                 type="button"
                 onClick={() => onUpdate('designStandard', opt.value)}
                 className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
-                  (formData.designStandard || 'BS7671') === opt.value
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
+                  (formData.designStandard || 'BS7671-A4') === opt.value
                     ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                     : 'bg-white/[0.05] border border-white/[0.08] text-white'
                 )}
               >
-                {(formData.designStandard || 'BS7671') === opt.value && <Check className="h-3 w-3" />}
+                {(formData.designStandard || 'BS7671-A4') === opt.value && <Check className="h-3 w-3" />}
                 {opt.label}
               </button>
             ))}

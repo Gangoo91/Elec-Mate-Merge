@@ -512,7 +512,7 @@ const sections = [
                   Factor in North East labour rates (£35 to £50/hour), typical cable run distances
                   (5 to 15 metres for most Newcastle semis and terraces), earth rod costs where
                   needed, and Northern Powergrid notification time. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes on site, including all materials and certification
                   costs.
                 </p>

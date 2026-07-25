@@ -595,7 +595,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Listed building clients often underestimate the total project cost. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a detailed quote that includes the electrical installation, specialist

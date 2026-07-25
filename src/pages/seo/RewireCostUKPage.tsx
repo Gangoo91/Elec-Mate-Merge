@@ -755,14 +755,14 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Which electrical work is notifiable and how to comply with Part P.',
     icon: Scale,
     category: 'Regulations',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Generate professional, detailed quotes for rewires and other electrical work.',
     icon: Receipt,

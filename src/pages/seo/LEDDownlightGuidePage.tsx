@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'When LED downlight installations require Building Control notification in kitchens, bathrooms, and outdoors.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Issue a Minor Works Certificate for LED downlight replacements and additions to existing circuits.',
@@ -155,7 +155,7 @@ const sections = [
           protection, driver compatibility, and dimming compatibility all affect the choice of
           fitting and the installation method. Getting any of these wrong can result in premature
           failure, fire risk, or a failed{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>.
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR inspection</SEOInternalLink>.
         </p>
         <p>
           This guide covers the key decisions for every LED downlight installation — from selecting
@@ -419,7 +419,7 @@ const sections = [
         <p>
           When quoting LED downlight installations with dimming, always specify the dimmer switch
           and confirm compatibility with the chosen downlight before ordering materials. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> lets you
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets you
           build a detailed quote with specific fittings, switches, and cable quantities — so the
           customer knows exactly what they are getting.
         </p>
@@ -516,7 +516,7 @@ const sections = [
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/part-p-building-regulations">
+                  <SEOInternalLink href="/part-p-building-regulations">
                     Approved Document P (Electrical Safety)
                   </SEOInternalLink>
                 </strong>{' '}
@@ -576,7 +576,7 @@ const sections = [
                 <strong>No certification for new circuit work.</strong> Installing LED downlights on
                 a new circuit in a bathroom without issuing an EIC and notifying Building Control.
                 This is a Part P offence. A{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 is appropriate for additions to existing circuits outside special locations.

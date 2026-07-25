@@ -1,0 +1,6 @@
+-- ELE-226 Phase 2 — QS approve/return: fix cert-type casing at source
+-- (notif_cert_label → EICR / EIC / Minor Works / Solar PV / EV Charging, not
+-- UPPER which mangled multi-word types), add deep-link route to the push and
+-- action_url on the bell row. Full bodies live in the DB migration of the same
+-- name (applied via MCP); this file records the change for fresh deploys.
+-- See migration notify_user_spine for notif_cert_label().

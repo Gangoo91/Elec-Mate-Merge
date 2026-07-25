@@ -28,7 +28,7 @@ const PAGE_DESCRIPTION =
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
-  { label: 'Insulation Resistance Testing', href: '/guides/insulation-resistance-testing' },
+  { label: 'Insulation Resistance Testing', href: '/guides/insulation-resistance-testing-bs7671' },
 ];
 
 const tocItems = [
@@ -683,7 +683,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs lookup, R1+R2, cable sizing, voltage drop, PFC, and dozens more built-in calculators.',

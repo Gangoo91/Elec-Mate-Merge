@@ -562,7 +562,7 @@ const sections = [
         </div>
         <p>
           Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to send the
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to send the
           final invoice alongside the certificate. The customer receives the EIC and the invoice in
           one professional package — no chasing for payment later.
         </p>

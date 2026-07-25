@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'Price home office electrical upgrades with itemised materials and labour costs.',
     icon: Wrench,
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with modules covering domestic installation testing and certification.',
@@ -534,7 +534,7 @@ const sections = [
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 or{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 is required. Test continuity, insulation resistance, polarity, earth fault loop
@@ -669,7 +669,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quick Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the home office setup with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Dedicated circuit, sockets, data cabling, lighting — all itemised. Send a
                   professional PDF quote from the survey visit.
                 </p>

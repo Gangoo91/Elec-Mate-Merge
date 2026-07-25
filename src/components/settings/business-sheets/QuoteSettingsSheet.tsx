@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -160,16 +161,13 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Quotes</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Quote settings
@@ -188,7 +186,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                     setQuoteValidityDays(parseInt(e.target.value) || 30)
                   }
                   placeholder="30"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
               <div className="space-y-1.5">
@@ -197,10 +195,10 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                   value={String(depositPercentage)}
                   onValueChange={(v) => setDepositPercentage(parseInt(v, 10))}
                 >
-                  <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                  <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                     <SelectValue placeholder="Select deposit" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                  <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                     <SelectItem value="0">No deposit</SelectItem>
                     <SelectItem value="10">10%</SelectItem>
                     <SelectItem value="20">20%</SelectItem>
@@ -218,7 +216,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                   value={warrantyPeriod}
                   onChange={(e) => setWarrantyPeriod(e.target.value)}
                   placeholder="12 months"
-                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
             </div>
@@ -339,7 +337,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                   value={newCustomTerm}
                   onChange={(e) => setNewCustomTerm(e.target.value)}
                   placeholder="Add custom term…"
-                  className="flex-1 h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className="flex-1 h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && newCustomTerm.trim()) {
                       e.preventDefault();
@@ -386,7 +384,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

@@ -582,7 +582,7 @@ export default function NetworkedFireAlarmPage() {
           category: 'Certification',
         },
         {
-          href: '/tools/emergency-lighting-certificate',
+          href: '/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description: 'BS 5266 emergency lighting certification guide.',
           icon: Zap,

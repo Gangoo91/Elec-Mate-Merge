@@ -470,7 +470,7 @@ const sections = [
                   Factor in South Coast labour rates (£42 to £55/hour), earth rod costs, SSEN G98
                   notification, EIC certification, and coastal corrosion-resistant components where
                   relevant. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised, professional quotes that cover all job-specific variables.
                 </p>
               </div>

@@ -645,7 +645,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found in an Oxford Victorian terrace, quote the
                   consumer unit replacement or RCD upgrade immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Oxford landlords must act within 28 days — the electrician who quotes on the day

@@ -136,7 +136,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/electrical-career-progression',
+    href: '/guides/electrician-career-progression',
     title: 'Electrical Career Progression',
     description:
       'Where your career can go after qualifying — specialisms, management, and self-employment.',

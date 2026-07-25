@@ -48,13 +48,21 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
     setIsSending(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('send-admin-message', {
-        body: {
-          recipientId: user.id,
-          subject: subject.trim(),
-          message: message.trim(),
-          messageType,
-        },
+      // Insert the row directly — the trg_notify_admin_message trigger fires
+      // notify-message server-side, which handles push + bell + email
+      // (message_type 'email'/'both' forces the email; 'in_app' is push-first
+      // with email fallback for users without a device token).
+      const {
+        data: { user: adminUser },
+      } = await supabase.auth.getUser();
+      if (!adminUser) throw new Error('Not authenticated');
+
+      const { error } = await supabase.from('admin_messages').insert({
+        sender_id: adminUser.id,
+        recipient_id: user.id,
+        subject: subject.trim(),
+        message: message.trim(),
+        message_type: messageType,
       });
 
       if (error) throw error;
@@ -62,9 +70,10 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
       setSent(true);
       toast({
         title: 'Message sent',
-        description: data.emailSent
-          ? 'Email and in-app notification sent successfully'
-          : 'In-app notification sent successfully',
+        description:
+          messageType === 'in_app'
+            ? 'In-app notification sent'
+            : 'Email and in-app notification sent',
       });
 
       // Reset after showing success
@@ -74,11 +83,11 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
         setSent(false);
         onOpenChange(false);
       }, 1500);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Send error:', error);
       toast({
         title: 'Failed to send',
-        description: error.message || 'Please try again',
+        description: error instanceof Error ? error.message : 'Please try again',
         variant: 'destructive',
       });
     } finally {

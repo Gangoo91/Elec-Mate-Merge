@@ -4,12 +4,7 @@ import SupporterListItem from './SupporterListItem';
 import { PeerSupporter, peerPresenceService } from '@/services/peerSupportService';
 import { useAvailableSupporters } from '@/hooks/usePeerChat';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  SectionHeader,
-  ListCard,
-  EmptyState,
-  TextAction,
-} from '@/components/college/primitives';
+import { SectionHeader, ListCard, EmptyState, TextAction } from '@/components/college/primitives';
 
 interface AvailableSupportersProps {
   onConnect: (supporterId: string) => void;
@@ -132,6 +127,26 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
           action="Refresh"
           onAction={() => refetch()}
         />
+        {/* Never a dead end — the 24/7 lines are always open */}
+        <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+          <p className="text-[12.5px] text-white/85 leading-relaxed mb-3">
+            Don't want to wait? These are free, confidential and open all night.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <a
+              href="tel:116123"
+              className="inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
+            >
+              Call Samaritans 116 123
+            </a>
+            <a
+              href="sms:85258?body=SHOUT"
+              className="inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[13px] font-medium touch-manipulation active:scale-[0.98]"
+            >
+              Text SHOUT to 85258
+            </a>
+          </div>
+        </div>
       </section>
     );
   }

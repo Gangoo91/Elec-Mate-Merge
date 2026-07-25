@@ -20,7 +20,7 @@ import {
 export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
-      title="Battery Backup Calculator: UPS Runtime & Ah Sizing"
+      title="Battery Backup Calculator: Runtime & Ah Size in Seconds"
       description="Free UPS / battery backup calculator: size the battery bank and estimate runtime from your load, voltage, depth of discharge and inverter efficiency."
       datePublished="2026-01-25"
       dateModified="2026-06-10"
@@ -570,7 +570,7 @@ export default function BatteryBackupCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

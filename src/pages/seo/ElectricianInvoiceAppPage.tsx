@@ -514,7 +514,7 @@ export default function ElectricianInvoiceAppPage() {
               courses, Elec-Mate covers every aspect of electrical work — from design and
               calculation, through installation and testing, to{' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR certification</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink>, invoicing,
+              <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>, invoicing,
               and payment. One platform, one subscription, no gaps.
             </p>
             <p>
@@ -550,9 +550,9 @@ export default function ElectricianInvoiceAppPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Faster payment is valuable, but the bigger win is continuity. If the job started in
-              the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>, was
+              the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>, was
               priced in the{' '}
-              <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
+              <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
               carried a sensible floor price from the{' '}
               <SEOInternalLink href="/tools/minimum-charge-calculator">
                 minimum charge calculator

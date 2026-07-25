@@ -22,7 +22,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Zs Too High: Causes + How to Fix (BS 7671 Table 41.3 / 41.2)';
+const PAGE_TITLE = 'Earth Fault Loop Impedance Too High? Causes + Fixes (BS 7671)';
 const PAGE_DESCRIPTION =
   'High earth fault loop impedance (Zs) over the BS 7671 Table 41.3 (MCB) or Table 41.2 (fuse) maximum: high Ze, long runs, loose joints, hot conductors. Step-by-step diagnosis + 6 fixes for UK electricians.';
 
@@ -30,7 +30,7 @@ const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
   {
     label: 'Earth Fault Loop Impedance Too High',
-    href: '/guides/earth-fault-loop-impedance-explained-too-high',
+    href: '/guides/earth-fault-loop-impedance-explained',
   },
 ];
 
@@ -575,7 +575,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained — how they affect Zs values.',
     icon: Globe,

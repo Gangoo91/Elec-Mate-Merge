@@ -653,7 +653,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'Test voltages, minimum values, conductor combinations — the dead test that must pass before Zs testing.',

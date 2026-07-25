@@ -464,7 +464,7 @@ const sections = [
                   Factor in Edinburgh day rates (£320 to £420), stone wall routing challenges,
                   listed building and conservation area constraints, PME earthing requirements, and
                   factor consent timescales for tenement installations. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>

@@ -98,7 +98,7 @@ const sections = [
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and, for domestic work, that it complies with{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . Losing or discarding these certificates can have serious consequences.
@@ -151,7 +151,7 @@ const sections = [
             the installation work and should be retained for the life of the installation. It is the
             primary evidence that the work was designed, installed, and tested to BS 7671 at the
             time of completion. For{' '}
-            <SEOInternalLink href="/guides/part-p-building-regulations">
+            <SEOInternalLink href="/part-p-building-regulations">
               Part P notifiable work
             </SEOInternalLink>
             , the EIC (together with the Building Regulations Compliance Certificate) is essential

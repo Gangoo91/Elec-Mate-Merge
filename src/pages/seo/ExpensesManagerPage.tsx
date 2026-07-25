@@ -451,7 +451,7 @@ const sections = [
           year), workwear and PPE (GBP 100-GBP 300), stationery and printing (GBP 50-GBP 100),
           use-of-home allowance (GBP 120-GBP 312), and business bank account fees. Individually
           small, collectively significant. See our{' '}
-          <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink> for
+          <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink> for
           managing the timing of these payments alongside your income.
         </p>
       </>
@@ -461,7 +461,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/tools/cash-flow-planner',
+    href: '/cash-flow-planner',
     title: 'Cash Flow Planner',
     description: 'Forecast your cash position and spot shortfalls before they become crises.',
     icon: TrendingUp,
@@ -476,14 +476,14 @@ const relatedPages = [
     category: 'Business Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'AI-powered cost estimation and professional PDF quotes for electrical work.',
     icon: FileText,
     category: 'Business Tool',
   },
   {
-    href: '/tools/electrician-invoice-app',
+    href: '/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Digital invoicing with Stripe payments, automatic reminders, and accounting sync.',

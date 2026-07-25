@@ -15,6 +15,70 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
+// ── PECR: unsubscribe + suppression plumbing ─────────────────────
+// Same HMAC token scheme as send-lifetime-offer — the token lands on the
+// public `unsubscribe` edge function, which upserts into email_suppressions.
+const UNSUBSCRIBE_MAILTO = 'mailto:info@elec-mate.com?subject=unsubscribe';
+const UNSUBSCRIBE_SECRET = Deno.env.get('WINBACK_UNSUBSCRIBE_SECRET') ?? '';
+
+function b64urlEncode(bytes: Uint8Array): string {
+  let bin = '';
+  bytes.forEach((b) => (bin += String.fromCharCode(b)));
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function hmacSign(payload: string, secret: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  return b64urlEncode(new Uint8Array(sig));
+}
+
+async function buildUnsubscribeUrl(email: string): Promise<string> {
+  if (!UNSUBSCRIBE_SECRET) return UNSUBSCRIBE_MAILTO;
+  const payload = JSON.stringify({
+    email: email.toLowerCase().trim(),
+    issued_at: Math.floor(Date.now() / 1000),
+  });
+  const payloadB64 = b64urlEncode(new TextEncoder().encode(payload));
+  const sig = await hmacSign(payloadB64, UNSUBSCRIBE_SECRET);
+  const supabaseUrl = Deno.env.get('SUPABASE_URL');
+  if (!supabaseUrl) return UNSUBSCRIBE_MAILTO;
+  return `${supabaseUrl}/functions/v1/unsubscribe?token=${payloadB64}.${sig}`;
+}
+
+function buildUnsubscribeHeaders(unsubscribeUrl: string): Record<string, string> {
+  const isHttps = unsubscribeUrl.startsWith('https://');
+  return {
+    'List-Unsubscribe': isHttps
+      ? `<${unsubscribeUrl}>, <${UNSUBSCRIBE_MAILTO}>`
+      : `<${UNSUBSCRIBE_MAILTO}>`,
+    ...(isHttps ? { 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' } : {}),
+  };
+}
+
+function unsubscribeFooter(unsubscribeUrl: string): string {
+  const href = unsubscribeUrl.startsWith('https://') ? unsubscribeUrl : UNSUBSCRIBE_MAILTO;
+  return `<p style="margin:8px 0 0;font-size:11px;color:#64748b">You're receiving this because you created an account at elec-mate.com. <a href="${href}" style="color:#64748b">Unsubscribe</a></p>`;
+}
+
+// Suppressed addresses (unsubscribed/bounced) must never receive marketing.
+// Same query pattern as send-lifetime-offer.
+async function getSuppressedEmails(
+  // deno-lint-ignore no-explicit-any
+  supabase: any
+): Promise<Set<string>> {
+  const { data: suppressed } = await supabase.from('email_suppressions').select('email');
+  return new Set(
+    ((suppressed ?? []) as { email: string }[]).map((s) => s.email.toLowerCase())
+  );
+}
+
 interface EligibleUser {
   id: string;
   full_name: string | null;
@@ -42,7 +106,7 @@ function getLaunchPaymentUrl(role: 'electrician' | 'apprentice'): string {
 }
 
 // Generate electrician email HTML
-function generateElectricianEmailHTML(user: EligibleUser): string {
+function generateElectricianEmailHTML(user: EligibleUser, unsubscribeUrl: string): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
   const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
   const b = 'color:#fff;font-weight:700';
@@ -158,6 +222,7 @@ function generateElectricianEmailHTML(user: EligibleUser): string {
 <!-- Footer -->
 <tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
 <p style="margin:0;font-size:12px;color:#475569">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+${unsubscribeFooter(unsubscribeUrl)}
 </td></tr>
 
 </table></td></tr></table>
@@ -165,7 +230,7 @@ function generateElectricianEmailHTML(user: EligibleUser): string {
 }
 
 // Generate apprentice email HTML
-function generateApprenticeEmailHTML(user: EligibleUser): string {
+function generateApprenticeEmailHTML(user: EligibleUser, unsubscribeUrl: string): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
   const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
   const b = 'color:#fff;font-weight:700';
@@ -276,6 +341,7 @@ function generateApprenticeEmailHTML(user: EligibleUser): string {
 <!-- Footer -->
 <tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
 <p style="margin:0;font-size:12px;color:#475569">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+${unsubscribeFooter(unsubscribeUrl)}
 </td></tr>
 
 </table></td></tr></table>
@@ -283,7 +349,7 @@ function generateApprenticeEmailHTML(user: EligibleUser): string {
 }
 
 // V9 "Quick question" — card-entered-never-subscribed, personal, curious
-function generateV9CardEnteredEmailHTML(firstName: string): string {
+function generateV9CardEnteredEmailHTML(firstName: string, unsubscribeUrl: string): string {
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
   const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
   const logoUrl = 'https://elec-mate.com/logo.jpg';

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/guides/electrical-training-courses-uk' },
+  { label: 'Training', href: '/training' },
   { label: 'ECS Card Types', href: '/guides/ecs-card-types-explained' },
 ];
 
@@ -30,10 +30,10 @@ const tocItems = [
   { id: 'overview', label: 'What Is the ECS Card?' },
   { id: 'card-types', label: 'ECS Card Types' },
   { id: 'apprentice-card', label: 'Apprentice Card' },
-  { id: 'provisional-card', label: 'Provisional Card' },
+  { id: 'provisional-card', label: 'Trainee Electrician Card' },
   { id: 'installation-card', label: 'Installation Electrician Card' },
   { id: 'maintenance-card', label: 'Maintenance Electrician Card' },
-  { id: 'gold-card', label: 'Gold Card' },
+  { id: 'gold-card', label: 'Approved Electrician (Gold)' },
   { id: 'how-to-apply', label: 'How to Apply' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -41,9 +41,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'The ECS (Electrotechnical Certification Scheme) card is the industry-standard identification card for electricians and electrical workers in the UK. It is managed by the JIB (Joint Industry Board) and is required for site access on most commercial and industrial projects.',
-  'There are multiple card types: Apprentice (white), Provisional (yellow), Installation Electrician (blue), Maintenance Electrician (blue), and Gold Card (gold). Each requires different qualifications and experience.',
-  'The Installation Electrician card (blue card) is the most common and requires Level 3 NVQ, C&G 2382 (18th Edition), and the AM2 assessment. This is the standard card for a fully qualified electrician.',
-  'The Gold Card requires additional qualifications above the blue card — typically C&G 2391 (Inspection and Testing) plus a design qualification (C&G 2396) or equivalent.',
+  'There are multiple card types: ECS Apprentice, Trainee Electrician, Experienced Worker, Installation Electrician (gold), Maintenance Electrician (gold), Domestic Electrician (gold), and Approved Electrician (a gold-card grading above Installation Electrician). Each requires different qualifications and experience.',
+  'The Installation Electrician card is a gold card and the standard card for a fully qualified electrician. It requires Level 3 NVQ, C&G 2382 (18th Edition), and the AM2 assessment.',
+  'Approved Electrician is a gold-card grading above Installation Electrician — typically requiring C&G 2391 (Inspection and Testing) plus qualifying experience.',
   'All ECS cards require a valid health and safety qualification and must be renewed every 5 years. You must keep your qualifications up to date to renew.',
 ];
 
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'Can I get an ECS card without the AM2?',
     answer:
-      'You can get certain ECS cards without the AM2. The Apprentice card and Provisional card do not require the AM2. However, the full Installation Electrician card (blue card) requires the AM2 assessment. If you are a time-served electrician who qualified before the AM2 was introduced, there may be alternative routes — check with the JIB directly, as they assess experienced worker applications on a case-by-case basis.',
+      'You can get certain ECS cards without the AM2. The ECS Apprentice card and Trainee Electrician card do not require the AM2. However, the full Installation Electrician card (a gold card) requires the AM2 assessment. If you are a time-served electrician who qualified before the AM2 was introduced, the Experienced Worker route may apply — check with the JIB directly, as they assess experienced worker applications on a case-by-case basis, and note that new Experienced Worker Assessment applications may be restricted from 2026.',
   },
   {
     question: 'What health and safety qualification do I need for an ECS card?',
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/am2-exam-tips',
     title: 'AM2 Exam Tips',
-    description: 'Prepare for the AM2 practical assessment — required for the full blue card.',
+    description: 'Prepare for the AM2 practical assessment — required for the full gold card.',
     icon: GraduationCap,
     category: 'Guide',
   },
@@ -172,42 +172,48 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Apprentice (White)</h3>
-            <p className="text-white text-sm">For electrical apprentices currently in training.</p>
-          </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Provisional (Yellow)</h3>
+            <h3 className="font-bold text-white text-lg mb-2">ECS Apprentice</h3>
             <p className="text-white text-sm">
-              For qualified electricians who have not yet passed the AM2.
+              For those on an electrotechnical apprenticeship, currently in training.
             </p>
           </div>
-          <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Installation Electrician (Blue)</h3>
+          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+            <h3 className="font-bold text-white text-lg mb-2">Trainee Electrician</h3>
+            <p className="text-white text-sm">
+              For those on a formal training programme towards a recognised qualification.
+            </p>
+          </div>
+          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+            <h3 className="font-bold text-white text-lg mb-2">Installation Electrician (Gold)</h3>
             <p className="text-white text-sm">
               Fully qualified electrician with NVQ3 + 2382 + AM2.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-2">Gold Card</h3>
+            <h3 className="font-bold text-white text-lg mb-2">Approved Electrician (Gold)</h3>
             <p className="text-white text-sm">
-              Senior electrician with additional design and testing qualifications.
+              Gold-card grading above Installation Electrician — C&G 2391 plus experience.
             </p>
           </div>
         </div>
         <p>
-          There are also specialist cards for maintenance electricians, highway electrical
-          operatives, and other specific roles, but the four above are the most common.
+          There are also gold cards for Maintenance Electricians and Domestic Electricians, plus
+          Experienced Worker, Electrical Labourer, Manager, and Related Discipline (white) cards
+          for allied roles. You may still hear the old colour shorthand — white for apprentices,
+          yellow for provisional cardholders, blue for installation electricians — but the scheme
+          has moved from colour-first to role-based cards, and the core electrician cards are now
+          issued at gold standard.
         </p>
       </>
     ),
   },
   {
     id: 'apprentice-card',
-    heading: 'Apprentice Card (White)',
+    heading: 'ECS Apprentice Card',
     content: (
       <>
         <p>
-          The Apprentice card is for people who are currently enrolled on an electrical
+          The ECS Apprentice card is for people who are currently enrolled on an electrotechnical
           apprenticeship programme. It confirms that you are training to become an electrician and
           allows you site access while you are learning.
         </p>
@@ -243,36 +249,37 @@ const sections = [
   },
   {
     id: 'provisional-card',
-    heading: 'Provisional Card (Yellow)',
+    heading: 'Trainee Electrician Card',
     content: (
       <>
         <p>
-          The Provisional card is a stepping stone for electricians who have completed their
-          qualifications but have not yet passed the AM2 assessment.
+          The Trainee Electrician card is a stepping stone for those working towards becoming a
+          qualified electrician on a formal training programme outside an apprenticeship.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Requirements:</strong> Level 3 NVQ in Electrotechnical Services (or
-                equivalent), C&G 2382 (18th Edition), and the ECS Health, Safety and Environmental
-                Assessment. The AM2 is NOT required for this card.
+                <strong>Requirements:</strong> You must be enrolled on a formal training programme
+                leading to a recognised electrotechnical qualification and have passed the ECS
+                Health, Safety and Environmental Assessment. The AM2 is NOT required for this card.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Validity:</strong> 5 years, but you should aim to pass the AM2 and upgrade
-                to the full blue card as soon as possible.
+                <strong>Validity:</strong> Covers you while you are in training, but you should aim
+                to complete your NVQ and AM2 and upgrade to the full gold card as soon as possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limitations:</strong> Some main contractors and sites distinguish between
-                provisional and full cardholders. Having only the provisional card may limit your
-                earning potential and the projects you can work on.
+                <strong>Already experienced?</strong> The Experienced Worker card covers those
+                working towards the Level 3 NVQ via the Experienced Worker route — note that new
+                Experienced Worker Assessment applications may be restricted from 2026, so check
+                with the JIB before relying on this route.
               </span>
             </li>
           </ul>
@@ -282,17 +289,18 @@ const sections = [
   },
   {
     id: 'installation-card',
-    heading: 'Installation Electrician Card (Blue)',
+    heading: 'Installation Electrician Card (Gold)',
     content: (
       <>
         <p>
-          The Installation Electrician card is the standard card for a fully qualified electrician.
-          This is the card that most employers and site managers expect to see.
+          The Installation Electrician card is a gold card and the standard card for a fully
+          qualified electrician. This is the card that most employers and site managers expect to
+          see.
         </p>
-        <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> Level 3 NVQ in Electrotechnical Services (or
                 equivalent), C&G 2382 (18th Edition), AM2 assessment, and the ECS Health, Safety and
@@ -300,7 +308,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What it proves:</strong> That you are a fully qualified installation
                 electrician who can work unsupervised on electrical installation projects. You have
@@ -308,7 +316,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>JIB grade:</strong> Corresponds to JIB Electrician grade, which determines
                 your minimum pay rate under JIB terms.
@@ -317,7 +325,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The blue card is the goal for most apprentices and trainees. Once you have it, you are
+          This gold card is the goal for most apprentices and trainees. Once you have it, you are
           recognised as a fully qualified electrician across the entire UK construction industry.
         </p>
       </>
@@ -325,7 +333,7 @@ const sections = [
   },
   {
     id: 'maintenance-card',
-    heading: 'Maintenance Electrician Card (Blue)',
+    heading: 'Maintenance Electrician Card (Gold)',
     content: (
       <>
         <p>
@@ -357,28 +365,30 @@ const sections = [
   },
   {
     id: 'gold-card',
-    heading: 'Gold Card',
+    heading: 'Approved Electrician (Gold Card Grading)',
     content: (
       <>
         <p>
-          The ECS Gold Card is the highest standard ECS card and recognises electricians with
-          qualifications and experience above the standard installation or maintenance level.
+          The Approved Electrician card is a gold-card grading above Installation Electrician. It
+          recognises electricians with qualifications and experience above the standard
+          installation or maintenance level.
         </p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Requirements:</strong> Everything needed for the blue card PLUS additional
-                qualifications. Typically this means{' '}
+                <strong>Requirements:</strong> Everything needed for the Installation Electrician
+                card PLUS additional qualifications and experience. Typically this means{' '}
                 <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
                   C&G 2382
-                </SEOInternalLink>
-                , C&G 2391 (Inspection and Testing), and a design qualification such as the{' '}
+                </SEOInternalLink>{' '}
+                and C&G 2391 (Inspection and Testing) plus qualifying experience; a design
+                qualification such as the{' '}
                 <SEOInternalLink href="/guides/city-guilds-2396-design-course">
                   C&G 2396
-                </SEOInternalLink>
-                . See the{' '}
+                </SEOInternalLink>{' '}
+                supports further progression. See the{' '}
                 <SEOInternalLink href="/guides/gold-card-requirements-electrician">
                   full Gold Card requirements guide
                 </SEOInternalLink>
@@ -388,9 +398,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What it proves:</strong> That you are qualified to design, install, inspect,
-                and test electrical installations. It is the most comprehensive ECS card and
-                demonstrates the highest level of competence.
+                <strong>What it proves:</strong> That you are qualified to install, inspect, and
+                test electrical installations. It is the highest electrician grading on the scheme
+                and demonstrates the highest level of competence.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -427,7 +437,8 @@ const sections = [
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2:</strong> Gather your qualification certificates — NVQ Level 3, C&G
-                2382, AM2 certificate, and any additional qualifications for Gold Card.
+                2382, AM2 certificate, and any additional qualifications for the Approved
+                Electrician grading.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -465,9 +476,9 @@ export default function ECSCardTypesExplainedPage() {
   return (
     <GuideTemplate
       title="ECS Card Types Explained | Electrician Card Guide UK 2026"
-      description="Complete guide to ECS card types for UK electricians. Apprentice, Provisional, Installation Electrician, Maintenance, and Gold Card — requirements…"
+      description="Complete guide to ECS card types for UK electricians. Apprentice, Trainee, Installation Electrician, Maintenance, and Approved Electrician gold cards — requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-07-25"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"
@@ -477,7 +488,7 @@ export default function ECSCardTypesExplainedPage() {
           ECS Card Types Explained: <span className="text-yellow-400">Which Card Do You Need?</span>
         </>
       }
-      heroSubtitle="The ECS card is your electrician's passport to UK construction sites. This guide explains every card type — Apprentice, Provisional, Installation, Maintenance, and Gold — with the qualifications needed for each."
+      heroSubtitle="The ECS card is your electrician's passport to UK construction sites. This guide explains every card type — Apprentice, Trainee, Installation, Maintenance, and Approved Electrician — with the qualifications needed for each."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

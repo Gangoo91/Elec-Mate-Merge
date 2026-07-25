@@ -258,7 +258,7 @@ export default function CityGuilds2391Page() {
               significantly. Holding the 2391-52 opens a lucrative revenue stream for self-employed
               electricians and small contractors. Before sitting the 2391-52, ensure you have
               completed the{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition wiring regulations course
               </SEOInternalLink>
               .
@@ -608,7 +608,7 @@ export default function CityGuilds2391Page() {
       <section className="py-8 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
-            title="Pass the C&G 2391-52 with Elec-Mate"
+            title="C&G 2391-52 Course: Cost, Format + How to Pass First Time"
             description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"

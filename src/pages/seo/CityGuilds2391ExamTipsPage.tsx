@@ -110,14 +110,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Every section of the EICR form explained — essential knowledge for the 2391.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for the 2391 on Elec-Mate with structured modules, flashcards, and EPA simulation.',

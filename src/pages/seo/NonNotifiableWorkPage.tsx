@@ -114,7 +114,7 @@ const sections = [
         <p>
           The distinction between notifiable and non-notifiable work is defined in Approved Document
           P (2013 edition with 2016 amendments) of the{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Building Regulations
           </SEOInternalLink>
           . Understanding this distinction is essential for every electrician to advise customers
@@ -424,7 +424,7 @@ const sections = [
           electrical work, including non-notifiable work. The cost of having a professional carry
           out the work is modest compared to the safety risks of incorrect DIY electrical work. A
           qualified electrician will also issue a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works certificate
           </SEOInternalLink>{' '}
           documenting the work, which protects both the homeowner and the electrician.
@@ -567,7 +567,7 @@ const sections = [
         <p>
           Elec-Mate makes it easy to issue professional Minor Works certificates for non-notifiable
           work. The app includes a{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works certificate template
           </SEOInternalLink>{' '}
           that captures all the required information: description of work, circuit details, test
@@ -584,7 +584,7 @@ const sections = [
             Electrical Installation Certificates
           </SEOInternalLink>{' '}
           with complete schedules of test results. The{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             70+ electrical calculators
           </SEOInternalLink>{' '}
           help you verify cable sizes, voltage drop, and Zs values for every circuit. The 8 Elec-AI
@@ -597,7 +597,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Complete guide to Part P. What is notifiable, competent person schemes, building control process.',
@@ -605,7 +605,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Generate professional Minor Works certificates for non-notifiable electrical work. Auto-validated test results.',
@@ -637,7 +637,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Cable sizing, voltage drop, Zs verification, PFC, and dozens more. Verify your work to BS 7671.',

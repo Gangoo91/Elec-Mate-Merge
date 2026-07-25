@@ -9,15 +9,15 @@ import { Capacitor } from '@capacitor/core';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useToast } from '@/hooks/use-toast';
 import StripeConnectSetup from '@/components/electrician/settings/StripeConnectSetup';
+import { stripePriceData } from '@/data/stripePrices';
 import {
-  ListCard,
   ListRow,
-  SectionHeader,
   Eyebrow,
   TextAction,
   containerVariants,
   itemVariants,
 } from '@/components/college/primitives';
+import { SettingsCard } from '@/components/settings/rows';
 
 const STRIPE_BILLING_PORTAL_URL = import.meta.env.VITE_STRIPE_BILLING_PORTAL_URL;
 if (!STRIPE_BILLING_PORTAL_URL && import.meta.env.PROD) {
@@ -56,37 +56,39 @@ const BillingTab = () => {
     }
   };
 
-  const proFeatures = [
-    'Unlimited certificates and reports',
-    'AI-powered tools and assistants',
-    'Priority customer support',
-    'Advanced analytics dashboard',
-    'Custom branding options',
-    'Cloud backup and sync',
-  ];
+  // Real plan catalogue — names, descriptions and features per tier.
+  // Prices are deliberately not shown here: grandfathered, founders and
+  // App Store subscribers all pay different amounts to today's list price.
+  const tierPlan = subscriptionTier
+    ? stripePriceData.monthly.find((p) => p.id === `${subscriptionTier.replace('_', '-')}-monthly`)
+    : undefined;
 
   const freeFeatures = [
-    'Basic certificate creation',
-    'Limited AI features',
+    'Browse tools and calculators',
+    'Preview the study centre',
+    'Set up your Elec-ID profile',
     'Community support',
-    'Standard templates',
   ];
 
-  const features = isSubscribed ? proFeatures : freeFeatures;
-  const tierLabel = isSubscribed ? subscriptionTier || 'Pro' : 'Free';
+  const features = isSubscribed
+    ? (tierPlan?.features || []).slice(0, 8)
+    : freeFeatures;
+  const inheritsFrom = isSubscribed ? tierPlan?.inheritsFrom : undefined;
+  const tierLabel = isSubscribed ? tierPlan?.name || subscriptionTier || 'Pro' : 'Free';
+  const tierDescription = isSubscribed
+    ? tierPlan?.description || 'Full access to all premium features.'
+    : 'Upgrade to unlock all features.';
 
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-8"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"
     >
       {/* ── CURRENT PLAN ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow="01" title="Current Plan" />
-
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="01" title="Current Plan">
           {isSubscribed && (
             <div className="h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70" />
           )}
@@ -108,15 +110,13 @@ const BillingTab = () => {
                   </span>
                 </div>
                 <p className="mt-2 text-[13px] text-white max-w-md leading-relaxed">
-                  {isSubscribed
-                    ? 'Full access to all premium features.'
-                    : 'Upgrade to unlock all features.'}
+                  {tierDescription}
                 </p>
               </div>
             </div>
 
             {isSubscribed && (
-              <div className="flex items-center justify-between gap-4 p-3 rounded-xl bg-[#0a0a0a] border border-white/[0.06]">
+              <div className="flex items-center justify-between gap-4 p-3 rounded-xl bg-white/[0.04] border border-white/[0.10]">
                 <Eyebrow>Next Billing</Eyebrow>
                 <span className="text-[13px] font-medium text-white tabular-nums">
                   {profile?.subscription_end
@@ -134,6 +134,11 @@ const BillingTab = () => {
               <Eyebrow>
                 {isSubscribed ? 'Your Premium Features' : 'Current Features'}
               </Eyebrow>
+              {inheritsFrom && (
+                <p className="mt-2 text-[12px] text-white/70">
+                  Everything in {inheritsFrom}, plus:
+                </p>
+              )}
               <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {features.map((feature) => (
                   <li
@@ -158,7 +163,7 @@ const BillingTab = () => {
                   onClick={() => navigate('/subscriptions')}
                   className="h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
                 >
-                  Upgrade to Pro
+                  Upgrade
                 </Button>
               ) : (
                 <Button
@@ -175,19 +180,18 @@ const BillingTab = () => {
               )}
             </div>
           </div>
-        </div>
+        </SettingsCard>
       </motion.section>
 
       {/* ── STRIPE CONNECT (plumbing preserved) ── */}
-      <motion.section variants={itemVariants}>
+      <motion.section variants={itemVariants} className="flex h-full flex-col [&>*]:flex-1">
         <StripeConnectSetup />
       </motion.section>
 
       {/* ── MANAGE SUBSCRIPTION ── */}
       {isSubscribed && (
-        <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader eyebrow="02" title="Manage Subscription" />
-          <ListCard>
+        <motion.section variants={itemVariants} className="h-full">
+          <SettingsCard eyebrow="02" title="Manage Subscription">
             {isNative ? (
               <ListRow
                 title="Manage Subscription"
@@ -240,23 +244,24 @@ const BillingTab = () => {
                 />
               </>
             )}
-          </ListCard>
 
-          <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-4 py-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-300 mb-1">
-              Manage your subscription where you bought it
-            </p>
-            <p className="text-[13px] text-white/80 leading-relaxed">
-              Apple and Google require subscriptions purchased through their stores to be managed in their settings, and Stripe subscriptions can only be managed via the web. If you bought on the web and signed in on the iOS app, you'll need to cancel or change your plan from a browser — not in the app. Same the other way around.
-            </p>
-          </div>
+            <div className="px-5 sm:px-6 py-4">
+              <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-4 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-300 mb-1">
+                  Manage your subscription where you bought it
+                </p>
+                <p className="text-[13px] text-white/80 leading-relaxed">
+                  Apple and Google require subscriptions purchased through their stores to be managed in their settings, and Stripe subscriptions can only be managed via the web. If you bought on the web and signed in on the iOS app, you'll need to cancel or change your plan from a browser — not in the app. Same the other way around.
+                </p>
+              </div>
+            </div>
+          </SettingsCard>
         </motion.section>
       )}
 
       {/* ── SECURITY BADGE ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow={isSubscribed ? '03' : '02'} title="Security" />
-        <ListCard>
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow={isSubscribed ? '03' : '02'} title="Security">
           <ListRow
             title={
               isNative
@@ -273,13 +278,12 @@ const BillingTab = () => {
             }
             accent="blue"
           />
-        </ListCard>
+        </SettingsCard>
       </motion.section>
 
       {/* ── SUPPORT ── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader eyebrow={isSubscribed ? '04' : '03'} title="Billing Support" />
-        <ListCard>
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow={isSubscribed ? '04' : '03'} title="Billing Support">
           <ListRow
             title="Contact Billing"
             subtitle="info@elec-mate.com"
@@ -291,7 +295,7 @@ const BillingTab = () => {
             }
             accent="yellow"
           />
-        </ListCard>
+        </SettingsCard>
       </motion.section>
     </motion.div>
   );

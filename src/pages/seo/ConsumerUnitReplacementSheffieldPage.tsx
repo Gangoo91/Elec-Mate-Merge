@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Notifiable electrical work in England — what requires notification and how the process works.',
@@ -524,7 +524,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When your inspection uncovers old wiring, missing bonding, or additional circuits
                   needed, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to quote the additional work while you are still on site. Customers in Sheffield

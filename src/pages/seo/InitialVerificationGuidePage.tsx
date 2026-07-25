@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with 50+ structured courses on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -198,7 +198,7 @@ const sections = [
                   consumer unit change
                 </SEOInternalLink>{' '}
                 is classified as notifiable work under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>{' '}
                 and requires initial verification of the new unit and all circuits connected to it.
@@ -424,7 +424,7 @@ const sections = [
         </p>
         <p>
           For notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           , the EIC must be registered with the local authority building control (or automatically

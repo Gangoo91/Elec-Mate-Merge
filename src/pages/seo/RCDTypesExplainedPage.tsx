@@ -718,14 +718,14 @@ export default function RCDTypesExplainedPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/rcd-testing-guide',
+          href: '/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description: 'Trip time testing procedures and pass/fail criteria.',
           icon: Timer,
           category: 'Guide',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT and their impact on RCD selection.',
           icon: Cable,

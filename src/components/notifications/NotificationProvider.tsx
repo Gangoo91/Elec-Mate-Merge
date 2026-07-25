@@ -13,6 +13,25 @@ export type Notification = {
   read: boolean;
   createdAt: string;
   link?: string;
+  /** Original push_notification_log.type — drives category colour + deep-link. */
+  rawType?: string;
+  referenceId?: string | null;
+};
+
+/* Derive a deep-link from a notification's raw type + reference so the
+   Notifications page can actually action them (push_notification_log has no
+   link column of its own). */
+const deriveNotifLink = (rawType?: string, refId?: string | null): string | undefined => {
+  const t = (rawType || '').toLowerCase();
+  if (t.includes('invoice') || t === 'payment') return '/electrician/invoices';
+  if (t.includes('quote')) return '/electrician/quotes';
+  if (t.includes('task')) return '/electrician';
+  if (t.startsWith('compliance') || t.includes('cert') || t.includes('ecs')) return '/settings?tab=business';
+  if (t.includes('study') || t.includes('flashcard')) return '/electrician/study-centre';
+  if (t.includes('mood') || t.includes('wellbeing') || t.includes('mental')) return '/electrician/mental-health-hub';
+  if (t.includes('job')) return '/electrician/jobs';
+  if (t.startsWith('safeguarding')) return '/college';
+  return undefined;
 };
 
 type NotificationContextType = {
@@ -41,6 +60,7 @@ const mapPushLog = (row: {
   title: string;
   body: string;
   type: string;
+  reference_id?: string | null;
   sent_at: string;
   read_at: string | null;
 }): Notification => ({
@@ -58,6 +78,9 @@ const mapPushLog = (row: {
           : 'info') as Notification['type'],
   read: !!row.read_at,
   createdAt: row.sent_at,
+  rawType: row.type,
+  referenceId: row.reference_id ?? null,
+  link: deriveNotifLink(row.type, row.reference_id),
 });
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -98,7 +121,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await (supabase as any)
         .from('push_notification_log')
-        .select('id, title, body, type, sent_at, read_at')
+        .select('id, title, body, type, reference_id, sent_at, read_at')
         .eq('user_id', user.id)
         .order('sent_at', { ascending: false })
         .limit(30);

@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate confined space risk assessments and method statements.',
     icon: FileCheck2,
@@ -733,7 +733,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Confined Space RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
                 to produce comprehensive risk assessments and method statements for confined space
                 electrical work. Covers atmospheric hazards, LOTO requirements, entry team roles,
                 rescue arrangements, and ATEX equipment requirements. Ready to share with your

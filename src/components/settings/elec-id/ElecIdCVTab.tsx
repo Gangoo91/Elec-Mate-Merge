@@ -73,7 +73,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
         className="space-y-6"
       >
         <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-500/70 via-blue-400/70 to-purple-400/70" />
+          <div className="absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
           <Eyebrow>Elec-ID · CV</Eyebrow>
           <h2 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-[1.05]">
             Create your professional CV

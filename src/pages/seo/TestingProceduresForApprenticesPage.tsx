@@ -94,7 +94,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'The prove-test-prove method you must complete before any dead testing.',
     icon: ShieldCheck,
@@ -108,14 +108,14 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'How to carry out insulation resistance tests and interpret the results.',
     icon: Gauge,
     category: 'Guide' as const,
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Complete guide to preparing for the AM2 practical assessment including testing.',
     icon: Target,
@@ -183,7 +183,7 @@ const sections = [
         <p>
           <strong>Dead tests (supply disconnected):</strong> All dead tests are carried out with the
           supply isolated using the{' '}
-          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+          <SEOInternalLink href="/how-to-do-safe-isolation">
             safe isolation procedure
           </SEOInternalLink>
           . The dead test sequence is:
@@ -404,7 +404,7 @@ const sections = [
           that no unwanted current path exists between live conductors or between live conductors
           and earth. Degraded insulation can cause leakage current, earth faults, short circuits,
           and fire. For a comprehensive explanation, see our{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-testing">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance testing guide
           </SEOInternalLink>
           .
@@ -625,7 +625,7 @@ const sections = [
         </p>
         <p>
           <strong>AM2 preparation:</strong> The{' '}
-          <SEOInternalLink href="/training/am2-exam-preparation">AM2 exam</SEOInternalLink> requires
+          <SEOInternalLink href="/am2-exam-preparation">AM2 exam</SEOInternalLink> requires
           you to carry out the complete testing sequence within a time limit. Elec-Mate's AM2
           preparation content includes testing practice scenarios, timing guidance, and step-by-step
           procedures for every test you will need to perform.

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/training/electrical-apprentice' },
+  { label: 'Training', href: '/apprentice-training' },
   { label: 'College Tutor Dashboard', href: '/tools/college-tutor-dashboard' },
 ];
 
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation',
     description:
       'Complete guide to the end-point assessment for electrical apprenticeships including knowledge test, practical, and discussion.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Guidance on building a strong apprenticeship portfolio that meets KSB requirements for the EPA gateway.',
@@ -220,7 +220,7 @@ const sections = [
           structure of Level 2 and Level 3 electrical apprenticeships, the KSBs in the
           apprenticeship standard, the module structure of City & Guilds qualifications, and the
           requirements for{' '}
-          <SEOInternalLink href="/training/epa-preparation">EPA gateway</SEOInternalLink>. This
+          <SEOInternalLink href="/epa-preparation">EPA gateway</SEOInternalLink>. This
           means the progress tracking and reporting are meaningful and specific, not generic
           learning management system metrics.
         </p>
@@ -329,7 +329,7 @@ const sections = [
         <p>
           Custom quizzes let you create shorter, topic-specific assessments. For example, after
           teaching a session on{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangements
           </SEOInternalLink>
           , you might assign a 15-question quiz on TN-S, TN-C-S, and TT systems to check
@@ -339,7 +339,7 @@ const sections = [
           For practical assessments, the observation checklist tool lets you record marks and
           comments against the qualification criteria while watching a student work. This is
           particularly useful for the{' '}
-          <SEOInternalLink href="/training/am2-exam-preparation">AM2 preparation</SEOInternalLink>{' '}
+          <SEOInternalLink href="/am2-exam-preparation">AM2 preparation</SEOInternalLink>{' '}
           sessions where students practise timed installation and testing tasks under supervised
           conditions.
         </p>

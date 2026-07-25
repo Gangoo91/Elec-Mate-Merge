@@ -624,7 +624,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Full Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Home office enquiries often grow once you meet the customer. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   quickly add data cabling, garden lighting, EV charging, and additional socket
                   circuits to a quote. A comprehensive quote wins more work than a minimum-scope
                   tender.

@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 18th Edition qualification with structured training modules and mock exams.',
@@ -411,7 +411,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>During certification</strong> — the{' '}
-                <SEOInternalLink href="/guides/how-to-fill-in-eicr">
+                <SEOInternalLink href="/how-to-fill-in-eicr">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 should record that the design accounts for bidirectional current flow where
@@ -423,7 +423,7 @@ const sections = [
         </div>
         <p>
           If you are studying for your{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             C&G 2391 inspection and testing qualification
           </SEOInternalLink>
           , expect questions on Amendment 3 to appear in exam papers. The examiners will be looking

@@ -24,7 +24,7 @@ export default function ElectricalCustomerServicePage() {
       datePublished="2026-02-01"
       dateModified="2026-05-18"
       breadcrumbs={[
-        { label: 'Business', href: '/guides/business' },
+        { label: 'Business', href: '/guides' },
         { label: 'Customer Service', href: '/guides/customer-service-electricians' },
       ]}
       tocItems={[
@@ -559,7 +559,7 @@ export default function ElectricalCustomerServicePage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, sent from site in minutes.',
@@ -567,7 +567,7 @@ export default function ElectricalCustomerServicePage() {
           category: 'Tool',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Professional invoices with online payment links, created from site.',
           icon: Receipt,

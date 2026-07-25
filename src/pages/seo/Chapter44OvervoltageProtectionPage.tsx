@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study SPD inspection, overvoltage risk assessment, and Chapter 44 requirements for C&G 2391.',

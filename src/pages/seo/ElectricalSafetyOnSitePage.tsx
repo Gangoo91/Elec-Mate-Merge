@@ -521,7 +521,7 @@ const sections = [
             permit to work guide
           </SEOInternalLink>
           . Elec-Mate can generate permit to work documents as part of the{' '}
-          <SEOInternalLink href="/tools/rams-generator">RAMS package</SEOInternalLink>, pre-populated with
+          <SEOInternalLink href="/rams-generator">RAMS package</SEOInternalLink>, pre-populated with
           the site details and the specific hazards identified in your{' '}
           <SEOInternalLink href="/guides/risk-assessment-electricians">
             risk assessment

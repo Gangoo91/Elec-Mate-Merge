@@ -632,14 +632,14 @@ export default function MICCCableGuidePage() {
           category: 'Installation',
         },
         {
-          href: '/guides/how-to-size-cables-bs-7671',
+          href: '/how-to-size-cables',
           title: 'Cable Sizing Guide',
           description: 'Complete BS 7671 cable sizing process.',
           icon: Calculator,
           category: 'Guide',
         },
         {
-          href: '/guides/insulation-resistance-testing',
+          href: '/guides/insulation-resistance-testing-bs7671',
           title: 'Insulation Resistance Testing',
           description: 'IR test procedures for all cable types.',
           icon: ClipboardCheck,

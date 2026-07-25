@@ -1,0 +1,29 @@
+# Normalise line endings across platforms
+* text=auto eol=lf
+
+# Binary assets — never diff or normalise
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.mp4 binary
+*.lockb binary
+
+# Generated / vendored — exclude from GitHub language stats and collapse in diffs
+src/integrations/supabase/types.ts linguist-generated=true
+package-lock.json linguist-generated=true
+bun.lockb linguist-generated=true
+public/sitemap*.xml linguist-generated=true
+public/llms*.txt linguist-generated=true
+dist/** linguist-generated=true
+supabase/migrations/** linguist-generated=true
+
+# Keep shell scripts LF even on Windows checkouts
+*.sh text eol=lf

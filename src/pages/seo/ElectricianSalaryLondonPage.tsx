@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote faster and win more London jobs with professional estimates.',
     icon: Calculator,
@@ -535,7 +535,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   The biggest single salary step-changes come from specialist qualifications. CompEx
                   for explosive atmospheres, HV authorisation,{' '}
-                  <SEOInternalLink href="/training/city-guilds-2391">
+                  <SEOInternalLink href="/city-guilds2391">
                     City &amp; Guilds 2391 inspection and testing
                   </SEOInternalLink>
                   , and BMS qualifications all deliver immediate rate increases of 20 to 50%.

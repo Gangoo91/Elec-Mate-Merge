@@ -171,7 +171,7 @@ const sections = [
         </p>
         <p>
           The external earth return path differs depending on the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">earthing system</SEOInternalLink>:
+          <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink>:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -662,7 +662,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'Test voltages, minimum values, conductor combinations — the dead test that must pass before measuring Zs.',
@@ -685,7 +685,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'Zs lookup, R1+R2, cable sizing, voltage drop, PFC, earth electrode, and more.',
     icon: Calculator,

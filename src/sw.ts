@@ -8,7 +8,6 @@ import {
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import { NetworkFirst } from 'workbox-strategies';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -41,7 +40,10 @@ registerRoute(
 
 // ─── Workbox: Runtime Caching ────────────────────────────────────
 
-// JS chunks: NetworkFirst with 24hr cache
+// JS chunks: NetworkFirst — fresh chunks when online, cache as offline fallback.
+// The js-cache is WIPED on every activate (see below) so a new deploy never
+// mixes old + new content-hashed chunks (root cause of the Sentry
+// "SyntaxError: … does not provide an export named 'p'" cluster — ELE-1384).
 registerRoute(
   /\.js$/,
   new NetworkFirst({
@@ -51,18 +53,12 @@ registerRoute(
   })
 );
 
-// Supabase API: NetworkFirst with 60s cache, only cache successful responses
-registerRoute(
-  /^https:\/\/.*supabase\.co\/.*/i,
-  new NetworkFirst({
-    cacheName: 'supabase-cache',
-    networkTimeoutSeconds: 8,
-    plugins: [
-      new CacheableResponsePlugin({ statuses: [0, 200] }),
-      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 60 }),
-    ],
-  })
-);
+// Supabase API is DELIBERATELY NOT cached by the SW (ELE-1384). Auth tokens and
+// user-specific REST reads must always hit the network; caching them made the SW
+// return `no-response` on any network hiccup, which the browser surfaces as a
+// bogus "CORS / no Access-Control-Allow-Origin" error and breaks the whole app.
+// Unmatched requests fall through to the browser's default fetch — exactly what
+// we want for the API.
 
 // ─── Push Notifications ──────────────────────────────────────────
 
@@ -256,6 +252,11 @@ self.addEventListener('activate', (event) => {
       // Clean up orphaned cache from the old manual service worker
       caches.delete('elec-mate-v1'),
       caches.delete('html-cache'),
+      // ELE-1384: purge the poisoned Supabase cache for users who already have
+      // it (this route is gone now), and wipe the JS cache on every deploy so a
+      // new build never serves stale, version-mismatched chunks.
+      caches.delete('supabase-cache'),
+      caches.delete('js-cache'),
     ])
   );
 });
@@ -352,7 +353,7 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
 
   switch (data.type) {
     case 'peer':
-      url = `/electrician/mental-health?tab=mates&conversation=${data.conversationId || ''}`;
+      url = `/mental-health?section=talk&conversation=${data.conversationId || ''}`;
       break;
     case 'job':
       url =

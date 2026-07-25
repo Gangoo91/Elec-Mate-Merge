@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Apprentice', href: '/guides/electrical-apprenticeship-guide' },
-  { label: 'Apprenticeship Cost', href: '/guides/electrical-apprenticeship-guide-cost' },
+  { label: 'Apprenticeship Cost', href: '/guides/electrical-apprenticeship-guide' },
 ];
 
 const tocItems = [
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description:
       'How to prepare for the end-point assessment — knowledge test, skills test, and professional discussion.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'How to build your apprentice portfolio — evidence requirements, photo tips, and common mistakes.',

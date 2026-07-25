@@ -666,7 +666,7 @@ const sections = [
                   cable with damaged insulation. If the circuit is overloaded, advise on
                   redistributing loads or adding circuits. Consider recommending AFDD installation
                   for additional fire protection. Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   documenting the findings and remedial work.

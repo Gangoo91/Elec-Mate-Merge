@@ -5,6 +5,7 @@ import { ArrowLeft, Lock, Phone, Send } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { MentalHealthProvider } from '@/contexts/MentalHealthContext';
 import { useMoodData } from '@/hooks/useMentalHealthSync';
+import { useAvailableSupporters } from '@/hooks/usePeerChat';
 import { useWellbeingScore } from '@/hooks/useWellbeingScore';
 import { useWellbeingInsights } from '@/hooks/useWellbeingInsights';
 import { cn } from '@/lib/utils';
@@ -294,10 +295,7 @@ function MoodHeatmap({
         {days.map((d) => (
           <div key={d.key} className="flex flex-col items-center gap-1.5">
             <div
-              className={cn(
-                'h-9 w-full rounded-lg border transition-colors',
-                moodColour(d.mood)
-              )}
+              className={cn('h-9 w-full rounded-lg border transition-colors', moodColour(d.mood))}
               aria-label={d.mood ? `Mood ${d.mood}/5 on ${d.key}` : `No log on ${d.key}`}
             />
             <span className="text-[10px] text-white">{d.label}</span>
@@ -336,8 +334,7 @@ interface ToolCard {
   number: string;
 }
 
-const buildToolkit = (role: string | null | undefined): ToolCard[] => {
-  const isApprentice = role === 'apprentice';
+const buildToolkit = (): ToolCard[] => {
   const cards: ToolCard[] = [
     {
       id: 'tools',
@@ -369,40 +366,38 @@ const buildToolkit = (role: string | null | undefined): ToolCard[] => {
     },
   ];
 
-  if (isApprentice) {
-    cards.unshift(
-      {
-        id: 'journal',
-        title: 'Wellbeing Journal',
-        description: 'Track thoughts, gratitude and triggers.',
-        tone: 'emerald',
-        number: '01',
-      },
-      {
-        id: 'safety-plan',
-        title: 'My Safety Plan',
-        description: 'A personal plan for difficult moments.',
-        tone: 'red',
-        number: '02',
-      },
-      {
-        id: 'sleep',
-        title: 'Sleep Tracker',
-        description: 'See how rest affects your wellbeing.',
-        tone: 'indigo',
-        number: '03',
-      },
-      {
-        id: 'insights',
-        title: 'Mood Insights',
-        description: 'Spot patterns early.',
-        tone: 'cyan',
-        number: '04',
-      }
-    );
-    // renumber
-    cards.forEach((c, i) => (c.number = String(i + 1).padStart(2, '0')));
-  }
+  cards.unshift(
+    {
+      id: 'journal',
+      title: 'Wellbeing Journal',
+      description: 'Track thoughts, gratitude and triggers.',
+      tone: 'emerald',
+      number: '01',
+    },
+    {
+      id: 'safety-plan',
+      title: 'My Safety Plan',
+      description: 'A personal plan for difficult moments.',
+      tone: 'red',
+      number: '02',
+    },
+    {
+      id: 'sleep',
+      title: 'Sleep Tracker',
+      description: 'See how rest affects your wellbeing.',
+      tone: 'indigo',
+      number: '03',
+    },
+    {
+      id: 'insights',
+      title: 'Mood Insights',
+      description: 'Spot patterns early.',
+      tone: 'cyan',
+      number: '04',
+    }
+  );
+  // renumber
+  cards.forEach((c, i) => (c.number = String(i + 1).padStart(2, '0')));
 
   return cards;
 };
@@ -449,11 +444,22 @@ const ALL_TRADE_SUPPORT: TradeSupport[] = [
     audiences: ['employer', 'electrician', 'all'],
   },
   {
-    id: 'youngminds',
-    title: 'YoungMinds',
-    subtitle: 'Free, confidential mental health support for young people.',
-    href: 'tel:08004541111',
-    ctaLabel: '0800 454 1111',
+    id: 'calm',
+    title: 'CALM — Campaign Against Living Miserably',
+    subtitle:
+      'Leading the movement against suicide. For anyone who is down or in crisis — 5pm to midnight, every day.',
+    href: 'tel:0800585858',
+    ctaLabel: '0800 58 58 58',
+    isPhone: true,
+    audiences: ['electrician', 'apprentice', 'employer', 'all'],
+  },
+  {
+    id: 'papyrus',
+    title: 'Papyrus HOPELINE247',
+    subtitle:
+      'Suicide prevention advisers for anyone under 35. Free, confidential, 24/7 — call, text or WhatsApp.',
+    href: 'tel:08000684141',
+    ctaLabel: '0800 068 4141',
     isPhone: true,
     audiences: ['apprentice'],
   },
@@ -471,16 +477,19 @@ const ALL_TRADE_SUPPORT: TradeSupport[] = [
 const rankTradeSupport = (role: string | null | undefined): TradeSupport[] => {
   const r = role ?? 'all';
   const order: Record<string, string[]> = {
-    apprentice: ['youngminds', 'eic', 'lighthouse', 'andys-man-club', 'mates-in-mind'],
-    employer: ['mates-in-mind', 'lighthouse', 'eic', 'andys-man-club'],
-    electrician: ['eic', 'lighthouse', 'andys-man-club', 'mates-in-mind'],
-    all: ['eic', 'lighthouse', 'mates-in-mind', 'andys-man-club'],
+    apprentice: ['papyrus', 'calm', 'eic', 'lighthouse', 'andys-man-club'],
+    employer: ['calm', 'mates-in-mind', 'lighthouse', 'eic', 'andys-man-club'],
+    electrician: ['calm', 'eic', 'lighthouse', 'andys-man-club', 'mates-in-mind'],
+    all: ['calm', 'eic', 'lighthouse', 'mates-in-mind', 'andys-man-club'],
   };
   const ids = order[r] ?? order.all;
   return ids
     .map((id) => ALL_TRADE_SUPPORT.find((t) => t.id === id))
     .filter((t): t is TradeSupport => Boolean(t))
-    .filter((t) => t.audiences.includes(r as TradeSupport['audiences'][number]) || t.audiences.includes('all'));
+    .filter(
+      (t) =>
+        t.audiences.includes(r as TradeSupport['audiences'][number]) || t.audiences.includes('all')
+    );
 };
 
 /* ── Quick reset row ───────────────────────────────────────────────── */
@@ -517,9 +526,13 @@ export default function MentalHealthHub() {
     }
   };
 
-  const { moodHistory, addMoodEntry, refreshMoodData } = useMoodData();
+  const { moodHistory, addMoodEntry } = useMoodData();
   const { score, band, pillars, isLoading: scoreLoading } = useWellbeingScore();
   const { insights } = useWellbeingInsights();
+  // Live count of Mental Health Mates online — a real person being available
+  // right now is the strongest nudge to actually talk.
+  const { data: availableSupporters } = useAvailableSupporters(profile?.id);
+  const matesOnline = availableSupporters?.length ?? 0;
 
   const todayKey = new Date().toISOString().split('T')[0];
   const todaysMood = useMemo(() => {
@@ -683,7 +696,11 @@ export default function MentalHealthHub() {
         break;
       default:
         body = (
-          <EmptyState title="Section not found" action="Back to hub" onAction={() => setActiveSection(null)} />
+          <EmptyState
+            title="Section not found"
+            action="Back to hub"
+            onAction={() => setActiveSection(null)}
+          />
         );
     }
 
@@ -698,7 +715,7 @@ export default function MentalHealthHub() {
 
   /* ── Hub landing ───────────────────────────────────────────────── */
 
-  const toolkit = buildToolkit(role);
+  const toolkit = buildToolkit();
 
   return (
     <MentalHealthProvider>
@@ -718,7 +735,7 @@ export default function MentalHealthHub() {
             </button>
 
             <PageHero
-              eyebrow="Apprentice · Wellbeing"
+              eyebrow="Wellbeing"
               title="Mental health"
               description="A private space — for resets, real talk, and patterns over time."
               tone="yellow"
@@ -730,12 +747,6 @@ export default function MentalHealthHub() {
                       {streak}-day streak
                     </span>
                   )}
-                  <button
-                    onClick={() => refreshMoodData()}
-                    className="h-10 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] font-medium text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
-                  >
-                    Refresh
-                  </button>
                 </>
               }
             />
@@ -791,10 +802,7 @@ export default function MentalHealthHub() {
                 </div>
 
                 {/* 7-day mood heatmap */}
-                <MoodHeatmap
-                  moodHistory={moodHistory}
-                  onTap={() => setActiveSection('insights')}
-                />
+                <MoodHeatmap moodHistory={moodHistory} onTap={() => setActiveSection('insights')} />
               </>
             )}
 
@@ -852,7 +860,14 @@ export default function MentalHealthHub() {
                     className="bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors px-4 py-5 text-left touch-manipulation"
                   >
                     <div className="text-[14px] font-semibold text-white">{q.label}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white">{q.sub}</div>
+                    <div className="mt-0.5 text-[11.5px] text-white flex items-center gap-1.5">
+                      {q.id === 'talk' && matesOnline > 0 && (
+                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      )}
+                      {q.id === 'talk' && matesOnline > 0
+                        ? `${matesOnline} mate${matesOnline === 1 ? '' : 's'} online`
+                        : q.sub}
+                    </div>
                     <div
                       className={cn(
                         'mt-3 text-[12px] font-medium',
@@ -873,33 +888,34 @@ export default function MentalHealthHub() {
             <DailyAffirmation />
 
             {/* Stat strip — wellbeing pillars */}
-            {!scoreLoading && (pillars.mood.n > 0 || pillars.sleep.n > 0 || pillars.journal.n > 0) && (
-              <StatStrip
-                columns={4}
-                stats={[
-                  {
-                    label: 'Mood 7d',
-                    value: pillars.mood.n > 0 ? pillars.mood.avg.toFixed(1) : '—',
-                    sub: pillars.mood.n > 0 ? `${pillars.mood.n} check-ins` : 'Log to track',
-                  },
-                  {
-                    label: 'Sleep 7d',
-                    value: pillars.sleep.n > 0 ? `${pillars.sleep.avgHours.toFixed(1)}h` : '—',
-                    sub: pillars.sleep.n > 0 ? `${pillars.sleep.n} nights` : 'Open tracker',
-                  },
-                  {
-                    label: 'Journal 7d',
-                    value: pillars.journal.n,
-                    sub: pillars.journal.n > 0 ? 'entries' : 'Try one prompt',
-                  },
-                  {
-                    label: 'Consistency',
-                    value: `${pillars.consistency.score}%`,
-                    sub: `${pillars.consistency.days}/7 days`,
-                  },
-                ]}
-              />
-            )}
+            {!scoreLoading &&
+              (pillars.mood.n > 0 || pillars.sleep.n > 0 || pillars.journal.n > 0) && (
+                <StatStrip
+                  columns={4}
+                  stats={[
+                    {
+                      label: 'Mood 7d',
+                      value: pillars.mood.n > 0 ? pillars.mood.avg.toFixed(1) : '—',
+                      sub: pillars.mood.n > 0 ? `${pillars.mood.n} check-ins` : 'Log to track',
+                    },
+                    {
+                      label: 'Sleep 7d',
+                      value: pillars.sleep.n > 0 ? `${pillars.sleep.avgHours.toFixed(1)}h` : '—',
+                      sub: pillars.sleep.n > 0 ? `${pillars.sleep.n} nights` : 'Open tracker',
+                    },
+                    {
+                      label: 'Journal 7d',
+                      value: pillars.journal.n,
+                      sub: pillars.journal.n > 0 ? 'entries' : 'Try one prompt',
+                    },
+                    {
+                      label: 'Consistency',
+                      value: `${pillars.consistency.score}%`,
+                      sub: `${pillars.consistency.days}/7 days`,
+                    },
+                  ]}
+                />
+              )}
 
             {/* Toolkit */}
             <div className="space-y-4">
@@ -933,11 +949,18 @@ export default function MentalHealthHub() {
               <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-amber-500/70 via-amber-400/70 to-yellow-400/70 opacity-70" />
                 <div className="flex items-center justify-between gap-2">
-                  <div className="text-[13px] font-semibold text-white">Trade-specific support</div>
+                  <div className="text-[13px] font-semibold text-white">
+                    Support built for the trade
+                  </div>
                   <span className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-amber-300">
                     For you
                   </span>
                 </div>
+                <p className="mt-1.5 text-[12px] text-white/70 leading-relaxed max-w-2xl">
+                  Suicide is the biggest killer of men under 50 in the UK, and in construction and
+                  the trades the risk runs almost four times the national average. That's why this
+                  page exists. Talking is the strong move.
+                </p>
               </div>
               <div>
                 {tradeSupport.map((t) => (

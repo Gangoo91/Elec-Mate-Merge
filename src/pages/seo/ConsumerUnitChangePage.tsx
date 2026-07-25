@@ -577,7 +577,7 @@ export default function ConsumerUnitChangePage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'What work is notifiable and how to comply.',
           icon: ShieldCheck,

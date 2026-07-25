@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/battery-storage-installation',
+    href: '/guides/battery-storage-installation',
     title: 'Battery Storage Installation',
     description: 'Home battery storage — types, popular systems, G99, and MCS certification.',
     icon: Battery,
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote hybrid solar and battery installations accurately.',
     icon: PoundSterling,
@@ -471,7 +471,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Upsell Battery on Every Solar Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Present hybrid system options alongside every solar-only quote using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Show the customer the payback difference between solar only and solar plus

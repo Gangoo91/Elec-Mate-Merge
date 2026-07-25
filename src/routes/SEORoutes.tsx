@@ -2280,6 +2280,17 @@ const EarthLoopImpedanceCalculatorPage = lazy(
 const EighteenthEditionCoursePage = lazy(() => import('@/pages/seo/EighteenthEditionCoursePage'));
 const ElecMateVsCertsAppPage = lazy(() => import('@/pages/seo/ElecMateVsCertsAppPage'));
 const ElecMateVsICertifiPage = lazy(() => import('@/pages/seo/ElecMateVsICertifiPage'));
+const ElecMateVsTradifyPage = lazy(() => import('@/pages/seo/ElecMateVsTradifyPage'));
+const ElecMateVsPoweredNowPage = lazy(() => import('@/pages/seo/ElecMateVsPoweredNowPage'));
+const ElecMateVsCertSuitePage = lazy(() => import('@/pages/seo/ElecMateVsCertSuitePage'));
+const ElecMateVsJobberPage = lazy(() => import('@/pages/seo/ElecMateVsJobberPage'));
+const ElecMateVsServiceM8Page = lazy(() => import('@/pages/seo/ElecMateVsServiceM8Page'));
+const ElecMateVsTradeCertPage = lazy(() => import('@/pages/seo/ElecMateVsTradeCertPage'));
+const ElecMateVsSpeedCertPage = lazy(() => import('@/pages/seo/ElecMateVsSpeedCertPage'));
+const ElecMateVsNapitFastTestPage = lazy(() => import('@/pages/seo/ElecMateVsNapitFastTestPage'));
+const ElecMateVsSimproPage = lazy(() => import('@/pages/seo/ElecMateVsSimproPage'));
+const ElecMateVsCommusoftPage = lazy(() => import('@/pages/seo/ElecMateVsCommusoftPage'));
+const ElecMateVsRamsAppsPage = lazy(() => import('@/pages/seo/ElecMateVsRamsAppsPage'));
 const ElectricalQuotingAppPage = lazy(() => import('@/pages/seo/ElectricalQuotingAppPage'));
 const ElectricalTestingCalculatorsPage = lazy(
   () => import('@/pages/seo/ElectricalTestingCalculatorsPage')
@@ -10981,6 +10992,94 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ElecMateVsICertifiPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-tradify"
+        element={
+          <LazyRoute>
+            <ElecMateVsTradifyPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-powered-now"
+        element={
+          <LazyRoute>
+            <ElecMateVsPoweredNowPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-certsuite"
+        element={
+          <LazyRoute>
+            <ElecMateVsCertSuitePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-jobber"
+        element={
+          <LazyRoute>
+            <ElecMateVsJobberPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-servicem8"
+        element={
+          <LazyRoute>
+            <ElecMateVsServiceM8Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-tradecert"
+        element={
+          <LazyRoute>
+            <ElecMateVsTradeCertPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-speedcert"
+        element={
+          <LazyRoute>
+            <ElecMateVsSpeedCertPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-napit-fasttest"
+        element={
+          <LazyRoute>
+            <ElecMateVsNapitFastTestPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-simpro"
+        element={
+          <LazyRoute>
+            <ElecMateVsSimproPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/elec-mate-vs-commusoft"
+        element={
+          <LazyRoute>
+            <ElecMateVsCommusoftPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/compare/best-rams-app-electricians"
+        element={
+          <LazyRoute>
+            <ElecMateVsRamsAppsPage />
           </LazyRoute>
         }
       />

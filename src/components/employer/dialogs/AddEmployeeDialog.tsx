@@ -63,7 +63,18 @@ const JOB_ROLES = [
   'Site Supervisor',
   'Estimator',
 ];
-const ECS_CARD_TYPES = ['Gold', 'Blue', 'White', 'Black', 'Green'];
+const ECS_CARD_TYPES = [
+  { value: 'Installation Electrician', label: 'Installation Electrician (Gold)' },
+  { value: 'Maintenance Electrician', label: 'Maintenance Electrician (Gold)' },
+  { value: 'Approved Electrician', label: 'Approved Electrician (Gold)' },
+  { value: 'Domestic Electrician', label: 'Domestic Electrician (Gold)' },
+  { value: 'Experienced Worker', label: 'Experienced Worker' },
+  { value: 'Trainee Electrician', label: 'Trainee Electrician' },
+  { value: 'Apprentice', label: 'ECS Apprentice' },
+  { value: 'Electrical Labourer', label: 'Electrical Labourer' },
+  { value: 'Manager', label: 'Manager' },
+  { value: 'Related Discipline', label: 'Related Discipline (White)' },
+];
 
 interface AddEmployeeDialogProps {
   trigger?: React.ReactNode;
@@ -118,7 +129,7 @@ export function AddEmployeeDialog({
     annualSalary: '',
     dayRate: '',
     createElecId: false,
-    ecsCardType: 'Gold',
+    ecsCardType: 'Installation Electrician',
     ecsCardNumber: '',
     ecsExpiryDate: '',
   });
@@ -305,7 +316,7 @@ export function AddEmployeeDialog({
       annualSalary: '',
       dayRate: '',
       createElecId: false,
-      ecsCardType: 'Gold',
+      ecsCardType: 'Installation Electrician',
       ecsCardNumber: '',
       ecsExpiryDate: '',
     });
@@ -713,8 +724,8 @@ export function AddEmployeeDialog({
                             </SelectTrigger>
                             <SelectContent className={selectContentClass}>
                               {ECS_CARD_TYPES.map((type) => (
-                                <SelectItem key={type} value={type}>
-                                  {type}
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
                                 </SelectItem>
                               ))}
                             </SelectContent>

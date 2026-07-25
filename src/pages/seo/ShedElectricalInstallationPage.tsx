@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Price shed electrical installations with itemised materials, labour, and certification.',
@@ -129,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with modules covering outbuilding installations and TT earthing.',
@@ -163,7 +163,7 @@ const sections = [
         </p>
         <p>
           The work is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           because it involves a new circuit in a location outside the main dwelling. A registered
@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the job with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
                   cable, glands, consumer unit, accessories, labour, trench work, testing, and
                   certification — all itemised with your margins. Send a professional PDF quote from
                   the survey.

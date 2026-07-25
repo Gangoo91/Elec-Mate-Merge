@@ -452,7 +452,7 @@ const sections = [
                   Factor in Liverpool day rates (£280 to £380), cable run lengths in Victorian
                   terraces, PME earthing requirements, and board upgrades on pre-RCD consumer units.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>

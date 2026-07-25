@@ -448,7 +448,7 @@ const sections = [
                 </h3>
                 <p className="text-white text-sm leading-relaxed">
                   Yes → Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works certificate
                   </SEOInternalLink>
                   . This includes adding sockets to existing rings, extending lighting circuits, and

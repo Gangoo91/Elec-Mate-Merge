@@ -546,7 +546,7 @@ const sections = [
                   Post-war properties almost always need bonding alongside the consumer unit
                   replacement, and often need additional sockets or dedicated appliance circuits.
                   Quote the complete package using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to maximise job value and give clients a complete solution rather than a piecemeal

@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with structured modules covering special locations.',
     icon: GraduationCap,
@@ -750,7 +750,7 @@ const sections = [
         </div>
         <p>
           An <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           must be issued. On EICRs, common observations include missing supplementary bonding (where

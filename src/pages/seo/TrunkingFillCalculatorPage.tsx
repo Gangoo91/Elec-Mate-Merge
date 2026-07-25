@@ -719,7 +719,7 @@ export default function TrunkingFillCalculatorPage() {
             <SEOInternalLink href="/guides/trunking-installation-guide">
               Trunking Installation Guide
             </SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-fill-in-eicr">
+            <SEOInternalLink href="/how-to-fill-in-eicr">
               How to Fill In an EICR Form
             </SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-fill-in-minor-works">

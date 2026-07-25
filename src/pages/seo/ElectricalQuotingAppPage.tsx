@@ -505,7 +505,7 @@ export default function ElectricalQuotingAppPage() {
                 digital EICR and EIC certification
               </SEOInternalLink>
               , and the full quoting,
-              <SEOInternalLink href="/tools/electrician-invoice-app"> invoicing</SEOInternalLink>, and
+              <SEOInternalLink href="/electrician-invoice-app"> invoicing</SEOInternalLink>, and
               payment system described on this page.
             </p>
             <p>
@@ -547,13 +547,13 @@ export default function ElectricalQuotingAppPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Quoting works best when it is connected to the rest of the commercial stack. Start
-              with the <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+              with the <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
               for the estimate, protect margin with the{' '}
               <SEOInternalLink href="/tools/minimum-charge-calculator">
                 minimum charge calculator
               </SEOInternalLink>
               , convert the accepted job into the{' '}
-              <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>,
+              <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>,
               and tie completed work back to the{' '}
               <SEOInternalLink href="/tools/eicr-certificate">certificate record</SEOInternalLink>{' '}
               where relevant.

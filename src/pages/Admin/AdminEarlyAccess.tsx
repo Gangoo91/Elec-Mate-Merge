@@ -114,10 +114,7 @@ export default function AdminEarlyAccess() {
   }, [trackingEvents]);
 
   const recentActivity = useMemo(() => {
-    const map = new Map<
-      string,
-      { email: string; event: string; at: string }
-    >();
+    const map = new Map<string, { email: string; event: string; at: string }>();
     (trackingEvents || []).slice(0, 40).forEach((e) => {
       if (!e.user_email) return;
       const key = `${e.user_email.toLowerCase()}::${e.event_type}`;
@@ -203,7 +200,16 @@ export default function AdminEarlyAccess() {
     try {
       let totalSent = 0;
       let complete = false;
+      // Batch cap: if the backend never reports complete (hang/regression),
+      // stop instead of polling forever with the UI stuck on "Sending…".
+      let batches = 0;
+      const MAX_BATCHES = 200;
       while (!complete) {
+        if (++batches > MAX_BATCHES) {
+          throw new Error(
+            `Stopped after ${MAX_BATCHES} batches (${totalSent} sent) — backend never reported completion`
+          );
+        }
         const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
           body: { action: 'send_ea_offer_campaign', email_version: EMAIL_VERSION },
         });
@@ -316,13 +322,15 @@ export default function AdminEarlyAccess() {
           <LoadingBlocks />
         ) : (
           <>
+            {/* Honest labels — the old strip called lifetime opens "This Week",
+                emails sent "Active", and the send queue "Features Live". */}
             <StatStrip
               columns={4}
               stats={[
-                { label: 'Total', value: total },
-                { label: 'This Week', value: perf.opened, tone: 'cyan' },
-                { label: 'Active', value: sent, tone: 'emerald' },
-                { label: 'Features Live', value: remaining, accent: true },
+                { label: 'Eligible', value: total, sub: 'In the programme' },
+                { label: 'Invites sent', value: sent, tone: 'emerald' },
+                { label: 'Opened', value: perf.opened, tone: 'cyan', sub: 'All time' },
+                { label: 'Still to send', value: remaining, accent: true },
               ]}
             />
 
@@ -371,10 +379,7 @@ export default function AdminEarlyAccess() {
                   ) : (
                     <ListBody>
                       {recentActivity.map((a, i) => {
-                        const initials = a.email
-                          .split('@')[0]
-                          .slice(0, 2)
-                          .toUpperCase();
+                        const initials = a.email.split('@')[0].slice(0, 2).toUpperCase();
                         return (
                           <ListRow
                             key={`${a.email}-${a.event}-${i}`}
@@ -385,9 +390,7 @@ export default function AdminEarlyAccess() {
                             }
                             title={a.email}
                             subtitle={formatTime(a.at)}
-                            trailing={
-                              <Pill tone={eventTone(a.event)}>{eventLabel(a.event)}</Pill>
-                            }
+                            trailing={<Pill tone={eventTone(a.event)}>{eventLabel(a.event)}</Pill>}
                           />
                         );
                       })}
@@ -666,8 +669,8 @@ export default function AdminEarlyAccess() {
                     hasn&apos;t converted to a full account.
                   </p>
                   <p className="text-white text-xs">
-                    Uses Resend batch API (up to 100 per call), with suppression check,
-                    idempotency, and exponential-backoff retries.
+                    Uses Resend batch API (up to 100 per call), with suppression check, idempotency,
+                    and exponential-backoff retries.
                   </p>
                 </div>
               </AlertDialogDescription>

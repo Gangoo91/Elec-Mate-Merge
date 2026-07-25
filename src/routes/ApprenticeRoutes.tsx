@@ -17,13 +17,6 @@ const RightsWages = lazy(() => import('@/pages/apprentice/rights-guide/WagesPage
 const RightsYourRights = lazy(() => import('@/pages/apprentice/rights-guide/RightsPage'));
 const RightsSupport = lazy(() => import('@/pages/apprentice/rights-guide/SupportPage'));
 const RightsTools = lazy(() => import('@/pages/apprentice/rights-guide/ToolsPage'));
-const WorkLifeBalance = lazy(() => import('@/pages/apprentice/mental-health/WorkLifeBalance'));
-const MentalHealthResources = lazy(
-  () => import('@/pages/apprentice/mental-health/MentalHealthResources')
-);
-const StressManagement = lazy(() => import('@/pages/apprentice/mental-health/StressManagement'));
-const CrisisResources = lazy(() => import('@/pages/apprentice/mental-health/CrisisResources'));
-const SupportNetwork = lazy(() => import('@/pages/apprentice/mental-health/SupportNetwork'));
 const OnJobTools = lazy(() => import('@/pages/apprentice/OnJobTools'));
 const OnJobCalculations = lazy(() => import('@/pages/apprentice/OnJobCalculations'));
 const OnJobSafetyCases = lazy(() => import('@/pages/apprentice/OnJobSafetyCases'));
@@ -261,45 +254,26 @@ const ApprenticeRoutes = () => (
           </LazyRoute>
         }
       />
+      {/* Legacy sub-pages — the unified hub owns this content now */}
       <Route
         path="mental-health/work-life-balance"
-        element={
-          <LazyRoute>
-            <WorkLifeBalance />
-          </LazyRoute>
-        }
+        element={<Navigate to="/mental-health?section=resources" replace />}
       />
       <Route
         path="mental-health/resources"
-        element={
-          <LazyRoute>
-            <MentalHealthResources />
-          </LazyRoute>
-        }
+        element={<Navigate to="/mental-health?section=resources" replace />}
       />
       <Route
         path="mental-health/stress-management"
-        element={
-          <LazyRoute>
-            <StressManagement />
-          </LazyRoute>
-        }
+        element={<Navigate to="/mental-health?section=tools" replace />}
       />
       <Route
         path="mental-health/crisis-resources"
-        element={
-          <LazyRoute>
-            <CrisisResources />
-          </LazyRoute>
-        }
+        element={<Navigate to="/mental-health?section=crisis" replace />}
       />
       <Route
         path="mental-health/support-network"
-        element={
-          <LazyRoute>
-            <SupportNetwork />
-          </LazyRoute>
-        }
+        element={<Navigate to="/mental-health?section=support" replace />}
       />
 
       <Route

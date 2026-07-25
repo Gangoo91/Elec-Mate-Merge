@@ -354,7 +354,7 @@ const sections = [
           project specification, the design drawings, and the employer's quality management system.
           Specific checks include: correct cable types and sizes, proper containment installation,
           adequate fixings, correct terminations, appropriate labelling, and compliance with{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             testing procedures
           </SEOInternalLink>
           .
@@ -429,7 +429,7 @@ const sections = [
                 <strong>Support their portfolio.</strong> Help the apprentice identify portfolio
                 evidence from their daily work. Photographs of completed work, descriptions of
                 tasks, and supervisor witness statements all contribute to their{' '}
-                <SEOInternalLink href="/training/apprentice-portfolio">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   portfolio
                 </SEOInternalLink>
                 .
@@ -481,7 +481,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'How to build a strong NVQ portfolio — evidence types, witness statements, and assessment preparation.',

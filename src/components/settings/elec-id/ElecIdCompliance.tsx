@@ -16,7 +16,6 @@ import {
   getWorkHistoryByProfileId,
 } from '@/services/elecIdService';
 import { getECSCardType } from '@/data/uk-electrician-constants';
-import { toast } from '@/hooks/use-toast';
 import {
   getAllRecommendations,
   getSmartNextSteps,
@@ -608,20 +607,14 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
       )}
 
       {/* Notification settings */}
-      <button
-        onClick={() => {
-          toast({
-            title: 'Coming soon',
-            description: 'Expiry reminders will be available in a future update.',
-          });
-        }}
-        className="w-full"
-      >
+      <button onClick={() => navigate('/settings?tab=notifications')} className="w-full">
         <ListCard>
           <ListRow
-            title="Expiry reminders"
-            subtitle="Get notified before qualifications expire"
-            trailing={<span className="text-xs font-medium text-elec-yellow">Configure →</span>}
+            title="Expiry reminders active"
+            subtitle="You'll be notified 30 days before anything lapses"
+            trailing={
+              <span className="text-xs font-medium text-elec-yellow">Notification settings →</span>
+            }
           />
         </ListCard>
       </button>

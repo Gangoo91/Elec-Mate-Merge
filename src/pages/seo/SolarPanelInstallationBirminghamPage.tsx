@@ -598,7 +598,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   After commissioning a solar installation, generate a battery storage quote
                   immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . West Midlands homeowners are increasingly adding battery storage — make the

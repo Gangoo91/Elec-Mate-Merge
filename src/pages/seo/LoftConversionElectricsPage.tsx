@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Complete guide to Part P notification requirements for domestic electrical work in England and Wales.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with structured training modules on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -156,7 +156,7 @@ const sections = [
           Unlike cosmetic work such as replacing a light fitting or adding a socket to an existing
           circuit, loft conversion electrics involve new circuits in a new part of the building.
           This makes the work notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (Approved Document P). It also triggers fire detection requirements under Part B (Approved
@@ -628,7 +628,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App for Accurate Pricing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the loft conversion electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Materials, labour, margins, and VAT calculated automatically. Send a professional
                   quote to the customer before you leave the survey.
                 </p>

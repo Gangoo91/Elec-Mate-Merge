@@ -342,7 +342,7 @@ export default function RCDKeepsTrippingPage() {
               <p>
                 The systematic approach for fault-finding on an RCD that keeps tripping involves
                 isolating circuits one by one at the consumer unit and carrying out{' '}
-                <SEOInternalLink href="/guides/insulation-resistance-testing">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   insulation resistance tests
                 </SEOInternalLink>{' '}
                 on each circuit.
@@ -660,7 +660,7 @@ export default function RCDKeepsTrippingPage() {
           category: 'Testing',
         },
         {
-          href: '/guides/insulation-resistance-testing',
+          href: '/guides/insulation-resistance-testing-bs7671',
           title: 'Insulation Resistance Testing',
           description: 'How to carry out IR testing and interpret the results.',
           icon: Calculator,

@@ -120,7 +120,7 @@ export default function ElecMateVsEasyEICRPage() {
                 The platform includes 16 certificate types (EICR, EIC, Minor Works, EV Charger,
                 Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist
                 electrical calculators, 5{' '}
-                <SEOInternalLink href="/tools/ai-electrician">
+                <SEOInternalLink href="/ai-electrician-tools">
                   Elec-AI specialist agents
                 </SEOInternalLink>{' '}
                 (Circuit Designer, Cost Engineer, Installation Specialist, Maintenance Specialist,
@@ -212,7 +212,7 @@ export default function ElecMateVsEasyEICRPage() {
                 earth fault loop impedance checks, prospective fault current, disconnection time
                 verification, and many more. All referencing BS 7671:2018+A4:2026 tables. See our
                 full{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>{' '}
                 for the complete list.
@@ -356,7 +356,7 @@ export default function ElecMateVsEasyEICRPage() {
           category: 'Comparison',
         },
         {
-          href: '/compare/elec-mate-vs-certsapp',
+          href: '/elec-mate-vs-certs-app',
           title: 'Elec-Mate vs CertsApp',
           description:
             'Detailed comparison with CertsApp including credit-based vs flat pricing analysis.',
@@ -380,7 +380,7 @@ export default function ElecMateVsEasyEICRPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/ai-electrician',
+          href: '/ai-electrician-tools',
           title: 'AI Electrician Hub',
           description:
             '5 specialist AI agents and 12 AI tools built for UK electricians. Board scanner, defect AI, and more.',

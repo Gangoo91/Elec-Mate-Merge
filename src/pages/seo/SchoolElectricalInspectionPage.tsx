@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/emergency-lighting-certificate-guide',
+    href: '/guides/emergency-lighting-certificate-guide',
     title: 'Emergency Lighting Certificate',
     description: 'Complete guide to emergency lighting certification and testing requirements.',
     icon: Lightbulb,

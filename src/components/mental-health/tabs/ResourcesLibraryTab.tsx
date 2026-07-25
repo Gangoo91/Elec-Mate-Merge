@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { useMentalHealth } from '@/contexts/MentalHealthContext';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { cn } from '@/lib/utils';
 import {
   PageHero,
@@ -22,9 +24,9 @@ const resources = [
   { id: 'construction-wellbeing', title: 'Construction Industry Wellbeing', sub: 'Mental health for construction workers', type: 'document', category: 'workplace', url: 'https://www.matesinmind.org/', source: 'Mates in Mind' },
   { id: 'eic-support', title: 'Electrical Industry Support', sub: 'Financial, practical and emotional support', type: 'document', category: 'workplace', url: 'https://www.electricalcharity.org/', source: 'EIC' },
   { id: 'calm-resources', title: 'CALM Resources for Men', sub: "Support and resources for men's mental health", type: 'document', category: 'anxiety', url: 'https://www.thecalmzone.net/help/get-help/', source: 'CALM' },
-  { id: 'body-scan', title: 'Body Scan Meditation', sub: 'Progressive relaxation technique', type: 'video', category: 'self-care', url: 'https://www.youtube.com/results?search_query=body+scan+meditation', source: 'YouTube' },
+  { id: 'body-scan', title: 'Body Scan Relaxation', sub: 'Guided 3-minute exercise — built into this hub', type: 'tool', category: 'self-care', url: '/mental-health?section=tools', source: 'Elec-Mate' },
   { id: 'burnout-prevention', title: 'Preventing Burnout at Work', sub: 'Recognise signs and take action early', type: 'document', category: 'stress', url: 'https://www.mind.org.uk/information-support/tips-for-everyday-living/how-to-be-mentally-healthy-at-work/work-and-stress/', source: 'Mind' },
-  { id: 'grounding-techniques', title: '5-4-3-2-1 Grounding Technique', sub: 'Quick anxiety relief using your senses', type: 'video', category: 'anxiety', url: 'https://www.youtube.com/results?search_query=54321+grounding+technique', source: 'YouTube' },
+  { id: 'grounding-techniques', title: '5-4-3-2-1 Grounding Technique', sub: 'Quick anxiety relief using your senses — try it now', type: 'tool', category: 'anxiety', url: '/mental-health?section=grounding', source: 'Elec-Mate' },
 ];
 
 const categoryTabs = [
@@ -37,6 +39,7 @@ const categoryTabs = [
 
 const ResourcesLibraryTab = () => {
   const { favoriteResources, toggleFavoriteResource } = useMentalHealth();
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
 
@@ -45,17 +48,32 @@ const ResourcesLibraryTab = () => {
       !search ||
       r.title.toLowerCase().includes(search.toLowerCase()) ||
       r.sub.toLowerCase().includes(search.toLowerCase());
-    const matchesCat = category === 'all' || r.category === category;
+    const matchesCat =
+      category === 'all'
+        ? true
+        : category === 'starred'
+          ? favoriteResources.includes(r.id)
+          : r.category === category;
     return matchesSearch && matchesCat;
   });
 
-  const tabsWithCounts = categoryTabs.map((t) => ({
+  const tabsWithCounts = [
+    ...categoryTabs,
+    { value: 'starred', label: 'Starred' },
+  ].map((t) => ({
     ...t,
     count:
       t.value === 'all'
         ? resources.length
-        : resources.filter((r) => r.category === t.value).length,
+        : t.value === 'starred'
+          ? favoriteResources.length
+          : resources.filter((r) => r.category === t.value).length,
   }));
+
+  const openResource = (r: (typeof resources)[number]) => {
+    if (r.url.startsWith('/')) navigate(r.url);
+    else openExternalUrl(r.url);
+  };
 
   return (
     <div className="space-y-8 sm:space-y-10">
@@ -92,11 +110,11 @@ const ResourcesLibraryTab = () => {
           <ListCard>
             {filtered.map((r) => {
               const isFav = favoriteResources.includes(r.id);
-              const isVideo = r.type === 'video';
+              const tone = r.type === 'video' ? 'red' : r.type === 'tool' ? 'yellow' : 'blue';
               return (
                 <ListRow
                   key={r.id}
-                  accent={isVideo ? 'red' : 'blue'}
+                  accent={tone}
                   title={r.title}
                   subtitle={
                     <span className="flex items-center gap-2">
@@ -106,15 +124,15 @@ const ResourcesLibraryTab = () => {
                     </span>
                   }
                   trailing={
-                    <div className="flex items-center gap-2">
-                      <Pill tone={isVideo ? 'red' : 'blue'}>{r.type}</Pill>
+                    <div className="flex items-center gap-1">
+                      <Pill tone={tone}>{r.type}</Pill>
                       <button
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
                           toggleFavoriteResource(r.id);
                         }}
-                        className="p-1.5 touch-manipulation"
+                        className="h-11 w-11 flex items-center justify-center touch-manipulation"
                         aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
                       >
                         <Star
@@ -125,7 +143,7 @@ const ResourcesLibraryTab = () => {
                       </button>
                     </div>
                   }
-                  onClick={() => window.open(r.url, '_blank', 'noopener,noreferrer')}
+                  onClick={() => openResource(r)}
                 />
               );
             })}

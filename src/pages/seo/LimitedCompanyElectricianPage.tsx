@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cash-flow-planner',
+    href: '/cash-flow-planner',
     title: 'Cash Flow Planner',
     description: 'Track income, expenses, tax reserves, and cash flow forecasts from your phone.',
     icon: BarChart3,
@@ -350,7 +350,7 @@ const sections = [
           This means you have time to save for the tax bill — but you must actually save it. One of
           the most common mistakes new limited company owners make is spending money that should be
           set aside for corporation tax. Use Elec-Mate{' '}
-          <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink> to
+          <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink> to
           track your tax reserves.
         </p>
       </>

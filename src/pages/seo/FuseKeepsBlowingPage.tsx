@@ -587,7 +587,7 @@ const sections = [
                   Fix the root cause — replace damaged cable, repair or replace the faulty
                   appliance, redistribute loads, or add circuits as needed. Consider recommending a
                   consumer unit upgrade if the customer still has rewireable fuses. Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   for any remedial work carried out.

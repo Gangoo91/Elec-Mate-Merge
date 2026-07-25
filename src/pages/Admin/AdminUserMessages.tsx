@@ -5,11 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import {
-  Avatar as ShadAvatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar';
+import { Avatar as ShadAvatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
@@ -111,7 +107,10 @@ interface ConversationPartner {
   } | null;
   lastMessage: AdminMessage;
   unreadCount: number;
-  messages: AdminMessage[];
+  messages: AdminMessageRow[];
+  // Team-inbox flags — "the admins" are one recipient, whichever id a row hit
+  hasInboundToAdmin: boolean;
+  hasAdminReply: boolean;
 }
 
 export default function AdminUserMessages() {
@@ -120,8 +119,9 @@ export default function AdminUserMessages() {
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState<'all' | 'unread' | 'read' | 'sent'>('all');
-  const [selectedConversation, setSelectedConversation] =
-    useState<ConversationPartner | null>(null);
+  const [selectedConversation, setSelectedConversation] = useState<ConversationPartner | null>(
+    null
+  );
   const [replyMessage, setReplyMessage] = useState('');
   const [composeOpen, setComposeOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -183,14 +183,22 @@ export default function AdminUserMessages() {
             lastMessage: msg,
             unreadCount: 0,
             messages: [],
+            hasInboundToAdmin: false,
+            hasAdminReply: false,
           });
         }
 
         const conv = conversationMap.get(partnerId)!;
         conv.messages.push(msg);
 
-        if (msg.recipient_id === user.id && !msg.read_at) {
-          conv.unreadCount++;
+        // Inbound messages are addressed to ONE admin's id, but the whole
+        // admin team owns the inbox — count unread for any admin recipient.
+        if (msg.recipient?.admin_role) {
+          conv.hasInboundToAdmin = true;
+          if (!msg.read_at) conv.unreadCount++;
+        }
+        if (senderIsAdmin) {
+          conv.hasAdminReply = true;
         }
       });
 
@@ -223,11 +231,13 @@ export default function AdminUserMessages() {
 
   const markAsReadMutation = useMutation({
     mutationFn: async (messageIds: string[]) => {
+      // No recipient filter: inbound rows may be addressed to another admin's
+      // id, and any admin reading the thread settles it for the whole team.
+      // RLS "Admins can update messages" scopes this to admins.
       const { error } = await supabase
         .from('admin_messages')
         .update({ read_at: new Date().toISOString() })
-        .in('id', messageIds)
-        .eq('recipient_id', user?.id);
+        .in('id', messageIds);
 
       if (error) throw error;
     },
@@ -275,7 +285,7 @@ export default function AdminUserMessages() {
     setSelectedConversation(conv);
 
     const unreadIds = conv.messages
-      .filter((m) => m.recipient_id === user?.id && !m.read_at)
+      .filter((m) => !!m.recipient?.admin_role && !m.read_at)
       .map((m) => m.id);
 
     if (unreadIds.length > 0) {
@@ -351,9 +361,9 @@ export default function AdminUserMessages() {
         case 'unread':
           return conv.unreadCount > 0;
         case 'read':
-          return conv.unreadCount === 0 && conv.messages.some((m) => m.recipient_id === user?.id);
+          return conv.unreadCount === 0 && conv.hasInboundToAdmin;
         case 'sent':
-          return conv.messages.some((m) => m.sender_id === user?.id);
+          return conv.hasAdminReply;
         case 'all':
         default:
           return true;
@@ -369,17 +379,12 @@ export default function AdminUserMessages() {
         value: 'read',
         label: 'Read',
         count:
-          conversations?.filter(
-            (c) =>
-              c.unreadCount === 0 && c.messages.some((m) => m.recipient_id === user?.id)
-          ).length ?? 0,
+          conversations?.filter((c) => c.unreadCount === 0 && c.hasInboundToAdmin).length ?? 0,
       },
       {
         value: 'sent',
         label: 'Sent',
-        count:
-          conversations?.filter((c) => c.messages.some((m) => m.sender_id === user?.id))
-            .length ?? 0,
+        count: conversations?.filter((c) => c.hasAdminReply).length ?? 0,
       },
     ],
     [conversations, stats.unread, user?.id]
@@ -398,11 +403,7 @@ export default function AdminUserMessages() {
           description="Support requests and direct messages from users."
           tone="yellow"
           actions={
-            <IconButton
-              onClick={() => refetch()}
-              aria-label="Refresh"
-              disabled={isFetching}
-            >
+            <IconButton onClick={() => refetch()} aria-label="Refresh" disabled={isFetching}>
               <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
             </IconButton>
           }
@@ -482,11 +483,7 @@ export default function AdminUserMessages() {
                   <ListRow
                     key={conv.partnerId}
                     accent={unread ? 'yellow' : undefined}
-                    lead={
-                      <Avatar
-                        initials={getInitials(conv.partner?.full_name)}
-                      />
-                    }
+                    lead={<Avatar initials={getInitials(conv.partner?.full_name)} />}
                     title={
                       <span className={unread ? 'font-semibold' : ''}>
                         {conv.partner?.full_name || 'Unknown User'}
@@ -500,9 +497,7 @@ export default function AdminUserMessages() {
                             {role}
                           </Pill>
                         )}
-                        {unread && (
-                          <Pill tone="yellow">{conv.unreadCount}</Pill>
-                        )}
+                        {unread && <Pill tone="yellow">{conv.unreadCount}</Pill>}
                         <span className="text-[11px] text-white tabular-nums">
                           {relativeTime(new Date(conv.lastMessage.created_at))}
                         </span>
@@ -516,10 +511,7 @@ export default function AdminUserMessages() {
           </ListCard>
         )}
 
-        <Sheet
-          open={!!selectedConversation}
-          onOpenChange={() => setSelectedConversation(null)}
-        >
+        <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedConversation(null)}>
           <SheetContent side="bottom" className="h-[92vh] rounded-t-3xl p-0 border-0">
             <div className="flex flex-col h-full bg-background">
               <div className="flex justify-center pt-3 pb-1">
@@ -551,7 +543,10 @@ export default function AdminUserMessages() {
                         {selectedConversation?.messages.length} messages
                       </p>
                       {selectedConversation?.partner?.role && (
-                        <Pill tone={roleToTone(selectedConversation.partner.role)} className="capitalize">
+                        <Pill
+                          tone={roleToTone(selectedConversation.partner.role)}
+                          className="capitalize"
+                        >
                           {selectedConversation.partner.role}
                         </Pill>
                       )}
@@ -580,12 +575,7 @@ export default function AdminUserMessages() {
                             </span>
                           </div>
                         )}
-                        <div
-                          className={cn(
-                            'flex',
-                            isFromUser ? 'justify-start' : 'justify-end'
-                          )}
-                        >
+                        <div className={cn('flex', isFromUser ? 'justify-start' : 'justify-end')}>
                           <div
                             className={cn(
                               'max-w-[80%] rounded-2xl px-4 py-2.5 border',
@@ -690,11 +680,7 @@ export default function AdminUserMessages() {
                       {searchResults?.map((resultUser) => (
                         <ListRow
                           key={resultUser.id}
-                          lead={
-                            <Avatar
-                              initials={getInitials(resultUser.full_name)}
-                            />
-                          }
+                          lead={<Avatar initials={getInitials(resultUser.full_name)} />}
                           title={resultUser.full_name || 'Unknown User'}
                           subtitle={resultUser.email}
                           trailing={

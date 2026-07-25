@@ -472,7 +472,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   After replacement: verify element resistance, IR test, continuity of protective
                   conductor, RCD trip test. Set thermostat to 60-65 degrees Celsius. Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   if the circuit was modified, or document the like-for-like replacement.

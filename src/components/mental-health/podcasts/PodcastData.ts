@@ -71,7 +71,7 @@ export const podcasts: Podcast[] = [
     topics: ['Construction Workers', 'Family Support', 'Crisis Help', 'Recovery Stories'],
     category: 'trades-specific',
     links: {
-      website: 'https://www.lighthouseclub.org/',
+      website: 'https://lighthousecharity.org/',
     },
   },
   {

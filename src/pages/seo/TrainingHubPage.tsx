@@ -90,28 +90,28 @@ const trainingCollections = [
   {
     heading: 'Core training pages',
     links: [
-      { href: '/training/18th-edition-course', label: '18th Edition Course' },
-      { href: '/training/electrical-apprentice', label: 'Electrical Apprentice Training' },
-      { href: '/training/am2-exam-preparation', label: 'AM2 Exam Preparation' },
-      { href: '/training/inspection-and-testing', label: 'Inspection and Testing' },
+      { href: '/eighteenth-edition-course', label: '18th Edition Course' },
+      { href: '/apprentice-training', label: 'Electrical Apprentice Training' },
+      { href: '/am2-exam-preparation', label: 'AM2 Exam Preparation' },
+      { href: '/inspection-testing-course', label: 'Inspection and Testing' },
     ],
   },
   {
     heading: 'Qualification support',
     links: [
-      { href: '/training/city-guilds-2391', label: 'City & Guilds 2391' },
-      { href: '/training/level-2-electrical', label: 'Level 2 Electrical' },
-      { href: '/training/level-3-electrical', label: 'Level 3 Electrical' },
-      { href: '/training/epa-preparation', label: 'EPA Preparation' },
+      { href: '/city-guilds2391', label: 'City & Guilds 2391' },
+      { href: '/level2-electrical', label: 'Level 2 Electrical' },
+      { href: '/level3-electrical', label: 'Level 3 Electrical' },
+      { href: '/epa-preparation', label: 'EPA Preparation' },
     ],
   },
   {
     heading: 'Study and progression',
     links: [
-      { href: '/training/apprentice-portfolio', label: 'Apprentice Portfolio' },
+      { href: '/apprentice-portfolio-guide', label: 'Apprentice Portfolio' },
       { href: '/study-centre', label: 'Study Centre' },
-      { href: '/tools/ai-electrician', label: 'AI Learning Tools' },
-      { href: '/tools/best-electrician-app-uk', label: 'Best Electrician App Overview' },
+      { href: '/ai-electrician-tools', label: 'AI Learning Tools' },
+      { href: '/best-electrician-app', label: 'Best Electrician App Overview' },
     ],
   },
   {
@@ -309,9 +309,9 @@ export default function TrainingHubPage() {
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             Whether you are starting out or topping up your knowledge, this hub ties together pages
             like{' '}
-            <SEOInternalLink href="/training/18th-edition-course">18th Edition</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/training/am2-exam-preparation">AM2 preparation</SEOInternalLink>
-            , <SEOInternalLink href="/training/city-guilds-2391">2391</SEOInternalLink>, and the{' '}
+            <SEOInternalLink href="/eighteenth-edition-course">18th Edition</SEOInternalLink>,{' '}
+            <SEOInternalLink href="/am2-exam-preparation">AM2 preparation</SEOInternalLink>
+            , <SEOInternalLink href="/city-guilds2391">2391</SEOInternalLink>, and the{' '}
             <SEOInternalLink href="/study-centre">Study Centre</SEOInternalLink> so you can find the
             right learning path quickly.
           </p>
@@ -321,7 +321,7 @@ export default function TrainingHubPage() {
           <p className="text-white/80 leading-relaxed mb-6 max-w-4xl">
             A typical Installation and Maintenance Electrician route runs through four stages. Exact
             qualifications depend on whether you study with{' '}
-            <SEOInternalLink href="/training/city-guilds-2391">City &amp; Guilds</SEOInternalLink> or
+            <SEOInternalLink href="/city-guilds2391">City &amp; Guilds</SEOInternalLink> or
             EAL — these are separate awarding organisations, so check which your employer or college
             uses.
           </p>
@@ -378,7 +378,7 @@ export default function TrainingHubPage() {
           </div>
           <p className="text-white/80 leading-relaxed mt-6">
             Track and evidence these hours in the{' '}
-            <SEOInternalLink href="/training/apprentice-portfolio">apprentice portfolio</SEOInternalLink>{' '}
+            <SEOInternalLink href="/apprentice-portfolio-guide">apprentice portfolio</SEOInternalLink>{' '}
             so the record is ready for your tutor, assessor and EPA gateway.
           </p>
         </div>
@@ -416,7 +416,7 @@ export default function TrainingHubPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white">Learn it, then use it</h2>
           <p>
             Training works best when it connects back to real jobs. If you are revising{' '}
-            <SEOInternalLink href="/training/inspection-and-testing">
+            <SEOInternalLink href="/inspection-testing-course">
               inspection and testing
             </SEOInternalLink>
             , you can move straight into the{' '}

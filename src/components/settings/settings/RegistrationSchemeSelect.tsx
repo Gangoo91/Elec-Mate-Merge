@@ -47,11 +47,11 @@ export function RegistrationSchemeSelect({
         <Select value={scheme} onValueChange={onSchemeChange}>
           <SelectTrigger
             id="registrationScheme"
-            className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+            className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
           >
             <SelectValue placeholder="Select a scheme" />
           </SelectTrigger>
-          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+          <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
             {UK_REGISTRATION_SCHEMES.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
@@ -72,7 +72,7 @@ export function RegistrationSchemeSelect({
               value={registrationNumber}
               onChange={(e) => onNumberChange(e.target.value)}
               placeholder="Enter registration number"
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
@@ -85,7 +85,7 @@ export function RegistrationSchemeSelect({
               type="date"
               value={registrationExpiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
         </div>

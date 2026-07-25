@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Zap, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useUiPreferences } from '@/hooks/useUiPreferences';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,7 +40,15 @@ const specialistCerts: CertDef[] = [
   { id: 'pat-testing', title: 'PAT Testing', description: 'Portable appliance testing', standard: 'IET CoP', accentColor: 'from-cyan-500 via-cyan-400 to-blue-400' },
 ];
 
-const CertCard = ({ cert, onClick }: { cert: CertDef; onClick: () => void }) => (
+const CertCard = ({
+  cert,
+  onClick,
+  isDefault,
+}: {
+  cert: CertDef;
+  onClick: () => void;
+  isDefault?: boolean;
+}) => (
   <motion.div variants={itemVariants} className="h-full">
     <button
       onClick={onClick}
@@ -48,7 +57,12 @@ const CertCard = ({ cert, onClick }: { cert: CertDef; onClick: () => void }) => 
       <div className="group relative overflow-hidden h-full card-surface-interactive active:scale-[0.98] transition-all duration-200">
         <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200', cert.accentColor)} />
         <div className="relative z-10 flex flex-col h-full p-4">
-          <div className="flex items-center justify-end mb-3">
+          <div className={cn('flex items-center mb-3', isDefault ? 'justify-between' : 'justify-end')}>
+            {isDefault && (
+              <span className="text-[10px] font-bold text-black bg-elec-yellow px-2 py-0.5 rounded">
+                Default
+              </span>
+            )}
             <span className="text-[10px] font-bold text-white bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded">{cert.standard}</span>
           </div>
           <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">{cert.title}</h3>
@@ -68,6 +82,12 @@ const CertCard = ({ cert, onClick }: { cert: CertDef; onClick: () => void }) => 
 
 export default function NewCertificate() {
   const navigate = useNavigate();
+  const { preferences } = useUiPreferences();
+  const defaultCertId = preferences.default_cert_type;
+
+  // Default type (Settings → Preferences) leads its group so it's always the first tap.
+  const sortDefaultFirst = (certs: CertDef[]) =>
+    [...certs].sort((a, b) => (b.id === defaultCertId ? 1 : 0) - (a.id === defaultCertId ? 1 : 0));
 
   const handleClick = (cert: CertDef) => {
     // Core certs use section-based routing
@@ -114,8 +134,13 @@ export default function NewCertificate() {
             Electrical Installation
           </h2>
           <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {coreCerts.map((cert) => (
-              <CertCard key={cert.id} cert={cert} onClick={() => handleClick(cert)} />
+            {sortDefaultFirst(coreCerts).map((cert) => (
+              <CertCard
+                key={cert.id}
+                cert={cert}
+                isDefault={cert.id === defaultCertId}
+                onClick={() => handleClick(cert)}
+              />
             ))}
           </div>
         </motion.section>
@@ -126,8 +151,13 @@ export default function NewCertificate() {
             Fire & Safety Systems
           </h2>
           <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {fireSafety.map((cert) => (
-              <CertCard key={cert.id} cert={cert} onClick={() => handleClick(cert)} />
+            {sortDefaultFirst(fireSafety).map((cert) => (
+              <CertCard
+                key={cert.id}
+                cert={cert}
+                isDefault={cert.id === defaultCertId}
+                onClick={() => handleClick(cert)}
+              />
             ))}
           </div>
         </motion.section>
@@ -138,8 +168,13 @@ export default function NewCertificate() {
             Specialist Certificates
           </h2>
           <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {specialistCerts.map((cert) => (
-              <CertCard key={cert.id} cert={cert} onClick={() => handleClick(cert)} />
+            {sortDefaultFirst(specialistCerts).map((cert) => (
+              <CertCard
+                key={cert.id}
+                cert={cert}
+                isDefault={cert.id === defaultCertId}
+                onClick={() => handleClick(cert)}
+              />
             ))}
           </div>
         </motion.section>

@@ -585,7 +585,7 @@ const sections = [
                   efficient with fan-assisted heat release and automatic controls. When replacing,
                   check the circuit capacity — modern high-output heaters may require a larger cable
                   and MCB. Where the existing circuit is unaltered, a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   (Reg 644.4.201) is appropriate. If the circuit cable or protective device is

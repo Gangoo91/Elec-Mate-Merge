@@ -444,7 +444,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Factor in terraced house cable runs (12 to 20 metres average), frequent board
                   upgrades, and earth rod installations on PME supplies. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes on site.
                 </p>
               </div>

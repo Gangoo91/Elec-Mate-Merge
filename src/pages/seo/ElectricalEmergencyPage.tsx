@@ -565,7 +565,7 @@ const sections = [
                 <strong>Certificate issued</strong> — the electrician will issue a Minor Works
                 Certificate or Electrical Installation Certificate for the repair work. If a full
                 inspection is needed, an{' '}
-                <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> will be
+                <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> will be
                 produced.
               </span>
             </li>

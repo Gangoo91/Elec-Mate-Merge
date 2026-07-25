@@ -22,7 +22,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Regulations', href: '/guides/bs-7671-18th-edition-guide' },
-  { label: 'Chapter 42', href: '/guides/chapter-42-thermal-effects-protection' },
+  { label: 'Chapter 42', href: '/guides' },
 ];
 
 const tocItems = [
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study thermal effects, fire-stopping inspection, and cable derating for C&G 2391.',

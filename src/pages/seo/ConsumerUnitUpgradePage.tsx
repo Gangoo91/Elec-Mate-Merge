@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What electrical work requires notification, competent person schemes, and Building Control.',
@@ -435,7 +435,7 @@ const sections = [
       <>
         <p>
           A consumer unit upgrade is{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             notifiable work under Part P
           </SEOInternalLink>{' '}
           of the Building Regulations in England and Wales. This means:

@@ -512,7 +512,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When your consumer unit replacement job reveals old wiring, missing bonding, or a
                   need for smoke alarms, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote additional work on the day. Nottingham landlords with multiple properties

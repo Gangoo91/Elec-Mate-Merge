@@ -313,7 +313,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   Emergency lighting
                 </SEOInternalLink>{' '}
                 legends missing or incorrectly positioned
@@ -356,7 +356,7 @@ const sections = [
               Every circuit must be tested in accordance with BS 7671 Chapter 64, with results
               recorded on the schedule of test results. The test results provide objective evidence
               that the installation meets the required standard. For additions and alterations, a{' '}
-              <SEOInternalLink href="/tools/minor-works-certificate">
+              <SEOInternalLink href="/minor-works-certificate">
                 minor works certificate
               </SEOInternalLink>{' '}
               serves the same purpose.
@@ -592,7 +592,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate method statements with quality requirements built in.',
     icon: Brain,

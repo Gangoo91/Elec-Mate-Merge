@@ -776,7 +776,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the shower circuit has undersized cable or an unprotected circuit, quote the
                   upgrade immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Customers who receive a professional quote while you are present approve work at

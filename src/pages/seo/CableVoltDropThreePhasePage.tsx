@@ -9,7 +9,7 @@ import { Calculator, Cable, BarChart3, Shield, BookOpen, Activity, Ruler } from 
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Three Phase Voltage Drop', href: '/tools/cable-volt-drop-three-phase' },
 ];
 
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: 'All Electrical Calculators',
     description:
       '70+ BS 7671 compliant calculators for UK electricians. Voltage drop, cable sizing, fault current, and more.',
@@ -641,8 +641,8 @@ const sections = [
 export default function CableVoltDropThreePhasePage() {
   return (
     <ToolTemplate
-      title="3 Phase Voltage Drop Formula + Calculator (BS 7671)"
-      description="3-phase voltage drop formula: VD = mV/A/m × Ib × L ÷ 1000 — √3 (1.732) is already in the BS 7671 tables. Free calculator, instant pass/fail vs 5% + 3% limits."
+      title="3-Phase Voltage Drop Calculator: Instant BS 7671 Pass/Fail"
+      description="Three-phase voltage drop done for you — the √3 and every BS 7671 mV/A/m value are built in. Enter load and length, get an instant pass/fail against the 3% and 5% limits. Free calculator."
       datePublished="2025-06-15"
       dateModified="2026-07-02"
       breadcrumbs={breadcrumbs}

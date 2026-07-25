@@ -111,7 +111,7 @@ export function OCRPreview({
         <div className="space-y-3">
           <div className="relative h-32 rounded-xl overflow-hidden bg-white/[0.04] border border-white/[0.06]">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-scan" />
+              <div className="w-full h-0.5 bg-elec-yellow/60 animate-scan" />
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">

@@ -572,7 +572,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Elec-Mate Minor Works Certificate app
                   </SEOInternalLink>{' '}
                   to complete and issue the certificate on site. Record test results, circuit

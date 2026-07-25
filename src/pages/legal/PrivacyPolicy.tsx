@@ -483,7 +483,6 @@ const PrivacyPolicy = () => {
               device using browser localStorage and IndexedDB:
             </p>
             <ul className="text-white text-sm space-y-1 list-disc list-inside">
-              <li>Mental health check-ins and daily reflections</li>
               <li>Form drafts (including customer names, addresses, and project details)</li>
               <li>Offline message queues (sent automatically when connectivity resumes)</li>
               <li>Study progress and session data</li>
@@ -493,6 +492,12 @@ const PrivacyPolicy = () => {
               This data remains on your device until you clear your browser data or sign out. It is
               not encrypted separately from your device's own protections. We recommend using a
               device passcode or biometric lock to secure your device.
+            </p>
+            <p className="text-white text-sm mt-2">
+              Mental health check-ins, daily reflections, mood, sleep and journal entries are
+              stored securely in your account (not on your device), protected by the encryption
+              and access controls described above. They are included in your data export and
+              permanently deleted when you delete your account.
             </p>
           </div>
         </section>

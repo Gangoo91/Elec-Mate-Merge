@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate App',
     description: 'Complete emergency lighting installation and test certificates on your phone.',
     icon: FileCheck2,
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote emergency lighting installations with itemised luminaires, cable, and labour.',
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate supports{' '}
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             emergency lighting certification
           </SEOInternalLink>{' '}
           on mobile — complete the installation details, luminaire schedule, test results, and
@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes for emergency lighting. Luminaires, exit signs, cable,
@@ -655,7 +655,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Emergency Lighting Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete{' '}
-                  <SEOInternalLink href="/tools/emergency-lighting-certificate">
+                  <SEOInternalLink href="/emergency-lighting-certificate">
                     emergency lighting certificates
                   </SEOInternalLink>{' '}
                   on your phone — installation commissioning, annual test certificates, and

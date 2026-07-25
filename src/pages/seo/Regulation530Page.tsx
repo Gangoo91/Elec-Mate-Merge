@@ -124,7 +124,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description: 'Digital solar PV installation certificate with A4:2026 compliance fields.',
     icon: FileCheck2,
@@ -455,7 +455,7 @@ const sections = [
         </div>
         <p>
           When specifying protective devices for a{' '}
-          <SEOInternalLink href="/tools/solar-pv-certificate">
+          <SEOInternalLink href="/solar-pv-certificate">
             solar PV installation
           </SEOInternalLink>
           , confirm with the device manufacturer that each device in the bidirectional current path

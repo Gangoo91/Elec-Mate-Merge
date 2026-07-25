@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'For additions to existing kitchen circuits — issue on site instantly.',
     icon: ClipboardCheck,
@@ -498,7 +498,7 @@ const sections = [
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           or{' '}
-          <SEOInternalLink href="/tools/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           on site.

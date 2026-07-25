@@ -698,7 +698,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When rubber wiring or absent RCD protection is found in a York Victorian terrace,
                   quote the consumer unit replacement immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . York landlords must act within 28 days — quoting on the day of the EICR

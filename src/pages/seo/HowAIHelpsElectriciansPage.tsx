@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-electrician',
+    href: '/ai-electrician-tools',
     title: 'AI Electrician Tools',
     description:
       'Complete overview of all 8 AI agents available in Elec-Mate — from circuit design to fault diagnosis.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/ai-cost-engineer',
+    href: '/ai-cost-engineer',
     title: 'AI Cost Engineer',
     description:
       'Get accurate material and labour cost estimates for any electrical job, powered by live UK trade pricing data.',
@@ -224,7 +224,7 @@ const sections = [
             </h4>
             <p className="text-white text-sm leading-relaxed">
               Describe any electrical job and the{' '}
-              <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+              <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
               produces a detailed cost breakdown — materials at live UK trade prices, labour hours
               based on real productivity data, and overhead allocation. It accounts for cable
               lengths, accessory quantities, containment, fixings, and consumables. The output feeds
@@ -321,7 +321,7 @@ const sections = [
             cable tails, earth bar, bonding cable, labels, blanking plates), labour estimate
             (typically 4 to 6 hours depending on the number of circuits), and total cost with markup
             applied. The electrician reviews, adjusts if needed, and sends the quote straight from
-            the <SEOInternalLink href="/tools/electrical-quoting-app">quoting tool</SEOInternalLink>
+            the <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink>
             .
           </p>
         </div>
@@ -420,7 +420,7 @@ const sections = [
           Compounded across a typical working week, these savings translate to approximately 4 to 6
           additional billable hours. At an average day rate of £300 to £400, that is £300 to £500
           per week in recovered time — significantly more than the cost of an{' '}
-          <SEOInternalLink href="/tools/best-electrician-app-uk">
+          <SEOInternalLink href="/best-electrician-app">
             Elec-Mate subscription
           </SEOInternalLink>
           .
@@ -517,7 +517,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/ai-electrician">AI Electrician Tools</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-electrician-tools">AI Electrician Tools</SEOInternalLink>{' '}
           page provides a complete overview of all 8 agents with detailed examples of how to use
           each one effectively.
         </p>

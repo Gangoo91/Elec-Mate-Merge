@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments and method statements instantly.',
     icon: FileCheck2,
@@ -732,7 +732,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Live Work RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
                 to create comprehensive risk assessments and method statements for live electrical
                 work, including IEC 60900 tool requirements, PPE specifications, and rescue plan
                 documentation. Ready to share with clients and principal contractors.

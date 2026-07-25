@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create detailed, itemised quotes for commercial fit-out projects.',
     icon: PoundSterling,
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering commercial installations.',
@@ -644,7 +644,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Commercial Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised commercial quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Lighting, power, emergency lighting, fire alarm, data cabling — all broken down
                   with materials, labour, and your margins. Present a professional quotation to the
                   main contractor or tenant. New to commercial pricing? Read{' '}

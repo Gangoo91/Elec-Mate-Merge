@@ -194,7 +194,7 @@ const sections = [
           smart home installation requires specialist knowledge that relatively few electricians
           possess. An electrician who can design, install, and commission a complete smart home
           system — including{' '}
-          <SEOInternalLink href="/training/ev-charger-installation">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger integration
           </SEOInternalLink>
           , lighting control, climate management, and security — becomes a one-stop solution for
@@ -409,7 +409,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description: 'EV charger integration is a key component of modern smart home installations.',
     icon: GraduationCap,
@@ -430,7 +430,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description: 'Solar PV and battery storage integration for smart energy management systems.',
     icon: Lightbulb,

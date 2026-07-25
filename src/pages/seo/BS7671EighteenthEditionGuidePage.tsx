@@ -580,7 +580,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382-22 exam with 20,000+ practice questions and AI study assistant.',
@@ -602,7 +602,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'How Part P interacts with BS 7671 — notifiable work, competent person schemes.',
     icon: Scale,

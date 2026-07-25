@@ -157,7 +157,7 @@ const sections = [
         </div>
         <p>
           PFC also matters for cable protection. The{' '}
-          <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+          <SEOInternalLink href="/how-to-size-cables">
             adiabatic equation
           </SEOInternalLink>{' '}
           (k&sup2;S&sup2; &ge; I&sup2;t) verifies that the cable conductor can withstand the heating
@@ -238,7 +238,7 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-2">Recording on Certificates</h3>
             <p className="text-white text-sm leading-relaxed">
               The measured PFC is recorded in the "Prospective fault current Ipf" field on the EIC
-              or <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink>. Record
+              or <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>. Record
               the highest value (typically the line-to-neutral PFC). On the EICR, the PFC at the
               origin is recorded in the Supply Characteristics section. If the PFC exceeds the
               breaking capacity of any installed device, this must be recorded as an observation
@@ -410,7 +410,7 @@ const sections = [
           (line-to-neutral). The overall PFC recorded on the certificate should be the higher of the
           two values — typically the line-to-neutral short circuit current. The Ze is recorded
           separately in the supply characteristics section of the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
           data.
         </p>
         <SEOAppBridge
@@ -541,7 +541,7 @@ const sections = [
               including short-circuit current. The protective device must disconnect the circuit
               before the short-circuit current causes damage to the cable insulation or connections.
               The{' '}
-              <SEOInternalLink href="/guides/how-to-size-cables-bs-7671">
+              <SEOInternalLink href="/how-to-size-cables">
                 adiabatic equation
               </SEOInternalLink>{' '}
               (k&sup2;S&sup2; &ge; I&sup2;t) is the tool used to verify this requirement.
@@ -576,7 +576,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, TT systems explained. Ze values and their relationship to PFC.',
     icon: Activity,
@@ -591,7 +591,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables to BS 7671',
     description: 'Cable sizing includes fault current verification using the adiabatic equation.',
     icon: Cable,

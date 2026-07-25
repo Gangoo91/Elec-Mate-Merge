@@ -1,6 +1,4 @@
-import React from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Button } from '@/components/ui/button';
 import { ExternalLink, Mic, Globe } from 'lucide-react';
 import { Podcast } from './PodcastData';
 
@@ -29,200 +27,101 @@ const FacebookIcon = () => (
   </svg>
 );
 
-// Category color configurations
-const categoryColors: Record<
-  string,
-  {
-    gradient: string;
-    border: string;
-    accent: string;
-    iconBg: string;
-    topicBg: string;
-    topicText: string;
-  }
-> = {
-  'trades-specific': {
-    gradient: '',
-    border: 'border-white/[0.06] hover:border-white/[0.06]',
-    accent: 'text-white/85',
-    iconBg: 'bg-white/[0.02]',
-    topicBg: 'bg-white/[0.02] border-white/[0.06]',
-    topicText: 'text-white/85',
-  },
-  'general-mental-health': {
-    gradient: '',
-    border: 'border-white/[0.06] hover:border-white/[0.06]',
-    accent: 'text-white/85',
-    iconBg: 'bg-white/[0.02]',
-    topicBg: 'bg-white/[0.02] border-white/[0.06]',
-    topicText: 'text-white/85',
-  },
-  'personal-stories': {
-    gradient: '',
-    border: 'border-white/[0.06] hover:border-white/[0.06]',
-    accent: 'text-white/85',
-    iconBg: 'bg-white/[0.02]',
-    topicBg: 'bg-white/[0.02] border-white/[0.06]',
-    topicText: 'text-white/85',
-  },
-  'sleep-anxiety': {
-    gradient: '',
-    border: 'border-white/[0.06] hover:border-white/[0.06]',
-    accent: 'text-white/85',
-    iconBg: 'bg-white/[0.02]',
-    topicBg: 'bg-white/[0.02] border-white/[0.06]',
-    topicText: 'text-white/85',
-  },
-};
-
 interface PodcastCardProps {
   podcast: Podcast;
 }
 
+const PLATFORM_BUTTON =
+  'inline-flex items-center gap-1.5 h-11 sm:h-9 px-3.5 rounded-full text-[12px] font-medium touch-manipulation active:scale-[0.97] transition-colors';
+
 const PodcastCard = ({ podcast }: PodcastCardProps) => {
-  const colors = categoryColors[podcast.category] || categoryColors['general-mental-health'];
-
-  const openLink = (url: string) => {
-    openExternalUrl(url);
-  };
-
-  const hasLinks =
-    podcast.links.spotify ||
-    podcast.links.apple ||
-    podcast.links.youtube ||
-    podcast.links.website ||
-    podcast.links.facebook;
+  const platforms = [
+    podcast.links.spotify && {
+      key: 'spotify',
+      label: 'Spotify',
+      icon: <SpotifyIcon />,
+      className: 'bg-[#1DB954]/15 border border-[#1DB954]/30 text-[#1ed760]',
+      url: podcast.links.spotify,
+    },
+    podcast.links.apple && {
+      key: 'apple',
+      label: 'Apple',
+      icon: <ApplePodcastIcon />,
+      className: 'bg-[#9933FF]/15 border border-[#9933FF]/30 text-[#c084fc]',
+      url: podcast.links.apple,
+    },
+    podcast.links.youtube && {
+      key: 'youtube',
+      label: 'YouTube',
+      icon: <YouTubeIcon />,
+      className: 'bg-[#FF0000]/15 border border-[#FF0000]/30 text-[#f87171]',
+      url: podcast.links.youtube,
+    },
+    podcast.links.facebook && {
+      key: 'facebook',
+      label: 'Facebook',
+      icon: <FacebookIcon />,
+      className: 'bg-[#1877F2]/15 border border-[#1877F2]/30 text-[#60a5fa]',
+      url: podcast.links.facebook,
+    },
+    podcast.links.website && {
+      key: 'website',
+      label: 'Website',
+      icon: <Globe className="h-4 w-4" />,
+      className: 'bg-white/[0.06] border border-white/[0.12] text-white',
+      url: podcast.links.website,
+    },
+  ].filter(Boolean) as { key: string; label: string; icon: JSX.Element; className: string; url: string }[];
 
   return (
-    <div
-      className={`
-      group relative overflow-hidden rounded-2xl border backdrop-blur-sm
-      bg-white/[0.03] transition-all duration-500
-      hover:scale-[1.02] hover:shadow-2xl hover:shadow-black/20
-      ${colors.border}
-    `}
-    >
-      {/* Glassmorphism Background Layer */}
-      <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-      {/* Category Gradient Header */}
-      <div className="relative h-16 sm:h-24 bg-white/[0.02] flex items-center justify-center overflow-hidden">
-        {/* Animated Background Pattern */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
-            backgroundSize: '24px 24px',
-          }}
-        />
-
-        {/* Mic Icon */}
-        <div
-          className={`
-          relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl ${colors.iconBg}
-          border border-white/20 backdrop-blur-sm
-          flex items-center justify-center
-          shadow-lg group-hover:scale-110 transition-transform duration-300
-        `}
-        >
-          <Mic className={`w-5 h-5 sm:w-7 sm:h-7 ${colors.accent}`} />
+    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5 space-y-3">
+      {/* Title & host */}
+      <div className="flex items-start gap-3">
+        <div className="h-10 w-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center shrink-0">
+          <Mic className="h-4.5 w-4.5 text-elec-yellow" />
         </div>
-      </div>
-
-      {/* Content */}
-      <div className="relative p-3 sm:p-5 space-y-2 sm:space-y-4">
-        {/* Title & Host */}
-        <div>
-          <h3 className="font-bold text-white text-base sm:text-lg leading-tight line-clamp-2 group-hover:text-white transition-colors">
+        <div className="min-w-0 flex-1">
+          <h3 className="font-semibold text-white text-[15px] sm:text-base leading-tight line-clamp-2">
             {podcast.name}
           </h3>
-          <p className={`text-xs sm:text-sm mt-0.5 sm:mt-1 ${colors.accent}`}>{podcast.host}</p>
+          <p className="text-[12px] sm:text-[13px] text-white/70 mt-0.5">{podcast.host}</p>
         </div>
-
-        {/* Description - hidden on mobile for cleaner cards */}
-        <p className="hidden sm:block text-sm text-white leading-relaxed line-clamp-3">
-          {podcast.description}
-        </p>
-
-        {/* Topics - fewer on mobile */}
-        <div className="flex flex-wrap gap-1 sm:gap-1.5">
-          {podcast.topics.slice(0, 3).map((topic, idx) => (
-            <span
-              key={idx}
-              className={`
-                text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border
-                ${colors.topicBg} ${colors.topicText}
-              `}
-            >
-              {topic}
-            </span>
-          ))}
-        </div>
-
-        {/* Platform Buttons - compact on mobile */}
-        {hasLinks && (
-          <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
-            {podcast.links.spotify && (
-              <Button
-                size="sm"
-                onClick={() => openLink(podcast.links.spotify!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1DB954] hover:bg-[#1ed760] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#1DB954]/0 hover:shadow-[#1DB954]/30 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <SpotifyIcon />
-                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Spotify</span>
-              </Button>
-            )}
-
-            {podcast.links.apple && (
-              <Button
-                size="sm"
-                onClick={() => openLink(podcast.links.apple!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#9933FF] hover:bg-[#a855f7] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#9933FF]/0 hover:shadow-[#9933FF]/30 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <ApplePodcastIcon />
-                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Apple</span>
-              </Button>
-            )}
-
-            {podcast.links.youtube && (
-              <Button
-                size="sm"
-                onClick={() => openLink(podcast.links.youtube!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#FF0000] hover:bg-[#ff1a1a] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#FF0000]/0 hover:shadow-[#FF0000]/30 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <YouTubeIcon />
-                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">YouTube</span>
-              </Button>
-            )}
-
-            {podcast.links.facebook && (
-              <Button
-                size="sm"
-                onClick={() => openLink(podcast.links.facebook!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-[#1877F2] hover:bg-[#1a85ff] text-white border-0 gap-1 sm:gap-2 shadow-lg shadow-[#1877F2]/0 hover:shadow-[#1877F2]/30 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <FacebookIcon />
-                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">
-                  Facebook
-                </span>
-              </Button>
-            )}
-
-            {podcast.links.website && (
-              <Button
-                size="sm"
-                onClick={() => openLink(podcast.links.website!)}
-                className="h-7 sm:h-9 px-2 sm:px-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 gap-1 sm:gap-2 transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <Globe className="h-4 w-4" />
-                <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">Website</span>
-                <ExternalLink className="h-3 w-3 opacity-50" />
-              </Button>
-            )}
-          </div>
-        )}
       </div>
 
+      {/* Description — hidden on mobile for cleaner cards */}
+      <p className="hidden sm:block text-sm text-white/85 leading-relaxed line-clamp-3">
+        {podcast.description}
+      </p>
+
+      {/* Topics */}
+      <div className="flex flex-wrap gap-1.5">
+        {podcast.topics.slice(0, 3).map((topic, idx) => (
+          <span
+            key={idx}
+            className="text-[10.5px] sm:text-xs px-2.5 py-1 rounded-full border border-white/[0.08] bg-white/[0.04] text-white/80"
+          >
+            {topic}
+          </span>
+        ))}
+      </div>
+
+      {/* Platform buttons — 44px targets on mobile, labels always visible */}
+      {platforms.length > 0 && (
+        <div className="flex flex-wrap gap-2 pt-1">
+          {platforms.map((p) => (
+            <button
+              key={p.key}
+              onClick={() => openExternalUrl(p.url)}
+              className={`${PLATFORM_BUTTON} ${p.className}`}
+              aria-label={`Open ${podcast.name} on ${p.label}`}
+            >
+              {p.icon}
+              <span>{p.label}</span>
+              {p.key === 'website' && <ExternalLink className="h-3 w-3 opacity-50" />}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P covers, which work is notifiable, and how competent person scheme registration helps.',
@@ -145,7 +145,7 @@ const sections = [
           ELECSA is a government-approved competent person scheme for electricians in England and
           Wales. It allows registered contractors to self-certify electrical work that is notifiable
           under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           , without needing to involve local authority Building Control.

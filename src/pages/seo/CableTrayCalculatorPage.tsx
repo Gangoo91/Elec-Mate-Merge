@@ -461,7 +461,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description: '50+ BS 7671 calculators and containment tools for UK electricians.',
           icon: Calculator,

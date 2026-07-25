@@ -543,7 +543,7 @@ const sections = [
         />
         <p>
           The app records the test voltage alongside each IR value and includes the{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             complete schedule of tests
           </SEOInternalLink>{' '}
           with auto-validated IR, R1+R2, Zs, and RCD results — all cross-referenced against BS 7671
@@ -556,7 +556,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description:
       'Full IR testing procedure — how to perform the test, conductor combinations, equipment disconnection.',
@@ -596,7 +596,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. All built to BS 7671.',

@@ -24,7 +24,7 @@ export default function ElectricalMarketingTipsPage() {
       datePublished="2026-01-30"
       dateModified="2026-06-10"
       breadcrumbs={[
-        { label: 'Business', href: '/guides/business' },
+        { label: 'Business', href: '/guides' },
         { label: 'Marketing Tips', href: '/guides/marketing-tips-electricians' },
       ]}
       tocItems={[
@@ -687,7 +687,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, sent from site in minutes.',
@@ -695,7 +695,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Professional invoices with online payment links, created and sent from site.',
@@ -703,7 +703,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/ai-cost-engineer',
+          href: '/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Describe any job and get an itemised estimate with current UK trade pricing.',

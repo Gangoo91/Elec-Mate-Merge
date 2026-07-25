@@ -167,7 +167,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Ensuring all work meets the specification, BS 7671 requirements, and the client's
               quality standards. The site manager oversees the{' '}
-              <SEOInternalLink href="/guides/how-to-fill-in-eicr">
+              <SEOInternalLink href="/how-to-fill-in-eicr">
                 inspection and testing process
               </SEOInternalLink>
               , reviews test results, and manages the snagging and rectification process. On
@@ -581,7 +581,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate risk assessments and method statements with AI.',
     icon: Brain,

@@ -88,6 +88,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/ev-charging-legislation',
+    title: 'EV Charging Legislation UK',
+    description:
+      'The regulations behind every EV charger install — Building Regs Part S, smart charge points and BS 7671.',
+    icon: Car,
+    category: 'Guide',
+  },
+  {
     href: '/guides/section-722-ev-charging-a4-2026-changes',
     title: 'Section 722 EV Charging A4:2026 Changes',
     description: 'RDC-DD, PME, V2G — what changed in Section 722 under A4:2026.',
@@ -645,7 +653,7 @@ const sections = [
 export default function Section722EVChargingGuidePage() {
   return (
     <GuideTemplate
-      title="BS 7671 Section 722: EV Charger Rules + PME Explained"
+      title="Section 722 BS 7671: Every EV Charger Rule Explained (2026)"
       description="BS 7671 Section 722 for UK EV charger installs: PME earthing restriction, Type A RCD + 6mA DC leakage, dedicated circuit, cable sizing, earth electrode option."
       datePublished="2026-03-27"
       dateModified="2026-07-02"

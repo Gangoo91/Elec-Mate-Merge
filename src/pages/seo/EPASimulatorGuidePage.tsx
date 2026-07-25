@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Apprentice',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'How to organise and present your apprentice evidence portfolio for the EPA gateway and professional discussion.',

@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Send professional PDF quotes from your phone. Win more jobs with itemised, clear pricing.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-van-setup-guide',
+    href: '/guides/electrician-van-setup',
     title: 'Electrician Van Setup Guide',
     description:
       'Organise your van for efficiency and security. Racking systems, tool protection, and branding.',

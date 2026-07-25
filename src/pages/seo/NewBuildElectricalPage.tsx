@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Detailed guide to Part P notification, competent person schemes, and Building Control inspections.',
@@ -236,7 +236,7 @@ const sections = [
       <>
         <p>
           A new build electrical installation is fully notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . This means the work must either be carried out and self-certified by a registered
@@ -488,7 +488,7 @@ const sections = [
           Both AFDDs and SPDs add cost to the consumer unit — budget an additional £30-£50 per
           circuit for AFDDs and £50-£100 for an SPD module. Include these in the initial quote to
           avoid surprises. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to price the
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to price the
           full new build installation including all protective devices.
         </p>
       </>

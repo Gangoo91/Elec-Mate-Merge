@@ -631,30 +631,9 @@ ${companyName}`;
             </span>
           </div>
         </DropdownMenuItem>
-        {/* ELE-1276: only offer WhatsApp where the PDF can genuinely attach
-            (native app / mobile web). Desktop WhatsApp can't accept files via
-            URL scheme — hiding it beats sending clients a bare link. */}
-        {canShareFilesToWhatsApp() && (
-          <DropdownMenuItem
-            onClick={handleShareWhatsApp}
-            disabled={isSharingWhatsApp}
-            className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
-          >
-            {isSharingWhatsApp ? (
-              <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
-            ) : (
-              <MessageCircle className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
-            )}
-            <div className="flex min-w-0 flex-col">
-              <span className="text-[14px] font-semibold text-white leading-tight">
-                Share on WhatsApp
-              </span>
-              <span className="text-[12px] text-white/50 leading-snug">
-                Opens WhatsApp with the PDF attached
-              </span>
-            </div>
-          </DropdownMenuItem>
-        )}
+        {/* ELE-1377 — WhatsApp share removed (dumped a raw signed URL into the
+            chat instead of the PDF). Clients get the PDF by email or the native
+            share sheet instead. */}
 
         {/* Accounting Sync Section */}
         {!accountingLoading && (

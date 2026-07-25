@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What work is notifiable under Part P and how to comply through a competent person scheme.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-fill-in-eicr',
+    href: '/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form correctly.',
     icon: ClipboardCheck,
@@ -182,11 +182,11 @@ const sections = [
             </li>
             <li>
               <strong>Provide your qualifications.</strong> Upload copies of your{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition qualification
               </SEOInternalLink>{' '}
               (C&G 2382), inspection and testing qualification (
-              <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink> or
+              <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> or
               equivalent), and NVQ Level 3 or equivalent evidence of competence.
             </li>
             <li>

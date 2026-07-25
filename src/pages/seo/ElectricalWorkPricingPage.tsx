@@ -24,8 +24,8 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Business', href: '/guides/starting-an-electrical-business-uk' },
-  { label: 'Pricing Guide', href: '/guides/electrical-work-pricing-guide' },
+  { label: 'Business', href: '/guides/starting-an-electrical-business' },
+  { label: 'Pricing Guide', href: '/guides/pricing-electrical-work-per-point' },
 ];
 
 const tocItems = [
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/starting-an-electrical-business-uk',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'Complete guide to setting up as a self-employed electrician, from scheme registration to pricing strategy.',
@@ -480,7 +480,7 @@ const sections = [
         </div>
         <p>
           All outdoor electrical work is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . This means the electrician must be registered with a competent person scheme to

@@ -84,6 +84,14 @@ const faqs = [
 
 const relatedPages = [
   {
+    href: '/guides/gold-card-requirements-electrician',
+    title: 'JIB Gold Card Requirements',
+    description:
+      'What you need for the JIB Gold Card and how it changes your rate.',
+    icon: PoundSterling,
+    category: 'Guide',
+  },
+  {
     href: '/guides/starting-electrical-apprenticeship',
     title: 'Starting Your Electrical Apprenticeship',
     description:
@@ -495,7 +503,7 @@ const sections = [
         </p>
         <p>
           <strong>Portfolio builder:</strong> The{' '}
-          <SEOInternalLink href="/training/apprentice-portfolio">portfolio builder</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio builder</SEOInternalLink>{' '}
           with AC (assessment criteria) mapping helps you demonstrate competence to your employer
           and training provider, supporting timely progression through the apprenticeship stages and
           pay grades. A strong portfolio also supports your{' '}
@@ -528,7 +536,7 @@ const sections = [
 export default function ApprenticeSalaryPage() {
   return (
     <GuideTemplate
-      title="Apprentice Electrician Wages by Year: JIB Rates 2026 UK"
+      title="Apprentice Electrician Salary UK 2026: Year 1–4 Real Rates"
       description="What apprentice electricians earn in each year of the apprenticeship: Year 1 to 4 hourly rates, JIB Stage 1-4 graded rates for 2026, and weekly take-home pay."
       datePublished="2025-09-10"
       dateModified="2026-07-02"

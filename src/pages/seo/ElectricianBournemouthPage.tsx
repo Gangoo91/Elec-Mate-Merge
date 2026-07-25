@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Understand which electrical work is notifiable and what compliance means.',
     icon: ShieldCheck,
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create professional quotes for Bournemouth customers with accurate local pricing.',
@@ -151,7 +151,7 @@ const sections = [
         </p>
         <p>
           Every electrician carrying out notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work signed off by
@@ -353,7 +353,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Bournemouth is overseen by BCP Council building
           control or an approved inspector.
         </p>

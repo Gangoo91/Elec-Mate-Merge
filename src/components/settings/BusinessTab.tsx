@@ -1,15 +1,24 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import {
+  Building2,
+  Palette,
+  CreditCard,
+  PoundSterling,
+  Calculator,
+  FileText,
+  Receipt,
+  Star,
+  CalendarClock,
+  BadgeCheck,
+  Gauge,
+  Globe,
+} from 'lucide-react';
+import { SettingsCard, NavRow } from '@/components/settings/rows';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { motion } from 'framer-motion';
-import {
-  ListCard,
-  ListRow,
-  SectionHeader,
-  containerVariants,
-  itemVariants,
-  LoadingState,
-} from '@/components/college/primitives';
+import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
 import {
   CompanySheet,
   BrandSheet,
@@ -29,6 +38,7 @@ interface BusinessRow {
   id: string;
   title: string;
   subtitle: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 interface BusinessGroup {
@@ -42,26 +52,26 @@ const GROUPS: BusinessGroup[] = [
     eyebrow: '01',
     title: 'Identity',
     rows: [
-      { id: 'company', title: 'Company', subtitle: 'Name, logo and contact' },
-      { id: 'brand', title: 'Brand', subtitle: 'Colours and styling' },
+      { id: 'company', title: 'Company', subtitle: 'Name, logo and contact', icon: Building2 },
+      { id: 'brand', title: 'Brand', subtitle: 'Colours and styling', icon: Palette },
     ],
   },
   {
     eyebrow: '02',
     title: 'Financials',
     rows: [
-      { id: 'payment', title: 'Payment', subtitle: 'Banking and Stripe' },
-      { id: 'pricing', title: 'Pricing', subtitle: 'Rates and margins' },
-      { id: 'accounting', title: 'Accounting', subtitle: 'Xero and QuickBooks' },
+      { id: 'payment', title: 'Payment', subtitle: 'Banking and Stripe', icon: CreditCard },
+      { id: 'pricing', title: 'Pricing', subtitle: 'Rates and margins', icon: PoundSterling },
+      { id: 'accounting', title: 'Accounting', subtitle: 'Xero and QuickBooks', icon: Calculator },
     ],
   },
   {
     eyebrow: '03',
     title: 'Documents',
     rows: [
-      { id: 'quotes', title: 'Quotes', subtitle: 'Terms and defaults' },
-      { id: 'invoices', title: 'Invoices', subtitle: 'Terms and payment' },
-      { id: 'reviews', title: 'Reviews', subtitle: 'Review links for invoice emails' },
+      { id: 'quotes', title: 'Quotes', subtitle: 'Terms and defaults', icon: FileText },
+      { id: 'invoices', title: 'Invoices', subtitle: 'Terms and payment', icon: Receipt },
+      { id: 'reviews', title: 'Reviews', subtitle: 'Review links for invoice emails', icon: Star },
     ],
   },
   {
@@ -72,6 +82,7 @@ const GROUPS: BusinessGroup[] = [
         id: 'booking-availability',
         title: 'Booking availability',
         subtitle: 'Working hours, buffer, daily cap',
+        icon: CalendarClock,
       },
     ],
   },
@@ -79,9 +90,14 @@ const GROUPS: BusinessGroup[] = [
     eyebrow: '05',
     title: 'Professional',
     rows: [
-      { id: 'inspector', title: 'Inspector', subtitle: 'Credentials and qualifications' },
-      { id: 'instruments', title: 'Instruments', subtitle: 'Testing equipment' },
-      { id: 'regional', title: 'Regional', subtitle: 'Currency and locale' },
+      {
+        id: 'inspector',
+        title: 'Inspector',
+        subtitle: 'Credentials and qualifications',
+        icon: BadgeCheck,
+      },
+      { id: 'instruments', title: 'Instruments', subtitle: 'Testing equipment', icon: Gauge },
+      { id: 'regional', title: 'Regional', subtitle: 'Currency and locale', icon: Globe },
     ],
   },
 ];
@@ -90,6 +106,19 @@ const BusinessTab = () => {
   const { companyProfile, loading, saveCompanyProfile, uploadLogo } = useCompanyProfile();
   const { addNotification } = useNotifications();
   const [openSheet, setOpenSheet] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Deep link: /settings?tab=business&sheet=<id> opens that sheet directly
+  // (used by the readiness meter). Param is consumed once, then removed.
+  useEffect(() => {
+    const sheet = searchParams.get('sheet');
+    if (sheet) {
+      setOpenSheet(sheet);
+      searchParams.delete('sheet');
+      setSearchParams(searchParams, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSave = useCallback(
     async (data: Record<string, unknown>) => {
@@ -133,29 +162,21 @@ const BusinessTab = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-8"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"
     >
       {GROUPS.map((group) => (
-        <motion.section key={group.title} variants={itemVariants} className="space-y-3">
-          <SectionHeader eyebrow={group.eyebrow} title={group.title} />
-          <ListCard>
+        <motion.section key={group.title} variants={itemVariants} className="h-full">
+          <SettingsCard eyebrow={group.eyebrow} title={group.title}>
             {group.rows.map((row) => (
-              <ListRow
+              <NavRow
                 key={row.id}
+                icon={row.icon}
                 title={row.title}
                 subtitle={row.subtitle}
                 onClick={() => setOpenSheet(row.id)}
-                trailing={
-                  <span
-                    aria-hidden
-                    className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all"
-                  >
-                    {'\u2192'}
-                  </span>
-                }
               />
             ))}
-          </ListCard>
+          </SettingsCard>
         </motion.section>
       ))}
 

@@ -217,7 +217,17 @@ function splitEicrDescription(eicrData: EICRFormData): {
  * Maps a single EICR TestResult to EIC EICCircuitData
  */
 function mapCircuitToEIC(testResult: TestResult): EICCircuitData {
-  const phaseType: 'single' | 'three' = testResult.phaseType === '3P' ? 'three' : 'single';
+  // Per-circuit phase uses the '1P' / '3P' convention (same as the EICR and the
+  // EIC schedule) — NOT the supply-level 'single' / 'three'. The old code emitted
+  // 'three', which the EIC form (reads '3P') couldn't match, so every converted
+  // circuit showed 1P (Craig, ELE-1391). Honour phaseType, phase, or spansWays.
+  const raw = testResult as unknown as Record<string, unknown>;
+  const phaseType: '1P' | '3P' =
+    testResult.phaseType === '3P' ||
+    raw.phase === '3P' ||
+    Number(raw.spansWays ?? raw.spans_ways) === 3
+      ? '3P'
+      : '1P';
 
   // FULL passthrough — the EIC PDF reads ~50 per-circuit fields (r2,
   // insulationLiveEarth/Neutral, rcdHalfX/FiveX/BsStandard, pfcLiveNeutral/
@@ -226,13 +236,14 @@ function mapCircuitToEIC(testResult: TestResult): EICCircuitData {
   // schedule on the converted EIC (Craig, 2026-07-17). Spread everything,
   // then apply the few EIC-specific normalisations.
   return {
-    ...(testResult as Record<string, unknown>),
+    ...raw,
     phaseType,
+    phase: phaseType,
     circuitDescription: testResult.circuitDescription || testResult.circuitDesignation || '',
     liveSize: testResult.liveSize || testResult.cableSize || '',
     insulationTestVoltage: testResult.insulationTestVoltage || '500',
     insulationResistance: testResult.insulationResistance || testResult.insulationLiveNeutral || '',
-  } as EICCircuitData;
+  } as unknown as EICCircuitData;
 }
 
 /**
@@ -289,7 +300,7 @@ export function transformEICRToEIC(eicrData: EICRFormData): EICFormData {
     description,
     occupier: eicrData.occupier || '',
     estimatedAge: eicrData.estimatedAge || '',
-    designStandard: 'BS 7671:2018+A2:2022',
+    designStandard: 'BS 7671:2018+A4:2026',
 
     // Supply & Earthing - direct transfer
     supplyVoltage: eicrData.supplyVoltage || '',

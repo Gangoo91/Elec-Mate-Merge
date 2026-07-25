@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Portfolio Building Guide',
     description: 'Build a comprehensive portfolio without the last-minute stress.',
     icon: FolderOpen,
     category: 'Guide',
   },
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'Reduce exam anxiety with structured EPA preparation strategies.',
     icon: Target,

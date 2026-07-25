@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useRef } from 'r
 import { useToast } from '@/hooks/use-toast';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useCloudSync } from '@/hooks/useCloudSync';
+import { useUiPreferences } from '@/hooks/useUiPreferences';
 import { useReportId } from '@/hooks/useReportId';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
@@ -216,6 +217,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     };
   });
 
+  // User preference: auto-save drafts (Settings → Preferences). Manual saves are unaffected.
+  const { preferences: uiPrefs } = useUiPreferences();
+
   // Cloud sync integration - primary persistence layer
   const {
     syncState,
@@ -230,7 +234,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     reportId: currentReportId,
     reportType: 'eicr',
     data: formData,
-    enabled: true,
+    enabled: uiPrefs.autosave_drafts,
     customerId: customerIdFromNav,
     // Gate autosave while loading from cloud — stops blank initial state overwriting real data.
     isHydrating: isLoadingReport,

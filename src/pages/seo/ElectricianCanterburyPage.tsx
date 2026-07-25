@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Canterbury electrical jobs at accurate South East rates — send professional quotes on site.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       "Study for C&G 2391 — essential for EICR work in Canterbury's large student rental sector.",
@@ -449,7 +449,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Heritage and Standard Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional PDF quotes from Canterbury surveys. Quote heritage property
                   rewires at the appropriate premium, and standard domestic work at South East
                   rates. Send quotes before you leave site.

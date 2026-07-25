@@ -7,7 +7,6 @@ import {
   DistributionBoard,
   isMainBoard as isMainBoardFn,
   getBoardWays,
-  BOARD_MANUFACTURERS,
   BOARD_TYPES,
   BOARD_LOCATIONS,
   BOARD_SIZES,
@@ -37,7 +36,8 @@ const BS_EN_OPTIONS = [
   { value: '60898', label: 'BS EN 60898 — MCB' },
   { value: '61009', label: 'BS EN 61009 — RCBO' },
   { value: '61008', label: 'BS EN 61008 — RCD' },
-  { value: '60947', label: 'BS EN 60947 — Industrial' },
+  { value: '60947-3', label: 'BS EN 60947-3 — Switch-Disconnector' },
+  { value: '60947', label: 'BS EN 60947 — Industrial (other)' },
   { value: '88-2', label: 'BS 88-2 — HRC Fuse' },
   { value: '88-3', label: 'BS 88-3 — HRC Fuse' },
   { value: '1361', label: 'BS 1361 — Cartridge Fuse' },
@@ -68,7 +68,8 @@ const getTypeOptionsForBsEn = (bsEn: string) => {
         { value: 'Type F', label: 'Type F' },
         { value: 'Type S', label: 'Type S (Delayed)' },
       ];
-    case '60947': // Industrial
+    case '60947-3': // Switch-disconnectors / isolators (domestic + commercial)
+    case '60947': // Industrial (other)
       return [
         { value: 'MCCB', label: 'MCCB' },
         { value: 'ACB', label: 'ACB' },
@@ -103,7 +104,8 @@ const getRatingOptionsForBsEn = (bsEn: string) => {
       return [5, 15, 20, 30, 45, 60, 80, 100];
     case '3036': // BS 3036 Rewirable — Table 41.2(c) + 41.4(c)
       return [5, 15, 20, 30, 45, 60, 100];
-    case '60947': // Industrial
+    case '60947-3': // Switch-disconnectors / isolators
+    case '60947': // Industrial (other)
       return [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 630, 800, 1000, 1250, 1600];
     default:
       return [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100];
@@ -148,6 +150,10 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   certType,
 }) => {
   const isEicr = certType === 'eicr';
+  // ELE-1388 — the EIC collapses Make/Model/From/Ways into a single free-text
+  // "Board details" line (e.g. "Wylex 10way"). The individual data fields are
+  // kept on the type so old certs keep their values.
+  const isEic = certType === 'eic';
   // ELE-830: Main-ness is position-based (order === 0), not ID-based.
   // The dual-check preserves backwards compatibility with legacy certs where
   // the main always had id='main-cu'.
@@ -237,14 +243,30 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           </div>
         </div>
 
+        {/* ELE-1388 — EIC: one free-text board line instead of Make/Model/From/Ways. */}
+        {isEic && (
+          <div>
+            <label className="text-[10px] text-white block mb-1">Board details</label>
+            <Input
+              value={board.boardDetails || ''}
+              onChange={(e) => onUpdate('boardDetails', e.target.value)}
+              placeholder="e.g. Wylex 10way, Hager 4way"
+              className={inputCn}
+            />
+          </div>
+        )}
+
         {/* EICR drops Model to streamline the board (ELE-1106). From stays on BOTH
             cert types: the EICR PDF prints supplied_from (with "DNO"/"Main DB"
             template defaults), so hiding the input left users stuck with values
             they couldn't change (ELE-1244). */}
+        {!isEic && (
         <div className={cn('grid gap-2 items-end', isEicr ? 'grid-cols-2' : 'grid-cols-3')}>
           <div>
             <label className="text-[10px] text-white block mb-1">Make</label>
-            <MobileSelectPicker value={board.make || ''} onValueChange={(value) => onUpdate('make', value)} options={BOARD_MANUFACTURERS.map((m) => ({ value: m, label: m }))} placeholder="Select" title="Manufacturer" triggerClassName="text-white" />
+            {/* ELE-1383 — free text, not a dropdown: manufacturers vary too much
+                for a fixed list. */}
+            <Input value={board.make || ''} onChange={(e) => onUpdate('make', e.target.value)} placeholder="e.g. Hager, Schneider" className={inputCn} />
           </div>
           {!isEicr && (
             <div>
@@ -257,6 +279,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
           </div>
         </div>
+        )}
 
         {/* Ways as toggle buttons + custom. ELE-1245 — read the selection via
             getBoardWays so boards whose way count arrived under a legacy or
@@ -264,6 +287,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             showing blank. Select/deselect writes a PATCH that also clears the
             alternate fields — otherwise getBoardWays falls back to the old
             value and the button can never be un-toggled. */}
+        {!isEic && (
         <div>
           {(() => {
             const selectedWays = board.totalWays === -1 ? -1 : getBoardWays(board) ?? 0;
@@ -318,6 +342,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             );
           })()}
         </div>
+        )}
 
         {/* Board Type — dual select: Enclosure + Mounting */}
         <div className="grid grid-cols-2 gap-2">

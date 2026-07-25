@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Understand which electrical work is notifiable and what compliance means.',
     icon: ShieldCheck,
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Manchester customers.',
     icon: PoundSterling,
@@ -159,7 +159,7 @@ const sections = [
         <p>
           Whether you need a simple socket addition or a full rewire, the same rules apply: hire a
           qualified electrician registered with a competent person scheme under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . The main schemes are{' '}
@@ -398,7 +398,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Manchester is overseen by Manchester City
           Council building control (or the relevant borough council for areas outside the City of
           Manchester). If your electrician is registered with a competent person scheme, they

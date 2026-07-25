@@ -342,7 +342,7 @@ export default function SolarPanelSizingCalculatorPage() {
               </p>
               <p>
                 Isolation, ventilation, and fire safety must also be considered. The{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 in Elec-Mate include tests specific to battery energy storage systems.
@@ -656,7 +656,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Certificates',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for testing, sizing, and design.',

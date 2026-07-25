@@ -209,7 +209,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 quickly each client pays. If a commercial client consistently takes 60 days when
                 your terms say 30, you can see the cash flow impact and decide whether to tighten
                 terms, add a late payment charge, or stop working for them. The{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 factors in each client's payment history when forecasting.
               </p>
               <p>
@@ -248,7 +248,7 @@ export default function BusinessAnalyticsElectricianPage() {
               </p>
               <p>
                 The detailed{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 provides the granular, week-by-week forecast, while the analytics dashboard shows
                 the higher-level trends and patterns.
               </p>
@@ -287,7 +287,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 quotes you send are accepted? A healthy win rate is 40% to 60%. Below 30% suggests
                 your pricing is too high or your quotes are not compelling enough. Above 70%
                 suggests you may be undercharging. The{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> tracks
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> tracks
                 this automatically.
               </p>
               <p>
@@ -301,7 +301,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 average does it take your clients to pay? Lower is better. If debtor days are
                 creeping up, you need to tighten payment terms or chase invoices more aggressively.
                 The{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
                 sends automatic payment reminders to reduce debtor days.
               </p>
             </>
@@ -390,7 +390,7 @@ export default function BusinessAnalyticsElectricianPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description: 'Detailed week-by-week cash flow forecasting for your electrical business.',
           icon: Briefcase,

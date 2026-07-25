@@ -449,7 +449,7 @@ const sections = [
                 VDE-rated tools are mandatory for any work on DC-side conductors, combiner boxes, or
                 string connections — there is no safe isolation equivalent for the DC side during
                 daylight hours. See the{' '}
-                <SEOInternalLink href="/tools/solar-pv-certificate">
+                <SEOInternalLink href="/solar-pv-certificate">
                   Solar PV installation certificate
                 </SEOInternalLink>{' '}
                 and{' '}
@@ -712,7 +712,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate training courses including{' '}
-          <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,{' '}
           <SEOInternalLink href="/pasma-training">PASMA</SEOInternalLink>,{' '}
           <SEOInternalLink href="/ipaf-training">IPAF</SEOInternalLink>, and{' '}
           <SEOInternalLink href="/training/working-at-height">working at height</SEOInternalLink>{' '}

@@ -65,7 +65,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Enter your full name"
-          className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+          className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
         />
       </div>
 
@@ -83,7 +83,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
                   'flex flex-col items-center justify-center rounded-2xl border p-4 min-h-[72px] transition-colors touch-manipulation',
                   isSelected
                     ? 'border-elec-yellow/60 bg-elec-yellow/10'
-                    : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
+                    : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
                 )}
                 aria-pressed={isSelected}
               >

@@ -602,7 +602,7 @@ const sections = [
                   Record findings and any remedial work carried out. If the consumer unit is a
                   plastic type, advise on upgrading to metal-enclosed. If the installation has not
                   had an EICR within the recommended interval, recommend a full inspection. Issue an{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   if any remedial work was carried out.

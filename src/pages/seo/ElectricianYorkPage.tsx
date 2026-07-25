@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, EICRs, and commercial work with professional PDF quotes sent from site.',
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -462,7 +462,7 @@ const sections = [
           These rates are indicative for 2026 and will vary based on property access, complexity,
           and material costs. Flood-affected property work and listed building work command the
           highest premiums. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate, itemised quotes that reflect the true cost of specialist work.
         </p>
       </>
@@ -522,7 +522,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Price heritage rewires, flood remediation, and commercial maintenance contracts
                   with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>

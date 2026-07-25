@@ -527,7 +527,7 @@ const sections = [
                   Factor in Yorkshire day rates (£300 to £400), cable run lengths in older terraced
                   stock, potential board upgrades on pre-2000 consumer units, and parking
                   considerations in inner-city Leeds streets. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>

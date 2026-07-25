@@ -374,7 +374,7 @@ export default function PowerConsumptionCalculatorPage() {
               </ul>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculator suite
                 </SEOInternalLink>{' '}
                 in Elec-Mate includes energy efficiency calculations alongside the standard BS 7671
@@ -523,7 +523,7 @@ export default function PowerConsumptionCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for testing, sizing, and design.',

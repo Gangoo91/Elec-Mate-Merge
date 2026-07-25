@@ -178,7 +178,7 @@ const sections = [
         </p>
         <p>
           For electricians studying for or holding the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification (C&G 2382)
           </SEOInternalLink>
           , Amendment 3 is required knowledge. Exam questions may reference the A3:2024 Section 530
@@ -284,7 +284,7 @@ const sections = [
         </div>
         <p>
           For existing installations being inspected under an{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink>, an inspector
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink>, an inspector
           should check whether any microgeneration or energy storage is present and, if so, verify
           that all devices in the affected circuits are suitable for bidirectional operation. A
           non-compliant device in a bidirectional circuit could be classified as a C2 (Potentially
@@ -338,7 +338,7 @@ const sections = [
         </div>
         <p>
           For{' '}
-          <SEOInternalLink href="/training/ev-charger-installation">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger installations
           </SEOInternalLink>
           , Amendment 3 is particularly relevant where vehicle-to-grid (V2G) or vehicle-to-home
@@ -469,7 +469,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course (C&G 2382)',
     description:
       'Full 18th Edition study course covering all parts of BS 7671:2018+A3:2024 with interactive quizzes and mock exams.',
@@ -493,7 +493,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/training/ev-charger-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Course',
     description:
       'Section 722 requirements, V2G considerations, and bidirectional power flow in EV charging installations.',
@@ -501,7 +501,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'C&G 2391 study course including updated EICR procedures for installations with bidirectional power flow.',
@@ -509,7 +509,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/tools/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description:
       'Solar PV design and installation training — including inverter selection and bidirectional protection.',

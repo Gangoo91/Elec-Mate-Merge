@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Troubleshooting',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: 'Ring Circuit Calculator',
     description:
       'Verify ring circuit continuity with R1, Rn, and R2 values to confirm the ring is intact.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with structured training covering ring circuit testing and fault diagnosis.',
@@ -505,7 +505,7 @@ const sections = [
           smell. Any of these signs should be investigated immediately — loose connections that arc
           are a significant fire risk. If you find evidence of arcing, the socket must be replaced
           and the finding recorded on the{' '}
-          <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 or C2
+          <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 or C2
           observation.
         </p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">

@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Wiring Instructions', href: '/tools/ai-wiring-instructions' },
 ];
 
@@ -224,7 +224,7 @@ const sections = [
           is taught in college workshops by providing the same information in a different format,
           with clear explanations of why each step is done that way — not just the "how" but the
           "why" behind UK wiring practices. The tool covers all the circuit types assessed in the{' '}
-          <SEOInternalLink href="/training/am2-exam-preparation">
+          <SEOInternalLink href="/am2-exam-preparation">
             AM2 practical assessment
           </SEOInternalLink>{' '}
           and is widely used for revision and preparation.
@@ -397,7 +397,7 @@ const sections = [
         <p>
           The regulation references also help apprentices connect their practical work with the
           theory they learn in{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course studies
           </SEOInternalLink>
           . Understanding why a cable must be in a safe zone (not just that it must) deepens their

@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Which electrical work is notifiable, competent person schemes, and Building Control notification.',
@@ -151,7 +151,7 @@ const sections = [
         </p>
         <p>
           Electric shower installation in a bathroom is notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . It must be carried out by an electrician registered with a competent person scheme or
@@ -413,7 +413,7 @@ const sections = [
         </div>
         <p>
           When testing the completed installation, the{' '}
-          <SEOInternalLink href="/tools/rcd-testing-guide">RCD must be tested</SEOInternalLink> at rated
+          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> at rated
           residual operating current (30mA) and at 5x (150mA). The trip times must be within 300ms
           at 1x and 40ms at 5x.
         </p>
@@ -437,7 +437,7 @@ const sections = [
       <>
         <p>
           Installing a new electric shower circuit is{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             notifiable work under Part P
           </SEOInternalLink>{' '}
           of the Building Regulations (England and Wales). This is because the work involves a new

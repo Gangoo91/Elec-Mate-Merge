@@ -123,7 +123,7 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Whether you are completing an{' '}
                 <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
-                <SEOInternalLink href="/tools/minor-works-certificate">Minor Works</SEOInternalLink>
+                <SEOInternalLink href="/minor-works-certificate">Minor Works</SEOInternalLink>
                 , or any other certificate type in the{' '}
                 <SEOInternalLink href="/tools/digital-certificates-app">
                   digital certificates app
@@ -143,7 +143,7 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Every calculator in Elec-Mate runs entirely on your device. There is no server
                 round-trip, no API call, and no dependency on internet connectivity. All 70+{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   BS 7671 calculators
                 </SEOInternalLink>{' '}
                 work offline with identical performance:
@@ -202,7 +202,7 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Mock exams and practice tests also work offline, with results stored locally and
                 synced later. This means you can run through a full{' '}
-                <SEOInternalLink href="/training/am2-exam-preparation">AM2 practice exam</SEOInternalLink> on
+                <SEOInternalLink href="/am2-exam-preparation">AM2 practice exam</SEOInternalLink> on
                 the train home without worrying about signal.
               </p>
             </>
@@ -292,9 +292,9 @@ export default function OfflineElectricalAppPage() {
               <p>
                 That matters commercially as well as technically. You can keep the job moving in
                 low-signal environments, then feed the completed work into the{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
                 or the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
                 once connectivity returns, without rebuilding the admin from scratch.
               </p>
             </>
@@ -424,7 +424,7 @@ export default function OfflineElectricalAppPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description: '70+ BS 7671 calculators — all work offline with no performance difference.',
           icon: Calculator,
@@ -447,7 +447,7 @@ export default function OfflineElectricalAppPage() {
           category: 'Platform',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Turn completed offline jobs into invoices quickly once you are back in signal.',

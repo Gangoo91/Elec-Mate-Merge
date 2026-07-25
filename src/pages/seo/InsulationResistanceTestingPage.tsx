@@ -94,7 +94,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/continuity-testing-electricians-guide',
+    href: '/continuity-testing-guide',
     title: 'Continuity Testing Guide',
     description: 'R1+R2 measurement, ring circuit methods, and CPC continuity.',
     icon: ClipboardCheck,
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with structured training modules on all test methods.',
     icon: GraduationCap,

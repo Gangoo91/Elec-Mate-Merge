@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Complete guide to Part P notification for outbuilding electrical supplies.',
     icon: ShieldCheck,
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems with implications for outbuilding supplies.',
@@ -156,7 +156,7 @@ const sections = [
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and be notified under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . This is not a DIY project — it requires a qualified electrician to design, install,
@@ -290,7 +290,7 @@ const sections = [
       <>
         <p>
           Installing a new circuit to supply a garden office is notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (Approved Document P). This applies to all garden offices, regardless of whether the
@@ -577,7 +577,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the full garden office package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
                   cable, trenching, sub-board, circuits, accessories, testing, and certification —
                   all itemised with your margins. Send a professional PDF quote to the homeowner on
                   the spot.

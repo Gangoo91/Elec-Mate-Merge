@@ -507,7 +507,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works-certificate" label="Minor Works Certificate" /> —
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue a minor works certificate when connecting UFH to an existing suitable circuit
                 without consumer unit modifications.
               </span>

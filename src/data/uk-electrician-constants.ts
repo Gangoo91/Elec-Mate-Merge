@@ -593,6 +593,86 @@ export interface ECSCardType {
 }
 
 export const ECS_CARD_TYPES: ECSCardType[] = [
+  {
+    value: 'apprentice',
+    label: 'ECS Apprentice',
+    color: '#FFD93D',
+    description: 'Enrolled on an approved electrotechnical apprenticeship',
+    category: 'ECS',
+  },
+  {
+    value: 'trainee_electrician',
+    label: 'Trainee Electrician',
+    color: '#DC143C',
+    description: 'Working towards a recognised electrotechnical qualification',
+    category: 'ECS',
+  },
+  {
+    value: 'experienced_worker',
+    label: 'Experienced Worker',
+    color: '#B91C1C',
+    description: 'Experienced worker progressing towards full qualification',
+    category: 'ECS',
+  },
+  {
+    value: 'installation_electrician',
+    label: 'Installation Electrician (Gold)',
+    color: '#FFD700',
+    description: 'Qualified installation electrician with NVQ Level 3 and AM2',
+    category: 'ECS',
+  },
+  {
+    value: 'maintenance_electrician',
+    label: 'Maintenance Electrician (Gold)',
+    color: '#FFD700',
+    description: 'Qualified maintenance electrician with NVQ Level 3 and AM2',
+    category: 'ECS',
+  },
+  {
+    value: 'domestic_electrician',
+    label: 'Domestic Electrician (Gold)',
+    color: '#FFD700',
+    description: 'Qualified domestic electrician',
+    category: 'ECS',
+  },
+  {
+    value: 'approved_electrician',
+    label: 'Approved Electrician (Gold)',
+    color: '#FFD700',
+    description: 'Approved electrician with post-qualification experience',
+    category: 'ECS',
+  },
+  {
+    value: 'electrical_labourer',
+    label: 'Electrical Labourer',
+    color: '#F5F5F5',
+    description: 'Electrical labourer supporting site work',
+    category: 'ECS',
+  },
+  {
+    value: 'manager',
+    label: 'Manager',
+    color: '#1A1A1A',
+    description: 'Electrotechnical manager',
+    category: 'ECS',
+  },
+  {
+    value: 'related_discipline',
+    label: 'Related Discipline (White)',
+    color: '#F5F5F5',
+    description: 'Occupation related to the electrotechnical industry',
+    category: 'ECS',
+  },
+  {
+    value: 'none',
+    label: 'No card yet',
+    color: '#6B7280',
+    description: 'Not currently registered',
+    category: 'Other',
+  },
+];
+
+export const LEGACY_ECS_CARD_TYPES: ECSCardType[] = [
   // ECS Cards
   {
     value: 'gold',
@@ -694,15 +774,9 @@ export const ECS_CARD_TYPES: ECSCardType[] = [
     description: 'Stroma certification scheme',
     category: 'Scheme',
   },
-  // Other / None
-  {
-    value: 'none',
-    label: 'No card yet',
-    color: '#6B7280',
-    description: 'Not currently registered',
-    category: 'Other',
-  },
 ];
+
+export const ALL_ECS_CARD_TYPES: ECSCardType[] = [...ECS_CARD_TYPES, ...LEGACY_ECS_CARD_TYPES];
 
 export const SKILL_LEVELS = [
   {
@@ -964,5 +1038,12 @@ export const getQualificationLabel = (value: string): string => {
 };
 
 export const getECSCardType = (value: string): ECSCardType | undefined => {
-  return ECS_CARD_TYPES.find((c) => c.value === value);
+  const normalised = value?.toLowerCase();
+  return ALL_ECS_CARD_TYPES.find((c) => c.value === normalised);
+};
+
+export const getEcsCardLabel = (value: string | null | undefined): string => {
+  if (!value) return 'Not set';
+  const normalised = value.toLowerCase();
+  return ALL_ECS_CARD_TYPES.find((c) => c.value === normalised)?.label || 'Not set';
 };

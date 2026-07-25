@@ -21,7 +21,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Career Guides', href: '/guides/electrician-career-ladder-uk' },
-  { label: 'Working Abroad', href: '/guides/electrician-working-abroad-uk' },
+  { label: 'Working Abroad', href: '/guides/electrician-working-abroad' },
 ];
 
 const tocItems = [
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Training',
     description: 'C&G 2391 — a key qualification valued by international employers.',
     icon: GraduationCap,

@@ -617,7 +617,7 @@ const sections = [
                   limits. Check supplementary bonding per Regulation 411.3.3. Verify earth fault
                   loop impedance (Zs) is within limits for the protective device rating. If
                   replacing the shower, issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   for the replacement work.

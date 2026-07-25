@@ -9,7 +9,7 @@ import { Calculator, Zap, Activity, BookOpen, FileText, BarChart3 } from 'lucide
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Max Demand Guide', href: '/guides/max-demand-calculation-guide' },
 ];
 
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-size-cables-bs-7671',
+    href: '/how-to-size-cables',
     title: 'How to Size Cables',
     description:
       'Step-by-step cable sizing process from design current through correction factors to final selection.',
@@ -668,7 +668,7 @@ const sections = [
 export default function MaxDemandGuidePage() {
   return (
     <GuideTemplate
-      title="How to Calculate Max Demand: BS 7671 Diversity Table + ADMD"
+      title="How to Calculate Maximum Demand (UK): Diversity + Examples"
       description="How to calculate max demand for UK installations: BS 7671 diversity factors, ADMD method, worked examples for domestic, commercial + three-phase. Free guide."
       datePublished="2025-03-15"
       dateModified="2026-06-10"

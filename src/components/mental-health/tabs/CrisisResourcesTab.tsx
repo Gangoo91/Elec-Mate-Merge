@@ -1,5 +1,10 @@
+import { Download, Phone } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import LocalResourceFinder from '@/components/mental-health/crisis/LocalResourceFinder';
+import {
+  generateCrisisPlanPdf,
+  generateEmergencyContactsPdf,
+} from '@/utils/crisisResourcesPdf';
 import {
   emergencyContacts,
   onlineResources,
@@ -165,6 +170,41 @@ const CrisisResourcesTab = () => {
             />
           ))}
         </ListCard>
+      </div>
+
+      {/* Printable resources — a plan made on a good day, kept for a bad one */}
+      <div className="space-y-3">
+        <SectionHeader eyebrow="Keep on paper" title="Printable resources" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button
+            onClick={() => generateCrisisPlanPdf()}
+            className="flex items-center gap-3 p-4 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_14%)] text-left touch-manipulation transition-colors"
+          >
+            <Download className="h-4 w-4 text-red-400 shrink-0" />
+            <span className="flex-1 min-w-0">
+              <span className="block text-[13.5px] font-semibold text-white">
+                Crisis plan template
+              </span>
+              <span className="block text-[12px] text-white/70 leading-snug mt-0.5">
+                Fill in by hand — warning signs, coping steps, people to call.
+              </span>
+            </span>
+          </button>
+          <button
+            onClick={() => generateEmergencyContactsPdf()}
+            className="flex items-center gap-3 p-4 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_14%)] text-left touch-manipulation transition-colors"
+          >
+            <Phone className="h-4 w-4 text-red-400 shrink-0" />
+            <span className="flex-1 min-w-0">
+              <span className="block text-[13.5px] font-semibold text-white">
+                Emergency contacts card
+              </span>
+              <span className="block text-[12px] text-white/70 leading-snug mt-0.5">
+                Wallet-size card of every verified helpline — print and cut out.
+              </span>
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Online resources */}

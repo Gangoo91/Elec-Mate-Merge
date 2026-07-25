@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Notifiable electrical work in England — what requires notification and how the process works.',
@@ -576,7 +576,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you find earthing deficiencies, defective wiring, or additional circuits
                   needed, quote them immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>
                   . Customers are most likely to approve additional work while you are on site and

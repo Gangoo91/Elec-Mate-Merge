@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Training', href: '/guides/electrical-qualifications-pathway' },
-  { label: 'Mock Exams', href: '/guides/mock-exams-electrical' },
+  { label: 'Mock Exams', href: '/guides/mock-exams-electrician' },
 ];
 
 const tocItems = [
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Structured 2391 preparation with courses, practice questions, and progress tracking.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Detailed guide to the AM2 practical assessment with task breakdowns and scoring criteria.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'End-Point Assessment preparation for Level 3 electrical apprentices.',
     icon: Target,
@@ -226,7 +226,7 @@ const sections = [
               <span>
                 <strong>Part 4:</strong> Protection for safety — protection against electric shock,
                 overcurrent, overvoltage,{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>
                 , RCD selection.
@@ -320,7 +320,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             City & Guilds 2391
           </SEOInternalLink>{' '}
           (Initial Verification and Periodic Inspection and Testing) is a more advanced
@@ -376,7 +376,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> is the practical
+          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> is the practical
           assessment that sits at the end of an electrical apprenticeship. It is administered by the
           JIB (Joint Industry Board) and typically takes 1 to 2 days at an approved assessment
           centre.
@@ -436,7 +436,7 @@ const sections = [
     content: (
       <>
         <p>
-          The End-Point Assessment (<SEOInternalLink href="/training/epa-preparation">EPA</SEOInternalLink>)
+          The End-Point Assessment (<SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>)
           is the final assessment for electrical apprentices under the apprenticeship standard. It
           confirms that you are occupationally competent — that you can work safely and effectively
           as a qualified electrician.
@@ -463,7 +463,7 @@ const sections = [
               <span>
                 <strong>Professional discussion:</strong> A structured interview where you discuss
                 your workplace experience, using your{' '}
-                <SEOInternalLink href="/training/apprentice-portfolio">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 as evidence. You need to demonstrate understanding, not just describe what you did.

@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote heritage rewires and commercial maintenance with professional itemised PDFs.',
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description:
       'Study for C&G 2391 with structured training modules covering all installation types.',
@@ -524,7 +524,7 @@ const sections = [
           discount. The Royal Crescent and Lansdown Crescent areas command the highest rates.
           Properties outside the conservation areas (Twerton, Odd Down, Weston) are priced closer to
           national averages. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate, itemised quotes that reflect the true cost of Bath heritage work.
         </p>
       </>
@@ -580,7 +580,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Quote Georgian rewires, UFH installations, and commercial maintenance with
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with heritage-specific line items, sent from the survey.
                 </p>
               </div>

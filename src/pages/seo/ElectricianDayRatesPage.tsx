@@ -362,7 +362,7 @@ const sections = [
           The biggest jump in day rate comes from gaining specialist qualifications. An electrician
           with 3 years of general experience earning £250 per day can jump to £320+ per day by
           adding a{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             C&G 2391 inspection and testing
           </SEOInternalLink>{' '}
           qualification and targeting EICR work.
@@ -429,7 +429,7 @@ const sections = [
           Investing in specialist qualifications is one of the best returns on investment in the
           electrical trade. A C&G 2391 course costs £500 to £1,500. Within a month of qualifying,
           the higher day rate has paid for the course. Elec-Mate offers{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             46+ training courses
           </SEOInternalLink>{' '}
           to help you upskill and specialise.
@@ -578,7 +578,7 @@ const sections = [
                 <strong>Review monthly.</strong> At the end of each month, calculate your total
                 income, total expenses, and actual profit. Are you hitting your target? If not, why
                 not? Use Elec-Mate{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 to see where the money is going.
               </span>
             </li>

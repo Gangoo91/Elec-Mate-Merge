@@ -639,7 +639,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Elec-Mate Minor Works Certificate app
                   </SEOInternalLink>{' '}
                   or{' '}

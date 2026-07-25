@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'Full guide to Part P notification requirements, notifiable vs non-notifiable work, and competent person schemes.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description: 'Study for C&G 2391 with structured training on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -166,7 +166,7 @@ const sections = [
           Compliance certificates serve multiple purposes: they protect the property owner by
           providing evidence that the work is safe; they protect the electrician by documenting what
           was done and tested; and they satisfy regulatory requirements under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           (England and Wales) and the Electricity at Work Regulations 1989.
@@ -261,7 +261,7 @@ const sections = [
             Fire Alarm Certificate
           </SEOInternalLink>
           , and{' '}
-          <SEOInternalLink href="/tools/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             Emergency Lighting Certificate
           </SEOInternalLink>
           . These follow similar principles but include additional sections specific to the type of
@@ -276,7 +276,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           applies in England and Wales. It requires that electrical installation work is designed,

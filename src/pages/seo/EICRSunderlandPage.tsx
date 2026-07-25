@@ -611,13 +611,13 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C2 findings such as unprotected consumer units come up — which is common in
                   Sunderland's older housing stock — quote the remedial work immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords under the 28-day clock almost always proceed with the electrician who
                   inspected the property. Minor remedial work following an EICR can be certified
                   using a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     minor works certificate
                   </SEOInternalLink>
                   , keeping your paperwork complete in one place.

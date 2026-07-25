@@ -323,7 +323,7 @@ const sections = [
               partially damaged insulation may only leak when it is under load (thermal expansion),
               when it is vibrated (by a washing machine or nearby traffic), or when conditions
               change (temperature, humidity). The leakage is real but intermittent — carry out{' '}
-              <SEOInternalLink href="/guides/insulation-resistance-testing">
+              <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                 insulation resistance testing
               </SEOInternalLink>{' '}
               on every circuit to check for borderline readings (1 to 2 MΩ) that may indicate
@@ -426,7 +426,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/insulation-resistance-testing',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'Rule out genuine insulation faults before diagnosing nuisance tripping.',
     icon: Gauge,

@@ -111,7 +111,7 @@ export default function CableDeratingCalculatorPage() {
               <p>
                 Understanding and correctly applying these correction factors is one of the
                 fundamental skills in electrical design. It is tested extensively in the{' '}
-                <SEOInternalLink href="/training/city-guilds-2391">
+                <SEOInternalLink href="/city-guilds2391">
                   City and Guilds 2391
                 </SEOInternalLink>{' '}
                 examination and is a daily requirement for any electrician designing or verifying
@@ -482,7 +482,7 @@ export default function CableDeratingCalculatorPage() {
               </div>
               <p>
                 The Elec-Mate{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculator suite
                 </SEOInternalLink>{' '}
                 links the derating calculator directly to the cable sizing tables, so once you have
@@ -626,7 +626,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for cable sizing, testing, and design.',

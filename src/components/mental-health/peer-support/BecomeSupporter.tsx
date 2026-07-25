@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Heart, Award, CheckCircle, Loader2, ArrowLeft, Shield } from 'lucide-react';
 import {
+  PeerSupporter,
   peerSupporterService,
   supportTopics,
   TrainingLevel,
@@ -24,15 +25,24 @@ import { useToast } from '@/hooks/use-toast';
 interface BecomeSupporterProps {
   onSuccess: () => void;
   onBack: () => void;
+  /** When set, the form edits this existing profile instead of registering. */
+  existing?: PeerSupporter;
 }
 
-const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) => {
+const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack, existing }) => {
   const { toast } = useToast();
+  const isEditing = !!existing;
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [displayName, setDisplayName] = useState('');
-  const [bio, setBio] = useState('');
-  const [trainingLevel, setTrainingLevel] = useState<TrainingLevel>('peer');
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [displayName, setDisplayName] = useState(existing?.display_name ?? '');
+  const [bio, setBio] = useState(existing?.bio ?? '');
+  const [trainingLevel, setTrainingLevel] = useState<TrainingLevel>(
+    existing?.training_level ?? 'peer'
+  );
+  const [selectedTopics, setSelectedTopics] = useState<string[]>(
+    existing?.topics_comfortable_with ?? []
+  );
+  // Editors already agreed to the ground rules when they signed up.
+  const [agreedToGuidelines, setAgreedToGuidelines] = useState(isEditing);
 
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
@@ -55,18 +65,30 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
     setIsSubmitting(true);
 
     try {
-      await peerSupporterService.register({
-        display_name: displayName.trim(),
-        bio: bio.trim() || undefined,
-        training_level: trainingLevel,
-        topics_comfortable_with: selectedTopics,
-      });
-
-      toast({
-        title: 'Welcome aboard!',
-        description:
-          "You're now registered as a Mental Health Mate. Toggle your availability when you're ready to help.",
-      });
+      if (isEditing) {
+        await peerSupporterService.updateProfile({
+          display_name: displayName.trim(),
+          bio: bio.trim() || undefined,
+          training_level: trainingLevel,
+          topics_comfortable_with: selectedTopics,
+        });
+        toast({
+          title: 'Profile updated',
+          description: 'Your changes are live for anyone looking for support.',
+        });
+      } else {
+        await peerSupporterService.register({
+          display_name: displayName.trim(),
+          bio: bio.trim() || undefined,
+          training_level: trainingLevel,
+          topics_comfortable_with: selectedTopics,
+        });
+        toast({
+          title: 'Welcome aboard!',
+          description:
+            "You're now registered as a Mental Health Mate. Toggle your availability when you're ready to help.",
+        });
+      }
 
       onSuccess();
     } catch (error: unknown) {
@@ -89,8 +111,14 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div>
-          <h2 className="text-xl font-bold text-white">Become a Mental Health Mate</h2>
-          <p className="text-sm text-white">Help others by being there to listen</p>
+          <h2 className="text-xl font-bold text-white">
+            {isEditing ? 'Edit your profile' : 'Become a Mental Health Mate'}
+          </h2>
+          <p className="text-sm text-white">
+            {isEditing
+              ? 'Update what people see when they look for support'
+              : 'Help others by being there to listen'}
+          </p>
         </div>
       </div>
 
@@ -218,39 +246,64 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
               </div>
             </div>
 
-            {/* Guidelines Notice */}
-            <Card className="bg-white/[0.02] border-white/[0.06]">
-              <CardContent className="p-4">
+            {/* Ground rules — must be read and agreed before joining */}
+            <Card className="bg-white/[0.02] border-white/[0.08]">
+              <CardContent className="p-4 space-y-3">
                 <div className="flex items-start gap-3">
-                  <Shield className="h-5 w-5 text-white/85 flex-shrink-0 mt-0.5" />
+                  <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div className="space-y-2 text-sm">
-                    <p className="font-medium text-white/85">Important Guidelines</p>
-                    <ul className="text-white space-y-1 list-disc list-inside">
-                      <li>You're here to listen, not to give professional advice</li>
-                      <li>If someone is in crisis, direct them to professional help</li>
-                      <li>Keep conversations confidential</li>
-                      <li>Look after your own wellbeing too</li>
+                    <p className="font-semibold text-white">The ground rules</p>
+                    <ul className="text-white/85 space-y-1.5 list-disc list-inside leading-relaxed">
+                      <li>
+                        You're a mate who listens — not a counsellor. Never diagnose or give
+                        professional advice.
+                      </li>
+                      <li>
+                        If someone talks about suicide or self-harm: stay calm, take it seriously,
+                        and point them to Samaritans (116 123) or 999. The chat shows these options
+                        to you both when things get heavy — use them.
+                      </li>
+                      <li>What's shared in a chat stays in the chat.</li>
+                      <li>
+                        Look after yourself too — go unavailable whenever you need to, and end a
+                        chat that's too much for you. That's the right call, not a failure.
+                      </li>
+                      <li>Abuse or unsafe behaviour can be reported and will be reviewed.</li>
                     </ul>
                   </div>
                 </div>
+                {!isEditing && (
+                  <label className="flex items-start gap-3 pt-1 cursor-pointer touch-manipulation">
+                    <input
+                      type="checkbox"
+                      checked={agreedToGuidelines}
+                      onChange={(e) => setAgreedToGuidelines(e.target.checked)}
+                      className="mt-0.5 h-5 w-5 rounded border-white/40 bg-transparent accent-[#eab308]"
+                    />
+                    <span className="text-[13px] text-white leading-snug">
+                      I've read the ground rules and understand I'm offering a listening ear, not
+                      professional support.
+                    </span>
+                  </label>
+                )}
               </CardContent>
             </Card>
 
             {/* Submit */}
             <Button
               type="submit"
-              disabled={isSubmitting || !displayName.trim()}
-              className="w-full bg-white/[0.02] hover:bg-white/[0.02] text-white shadow-lg"
+              disabled={isSubmitting || !displayName.trim() || !agreedToGuidelines}
+              className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Registering...
+                  {isEditing ? 'Saving...' : 'Registering...'}
                 </>
               ) : (
                 <>
                   <Heart className="w-4 h-4 mr-2" />
-                  Become a Mental Health Mate
+                  {isEditing ? 'Save changes' : 'Become a Mental Health Mate'}
                 </>
               )}
             </Button>

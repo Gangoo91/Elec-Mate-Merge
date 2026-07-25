@@ -310,7 +310,7 @@ Review and update it regularly, especially when you're feeling well.
                             removeContact(activeSection, index);
                           }}
                           aria-label="Remove contact"
-                          className="h-9 w-9 rounded-full text-red-400 hover:bg-red-500/10 flex items-center justify-center touch-manipulation"
+                          className="h-11 w-11 rounded-full text-red-400 hover:bg-red-500/10 flex items-center justify-center touch-manipulation"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -387,7 +387,7 @@ Review and update it regularly, especially when you're feeling well.
                             removeItem(activeSection, index);
                           }}
                           aria-label="Remove item"
-                          className="h-9 w-9 rounded-full text-red-400 hover:bg-red-500/10 flex items-center justify-center touch-manipulation"
+                          className="h-11 w-11 rounded-full text-red-400 hover:bg-red-500/10 flex items-center justify-center touch-manipulation"
                         >
                           <X className="h-4 w-4" />
                         </button>

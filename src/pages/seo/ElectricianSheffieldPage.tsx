@@ -115,14 +115,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description: 'Understand which electrical work is notifiable and what compliance means.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Sheffield customers with accurate local pricing.',
     icon: PoundSterling,
@@ -157,7 +157,7 @@ const sections = [
         </p>
         <p>
           Every electrician carrying out notifiable work under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
@@ -276,7 +276,7 @@ const sections = [
         <p>
           These prices are indicative and vary based on property condition, access, and
           specification. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to build
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to build
           accurate, itemised quotes on site and send professional PDFs to customers instantly.
         </p>
       </>
@@ -639,7 +639,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win More Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build professional, itemised quotes during the survey. Sheffield landlords with
                   multiple HMOs value electricians who can provide clear pricing quickly. Send the
                   PDF quote before you leave the property.

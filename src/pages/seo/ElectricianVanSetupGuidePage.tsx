@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Business', href: '/guides/how-to-get-first-electrical-customer' },
-  { label: 'Van Setup', href: '/guides/electrician-van-setup-guide' },
+  { label: 'Van Setup', href: '/guides/electrician-van-setup' },
 ];
 
 const tocItems = [
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price jobs and send professional quotes from your phone. Include van and travel costs in your pricing.',

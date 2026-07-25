@@ -625,7 +625,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote smart home packages with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Structured cabling, containment, access points, smart switches, network equipment,
                   labour, and testing — all itemised with your margins. Professional PDF quote sent
                   on the spot.

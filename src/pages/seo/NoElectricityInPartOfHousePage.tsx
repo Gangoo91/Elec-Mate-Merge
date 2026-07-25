@@ -619,7 +619,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">4. Repair and Certify</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Repair the fault and test the circuit thoroughly before re-energising. Issue a{' '}
-                  <SEOInternalLink href="/tools/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   for the repair work. If the investigation reveals wider installation issues

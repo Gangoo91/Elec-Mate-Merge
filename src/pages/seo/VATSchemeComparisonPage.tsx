@@ -253,7 +253,7 @@ export default function VATSchemeComparisonPage() {
               </p>
               <p>
                 Cash accounting works particularly well with the{' '}
-                <SEOInternalLink href="/tools/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
+                <SEOInternalLink href="/cash-flow-planner">cash flow planner</SEOInternalLink>{' '}
                 because your VAT liability aligns with your actual cash receipts, making forecasting
                 more accurate.
               </p>
@@ -399,7 +399,7 @@ export default function VATSchemeComparisonPage() {
           category: 'Business Strategy',
         },
         {
-          href: '/tools/cash-flow-planner',
+          href: '/cash-flow-planner',
           title: 'Cash Flow Planner',
           description: 'Forecast your cash flow including quarterly VAT payments to HMRC.',
           icon: Briefcase,

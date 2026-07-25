@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — characteristics, advantages, and BS 7671 requirements.',
@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description: 'Study for C&G 2382 with structured training courses on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -211,7 +211,7 @@ const sections = [
                 <strong>Earthing arrangement.</strong> Identify the type of earthing system — TN-S,
                 TN-C-S (PME), or TT. This is determined by the DNO and fundamentally affects the
                 design of the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing and bonding
                 </SEOInternalLink>
                 , the selection of protective devices, and the maximum earth fault loop impedance
@@ -487,7 +487,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing and bonding arrangement
           </SEOInternalLink>{' '}
           is a fundamental part of the design. It provides the path for earth fault current to flow,

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Fault Diagnosis', href: '/tools/ai-fault-diagnosis' },
 ];
 
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with structured training courses covering all testing procedures and fault-finding techniques.',
@@ -249,7 +249,7 @@ const sections = [
         <p>
           The diagnostic process follows a structured approach that mirrors the systematic
           fault-finding methodology taught on{' '}
-          <SEOInternalLink href="/training/inspection-and-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             C&G 2391 inspection and testing courses
           </SEOInternalLink>
           . You provide the symptoms, the AI generates hypotheses, and then guides you through the
@@ -297,7 +297,7 @@ const sections = [
           PVC cables), nuisance RCD tripping caused by cumulative earth leakage across multiple
           circuits, high earth fault loop impedance on long cable runs in TT earthing systems,
           neutral-earth faults in{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             TN-C-S (PME) systems
           </SEOInternalLink>{' '}
           causing voltage on exposed metalwork, and overloaded circuits where diversity assumptions

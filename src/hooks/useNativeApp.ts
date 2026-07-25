@@ -59,7 +59,7 @@ function resolvePushDestinationUrl(
   if (data.type === 'invoices_overdue')
     return r === 'employer' ? '/employer?section=quotes' : '/electrician/invoices?filter=overdue';
   if (data.type === 'peer' && data.conversationId)
-    return `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
+    return `/mental-health?section=talk&conversation=${data.conversationId}`;
   if (data.conversationId) return `/electrician/messages?conversation=${data.conversationId}`;
   if (data.quoteId)
     return r === 'employer'

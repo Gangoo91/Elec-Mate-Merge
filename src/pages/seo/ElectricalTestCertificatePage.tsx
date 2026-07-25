@@ -129,7 +129,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     The{' '}
-                    <SEOInternalLink href="/tools/minor-works-certificate">
+                    <SEOInternalLink href="/minor-works-certificate">
                       Minor Works Certificate
                     </SEOInternalLink>{' '}
                     is a simplified certificate for small additions or alterations to an existing
@@ -360,7 +360,7 @@ export default function ElectricalTestCertificatePage() {
               <p>
                 In the UK, electrical certificates can be issued by any competent person, but for
                 the certificate to demonstrate{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+                <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink>{' '}
                 compliance with the Building Regulations, the person issuing it must be registered
                 with a competent person scheme (also known as a Part P scheme).
               </p>
@@ -580,7 +580,7 @@ export default function ElectricalTestCertificatePage() {
           category: 'Certification',
         },
         {
-          href: '/tools/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'When and how to issue a Minor Works Certificate.',
           icon: FileCheck2,
@@ -601,7 +601,7 @@ export default function ElectricalTestCertificatePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/part-p-building-regulations',
+          href: '/part-p-building-regulations',
           title: 'Part P Building Regulations',
           description: 'When electrical work is notifiable under Part P.',
           icon: ShieldCheck,

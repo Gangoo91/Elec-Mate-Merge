@@ -61,16 +61,17 @@ export const emergencyContacts: EmergencyContact[] = [
   {
     name: 'Electrical Industries Charity',
     phone: '0800 652 1618',
-    hours: '8am - 8pm, Mon-Fri',
+    hours: '9am - 5pm, Mon-Fri',
     description: 'Practical, emotional and financial support for people from the electrical sector',
     type: 'specialty',
   },
   {
-    name: "Andy's Man Club Helpline",
-    phone: '0800 023 9877',
-    hours: '24/7',
-    description: 'Support for men struggling with mental health - #ITSOKAYTOTALK',
-    type: 'specialty',
+    name: 'Papyrus HOPELINE247',
+    phone: '0800 068 4141',
+    hours: '24/7, 365 days',
+    description:
+      'Suicide prevention advisers for anyone under 35, or anyone worried about a young person',
+    type: 'crisis',
   },
   {
     name: 'SHOUT — text crisis support',
@@ -169,6 +170,6 @@ export const onlineResources: OnlineResource[] = [
     title: 'Lighthouse Construction Industry Charity',
     description: '24/7 helpline plus financial, legal and emotional aid grants for construction and tradespeople in crisis.',
     type: 'website',
-    url: 'https://www.lighthouseclub.org/',
+    url: 'https://lighthousecharity.org/',
   },
 ];

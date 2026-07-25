@@ -36,6 +36,7 @@ const SUPPLY_SECTION_FIELDS = [
   'otherSourcesOfSupply',
   'mainProtectiveDevice',
   'mainProtectiveDeviceCustom',
+  'mainProtectiveDeviceLimit',
   'mainSwitchRating',
   'breakingCapacity',
   'mainSwitchPoles',
@@ -217,39 +218,6 @@ const SupplyCharacteristicsSectionInner = ({
 
   const knownDeviceValues = mainProtectiveDeviceOptions.map((d) => d.value);
 
-  // Smart rating options based on selected device type
-  const deviceRatings: Record<string, string[]> = {
-    'BS 1361 Fuse': ['45', '60', '80', '100'],
-    'BS 88 HRC Fuse': ['2', '4', '6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250'],
-    'BS 3036 Rewireable Fuse': ['5', '15', '20', '30', '45', '60'],
-    'MCB Type B': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
-    'MCB Type C': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
-    'MCB Type D': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
-    MCCB: [
-      '16',
-      '20',
-      '25',
-      '32',
-      '40',
-      '50',
-      '63',
-      '80',
-      '100',
-      '125',
-      '160',
-      '200',
-      '250',
-      '315',
-      '400',
-      '500',
-      '630',
-    ],
-    'Switch Disconnector': ['32', '40', '63', '80', '100', '125', '160', '200'],
-    Isolator: ['32', '40', '63', '80', '100', '125', '160'],
-    'RCD Main Switch': ['25', '40', '63', '80', '100'],
-    RCBO: ['6', '10', '16', '20', '25', '32', '40', '50', '63'],
-  };
-
   // Smart breaking capacity options based on selected device type
   const deviceBreakingCapacity: Record<string, string[]> = {
     'BS 1361 Fuse': ['16.5', '33'],
@@ -265,8 +233,18 @@ const SupplyCharacteristicsSectionInner = ({
     RCBO: ['6', '10'],
   };
 
-  const currentRatings = deviceRatings[formData.mainProtectiveDevice] || [];
   const currentBreakingCapacities = deviceBreakingCapacity[formData.mainProtectiveDevice] || [];
+
+  // Section-wide LIM/N/A limitation marker for the Main Protective Device.
+  // Owns its own key now (ELE-1370) so this section no longer writes the
+  // mainSwitch* keys — those belong to the consumer-unit Main Switch (the
+  // board), which is what the PDF reads. Falls back to a legacy value stored
+  // in mainSwitchRating so certs saved before the decouple still show LIM/N/A.
+  const mpdLimit =
+    formData.mainProtectiveDeviceLimit ||
+    (formData.mainSwitchRating === 'LIM' || formData.mainSwitchRating === 'N/A'
+      ? formData.mainSwitchRating
+      : '');
 
   // Check if custom input should be shown
   const showCustomProtectiveDevice =
@@ -603,21 +581,21 @@ const SupplyCharacteristicsSectionInner = ({
               type="button"
               onClick={() => {
                 haptic.light();
-                if (formData.mainSwitchRating === 'LIM') {
-                  onUpdate('mainSwitchRating', '');
+                if (mpdLimit === 'LIM') {
+                  onUpdate('mainProtectiveDeviceLimit', '');
+                  if (formData.mainSwitchRating === 'LIM') onUpdate('mainSwitchRating', '');
                 } else {
-                  onUpdate('mainSwitchRating', 'LIM');
+                  onUpdate('mainProtectiveDeviceLimit', 'LIM');
                   onUpdate('mainProtectiveDevice', '');
                   onUpdate('mainProtectiveDeviceCustom', 'false');
                   onUpdate('breakingCapacity', '');
                   onUpdate('fuseDeviceRating', '');
-                  onUpdate('mainSwitchPoles', '');
                   onUpdate('mainSwitchVoltageRating', '');
                 }
               }}
               className={cn(
                 'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors active:scale-[0.98]',
-                formData.mainSwitchRating === 'LIM'
+                mpdLimit === 'LIM'
                   ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400'
                   : 'bg-white/[0.05] border border-white/[0.08] text-white'
               )}
@@ -629,21 +607,21 @@ const SupplyCharacteristicsSectionInner = ({
               type="button"
               onClick={() => {
                 haptic.light();
-                if (formData.mainSwitchRating === 'N/A') {
-                  onUpdate('mainSwitchRating', '');
+                if (mpdLimit === 'N/A') {
+                  onUpdate('mainProtectiveDeviceLimit', '');
+                  if (formData.mainSwitchRating === 'N/A') onUpdate('mainSwitchRating', '');
                 } else {
-                  onUpdate('mainSwitchRating', 'N/A');
+                  onUpdate('mainProtectiveDeviceLimit', 'N/A');
                   onUpdate('mainProtectiveDevice', 'N/A');
                   onUpdate('mainProtectiveDeviceCustom', 'false');
                   onUpdate('breakingCapacity', 'N/A');
                   onUpdate('fuseDeviceRating', 'N/A');
-                  onUpdate('mainSwitchPoles', 'N/A');
                   onUpdate('mainSwitchVoltageRating', 'N/A');
                 }
               }}
               className={cn(
                 'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors active:scale-[0.98]',
-                formData.mainSwitchRating === 'N/A'
+                mpdLimit === 'N/A'
                   ? 'bg-zinc-500/20 border border-zinc-500/40 text-zinc-300'
                   : 'bg-white/[0.05] border border-white/[0.08] text-white'
               )}
@@ -653,67 +631,19 @@ const SupplyCharacteristicsSectionInner = ({
           </div>
         </div>
         <div className="space-y-3 py-3">
-          <div className="grid grid-cols-2 gap-3 items-end">
           <FormField label="Device *">
             <FormSelectSheet
               value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
               onValueChange={handleMainProtectiveDeviceChange}
-              disabled={formData.mainSwitchRating === 'LIM'}
+              disabled={mpdLimit === 'LIM'}
               label="Main Protective Device"
               placeholder="Select device"
               allowCustom
               customLabel="Other (specify)"
               options={mainProtectiveDeviceOptions}
-              className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+              className={cn(mpdLimit === 'LIM' && 'opacity-40')}
             />
           </FormField>
-          <FormField label="Rating (A)">
-              {formData.mainSwitchRating === 'LIM' ? (
-                <Input
-                  value="LIM"
-                  disabled
-                  className="h-11 text-base touch-manipulation opacity-40"
-                />
-              ) : currentRatings.length > 0 ? (
-                <FormSelectSheet
-                  value={formData.mainSwitchRating || ''}
-                  onValueChange={(value) => {
-                    haptic.light();
-                    if (value === '__custom__') { onUpdate('mainSwitchRating', '__custom__'); }
-                    else { onUpdate('mainSwitchRating', value); }
-                  }}
-                  label="Rating (A)"
-                  placeholder="Select rating"
-                  allowCustom
-                  customLabel="Other (specify)"
-                  options={currentRatings.map((r) => ({ value: r, label: `${r}A` }))}
-                />
-              ) : (
-                <Input
-                  value={formData.mainSwitchRating || ''}
-                  onChange={(e) => onUpdate('mainSwitchRating', e.target.value)}
-                  placeholder="e.g., 100"
-                  type="number"
-                  min="0"
-                  className="h-11 text-base touch-manipulation"
-                />
-              )}
-            </FormField>
-          </div>
-
-          {/* Custom rating input when "Other (specify)" selected */}
-          {formData.mainSwitchRating === '__custom__' && (
-            <FormField label="Custom Rating (A)">
-              <Input
-                value={formData.fuseDeviceRating || ''}
-                onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
-                placeholder="e.g. 800"
-                type="number"
-                min="0"
-                className="h-11 text-base touch-manipulation"
-              />
-            </FormField>
-          )}
 
           {/* BS 88 Fuse sub-type (gG, gM, aM, Type 2/3/4) */}
           {formData.mainProtectiveDevice === 'BS 88 HRC Fuse' && (
@@ -744,13 +674,13 @@ const SupplyCharacteristicsSectionInner = ({
                 value={formData.mainProtectiveDevice || ''}
                 onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
                 placeholder="e.g. 125A BS 88 Fuse"
-                disabled={formData.mainSwitchRating === 'LIM'}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                disabled={mpdLimit === 'LIM'}
+                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', mpdLimit === 'LIM' && 'opacity-40')}
               />
             </FormField>
           )}
 
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             <FormField
               label="kA"
               trailing={
@@ -776,13 +706,13 @@ const SupplyCharacteristicsSectionInner = ({
                     if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
                     else { onUpdate('breakingCapacity', value); }
                   }}
-                  disabled={formData.mainSwitchRating === 'LIM'}
+                  disabled={mpdLimit === 'LIM'}
                   label="Breaking Capacity (kA)"
                   placeholder="Select kA"
                   allowCustom
                   customLabel="Other (specify)"
                   options={currentBreakingCapacities.map((kA) => ({ value: kA, label: `${kA} kA` }))}
-                  className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                  className={cn(mpdLimit === 'LIM' && 'opacity-40')}
                 />
               ) : (
                 <Input
@@ -796,41 +726,8 @@ const SupplyCharacteristicsSectionInner = ({
                   type="number"
                   min="0"
                   step="0.1"
-                  disabled={formData.mainSwitchRating === 'LIM'}
-                  className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
-                />
-              )}
-            </FormField>
-            <FormField
-              label="Poles"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.mainSwitchPoles || ''}
-                  markers={['N/A']}
-                  onChange={(v) => onUpdate('mainSwitchPoles', v)}
-                />
-              }
-            >
-              {isFieldMarker(formData.mainSwitchPoles) ? (
-                <Input value={formData.mainSwitchPoles} disabled className="h-11 bg-white/[0.06] border-white/[0.08] opacity-60" />
-              ) : (
-                <FormSelectSheet
-                  value={formData.mainSwitchPoles || ''}
-                  onValueChange={(value) => {
-                    haptic.light();
-                    onUpdate('mainSwitchPoles', value);
-                  }}
-                  disabled={formData.mainSwitchRating === 'LIM'}
-                  label="Poles"
-                  placeholder="—"
-                  options={[
-                    { value: '1', label: '1P' },
-                    { value: '2', label: '2P' },
-                    { value: '3', label: '3P' },
-                    { value: '4', label: '4P' },
-                  ]}
-                  className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                  disabled={mpdLimit === 'LIM'}
+                  className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', mpdLimit === 'LIM' && 'opacity-40')}
                 />
               )}
             </FormField>
@@ -851,8 +748,8 @@ const SupplyCharacteristicsSectionInner = ({
                 value={formData.fuseDeviceRating || ''}
                 onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
                 placeholder="100"
-                disabled={formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.fuseDeviceRating)}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
+                disabled={mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)}
+                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
                 inputMode="numeric"
               />
             </FormField>
@@ -873,8 +770,8 @@ const SupplyCharacteristicsSectionInner = ({
                 value={formData.mainSwitchVoltageRating || ''}
                 onChange={(e) => onUpdate('mainSwitchVoltageRating', e.target.value)}
                 placeholder="230"
-                disabled={formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
+                disabled={mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)}
+                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
                 inputMode="numeric"
               />
             </FormField>
@@ -981,7 +878,6 @@ const SupplyCharacteristicsSectionInner = ({
                 { value: 'tape', label: 'Tape' },
                 { value: 'plate', label: 'Plate' },
                 { value: 'structural', label: 'Steel' },
-                { value: 'water-pipe', label: 'Water Pipe' },
                 { value: 'n/a', label: 'N/A' },
               ]}
             />

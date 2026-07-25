@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/inspection-and-testing',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing Course',
     description: 'Study for C&G 2391 with structured training modules.',
     icon: GraduationCap,
@@ -457,7 +457,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting and Invoicing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote remedial work on site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Landlords want a clear, itemised price for repairs — provide it before you

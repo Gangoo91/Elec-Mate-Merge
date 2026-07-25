@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet } from '@/components/ui/sheet';
+import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -55,16 +56,13 @@ const RegionalSheet = ({ open, onOpenChange, profile, onSave }: RegionalSheetPro
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
-      >
-        <div className="flex flex-col h-full bg-[#0a0a0a]">
-          <div className="flex justify-center pt-3 pb-1">
+      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+          <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <header className="px-5 sm:px-6 pb-4">
+          <header className="px-5 sm:px-6 lg:pt-6 pb-4">
             <Eyebrow>Localisation</Eyebrow>
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Regional settings
@@ -77,10 +75,10 @@ const RegionalSheet = ({ open, onOpenChange, profile, onSave }: RegionalSheetPro
               <div className="space-y-1.5">
                 <Label className="text-white font-medium text-[13px]">Currency</Label>
                 <Select value={currency} onValueChange={setCurrency}>
-                  <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                  <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                  <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                     <SelectItem value="GBP">GBP (£)</SelectItem>
                     <SelectItem value="EUR">EUR (€)</SelectItem>
                     <SelectItem value="USD">USD ($)</SelectItem>
@@ -90,10 +88,10 @@ const RegionalSheet = ({ open, onOpenChange, profile, onSave }: RegionalSheetPro
               <div className="space-y-1.5">
                 <Label className="text-white font-medium text-[13px]">Locale</Label>
                 <Select value={locale} onValueChange={setLocale}>
-                  <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                  <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                  <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                     <SelectItem value="en-GB">English (UK)</SelectItem>
                     <SelectItem value="en-US">English (US)</SelectItem>
                   </SelectContent>
@@ -113,7 +111,7 @@ const RegionalSheet = ({ open, onOpenChange, profile, onSave }: RegionalSheetPro
             </button>
           </div>
         </div>
-      </SheetContent>
+      </SettingsSheetContent>
     </Sheet>
   );
 };

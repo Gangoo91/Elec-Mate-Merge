@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrical-work-pricing-guide',
+    href: '/guides/pricing-electrical-work-per-point',
     title: 'Electrical Work Pricing Guide',
     description:
       'What every common electrical job costs in the UK in 2026 — sockets, rewires, EV chargers, consumer units, and more.',
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-become-electrician-uk',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete guide to the qualifications, training, and career pathway for becoming a qualified electrician in the UK.',
@@ -211,7 +211,7 @@ const sections = [
         </div>
         <p>
           All three schemes are authorised by the UK Government under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . Registration with any of them confirms that the electrician has been independently
@@ -369,7 +369,7 @@ const sections = [
               <strong>What certification will I receive?</strong> For new circuits or a consumer
               unit replacement, you should receive an{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A{' '}
-              <SEOInternalLink href="/tools/minor-works-certificate">
+              <SEOInternalLink href="/minor-works-certificate">
                 Minor Works Certificate
               </SEOInternalLink>{' '}
               is only valid where no new circuit is introduced — adding a shower, EV charger, or

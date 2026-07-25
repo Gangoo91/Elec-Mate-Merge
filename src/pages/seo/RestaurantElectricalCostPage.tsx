@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional itemised quote during your site survey. Issue{' '}
