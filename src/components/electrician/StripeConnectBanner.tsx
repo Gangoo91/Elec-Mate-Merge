@@ -216,7 +216,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
           <p className="text-[12px] text-white/60 mt-0.5">
             {status === 'pending'
               ? 'Complete setup and every invoice gets a Pay now button'
-              : 'Card and Apple Pay on every invoice — clients pay the same day'}
+              : 'Connect Stripe to add Card and Apple Pay to every invoice — clients pay the same day'}
           </p>
         </div>
 

@@ -2091,15 +2091,18 @@ declaration with a single signature instead of three identical blocks.{% endcomm
         <div class="board-info-details">
             <span><strong>Location:</strong> {{ board.location }}</span>
             <span><strong>Type:</strong> {{ board.board_type }}</span>
-            <span><strong>Make:</strong> {{ board.board_make }}</span>
-            {% if board.board_model != blank %}<span><strong>Model:</strong> {{ board.board_model }}</span>{% endif %}
-            <span><strong>Supply from:</strong> {{ board.supply_from }}</span>
+            {% comment %}ELE-1388 — EIC now captures one free-text "Board details"
+            line (e.g. "Wylex 10way"). Show it in place of the separate
+            Make/Model/Ways rows; legacy certs (no board_details) keep the old
+            detailed layout.{% endcomment %}
+            {% if board.board_details != blank %}<span><strong>Board:</strong> {{ board.board_details }}</span>{% else %}<span><strong>Make:</strong> {{ board.board_make }}</span>{% if board.board_model != blank %}<span><strong>Model:</strong> {{ board.board_model }}</span>{% endif %}{% endif %}
+            {% if board.supply_from != blank %}<span><strong>Supply from:</strong> {{ board.supply_from }}</span>{% endif %}
             {% if board.supply_cable_size != blank %}<span><strong>Supply cable:</strong> {{ board.supply_cable_size }}mm&sup2; {{ board.supply_cable_type }}</span>{% endif %}
             <span><strong>Zdb:</strong> {{ board.zdb }} &Omega;</span>
             <span><strong>Ipf:</strong> {{ board.ipf }} kA</span>
         </div>
         <div class="board-info-verification">
-            <span><strong>Ways:</strong> {{ board.total_ways }} total / {{ board.used_ways }} used / {{ board.spare_ways }} spare</span>
+            {% if board.total_ways != blank %}<span><strong>Ways:</strong> {{ board.total_ways }} total / {{ board.used_ways }} used / {{ board.spare_ways }} spare</span>{% endif %}
             <span><strong>Main Switch:</strong> {% if board.main_switch_bs_en != blank %}{{ board.main_switch_bs_en }} {% endif %}{{ board.main_switch_type }} {{ board.main_switch_rating }}A{% if board.main_switch_poles != blank %} {{ board.main_switch_poles }}P{% endif %}</span>
             {% if board.spd_fitted %}<span><strong>SPD:</strong> Fitted</span>{% endif %}
             {% if board.rcd_type != blank %}<span><strong>RCD:</strong> {{ board.rcd_type }} {{ board.rcd_rating }}mA{% if board.rcd_measured_time != blank %} ({{ board.rcd_measured_time }}ms){% endif %}</span>{% endif %}

@@ -36,10 +36,10 @@ import CertificateGenerationDialog from '@/components/inspection/CertificateGene
 import PDFExportProgress from '@/components/PDFExportProgress';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
+import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
 
 // Feature flag: set to true to use Gotenberg (v2), false to revert to PDF Monkey (v1)
 const USE_GOTENBERG_PDF = false;
@@ -130,6 +130,10 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     { label: 'Test Results', done: hasTestResults },
     { label: 'Declaration', done: hasDeclaration },
   ];
+
+  // ELE-1377 — only offer WhatsApp where the device can attach the PDF file
+  // (native app / mobile web). Desktop hides it — no raw-link fallback.
+  const canWhatsApp = canShareFilesToWhatsApp();
 
   // --- Part P notification handler ---
   const handleNotificationCreation = async (savedReportId?: string) => {
@@ -609,17 +613,23 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       const clientPhone = formData.clientPhone || '';
 
       if (Capacitor.isNativePlatform()) {
-        const text = `Hi ${clientName},\n\nPlease find your Minor Works Certificate (${certRef}) for ${address}.\n\nDownload your certificate:\n${report.pdf_url}\n\nKind regards`;
-
-        let whatsappUrl: string;
-        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(text)}`;
-        } else {
-          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        // ELE-1377 — attach the actual PDF via the native share sheet. The old
+        // path put the signed pdf_url in a wa.me text link, which dumped a raw
+        // URL into the chat (the broken behaviour). No link fallback.
+        const nativeText = `Hi ${clientName},\n\nPlease find attached your Minor Works Certificate (${certRef}) for ${address}.\n\nKind regards`;
+        const shared = await sharePdfFileNative({
+          pdfUrl: report.pdf_url,
+          filename: `Minor-Works-Certificate-${certRef}.pdf`,
+          title: `Minor Works Certificate ${certRef}`,
+          text: nativeText,
+        });
+        if (!shared) {
+          toast({
+            title: 'Could not open share sheet',
+            description: 'Please try again, or use the generated PDF to attach it yourself.',
+            variant: 'destructive',
+          });
         }
-
-        await openExternalUrl(whatsappUrl);
         return;
       }
 
@@ -715,7 +725,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         </button>
 
         {/* Secondary Actions */}
-        <div className="grid grid-cols-3 gap-1">
+        <div className={`grid ${canWhatsApp ? 'grid-cols-4' : 'grid-cols-3'} gap-1`}>
           <button
             type="button"
             onClick={handleSaveDraft}
@@ -731,6 +741,21 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           >
             Email
           </button>
+          {canWhatsApp && (
+            <button
+              type="button"
+              onClick={handleWhatsApp}
+              disabled={!canGenerateCertificate || isSendingWhatsApp}
+              className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1 text-[10px] font-semibold"
+            >
+              {isSendingWhatsApp ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
+              ) : (
+                <MessageCircle className="h-3 w-3" />
+              )}
+              Share
+            </button>
+          )}
           <button
             type="button"
             onClick={handleCreateInvoice}

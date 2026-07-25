@@ -12,6 +12,8 @@ import { isInvoiceOverdue as invoiceIsOverdue, getInvoiceDaysOverdue } from '@/u
 import { format, isPast, differenceInDays, addHours } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import LatePaymentHelpSheet from '@/components/electrician/invoices/LatePaymentHelpSheet';
+import { calcStatutoryInterest } from '@/utils/latePaymentLetters';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,6 +38,7 @@ const InvoiceViewPage = () => {
   const [isMarkingPaid, setIsMarkingPaid] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [showLatePaymentHelp, setShowLatePaymentHelp] = useState(false);
   const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
   const [pdfFilename, setPdfFilename] = useState('Invoice.pdf');
   const [generationError, setGenerationError] = useState<string | null>(null);
@@ -707,14 +710,33 @@ const InvoiceViewPage = () => {
                   </div>
                 )}
               </div>
-              {/* Late payment interest — lives with the dates it derives from */}
+              {/* Late payment interest — lives with the dates it derives from.
+                  Shown at the 8% consumer floor; the help sheet calculates the
+                  precise figure per debtor type (ELE-1158). */}
               {isOverdue && daysOverdue && daysOverdue > 0 && (
-                <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/[0.08]">
-                  <p className="text-[12px] text-white/70">{daysOverdue} days late · 8.5% statutory</p>
-                  <span className="text-[14px] font-bold text-red-400 tabular-nums">
-                    +{formatCurrency((invoice.total * 0.085 * daysOverdue) / 365)}
-                  </span>
-                </div>
+                <>
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/[0.08]">
+                    <p className="text-[12px] text-white/70">
+                      {daysOverdue} days late · statutory interest
+                    </p>
+                    <span className="text-[14px] font-bold text-red-400 tabular-nums">
+                      +{formatCurrency(calcStatutoryInterest(Math.max(invoice.total - totalPaid, 0), daysOverdue, 'consumer'))}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setShowLatePaymentHelp(true)}
+                    className={cn(
+                      'mt-3 w-full h-11 rounded-xl text-[13px] font-semibold touch-manipulation transition-colors',
+                      daysOverdue > 30
+                        ? 'bg-amber-500/15 border border-amber-500/30 text-amber-300'
+                        : 'border border-white/[0.1] text-white/75 hover:text-white'
+                    )}
+                  >
+                    {daysOverdue > 30
+                      ? 'Need help getting paid? Chasing letters ready →'
+                      : 'Need help getting paid?'}
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -1199,6 +1221,23 @@ const InvoiceViewPage = () => {
         open={showRecordPayment}
         onOpenChange={setShowRecordPayment}
         onPaymentRecorded={fetchInvoice}
+      />
+
+      <LatePaymentHelpSheet
+        open={showLatePaymentHelp}
+        onOpenChange={setShowLatePaymentHelp}
+        invoiceId={invoice.id}
+        clientName={invoice.client?.name || ''}
+        clientEmail={invoice.client?.email || null}
+        invoiceNumber={invoice.invoice_number || ''}
+        invoiceTotal={invoice.total}
+        amountOutstanding={Math.max(invoice.total - totalPaid, 0)}
+        dueDateFormatted={
+          invoice.invoice_due_date ? format(new Date(invoice.invoice_due_date), 'd MMMM yyyy') : '—'
+        }
+        daysOverdue={daysOverdue || 0}
+        jobTitle={invoice.jobDetails?.title}
+        jobLocation={invoice.jobDetails?.location}
       />
     </div>
   );

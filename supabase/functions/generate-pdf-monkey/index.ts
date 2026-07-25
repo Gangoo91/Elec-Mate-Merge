@@ -792,10 +792,22 @@ serve(async (req) => {
       const invEquipmentItems = processedItems.filter((i: any) => i.category === 'equipment');
       const invManualItems = processedItems.filter((i: any) => i.category === 'manual');
 
-      // ELE-1404 — section header must match the content: labour-only
-      // invoices shouldn't claim "Work & materials".
-      const hasMaterialsish = invMaterialItems.length > 0 || invEquipmentItems.length > 0;
-      const invSectionTitle = hasMaterialsish ? 'Work & materials' : 'Work carried out';
+      // ELE-1404 + ELE-1405 — section header must match the content: labour-only
+      // invoices shouldn't claim "Work & materials", and a survey fee or
+      // consultation isn't "Work carried out" either.
+      const hasLabourItems = invLabourItems.length > 0;
+      const hasGoodsItems = invMaterialItems.length > 0 || invEquipmentItems.length > 0;
+      const hasServiceItems = invManualItems.length > 0;
+      const invSectionTitle = (() => {
+        if (hasLabourItems && hasGoodsItems) {
+          return hasServiceItems ? 'Work, materials & services' : 'Work & materials';
+        }
+        if (hasLabourItems) return hasServiceItems ? 'Work & services' : 'Work carried out';
+        if (hasGoodsItems)
+          return hasServiceItems ? 'Materials, equipment & services' : 'Materials & equipment';
+        if (hasServiceItems) return 'Services & fees';
+        return 'Work & materials';
+      })();
 
       const transformedInvoice = {
         sectionTitle: invSectionTitle,

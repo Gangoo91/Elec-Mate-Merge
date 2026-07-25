@@ -13,7 +13,6 @@ import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 import { sharePdfFileNative, canShareFilesToWhatsApp } from '@/utils/share-pdf-file-native';
@@ -445,27 +444,20 @@ ${companyName}`;
         });
 
         if (!shared) {
-          // Fallback: legacy wa.me text with the download link — better than
-          // nothing if the PDF download or share sheet failed.
-          const fallbackMessage = `${nativeMessage}
-
-Download your quote here:
-${pdfDownloadUrl}`;
-          let whatsappUrl: string;
-          if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-            const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-            whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(fallbackMessage)}`;
-          } else {
-            whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fallbackMessage)}`;
-          }
-          await openExternalUrl(whatsappUrl);
+          // ELE-1377 — no wa.me link fallback (it dumped a raw signed URL into
+          // the chat). If the share sheet can't open, point at Save instead.
+          toast({
+            title: 'Could not open share sheet',
+            description: 'Please try again, or use Save to download the PDF and attach it yourself.',
+            variant: 'destructive',
+          });
+          onSuccess?.();
+          return;
         }
 
         toast({
-          title: shared ? 'Share sheet opened' : 'Opening WhatsApp',
-          description: shared
-            ? 'Your quote PDF is attached — pick WhatsApp to send it'
-            : 'WhatsApp will open with your quote message',
+          title: 'Share sheet opened',
+          description: 'Your quote PDF is attached — pick WhatsApp to send it',
           variant: 'success',
           duration: 3000,
         });
@@ -572,9 +564,30 @@ ${companyName}`;
             </span>
           </div>
         </DropdownMenuItem>
-        {/* ELE-1377 — WhatsApp share removed (dumped a raw signed URL into the
-            chat instead of the PDF). Clients get the PDF by email or the native
-            share sheet instead. */}
+        {/* ELE-1377 — native WhatsApp share (PDF attached via the OS share
+            sheet). Only shown where the device can attach a file; the broken
+            wa.me link fallback that dumped a raw signed URL was removed. */}
+        {canShareFilesToWhatsApp() && (
+          <DropdownMenuItem
+            onClick={handleShareWhatsApp}
+            disabled={isSharingWhatsApp}
+            className="cursor-pointer rounded-xl px-3 py-3 gap-3 focus:bg-white/[0.06] touch-manipulation"
+          >
+            {isSharingWhatsApp ? (
+              <Loader2 className="h-[18px] w-[18px] animate-spin text-white/70 flex-shrink-0" />
+            ) : (
+              <MessageCircle className="h-[18px] w-[18px] text-white/70 flex-shrink-0" />
+            )}
+            <div className="flex min-w-0 flex-col">
+              <span className="text-[14px] font-semibold text-white leading-tight">
+                Share via WhatsApp
+              </span>
+              <span className="text-[12px] text-white/50 leading-snug">
+                Opens your share sheet with the PDF attached
+              </span>
+            </div>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

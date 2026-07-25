@@ -1431,7 +1431,7 @@ export const EnhancedQuoteItemsStep = ({
                   { id: 'materials' as const, label: 'Materials' },
                   { id: 'labour' as const, label: 'Labour' },
                   { id: 'equipment' as const, label: 'Equipment' },
-                  { id: 'manual' as const, label: 'Other' },
+                  { id: 'manual' as const, label: 'Service / fee' },
                 ].map((opt) => (
                   <button
                     key={opt.id}

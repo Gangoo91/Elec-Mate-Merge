@@ -768,10 +768,12 @@ export function CreateInvoiceDialog({
                         />
                       </Field>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       {[
                         { value: 'labour', label: 'Labour' },
                         { value: 'material', label: 'Materials' },
+                        { value: 'equipment', label: 'Equipment hire' },
+                        { value: 'service', label: 'Service / fee' },
                       ].map((opt) => (
                         <button
                           key={opt.value}

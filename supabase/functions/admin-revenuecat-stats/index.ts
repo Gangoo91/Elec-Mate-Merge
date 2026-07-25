@@ -5,8 +5,78 @@ import { captureException } from '../_shared/sentry.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type, x-request-id',
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
+
+type RcMetrics = {
+  mrr: number;
+  revenue: number;
+  activeSubscriptions: number;
+  activeTrials: number;
+};
+
+const RC_CACHE_KEY = 'revenuecat_overview';
+const RC_CACHE_FRESH_MS = 10 * 60 * 1000;
+
+async function fetchRcOverview(): Promise<RcMetrics | null> {
+  const rcApiKey = Deno.env.get('REVENUECAT_API_V2_KEY');
+  if (!rcApiKey) return null;
+  try {
+    const res = await fetch(
+      'https://api.revenuecat.com/v2/projects/proj5dd5e597/metrics/overview?currency=GBP',
+      { headers: { Authorization: `Bearer ${rcApiKey}`, 'Content-Type': 'application/json' } }
+    );
+    if (!res.ok) {
+      console.warn('RevenueCat API returned', res.status, await res.text());
+      return null;
+    }
+    const data = await res.json();
+    const metrics: RcMetrics = { mrr: 0, revenue: 0, activeSubscriptions: 0, activeTrials: 0 };
+    for (const m of data.metrics || []) {
+      if (m.id === 'mrr') metrics.mrr = m.value || 0;
+      if (m.id === 'revenue') metrics.revenue = m.value || 0;
+      if (m.id === 'active_subscriptions') metrics.activeSubscriptions = m.value || 0;
+      if (m.id === 'active_trials') metrics.activeTrials = m.value || 0;
+    }
+    return metrics;
+  } catch (e) {
+    console.warn('RevenueCat API call failed (non-fatal):', e);
+    return null;
+  }
+}
+
+// RevenueCat's /metrics/overview takes ~10s per call and only recomputes
+// periodically, so serve it stale-while-revalidate from admin_metric_cache:
+// fresh cache → return it; stale cache → return it and refresh after the
+// response has gone out; no cache → fetch inline (first call only).
+// deno-lint-ignore no-explicit-any
+async function getRcMetrics(admin: any): Promise<RcMetrics> {
+  const zero: RcMetrics = { mrr: 0, revenue: 0, activeSubscriptions: 0, activeTrials: 0 };
+
+  const { data: cached } = await admin
+    .from('admin_metric_cache')
+    .select('value, updated_at')
+    .eq('key', RC_CACHE_KEY)
+    .maybeSingle();
+
+  const refresh = async () => {
+    const fresh = await fetchRcOverview();
+    if (fresh) {
+      await admin
+        .from('admin_metric_cache')
+        .upsert({ key: RC_CACHE_KEY, value: fresh, updated_at: new Date().toISOString() });
+    }
+    return fresh;
+  };
+
+  if (cached?.value) {
+    const age = Date.now() - new Date(cached.updated_at).getTime();
+    if (age > RC_CACHE_FRESH_MS) EdgeRuntime.waitUntil(refresh());
+    return cached.value as RcMetrics;
+  }
+
+  return (await refresh()) ?? zero;
+}
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -45,6 +115,10 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
+
+    // Start the (cached) RevenueCat lookup now so it overlaps the DB work
+    // below instead of running after it.
+    const rcMetricsPromise = getRcMetrics(supabaseAdmin);
 
     // Fetch all subscribed/trial/free users with full detail
     const { data: subscribers, error: subErr } = await supabaseAdmin
@@ -217,31 +291,8 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Try RevenueCat API for MRR/revenue data
-    const rcMetrics = { mrr: 0, revenue: 0, activeSubscriptions: 0, activeTrials: 0 };
-    const rcApiKey = Deno.env.get('REVENUECAT_API_V2_KEY');
-
-    if (rcApiKey) {
-      try {
-        const res = await fetch(
-          'https://api.revenuecat.com/v2/projects/proj5dd5e597/metrics/overview?currency=GBP',
-          { headers: { Authorization: `Bearer ${rcApiKey}`, 'Content-Type': 'application/json' } }
-        );
-        if (res.ok) {
-          const data = await res.json();
-          for (const m of data.metrics || []) {
-            if (m.id === 'mrr') rcMetrics.mrr = m.value || 0;
-            if (m.id === 'revenue') rcMetrics.revenue = m.value || 0;
-            if (m.id === 'active_subscriptions') rcMetrics.activeSubscriptions = m.value || 0;
-            if (m.id === 'active_trials') rcMetrics.activeTrials = m.value || 0;
-          }
-        } else {
-          console.warn('RevenueCat API returned', res.status, await res.text());
-        }
-      } catch (e) {
-        console.warn('RevenueCat API call failed (non-fatal):', e);
-      }
-    }
+    // RevenueCat MRR/revenue — cached, kicked off before the DB work
+    const rcMetrics = await rcMetricsPromise;
 
     return new Response(
       JSON.stringify({

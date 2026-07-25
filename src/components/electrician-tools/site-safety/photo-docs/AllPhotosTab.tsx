@@ -40,6 +40,15 @@ import { format } from 'date-fns';
 type SortMode = 'newest' | 'oldest';
 type GroupMode = 'project' | 'category' | 'date';
 
+// ELE-1374 — photo thumbnail size. S = smaller thumbnails / more per row,
+// L = larger / fewer per row. Remembered per device.
+type PhotoSize = 'S' | 'M' | 'L';
+const GRID_COLS: Record<PhotoSize, string> = {
+  S: 'grid-cols-4 md:grid-cols-6 lg:grid-cols-8',
+  M: 'grid-cols-3 md:grid-cols-4 lg:grid-cols-6',
+  L: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+};
+
 interface PhotoGroup {
   key: string;
   label: string;
@@ -77,15 +86,17 @@ function LargePhotoGrid({
   selectedPhotos,
   batchMode,
   onPhotoClick,
+  gridCols,
 }: {
   photos: SafetyPhoto[];
   selectedPhotos: Set<string>;
   batchMode: boolean;
   onPhotoClick: (photo: SafetyPhoto) => void;
+  gridCols: string;
 }) {
   return (
     <div className="p-3">
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+      <div className={`grid ${gridCols} gap-2`}>
         {photos.map((photo) => {
           const isSelected = selectedPhotos.has(photo.id);
           const isVideo = photo.mime_type?.startsWith('video/');
@@ -133,6 +144,23 @@ export default function AllPhotosTab() {
   const [groupMode, setGroupMode] = useState<GroupMode>('project');
   const [filters, setFilters] = useState<PhotoFilters>({});
   const [showFilters, setShowFilters] = useState(false);
+
+  // ELE-1374 — thumbnail size, remembered per device.
+  const [gridSize, setGridSize] = useState<PhotoSize>(() => {
+    try {
+      return (localStorage.getItem('photoDocsGridSize') as PhotoSize) || 'M';
+    } catch {
+      return 'M';
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem('photoDocsGridSize', gridSize);
+    } catch {
+      /* storage unavailable — non-fatal */
+    }
+  }, [gridSize]);
+  const gridCols = GRID_COLS[gridSize];
 
   // Batch select
   const [batchMode, setBatchMode] = useState(false);
@@ -392,6 +420,22 @@ export default function AllPhotosTab() {
             )}
           </div>
 
+          {/* ELE-1374 — thumbnail size: S = smaller/more per row, L = larger/fewer */}
+          <div className="flex items-center rounded-xl bg-[#1e1e1e] border border-white/10 p-0.5 flex-shrink-0">
+            {(['S', 'M', 'L'] as PhotoSize[]).map((s) => (
+              <button
+                key={s}
+                onClick={() => setGridSize(s)}
+                aria-label={`${s === 'S' ? 'Small' : s === 'M' ? 'Medium' : 'Large'} thumbnails`}
+                className={`h-10 w-8 rounded-lg text-xs font-semibold touch-manipulation transition-colors ${
+                  gridSize === s ? 'bg-elec-yellow text-black' : 'text-white/70 active:bg-white/10'
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
           {/* Overflow menu button */}
           <button
             onClick={() => setShowOverflowMenu(true)}
@@ -479,10 +523,11 @@ export default function AllPhotosTab() {
                 selectedPhotos={selectedPhotos}
                 batchMode={batchMode}
                 onPhotoClick={handlePhotoClick}
+                gridCols={gridCols}
               />
             ) : (
               <div className="p-3">
-                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                <div className={`grid ${gridCols} gap-2`}>
                   {sortedPhotos.map((photo, index) => {
                     const isSelected = selectedPhotos.has(photo.id);
                     const isVideo = photo.mime_type?.startsWith('video/');
@@ -573,7 +618,7 @@ export default function AllPhotosTab() {
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-1">
+                    <div className={`grid ${gridCols} gap-2 mb-1`}>
                       {group.photos.map((photo, index) => {
                         const isSelected = selectedPhotos.has(photo.id);
                         const isVideo = photo.mime_type?.startsWith('video/');

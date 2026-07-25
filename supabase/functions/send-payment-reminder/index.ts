@@ -16,6 +16,10 @@ const corsHeaders = {
 interface PaymentReminderRequest {
   invoiceId: string;
   reminderType: 'gentle' | 'firm' | 'final';
+  // ELE-1158 — chasing-letter mode: send a pre-built legal letter verbatim
+  // instead of the tone template. Plain text; rendered preserving line breaks.
+  customSubject?: string;
+  customBody?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -37,7 +41,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { invoiceId, reminderType }: PaymentReminderRequest = await req.json();
+    const { invoiceId, reminderType, customSubject, customBody }: PaymentReminderRequest =
+      await req.json();
 
     if (!invoiceId || !reminderType) {
       return new Response(
@@ -229,12 +234,21 @@ const handler = async (req: Request): Promise<Response> => {
       companyEmail: companyProfile?.company_email,
     });
 
+    // ELE-1158 — a supplied letter replaces the tone template wholesale.
+    const finalSubject = customBody ? customSubject || emailContent.subject : emailContent.subject;
+    const finalHtml = customBody
+      ? `<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 15px; line-height: 1.7; color: #111827; max-width: 640px; margin: 0 auto; padding: 24px; white-space: pre-wrap;">${customBody
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')}</div>`
+      : emailContent.html;
+
     const { data: emailResult, error: emailError } = await resend.emails.send({
       ...sender,
       to: [clientEmail],
-      subject: emailContent.subject,
-      html: emailContent.html,
-      text: htmlToPlainText(emailContent.html),
+      subject: finalSubject,
+      html: finalHtml,
+      text: customBody ? customBody : htmlToPlainText(emailContent.html),
     });
 
     if (emailError) {
@@ -255,9 +269,9 @@ const handler = async (req: Request): Promise<Response> => {
       const { error: copyError } = await resend.emails.send({
         ...sender,
         to: [electricianEmail],
-        subject: `Copy: ${emailContent.subject}`,
-        html: copyBanner + emailContent.html,
-        text: `COPY FOR YOUR RECORDS — this reminder was sent to your customer at ${clientEmail}.\n\n${htmlToPlainText(emailContent.html)}`,
+        subject: `Copy: ${finalSubject}`,
+        html: copyBanner + finalHtml,
+        text: `COPY FOR YOUR RECORDS — this reminder was sent to your customer at ${clientEmail}.\n\n${customBody ? customBody : htmlToPlainText(emailContent.html)}`,
       });
       if (copyError) {
         // Client leg already succeeded — log and carry on.
