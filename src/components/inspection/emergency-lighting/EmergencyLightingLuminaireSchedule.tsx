@@ -158,6 +158,23 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
     );
   };
 
+  // ELE-1410 — apply several fields in ONE update. Calling updateLuminaire twice
+  // in a single onChange (e.g. the field + autoFilled:false) made the second
+  // call overwrite the first, because both were built from the same stale
+  // formData.luminaires closure — so typing into Manufacturer/Model/etc. never
+  // stuck. Set both in a single map instead.
+  const updateLuminaireFields = (
+    id: string,
+    patch: Record<string, string | number | boolean>
+  ) => {
+    onUpdate(
+      'luminaires',
+      (formData.luminaires || []).map((lum: Luminaire) =>
+        lum.id === id ? { ...lum, ...patch } : lum
+      )
+    );
+  };
+
   const removeLuminaire = (id: string) => {
     onUpdate(
       'luminaires',
@@ -236,10 +253,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <Field label="Type">
                       <MobileSelectPicker
                         value={luminaire.luminaireType || ''}
-                        onValueChange={(v) => {
-                          updateLuminaire(luminaire.id, 'luminaireType', v);
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onValueChange={(v) =>
+                          updateLuminaireFields(luminaire.id, {
+                            luminaireType: v,
+                            autoFilled: false,
+                          })
+                        }
                         options={[
                           { value: 'bulkhead', label: 'Bulkhead' },
                           { value: 'twin-spot', label: 'Twin Spot' },
@@ -260,10 +279,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <Field label="Manufacturer">
                       <Input
                         value={luminaire.manufacturer || ''}
-                        onChange={(e) => {
-                          updateLuminaire(luminaire.id, 'manufacturer', e.target.value);
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onChange={(e) =>
+                          updateLuminaireFields(luminaire.id, {
+                            manufacturer: e.target.value,
+                            autoFilled: false,
+                          })
+                        }
                         className={inputCn}
                         placeholder="Ansell, Thorn"
                       />
@@ -271,10 +292,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <Field label="Model">
                       <Input
                         value={luminaire.model || ''}
-                        onChange={(e) => {
-                          updateLuminaire(luminaire.id, 'model', e.target.value);
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onChange={(e) =>
+                          updateLuminaireFields(luminaire.id, {
+                            model: e.target.value,
+                            autoFilled: false,
+                          })
+                        }
                         className={inputCn}
                       />
                     </Field>
@@ -284,10 +307,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <Field label="Category">
                       <MobileSelectPicker
                         value={luminaire.category || 'escape-route'}
-                        onValueChange={(v) => {
-                          updateLuminaire(luminaire.id, 'category', v);
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onValueChange={(v) =>
+                          updateLuminaireFields(luminaire.id, {
+                            category: v,
+                            autoFilled: false,
+                          })
+                        }
                         options={[
                           { value: 'escape-route', label: 'Escape Route' },
                           { value: 'open-area', label: 'Open Area' },
@@ -304,10 +329,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                         min="0"
                         step="0.1"
                         value={luminaire.wattage || ''}
-                        onChange={(e) => {
-                          updateLuminaire(luminaire.id, 'wattage', parseFloat(e.target.value) || 0);
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onChange={(e) =>
+                          updateLuminaireFields(luminaire.id, {
+                            wattage: parseFloat(e.target.value) || 0,
+                            autoFilled: false,
+                          })
+                        }
                         className={inputCn}
                       />
                     </Field>
@@ -316,10 +343,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <Field label="Duration">
                       <MobileSelectPicker
                         value={luminaire.ratedDuration?.toString() || '180'}
-                        onValueChange={(v) => {
-                          updateLuminaire(luminaire.id, 'ratedDuration', parseInt(v));
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onValueChange={(v) =>
+                          updateLuminaireFields(luminaire.id, {
+                            ratedDuration: parseInt(v),
+                            autoFilled: false,
+                          })
+                        }
                         options={[
                           { value: '60', label: '1 Hour (60 min)' },
                           { value: '180', label: '3 Hours (180 min)' },
@@ -331,10 +360,12 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     <Field label="Battery">
                       <MobileSelectPicker
                         value={luminaire.batteryType || ''}
-                        onValueChange={(v) => {
-                          updateLuminaire(luminaire.id, 'batteryType', v);
-                          updateLuminaire(luminaire.id, 'autoFilled', false);
-                        }}
+                        onValueChange={(v) =>
+                          updateLuminaireFields(luminaire.id, {
+                            batteryType: v,
+                            autoFilled: false,
+                          })
+                        }
                         options={[
                           { value: 'NiCd', label: 'NiCd' },
                           { value: 'NiMH', label: 'NiMH' },

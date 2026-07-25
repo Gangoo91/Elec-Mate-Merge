@@ -540,7 +540,8 @@ export default function AdminUserMessages() {
                     </SheetTitle>
                     <div className="flex items-center gap-2 mt-0.5">
                       <p className="text-[11px] text-white">
-                        {selectedConversation?.messages.length} messages
+                        {selectedConversation?.messages.length}{' '}
+                        {selectedConversation?.messages.length === 1 ? 'message' : 'messages'}
                       </p>
                       {selectedConversation?.partner?.role && (
                         <Pill
