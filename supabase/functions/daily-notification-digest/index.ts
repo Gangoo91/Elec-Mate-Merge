@@ -184,6 +184,35 @@ async function buildAlertsForUser(
     });
   }
 
+  // ── Invoices due tomorrow (gentle heads-up BEFORE they go overdue) ──
+  const midnight = new Date(now);
+  midnight.setHours(0, 0, 0, 0);
+  const tomorrowStart = new Date(midnight.getTime() + 86400000).toISOString();
+  const dayAfterStart = new Date(midnight.getTime() + 2 * 86400000).toISOString();
+  const { data: dueSoon } = await supabase
+    .from('invoices')
+    .select('id, total')
+    .eq('user_id', userId)
+    .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
+    .is('paid_at', null)
+    .gte('due_date', tomorrowStart)
+    .lt('due_date', dayAfterStart)
+    .is('deleted_at', null)
+    .limit(10);
+
+  if (dueSoon && dueSoon.length > 0) {
+    const total = dueSoon.reduce((sum, inv) => sum + (inv.total ?? 0), 0);
+    const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(total);
+    alerts.push({
+      type: 'invoice_due_soon',
+      referenceId: 'invoices-due-tomorrow',
+      title: `${dueSoon.length} invoice${dueSoon.length > 1 ? 's' : ''} due tomorrow`,
+      body: `${formatted} — a quick nudge before ${dueSoon.length > 1 ? 'they' : 'it'} go${dueSoon.length > 1 ? '' : 'es'} overdue.`,
+      pushType: 'invoice',
+      data: { role, route: '/electrician/invoices' },
+    });
+  }
+
   // ── Expiring quotes (within 3 days) ──────────────────────────────
   const threeDays = new Date(now.getTime() + 3 * 86400000).toISOString();
   const { data: expiringQuotes } = await supabase

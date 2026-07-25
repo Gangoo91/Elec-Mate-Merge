@@ -102,6 +102,7 @@ const DEFAULT_BRAND_PROFILE: CompanyBrand = {
 
 const PublicQuoteView = () => {
   const { token } = useParams<{ token: string }>();
+  const viewTrackedRef = useRef(false);
   const [quote, setQuote] = useState<Quote | null>(null);
   const [brand, setBrand] = useState<CompanyBrand>(DEFAULT_BRAND_PROFILE);
 
@@ -285,6 +286,22 @@ const PublicQuoteView = () => {
       setQuote(convertedQuote);
       setClientName(convertedQuote.client?.name || '');
       setClientEmail(convertedQuote.client?.email || '');
+
+      // ELE-226 — record the first client view and notify the electrician
+      // ("Sarah viewed your quote"). Fires once; skips the owner previewing
+      // their own quote so it never self-notifies. Fire-and-forget.
+      if (!viewTrackedRef.current) {
+        viewTrackedRef.current = true;
+        supabase.auth.getUser().then(({ data }) => {
+          if (data?.user?.id === convertedQuote.user_id) return; // owner preview — don't count
+          void (
+            supabase.rpc as unknown as (
+              fn: string,
+              args: Record<string, unknown>
+            ) => Promise<{ error: unknown }>
+          )('mark_quote_viewed', { p_quote_id: convertedQuote.id }).catch(() => {});
+        });
+      }
 
       // ELE-956 — for v2+ quotes, fetch the version that this one supersedes
       // and compute the diff so the client sees what changed before they sign.
