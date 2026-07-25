@@ -306,8 +306,8 @@ export function ExpenseDetailSheet({
                   )}
                   {expense.paid_date && (
                     <div className="flex items-start gap-3">
-                      <div className="p-1.5 rounded-full bg-blue-500/10">
-                        <DollarSign className="h-4 w-4 text-blue-400" />
+                      <div className="p-1.5 rounded-full bg-emerald-500/10">
+                        <DollarSign className="h-4 w-4 text-emerald-400" />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">Marked as paid</p>

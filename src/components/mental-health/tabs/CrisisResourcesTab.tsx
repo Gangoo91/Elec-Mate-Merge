@@ -1,10 +1,8 @@
 import { Download, Phone } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
+import ExternalLinkCards from '@/components/mental-health/ExternalLinkCards';
 import LocalResourceFinder from '@/components/mental-health/crisis/LocalResourceFinder';
-import {
-  generateCrisisPlanPdf,
-  generateEmergencyContactsPdf,
-} from '@/utils/crisisResourcesPdf';
+import { generateCrisisPlanPdf, generateEmergencyContactsPdf } from '@/utils/crisisResourcesPdf';
 import {
   emergencyContacts,
   onlineResources,
@@ -210,18 +208,14 @@ const CrisisResourcesTab = () => {
       {/* Online resources */}
       <div className="space-y-3">
         <SectionHeader eyebrow="Online" title="Trusted resources" />
-        <ListCard>
-          {onlineResources.map((r) => (
-            <ListRow
-              key={`${r.name}-${r.url}`}
-              accent="cyan"
-              title={r.name}
-              subtitle={r.description}
-              trailing={<Pill tone="cyan">Open</Pill>}
-              onClick={() => openExternalUrl(r.url)}
-            />
-          ))}
-        </ListCard>
+        <ExternalLinkCards
+          items={onlineResources.map((r) => ({
+            title: r.title,
+            description: r.description,
+            url: r.url || '',
+            tone: 'cyan' as const,
+          }))}
+        />
       </div>
     </div>
   );

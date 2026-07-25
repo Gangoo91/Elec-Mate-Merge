@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 
 import {
   ResponsiveDialog,
@@ -52,6 +53,7 @@ const SEND_OPTIONS = [
 
 export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) {
   const { cohorts, courses, addStudent } = useCollegeSupabase();
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -120,8 +122,17 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
       setSendFlags([]);
       setEal(false);
       onOpenChange(false);
+      toast({ title: 'Student added', description: `${formData.name} has been added.` });
     } catch (error) {
+      // ELE-1375 — was a silent console.error; surface it so the user knows.
       console.error('Failed to add student:', error);
+      toast({
+        title: "Couldn't add student",
+        description:
+          (error as { message?: string })?.message ||
+          'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }

@@ -398,11 +398,12 @@ export const groundingService = {
     const today = new Date().toISOString().split('T')[0];
 
     try {
+      // maybeSingle: .single() 406s on days with no progress row yet.
       const { data, error } = await supabase
         .from('mental_health_grounding_progress')
         .select('*')
         .eq('date', today)
-        .single();
+        .maybeSingle();
 
       // PGRST116 = no rows found, which is fine
       // 406 = schema cache not refreshed (happens with new tables)

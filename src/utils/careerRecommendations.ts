@@ -346,8 +346,24 @@ export function getCareerProgressionRecommendations(
   const qualNames = qualifications.map((q) => q.qualification_name.toLowerCase());
   const skillNames = skills.map((s) => s.skill_name.toLowerCase());
 
+  // The progression map is keyed by legacy colour values; official role-based
+  // card values (2026 scheme) resolve to the equivalent progression bucket.
+  const ROLE_TO_BUCKET: Record<string, string> = {
+    apprentice: 'green',
+    electrical_labourer: 'green',
+    trainee_electrician: 'red',
+    experienced_worker: 'blue',
+    installation_electrician: 'gold',
+    maintenance_electrician: 'gold',
+    domestic_electrician: 'gold',
+    approved_electrician: 'gold',
+    manager: 'black',
+    related_discipline: 'white',
+  };
+  const bucket = ROLE_TO_BUCKET[normalizedCardType] || normalizedCardType;
+
   // Get base recommendations for card type
-  let recommendations = CAREER_PROGRESSION_MAP[normalizedCardType] || DEFAULT_RECOMMENDATIONS;
+  let recommendations = CAREER_PROGRESSION_MAP[bucket] || DEFAULT_RECOMMENDATIONS;
 
   // Filter out recommendations for qualifications they already have
   recommendations = recommendations.filter((rec) => {

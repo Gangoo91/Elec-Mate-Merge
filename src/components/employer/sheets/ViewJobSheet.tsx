@@ -29,6 +29,7 @@ import { CopyJobSheet } from '@/components/employer/sheets/CopyJobSheet';
 import { JobLabelPicker } from '@/components/employer/JobLabelPicker';
 import { JobTasksPanel } from '@/components/employer/JobTasksPanel';
 import { JobActivityFeed } from '@/components/employer/JobActivityFeed';
+import JobCostsSection from '@/components/employer/jobs/JobCostsSection';
 import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import { toast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
@@ -763,6 +764,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </CollapsibleContent>
                 </div>
               </Collapsible>
+
+              <JobCostsSection jobId={job.id} />
 
               <Collapsible open={activityOpen} onOpenChange={setActivityOpen}>
                 <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">

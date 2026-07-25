@@ -123,10 +123,10 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack, ex
       </div>
 
       {/* Info Card */}
-      <Card className="bg-white/[0.02] border-white/[0.06]">
+      <Card className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-white/[0.02]">
+            <div className="p-2 rounded-lg bg-rose-500/10 border border-rose-500/25">
               <Heart className="h-5 w-5 text-white/85" />
             </div>
             <div className="space-y-1">
@@ -142,7 +142,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack, ex
       </Card>
 
       {/* Registration Form */}
-      <Card className="bg-white/[0.02] border-white/10">
+      <Card className="bg-[hsl(0_0%_12%)] border-white/10">
         <CardHeader>
           <CardTitle className="text-lg">Your Profile</CardTitle>
           <CardDescription>
@@ -233,7 +233,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack, ex
                         px-3 py-1.5 rounded-full text-sm border transition-all
                         ${
                           isSelected
-                            ? 'bg-white/[0.02] border-white/[0.06] text-white/85'
+                            ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow'
                             : 'bg-white/5 border-white/20 text-white hover:bg-white/10'
                         }
                       `}
@@ -247,7 +247,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack, ex
             </div>
 
             {/* Ground rules — must be read and agreed before joining */}
-            <Card className="bg-white/[0.02] border-white/[0.08]">
+            <Card className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-start gap-3">
                   <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />

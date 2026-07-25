@@ -141,8 +141,8 @@ export const DailyAffirmation = () => {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
-      <div className="absolute inset-x-0 top-0 h-px bg-white/[0.02] opacity-70" />
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/60 via-amber-400/60 to-elec-yellow/60 opacity-70" />
       <div className="flex items-start gap-3">
         <div className="shrink-0 mt-0.5">
           <Quote className="h-4 w-4 text-white/85" />
@@ -153,7 +153,7 @@ export const DailyAffirmation = () => {
               Daily affirmation
             </span>
             {isPersonalised && (
-              <span className="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border bg-white/[0.02] text-white/85 border-white/[0.06]">
+              <span className="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25">
                 For you · today
               </span>
             )}

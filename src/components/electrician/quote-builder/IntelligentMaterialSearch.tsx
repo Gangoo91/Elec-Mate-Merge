@@ -21,6 +21,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { expandMaterialQuery } from '@/data/materialSynonyms';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MaterialToQuoteItem } from '@/hooks/useQuoteMaterialIntegration';
@@ -117,6 +118,8 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
         {
           body: {
             query: queryToSearch,
+            // ELE-1393 — trade-phrase synonyms ("2 gang socket" → "double socket").
+            expansions: expandMaterialQuery(queryToSearch),
             categoryFilter: selectedCategory !== 'all' ? selectedCategory : null,
             supplierFilter: selectedSupplier !== 'all' ? selectedSupplier : null,
             limit: 50,

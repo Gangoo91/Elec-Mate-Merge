@@ -19,6 +19,11 @@ serve(async (req) => {
       supplierFilter,
       limit = 50,
       similarityThreshold = 0.2,
+      // ELE-1393 — trade-phrase synonyms expanded client-side (single source of
+      // truth: src/data/materialSynonyms.ts). e.g. "2 gang socket" arrives with
+      // ["double socket","twin socket","13a double",…] so the search matches
+      // supplier/catalogue names that only use the formal wording.
+      expansions = [],
     } = await req.json();
 
     // Input validation
@@ -28,6 +33,23 @@ serve(async (req) => {
     if (limit < 1 || limit > 100) {
       throw new ValidationError('Limit must be between 1 and 100');
     }
+
+    // Search terms = the typed query plus any synonym expansions, deduped
+    // case-insensitively and capped so a phrase never fans out to a huge number
+    // of parallel searches.
+    const extraTerms = Array.isArray(expansions)
+      ? expansions.map((t: unknown) => String(t ?? '').trim()).filter(Boolean)
+      : [];
+    const seenTerm = new Set<string>();
+    const searchTerms: string[] = [];
+    for (const t of [query.trim(), ...extraTerms]) {
+      const key = t.toLowerCase();
+      if (t && !seenTerm.has(key)) {
+        seenTerm.add(key);
+        searchTerms.push(t);
+      }
+    }
+    const boundedTerms = searchTerms.slice(0, 6);
 
     logger.info('Fuzzy search initiated', {
       query,
@@ -48,27 +70,43 @@ serve(async (req) => {
     // relevance-ranked, junk-name exclusion, cable boosts, category-aware
     // with broad fallback — so wizard prices always agree with AI prices.
     const liveCategory = categoryFilter && categoryFilter !== 'all' ? categoryFilter : null;
-    const [liveHits, catalogueResult] = await logger.time(
-      'live pipeline + catalogue search (parallel)',
+    const supplier = supplierFilter && supplierFilter !== 'all' ? supplierFilter : null;
+
+    // Run the live pipeline + catalogue fuzzy search for every term in
+    // parallel, then merge. With one term (no synonyms) this is the same two
+    // searches as before; with synonyms it unions the matches.
+    const perTerm = await logger.time(
+      'live pipeline + catalogue search (all terms, parallel)',
       async () =>
-        await Promise.all([
-          searchMaterials(supabase, {
-            query: query.trim(),
-            category: liveCategory,
-            limit: Math.min(16, limit),
-          }).catch((err) => {
-            logger.error('Live marketplace search failed', { error: err });
-            return [];
-          }),
-          supabase.rpc('search_materials_fuzzy', {
-            search_query: query.trim(),
-            category_filter: liveCategory,
-            supplier_filter: supplierFilter && supplierFilter !== 'all' ? supplierFilter : null,
-            similarity_threshold: similarityThreshold,
-            result_limit: limit,
-          }),
-        ])
+        await Promise.all(
+          boundedTerms.map(async (term) => {
+            const [live, cat] = await Promise.all([
+              searchMaterials(supabase, {
+                query: term,
+                category: liveCategory,
+                limit: Math.min(16, limit),
+              }).catch((err) => {
+                logger.error('Live marketplace search failed', { error: err, term });
+                return [];
+              }),
+              supabase.rpc('search_materials_fuzzy', {
+                search_query: term,
+                category_filter: liveCategory,
+                supplier_filter: supplier,
+                similarity_threshold: similarityThreshold,
+                result_limit: limit,
+              }),
+            ]);
+            if (cat?.error) {
+              logger.error('Fuzzy search failed', { error: cat.error, term });
+            }
+            return { live: ((live as any[]) || []), cat: ((cat?.data as any[]) || []) };
+          })
+        )
     );
+
+    const liveHits = perTerm.flatMap((r) => r.live);
+    const catalogueRows = perTerm.flatMap((r) => r.cat);
 
     const liveMaterials = (liveHits || []).map((hit: any) => ({
       id: hit.id,
@@ -90,13 +128,7 @@ serve(async (req) => {
       source: 'live',
     }));
 
-    const { data: results, error: searchError } = catalogueResult;
-    if (searchError) {
-      logger.error('Fuzzy search failed', { error: searchError });
-      throw new Error(`Database search failed: ${searchError.message}`);
-    }
-
-    const catalogueMaterials = (results || []).map((item: any) => ({
+    const catalogueMaterials = (catalogueRows || []).map((item: any) => ({
       id: item.id,
       name: item.item_name,
       category: item.category || 'Materials',
@@ -110,10 +142,22 @@ serve(async (req) => {
       similarity: item.similarity_score,
       isFuzzyMatch: item.similarity_score < 0.8,
       source: 'catalogue',
-    }));
+    }))
+      // Best trigram matches first so they survive the limit when synonym
+      // terms have widened the result set.
+      .sort((a, b) => (b.similarity || 0) - (a.similarity || 0));
 
-    // Live pipeline prices lead; catalogue backfills.
-    const materials = [...liveMaterials, ...catalogueMaterials];
+    // Live pipeline prices lead; catalogue backfills. Dedup rows repeated
+    // across synonym terms and cap to the requested limit.
+    const seenRow = new Set<string>();
+    const materials = [...liveMaterials, ...catalogueMaterials]
+      .filter((m) => {
+        const key = `${m.source}:${m.id ?? m.name}`;
+        if (seenRow.has(key)) return false;
+        seenRow.add(key);
+        return true;
+      })
+      .slice(0, limit);
 
     // Get suggestions if no results found
     let suggestions: string[] = [];

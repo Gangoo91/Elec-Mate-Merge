@@ -38,6 +38,9 @@ export interface CompanyProfile {
   company_website?: string;
   company_registration?: string;
   vat_number?: string;
+  // ELE-1373 — Unique Taxpayer Reference, shown on invoices when CIS applies.
+  // NI number is deliberately never stored or shown on invoices.
+  utr?: string | null;
   logo_url?: string;
   logo_data_url?: string;
   primary_color: string;

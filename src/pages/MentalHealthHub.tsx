@@ -574,6 +574,13 @@ export default function MentalHealthHub() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Sections share one route (?section=), so the app's route-change scroll
+  // reset never fires — without this, a section opens at whatever depth you
+  // tapped from and you land mid-page.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeSection]);
+
   /* ── Active section renderer ───────────────────────────────────── */
 
   if (activeSection) {
@@ -852,14 +859,14 @@ export default function MentalHealthHub() {
                 <Eyebrow>Quick reset</Eyebrow>
                 <span className="text-[10.5px] text-white">No data needed — just tap one</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-[1.5px] bg-black border border-white/[0.06] rounded-2xl overflow-hidden">
+              <div className="grid grid-cols-2 gap-[1.5px] bg-black border border-white/[0.06] rounded-2xl overflow-hidden">
                 {quickActions.map((q) => (
                   <button
                     key={q.id}
                     onClick={() => setActiveSection(q.id)}
-                    className="bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors px-4 py-5 text-left touch-manipulation"
+                    className="bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors p-5 sm:p-6 text-left touch-manipulation"
                   >
-                    <div className="text-[14px] font-semibold text-white">{q.label}</div>
+                    <div className="text-[15px] font-semibold text-white">{q.label}</div>
                     <div className="mt-0.5 text-[11.5px] text-white flex items-center gap-1.5">
                       {q.id === 'talk' && matesOnline > 0 && (
                         <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-400" />

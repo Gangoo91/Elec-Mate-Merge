@@ -23,6 +23,7 @@ const SettingsSheetContent = React.forwardRef<
     <SheetContent
       ref={ref}
       side={isMobile ? 'bottom' : 'right'}
+      hideCloseButton
       className={cn(
         'p-0 overflow-hidden',
         isMobile

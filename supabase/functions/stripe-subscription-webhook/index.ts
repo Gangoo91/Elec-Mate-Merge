@@ -1844,16 +1844,17 @@ serve(async (req) => {
             trackingId: resolvedRow.id,
           });
 
-          // Create a payment recovered notification
-          await supabase.from('user_notifications').insert({
-            user_id: userId,
-            type: 'payment_recovered',
-            title: 'Payment Successful',
-            message:
-              'Your subscription payment has been processed successfully. Thank you for updating your payment details!',
-            link: '/subscriptions',
-            metadata: { invoice_id: invoice.id },
-            is_read: false,
+          // Payment recovered — bell + push via the unified spine (ELE-226).
+          await (supabase.rpc as unknown as (
+            fn: string,
+            args: Record<string, unknown>
+          ) => Promise<{ error: unknown }>)('notify_user', {
+            p_user_id: userId,
+            p_type: 'payment_recovered',
+            p_title: 'Payment recovered',
+            p_message:
+              'Your subscription payment went through — thanks for updating your details. You’re all set.',
+            p_data: { route: '/subscriptions', ref_id: invoice.id, invoice_id: invoice.id },
           });
         }
 

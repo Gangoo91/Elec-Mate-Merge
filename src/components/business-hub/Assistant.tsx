@@ -28,6 +28,7 @@ import type {
   CreateProjectInput,
 } from '@/hooks/useSparkProjects';
 import type { Customer } from '@/hooks/useCustomers';
+import { useCustomers } from '@/hooks/useCustomers';
 import type {
   ChatMessage,
   ProposedAction,
@@ -88,6 +89,20 @@ export function Assistant({
 }: Props) {
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // ELE-1385 — creating/updating/deleting a customer is a GLOBAL operation.
+  // Only BusinessHub wires these callbacks, so on Projects/Tasks/Snagging etc.
+  // Mate hit "Customers not available here". Fall back to useCustomers so Mate
+  // can manage customers from anywhere.
+  const {
+    saveCustomer: hookCreateCustomer,
+    updateCustomer: hookUpdateCustomer,
+    deleteCustomer: hookDeleteCustomer,
+  } = useCustomers();
+  const createCustomer = onCreateCustomer ?? hookCreateCustomer;
+  const amendCustomer = onUpdateCustomer ?? hookUpdateCustomer;
+  const removeCustomer = onDeleteCustomer ?? hookDeleteCustomer;
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
@@ -684,8 +699,7 @@ export function Assistant({
           break;
         }
         case 'create-customer': {
-          if (!onCreateCustomer) throw new Error('Customers not available here');
-          await onCreateCustomer(action.payload);
+          await createCustomer(action.payload);
           // useCustomers.saveCustomer returns void — no id captured, so no undo.
           break;
         }
@@ -805,7 +819,6 @@ export function Assistant({
           break;
         }
         case 'amend-customer': {
-          if (!onUpdateCustomer) throw new Error('Customers not available here');
           const before = lookupCustomer(action.id);
           const snapshot: Record<string, unknown> = {};
           if (before) {
@@ -813,12 +826,11 @@ export function Assistant({
               snapshot[k] = (before as any)[k] ?? null;
             }
           }
-          await onUpdateCustomer(action.id, action.patch);
+          await amendCustomer(action.id, action.patch);
           if (before && Object.keys(snapshot).length > 0) {
-            const updateCust = onUpdateCustomer;
             undo = {
               label: `Updated ${before.name}`,
-              run: () => updateCust(action.id, snapshot as any),
+              run: () => amendCustomer(action.id, snapshot as any),
             };
           }
           break;
@@ -900,16 +912,13 @@ export function Assistant({
           break;
         }
         case 'delete-customer': {
-          if (!onDeleteCustomer) throw new Error('Customers not available here');
-          if (!onCreateCustomer) throw new Error('Customers not available here');
           const before = lookupCustomer(action.id);
-          await onDeleteCustomer(action.id);
+          await removeCustomer(action.id);
           if (before) {
-            const createCust = onCreateCustomer;
             undo = {
               label: `Deleted ${before.name}`,
               run: () =>
-                createCust({
+                createCustomer({
                   name: before.name,
                   email: before.email,
                   phone: before.phone,

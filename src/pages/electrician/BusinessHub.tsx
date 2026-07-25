@@ -538,7 +538,7 @@ const BusinessHub = () => {
       value: formatCurrency(paidThisMonth),
       sub: 'Cleared',
       accent: true,
-      onClick: () => navigate('/electrician/invoices?filter=paid'),
+      onClick: () => navigate('/electrician/invoices?filter=paid_month'),
     },
     {
       label: 'Outstanding',

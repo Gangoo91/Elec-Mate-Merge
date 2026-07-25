@@ -34,6 +34,7 @@ const InvoiceBuilderCreate = () => {
   const [composedSessionIds, setComposedSessionIds] = useState<string[]>([]);
   const [composedItems, setComposedItems] = useState<any[]>([]);
   const [composedMaterialIds, setComposedMaterialIds] = useState<string[]>([]);
+  const [composedCostEntryIds, setComposedCostEntryIds] = useState<string[]>([]);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
   // Read projectId and timeSessionId from URL
@@ -70,7 +71,7 @@ const InvoiceBuilderCreate = () => {
     if (projectId && !quoteSessionId && !certificateSessionId) {
       (async () => {
         try {
-          const [{ data: project }, { data: sessions }, { data: gotMaterials }] =
+          const [{ data: project }, { data: sessions }, { data: gotMaterials }, { data: costEntries }] =
             await Promise.all([
               supabase
                 .from('spark_projects')
@@ -90,6 +91,12 @@ const InvoiceBuilderCreate = () => {
                 .eq('project_id', projectId)
                 .is('invoice_id', null)
                 .in('status', ['got', 'fitted']),
+              (supabase as any)
+                .from('job_cost_entries')
+                .select('id, entry_date, category, description, hours, quantity, unit_cost, total')
+                .eq('project_id', projectId)
+                .is('invoice_id', null)
+                .order('entry_date', { ascending: true }),
             ]);
 
           // Compose line items from the job's actuals (ELE-1357)
@@ -133,9 +140,47 @@ const InvoiceBuilderCreate = () => {
               category: 'materials',
             });
           }
+          // Cost-ledger entries logged on the job (ELE-1401) — per-visit
+          // labour/materials/other, composed alongside sessions + materials.
+          const costEntryIds: string[] = [];
+          for (const e of (costEntries as any[]) || []) {
+            const total = Number(e.total) || 0;
+            if (total <= 0) continue;
+            costEntryIds.push(e.id);
+            const dateLabel = new Date(`${e.entry_date}T00:00:00`).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+            });
+            if (e.category === 'labour') {
+              const hours = Number(e.hours) || 1;
+              const rate = Number(e.unit_cost) || total;
+              items.push({
+                id: `cost-${e.id}`,
+                description: `Labour — ${e.description} (${dateLabel})`,
+                quantity: hours,
+                unit: 'hours',
+                unitPrice: rate,
+                totalPrice: total,
+                category: 'labour',
+              });
+            } else {
+              const qty = Number(e.quantity) || 1;
+              items.push({
+                id: `cost-${e.id}`,
+                description: `${e.description} (${dateLabel})`,
+                quantity: qty,
+                unit: 'each',
+                unitPrice: Number(e.unit_cost) || total,
+                totalPrice: total,
+                category: 'materials',
+              });
+            }
+          }
+
           setComposedItems(items);
           setComposedSessionIds(sessionIds);
           setComposedMaterialIds(materialIds);
+          setComposedCostEntryIds(costEntryIds);
 
           if (project) {
             const customer = (project as any).customers;
@@ -198,6 +243,15 @@ const InvoiceBuilderCreate = () => {
         .in('id', composedMaterialIds);
       if (error)
         toast({ title: 'Could not mark materials as billed', variant: 'destructive' });
+    }
+    if (composedCostEntryIds.length > 0 && invoiceId) {
+      const { error } = await (supabase as any)
+        .from('job_cost_entries')
+        .update({ invoice_id: invoiceId, invoiced_at: new Date().toISOString() })
+        .in('id', composedCostEntryIds)
+        .is('invoice_id', null);
+      if (error)
+        toast({ title: 'Could not mark job costs as billed', variant: 'destructive' });
     }
     if (projectId) {
       navigate(`/electrician/projects/${projectId}`);

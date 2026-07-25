@@ -19,7 +19,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface PushAlert {
@@ -84,19 +85,31 @@ async function alreadySent(
 }
 
 /** Deep-link for a digest alert, so its bell row is actionable. */
-function routeForPushType(pushType: PushAlert['pushType'], data?: Record<string, unknown>): string | null {
+function routeForPushType(
+  pushType: PushAlert['pushType'],
+  data?: Record<string, unknown>
+): string | null {
   if (typeof data?.route === 'string') return data.route;
   switch (pushType) {
-    case 'invoice': return '/electrician/invoices';
-    case 'quote': return '/electrician/quotes';
-    case 'certificate': return '/settings?tab=business';
-    case 'job': return '/electrician/jobs';
-    case 'study': return '/electrician/study-centre';
+    case 'invoice':
+      return '/electrician/invoices';
+    case 'quote':
+      return '/electrician/quotes';
+    case 'certificate':
+      return '/settings?tab=business';
+    case 'job':
+      return '/electrician/jobs';
+    case 'study':
+      return '/electrician/study-centre';
     case 'mental_health':
-    case 'peer': return '/electrician/mental-health-hub';
-    case 'assessment': return '/apprentice';
-    case 'briefing': return '/electrician';
-    default: return null;
+    case 'peer':
+      return '/electrician/mental-health-hub';
+    case 'assessment':
+      return '/apprentice';
+    case 'briefing':
+      return '/electrician';
+    default:
+      return null;
   }
 }
 
@@ -184,6 +197,36 @@ async function buildAlertsForUser(
     });
   }
 
+  // ── Uninvoiced job costs (ELE-1401) — logged work not yet billed ────
+  // Only nag when entries have had a few days to accumulate: oldest
+  // uninvoiced entry is 3+ days old. Same stable-ref pattern as overdue.
+  const { data: uninvoicedCosts } = await supabase
+    .from('job_cost_entries')
+    .select('project_id, total, entry_date')
+    .eq('user_id', userId)
+    .is('invoice_id', null);
+
+  if (uninvoicedCosts && uninvoicedCosts.length > 0) {
+    const threeDaysAgo = new Date(now.getTime() - 3 * 86400000).toISOString().split('T')[0];
+    const oldEnough = uninvoicedCosts.some((c) => c.entry_date <= threeDaysAgo);
+    const costTotal = uninvoicedCosts.reduce((sum, c) => sum + (Number(c.total) || 0), 0);
+    if (oldEnough && costTotal > 0) {
+      const jobCount = new Set(uninvoicedCosts.map((c) => c.project_id)).size;
+      const formattedCosts = new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP',
+      }).format(costTotal);
+      alerts.push({
+        type: 'uninvoiced_costs',
+        referenceId: 'uninvoiced-job-costs',
+        title: `${formattedCosts} logged, not yet invoiced`,
+        body: `Across ${jobCount} job${jobCount > 1 ? 's' : ''} — tap to invoice it.`,
+        pushType: 'invoice',
+        data: { role, route: '/electrician/projects' },
+      });
+    }
+  }
+
   // ── Invoices due tomorrow (gentle heads-up BEFORE they go overdue) ──
   const midnight = new Date(now);
   midnight.setHours(0, 0, 0, 0);
@@ -202,7 +245,9 @@ async function buildAlertsForUser(
 
   if (dueSoon && dueSoon.length > 0) {
     const total = dueSoon.reduce((sum, inv) => sum + (inv.total ?? 0), 0);
-    const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(total);
+    const formatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+      total
+    );
     alerts.push({
       type: 'invoice_due_soon',
       referenceId: 'invoices-due-tomorrow',
@@ -446,50 +491,83 @@ async function buildAlertsForUser(
     }
   }
 
-  // ── Daily mood check-in ────────────────────────────────────────
-  const todayStart = new Date(now);
-  todayStart.setHours(0, 0, 0, 0);
-  const { data: todayMood } = await supabase
+  // ── Daily mood check-in (streak-aware) ─────────────────────────
+  const { data: recentMoods } = await supabase
     .from('mental_health_mood_entries')
-    .select('id')
+    .select('date')
     .eq('user_id', userId)
-    .gte('created_at', todayStart.toISOString())
-    .limit(1);
+    .order('date', { ascending: false })
+    .limit(10);
 
-  if (!todayMood || todayMood.length === 0) {
+  const todayKey = now.toISOString().split('T')[0];
+  const hasMoodToday = (recentMoods ?? []).some((m: { date: string }) => m.date === todayKey);
+
+  if (!hasMoodToday) {
+    // A live streak ending today is a stronger, more personal nudge than a
+    // generic prompt — count consecutive logged days back from yesterday.
+    const have = new Set((recentMoods ?? []).map((m: { date: string }) => m.date));
+    let streak = 0;
+    const walk = new Date(now);
+    walk.setDate(walk.getDate() - 1);
+    while (have.has(walk.toISOString().split('T')[0])) {
+      streak++;
+      walk.setDate(walk.getDate() - 1);
+    }
+
     alerts.push({
       type: 'mood_checkin',
       referenceId: `mood-${new Date().toDateString()}`,
-      title: `How are you feeling today?`,
-      body: 'Take a moment to check in.',
+      title:
+        streak >= 2
+          ? `${streak}-day wellbeing streak — keep it going`
+          : 'How are you feeling today?',
+      body:
+        streak >= 2
+          ? 'A 10-second check-in keeps your streak alive.'
+          : 'Take a moment to check in.',
       pushType: 'mental_health',
       data: { role },
     });
   }
 
   // ── Unread peer messages ───────────────────────────────────────
-  const { data: unreadPeer } = await supabase
-    .from('mental_health_peer_messages')
+  // Recipients are derived through the conversation (the messages table has
+  // no recipient_id column — the previous direct filter errored silently and
+  // this alert could never fire).
+  const { data: mySupporterRow } = await supabase
+    .from('mental_health_peer_supporters')
     .select('id')
-    .eq('recipient_id', userId)
-    .eq('is_read', false)
-    .limit(1);
+    .eq('user_id', userId)
+    .maybeSingle();
 
-  if (unreadPeer && unreadPeer.length > 0) {
+  let convoFilter = `seeker_id.eq.${userId}`;
+  if (mySupporterRow?.id) convoFilter += `,supporter_id.eq.${mySupporterRow.id}`;
+
+  const { data: myConvos } = await supabase
+    .from('mental_health_peer_conversations')
+    .select('id')
+    .or(convoFilter)
+    .eq('status', 'active');
+
+  const convoIds = (myConvos ?? []).map((c: { id: string }) => c.id);
+  if (convoIds.length > 0) {
     const { count: unreadCount } = await supabase
       .from('mental_health_peer_messages')
       .select('id', { count: 'exact', head: true })
-      .eq('recipient_id', userId)
+      .in('conversation_id', convoIds)
+      .neq('sender_id', userId)
       .eq('is_read', false);
 
-    alerts.push({
-      type: 'unread_peer_messages',
-      referenceId: `peer-${new Date().toDateString()}`,
-      title: `${unreadCount ?? 0} unread message${(unreadCount ?? 0) !== 1 ? 's' : ''}`,
-      body: 'Someone has been in touch. Tap to read.',
-      pushType: 'peer',
-      data: { role },
-    });
+    if ((unreadCount ?? 0) > 0) {
+      alerts.push({
+        type: 'unread_peer_messages',
+        referenceId: `peer-${new Date().toDateString()}`,
+        title: `${unreadCount} unread message${unreadCount !== 1 ? 's' : ''}`,
+        body: 'Someone has been in touch. Tap to read.',
+        pushType: 'peer',
+        data: { role },
+      });
+    }
   }
 
   // ── Apprentice-only alerts ─────────────────────────────────────
@@ -852,7 +930,9 @@ serve(async (req: Request): Promise<Response> => {
           // brief must read "Good morning, Andrew", never "ANDREW".
           const firstNameRaw = (nameRow?.full_name || '').trim().split(' ')[0];
           const firstName =
-            firstNameRaw && (firstNameRaw === firstNameRaw.toUpperCase() || firstNameRaw === firstNameRaw.toLowerCase())
+            firstNameRaw &&
+            (firstNameRaw === firstNameRaw.toUpperCase() ||
+              firstNameRaw === firstNameRaw.toLowerCase())
               ? firstNameRaw.charAt(0).toUpperCase() + firstNameRaw.slice(1).toLowerCase()
               : firstNameRaw;
 
@@ -977,7 +1057,11 @@ serve(async (req: Request): Promise<Response> => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {
-    await captureException(error, { functionName: 'daily-notification-digest', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'daily-notification-digest',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[daily-digest] Fatal error:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),

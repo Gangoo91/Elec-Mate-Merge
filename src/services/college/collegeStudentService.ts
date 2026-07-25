@@ -124,9 +124,26 @@ export const getStudentsAtRisk = async (collegeId?: string): Promise<CollegeStud
 export const createCollegeStudent = async (
   student: Omit<CollegeStudent, 'id' | 'created_at' | 'updated_at'>
 ): Promise<CollegeStudent> => {
+  // ELE-1375 — the RLS insert check (_ch_same_college) requires college_id to
+  // equal the adding admin's profiles.college_id. The Add Student dialog leaves
+  // it null, so the insert silently failed RLS. Resolve it from the current
+  // user's profile when it wasn't supplied.
+  let collegeId = student.college_id;
+  if (!collegeId) {
+    const { data: auth } = await supabase.auth.getUser();
+    if (auth?.user) {
+      const { data: prof } = await supabase
+        .from('profiles')
+        .select('college_id')
+        .eq('id', auth.user.id)
+        .maybeSingle();
+      collegeId = prof?.college_id ?? null;
+    }
+  }
+
   const { data, error } = await supabase
     .from('college_students')
-    .insert(student)
+    .insert({ ...student, college_id: collegeId })
     .select()
     .single();
 

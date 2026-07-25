@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { DecimalInput } from '@/components/ui/decimal-input';
 import { Textarea } from '@/components/ui/textarea';
 import { AutoGrowTextarea } from '@/components/ui/auto-grow-textarea';
+import { materialQueryMatches, expandMaterialQuery } from '@/data/materialSynonyms';
 import {
   Select,
   SelectContent,
@@ -146,8 +147,8 @@ export const EnhancedQuoteItemsStep = ({
       }
     }
     if (priceBookSearch.trim()) {
-      const q = priceBookSearch.toLowerCase();
-      return result.filter((p) => p.item.name.toLowerCase().includes(q));
+      // ELE-1393 — match trade phrases ("2 gang socket" → "double socket").
+      return result.filter((p) => materialQueryMatches(p.item.name, priceBookSearch));
     }
     return result;
   }, [materialsLists, priceBookSearch]);
@@ -487,9 +488,10 @@ export const EnhancedQuoteItemsStep = ({
     }
     if (materialSearch.trim().length >= 2) {
       const searchTerm = materialSearch.toLowerCase();
+      // ELE-1393 — trade-phrase aware name match; keep category/code matches.
       filtered = filtered.filter(
         (material) =>
-          material.name.toLowerCase().includes(searchTerm) ||
+          materialQueryMatches(material.name, materialSearch) ||
           material.category.toLowerCase().includes(searchTerm) ||
           material.subcategory.toLowerCase().includes(searchTerm) ||
           (material.code && material.code.toLowerCase().includes(searchTerm))
@@ -558,6 +560,8 @@ export const EnhancedQuoteItemsStep = ({
           const { data, error } = await supabase.functions.invoke('search-materials-fast', {
             body: {
               query: debouncedSearch,
+              // ELE-1393 — trade-phrase synonyms ("2 gang socket" → "double socket").
+              expansions: expandMaterialQuery(debouncedSearch),
               categoryFilter:
                 newItem.subcategory && newItem.subcategory !== 'all-categories'
                   ? newItem.subcategory
@@ -841,7 +845,7 @@ export const EnhancedQuoteItemsStep = ({
                 {rateCardItems
                   .filter(item =>
                     !rateCardSearch.trim() ||
-                    item.name.toLowerCase().includes(rateCardSearch.toLowerCase())
+                    materialQueryMatches(item.name, rateCardSearch)
                   )
                   .map((item) => (
                     <button

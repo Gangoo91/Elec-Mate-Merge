@@ -574,7 +574,9 @@ export default function AdminDocumentReview() {
         if (downloadError) {
           toast({
             title: 'Could not load document image',
-            description: error.message,
+            // The download error is the operative one — showing the earlier
+            // signed-URL error sent reviewers down the wrong path.
+            description: downloadError.message,
             variant: 'destructive',
           });
         } else if (downloadData) {
@@ -932,9 +934,7 @@ export default function AdminDocumentReview() {
                   {selectedDocument && (
                     <div className="flex items-center gap-3">
                       <Avatar
-                        initials={getInitials(
-                          selectedDocument.elec_id_profile?.employee?.name
-                        )}
+                        initials={getInitials(selectedDocument.elec_id_profile?.employee?.name)}
                       />
                       <div className="min-w-0 flex-1">
                         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
@@ -966,9 +966,7 @@ export default function AdminDocumentReview() {
                       style={{
                         width: `${
                           selectableDocs.length + queueReviewCount > 0
-                            ? (queueReviewCount /
-                                (selectableDocs.length + queueReviewCount)) *
-                              100
+                            ? (queueReviewCount / (selectableDocs.length + queueReviewCount)) * 100
                             : 0
                         }%`,
                       }}

@@ -287,7 +287,7 @@
 
       <!-- ── Items ── -->
       <div class="items-section">
-        <div class="section-title">Work &amp; materials</div>
+        <div class="section-title">{{ invoice.sectionTitle | default: "Work & materials" | escape }}</div>
         <table class="items-table">
           <thead>
             <tr>
@@ -363,6 +363,12 @@
             <span>Less CIS ({{ calculations.cisRate }}% on labour)</span>
             <span class="amount num">&minus;{% if calculations.cisAmountFormatted != blank %}{{ calculations.cisAmountFormatted }}{% else %}£{{ calculations.cisAmount | round: 2 }}{% endif %}</span>
           </div>
+          {% if calculations.cisUtr != blank %}
+          <div class="totals-row" style="font-size: 11px; color: #6b7280;">
+            <span>UTR (for CIS)</span>
+            <span class="num">{{ calculations.cisUtr }}</span>
+          </div>
+          {% endif %}
           {% endif %}
           {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true and calculations.cisAmount == 0 %}
           <div class="totals-row" style="font-weight: 600;">

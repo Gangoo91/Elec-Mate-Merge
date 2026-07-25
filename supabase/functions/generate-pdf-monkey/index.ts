@@ -756,12 +756,17 @@ serve(async (req) => {
           // ELE-1076 — old/AI-built rows can carry unit 'hour' on lump or
           // materials lines (hours=0, no hourly rate). Printing that reads
           // as nonsense ("Materials — 1 hour"); normalise to 'each'.
+          // ELE-1406 — but a user-selected 'hour' with a real duration
+          // (quantity ≠ 1, or a labour row) must be respected: manual line
+          // items store only quantity/unit/price, never hours/hourlyRate.
           unit: (() => {
             const u = String(it.raw.unit || 'each').toLowerCase();
             const hourly =
               parseFloat(it.raw.hours) > 0 ||
               parseFloat(it.raw.hourlyRate) > 0 ||
-              parseFloat(it.raw.hourly_rate) > 0;
+              parseFloat(it.raw.hourly_rate) > 0 ||
+              it.category === 'labour' ||
+              (parseFloat(it.quantity) || 0) !== 1;
             return ['hour', 'hours', 'day', 'days'].includes(u) && !hourly
               ? 'each'
               : it.raw.unit || 'each';
@@ -787,7 +792,13 @@ serve(async (req) => {
       const invEquipmentItems = processedItems.filter((i: any) => i.category === 'equipment');
       const invManualItems = processedItems.filter((i: any) => i.category === 'manual');
 
+      // ELE-1404 — section header must match the content: labour-only
+      // invoices shouldn't claim "Work & materials".
+      const hasMaterialsish = invMaterialItems.length > 0 || invEquipmentItems.length > 0;
+      const invSectionTitle = hasMaterialsish ? 'Work & materials' : 'Work carried out';
+
       const transformedInvoice = {
+        sectionTitle: invSectionTitle,
         invoiceNumber: freshQuote?.invoice_number || '',
         createdAt: freshQuote?.invoice_date
           ? new Date(freshQuote.invoice_date).toISOString().split('T')[0]
@@ -1121,6 +1132,9 @@ serve(async (req) => {
           cisEnabled: invCisEnabled,
           cisRate: invCisRate,
           cisAmount: invCisAmount,
+          // ELE-1373 — UTR is auto-shown on the invoice only when CIS applies.
+          // NI is never included.
+          cisUtr: invCisEnabled && freshCompanyProfile?.utr ? String(freshCompanyProfile.utr) : '',
           netPayable: invNetPayable,
           // Nested summary (for templates that prefer the object) +
           // flat convenience fields (for templates that use them
@@ -1169,6 +1183,8 @@ serve(async (req) => {
           cisRate: invCisRate,
           cisAmount: invCisAmount,
           cisAmountFormatted: gbp(invCisAmount),
+          // ELE-1373 — UTR only when CIS applies; NI never included.
+          cisUtr: invCisEnabled && freshCompanyProfile?.utr ? String(freshCompanyProfile.utr) : '',
           labourNet: invLabourNet,
           netPayable: invNetPayable,
           netPayableFormatted: gbp(invNetPayable),

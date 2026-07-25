@@ -39,7 +39,7 @@ const BodyScanTool = () => {
       <p className="text-[13px] font-medium text-white">Focus on: {parts[step]}</p>
       <p className="text-3xl font-semibold tabular-nums text-white/85">{time}s</p>
       <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-        <div className="h-full bg-white/[0.02] rounded-full transition-all" style={{ width: `${((step * 20 + (20 - time)) / (parts.length * 20)) * 100}%` }} />
+        <div className="h-full bg-cyan-400/80 rounded-full transition-all" style={{ width: `${((step * 20 + (20 - time)) / (parts.length * 20)) * 100}%` }} />
       </div>
       <p className="text-[11px] text-white">Step {step + 1} of {parts.length}</p>
       <div className="flex gap-2">
@@ -70,7 +70,7 @@ const WorryTimeTool = () => {
         {String(m).padStart(2, '0')}:{String(s).padStart(2, '0')}
       </p>
       <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-        <div className="h-full bg-white/[0.02] rounded-full transition-all" style={{ width: `${((900 - time) / 900) * 100}%` }} />
+        <div className="h-full bg-orange-400/80 rounded-full transition-all" style={{ width: `${((900 - time) / 900) * 100}%` }} />
       </div>
       <p className="text-[12px] text-white">
         {!active && time === 900 ? '15 minutes to process your worries' : active ? 'Let it out — write, think, pace' : "Time's up — let go now"}

@@ -408,7 +408,9 @@ export default function AdminWinback() {
   };
 
   const totalSent = stats?.offersSent || 0;
-  const converted = stats?.conversions || 0;
+  // Real recoveries: sent-offer users who are subscribed NOW. The edge fn's
+  // stats.conversions was never wired and always reported 0.
+  const converted = (sentUsers || []).filter((u) => u.subscribed).length;
   const openRate = totalSent > 0 ? Math.round((performanceStats.opened / totalSent) * 100) : 0;
   const clickRate = totalSent > 0 ? Math.round((performanceStats.clicked / totalSent) * 100) : 0;
   const convRate = totalSent > 0 ? Math.round((converted / totalSent) * 100) : 0;
@@ -429,10 +431,7 @@ export default function AdminWinback() {
 
   const daysSince = (iso: string | null | undefined) => {
     if (!iso) return 0;
-    return Math.max(
-      0,
-      Math.floor((Date.now() - parseISO(iso).getTime()) / (1000 * 60 * 60 * 24))
-    );
+    return Math.max(0, Math.floor((Date.now() - parseISO(iso).getTime()) / (1000 * 60 * 60 * 24)));
   };
 
   return (
@@ -533,9 +532,7 @@ export default function AdminWinback() {
                   {batchProgress.failed > 0 && (
                     <div className="flex items-center gap-2">
                       <Dot tone="red" />
-                      <span className="text-[12px] text-white">
-                        {batchProgress.failed} failed
-                      </span>
+                      <span className="text-[12px] text-white">{batchProgress.failed} failed</span>
                     </div>
                   )}
                 </div>
@@ -598,9 +595,7 @@ export default function AdminWinback() {
                         meta={<Pill tone="red">{cancelled.length}</Pill>}
                         action={batchSending ? undefined : 'Send offer'}
                         onAction={
-                          batchSending
-                            ? undefined
-                            : () => setConfirmSegmentSend('cancelled')
+                          batchSending ? undefined : () => setConfirmSegmentSend('cancelled')
                         }
                       />
                       <ListBody>
@@ -609,9 +604,7 @@ export default function AdminWinback() {
                           return (
                             <ListRow
                               key={u.id}
-                              lead={
-                                <Avatar initials={getInitials(u.full_name, u.username)} />
-                              }
+                              lead={<Avatar initials={getInitials(u.full_name, u.username)} />}
                               title={u.full_name || u.username || 'Unknown'}
                               subtitle={`${u.email} · Previously paying`}
                               trailing={
@@ -635,9 +628,7 @@ export default function AdminWinback() {
                         title="Never Subscribed"
                         meta={<Pill tone="orange">{neverSubscribed.length}</Pill>}
                         action={batchSending ? undefined : 'Send offer'}
-                        onAction={
-                          batchSending ? undefined : () => setConfirmSegmentSend('never')
-                        }
+                        onAction={batchSending ? undefined : () => setConfirmSegmentSend('never')}
                       />
                       <ListBody>
                         {neverSubscribed.slice(0, 50).map((u) => {
@@ -645,9 +636,7 @@ export default function AdminWinback() {
                           return (
                             <ListRow
                               key={u.id}
-                              lead={
-                                <Avatar initials={getInitials(u.full_name, u.username)} />
-                              }
+                              lead={<Avatar initials={getInitials(u.full_name, u.username)} />}
                               title={u.full_name || u.username || 'Unknown'}
                               subtitle={`${u.email} · Trial lapsed`}
                               trailing={
@@ -672,10 +661,7 @@ export default function AdminWinback() {
                     />
                     {visibleUsers.length === 0 ? (
                       <div className="px-5 sm:px-6 py-8">
-                        <EmptyState
-                          title="No matches"
-                          description="No users match your search."
-                        />
+                        <EmptyState title="No matches" description="No users match your search." />
                       </div>
                     ) : (
                       <ListBody>
@@ -685,16 +671,12 @@ export default function AdminWinback() {
                           return (
                             <ListRow
                               key={u.id}
-                              lead={
-                                <Avatar initials={getInitials(u.full_name, u.username)} />
-                              }
+                              lead={<Avatar initials={getInitials(u.full_name, u.username)} />}
                               title={u.full_name || u.username || 'Unknown'}
                               subtitle={`${u.email} · ${isCancelled ? 'Cancelled' : 'Trial lapsed'}`}
                               trailing={
                                 <>
-                                  <Pill tone={isCancelled ? 'red' : 'orange'}>
-                                    {days}d ago
-                                  </Pill>
+                                  <Pill tone={isCancelled ? 'red' : 'orange'}>{days}d ago</Pill>
                                 </>
                               }
                               onClick={() => setSelectedUser(u)}
@@ -730,8 +712,7 @@ export default function AdminWinback() {
                       <label className="flex items-center gap-3 touch-manipulation">
                         <Checkbox
                           checked={
-                            visibleUsers.length > 0 &&
-                            selectedUsers.size === visibleUsers.length
+                            visibleUsers.length > 0 && selectedUsers.size === visibleUsers.length
                           }
                           onCheckedChange={toggleSelectAll}
                           disabled={batchSending}
@@ -846,9 +827,7 @@ export default function AdminWinback() {
                     <ListBody>
                       {sentUsers.map((u) => {
                         const userEmail = u.email?.toLowerCase();
-                        const userEvents = userEmail
-                          ? trackingByEmail.get(userEmail)
-                          : undefined;
+                        const userEvents = userEmail ? trackingByEmail.get(userEmail) : undefined;
                         const wasOpened = userEvents?.has('email.opened') || false;
                         const wasClicked = userEvents?.has('email.clicked') || false;
 
@@ -942,8 +921,8 @@ export default function AdminWinback() {
                         Send real V11 to a specific address
                       </div>
                       <p className="mt-1 text-[11.5px] text-white leading-relaxed">
-                        Full send — goes through suppression check, logged, counts as sent.
-                        For testing, use the Test box above.
+                        Full send — goes through suppression check, logged, counts as sent. For
+                        testing, use the Test box above.
                       </p>
                     </div>
                     <div className="flex gap-2">
@@ -955,9 +934,7 @@ export default function AdminWinback() {
                         className="h-11 text-base touch-manipulation flex-1 bg-[hsl(0_0%_10%)] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white"
                       />
                       <Button
-                        onClick={() =>
-                          manualEmail && sendManualMutation.mutate(manualEmail)
-                        }
+                        onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
                         disabled={!manualEmail || sendManualMutation.isPending}
                         className="h-11 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
                       >
@@ -1015,18 +992,13 @@ export default function AdminWinback() {
                 <SheetTitle asChild>
                   <div className="flex items-center gap-3 text-left">
                     <Avatar
-                      initials={getInitials(
-                        selectedUser?.full_name,
-                        selectedUser?.username
-                      )}
+                      initials={getInitials(selectedUser?.full_name, selectedUser?.username)}
                     />
                     <div className="min-w-0">
                       <div className="text-[15px] font-semibold text-white truncate">
                         {selectedUser?.full_name || 'Unknown'}
                       </div>
-                      <div className="text-[12px] text-white truncate">
-                        {selectedUser?.email}
-                      </div>
+                      <div className="text-[12px] text-white truncate">{selectedUser?.email}</div>
                     </div>
                   </div>
                 </SheetTitle>
@@ -1098,13 +1070,10 @@ export default function AdminWinback() {
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2 text-white">
-                  <p>
-                    Sends in batches of {BATCH_SIZE} via Resend with a 2s gap between
-                    batches.
-                  </p>
+                  <p>Sends in batches of {BATCH_SIZE} via Resend with a 2s gap between batches.</p>
                   <p className="text-[12px]">
-                    Each recipient gets marked as sent and won&apos;t reappear in this
-                    segment unless reset.
+                    Each recipient gets marked as sent and won&apos;t reappear in this segment
+                    unless reset.
                   </p>
                 </div>
               </AlertDialogDescription>
@@ -1140,9 +1109,7 @@ export default function AdminWinback() {
               <SheetHeader className="px-5 pb-3 border-b border-white/[0.06]">
                 <SheetTitle asChild>
                   <div className="flex items-center gap-2 text-left">
-                    <span className="text-[13px] font-semibold text-white">
-                      V11 Preview
-                    </span>
+                    <span className="text-[13px] font-semibold text-white">V11 Preview</span>
                     <Pill tone="yellow">V11</Pill>
                   </div>
                 </SheetTitle>

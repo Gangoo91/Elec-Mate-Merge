@@ -1,11 +1,5 @@
-import {
-  PageHero,
-  SectionHeader,
-  ListCard,
-  ListRow,
-  Pill,
-} from '@/components/college/primitives';
-import { openExternalUrl } from '@/utils/open-external-url';
+import { PageHero, SectionHeader, ListCard, ListRow, Pill } from '@/components/college/primitives';
+import ExternalLinkCards from '@/components/mental-health/ExternalLinkCards';
 
 const PHONE_PRIMARY =
   'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25 text-[13px] font-semibold touch-manipulation';
@@ -160,18 +154,14 @@ const SupportNetworkTab = () => {
 
       <div className="space-y-3">
         <SectionHeader eyebrow="Online" title="Keep useful links close" />
-        <ListCard>
-          {onlineResources.map((r) => (
-            <ListRow
-              key={r.name}
-              accent="cyan"
-              title={r.name}
-              subtitle={r.description}
-              trailing={<Pill tone="cyan">Open</Pill>}
-              onClick={() => openExternalUrl(r.url)}
-            />
-          ))}
-        </ListCard>
+        <ExternalLinkCards
+          items={onlineResources.map((r) => ({
+            title: r.name,
+            description: r.description,
+            url: r.url,
+            tone: 'cyan' as const,
+          }))}
+        />
       </div>
 
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
@@ -187,9 +177,8 @@ const SupportNetworkTab = () => {
             <a href="tel:116123" className="font-semibold text-red-400">
               116 123
             </a>
-            , or text SHOUT to{' '}
-            <span className="font-semibold text-red-400">85258</span>. Fastest route to help matters
-            most.
+            , or text SHOUT to <span className="font-semibold text-red-400">85258</span>. Fastest
+            route to help matters most.
           </p>
         </div>
       </div>

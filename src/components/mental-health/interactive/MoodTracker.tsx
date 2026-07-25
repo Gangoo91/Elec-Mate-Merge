@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const moodOptions = [
   { value: 1, emoji: '😢', label: 'Struggling', message: "That's brave to say. You're not alone.", color: 'bg-red-500/15 border-red-500/20' },
-  { value: 2, emoji: '😔', label: 'Low', message: "Tough days happen. Let's get through this.", color: 'bg-white/[0.02] border-white/[0.06]' },
+  { value: 2, emoji: '😔', label: 'Low', message: "Tough days happen. Let's get through this.", color: 'bg-orange-500/10 border-orange-500/30' },
   { value: 3, emoji: '😐', label: 'Okay', message: "Okay is okay. Take it easy today.", color: 'bg-yellow-500/15 border-yellow-500/20' },
-  { value: 4, emoji: '🙂', label: 'Good', message: "Good to hear. Keep that going.", color: 'bg-white/[0.02] border-white/[0.06]' },
-  { value: 5, emoji: '😊', label: 'Great', message: "Brilliant. Remember this feeling.", color: 'bg-white/[0.02] border-white/[0.06]' },
+  { value: 4, emoji: '🙂', label: 'Good', message: "Good to hear. Keep that going.", color: 'bg-emerald-500/10 border-emerald-500/30' },
+  { value: 5, emoji: '😊', label: 'Great', message: "Brilliant. Remember this feeling.", color: 'bg-elec-yellow/10 border-elec-yellow/40' },
 ];
 
 const MoodTracker = () => {
@@ -89,7 +89,7 @@ const MoodTracker = () => {
       {selectedMood !== null && !saved && (
         <button
           onClick={handleSave}
-          className="w-full h-12 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+          className="w-full h-12 rounded-2xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
         >
           Save How I Feel
         </button>
@@ -112,7 +112,7 @@ const MoodTracker = () => {
               const dateStr = d.toISOString().split('T')[0];
               const entry = moodHistory.find((e) => e.date === dateStr);
               const mood = entry?.mood || 0;
-              const barColors = ['', 'bg-red-400', 'bg-white/[0.02]', 'bg-yellow-400', 'bg-white/[0.02]', 'bg-white/[0.02]'];
+              const barColors = ['', 'bg-red-400', 'bg-orange-400', 'bg-amber-400', 'bg-emerald-400', 'bg-elec-yellow'];
               return (
                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
                   <div className="w-full flex items-end justify-center" style={{ height: '44px' }}>

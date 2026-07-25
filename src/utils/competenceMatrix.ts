@@ -17,7 +17,7 @@
  */
 import type { ElecIdProfile } from '@/services/elecIdService';
 import type { Certification } from '@/hooks/useCertifications';
-import { getQualificationLabel } from '@/data/uk-electrician-constants';
+import { getQualificationLabel, getEcsCardLabel } from '@/data/uk-electrician-constants';
 
 export type CellStatus = 'valid' | 'expiring' | 'expired' | 'none';
 
@@ -203,7 +203,9 @@ export function buildCompetenceMatrix(
         ...(profile.ecs_card_type || profile.ecs_expiry_date || profile.ecs_card_number
           ? [
               {
-                name: profile.ecs_card_type || 'ECS Card',
+                name: profile.ecs_card_type
+                  ? getEcsCardLabel(profile.ecs_card_type)
+                  : 'ECS Card',
                 expiry: profile.ecs_expiry_date,
                 number: profile.ecs_card_number,
               },

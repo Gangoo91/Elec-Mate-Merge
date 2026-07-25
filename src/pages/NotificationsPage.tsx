@@ -5,28 +5,7 @@ import { Bell, CheckCheck, Trash2, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
-
-/* Category tone — colour + short label derived from the notification's real
-   type. Replaces the old "every row is a yellow lightning bolt" look. No icons. */
-const categoryTone = (rawType?: string): { label: string; text: string; bar: string } => {
-  const t = (rawType || '').toLowerCase();
-  if (t.startsWith('safeguarding')) return { label: 'Safeguarding', text: 'text-red-400', bar: 'bg-red-500' };
-  if (t.includes('invoice') || t.includes('quote') || t === 'payment' || t.includes('paid'))
-    return { label: 'Finance', text: 'text-emerald-400', bar: 'bg-emerald-400' };
-  if (t.startsWith('compliance') || t.includes('cert') || t.includes('ecs') || t.includes('part_p') || t.includes('qs'))
-    return { label: 'Compliance', text: 'text-amber-400', bar: 'bg-amber-400' };
-  if (t.includes('lead')) return { label: 'Lead', text: 'text-emerald-400', bar: 'bg-emerald-400' };
-  if (t.includes('task') || t.includes('job') || t.includes('timesheet') || t.includes('leave') || t.includes('expense') || t.includes('snag'))
-    return { label: 'Work', text: 'text-sky-400', bar: 'bg-sky-400' };
-  if (t.includes('message') || t.includes('peer') || t.includes('student') || t.includes('college'))
-    return { label: 'Message', text: 'text-blue-400', bar: 'bg-blue-400' };
-  if (t.includes('mood') || t.includes('wellbeing') || t.includes('mental'))
-    return { label: 'Wellbeing', text: 'text-rose-400', bar: 'bg-rose-400' };
-  if (t.includes('study') || t.includes('flashcard')) return { label: 'Study', text: 'text-violet-400', bar: 'bg-violet-400' };
-  if (t.includes('briefing') || t.includes('digest') || t.includes('morning'))
-    return { label: 'Daily brief', text: 'text-white/60', bar: 'bg-white/40' };
-  return { label: 'Update', text: 'text-white/60', bar: 'bg-white/40' };
-};
+import { categoryTone } from '@/lib/notificationCategory';
 
 const formatTime = (date: string) => {
   const d = new Date(date);
@@ -44,7 +23,7 @@ const NotificationCard = ({
   onOpen: () => void;
   onDelete: () => void;
 }) => {
-  const tone = categoryTone(n.type);
+  const tone = categoryTone(n.type, n.title, n.message);
   const actionable = !!n.link;
   return (
     <motion.div layout exit={{ opacity: 0, x: 60, height: 0 }} transition={{ duration: 0.2 }}>
@@ -110,7 +89,7 @@ const NotificationsPage = () => {
 
   // Only offer filter chips for categories that are actually present.
   const categoriesPresent = useMemo(
-    () => Array.from(new Set(notifications.map((n) => categoryTone(n.type).label))),
+    () => Array.from(new Set(notifications.map((n) => categoryTone(n.type, n.title, n.message).label))),
     [notifications]
   );
   const chips = useMemo(() => {
@@ -122,7 +101,7 @@ const NotificationsPage = () => {
   const filtered = useMemo(() => {
     if (filter === 'All') return notifications;
     if (filter === 'Unread') return notifications.filter((n) => !n.is_read);
-    return notifications.filter((n) => categoryTone(n.type).label === filter);
+    return notifications.filter((n) => categoryTone(n.type, n.title, n.message).label === filter);
   }, [notifications, filter]);
 
   const handleOpen = (n: UserNotification) => {

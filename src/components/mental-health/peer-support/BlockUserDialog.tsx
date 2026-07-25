@@ -97,7 +97,7 @@ export function BlockUserDialog({
           <AlertDialogAction
             onClick={handleBlock}
             disabled={isBlocking}
-            className="w-full sm:w-auto bg-white/[0.02] hover:bg-white/[0.02] text-white"
+            className="w-full sm:w-auto bg-red-500/20 border border-red-500/35 hover:bg-red-500/30 text-red-300"
           >
             {isBlocking ? (
               <>

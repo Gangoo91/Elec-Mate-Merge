@@ -220,20 +220,9 @@ export function ExpenseCard({
         onClick={() => !isDragging && onClick?.()}
       >
         <div className="flex items-center p-3.5 gap-3.5">
-          {/* Category Icon */}
-          <div
-            className={cn(
-              'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
-              `bg-${categoryConfig.colour}/15`
-            )}
-            style={{
-              backgroundColor: `rgb(var(--${categoryConfig.colour.replace('-500', '-500')}) / 0.12)`,
-            }}
-          >
-            <CategoryIcon
-              className={cn('h-5 w-5', `text-${categoryConfig.colour}`)}
-              style={{ color: `var(--${categoryConfig.colour}, #f97316)` }}
-            />
+          {/* Category icon — one muted treatment; the icon varies, the colour doesn't */}
+          <div className="w-11 h-11 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+            <CategoryIcon className="h-5 w-5 text-elec-yellow" />
           </div>
 
           {/* Content */}

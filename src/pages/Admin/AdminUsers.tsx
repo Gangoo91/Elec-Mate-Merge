@@ -157,6 +157,9 @@ export default function AdminUsers() {
   const [quickFilter, setQuickFilter] = useState('all');
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  // Two-step inline confirm for revoking comped access — the old revoke
+  // button lived in a display:hidden div and was unreachable.
+  const [revokeArmed, setRevokeArmed] = useState(false);
   const [messageUser, setMessageUser] = useState<{
     id: string;
     full_name?: string;
@@ -1195,37 +1198,78 @@ export default function AdminUsers() {
               : null
           }
           open={!!selectedUser}
-          onOpenChange={(open) => !open && setSelectedUser(null)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedUser(null);
+              setRevokeArmed(false);
+            }
+          }}
           extraActions={
             isSuperAdmin && selectedUser?.admin_role !== 'super_admin' ? (
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  className="flex-1 h-11 touch-manipulation rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-white/[0.06]"
-                  onClick={() =>
-                    selectedUser &&
-                    grantAdminMutation.mutate({
-                      userId: selectedUser.id,
-                      role: selectedUser.admin_role ? null : 'admin',
-                    })
-                  }
-                  disabled={grantAdminMutation.isPending}
-                >
-                  {selectedUser?.admin_role ? (
-                    <>
-                      <ShieldOff className="h-4 w-4 mr-2" />
-                      Remove admin
-                    </>
+              <div className="space-y-2">
+                {selectedUser?.free_access_granted &&
+                  (revokeArmed ? (
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        className="flex-1 h-11 touch-manipulation rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-white/[0.06]"
+                        onClick={() => setRevokeArmed(false)}
+                        disabled={revokeSubscriptionMutation.isPending}
+                      >
+                        Keep access
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="flex-1 h-11 touch-manipulation rounded-full bg-red-500/15 border-red-500/30 text-red-300 hover:bg-red-500/25"
+                        onClick={() => {
+                          if (selectedUser) revokeSubscriptionMutation.mutate(selectedUser.id);
+                          setRevokeArmed(false);
+                        }}
+                        disabled={revokeSubscriptionMutation.isPending}
+                      >
+                        {revokeSubscriptionMutation.isPending ? 'Revoking…' : 'Confirm revoke'}
+                      </Button>
+                    </div>
                   ) : (
-                    <>
-                      <Shield className="h-4 w-4 mr-2" />
-                      Make admin
-                    </>
-                  )}
-                </Button>
-                <IconButton onClick={() => setDeleteDialogOpen(true)} aria-label="Delete user">
-                  <Trash2 className="h-4 w-4" />
-                </IconButton>
+                    <Button
+                      variant="outline"
+                      className="w-full h-11 touch-manipulation rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-white/[0.06]"
+                      onClick={() => setRevokeArmed(true)}
+                      disabled={revokeSubscriptionMutation.isPending}
+                    >
+                      <Gift className="h-4 w-4 mr-2 text-red-400" />
+                      Revoke free access
+                    </Button>
+                  ))}
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1 h-11 touch-manipulation rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-white/[0.06]"
+                    onClick={() =>
+                      selectedUser &&
+                      grantAdminMutation.mutate({
+                        userId: selectedUser.id,
+                        role: selectedUser.admin_role ? null : 'admin',
+                      })
+                    }
+                    disabled={grantAdminMutation.isPending}
+                  >
+                    {selectedUser?.admin_role ? (
+                      <>
+                        <ShieldOff className="h-4 w-4 mr-2" />
+                        Remove admin
+                      </>
+                    ) : (
+                      <>
+                        <Shield className="h-4 w-4 mr-2" />
+                        Make admin
+                      </>
+                    )}
+                  </Button>
+                  <IconButton onClick={() => setDeleteDialogOpen(true)} aria-label="Delete user">
+                    <Trash2 className="h-4 w-4" />
+                  </IconButton>
+                </div>
               </div>
             ) : undefined
           }
@@ -1347,17 +1391,6 @@ export default function AdminUsers() {
             </div>
           </SheetContent>
         </Sheet>
-
-        {isSuperAdmin && selectedUser?.subscribed && (
-          <div className="hidden">
-            <button
-              onClick={() => selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)}
-              disabled={revokeSubscriptionMutation.isPending}
-            >
-              revoke
-            </button>
-          </div>
-        )}
       </PageFrame>
     </PullToRefresh>
   );

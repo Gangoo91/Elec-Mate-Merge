@@ -118,7 +118,7 @@ const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
         <span
           aria-hidden
           className={cn(
-            'absolute -bottom-0.5 -right-0.5 rounded-full bg-white/[0.02] border-[3px] border-[hsl(0_0%_8%)]',
+            'absolute -bottom-0.5 -right-0.5 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_8%)]',
             dot
           )}
         />
@@ -180,6 +180,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   useEffect(() => {
     setCrisisStripHidden(false);
   }, [selectedConversation?.id]);
+
+  // Internal views share the same route — reset scroll when switching between
+  // hub / chat / supporter detail so each opens at the top.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [viewState]);
   const crisisDetected = useMemo(
     () => chatMessages.slice(-12).some((m) => CRISIS_PATTERNS.test(m.content ?? '')),
     [chatMessages]

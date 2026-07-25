@@ -52,6 +52,7 @@ const UNIT_PRESETS = [
 
 import { DecimalInput as InlineDecimalInput } from '@/components/ui/decimal-input';
 import { AutoGrowTextarea } from '@/components/ui/auto-grow-textarea';
+import { materialQueryMatches, expandMaterialQuery } from '@/data/materialSynonyms';
 
 interface InvoiceItemsStepProps {
   originalItems: InvoiceItem[];
@@ -212,8 +213,8 @@ export const InvoiceItemsStep = ({
       }
     }
     if (priceBookSearch.trim()) {
-      const q = priceBookSearch.toLowerCase();
-      return result.filter((pb) => pb.item.name.toLowerCase().includes(q));
+      // ELE-1393 — match trade phrases ("2 gang socket" → "double socket").
+      return result.filter((pb) => materialQueryMatches(pb.item.name, priceBookSearch));
     }
     return result;
   }, [materialsLists, priceBookSearch]);
@@ -251,7 +252,15 @@ export const InvoiceItemsStep = ({
       setIsSearchingLive(true);
       try {
         const { data, error } = await supabase.functions.invoke('search-materials-fast', {
-          body: { query: debouncedMaterialSearch, categoryFilter: null, supplierFilter: 'all', limit: 16 },
+          body: {
+            query: debouncedMaterialSearch,
+            // ELE-1393 — send trade-phrase synonyms so "2 gang socket" matches
+            // supplier names using the formal wording.
+            expansions: expandMaterialQuery(debouncedMaterialSearch),
+            categoryFilter: null,
+            supplierFilter: 'all',
+            limit: 16,
+          },
         });
         if (error) throw error;
         if (!cancelled && data?.materials) {
@@ -515,9 +524,10 @@ export const InvoiceItemsStep = ({
     }
     if (materialSearch.trim().length >= 2) {
       const searchTerm = materialSearch.toLowerCase();
+      // ELE-1393 — trade-phrase aware name match; keep category substring match.
       filtered = filtered.filter(
         (material) =>
-          material.name.toLowerCase().includes(searchTerm) ||
+          materialQueryMatches(material.name, materialSearch) ||
           material.category.toLowerCase().includes(searchTerm)
       );
     }
@@ -1390,7 +1400,7 @@ export const InvoiceItemsStep = ({
               .filter(
                 (item) =>
                   !rateCardSearch.trim() ||
-                  item.name.toLowerCase().includes(rateCardSearch.toLowerCase())
+                  materialQueryMatches(item.name, rateCardSearch)
               )
               .map((item) => (
                 <button
@@ -1504,13 +1514,61 @@ export const InvoiceItemsStep = ({
                 transition={{ duration: 0.2 }}
                 className="py-3 border-b border-white/[0.12]"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <p className="text-[13px] font-medium text-white truncate">
-                      {item.description}
-                    </p>
-                  </div>
+                <div className="flex items-start justify-between mb-2">
+                  {editingItemId === item.id ? (
+                    <AutoGrowTextarea
+                      autoFocus
+                      value={editingDescription}
+                      onChange={(e) => setEditingDescription(e.target.value)}
+                      onFocus={(e) => {
+                        const len = e.target.value.length;
+                        e.target.setSelectionRange(len, len);
+                      }}
+                      onBlur={() => {
+                        if (editingDescription.trim())
+                          onUpdateItem(item.id, { description: editingDescription.trim() });
+                        setEditingItemId(null);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Escape') setEditingItemId(null);
+                      }}
+                      className="mr-2 flex-1 rounded-lg border border-elec-yellow/40 bg-white/[0.06] px-2.5 py-2 text-[15px] leading-snug text-white focus:border-elec-yellow focus:outline-none focus:ring-2 focus:ring-elec-yellow/15"
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingDescription(item.description);
+                        setEditingItemId(item.id);
+                      }}
+                      className="mr-2 min-w-0 flex-1 whitespace-pre-wrap break-words text-left text-[13px] font-medium leading-snug text-white"
+                    >
+                      {item.description || (
+                        <span className="font-normal text-white/40">Tap to add a description</span>
+                      )}
+                    </button>
+                  )}
                   <div className="flex items-center gap-1.5 ml-2">
+                    <button
+                      onClick={() => {
+                        if (editingItemId === item.id) {
+                          if (editingDescription.trim())
+                            onUpdateItem(item.id, { description: editingDescription.trim() });
+                          setEditingItemId(null);
+                        } else {
+                          setEditingDescription(item.description);
+                          setEditingItemId(item.id);
+                        }
+                      }}
+                      className={`w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
+                      aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
+                    >
+                      {editingItemId === item.id ? (
+                        <Check className="h-3.5 w-3.5 text-white" />
+                      ) : (
+                        <Pencil className="h-3.5 w-3.5 text-white" />
+                      )}
+                    </button>
                     <button
                       onClick={() => duplicateItem(item)}
                       className="w-9 h-9 rounded-lg bg-white/[0.08] flex items-center justify-center touch-manipulation active:scale-95"

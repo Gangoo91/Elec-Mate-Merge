@@ -125,11 +125,11 @@ const techniques: QuickTechnique[] = [
 
 const getColorClasses = (color: string) => {
   const colors: Record<string, { bg: string; text: string; border: string }> = {
-    blue: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
-    purple: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
-    cyan: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
-    orange: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
-    rose: { bg: 'bg-white/[0.02]', text: 'text-white/85', border: 'border-white/[0.06]' },
+    blue: { bg: 'bg-blue-500/10', text: 'text-blue-300', border: 'border-blue-500/25' },
+    purple: { bg: 'bg-purple-500/10', text: 'text-purple-300', border: 'border-purple-500/25' },
+    cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-300', border: 'border-cyan-500/25' },
+    orange: { bg: 'bg-orange-500/10', text: 'text-orange-300', border: 'border-orange-500/25' },
+    rose: { bg: 'bg-rose-500/10', text: 'text-rose-300', border: 'border-rose-500/25' },
     yellow: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/20' },
   };
   return colors[color] || colors.blue;
@@ -197,7 +197,7 @@ const QuickCopingToolkit = () => {
 
         {showFastTrack && selectedTechnique.fastTrack ? (
           // Fast track view
-          <Card className="border-white/[0.06] bg-white/[0.02]">
+          <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)]">
             <CardContent className="p-6 text-center">
               <Zap className={`h-8 w-8 ${colors.text} mx-auto mb-3`} />
               <p className="text-lg text-white leading-relaxed">
@@ -214,7 +214,7 @@ const QuickCopingToolkit = () => {
                   key={i}
                   className={`h-1 rounded-full transition-all ${
                     i < currentStep
-                      ? 'bg-white/[0.02] w-8'
+                      ? 'bg-emerald-400/80 w-8'
                       : i === currentStep
                         ? `${colors.text.replace('text-', 'bg-')} w-8`
                         : 'bg-white/20 w-4'
@@ -225,7 +225,7 @@ const QuickCopingToolkit = () => {
 
             {/* Current Step */}
             {currentStep < selectedTechnique.steps.length ? (
-              <Card className="border-white/[0.06] bg-white/[0.02]">
+              <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)]">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <div
@@ -241,9 +241,9 @@ const QuickCopingToolkit = () => {
               </Card>
             ) : (
               // Completed
-              <Card className="border-white/[0.06] bg-white/[0.02]">
+              <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)]">
                 <CardContent className="p-6 text-center">
-                  <CheckCircle className="h-12 w-12 text-white/85 mx-auto mb-3" />
+                  <CheckCircle className="h-12 w-12 text-emerald-400 mx-auto mb-3" />
                   <h3 className="text-lg font-bold text-white mb-2">Well done!</h3>
                   <p className="text-sm text-white">
                     How do you feel now? Remember you can use this anytime.
@@ -266,7 +266,7 @@ const QuickCopingToolkit = () => {
                     </Button>
                   )}
                   <Button
-                    className={`flex-1 h-12 text-base ${colors.bg} ${colors.text} hover:opacity-90 touch-manipulation active:scale-[0.98] transition-all`}
+                    className="flex-1 h-12 text-base bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] transition-all"
                     onClick={() => setCurrentStep(currentStep + 1)}
                   >
                     {currentStep + 1 >= selectedTechnique.steps.length ? 'Finish' : 'Next'}
@@ -294,15 +294,15 @@ const QuickCopingToolkit = () => {
     <div className="space-y-4">
       {/* Header */}
       <div className="text-center py-2">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.02] mb-3">
-          <Zap className="h-6 w-6 text-yellow-400" />
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/25 mb-3">
+          <Zap className="h-6 w-6 text-elec-yellow" />
         </div>
         <h2 className="text-xl font-bold text-white mb-1">Quick Coping Toolkit</h2>
         <p className="text-sm text-white">Fast techniques for difficult moments</p>
       </div>
 
       {/* Urgent Help Banner */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
+      <Card className="border-red-500/25 bg-red-500/[0.06]">
         <CardContent className="p-3">
           <div className="flex items-center gap-3">
             <Phone className="h-5 w-5 text-red-400" />
@@ -312,7 +312,7 @@ const QuickCopingToolkit = () => {
             </div>
             <a
               href="tel:116123"
-              className="px-3 py-1.5 bg-white/[0.02] text-red-300 rounded-lg text-sm font-medium hover:bg-white/[0.02] transition-colors"
+              className="h-11 px-4 inline-flex items-center bg-red-500/20 border border-red-500/35 text-red-300 rounded-full text-sm font-semibold hover:bg-red-500/30 transition-colors touch-manipulation"
             >
               Call
             </a>
@@ -320,8 +320,8 @@ const QuickCopingToolkit = () => {
         </CardContent>
       </Card>
 
-      {/* Technique Cards */}
-      <div className="space-y-2">
+      {/* Technique Cards — 2-up on desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {techniques.map((technique) => {
           const colors = getColorClasses(technique.color);
           const Icon = technique.icon;
@@ -329,13 +329,13 @@ const QuickCopingToolkit = () => {
           return (
             <Card
               key={technique.id}
-              className={`${colors.border} cursor-pointer touch-manipulation active:scale-[0.99] transition-transform`}
+              className={`border-white/[0.06] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_14%)] cursor-pointer touch-manipulation active:scale-[0.99] transition-all`}
               onClick={() => setSelectedTechnique(technique)}
             >
-              <CardContent className="p-3 min-h-[72px] flex items-center">
+              <CardContent className="p-4 min-h-[76px] flex items-center">
                 <div className="flex items-center gap-3 w-full">
                   <div
-                    className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}
+                    className={`w-12 h-12 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center flex-shrink-0`}
                   >
                     <Icon className={`h-6 w-6 ${colors.text}`} />
                   </div>
@@ -357,10 +357,10 @@ const QuickCopingToolkit = () => {
       </div>
 
       {/* Tip Card */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
+      <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)]">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <Sparkles className="h-5 w-5 text-white/85 flex-shrink-0 mt-0.5" />
+            <Sparkles className="h-5 w-5 text-elec-yellow/90 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm text-white/85">
                 <strong className="text-white/85">Pro tip:</strong> Practice these when you're
@@ -372,10 +372,10 @@ const QuickCopingToolkit = () => {
       </Card>
 
       {/* Self-compassion reminder */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
+      <Card className="border-white/[0.06] bg-[hsl(0_0%_12%)]">
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <Heart className="h-5 w-5 text-white/85" />
+            <Heart className="h-5 w-5 text-rose-300 flex-shrink-0" />
             <p className="text-sm text-white/85">
               Remember: It's okay to struggle. Reaching for these tools shows strength.
             </p>

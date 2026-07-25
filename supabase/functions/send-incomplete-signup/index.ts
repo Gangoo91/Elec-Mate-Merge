@@ -439,6 +439,7 @@ function generateV9CardEnteredEmailHTML(firstName: string, unsubscribeUrl: strin
 <!-- Footer -->
 <tr><td style="text-align:center;padding:0 32px 40px">
 <p style="margin:0;font-size:12px;color:#ffffff">&copy; ${new Date().getFullYear()} Elec-Mate Ltd &middot; Built in Cumbria for UK electricians</p>
+${unsubscribeFooter(unsubscribeUrl)}
 </td></tr>
 
 </table></td></tr></table>
@@ -600,7 +601,8 @@ function generateV10LaunchPriceHTML(
   firstName: string,
   role: 'electrician' | 'apprentice',
   paymentUrl: string,
-  deadlineLabel: string
+  deadlineLabel: string,
+  unsubscribeUrl: string
 ): string {
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
   const logoUrl = 'https://elec-mate.com/logo.jpg';
@@ -869,6 +871,7 @@ ${featureRows}
 <!-- Footer -->
 <tr><td style="text-align:center;padding:0 32px 40px">
 <p style="margin:0;font-size:11px;color:#ffffff;opacity:0.45">&copy; ${new Date().getFullYear()} Elec-Mate Ltd &middot; Built in Cumbria for UK electricians</p>
+${unsubscribeFooter(unsubscribeUrl)}
 </td></tr>
 
 </table></td></tr></table>
@@ -957,7 +960,7 @@ function generateV3EmailHTML(user: EligibleUser): string {
 }
 
 // V2 "Come Back" email — V5-style, targets ALL abandoned signups (no 10-day window)
-function generateV2EmailHTML(user: EligibleUser): string {
+function generateV2EmailHTML(user: EligibleUser, unsubscribeUrl: string): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
   const t = 'color:#ffffff;font-size:14px;line-height:1.6;margin:0 0 5px';
   const b = 'color:#fff;font-weight:700';
@@ -1072,6 +1075,7 @@ function generateV2EmailHTML(user: EligibleUser): string {
 <!-- Footer -->
 <tr><td style="padding:16px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.08)">
 <p style="margin:0;font-size:12px;color:#fff">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7; &#x26A1;</p>
+${unsubscribeFooter(unsubscribeUrl)}
 </td></tr>
 
 </table></td></tr></table>
@@ -1309,15 +1313,23 @@ Deno.serve(async (req) => {
           created_at: profile.created_at,
         };
 
+        const singleEmail = userWithEmail.email.trim().toLowerCase();
+        const singleSuppressed = await getSuppressedEmails(supabaseAdmin);
+        if (singleSuppressed.has(singleEmail)) {
+          throw new Error('Recipient has unsubscribed from Elec-Mate marketing emails');
+        }
+
         const singleFirstName = userWithEmail.full_name?.split(' ')[0] || 'mate';
-        const emailHtml = generateV9CardEnteredEmailHTML(singleFirstName);
+        const singleUnsubUrl = await buildUnsubscribeUrl(singleEmail);
+        const emailHtml = generateV9CardEnteredEmailHTML(singleFirstName, singleUnsubUrl);
 
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
-          to: [userWithEmail.email.trim().toLowerCase()],
+          to: [singleEmail],
           subject: `Quick question, ${singleFirstName}`,
           replyTo: 'founder@elec-mate.com',
           html: emailHtml,
+          headers: buildUnsubscribeHeaders(singleUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v8' },
             { name: 'role', value: profile.role || 'unknown' },
@@ -1362,6 +1374,7 @@ Deno.serve(async (req) => {
         let sentCount = 0;
         let skippedCount = 0;
         const errors: string[] = [];
+        const bulkSuppressed = await getSuppressedEmails(supabaseAdmin);
 
         for (const uid of userIds) {
           try {
@@ -1399,15 +1412,23 @@ Deno.serve(async (req) => {
               created_at: profile.created_at,
             };
 
+            const bulkEmail = userWithEmail.email.trim().toLowerCase();
+            if (bulkSuppressed.has(bulkEmail)) {
+              skippedCount++;
+              continue;
+            }
+
             const bulkFirstName = userWithEmail.full_name?.split(' ')[0] || 'mate';
-            const emailHtml = generateV9CardEnteredEmailHTML(bulkFirstName);
+            const bulkUnsubUrl = await buildUnsubscribeUrl(bulkEmail);
+            const emailHtml = generateV9CardEnteredEmailHTML(bulkFirstName, bulkUnsubUrl);
 
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
-              to: [userWithEmail.email.trim().toLowerCase()],
+              to: [bulkEmail],
               subject: `Quick question, ${bulkFirstName}`,
               replyTo: 'founder@elec-mate.com',
               html: emailHtml,
+              headers: buildUnsubscribeHeaders(bulkUnsubUrl),
               tags: [
                 { name: 'campaign', value: 'incomplete_signup_v8' },
                 { name: 'role', value: profile.role || 'unknown' },
@@ -1475,13 +1496,15 @@ Deno.serve(async (req) => {
           created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
         };
 
-        const emailHtml = generateElectricianEmailHTML(testUser);
+        const testUnsubUrl = await buildUnsubscribeUrl(testEmail.trim().toLowerCase());
+        const emailHtml = generateElectricianEmailHTML(testUser, testUnsubUrl);
         const { error: emailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [testEmail.trim().toLowerCase()],
           subject: '[TEST] Your Elec-Mate account is waiting for you',
           replyTo: 'founder@elec-mate.com',
           html: emailHtml,
+          headers: buildUnsubscribeHeaders(testUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup' },
             { name: 'type', value: 'test' },
@@ -1512,14 +1535,22 @@ Deno.serve(async (req) => {
           created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
         };
 
+        const manualEmailLower = manualEmail.trim().toLowerCase();
+        const manualSuppressed = await getSuppressedEmails(supabaseAdmin);
+        if (manualSuppressed.has(manualEmailLower)) {
+          throw new Error('Recipient has unsubscribed from Elec-Mate marketing emails');
+        }
+
         const manualFirstName = manualUser.full_name?.split(' ')[0] || 'mate';
-        const manualEmailHtml = generateV9CardEnteredEmailHTML(manualFirstName);
+        const manualUnsubUrl = await buildUnsubscribeUrl(manualEmailLower);
+        const manualEmailHtml = generateV9CardEnteredEmailHTML(manualFirstName, manualUnsubUrl);
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
-          to: [manualEmail.trim().toLowerCase()],
+          to: [manualEmailLower],
           subject: `Quick question, ${manualFirstName}`,
           replyTo: 'founder@elec-mate.com',
           html: manualEmailHtml,
+          headers: buildUnsubscribeHeaders(manualUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v8' },
             { name: 'type', value: 'manual' },
@@ -1642,13 +1673,15 @@ Deno.serve(async (req) => {
           created_at: new Date().toISOString(),
         };
 
-        const v2TestHtml = generateV2EmailHTML(testUser);
+        const v2TestUnsubUrl = await buildUnsubscribeUrl(testEmail.trim().toLowerCase());
+        const v2TestHtml = generateV2EmailHTML(testUser, v2TestUnsubUrl);
         const { data: v2TestData, error: v2TestErr } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
           to: [testEmail.trim().toLowerCase()],
           subject: "[TEST] Your Elec-Mate account — here's what you're missing",
           html: v2TestHtml,
+          headers: buildUnsubscribeHeaders(v2TestUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v2' },
             { name: 'type', value: 'test' },
@@ -1692,7 +1725,17 @@ Deno.serve(async (req) => {
           .map((p: any) => ({ ...p, email: v2EmailMap.get(p.id) || null }))
           .filter((p: any) => p.email);
 
-        const v2Batch = v2WithEmails.slice(0, V2_BATCH_SIZE);
+        // PECR: never send marketing to suppressed (unsubscribed/bounced) addresses
+        const v2SuppressedSet = await getSuppressedEmails(supabaseAdmin);
+        const v2Eligible = v2WithEmails.filter(
+          (p: any) => !v2SuppressedSet.has(p.email.trim().toLowerCase())
+        );
+        const v2SuppressedCount = v2WithEmails.length - v2Eligible.length;
+        if (v2SuppressedCount > 0) {
+          console.log(`V2 campaign: skipped ${v2SuppressedCount} suppressed (unsubscribed) addresses`);
+        }
+
+        const v2Batch = v2Eligible.slice(0, V2_BATCH_SIZE);
 
         if (v2Batch.length === 0) {
           result = { sent: 0, remaining: 0, complete: true, message: 'All V2 emails sent!' };
@@ -1714,7 +1757,8 @@ Deno.serve(async (req) => {
               created_at: profile.created_at,
             };
 
-            const emailHtml = generateV2EmailHTML(emailUser);
+            const v2UnsubUrl = await buildUnsubscribeUrl(profile.email.trim().toLowerCase());
+            const emailHtml = generateV2EmailHTML(emailUser, v2UnsubUrl);
 
             const { data: emailData, error: emailError } = await resend.emails.send({
               from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
@@ -1722,6 +1766,7 @@ Deno.serve(async (req) => {
               to: [profile.email.trim().toLowerCase()],
               subject: "Your Elec-Mate account — here's what you're missing",
               html: emailHtml,
+              headers: buildUnsubscribeHeaders(v2UnsubUrl),
               tags: [
                 { name: 'campaign', value: 'incomplete_signup_v2' },
                 { name: 'role', value: profile.role || 'electrician' },
@@ -1784,6 +1829,7 @@ Deno.serve(async (req) => {
         result = {
           sent: v2SentCount,
           remaining: v2RemainingCount,
+          suppressed: v2SuppressedCount,
           complete: v2Complete,
           errors: v2Errors.length > 0 ? v2Errors : undefined,
           message: v2Complete
@@ -1882,13 +1928,18 @@ Deno.serve(async (req) => {
           created_at: new Date().toISOString(),
         };
 
-        const v3TestHtml = generateV9CardEnteredEmailHTML(v3TestUser.full_name?.split(' ')[0] || 'Test');
+        const v3TestUnsubUrl = await buildUnsubscribeUrl(testEmail.trim().toLowerCase());
+        const v3TestHtml = generateV9CardEnteredEmailHTML(
+          v3TestUser.full_name?.split(' ')[0] || 'Test',
+          v3TestUnsubUrl
+        );
         const { data: v3TestData, error: v3TestErr } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
           to: [testEmail.trim().toLowerCase()],
           subject: '[TEST] Quick question, Test',
           html: v3TestHtml,
+          headers: buildUnsubscribeHeaders(v3TestUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v3' },
             { name: 'type', value: 'test' },
@@ -1927,9 +1978,19 @@ Deno.serve(async (req) => {
           if (u.email) v3CampEmailMap.set(u.id, u.email);
         });
 
-        const allToSend = v3CampFiltered
+        const v3CampWithEmails = v3CampFiltered
           .map((p: any) => ({ ...p, email: v3CampEmailMap.get(p.id) || null }))
           .filter((p: any) => p.email);
+
+        // PECR: never send marketing to suppressed (unsubscribed/bounced) addresses
+        const v3SuppressedSet = await getSuppressedEmails(supabaseAdmin);
+        const allToSend = v3CampWithEmails.filter(
+          (p: any) => !v3SuppressedSet.has(p.email.trim().toLowerCase())
+        );
+        const v3SuppressedCount = v3CampWithEmails.length - allToSend.length;
+        if (v3SuppressedCount > 0) {
+          console.log(`V3 campaign: skipped ${v3SuppressedCount} suppressed (unsubscribed) addresses`);
+        }
 
         if (allToSend.length === 0) {
           result = { sent: 0, remaining: 0, complete: true, message: 'All emails already sent!' };
@@ -1950,7 +2011,8 @@ Deno.serve(async (req) => {
           for (const profile of batch) {
             try {
               const campFirstName = profile.full_name?.split(' ')[0] || 'mate';
-              const emailHtml = generateV9CardEnteredEmailHTML(campFirstName);
+              const campUnsubUrl = await buildUnsubscribeUrl(profile.email.trim().toLowerCase());
+              const emailHtml = generateV9CardEnteredEmailHTML(campFirstName, campUnsubUrl);
 
               const { data: emailData, error: emailError } = await resend.emails.send({
                 from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
@@ -1958,6 +2020,7 @@ Deno.serve(async (req) => {
                 to: [profile.email.trim().toLowerCase()],
                 subject: `Quick question, ${campFirstName}`,
                 html: emailHtml,
+                headers: buildUnsubscribeHeaders(campUnsubUrl),
                 tags: [
                   { name: 'campaign', value: 'incomplete_signup_v9' },
                   { name: 'role', value: profile.role || 'electrician' },
@@ -2007,12 +2070,13 @@ Deno.serve(async (req) => {
         const v3Complete = true;
 
         console.log(
-          `V3 campaign: Sent ${v3SentCount}/${v3Batch.length} by admin ${user.id}. ~${v3RemCount} remaining.`
+          `V3 campaign: Sent ${v3SentCount}/${allToSend.length} by admin ${user.id}. ~${v3RemCount} remaining.`
         );
 
         result = {
           sent: v3SentCount,
           remaining: v3RemCount,
+          suppressed: v3SuppressedCount,
           complete: v3Complete,
           errors: v3Errors.length > 0 ? v3Errors : undefined,
           message: v3Complete
@@ -2108,13 +2172,21 @@ Deno.serve(async (req) => {
         const deadline = bodyDeadline || V10_DEADLINE_LABEL;
         const firstName = recipientName?.split(' ')[0] || 'Test';
 
-        const html = generateV10LaunchPriceHTML(firstName, testRole, paymentUrl, deadline);
+        const v10TestUnsubUrl = await buildUnsubscribeUrl(testEmail.trim().toLowerCase());
+        const html = generateV10LaunchPriceHTML(
+          firstName,
+          testRole,
+          paymentUrl,
+          deadline,
+          v10TestUnsubUrl
+        );
         const { data: testData, error: testErr } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
           to: [testEmail.trim().toLowerCase()],
           subject: `[TEST] Your launch price — ${testRole === 'apprentice' ? '£4.99' : '£9.99'}/mo`,
           html,
+          headers: buildUnsubscribeHeaders(v10TestUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v10' },
             { name: 'type', value: 'test' },
@@ -2159,13 +2231,27 @@ Deno.serve(async (req) => {
         const paymentUrl = getLaunchPaymentUrl(resolvedRole);
         const deadline = bodyDeadline || V10_DEADLINE_LABEL;
 
-        const html = generateV10LaunchPriceHTML(resolvedName, resolvedRole, paymentUrl, deadline);
+        const v10ManualEmail = manualEmail.trim().toLowerCase();
+        const v10ManualSuppressed = await getSuppressedEmails(supabaseAdmin);
+        if (v10ManualSuppressed.has(v10ManualEmail)) {
+          throw new Error('Recipient has unsubscribed from Elec-Mate marketing emails');
+        }
+
+        const v10ManualUnsubUrl = await buildUnsubscribeUrl(v10ManualEmail);
+        const html = generateV10LaunchPriceHTML(
+          resolvedName,
+          resolvedRole,
+          paymentUrl,
+          deadline,
+          v10ManualUnsubUrl
+        );
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           replyTo: 'founder@elec-mate.com',
-          to: [manualEmail.trim().toLowerCase()],
+          to: [v10ManualEmail],
           subject: `Your launch price, ${resolvedName}`,
           html,
+          headers: buildUnsubscribeHeaders(v10ManualUnsubUrl),
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v10' },
             { name: 'role', value: resolvedRole },
@@ -2232,12 +2318,24 @@ Deno.serve(async (req) => {
           if (u.email) v10EmailMap.set(u.id, u.email);
         });
 
-        const toSend = v10Filtered
+        const v10WithEmails = v10Filtered
           .map((p: Record<string, unknown>) => ({
             ...p,
             email: v10EmailMap.get(p.id as string) || null,
           }))
           .filter((p: { email: string | null }) => p.email);
+
+        // PECR: never send marketing to suppressed (unsubscribed/bounced) addresses
+        const v10SuppressedSet = await getSuppressedEmails(supabaseAdmin);
+        const toSend = v10WithEmails.filter(
+          (p: { email: string | null }) => !v10SuppressedSet.has((p.email as string).trim().toLowerCase())
+        );
+        const v10SuppressedCount = v10WithEmails.length - toSend.length;
+        if (v10SuppressedCount > 0) {
+          console.log(
+            `V10 campaign: skipped ${v10SuppressedCount} suppressed (unsubscribed) addresses`
+          );
+        }
 
         if (toSend.length === 0) {
           result = {
@@ -2268,7 +2366,16 @@ Deno.serve(async (req) => {
               const paymentUrl = getLaunchPaymentUrl(profileRole);
               const firstName =
                 ((profile as { full_name?: string }).full_name?.split(' ')[0]) || 'mate';
-              const html = generateV10LaunchPriceHTML(firstName, profileRole, paymentUrl, deadline);
+              const v10UnsubUrl = await buildUnsubscribeUrl(
+                (profile as { email: string }).email.trim().toLowerCase()
+              );
+              const html = generateV10LaunchPriceHTML(
+                firstName,
+                profileRole,
+                paymentUrl,
+                deadline,
+                v10UnsubUrl
+              );
               const priceLabel = profileRole === 'apprentice' ? '£4.99' : '£9.99';
 
               const { data: emailData, error: emailError } = await resend.emails.send({
@@ -2277,6 +2384,7 @@ Deno.serve(async (req) => {
                 to: [(profile as { email: string }).email.trim().toLowerCase()],
                 subject: `Your launch price, ${firstName} — ${priceLabel}/mo`,
                 html,
+                headers: buildUnsubscribeHeaders(v10UnsubUrl),
                 tags: [
                   { name: 'campaign', value: 'incomplete_signup_v10' },
                   { name: 'role', value: profileRole },
@@ -2327,6 +2435,7 @@ Deno.serve(async (req) => {
         result = {
           sent: v10SentCount,
           remaining: toSend.length - v10SentCount,
+          suppressed: v10SuppressedCount,
           complete: v10SentCount === toSend.length,
           errors: v10Errors.length > 0 ? v10Errors : undefined,
           message: `Sent ${v10SentCount} of ${toSend.length} V10 emails.`,

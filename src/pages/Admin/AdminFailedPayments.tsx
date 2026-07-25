@@ -18,6 +18,7 @@ import { format, formatDistanceToNow } from 'date-fns';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import {
   PageFrame,
   PageHero,
@@ -65,12 +66,14 @@ type TimeFilter = '24h' | '7d' | '30d' | 'all';
 
 function getInitials(name: string | null | undefined): string {
   if (!name) return '?';
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? '')
-    .join('') || '?';
+  return (
+    name
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() ?? '')
+      .join('') || '?'
+  );
 }
 
 function getStageLabel(r: FailedPaymentRecord): string {
@@ -113,6 +116,7 @@ function isToday(iso: string): boolean {
 export default function AdminFailedPayments() {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('all');
   const [search, setSearch] = useState('');
+  const [retryArmed, setRetryArmed] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<FailedPaymentRecord | null>(null);
   const [messageSheetOpen, setMessageSheetOpen] = useState(false);
   const [messageSubject, setMessageSubject] = useState('');
@@ -515,14 +519,25 @@ export default function AdminFailedPayments() {
     refetch();
   };
 
+  // Two-step Retry All: first tap shows exactly how many chases will go out
+  // and the £ at stake — the old one-tap button fired blind.
+  const retryTargets = filtered.filter((r) => !r.resolved && r.emails_sent < 3);
+  const retryTargetsAmount = (
+    retryTargets.reduce((sum, r) => sum + (r.amount_due || 0), 0) / 100
+  ).toLocaleString('en-GB', { maximumFractionDigits: 0 });
+
   const retryAllUnresolved = () => {
-    const targets = filtered.filter((r) => !r.resolved && r.emails_sent < 3);
-    if (targets.length === 0) {
+    if (retryTargets.length === 0) {
       toast.info('Nothing to retry in the current view');
       return;
     }
+    if (!retryArmed) {
+      setRetryArmed(true);
+      return;
+    }
+    setRetryArmed(false);
     haptic.medium();
-    retryAllMutation.mutate(targets.map((t) => t.id));
+    retryAllMutation.mutate(retryTargets.map((t) => t.id));
   };
 
   const atRiskAmount = (stats.atRiskPence / 100).toLocaleString('en-GB', {
@@ -573,10 +588,7 @@ export default function AdminFailedPayments() {
                   'Run Payday Retry'
                 )}
               </button>
-              <IconButton
-                onClick={exportCSV}
-                aria-label="Export CSV"
-              >
+              <IconButton onClick={exportCSV} aria-label="Export CSV">
                 <Download className="h-4 w-4" />
               </IconButton>
               <IconButton
@@ -639,13 +651,32 @@ export default function AdminFailedPayments() {
               onSearchChange={setSearch}
               searchPlaceholder="Search by name or invoice..."
               actions={
-                <button
-                  onClick={retryAllUnresolved}
-                  disabled={retryAllMutation.isPending}
-                  className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation"
-                >
-                  {retryAllMutation.isPending ? 'Retrying...' : 'Retry All'}
-                </button>
+                <div className="flex items-center gap-2">
+                  {retryArmed && !retryAllMutation.isPending && (
+                    <button
+                      onClick={() => setRetryArmed(false)}
+                      className="h-10 px-3 rounded-full border border-white/[0.08] text-white text-[12.5px] font-medium hover:bg-white/[0.04] touch-manipulation"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                  <button
+                    onClick={retryAllUnresolved}
+                    disabled={retryAllMutation.isPending}
+                    className={cn(
+                      'h-10 px-4 rounded-full text-[13px] font-semibold disabled:opacity-50 touch-manipulation',
+                      retryArmed
+                        ? 'bg-red-500/20 border border-red-500/35 text-red-300'
+                        : 'bg-elec-yellow text-black'
+                    )}
+                  >
+                    {retryAllMutation.isPending
+                      ? 'Retrying...'
+                      : retryArmed
+                        ? `Send ${retryTargets.length} chase${retryTargets.length === 1 ? '' : 's'} (£${retryTargetsAmount})`
+                        : 'Retry All'}
+                  </button>
+                </div>
               }
             />
 
@@ -1065,8 +1096,8 @@ export default function AdminFailedPayments() {
                     Cancel {selectedRecord?.full_name || 'user'}'s subscription?
                   </h3>
                   <p className="text-[13px] text-white leading-relaxed max-w-sm mx-auto">
-                    This cancels immediately in Stripe and clears their subscribed flag. It can't
-                    be undone from here — they'd need to re-subscribe.
+                    This cancels immediately in Stripe and clears their subscribed flag. It can't be
+                    undone from here — they'd need to re-subscribe.
                   </p>
                 </div>
                 <Divider />

@@ -64,6 +64,7 @@ import { useProjectEntities } from '@/hooks/useProjectEntities';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import type { ProjectPriority } from '@/hooks/useSparkProjects';
 import { useExpensesStorage } from '@/hooks/useExpensesStorage';
+import JobCostsSection from '@/components/employer/jobs/JobCostsSection';
 import { ExpenseAddSheet } from '@/components/electrician/expenses/ExpenseAddSheet';
 import { getCategoryConfig } from '@/types/expense';
 import { TaskForm } from '@/components/tasks/TaskForm';
@@ -341,6 +342,7 @@ const ProjectDetailPage = () => {
     paid: number;
     expenses: number;
     expenses_materials: number;
+    logged_costs: number;
   } | null>(null);
   const [finVersion, setFinVersion] = useState(0);
   useEffect(() => {
@@ -360,6 +362,7 @@ const ProjectDetailPage = () => {
           paid: Number(data[0].paid) || 0,
           expenses: Number(data[0].expenses) || 0,
           expenses_materials: Number(data[0].expenses_materials) || 0,
+          logged_costs: Number(data[0].logged_costs) || 0,
         });
       }
     })();
@@ -389,7 +392,10 @@ const ProjectDetailPage = () => {
     const realCosts = serverFin
       ? serverFin.expenses -
         serverFin.expenses_materials +
-        (materialsAreEstimated ? serverFin.materials_quoted : materialActuals)
+        (materialsAreEstimated ? serverFin.materials_quoted : materialActuals) +
+        // Per-visit cost ledger (ELE-1401) — its own system, never double-
+        // counted against expenses or the materials list.
+        (serverFin.logged_costs || 0)
       : projectSpend;
     return {
       ...computeProjectFinancials({
@@ -2386,6 +2392,11 @@ const ProjectDetailPage = () => {
               )}
             </CollapsibleContent>
           </Collapsible>
+        </motion.div>
+
+        {/* ── Costs ledger — time & materials per visit (ELE-1401) ── */}
+        <motion.div variants={itemVariants}>
+          <JobCostsSection jobId={id!} />
         </motion.div>
 
         {/* ── Expenses & spend Section (ELE-1176) ── */}

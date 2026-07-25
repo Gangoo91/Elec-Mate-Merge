@@ -64,9 +64,9 @@ const StressManagementTools = () => {
       <div className="flex flex-col items-center py-8 space-y-6">
         <p className="text-[10px] font-bold text-white uppercase tracking-wider">{activeEx?.title}</p>
         <div className={cn('w-36 h-36 rounded-full border-2 flex items-center justify-center transition-all duration-1000 ease-in-out',
-          phase === 'inhale' ? 'border-white/[0.06] bg-white/[0.02] scale-110' :
-          phase === 'hold' ? 'border-white/[0.06] bg-white/[0.02] scale-105' :
-          phase === 'exhale' ? 'border-white/[0.06] bg-white/[0.02] scale-90' :
+          phase === 'inhale' ? 'border-blue-400/50 bg-blue-500/10 scale-110' :
+          phase === 'hold' ? 'border-purple-400/50 bg-purple-500/10 scale-105' :
+          phase === 'exhale' ? 'border-cyan-400/50 bg-cyan-500/10 scale-90' :
           'border-white/20 bg-white/[0.03] scale-95'
         )}>
           <div className="text-center">
@@ -91,7 +91,7 @@ const StressManagementTools = () => {
           onClick={() => start(ex.id)}
           className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all text-left"
         >
-          <div className="w-9 h-9 rounded-lg bg-white/[0.02] flex items-center justify-center flex-shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
             <span className="text-white/85 text-xs font-bold">{ex.dur}</span>
           </div>
           <div className="flex-1 min-w-0">

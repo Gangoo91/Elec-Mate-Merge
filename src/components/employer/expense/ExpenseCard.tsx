@@ -44,45 +44,46 @@ const categoryIcons: Record<string, React.ElementType> = {
   Other: Package,
 };
 
-// Map category to color classes
+// One muted icon treatment — the icon varies per category, the colour doesn't.
+const categoryTile = 'bg-white/[0.05] text-elec-yellow border-white/[0.08]';
 const categoryColors: Record<string, string> = {
-  Materials: 'bg-blue-500/10 text-blue-500 border-blue-500/30',
-  Travel: 'bg-green-500/10 text-green-500 border-green-500/30',
-  Parking: 'bg-purple-500/10 text-purple-500 border-purple-500/30',
-  Tools: 'bg-orange-500/10 text-orange-500 border-orange-500/30',
-  PPE: 'bg-red-500/10 text-red-500 border-red-500/30',
-  Training: 'bg-teal-500/10 text-teal-500 border-teal-500/30',
-  Meals: 'bg-pink-500/10 text-pink-500 border-pink-500/30',
-  Other: 'bg-white/[0.06] text-white border-white/[0.1]',
+  Materials: categoryTile,
+  Travel: categoryTile,
+  Parking: categoryTile,
+  Tools: categoryTile,
+  PPE: categoryTile,
+  Training: categoryTile,
+  Meals: categoryTile,
+  Other: categoryTile,
 };
 
-// Status colors
+// Status: quiet semantic colour on the dot/text only — no filled chips.
 const statusConfig: Record<
   string,
   { color: string; bgColor: string; borderColor: string; icon: React.ElementType }
 > = {
   Pending: {
-    color: 'text-amber-500',
-    bgColor: 'bg-amber-500/10',
-    borderColor: 'border-l-amber-500',
+    color: 'text-amber-400',
+    bgColor: 'bg-transparent',
+    borderColor: 'border-l-amber-400/60',
     icon: Clock,
   },
   Approved: {
-    color: 'text-green-500',
-    bgColor: 'bg-green-500/10',
-    borderColor: 'border-l-green-500',
+    color: 'text-emerald-400',
+    bgColor: 'bg-transparent',
+    borderColor: 'border-l-emerald-400/60',
     icon: Check,
   },
   Paid: {
-    color: 'text-blue-500',
-    bgColor: 'bg-blue-500/10',
-    borderColor: 'border-l-blue-500',
-    icon: DollarSign,
+    color: 'text-emerald-400',
+    bgColor: 'bg-transparent',
+    borderColor: 'border-l-emerald-400/60',
+    icon: Check,
   },
   Rejected: {
-    color: 'text-red-500',
-    bgColor: 'bg-red-500/10',
-    borderColor: 'border-l-red-500',
+    color: 'text-red-400',
+    bgColor: 'bg-transparent',
+    borderColor: 'border-l-red-400/60',
     icon: X,
   },
 };

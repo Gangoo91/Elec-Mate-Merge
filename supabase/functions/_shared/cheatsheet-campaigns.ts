@@ -13,6 +13,55 @@ import { Resend } from './mailer.ts';
 
 export type CheatsheetAudience = 'apprentice' | 'winback' | 'early_access' | 'signup_failure';
 
+// ── PECR: unsubscribe plumbing ───────────────────────────────────
+// Same HMAC token scheme as send-lifetime-offer — the token lands on the
+// public `unsubscribe` edge function, which upserts into email_suppressions.
+// If the secret is missing we degrade to the mailto fallback rather than
+// blocking the send (matches the other marketing senders).
+const UNSUBSCRIBE_MAILTO = 'mailto:info@elec-mate.com?subject=unsubscribe';
+const UNSUBSCRIBE_SECRET = Deno.env.get('WINBACK_UNSUBSCRIBE_SECRET') ?? '';
+
+function b64urlEncode(bytes: Uint8Array): string {
+  let bin = '';
+  bytes.forEach((b) => (bin += String.fromCharCode(b)));
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function hmacSign(payload: string, secret: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  return b64urlEncode(new Uint8Array(sig));
+}
+
+async function buildUnsubscribeUrl(email: string): Promise<string> {
+  if (!UNSUBSCRIBE_SECRET) return UNSUBSCRIBE_MAILTO;
+  const payload = JSON.stringify({
+    email: email.toLowerCase().trim(),
+    issued_at: Math.floor(Date.now() / 1000),
+  });
+  const payloadB64 = b64urlEncode(new TextEncoder().encode(payload));
+  const sig = await hmacSign(payloadB64, UNSUBSCRIBE_SECRET);
+  const supabaseUrl = Deno.env.get('SUPABASE_URL');
+  if (!supabaseUrl) return UNSUBSCRIBE_MAILTO;
+  return `${supabaseUrl}/functions/v1/unsubscribe?token=${payloadB64}.${sig}`;
+}
+
+function buildUnsubscribeHeaders(unsubscribeUrl: string): Record<string, string> {
+  const isHttps = unsubscribeUrl.startsWith('https://');
+  return {
+    'List-Unsubscribe': isHttps
+      ? `<${unsubscribeUrl}>, <${UNSUBSCRIBE_MAILTO}>`
+      : `<${UNSUBSCRIBE_MAILTO}>`,
+    ...(isHttps ? { 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' } : {}),
+  };
+}
+
 interface CampaignCopy {
   subject: string;
   intro: string;
@@ -104,10 +153,14 @@ function buildHtml(opts: {
   firstName: string | undefined;
   pdfUrl: string;
   logoUrl: string;
+  unsubscribeUrl: string;
 }): { subject: string; html: string } {
   const copy = COPY[opts.audience];
   const greeting = opts.firstName ? `Hi ${opts.firstName},` : 'Hi mate,';
   const year = new Date().getFullYear();
+  const unsubHref = opts.unsubscribeUrl.startsWith('https://')
+    ? opts.unsubscribeUrl
+    : UNSUBSCRIBE_MAILTO;
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -203,6 +256,9 @@ function buildHtml(opts: {
               <p style="margin: 0; text-align: center; font-size: 11px; color: #6b7280;">
                 © ${year} Elec-Mate Ltd · Made in the UK · Reply to this email and I'll read it.
               </p>
+              <p style="margin: 8px 0 0; text-align: center; font-size: 11px; color: #6b7280; line-height: 1.5;">
+                You're receiving this because you signed up at elec-mate.com. <a href="${unsubHref}" style="color: #6b7280; text-decoration: underline;">Unsubscribe</a>
+              </p>
             </td>
           </tr>
 
@@ -228,11 +284,13 @@ export async function sendCheatsheetCampaignEmail(params: {
   const apiKey = Deno.env.get('BREVO_API_KEY');
   if (!apiKey) return { ok: false, error: 'BREVO_API_KEY not configured' };
 
+  const unsubscribeUrl = await buildUnsubscribeUrl(params.email.trim().toLowerCase());
   const { subject, html } = buildHtml({
     audience: params.audience,
     firstName: params.firstName,
     pdfUrl: params.pdfUrl,
     logoUrl: 'https://elec-mate.com/images/elec-mate-logo-512.png',
+    unsubscribeUrl,
   });
 
   const resend = new Resend(apiKey);
@@ -243,6 +301,7 @@ export async function sendCheatsheetCampaignEmail(params: {
       to: [params.email],
       subject,
       html,
+      headers: buildUnsubscribeHeaders(unsubscribeUrl),
     });
     if (error) return { ok: false, error: error.message };
     return { ok: true };
@@ -260,10 +319,13 @@ export function renderCheatsheetCampaignHtml(params: {
   firstName?: string;
   pdfUrl: string;
 }): { subject: string; html: string } {
+  // Preview renders with the mailto fallback — real per-recipient HMAC links
+  // are only built at send time in sendCheatsheetCampaignEmail.
   return buildHtml({
     audience: params.audience,
     firstName: params.firstName,
     pdfUrl: params.pdfUrl,
     logoUrl: 'https://elec-mate.com/images/elec-mate-logo-512.png',
+    unsubscribeUrl: UNSUBSCRIBE_MAILTO,
   });
 }

@@ -29,6 +29,7 @@ import { toast } from 'sonner';
 import { linkRecordToClient } from '@/services/employerClientService';
 import { Switch } from '@/components/ui/switch';
 import { calcEmployerTotals, isLabourItem } from '@/utils/employerMoney';
+import { useJobCostEntries } from '@/hooks/useJobCostEntries';
 import type { Quote } from '@/services/financeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { cn } from '@/lib/utils';
@@ -244,6 +245,50 @@ export function CreateInvoiceDialog({
   const { subtotal, vatAmount, notionalVat, cisAmount, total, amountDue } = money;
   const hasLabour = lineItems.some(isLabourItem);
 
+  // ELE-1401 — import the job's uninvoiced cost-ledger entries as line items.
+  // Maps entry id → line-item id so only entries still on the invoice at
+  // submit get stamped (removing an imported line un-imports that entry).
+  const { uninvoiced: uninvoicedCosts, markInvoiced } = useJobCostEntries(jobId ?? null);
+  const [importedCostMap, setImportedCostMap] = useState<Record<string, string>>({});
+  const uninvoicedNotImported = uninvoicedCosts.filter((e) => !importedCostMap[e.id]);
+  const uninvoicedImportTotal = uninvoicedNotImported.reduce((s, e) => s + (e.total || 0), 0);
+
+  const importJobCosts = () => {
+    if (uninvoicedNotImported.length === 0) return;
+    const map: Record<string, string> = { ...importedCostMap };
+    const items: LineItem[] = uninvoicedNotImported.map((e) => {
+      const lineId = crypto.randomUUID();
+      map[e.id] = lineId;
+      const dateLabel = new Date(e.entry_date + 'T00:00:00').toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+      });
+      if (e.category === 'labour') {
+        return {
+          id: lineId,
+          description: `Labour — ${e.description} (${dateLabel})`,
+          quantity: e.hours || 1,
+          unit: 'hour',
+          unitPrice: e.unit_cost || e.total,
+          total: e.total,
+          type: 'labour',
+        };
+      }
+      return {
+        id: lineId,
+        description: `${e.description} (${dateLabel})`,
+        quantity: e.quantity || 1,
+        unit: 'each',
+        unitPrice: e.unit_cost || e.total,
+        total: e.total,
+        type: 'material',
+      };
+    });
+    setLineItems((prev) => [...prev, ...items]);
+    setImportedCostMap(map);
+    toast.success(`${items.length} cost ${items.length === 1 ? 'entry' : 'entries'} added`);
+  };
+
   const addLineItem = () => {
     if (!newItem.description) return;
     const qty = Number(newItem.quantity) || 1;
@@ -316,6 +361,20 @@ export function CreateInvoiceDialog({
     // Auto-link into the CRM so the client record builds itself (non-fatal).
     if (createdInvoice?.id && client) {
       linkRecordToClient('employer_invoices', createdInvoice.id, client).catch(() => {});
+    }
+
+    // Stamp imported cost-ledger entries so they can never be billed twice —
+    // only those whose line item survived to submission (ELE-1401).
+    if (createdInvoice?.id) {
+      const liveLineIds = new Set(lineItems.map((li) => li.id));
+      const stampIds = Object.entries(importedCostMap)
+        .filter(([, lineId]) => liveLineIds.has(lineId))
+        .map(([entryId]) => entryId);
+      if (stampIds.length > 0) {
+        markInvoiced({ ids: stampIds, invoiceId: createdInvoice.id }).catch((err) =>
+          console.error('Failed to stamp cost entries as invoiced:', err)
+        );
+      }
     }
 
     // Converting from a quote closes it out — a Converted quote can't be
@@ -576,6 +635,26 @@ export function CreateInvoiceDialog({
 
               {step === 2 && (
                 <div className="space-y-4">
+                  {uninvoicedNotImported.length > 0 && (
+                    <button
+                      onClick={importJobCosts}
+                      className="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
+                    >
+                      <div className="min-w-0">
+                        <div className="text-[13.5px] font-semibold text-white">
+                          Import job costs
+                        </div>
+                        <div className="mt-0.5 text-[11.5px] text-white/60">
+                          {uninvoicedNotImported.length}{' '}
+                          {uninvoicedNotImported.length === 1 ? 'entry' : 'entries'} logged on this
+                          job, not yet invoiced
+                        </div>
+                      </div>
+                      <span className="text-[14px] font-bold text-elec-yellow tabular-nums shrink-0">
+                        £{uninvoicedImportTotal.toFixed(2)}
+                      </span>
+                    </button>
+                  )}
                   {lineItems.length > 0 && (
                     <FormCard eyebrow="Line items added">
                       <div className="space-y-2">

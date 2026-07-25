@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, RefreshCw, Copy, Check, UserPlus } from 'lucide-react';
+import { Loader2, RefreshCw, Copy, Check, UserPlus, Download } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
   AlertDialog,
@@ -106,6 +106,24 @@ export default function AdminBulkCreate() {
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
     toast({ title: 'Credentials copied', variant: 'success' });
+  };
+
+  // File copy of the logins — clipboard contents are easy to lose before
+  // they're handed to the cohort.
+  const downloadCredentials = () => {
+    if (!result) return;
+    const rows = [
+      'email,password,login_url',
+      ...result.created.map((email) => `${email},${password},app.elec-mate.com`),
+    ].join('\n');
+    const blob = new Blob([rows], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `elec-mate-logins-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: 'Logins downloaded', variant: 'success' });
   };
 
   const inputCn =
@@ -267,18 +285,27 @@ export default function AdminBulkCreate() {
               )}
             </div>
             {result.created.length > 0 && (
-              <button
-                type="button"
-                onClick={copyCredentials}
-                className="h-9 px-3 rounded-lg bg-white/[0.06] border border-white/[0.1] text-white flex items-center gap-1.5 text-[12.5px]"
-              >
-                {copied ? (
-                  <Check className="h-4 w-4 text-emerald-400" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}{' '}
-                Copy logins
-              </button>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={copyCredentials}
+                  className="h-11 sm:h-9 px-3 rounded-lg bg-white/[0.06] border border-white/[0.1] text-white flex items-center gap-1.5 text-[12.5px] touch-manipulation"
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4 text-emerald-400" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}{' '}
+                  Copy logins
+                </button>
+                <button
+                  type="button"
+                  onClick={downloadCredentials}
+                  className="h-11 sm:h-9 px-3 rounded-lg bg-elec-yellow text-black flex items-center gap-1.5 text-[12.5px] font-semibold touch-manipulation"
+                >
+                  <Download className="h-4 w-4" /> CSV
+                </button>
+              </div>
             )}
           </div>
           {result.skipped.length > 0 && (

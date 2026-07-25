@@ -89,6 +89,24 @@ export default function AdminFounders() {
     },
   });
 
+  // Real founder-tier subscriber count from Stripe — the old strip showed
+  // invites-sent as "Active" and invented "lifetime revenue" from it.
+  const { data: activeFounders } = useQuery({
+    queryKey: ['admin-stripe-founder-count'],
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const { data, error } = await supabase.functions.invoke('admin-stripe-stats', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      if (error) throw error;
+      return (data?.stripe?.tierCounts?.founder as number) ?? 0;
+    },
+  });
+
   const sendTestMutation = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.functions.invoke('founder-final-push', {
@@ -324,16 +342,24 @@ export default function AdminFounders() {
           <LoadingBlocks />
         ) : (
           <>
+            {/* Honest stats — previously "Active" and "New This Month" both
+                showed invites-sent, and "Lifetime Revenue" was invites × £3.99. */}
             <StatStrip
               columns={4}
               stats={[
-                { label: 'Total Founders', value: totalProspects, accent: true },
-                { label: 'Active', value: sentCount, tone: 'emerald' },
-                { label: 'New This Month', value: sentCount, tone: 'green' },
+                { label: 'Prospects', value: totalProspects },
+                { label: 'Invites sent', value: sentCount, sub: `${progressPercent}% of list` },
                 {
-                  label: 'Lifetime Revenue',
-                  value: `£${(sentCount * 3.99).toFixed(2)}`,
-                  sub: `${progressPercent}% activated`,
+                  label: 'Subscribed',
+                  value: activeFounders ?? '—',
+                  tone: 'emerald',
+                  accent: true,
+                  sub: 'Live founder tier (Stripe)',
+                },
+                {
+                  label: 'Founder MRR',
+                  value: activeFounders != null ? `£${(activeFounders * 3.99).toFixed(2)}` : '—',
+                  sub: 'At £3.99/mo',
                 },
               ]}
             />

@@ -13,10 +13,10 @@ interface Goal {
 }
 
 const categories = [
-  { value: 'wellbeing', label: 'Wellbeing', color: 'text-white/85 bg-white/[0.02]' },
-  { value: 'work', label: 'Work', color: 'text-white/85 bg-white/[0.02]' },
-  { value: 'learning', label: 'Learning', color: 'text-white/85 bg-white/[0.02]' },
-  { value: 'personal', label: 'Personal', color: 'text-white/85 bg-white/[0.02]' },
+  { value: 'wellbeing', label: 'Wellbeing', color: 'text-emerald-300 bg-emerald-500/10 ' },
+  { value: 'work', label: 'Work', color: 'text-blue-300 bg-blue-500/10 ' },
+  { value: 'learning', label: 'Learning', color: 'text-purple-300 bg-purple-500/10 ' },
+  { value: 'personal', label: 'Personal', color: 'text-amber-300 bg-amber-500/10 ' },
 ];
 
 const STORAGE_KEY = 'elec-mate-wellbeing-goals';
@@ -99,7 +99,7 @@ const GoalSettingTracker = () => {
                   onClick={() => handleProgress(goal)}
                   className="touch-manipulation active:scale-[0.95]"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.02] flex items-center justify-center flex-shrink-0 relative">
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 flex items-center justify-center flex-shrink-0 relative">
                     <span className="text-[10px] font-bold text-white/85">{goal.progress}%</span>
                   </div>
                 </button>
@@ -174,7 +174,7 @@ const GoalSettingTracker = () => {
             <button
               onClick={handleAdd}
               disabled={!title.trim()}
-              className="flex-1 h-11 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
+              className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
             >
               Save Goal
             </button>

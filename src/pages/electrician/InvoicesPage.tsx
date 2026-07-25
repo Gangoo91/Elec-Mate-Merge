@@ -373,6 +373,17 @@ const InvoicesPage = () => {
     if (activeFilter !== 'all') {
       if (activeFilter === 'overdue') {
         filtered = filtered.filter(isInvoiceOverdue);
+      } else if (activeFilter === 'paid_month') {
+        // ELE-1408 — the "Paid this month" tile must drill into the same
+        // set it counts: paid AND paid within the current calendar month.
+        const now = new Date();
+        filtered = filtered.filter((i) => {
+          if (i.invoice_status !== 'paid') return false;
+          const at = i.invoice_paid_at ? new Date(i.invoice_paid_at) : null;
+          return (
+            !!at && at.getMonth() === now.getMonth() && at.getFullYear() === now.getFullYear()
+          );
+        });
       } else {
         filtered = filtered.filter((i) => i.invoice_status === activeFilter);
       }
@@ -457,6 +468,7 @@ const InvoicesPage = () => {
     { id: 'sent', label: 'Sent', count: stats.sent, icon: Send },
     { id: 'overdue', label: 'Overdue', count: stats.overdue, icon: AlertCircle },
     { id: 'paid', label: 'Paid', count: stats.paid, icon: CheckCircle },
+    { id: 'paid_month', label: 'Paid this month', count: stats.monthlyCount, icon: CheckCircle },
   ];
 
   // Detect ?stripe=success when returning from Stripe onboarding
@@ -710,7 +722,7 @@ const InvoicesPage = () => {
           <div className={cn(PANEL, 'overflow-hidden mt-2')}>
             <div className="grid grid-cols-2 lg:grid-cols-4">
               <button
-                onClick={() => handleFilterChange('paid')}
+                onClick={() => handleFilterChange('paid_month')}
                 className="p-4 text-left border-b border-r border-white/[0.08] lg:border-b-0 touch-manipulation active:bg-white/[0.03] transition-colors"
               >
                 <p className="text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">{formatCurrency(stats.monthlyTotal)}</p>

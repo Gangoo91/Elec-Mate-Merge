@@ -240,7 +240,22 @@ serve(async (req) => {
     );
 
     const all = await fetchRecipients(sb, body.audience);
-    const recipients = body.limit ? all.slice(0, body.limit) : all;
+
+    // PECR: never send marketing to suppressed (unsubscribed/bounced) addresses.
+    // Bulk-fetch the suppression list once — same pattern as send-lifetime-offer.
+    const { data: suppressedRows } = await sb.from('email_suppressions').select('email');
+    const suppressedSet = new Set(
+      ((suppressedRows ?? []) as { email: string }[]).map((s) => s.email.toLowerCase())
+    );
+    const eligible = all.filter((r) => !suppressedSet.has(r.email.trim().toLowerCase()));
+    const suppressedSkipped = all.length - eligible.length;
+    if (suppressedSkipped > 0) {
+      console.log(
+        `[send-cheatsheet-campaign] skipped ${suppressedSkipped} suppressed (unsubscribed) addresses`
+      );
+    }
+
+    const recipients = body.limit ? eligible.slice(0, body.limit) : eligible;
 
     if (body.dry_run) {
       return new Response(
@@ -249,6 +264,7 @@ serve(async (req) => {
           audience: body.audience,
           dry_run: true,
           would_send: recipients.length,
+          suppressed_skipped: suppressedSkipped,
           total_in_audience: all.length,
           sample: recipients
             .slice(0, 20)
@@ -283,6 +299,7 @@ serve(async (req) => {
         audience: body.audience,
         total_in_audience: all.length,
         attempted: recipients.length,
+        suppressed_skipped: suppressedSkipped,
         sent,
         failed,
         errors: errors.slice(0, 10),

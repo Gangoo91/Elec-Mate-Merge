@@ -37,18 +37,18 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 
 // Colour classes for backgrounds
 const COLOUR_CLASSES: Record<string, string> = {
-  'orange-500': 'bg-orange-500/15 text-orange-400',
-  'amber-500': 'bg-amber-500/15 text-amber-400',
-  'red-500': 'bg-red-500/15 text-red-400',
-  'cyan-500': 'bg-cyan-500/15 text-cyan-400',
-  'purple-500': 'bg-purple-500/15 text-purple-400',
-  'green-500': 'bg-green-500/15 text-green-400',
-  'teal-500': 'bg-teal-500/15 text-teal-400',
-  'slate-500': 'bg-slate-500/15 text-slate-400',
-  'indigo-500': 'bg-indigo-500/15 text-indigo-400',
-  'pink-500': 'bg-pink-500/15 text-pink-400',
-  'rose-500': 'bg-rose-500/15 text-rose-400',
-  'gray-500': 'bg-gray-500/15 text-white',
+  'orange-500': 'bg-white/[0.05] text-elec-yellow',
+  'amber-500': 'bg-white/[0.05] text-elec-yellow',
+  'red-500': 'bg-white/[0.05] text-elec-yellow',
+  'cyan-500': 'bg-white/[0.05] text-elec-yellow',
+  'purple-500': 'bg-white/[0.05] text-elec-yellow',
+  'green-500': 'bg-white/[0.05] text-elec-yellow',
+  'teal-500': 'bg-white/[0.05] text-elec-yellow',
+  'slate-500': 'bg-white/[0.05] text-elec-yellow',
+  'indigo-500': 'bg-white/[0.05] text-elec-yellow',
+  'pink-500': 'bg-white/[0.05] text-elec-yellow',
+  'rose-500': 'bg-white/[0.05] text-elec-yellow',
+  'gray-500': 'bg-white/[0.05] text-elec-yellow',
 };
 
 interface ExpenseCategorySectionProps {
@@ -69,7 +69,7 @@ export function ExpenseCategorySection({
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   const CategoryIcon = CATEGORY_ICONS[group.category] || MoreHorizontal;
-  const colourClass = COLOUR_CLASSES[group.config.colour] || 'bg-gray-500/15 text-white';
+  const colourClass = COLOUR_CLASSES[group.config.colour] || 'bg-white/[0.05] text-elec-yellow';
 
   return (
     <div className="mb-4">

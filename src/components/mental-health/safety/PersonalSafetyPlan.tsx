@@ -489,7 +489,7 @@ Review and update it regularly, especially when you're feeling well.
       {isComplete && (
         <FormCard className="border-white/[0.06]">
           <div className="flex items-start gap-3">
-            <div className="w-12 h-12 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 flex items-center justify-center flex-shrink-0">
               <Award className="h-6 w-6 text-white/85" />
             </div>
             <div className="flex-1">

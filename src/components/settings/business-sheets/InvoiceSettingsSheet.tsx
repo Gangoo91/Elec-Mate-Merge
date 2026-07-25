@@ -108,6 +108,7 @@ const InvoiceSettingsSheet = ({
   const [defReverseCharge, setDefReverseCharge] = useState(false);
   const [defCisEnabled, setDefCisEnabled] = useState(false);
   const [defSummaryView, setDefSummaryView] = useState(false);
+  const [utr, setUtr] = useState('');
   const [expandedInvoiceGroups, setExpandedInvoiceGroups] = useState<string[]>([
     'payment',
     'late_payment',
@@ -134,6 +135,7 @@ const InvoiceSettingsSheet = ({
     setDefReverseCharge(profile.default_reverse_charge ?? false);
     setDefCisEnabled(profile.default_cis_enabled ?? false);
     setDefSummaryView(profile.default_invoice_summary_view ?? false);
+    setUtr(profile.utr ?? '');
     hydratedForOpenRef.current = true;
   }, [profile, open]);
 
@@ -152,6 +154,7 @@ const InvoiceSettingsSheet = ({
         default_reverse_charge: defReverseCharge,
         default_cis_enabled: defCisEnabled,
         default_invoice_summary_view: defSummaryView,
+        utr: utr.trim() || null,
       });
       if (success) {
         toast.success('Invoice settings saved');
@@ -231,6 +234,24 @@ const InvoiceSettingsSheet = ({
                   <Switch checked={val} onCheckedChange={set} className="flex-shrink-0" />
                 </div>
               ))}
+
+              {/* ELE-1373 — UTR, auto-shown on invoices when CIS applies. */}
+              <div className="space-y-1.5 pt-1">
+                <Label className="text-white font-medium text-[13px]">
+                  UTR (Unique Taxpayer Reference)
+                </Label>
+                <Input
+                  value={utr}
+                  onChange={(e) => setUtr(e.target.value)}
+                  placeholder="e.g. 1234567890"
+                  inputMode="numeric"
+                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                />
+                <p className="text-[11.5px] text-white/55">
+                  Shown on invoices automatically when CIS deductions apply. Your National
+                  Insurance number is never stored or shown.
+                </p>
+              </div>
             </div>
 
             <div className="h-px bg-white/[0.06]" />

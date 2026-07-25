@@ -131,8 +131,11 @@ export default function AdminEmailLogs() {
         bounced: bouncedRes.count || 0,
         pending: pendingRes.count || 0,
         total: totalRes.count || 0,
+        // "Sent" only means handed to Brevo, not confirmed delivered — so the
+        // honest health metric is the share that did NOT fail or bounce.
         deliveryRate: totalRes.count
-          ? (((sentRes.count || 0) + (deliveredRes.count || 0)) / totalRes.count) * 100
+          ? ((totalRes.count - (failedRes.count || 0) - (bouncedRes.count || 0)) / totalRes.count) *
+            100
           : 0,
       };
     },
@@ -171,10 +174,7 @@ export default function AdminEmailLogs() {
           description="Transactional email log and deliverability health."
           tone="blue"
           actions={
-            <IconButton
-              onClick={() => refetch()}
-              aria-label="Refresh email logs"
-            >
+            <IconButton onClick={() => refetch()} aria-label="Refresh email logs">
               <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
             </IconButton>
           }
@@ -188,12 +188,12 @@ export default function AdminEmailLogs() {
               label: 'Delivered',
               value: (stats?.delivered || 0).toLocaleString(),
               tone: 'emerald',
+              sub: `${(stats?.deliveryRate || 0).toFixed(0)}% sent OK`,
             },
             {
               label: 'Pending',
               value: (stats?.pending || 0).toLocaleString(),
               tone: 'amber',
-              sub: `${(stats?.deliveryRate || 0).toFixed(0)}% delivery rate`,
             },
             {
               label: 'Failed',
@@ -241,9 +241,7 @@ export default function AdminEmailLogs() {
                       new Date(email.created_at),
                       { addSuffix: true }
                     )}`}
-                    trailing={
-                      <Pill tone={statusTone(email.status)}>{email.status}</Pill>
-                    }
+                    trailing={<Pill tone={statusTone(email.status)}>{email.status}</Pill>}
                     onClick={() => setSelectedEmail(email)}
                   />
                 ))}
@@ -278,9 +276,7 @@ export default function AdminEmailLogs() {
               <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
                 <div className="flex items-center gap-3">
                   {selectedEmail && (
-                    <Pill tone={statusTone(selectedEmail.status)}>
-                      {selectedEmail.status}
-                    </Pill>
+                    <Pill tone={statusTone(selectedEmail.status)}>{selectedEmail.status}</Pill>
                   )}
                 </div>
                 <SheetTitle className="text-left text-white text-xl sm:text-2xl font-semibold tracking-tight mt-2">
@@ -295,18 +291,14 @@ export default function AdminEmailLogs() {
                     <ListRow
                       title="To"
                       trailing={
-                        <span className="text-[13px] text-white">
-                          {selectedEmail?.to_email}
-                        </span>
+                        <span className="text-[13px] text-white">{selectedEmail?.to_email}</span>
                       }
                     />
                     {selectedEmail?.from_email && (
                       <ListRow
                         title="From"
                         trailing={
-                          <span className="text-[13px] text-white">
-                            {selectedEmail.from_email}
-                          </span>
+                          <span className="text-[13px] text-white">{selectedEmail.from_email}</span>
                         }
                       />
                     )}
@@ -330,9 +322,7 @@ export default function AdminEmailLogs() {
                       <ListRow
                         title="Provider"
                         trailing={
-                          <span className="text-[13px] text-white">
-                            {selectedEmail.provider}
-                          </span>
+                          <span className="text-[13px] text-white">{selectedEmail.provider}</span>
                         }
                       />
                     )}
@@ -341,10 +331,7 @@ export default function AdminEmailLogs() {
                       trailing={
                         <span className="text-[13px] text-white tabular-nums">
                           {selectedEmail?.created_at &&
-                            format(
-                              new Date(selectedEmail.created_at),
-                              'dd MMM yyyy HH:mm'
-                            )}
+                            format(new Date(selectedEmail.created_at), 'dd MMM yyyy HH:mm')}
                         </span>
                       }
                     />
@@ -390,18 +377,17 @@ export default function AdminEmailLogs() {
                   </ListCard>
                 )}
 
-                {selectedEmail?.metadata &&
-                  Object.keys(selectedEmail.metadata).length > 0 && (
-                    <ListCard>
-                      <ListCardHeader tone="indigo" title="Metadata" />
-                      <div className="p-5">
-                        <Divider />
-                        <pre className="mt-4 text-[11.5px] text-white bg-white/[0.03] border border-white/[0.06] p-3 rounded-xl overflow-x-auto leading-relaxed">
-                          {JSON.stringify(selectedEmail.metadata, null, 2)}
-                        </pre>
-                      </div>
-                    </ListCard>
-                  )}
+                {selectedEmail?.metadata && Object.keys(selectedEmail.metadata).length > 0 && (
+                  <ListCard>
+                    <ListCardHeader tone="indigo" title="Metadata" />
+                    <div className="p-5">
+                      <Divider />
+                      <pre className="mt-4 text-[11.5px] text-white bg-white/[0.03] border border-white/[0.06] p-3 rounded-xl overflow-x-auto leading-relaxed">
+                        {JSON.stringify(selectedEmail.metadata, null, 2)}
+                      </pre>
+                    </div>
+                  </ListCard>
+                )}
               </div>
             </div>
           </SheetContent>

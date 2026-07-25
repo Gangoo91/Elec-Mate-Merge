@@ -1,0 +1,4 @@
+-- ELE-1401 — get_job_financials gains logged_costs + logged_costs_unbilled
+-- from the job_cost_entries ledger (applied to prod 2026-07-25 via MCP;
+-- full function body in the MCP migration job_financials_logged_costs —
+-- drop + recreate with two appended columns, body otherwise unchanged).

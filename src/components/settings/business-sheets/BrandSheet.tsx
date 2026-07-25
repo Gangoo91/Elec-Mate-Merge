@@ -14,6 +14,17 @@ interface BrandSheetProps {
   onSave: (data: Record<string, unknown>) => Promise<boolean>;
 }
 
+// Colour inputs require 7-char #rrggbb — legacy rows hold short/invalid hex
+// (e.g. '#000') which bricks the picker (ELE-1398). Expand or fall back.
+const normaliseHex = (value: string | null | undefined, fallback: string): string => {
+  const v = (value || '').trim();
+  if (/^#[0-9a-fA-F]{6}$/.test(v)) return v;
+  if (/^#[0-9a-fA-F]{3}$/.test(v)) {
+    return '#' + v[1] + v[1] + v[2] + v[2] + v[3] + v[3];
+  }
+  return fallback;
+};
+
 const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('#FFCC00');
@@ -29,9 +40,9 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
     }
     if (hydratedForOpenRef.current) return;
     if (!profile) return;
-    setPrimaryColor(profile.primary_color || '#FFCC00');
-    setSecondaryColor(profile.secondary_color || '#1A1A1A');
-    setAccentColor(profile.accent_color || '#F59E0B');
+    setPrimaryColor(normaliseHex(profile.primary_color, '#FFCC00'));
+    setSecondaryColor(normaliseHex(profile.secondary_color, '#1A1A1A'));
+    setAccentColor(normaliseHex(profile.accent_color, '#F59E0B'));
     hydratedForOpenRef.current = true;
   }, [profile, open]);
 

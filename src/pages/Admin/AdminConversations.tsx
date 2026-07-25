@@ -2,50 +2,45 @@ import { useState, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import { AdminMessageCard } from '@/components/admin/cards/AdminMessageCard';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { Skeleton } from '@/components/ui/skeleton';
-import {
-  MessagesSquare,
-  MessageSquare,
-  Clock,
-  Trash2,
-  ThumbsUp,
-  ChevronRight,
-  AlertTriangle,
-  MessageCircle,
-  RefreshCw,
-  Loader2,
-} from 'lucide-react';
+import { RefreshCw, Trash2, ThumbsUp, AlertTriangle, Loader2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  type Tone,
+} from '@/components/admin/editorial';
 
-// Static color map - extracted to module scope for performance
-const CATEGORY_COLORS: Record<string, string> = {
-  general: 'bg-blue-500/20 text-blue-400',
-  technical: 'bg-yellow-500/20 text-yellow-400',
-  jobs: 'bg-green-500/20 text-green-400',
-  study: 'bg-amber-500/20 text-amber-400',
-  default: 'bg-gray-500/20 text-gray-400',
+const CATEGORY_TONE: Record<string, Tone> = {
+  general: 'blue',
+  technical: 'yellow',
+  jobs: 'green',
+  study: 'amber',
 };
 
-const getCategoryColor = (category: string | null): string =>
-  CATEGORY_COLORS[category || ''] || CATEGORY_COLORS.default;
+const categoryTone = (category: string | null): Tone => CATEGORY_TONE[category || ''] || 'cyan';
+
+function getInitials(name?: string | null): string {
+  if (!name) return '??';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
 interface ChatMessage {
   id: string;
@@ -160,137 +155,98 @@ export default function AdminConversations() {
     setConfirmingDelete(false);
   }, []);
 
+  const filterTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: messages?.length },
+      ...categories.map((c) => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) })),
+    ],
+    [categories, messages?.length]
+  );
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-6 pb-20">
-        <AdminPageHeader
+      <PageFrame>
+        <PageHero
+          eyebrow="Moderation"
           title="Conversations"
-          subtitle={`${stats?.total || 0} total messages`}
-          icon={MessagesSquare}
-          iconColor="text-blue-400"
-          iconBg="bg-blue-500/10 border-blue-500/20"
-          accentColor="from-blue-500 via-cyan-400 to-blue-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+          description="Global chat messages across the community."
+          tone="blue"
+          actions={
+            <IconButton onClick={() => refetch()} aria-label="Refresh messages">
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-3 gap-3">
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.total || 0}</p>
-                  <p className="text-xs text-muted-foreground">Total Messages</p>
-                </div>
-                <MessageSquare className="h-6 w-6 text-blue-400" />
-              </div>
-            </CardContent>
-          </Card>
+        <StatStrip
+          columns={3}
+          stats={[
+            { label: 'Total messages', value: stats?.total || 0, accent: true },
+            { label: 'Today', value: stats?.today || 0, tone: 'emerald' },
+            { label: 'Categories', value: stats?.categories || 0, tone: 'amber' },
+          ]}
+        />
 
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.today || 0}</p>
-                  <p className="text-xs text-muted-foreground">Today</p>
-                </div>
-                <Clock className="h-6 w-6 text-green-400" />
-              </div>
-            </CardContent>
-          </Card>
+        <FilterBar
+          tabs={filterTabs}
+          activeTab={categoryFilter}
+          onTabChange={setCategoryFilter}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search messages or authors…"
+        />
 
-          <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.categories || 0}</p>
-                  <p className="text-xs text-muted-foreground">Categories</p>
-                </div>
-                <MessageCircle className="h-6 w-6 text-yellow-400" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search messages..."
-                className="flex-1"
-              />
-              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-full sm:w-[140px] h-12 touch-manipulation">
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  {categories?.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-12 w-12 shrink-0 touch-manipulation"
-                onClick={() => refetch()}
-              >
-                <RefreshCw className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Messages List */}
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3"
-              >
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : messages?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={MessageSquare}
-                title="No messages found"
-                description="Chat messages will appear here."
-              />
-            </CardContent>
-          </Card>
+          <LoadingBlocks />
+        ) : !messages || messages.length === 0 ? (
+          <EmptyState
+            title="No messages found"
+            description="Chat messages will appear here as the community talks."
+          />
         ) : (
-          <div className="space-y-2">
-            {messages?.map((message) => (
-              <AdminMessageCard
-                key={message.id}
-                message={message}
-                onClick={handleMessageClick}
-                getCategoryColor={getCategoryColor}
-              />
-            ))}
-          </div>
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Messages"
+              meta={<Pill tone="blue">{messages.length}</Pill>}
+            />
+            <ListBody>
+              {messages.map((message) => (
+                <ListRow
+                  key={message.id}
+                  lead={<Avatar initials={getInitials(message.author_name)} />}
+                  title={message.author_name || 'Unknown'}
+                  subtitle={
+                    <span className="flex items-center gap-2">
+                      <span className="truncate">{message.content}</span>
+                      <span className="text-white/30">·</span>
+                      <span className="shrink-0">
+                        {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
+                      </span>
+                    </span>
+                  }
+                  trailing={
+                    <>
+                      {message.upvotes > 0 && (
+                        <span className="hidden sm:flex items-center gap-1 text-[12px] text-white/70 tabular-nums">
+                          <ThumbsUp className="h-3 w-3" />
+                          {message.upvotes}
+                        </span>
+                      )}
+                      <Pill tone={categoryTone(message.category)}>
+                        {message.category || 'none'}
+                      </Pill>
+                    </>
+                  }
+                  onClick={() => handleMessageClick(message)}
+                />
+              ))}
+            </ListBody>
+          </ListCard>
         )}
 
         {/* Message Detail Sheet */}
@@ -301,21 +257,22 @@ export default function AdminConversations() {
             setConfirmingDelete(false);
           }}
         >
-          <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[75vh] rounded-t-2xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]"
+          >
             <div className="flex flex-col h-full">
               {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
 
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-yellow-500/20 flex items-center justify-center">
-                    <MessageSquare className="h-6 w-6 text-blue-400" />
-                  </div>
-                  <div className="text-left">
-                    <p>{selectedMessage?.author_name}</p>
-                    <p className="text-sm font-normal text-muted-foreground">
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="flex items-center gap-3 text-left">
+                  <Avatar initials={getInitials(selectedMessage?.author_name)} />
+                  <div>
+                    <p className="text-white">{selectedMessage?.author_name}</p>
+                    <p className="text-[12px] font-normal text-white/60">
                       {selectedMessage?.created_at &&
                         formatDistanceToNow(new Date(selectedMessage.created_at), {
                           addSuffix: true,
@@ -325,52 +282,41 @@ export default function AdminConversations() {
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
                 {/* Message Content */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <MessageCircle className="h-4 w-4 text-blue-400" />
-                      Message Content
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm whitespace-pre-wrap">{selectedMessage?.content}</p>
-                  </CardContent>
-                </Card>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4">
+                  <p className="text-[13.5px] text-white whitespace-pre-wrap leading-relaxed">
+                    {selectedMessage?.content}
+                  </p>
+                </div>
 
                 {/* Message Meta */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Details</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Category</span>
-                      <Badge className={getCategoryColor(selectedMessage?.category || null)}>
-                        {selectedMessage?.category || 'none'}
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Upvotes</span>
-                      <span className="text-sm font-medium flex items-center gap-1">
-                        <ThumbsUp className="h-3 w-3" />
-                        {selectedMessage?.upvotes || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Author ID</span>
-                      <span className="text-xs font-mono text-muted-foreground">
-                        {selectedMessage?.author_id?.slice(0, 8)}...
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] divide-y divide-white/[0.06]">
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <span className="text-[12px] text-white/70">Category</span>
+                    <Pill tone={categoryTone(selectedMessage?.category || null)}>
+                      {selectedMessage?.category || 'none'}
+                    </Pill>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <span className="text-[12px] text-white/70">Upvotes</span>
+                    <span className="text-[13px] text-white font-medium flex items-center gap-1.5 tabular-nums">
+                      <ThumbsUp className="h-3 w-3" />
+                      {selectedMessage?.upvotes || 0}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <span className="text-[12px] text-white/70">Author ID</span>
+                    <span className="text-[12px] font-mono text-white/60">
+                      {selectedMessage?.author_id?.slice(0, 8)}…
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* Actions Footer — inline two-step confirm, no nested modal */}
               {isSuperAdmin && (
-                <SheetFooter className="p-4 border-t border-border">
+                <SheetFooter className="p-4 border-t border-white/[0.06]">
                   {confirmingDelete ? (
                     <div className="w-full space-y-3">
                       <p className="text-[13px] text-white flex items-center gap-2">
@@ -380,7 +326,7 @@ export default function AdminConversations() {
                       <div className="flex gap-3">
                         <Button
                           variant="outline"
-                          className="flex-1 h-12 touch-manipulation"
+                          className="flex-1 h-12 touch-manipulation bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]"
                           onClick={() => setConfirmingDelete(false)}
                           disabled={deleteMessageMutation.isPending}
                         >
@@ -421,7 +367,7 @@ export default function AdminConversations() {
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

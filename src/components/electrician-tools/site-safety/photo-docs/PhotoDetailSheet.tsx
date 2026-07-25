@@ -267,7 +267,7 @@ export default function PhotoDetailSheet({
               <div className="px-4 pt-3">
                 <div
                   ref={mergedPhotoRef}
-                  className="relative rounded-xl overflow-hidden"
+                  className="relative mx-auto w-fit max-w-full rounded-xl overflow-hidden bg-black/30"
                   style={{ touchAction: isAnnotating ? 'pinch-zoom' : 'pan-y' }}
                   onClick={handlePhotoTapForAnnotation}
                   onTouchEnd={isAnnotating ? handlePhotoTapForAnnotation : undefined}
@@ -285,14 +285,14 @@ export default function PhotoDetailSheet({
                           src={photo.file_url}
                           controls
                           playsInline
-                          className="w-full aspect-auto rounded-xl object-cover"
+                          className="block w-auto h-auto max-w-full max-h-[65vh] rounded-xl object-contain select-none"
                           draggable={false}
                         />
                       ) : (
                         <img
                           src={photo.file_url}
                           alt={photo.description}
-                          className="w-full aspect-auto rounded-xl object-cover"
+                          className="block w-auto h-auto max-w-full max-h-[65vh] rounded-xl object-contain select-none"
                           draggable={false}
                         />
                       )}

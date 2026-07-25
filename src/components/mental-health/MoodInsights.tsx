@@ -322,7 +322,7 @@ const MoodInsights = () => {
                     key={i}
                     className={`px-4 py-3 rounded-xl text-[13px] border ${
                       insight.type === 'positive'
-                        ? 'bg-white/[0.02] text-white border-white/[0.06]'
+                        ? 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/40'
                         : insight.type === 'concern'
                           ? 'bg-red-500/10 text-white border-red-500/25'
                           : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08]'

@@ -67,9 +67,18 @@ const FILTER_TABS = [
 ];
 
 const QUICK_REPLIES = [
-  { label: 'Looking into this', text: "Thanks for reaching out. We're looking into this and will get back to you shortly." },
-  { label: 'Fixed', text: 'This has been resolved. Please let us know if you experience any further issues.' },
-  { label: 'More details', text: 'Could you share a bit more detail so we can help? Screenshots or steps to reproduce would be useful.' },
+  {
+    label: 'Looking into this',
+    text: "Thanks for reaching out. We're looking into this and will get back to you shortly.",
+  },
+  {
+    label: 'Fixed',
+    text: 'This has been resolved. Please let us know if you experience any further issues.',
+  },
+  {
+    label: 'More details',
+    text: 'Could you share a bit more detail so we can help? Screenshots or steps to reproduce would be useful.',
+  },
 ] as const;
 
 function getInitials(name?: string | null): string {
@@ -163,8 +172,7 @@ export default function AdminSupport() {
         const s = search.toLowerCase();
         filtered = filtered.filter(
           (t) =>
-            t.subject.toLowerCase().includes(s) ||
-            t.profiles?.full_name?.toLowerCase().includes(s)
+            t.subject.toLowerCase().includes(s) || t.profiles?.full_name?.toLowerCase().includes(s)
         );
       }
       return filtered;
@@ -330,7 +338,10 @@ export default function AdminSupport() {
         )}
 
         <Sheet open={!!selectedTicket} onOpenChange={() => setSelectedTicket(null)}>
-          <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
+          <SheetContent
+            side="bottom"
+            className="h-[90vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-12 h-1.5 bg-white/20 rounded-full" />
@@ -373,7 +384,9 @@ export default function AdminSupport() {
                       {statusLabel(selectedTicket.status)}
                     </Pill>
                     <span className="text-[11px] text-white tabular-nums">
-                      {formatDistanceToNow(new Date(selectedTicket.created_at), { addSuffix: true })}
+                      {formatDistanceToNow(new Date(selectedTicket.created_at), {
+                        addSuffix: true,
+                      })}
                     </span>
                   </div>
                 )}
@@ -382,10 +395,7 @@ export default function AdminSupport() {
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Avatar
-                      initials={getInitials(selectedTicket?.profiles?.full_name)}
-                      size="sm"
-                    />
+                    <Avatar initials={getInitials(selectedTicket?.profiles?.full_name)} size="sm" />
                     <div className="min-w-0 flex-1">
                       <p className="text-[12px] font-semibold text-white truncate">
                         {selectedTicket?.profiles?.full_name || 'Unknown'}
@@ -411,17 +421,12 @@ export default function AdminSupport() {
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <Avatar
-                        initials={getInitials(response.profiles?.full_name)}
-                        size="sm"
-                      />
+                      <Avatar initials={getInitials(response.profiles?.full_name)} size="sm" />
                       <div className="min-w-0 flex-1 flex items-center gap-2 flex-wrap">
                         <p className="text-[12px] font-semibold text-white truncate">
                           {response.profiles?.full_name || 'Unknown'}
                         </p>
-                        {response.is_admin_response && (
-                          <Pill tone="yellow">Admin</Pill>
-                        )}
+                        {response.is_admin_response && <Pill tone="yellow">Admin</Pill>}
                         <span className="text-[11px] text-white tabular-nums">
                           {formatDistanceToNow(new Date(response.created_at), { addSuffix: true })}
                         </span>
@@ -440,7 +445,7 @@ export default function AdminSupport() {
                     <button
                       key={qr.label}
                       onClick={() => setReplyMessage(qr.text)}
-                      className="h-8 px-3 rounded-full text-[11px] font-medium bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.06] touch-manipulation transition-colors"
+                      className="h-11 sm:h-9 px-3.5 rounded-full text-[12px] font-medium bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.06] touch-manipulation transition-colors"
                     >
                       {qr.label}
                     </button>

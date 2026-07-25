@@ -7,28 +7,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useUserNotifications, type UserNotification } from '@/hooks/useUserNotifications';
 import { formatDistanceToNow, isToday, isYesterday } from 'date-fns';
 import { cn } from '@/lib/utils';
-
-// No icons — a small colour-coded category label + accent carries the meaning.
-type Tone = { label: string; text: string; bar: string };
-
-const CATEGORIES: [RegExp, Tone][] = [
-  [/overdue|fail|danger|urgent|reject|declin/i, { label: 'Action needed', text: 'text-red-300', bar: 'bg-red-400' }],
-  [/part.?p|deadline|notifiable/i, { label: 'Part P', text: 'text-amber-300', bar: 'bg-amber-400' }],
-  [/qs|review|sign.?off|countersign/i, { label: 'QS', text: 'text-elec-yellow', bar: 'bg-elec-yellow' }],
-  [/approv|paid|recovered|complete|accepted|success/i, { label: 'Done', text: 'text-emerald-300', bar: 'bg-emerald-400' }],
-  [/leave|holiday|timesheet|expense|absence|rota|shift|job|assign/i, { label: 'Team', text: 'text-blue-300', bar: 'bg-blue-400' }],
-  [/message|chat|reply/i, { label: 'Message', text: 'text-sky-300', bar: 'bg-sky-400' }],
-  [/snag|defect|fault/i, { label: 'Snag', text: 'text-orange-300', bar: 'bg-orange-400' }],
-  [/invoice|payment|quote|deposit|reward|referral/i, { label: 'Finance', text: 'text-emerald-300', bar: 'bg-emerald-400' }],
-  [/cert|report|eicr|\beic\b|expir/i, { label: 'Certificate', text: 'text-blue-300', bar: 'bg-blue-400' }],
-  [/subscription|billing/i, { label: 'Account', text: 'text-white/70', bar: 'bg-white/40' }],
-];
-
-const toneFor = (type: string, title = '', message = ''): Tone => {
-  const hay = `${type} ${title} ${message}`;
-  for (const [re, tone] of CATEGORIES) if (re.test(hay)) return tone;
-  return { label: 'Update', text: 'text-white/70', bar: 'bg-white/40' };
-};
+// Shared category → colour/label source (same as the /notifications page).
+import { categoryTone as toneFor } from '@/lib/notificationCategory';
 
 const bucketOf = (iso: string): 'Today' | 'Yesterday' | 'Earlier' => {
   const d = new Date(iso);
