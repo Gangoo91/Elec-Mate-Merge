@@ -158,6 +158,9 @@ async function buildAlertsForUser(
     .select('id, invoice_number, client_data, total, due_date, status')
     .eq('user_id', userId)
     .not('status', 'in', '("paid","Paid","cancelled","Cancelled")')
+    // Belt-and-braces: some invoices keep status 'overdue' after being paid
+    // (paid_at set, status never updated) — they must NOT inflate the total (ELE-1378).
+    .is('paid_at', null)
     .not('due_date', 'is', null)
     .lt('due_date', yesterday)
     .is('deleted_at', null)
@@ -170,11 +173,14 @@ async function buildAlertsForUser(
     );
     alerts.push({
       type: 'overdue_invoices',
-      referenceId: `batch-${new Date().toDateString()}`,
+      // Stable ref (not date-based): the push still fires once/day via the
+      // same-day log check, but the BELL keeps ONE unread row until it's read —
+      // no "same overdue total every morning" pile-up (ELE-1378).
+      referenceId: 'overdue-invoices',
       title: `${overdueInvoices.length} overdue invoice${overdueInvoices.length > 1 ? 's' : ''}`,
       body: `${formatted} outstanding. Tap to chase.`,
       pushType: 'invoice',
-      data: { role, invoiceId: overdueInvoices[0].id },
+      data: { role, route: '/electrician/invoices', invoiceId: overdueInvoices[0].id },
     });
   }
 

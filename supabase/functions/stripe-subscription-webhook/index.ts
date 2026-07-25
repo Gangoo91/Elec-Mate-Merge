@@ -1915,20 +1915,24 @@ serve(async (req) => {
           break;
         }
 
-        // Don't immediately revoke access - Stripe will retry
-        // But notify the user
-        await supabase.from('user_notifications').insert({
-          user_id: userId,
-          type: 'payment_failed',
-          title: 'Payment Failed',
-          message:
-            'Your subscription payment failed. Please update your payment method to avoid losing access.',
-          link: '/subscriptions',
-          metadata: {
+        // Don't immediately revoke access - Stripe will retry. Notify the user
+        // via the unified spine so a failed payment also PUSHES (not just bell) —
+        // ELE-226. notify_user runs fine under the webhook's service role.
+        await (supabase.rpc as unknown as (
+          fn: string,
+          args: Record<string, unknown>
+        ) => Promise<{ error: unknown }>)('notify_user', {
+          p_user_id: userId,
+          p_type: 'payment_failed',
+          p_title: 'Payment failed',
+          p_message:
+            'Your subscription payment failed. Update your payment method to keep your access.',
+          p_data: {
+            route: '/subscriptions',
+            ref_id: invoice.id,
             invoice_id: invoice.id,
             amount: invoice.amount_due / 100,
           },
-          is_read: false,
         });
 
         // --- Dunning email sequence: Email 1 (immediate) ---

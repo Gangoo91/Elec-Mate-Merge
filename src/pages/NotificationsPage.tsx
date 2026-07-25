@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useUserNotifications, type UserNotification } from '@/hooks/useUserNotifications';
 import { format, isToday, isYesterday, formatDistanceToNow } from 'date-fns';
 import { Bell, CheckCheck, Trash2, X, ArrowLeft } from 'lucide-react';
@@ -106,6 +106,24 @@ const NotificationsPage = () => {
   const { notifications, unreadCount, markAsRead, markAllAsRead, deleteNotification, clearAll } =
     useUserNotifications();
   const navigate = useNavigate();
+  const [filter, setFilter] = useState<string>('All');
+
+  // Only offer filter chips for categories that are actually present.
+  const categoriesPresent = useMemo(
+    () => Array.from(new Set(notifications.map((n) => categoryTone(n.type).label))),
+    [notifications]
+  );
+  const chips = useMemo(() => {
+    const base = ['All'];
+    if (notifications.some((n) => !n.is_read)) base.push('Unread');
+    return [...base, ...categoriesPresent];
+  }, [notifications, categoriesPresent]);
+
+  const filtered = useMemo(() => {
+    if (filter === 'All') return notifications;
+    if (filter === 'Unread') return notifications.filter((n) => !n.is_read);
+    return notifications.filter((n) => categoryTone(n.type).label === filter);
+  }, [notifications, filter]);
 
   const handleOpen = (n: UserNotification) => {
     if (!n.is_read) markAsRead.mutate(n.id);
@@ -156,6 +174,25 @@ const NotificationsPage = () => {
             )}
           </div>
         </div>
+        {/* Filter chips — only when there's more than one thing to filter by */}
+        {chips.length > 2 && (
+          <div className="px-4 sm:px-6 lg:px-8 pb-3 flex gap-2 overflow-x-auto no-scrollbar">
+            {chips.map((c) => (
+              <button
+                key={c}
+                onClick={() => setFilter(c)}
+                className={cn(
+                  'shrink-0 h-8 px-3 rounded-full text-[12px] font-medium touch-manipulation transition-colors border',
+                  filter === c
+                    ? 'bg-white text-black border-white'
+                    : 'bg-white/[0.04] text-white/70 border-white/[0.10] hover:bg-white/[0.08]'
+                )}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="h-[1px] bg-white/[0.08]" />
       </div>
 
@@ -169,10 +206,12 @@ const NotificationsPage = () => {
             <p className="text-sm font-semibold text-white">All caught up</p>
             <p className="text-xs text-white/50 mt-1">No notifications right now</p>
           </div>
+        ) : filtered.length === 0 ? (
+          <div className="py-16 text-center text-[13px] text-white/50">Nothing in “{filter}”.</div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4 auto-rows-min">
             <AnimatePresence>
-              {notifications.map((n) => (
+              {filtered.map((n) => (
                 <NotificationCard
                   key={n.id}
                   n={n}
