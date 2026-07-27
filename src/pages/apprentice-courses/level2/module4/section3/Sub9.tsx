@@ -189,7 +189,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'IET On-Site Guide and BS 7671 Appendix 5 give the spacing factor for cable installation in conduit and trunking. ~40-45 % maximum fill is the install limit; this allows cables to slide past each other during the pull and gives room for thermal dissipation in service. Tighter fills cause pulls to jam (in the worst case, you cannot get the cable through at all) and reduce the cables&rsquo; rated current via thermal grouping.',
+      'The IET On-Site Guide Appendix E gives the cable factors for conduit and trunking (BS 7671 does not tabulate them; Reg 522.8.1 sets the principle). ~40-45 % maximum fill is the install limit; this allows cables to slide past each other during the pull and gives room for thermal dissipation in service. Tighter fills cause pulls to jam (in the worst case, you cannot get the cable through at all) and reduce the cables&rsquo; rated current via thermal grouping.',
   },
 ];
 

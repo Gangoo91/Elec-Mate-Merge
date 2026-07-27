@@ -213,7 +213,7 @@ const faqs = [
   {
     question: "Are there other correction factors beyond Ca, Cg and Ci?",
     answer:
-      "Yes, several. The harmonic correction Ch (Appendix 11) for multi-core cables carrying significant third-harmonic neutral current; the soil-thermal-resistivity correction (Table 4B3) for buried cables; depth-of-burial correction for non-standard depth; multi-conductor correction for parallel runs. For everyday domestic and small commercial work, Ca / Cg / Ci cover almost everything. For commercial sub-mains feeding LED arrays, UPS systems or large variable-speed drives, you must add Ch.",
+      "Yes, several. The triplen-harmonic rating factor (Appendix 4 Section 5.5) for multi-core cables carrying significant third-harmonic neutral current; the soil-thermal-resistivity correction (Table 4B3) for buried cables; depth-of-burial correction for non-standard depth; multi-conductor correction for parallel runs. For everyday domestic and small commercial work, Ca / Cg / Ci cover almost everything. For commercial sub-mains feeding LED arrays, UPS systems or large variable-speed drives, you must add Ch.",
   },
   {
     question: "Can a correction factor ever be above 1.0?",
@@ -573,7 +573,7 @@ export default function Sub3() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Ch — harmonic correction (BS 7671 Appendix 11).</strong> Three-phase circuits with significant third-harmonic content (LED drivers, switched-mode power supplies, UPS, large variable-speed drives) push extra current through the neutral conductor. The neutral can end up carrying as much as the line conductors, and Ch derates the multi-core cable’s overall CCC accordingly. For typical domestic loads Ch = 1.0 (third-harmonic content is small); for commercial loads with more than 15 percent third-harmonic content, Ch can drop below 0.85.
+                <strong>Triplen-harmonic rating factor (BS 7671 Appendix 4 Section 5.5).</strong> Three-phase circuits with significant third-harmonic content (LED drivers, switched-mode power supplies, UPS, large variable-speed drives) push extra current through the neutral conductor. The neutral can end up carrying as much as the line conductors, and Ch derates the multi-core cable’s overall CCC accordingly. For typical domestic loads Ch = 1.0 (third-harmonic content is small); for commercial loads with more than 15 percent third-harmonic content, Ch can drop below 0.85.
               </li>
               <li>
                 <strong>Soil thermal resistivity correction (Table 4B3).</strong> Buried cables under Method D assume soil thermal resistivity of 2.5 K·m/W. Damp clay (around 1.0 K·m/W) gives a correction above 1.0; dry sand (around 3.0 K·m/W) gives a correction below 1.0. Significant on long buried sub-mains.
@@ -586,7 +586,7 @@ export default function Sub3() {
               </li>
             </ul>
             <p>
-              You will not be expected to apply Ch or the soil correction in everyday Level 3 design exercises, but you must know they exist and recognise the install conditions that trigger them. On site, the prompt to dig deeper into Appendix 11 or 4B3 is usually a brief on a commercial fit-out with mixed loads, or a sub-main spec sheet that calls out the local soil type.
+              You will not be expected to apply Ch or the soil correction in everyday Level 3 design exercises, but you must know they exist and recognise the install conditions that trigger them. On site, the prompt to dig deeper into Appendix 4 Section 5.5 or Table 4B3 is usually a brief on a commercial fit-out with mixed loads, or a sub-main spec sheet that calls out the local soil type.
             </p>
           </ConceptBlock>
 

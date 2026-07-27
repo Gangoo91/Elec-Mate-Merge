@@ -304,7 +304,7 @@ const HNCModule4Section3_3 = () => {
                 DNO data plus cable impedance — and document.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.7.3.201; DNO connection statement; BS 7671 Appendix 14 (loop impedance)."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 643.7.3.201; DNO connection statement; BS 7671 Appendix 14 (determination of prospective fault current)."
           />
 
           <LearningOutcomes

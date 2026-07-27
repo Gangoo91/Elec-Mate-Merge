@@ -24,6 +24,8 @@ interface CertDef {
   accentColor: string;
   comingSoon?: boolean;
   category: 'electrical' | 'fire-safety' | 'security' | 'renewables';
+  /** Overrides the default /new cert route (e.g. the log book area). */
+  route?: string;
 }
 
 const specialistCerts: CertDef[] = [
@@ -125,6 +127,15 @@ const specialistCerts: CertDef[] = [
     standard: 'BS 5839-1',
     accentColor: 'from-pink-500 via-rose-400 to-red-400',
     category: 'fire-safety',
+  },
+  {
+    id: 'fire-alarm-log-books',
+    title: 'FA Log Book',
+    description: 'Live building log — weekly tests, faults, Annex H export',
+    standard: 'BS 5839-1',
+    accentColor: 'from-red-500 via-orange-400 to-amber-400',
+    category: 'fire-safety',
+    route: '/electrician/inspection-testing/fire-alarm-log-books',
   },
   {
     id: 'emergency-lighting',
@@ -289,7 +300,9 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                     key={cert.id}
                     cert={cert}
                     draft={drafts?.[cert.id]}
-                    onOpen={() => navigate(`/electrician/inspection-testing/${cert.id}/new`)}
+                    onOpen={() =>
+                      navigate(cert.route ?? `/electrician/inspection-testing/${cert.id}/new`)
+                    }
                     onResume={() =>
                       navigate(
                         `/electrician/inspection-testing/${cert.id}/${drafts?.[cert.id]?.latestReportId}`

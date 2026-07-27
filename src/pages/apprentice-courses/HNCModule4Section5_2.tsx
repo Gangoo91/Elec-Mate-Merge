@@ -1,7 +1,7 @@
 /**
  * Module 4 · Section 5 · Subsection 2 — Distribution Board Design
  * HNC Electrical Engineering for Building Services (Building Services Specialist)
- *   Ways calculation, diversity factor application (BS 7671 Appendix 1), Regulation
+ *   Ways calculation, diversity factor application (IET On-Site Guide Appendix A), Regulation
  *   514.9 labelling, three-phase load balancing, mounting heights and IP ratings for
  *   final distribution boards.
  */
@@ -345,7 +345,7 @@ const HNCModule4Section5_2 = () => {
               switchgear ratings, and ultimately project costs.
             </p>
             <p>
-              <strong>Diversity factors per BS 7671 Appendix 1 (circuit type / diversity factor / notes):</strong>
+              <strong>Diversity factors per IET On-Site Guide Appendix A (circuit type / diversity factor / notes):</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Lighting — 66% (0.66) — office/commercial areas</li>

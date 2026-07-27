@@ -239,7 +239,7 @@ const faqs = [
   {
     question: 'How do I calculate the required busbar rating for a distribution board?',
     answer:
-      'Busbar rating must consider: (1) Maximum design current including future capacity, (2) Diversity factors per BS 7671 Appendix 1, (3) Temperature rise limits from BS EN 61439, (4) Short-circuit withstand (Icw) matching the prospective fault current, and (5) Harmonic current effects (multiply neutral by 1.45 for LED/IT loads).',
+      'Busbar rating must consider: (1) Maximum design current including future capacity, (2) Diversity factors per IET On-Site Guide Appendix A, (3) Temperature rise limits from BS EN 61439, (4) Short-circuit withstand (Icw) matching the prospective fault current, and (5) Harmonic current effects (multiply neutral by 1.45 for LED/IT loads).',
   },
   {
     question: 'What documentation is required for a new distribution board installation?',

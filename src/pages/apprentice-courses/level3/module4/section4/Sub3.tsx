@@ -420,10 +420,10 @@ export default function Sub3() {
           <ConceptBlock
             title="R1+R2 — comparing measured to expected"
             plainEnglish="R1+R2 is the line + CPC loop resistance from the supply end to the accessory. The expected value depends on conductor size, length and material. Compare measured to expected — significant discrepancy indicates a HRJ somewhere along the route."
-            onSite="Use BS 7671 OSG (On-Site Guide) Appendix or BS 7671 Appendix 8 reference tables. For a typical 32 A ring final at 4 mm²/2.5 mm² T+E across 30 m: R1+R2 ≈ 0.45 Ω. Measured &gt;0.7 Ω = +50% above expected = HRJ candidate. Megger MFT1741+ in continuity mode (200 mA, autoranging) reads R1+R2 in seconds with the circuit isolated."
+            onSite="Use the conductor-resistance tables in the IET On-Site Guide or GN3 — BS 7671 itself does not tabulate (R1+R2). For a typical 32 A ring final at 4 mm²/2.5 mm² T+E across 30 m: R1+R2 ≈ 0.45 Ω. Measured &gt;0.7 Ω = +50% above expected = HRJ candidate. Megger MFT1741+ in continuity mode (200 mA, autoranging) reads R1+R2 in seconds with the circuit isolated."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Expected R1+R2</strong> — depends on cable size, length, material. Tables in OSG Appendix.</li>
+              <li><strong>Expected R1+R2</strong> — depends on cable size, length, material. Resistance-per-metre tables are in the On-Site Guide.</li>
               <li><strong>Measured = expected</strong> — circuit is healthy.</li>
               <li><strong>Measured significantly higher</strong> — HRJ somewhere on the loop. Halve and retest to localise.</li>
               <li><strong>Measured OPEN</strong> — broken conductor (CPC or line) somewhere on the loop. Walk the run to find break.</li>

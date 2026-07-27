@@ -43,6 +43,8 @@ import { useCollegeConversations } from '@/hooks/useCollegeChat';
 
 // Admin messages
 import { useAdminMessages } from '@/hooks/useAdminMessages';
+import ChatThread from '@/components/messaging/ChatThread';
+import AdminInboxPanel from '@/components/messaging/AdminInboxPanel';
 import { useApprenticeTutorMessages } from '@/hooks/useApprenticeTutorMessages';
 
 // Employer components
@@ -355,181 +357,6 @@ function PeerChatView({
   );
 }
 
-// Admin Chat View Component - Two-way chat with admin
-function AdminChatView({
-  currentUserId,
-  conversationMessages,
-  sendReply,
-  isSending,
-  markAsRead,
-  deleteMessage,
-  isDeleting,
-}: {
-  currentUserId: string;
-  conversationMessages: any[];
-  sendReply: (args: { message: string; subject?: string }) => Promise<any>;
-  isSending: boolean;
-  markAsRead: (id: string) => void;
-  deleteMessage?: (id: string) => void;
-  isDeleting?: boolean;
-}) {
-  const [newMessage, setNewMessage] = useState('');
-  const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
-
-  // Safely filter out any malformed messages
-  const safeMessages = (conversationMessages || []).filter(
-    (msg) => msg && msg.id && msg.created_at && msg.message
-  );
-
-  // Mark unread messages as read on mount
-  useEffect(() => {
-    safeMessages.forEach((msg) => {
-      if (msg.recipient_id === currentUserId && !msg.read_at) {
-        markAsRead(msg.id);
-      }
-    });
-  }, [safeMessages.length, currentUserId, markAsRead]);
-
-  const handleSend = async () => {
-    if (!newMessage.trim() || isSending) return;
-
-    try {
-      await sendReply({ message: newMessage.trim(), subject: 'Support Request' });
-      setNewMessage('');
-      toast({
-        title: 'Message sent',
-        description: 'The admin team will respond soon',
-      });
-    } catch (error) {
-      console.error('Failed to send:', error);
-      toast({
-        title: 'Failed to send',
-        description: 'Please try again',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  const handleDelete = (msgId: string) => {
-    if (deleteMessage) {
-      deleteMessage(msgId);
-      setMessageToDelete(null);
-      toast({
-        title: 'Message deleted',
-      });
-    }
-  };
-
-  return (
-    <div className="flex flex-col h-full">
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-3">
-          {safeMessages.length === 0 ? (
-            <div className="text-center py-8">
-              <Shield className="h-12 w-12 text-red-400/30 mx-auto mb-3" />
-              <p className="text-muted-foreground text-sm mb-2">Need help or have feedback?</p>
-              <p className="text-xs text-muted-foreground/70">Send a message to the admin team</p>
-            </div>
-          ) : (
-            safeMessages.map((msg) => {
-              const isFromUser = msg.sender_id === currentUserId;
-              return (
-                <div
-                  key={msg.id}
-                  className={cn('flex group', isFromUser ? 'justify-end' : 'justify-start')}
-                >
-                  <div className="relative">
-                    <div
-                      className={cn(
-                        'max-w-[85%] rounded-2xl px-4 py-3',
-                        isFromUser
-                          ? 'bg-blue-500 text-white rounded-br-md'
-                          : 'bg-muted text-foreground rounded-bl-md'
-                      )}
-                    >
-                      {!isFromUser &&
-                        msg.subject &&
-                        msg.subject !== 'Reply' &&
-                        msg.subject !== 'Support' &&
-                        msg.subject !== 'Support Request' && (
-                          <p className="text-xs font-semibold mb-1 opacity-70">{msg.subject}</p>
-                        )}
-                      <p className="text-sm whitespace-pre-wrap">{msg.message}</p>
-                      <div
-                        className={cn(
-                          'flex items-center gap-2 mt-1.5',
-                          isFromUser ? 'justify-end' : 'justify-start'
-                        )}
-                      >
-                        <p
-                          className={cn(
-                            'text-[10px]',
-                            isFromUser ? 'text-blue-100' : 'text-muted-foreground'
-                          )}
-                        >
-                          {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
-                        </p>
-                      </div>
-                    </div>
-                    {/* Delete button - show on hover/tap */}
-                    {deleteMessage && (
-                      <button
-                        onClick={() => handleDelete(msg.id)}
-                        disabled={isDeleting}
-                        className={cn(
-                          'absolute -top-2 opacity-0 group-hover:opacity-100 transition-opacity',
-                          'w-6 h-6 rounded-full bg-red-500/90 hover:bg-red-500 flex items-center justify-center',
-                          'text-white shadow-md touch-manipulation',
-                          isFromUser ? '-left-2' : '-right-2'
-                        )}
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-      </ScrollArea>
-
-      {/* Message Input */}
-      <div className="p-4 border-t border-border shrink-0">
-        <div className="flex gap-2">
-          <Input
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Message admin..."
-            disabled={isSending}
-            className="flex-1 h-11 touch-manipulation"
-          />
-          <Button
-            onClick={handleSend}
-            disabled={!newMessage.trim() || isSending}
-            size="icon"
-            className="h-11 w-11 bg-red-500 hover:bg-red-600 text-white shrink-0 rounded-xl"
-          >
-            {isSending ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <Send className="h-5 w-5" />
-            )}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -544,7 +371,6 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const [selectedTeamDM, setSelectedTeamDM] = useState<TeamDirectMessage | null>(null);
   const [selectedCollegeConversation, setSelectedCollegeConversation] =
     useState<CollegeConversation | null>(null);
-  const [selectedAdminMessage, setSelectedAdminMessage] = useState<any>(null);
   const [peerMessages, setPeerMessages] = useState<PeerMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
 
@@ -600,16 +426,15 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   // Admin messages
   const {
     messages: adminMessages,
-    conversationMessages,
     unreadCount: adminUnread,
-    markAsRead: markAdminAsRead,
     markAllAsRead: markAllAdminAsRead,
     sendReply,
     isSending: isSendingReply,
-    deleteMessage: deleteAdminMessage,
-    deleteAllMessages: deleteAllAdminMessages,
-    isDeleting: isDeletingAdmin,
   } = useAdminMessages();
+
+  // ELE-1415/1417 — an admin using the app is still a user; the Admin tab
+  // should show them the support inbox rather than a customer's own thread.
+  const isAdminUser = !!profile?.admin_role;
 
   // Calculate unreads
   const jobConversations = isEmployerContext ? employerConversations : electricianConversations;
@@ -662,7 +487,6 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
       setSelectedTeamChannel(null);
       setSelectedTeamDM(null);
       setSelectedCollegeConversation(null);
-      setSelectedAdminMessage(null);
       setPeerMessages([]);
     }
     onOpenChange(isOpen);
@@ -675,7 +499,6 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     setSelectedTeamChannel(null);
     setSelectedTeamDM(null);
     setSelectedCollegeConversation(null);
-    setSelectedAdminMessage(null);
     setPeerMessages([]);
   };
 
@@ -722,8 +545,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     selectedPeerConversation ||
     selectedTeamChannel ||
     selectedTeamDM ||
-    selectedCollegeConversation ||
-    selectedAdminMessage;
+    selectedCollegeConversation;
   const isInTeamChat = selectedTeamChannel || selectedTeamDM;
   const isInCollegeChat = !!selectedCollegeConversation;
 
@@ -889,7 +711,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                 </TabsTrigger>
               </TabsList>
 
-              <div className="flex-1 overflow-hidden">
+              {/* ELE-1417 — the admin/support tab hosts ChatThread, which owns
+                  its own scroller and needs real height. Wrapping it in the
+                  shared ScrollArea collapsed it to content height and pushed the
+                  composer up under the empty state. */}
+              <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
+                {activeTab !== 'admin' && (
                 <ScrollArea className="h-full">
                   <TabsContent value="job" className="m-0 p-4">
                     {isEmployerContext ? (
@@ -974,165 +801,48 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     </TabsContent>
                   )}
 
-                  {/* Admin Messages Tab */}
-                  <TabsContent value="admin" className="m-0 p-4">
-                    {adminMessages.length === 0 ? (
-                      <div className="flex flex-col items-center justify-center py-12 text-center">
-                        <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-4">
-                          <Shield className="h-8 w-8 text-red-400/50" />
-                        </div>
-                        <h3 className="font-semibold text-foreground mb-1">No messages yet</h3>
-                        <p className="text-sm text-muted-foreground max-w-[200px]">
-                          Contact the admin team for help or support
-                        </p>
-                        {/* Start conversation button */}
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="mt-4 h-10 touch-manipulation border-red-500/30 text-red-400 hover:bg-red-500/10"
-                          onClick={() =>
-                            setSelectedAdminMessage({ id: 'new', subject: 'New Message' })
-                          }
-                        >
-                          <Send className="h-4 w-4 mr-2" />
-                          Message Admin
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                        {/* Actions header */}
-                        <div className="flex items-center justify-between pb-2 border-b border-border">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-9 touch-manipulation text-xs"
-                            onClick={() =>
-                              setSelectedAdminMessage({ id: 'new', subject: 'New Message' })
-                            }
-                          >
-                            <Send className="h-3.5 w-3.5 mr-1.5" />
-                            New Message
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-9 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                            onClick={() => {
-                              if (confirm('Delete all messages? This cannot be undone.')) {
-                                deleteAllAdminMessages();
-                                toast({ title: 'All messages deleted' });
-                              }
-                            }}
-                            disabled={isDeletingAdmin}
-                          >
-                            <Trash2 className="h-3.5 w-3.5 mr-1.5" />
-                            Clear All
-                          </Button>
-                        </div>
-                        {adminMessages.map((msg) => {
-                          const isUnread = msg.recipient_id === user?.id && !msg.read_at;
-                          const isFromUser = msg.sender_id === user?.id;
-                          return (
-                            <div
-                              key={msg.id}
-                              className={cn(
-                                'relative group flex items-start gap-3 p-4 rounded-xl text-left transition-all',
-                                isUnread
-                                  ? 'bg-elec-yellow/10 border border-elec-yellow/20'
-                                  : isFromUser
-                                    ? 'bg-blue-500/5 border border-blue-500/10'
-                                    : 'bg-muted/30 border border-transparent'
-                              )}
-                            >
-                              {/* Click area for opening chat */}
-                              <button
-                                onClick={() => {
-                                  setSelectedAdminMessage(msg);
-                                  if (!msg.read_at && msg.recipient_id === user?.id) {
-                                    markAdminAsRead(msg.id);
-                                  }
-                                }}
-                                className="absolute inset-0 touch-manipulation"
-                              />
-
-                              {/* Icon */}
-                              <div
-                                className={cn(
-                                  'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 relative z-10',
-                                  isFromUser
-                                    ? 'bg-blue-500/20'
-                                    : isUnread
-                                      ? 'bg-red-500/20'
-                                      : 'bg-muted'
-                                )}
-                              >
-                                {isFromUser ? (
-                                  <Send className="h-5 w-5 text-blue-400" />
-                                ) : (
-                                  <Shield
-                                    className={cn(
-                                      'h-5 w-5',
-                                      isUnread ? 'text-red-400' : 'text-muted-foreground'
-                                    )}
-                                  />
-                                )}
-                              </div>
-
-                              {/* Content */}
-                              <div className="flex-1 min-w-0 relative z-10 pointer-events-none">
-                                <div className="flex items-start justify-between gap-2">
-                                  <div className="flex items-center gap-2">
-                                    <p
-                                      className={cn(
-                                        'text-sm leading-tight',
-                                        isUnread
-                                          ? 'font-semibold text-foreground'
-                                          : 'text-foreground/80'
-                                      )}
-                                    >
-                                      {isFromUser ? 'You' : 'Admin'}
-                                    </p>
-                                    {isFromUser && (
-                                      <Badge
-                                        variant="outline"
-                                        className="text-[9px] px-1.5 py-0 h-4 bg-blue-500/10 text-blue-400 border-blue-500/20"
-                                      >
-                                        Sent
-                                      </Badge>
-                                    )}
-                                  </div>
-                                  {isUnread && (
-                                    <span className="w-2 h-2 rounded-full bg-red-500 shrink-0 mt-1.5" />
-                                  )}
-                                </div>
-                                <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
-                                  {msg.message}
-                                </p>
-                                <p className="text-[10px] text-muted-foreground/60 mt-2">
-                                  {formatDistanceToNow(new Date(msg.created_at), {
-                                    addSuffix: true,
-                                  })}
-                                </p>
-                              </div>
-
-                              {/* Delete button - always visible on mobile */}
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  deleteAdminMessage(msg.id);
-                                }}
-                                disabled={isDeletingAdmin}
-                                className="relative z-10 w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center text-red-400 touch-manipulation shrink-0"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </TabsContent>
                 </ScrollArea>
+                )}
+                {/* ELE-1415/1417 — an admin opening this tab used to see only
+                    their own thread with "admin", because the sheet used the
+                    customer-side hook. Admins now get the real support inbox;
+                    everyone else keeps their conversation with support. */}
+                {isAdminUser ? (
+                  <TabsContent value="admin" className="m-0 flex-1 min-h-0 p-0 data-[state=active]:flex data-[state=active]:flex-col">
+                    <AdminInboxPanel />
+                  </TabsContent>
+                ) : (
+                  <TabsContent value="admin" className="m-0 flex-1 min-h-0 p-0 data-[state=active]:flex data-[state=active]:flex-col">
+                    <ChatThread
+                      messages={adminMessages
+                        .slice()
+                        .sort(
+                          (a, b) =>
+                            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+                        )
+                        .map((m) => ({
+                          id: m.id,
+                          body: m.message,
+                          createdAt: m.created_at,
+                          isOwn: m.sender_id === user?.id,
+                        }))}
+                      onSend={(body) => sendReply({ message: body })}
+                      isSending={isSendingReply}
+                      placeholder="Message the Elec-Mate team…"
+                      emptyState={
+                        <div className="text-center px-6">
+                          <p className="text-[15px] font-semibold text-white">
+                            Message the team
+                          </p>
+                          <p className="mt-1 text-[13px] text-white/60 max-w-[240px]">
+                            Ask a question or report a problem — we reply here and you will get
+                            a notification.
+                          </p>
+                        </div>
+                      }
+                    />
+                  </TabsContent>
+                )}
               </div>
             </Tabs>
           </>
@@ -1156,7 +866,6 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     (selectedPeerConversation.supporter?.user_id === user?.id
                       ? selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate'
                       : selectedPeerConversation.supporter?.display_name || 'Peer Supporter')}
-                  {selectedAdminMessage && 'Admin Support'}
                 </h3>
               </div>
               {/* Peer Chat Actions */}
@@ -1229,17 +938,6 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
               )}
 
               {/* Admin Chat View - Two-way conversation */}
-              {selectedAdminMessage && (
-                <AdminChatView
-                  currentUserId={user?.id || ''}
-                  conversationMessages={conversationMessages}
-                  sendReply={sendReply}
-                  isSending={isSendingReply}
-                  markAsRead={markAdminAsRead}
-                  deleteMessage={deleteAdminMessage}
-                  isDeleting={isDeletingAdmin}
-                />
-              )}
             </div>
           </div>
         )}

@@ -65,7 +65,7 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
             </Button>
             <div>
               <h1 className="text-base font-semibold text-white">Inspection &amp; Testing</h1>
-              <p className="text-[10px] text-white/50">BS 7671:2018+A3:2024</p>
+              <p className="text-[10px] text-white/50">BS 7671:2018+A4:2026</p>
             </div>
           </div>
         </div>

@@ -584,6 +584,137 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
           }
           return null;
         })()}
+
+        {/* Which devices, specifically — assessors want the list, not a percentage */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <Label className="text-white text-xs block">Devices tested this visit</Label>
+            <button
+              type="button"
+              onClick={() => {
+                const list = Array.isArray(formData.sampledDevices) ? formData.sampledDevices : [];
+                onUpdate('sampledDevices', [...list, { ref: '', zone: '', result: 'pass' }]);
+              }}
+              className="text-[12px] font-medium text-elec-yellow touch-manipulation min-h-[44px] px-2"
+            >
+              + Add device
+            </button>
+          </div>
+          {(Array.isArray(formData.sampledDevices) ? formData.sampledDevices : []).length === 0 && (
+            <p className="text-[11px] text-white/40 leading-relaxed">
+              Optional but recommended — record each device by reference (e.g. Z2/D14) so the next
+              visit knows exactly what's still to test in the cycle.
+            </p>
+          )}
+          <div className="space-y-2">
+            {(Array.isArray(formData.sampledDevices) ? formData.sampledDevices : []).map(
+              (d: { ref: string; zone: string; result: string }, i: number) => {
+                const list = formData.sampledDevices as {
+                  ref: string;
+                  zone: string;
+                  result: string;
+                }[];
+                const set = (field: string, value: string) =>
+                  onUpdate(
+                    'sampledDevices',
+                    list.map((row, idx) => (idx === i ? { ...row, [field]: value } : row))
+                  );
+                return (
+                  <div key={i} className="flex gap-2">
+                    <Input
+                      value={d.ref}
+                      onChange={(e) => set('ref', e.target.value)}
+                      className={cn(inputCn, 'flex-1')}
+                      placeholder="Device ref (Z2/D14)"
+                    />
+                    <Input
+                      value={d.zone}
+                      onChange={(e) => set('zone', e.target.value)}
+                      className={cn(inputCn, 'w-24')}
+                      placeholder="Zone"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => set('result', d.result === 'pass' ? 'fail' : 'pass')}
+                      className={cn(
+                        'shrink-0 w-16 h-12 rounded-lg text-[12px] font-semibold touch-manipulation border',
+                        d.result === 'pass'
+                          ? 'bg-green-500/15 text-green-400 border-green-500/30'
+                          : 'bg-red-500/15 text-red-400 border-red-500/30'
+                      )}
+                    >
+                      {d.result === 'pass' ? 'Pass' : 'Fail'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onUpdate(
+                          'sampledDevices',
+                          list.filter((_, idx) => idx !== i)
+                        )
+                      }
+                      className="shrink-0 w-10 h-12 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.08] touch-manipulation"
+                      aria-label="Remove device"
+                    >
+                      ×
+                    </button>
+                  </div>
+                );
+              }
+            )}
+          </div>
+        </div>
+
+        {/* Reason devices were not tested */}
+        <div>
+          <Label className="text-white text-xs mb-1.5 block">
+            Devices not tested — reason (access, occupied areas…)
+          </Label>
+          <Textarea
+            value={formData.devicesNotTestedReason || ''}
+            onChange={(e) => onUpdate('devicesNotTestedReason', e.target.value)}
+            className="touch-manipulation text-base min-h-[70px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+            placeholder="e.g. Rooms 210-214 occupied — to be covered at the next visit"
+          />
+        </div>
+
+        {/* 12-month cycle statement — recorded, not just hinted */}
+        <div>
+          <Label className="text-white text-xs mb-1.5 block">
+            Have all devices been tested within the last 12 months?
+          </Label>
+          <div className="grid grid-cols-3 gap-2">
+            {(
+              [
+                ['yes', 'Yes'],
+                ['no', 'No'],
+                ['unknown', 'Not known'],
+              ] as [string, string][]
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => onUpdate('allDevicesTested12mo', value)}
+                className={cn(
+                  'h-11 rounded-lg text-[13px] font-medium touch-manipulation border transition-colors',
+                  formData.allDevicesTested12mo === value
+                    ? value === 'no'
+                      ? 'bg-red-500/15 text-red-400 border-red-500/40'
+                      : 'bg-elec-yellow text-black border-elec-yellow'
+                    : 'bg-white/[0.06] text-white border-white/[0.12] hover:bg-white/[0.1]'
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {formData.allDevicesTested12mo === 'no' && (
+            <p className="mt-1.5 text-[11px] text-red-400 leading-relaxed">
+              Record which areas are outstanding above — BS 5839-1:2025 expects every device
+              functionally tested over the 12-month cycle.
+            </p>
+          )}
+        </div>
       </Section>
 
       {/* Compliance Score */}

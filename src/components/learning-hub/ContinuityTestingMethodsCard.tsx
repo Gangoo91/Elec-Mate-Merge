@@ -112,7 +112,7 @@ const ContinuityTestingMethodsCard = () => {
       id: 'ring-circuit',
       name: 'Ring Circuit Continuity',
       description: 'Specific testing procedure for ring final circuits',
-      regulation: 'BS 7671 Appendix 15',
+      regulation: 'BS 7671 Reg 643.2.1',
       when: 'For all ring final circuits to verify ring integrity',
       procedure: [
         'Identify both ends of the ring at the distribution board',

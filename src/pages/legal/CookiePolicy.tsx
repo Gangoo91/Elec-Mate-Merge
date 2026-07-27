@@ -17,7 +17,7 @@ import {
 import LegalPageLayout from '@/components/layout/LegalPageLayout';
 
 const CookiePolicy = () => {
-  const lastUpdated = '30 January 2026';
+  const lastUpdated = '26 July 2026';
   const effectiveDate = '30 January 2026';
 
   return (
@@ -311,17 +311,43 @@ const CookiePolicy = () => {
             6. Marketing Cookies
           </h2>
           <p className="text-gray-300 leading-relaxed mb-3">
-            Marketing cookies may be used to track visitors across websites and display relevant
-            advertisements.{' '}
+            With your consent, we use marketing cookies and similar technologies to measure how
+            well our advertising works and to reach people likely to find Elec-Mate useful.{' '}
             <strong className="text-white">
-              We currently do not use marketing or advertising cookies.
+              None of these are loaded unless you accept marketing cookies in our banner
             </strong>{' '}
-            If this changes, we will update this policy and request your consent.
+            — declining means the scripts are never added to the page.
           </p>
-          <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30">
-            <p className="text-green-200 text-sm">
-              <strong>Current Status:</strong> No marketing or advertising cookies are in use on
-              Elec-Mate.
+          <div className="space-y-3">
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+              <h3 className="font-semibold text-white mb-2">Meta Pixel (Facebook/Instagram)</h3>
+              <p className="text-gray-300 text-sm">
+                Measures whether our Facebook and Instagram ads lead to sign-ups, and helps build
+                audiences of similar tradespeople. Data may be transferred to Meta in the USA under
+                the UK Extension to the EU-US Data Privacy Framework.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+              <h3 className="font-semibold text-white mb-2">Google Ads &amp; Google Analytics 4</h3>
+              <p className="text-gray-300 text-sm">
+                Measures ad conversions and site usage. We use Google Consent Mode v2 — all Google
+                storage is denied by default and only switched on after you opt in.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+              <h3 className="font-semibold text-white mb-2">Vector (Leadsy.ai) — company identification</h3>
+              <p className="text-gray-300 text-sm">
+                Uses your IP address to estimate which <strong className="text-white">company or
+                organisation</strong> a visit may have come from (it does not identify you as an
+                individual). We use this to understand which UK contracting firms are interested in
+                Elec-Mate and to inform our business outreach. Loaded only with marketing consent.
+              </p>
+            </div>
+          </div>
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 mt-3">
+            <p className="text-gray-300 text-sm">
+              If you withdraw marketing consent, these scripts are removed and will not load on
+              future visits; Google and Meta are also signalled to stop using stored data.
             </p>
           </div>
         </section>
@@ -392,6 +418,43 @@ const CookiePolicy = () => {
                   rel="noopener noreferrer"
                 >
                   Privacy Policy
+                </a>
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+              <h3 className="font-semibold text-white mb-2">Meta, Google &amp; Vector (Marketing)</h3>
+              <p className="text-gray-300 text-sm mb-2">
+                Only loaded if you consent to marketing cookies. Meta and Google measure
+                advertising; Vector (Leadsy.ai) estimates the company a visit came from using the
+                IP address. See section 6 for full details.
+              </p>
+              <p className="text-gray-400 text-xs">
+                <a
+                  href="https://www.facebook.com/privacy/policy/"
+                  className="text-yellow-400 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Meta Privacy Policy
+                </a>{' '}
+                |{' '}
+                <a
+                  href="https://policies.google.com/privacy"
+                  className="text-yellow-400 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Privacy Policy
+                </a>{' '}
+                |{' '}
+                <a
+                  href="https://www.leadsy.ai/privacy"
+                  className="text-yellow-400 hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Leadsy Privacy Policy
                 </a>
               </p>
             </div>

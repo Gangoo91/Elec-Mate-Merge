@@ -228,7 +228,7 @@ const faqs = [
   {
     question: 'How do I assess maximum demand for a new building with no historical data?',
     answer:
-      'Use a combination of methods: (1) CIBSE Guide A benchmark data for similar building types, (2) BS 7671 Appendix 1 diversity factors, (3) detailed load analysis of major equipment, (4) measured data from comparable buildings. Always add appropriate allowance for future growth (typically 20-25%).',
+      'Use a combination of methods: (1) CIBSE Guide A benchmark data for similar building types, (2) IET On-Site Guide Appendix A diversity factors, (3) detailed load analysis of major equipment, (4) measured data from comparable buildings. Always add appropriate allowance for future growth (typically 20-25%).',
   },
   {
     question: 'Why does the DNO want maximum demand in kVA not kW?',
@@ -396,7 +396,7 @@ const HNCModule4Section1_1 = () => {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Sum connected loads</li>
               <li>Apply diversity factors</li>
-              <li>BS 7671 Appendix 1 guidance</li>
+              <li>IET On-Site Guide Appendix A guidance</li>
               <li>Suitable when loads known</li>
             </ul>
             <p>

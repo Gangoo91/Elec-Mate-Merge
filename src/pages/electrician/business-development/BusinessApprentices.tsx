@@ -90,24 +90,24 @@ const BusinessApprentices = () => {
 
   // Key Stats Data
   const keyStats = [
-    { label: 'Gov Incentive', value: '£3,000', sublabel: 'Per apprentice', icon: PoundSterling },
-    { label: 'Retention Rate', value: '85%', sublabel: 'Well-managed', icon: Users },
-    { label: 'Full Qualification', value: '4 Years', sublabel: 'Training period', icon: BookOpen },
+    { label: 'SME Hire Incentive', value: 'Up to £2,000', sublabel: 'Ages 16-24, from Oct 2026', icon: PoundSterling },
+    { label: 'Apprentice Wage', value: '£8.00/hr', sublabel: 'April 2026 minimum', icon: Users },
+    { label: 'Full Qualification', value: '4 Years', sublabel: 'Typical training period', icon: BookOpen },
   ];
 
   // Recruitment Section Data
   const recruitmentMetrics = [
-    { label: 'Time to Hire', value: '6-8 weeks', sublabel: 'Quality candidates' },
-    { label: 'ROI', value: '£7.50/£1', sublabel: 'Investment return' },
-    { label: 'Success Rate', value: '85%', sublabel: 'Structured hiring' },
-    { label: 'Cost Per Hire', value: '£1,200-2,500', sublabel: 'Total investment' },
+    { label: 'Time to Hire', value: '6-8 weeks', sublabel: 'Typical, quality candidates' },
+    { label: 'Training Funding', value: '100%', sublabel: 'Eligible under-25s, small employers' },
+    { label: "Employer NI", value: '£0', sublabel: 'Apprentices under 25' },
+    { label: 'Cost Per Hire', value: '£1,200-2,500', sublabel: 'Typical total investment' },
   ];
 
   const recruitmentStrategies = [
     {
       title: 'Digital-First Approach',
       description:
-        'Social media presence, video content, interactive applications, virtual open days. Attracts tech-savvy candidates and reduces recruitment timeline by 30%.',
+        'Social media presence, video content, interactive applications, virtual open days. Attracts candidates where they already spend their time.',
     },
     {
       title: 'Partnership Ecosystem',
@@ -141,22 +141,22 @@ const BusinessApprentices = () => {
 
   // Legal Section Data
   const complianceMetrics = [
-    { label: 'Non-Compliance Risk', value: '15%', sublabel: 'Face penalties annually' },
-    { label: 'Average Penalty', value: '£12,500', sublabel: 'Per violation' },
-    { label: 'Compliance ROI', value: '£4.50/£1', sublabel: 'Investment return' },
-    { label: 'Time to Comply', value: '4-6 weeks', sublabel: 'Structured approach' },
+    { label: 'Underpayment Penalty', value: '200%', sublabel: 'Of wage arrears owed' },
+    { label: 'Maximum Penalty', value: '£20,000', sublabel: 'Per underpaid worker' },
+    { label: 'Off-the-Job Training', value: '6 hrs/week', sublabel: 'Legal minimum, in paid time' },
+    { label: 'Progress Reviews', value: '12 weeks', sublabel: 'Recommended cycle' },
   ];
 
   const legalRequirements = [
     {
-      title: '2025 Minimum Wage Requirements',
+      title: 'Minimum Wage (April 2026 Rates)',
       description:
-        'Apprentice rate: £7.00/hour (first year or under 19). 18-20: £12.21/hour (after first year). Automatic penalties up to £25,000 per worker for underpayment.',
+        'Apprentice rate £8.00/hour applies while under 19, or 19+ in the first year only. After that they must get their age rate: £10.85 (18-20) or £12.71 (21+). Underpayment penalty is 200% of arrears, up to £20,000 per worker, plus public naming.',
     },
     {
       title: 'Training Time Legal Requirements',
       description:
-        'Minimum 20% off-the-job training. Detailed time tracking required. Regular progress reviews every 12 weeks minimum.',
+        'Minimum 6 hours per week off-the-job training in paid working time (replaced the old 20% rule). Detailed time tracking required. Regular progress reviews every 12 weeks minimum.',
     },
     {
       title: 'Health & Safety Framework',
@@ -185,10 +185,10 @@ const BusinessApprentices = () => {
 
   // Training Section Data
   const trainingMetrics = [
-    { label: 'Training ROI', value: '£4.20/£1', sublabel: 'Investment return' },
-    { label: 'Skill Development', value: '36 months', sublabel: 'Full competency' },
-    { label: 'Retention Rate', value: '92%', sublabel: 'With proper support' },
-    { label: 'Total Investment', value: '£12k-18k', sublabel: 'Per apprentice' },
+    { label: 'Off-the-Job Training', value: '6 hrs/week', sublabel: 'Legal minimum' },
+    { label: 'Skill Development', value: '36 months', sublabel: 'To full competency' },
+    { label: 'AM2 / EPA', value: 'Final gate', sublabel: 'End-point assessment' },
+    { label: 'Total Investment', value: '£12k-18k', sublabel: 'Typical, per apprentice' },
   ];
 
   const trainingFramework = [
@@ -224,10 +224,10 @@ const BusinessApprentices = () => {
 
   // Support Section Data
   const supportMetrics = [
-    { label: 'Early Support Impact', value: '75%', sublabel: 'Dropout reduction' },
-    { label: 'Response Time', value: '24 hours', sublabel: 'Critical needs' },
-    { label: 'Issue Resolution', value: '90%', sublabel: 'Within one week' },
-    { label: 'Mental Health ROI', value: '£5.20/£1', sublabel: 'Wellbeing investment' },
+    { label: 'Response Target', value: '24 hours', sublabel: 'For critical concerns' },
+    { label: 'Mentor Check-in', value: 'Weekly', sublabel: 'One-to-one, first year' },
+    { label: 'Progress Reviews', value: '12 weeks', sublabel: 'Three-way with college' },
+    { label: 'Wellbeing Support', value: '24/7', sublabel: 'Built into Elec-Mate' },
   ];
 
   const supportPlatforms = [
@@ -268,10 +268,10 @@ const BusinessApprentices = () => {
 
   // Assessment Section Data
   const assessmentMetrics = [
-    { label: 'Completion Rate', value: '87%', sublabel: 'With structured assessment' },
-    { label: 'College Support', value: '95%', sublabel: 'Rated good/excellent' },
-    { label: 'Employer ROI', value: '£7.50/£1', sublabel: 'Assessment tracking' },
-    { label: 'Time Saved', value: '3-4 months', sublabel: 'To independence' },
+    { label: 'Gateway Reviews', value: '12 weeks', sublabel: 'Portfolio + practical' },
+    { label: 'EPA Window', value: 'Month 15-18', sublabel: 'Of the final stage' },
+    { label: 'Portfolio', value: 'Week 1', sublabel: 'Digital, from day one' },
+    { label: 'Off-the-Job Log', value: '6 hrs/week', sublabel: 'Evidenced continuously' },
   ];
 
   const assessmentFramework = [
@@ -312,10 +312,10 @@ const BusinessApprentices = () => {
 
   // Tools Section Data
   const toolsMetrics = [
-    { label: 'Cost per Qualified', value: '£68,000', sublabel: '-12% vs. external' },
-    { label: 'Time to Competency', value: '18 months', sublabel: '3 months faster' },
-    { label: 'ROI After 5 Years', value: '287%', sublabel: '+15% with 2025 rates' },
-    { label: 'Success Improvement', value: '23%', sublabel: 'Digital tools' },
+    { label: 'Year 1 Wage Floor', value: '£8.00/hr', sublabel: 'April 2026 apprentice rate' },
+    { label: 'Hire Incentive', value: 'Up to £2,000', sublabel: 'SMEs, 16-24, from Oct 2026' },
+    { label: 'Training Funding', value: '100%', sublabel: 'Eligible under-25s, small employers' },
+    { label: 'Qualification', value: '4 years', sublabel: 'Typical to fully qualified' },
   ];
 
   return (
@@ -334,7 +334,7 @@ const BusinessApprentices = () => {
         subtitle="Complete guide to recruiting, training, and supporting apprentices"
         icon={GraduationCap}
         backUrl="/electrician/business-development"
-        accentColor="rose"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={3} />
@@ -344,7 +344,7 @@ const BusinessApprentices = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
-          accentColor="rose"
+          accentColor="yellow"
         />
 
         {/* Content Area */}
@@ -356,7 +356,7 @@ const BusinessApprentices = () => {
               Recruitment
             </h2>
 
-            <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <p className="text-sm text-white">
                 Strategic recruitment reduces time-to-hire by 40% and increases apprentice
                 completion rates to 85%+.
@@ -366,9 +366,9 @@ const BusinessApprentices = () => {
             <DataGrid items={recruitmentMetrics} columns={4} />
 
             <ContentBlock
-              title="2025 Recruitment Strategy"
+              title="Recruitment Strategy"
               icon={Target}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Modern digital-first approach with partnership ecosystem and employer branding for maximum candidate quality."
             >
               <InfoList items={recruitmentStrategies} variant="numbered" />
@@ -377,7 +377,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Selection Framework"
               icon={Search}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Three-stage process from digital pre-screening through structured interviews to final onboarding."
             >
               <InfoList items={selectionFramework} variant="numbered" />
@@ -386,7 +386,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Digital Recruitment Channels"
               icon={Brain}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Government portals, social media, and professional networks for comprehensive candidate reach."
             >
               <div className="space-y-3">
@@ -422,8 +422,8 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Investment Analysis"
               icon={PoundSterling}
-              accentColor="rose"
-              summary="Initial recruitment investment vs. government support - often results in net positive ROI."
+              accentColor="yellow"
+              summary="Initial recruitment investment vs. government support — the incentives often cover most of the hiring cost."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
@@ -436,14 +436,14 @@ const BusinessApprentices = () => {
                     <li className="font-medium text-white pt-1">Total: £1,700-3,300/hire</li>
                   </ul>
                 </div>
-                <div className="p-3 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+                <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08]">
                   <h4 className="text-sm font-medium text-white mb-2">Government Support</h4>
                   <ul className="space-y-1 text-xs text-white">
-                    <li>16-18 incentive: £3,000/apprentice</li>
-                    <li>Small employer bonus: £1,000</li>
-                    <li>Training funding: 95-100%</li>
-                    <li>Levy offset: £15,000/year</li>
-                    <li className="font-medium text-yellow-300 pt-1">Often net positive ROI</li>
+                    <li>16-18 hire payment: £1,000 (via provider)</li>
+                    <li>SME incentive: up to £2,000 (16-24, from Oct 2026)</li>
+                    <li>Training funding: 100% eligible under-25s</li>
+                    <li>Employer NI: £0 for apprentices under 25</li>
+                    <li className="font-medium text-yellow-300 pt-1">Support often covers hire costs</li>
                   </ul>
                 </div>
               </div>
@@ -468,9 +468,9 @@ const BusinessApprentices = () => {
             <DataGrid items={complianceMetrics} columns={4} />
 
             <ContentBlock
-              title="2025 Legal Framework"
+              title="Legal Framework (2026/27)"
               icon={Shield}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Wage requirements, training time obligations, and health & safety framework with strict enforcement."
             >
               <InfoList items={legalRequirements} variant="default" />
@@ -479,7 +479,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Critical Compliance Requirements"
               icon={AlertTriangle}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Immediate action required items with significant penalty risks. Employment contracts, wages, and H&S training."
             >
               <InfoList items={criticalCompliance} variant="default" />
@@ -488,7 +488,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Government Support & Guidance"
               icon={CheckCircle}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Free compliance guidance from ACAS, CITB safety training, and financial incentives available."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -500,12 +500,12 @@ const BusinessApprentices = () => {
                     <li>Phone, online, face-to-face consultations</li>
                   </ul>
                 </div>
-                <div className="p-3 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+                <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08]">
                   <h4 className="text-sm font-medium text-white mb-2">Financial Incentives</h4>
                   <ul className="space-y-1 text-xs text-white">
-                    <li>£3,000 for 16-18 year olds</li>
-                    <li>£1,500 for 19-24 year olds</li>
-                    <li>95-100% training funding</li>
+                    <li>£1,000 for 16-18s (and eligible 19-24s)</li>
+                    <li>Up to £2,000 SME incentive from Oct 2026</li>
+                    <li>100% training funding, eligible under-25s</li>
                   </ul>
                 </div>
               </div>
@@ -514,7 +514,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Regional Compliance Variations"
               icon={Globe}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Different authorities and requirements across England, Scotland, Wales, and Northern Ireland."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -549,7 +549,7 @@ const BusinessApprentices = () => {
               Training & Development
             </h2>
 
-            <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <p className="text-sm text-white">
                 Modern training approaches improve apprentice completion rates by 25% and reduce
                 time to competency.
@@ -559,9 +559,9 @@ const BusinessApprentices = () => {
             <DataGrid items={trainingMetrics} columns={4} />
 
             <ContentBlock
-              title="2025 Training Framework"
+              title="Training Framework"
               icon={Target}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Three-phase approach from digital foundation through applied skills to professional mastery and EPA."
             >
               <InfoList items={trainingFramework} variant="numbered" />
@@ -570,7 +570,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Training Provider Options"
               icon={BookOpen}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Digital-first providers with VR/AR modules or hybrid learning solutions with local colleges."
             >
               <InfoList items={trainingProviders} variant="default" />
@@ -579,7 +579,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Skills Progression Framework"
               icon={Award}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Structured progression across safety leadership, technical excellence, and business & customer focus."
             >
               <div className="space-y-3">
@@ -625,7 +625,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Modern Mentoring Approaches"
               icon={Users}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Digital mentoring platforms, structured competency pathways, and industry exposure programmes."
             >
               <div className="space-y-3">
@@ -656,7 +656,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Training Investment Analysis"
               icon={PoundSterling}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Direct costs (mostly government funded) and indirect costs (mentor time, productivity, equipment)."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -689,7 +689,7 @@ const BusinessApprentices = () => {
               Support Resources
             </h2>
 
-            <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <p className="text-sm text-white flex items-center gap-2">
                 <Heart className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                 Early support intervention prevents 75% of apprentice failures. Getting help quickly
@@ -700,9 +700,9 @@ const BusinessApprentices = () => {
             <DataGrid items={supportMetrics} columns={4} />
 
             <ContentBlock
-              title="2025 Digital Support Platforms"
+              title="Digital Support Platforms"
               icon={Brain}
-              accentColor="rose"
+              accentColor="yellow"
               summary="AI-powered support hub, crisis intervention network, and peer community networks for comprehensive coverage."
             >
               <InfoList items={supportPlatforms} variant="default" />
@@ -711,7 +711,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Support Service Categories"
               icon={Users}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Professional & career support, personal & mental wellbeing, and legal & employment rights."
             >
               <div className="space-y-3">
@@ -746,7 +746,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Emergency & Crisis Support"
               icon={Phone}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Critical contact numbers for apprenticeship crises, mental health emergencies, and workplace safety incidents."
             >
               <div className="space-y-3">
@@ -765,7 +765,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Digital Support Resources"
               icon={Globe}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Government and industry-specific digital platforms for ongoing support and guidance."
             >
               <div className="space-y-2">
@@ -810,7 +810,7 @@ const BusinessApprentices = () => {
               Assessment & Progress
             </h2>
 
-            <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <p className="text-sm text-white flex items-center gap-2">
                 <Eye className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                 Effective assessment tracking increases completion rates by 19% and provides clear
@@ -821,9 +821,9 @@ const BusinessApprentices = () => {
             <DataGrid items={assessmentMetrics} columns={4} />
 
             <ContentBlock
-              title="2025 Assessment Framework"
+              title="Assessment Framework"
               icon={Target}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Digital onboarding assessment, progress gateway reviews, and EPA gateway preparation."
             >
               <InfoList items={assessmentFramework} variant="numbered" />
@@ -832,7 +832,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Digital Assessment Tools"
               icon={Brain}
-              accentColor="rose"
+              accentColor="yellow"
               summary="EPA-aligned platforms and performance analytics for comprehensive progress tracking."
             >
               <div className="space-y-3">
@@ -874,7 +874,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="College Performance Monitoring"
               icon={Award}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Teaching quality, assessment standards, and support systems benchmarks for provider evaluation."
             >
               <div className="space-y-3">
@@ -905,7 +905,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Early Intervention Strategies"
               icon={AlertTriangle}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Trigger-based intervention protocols for assessment issues, engagement problems, and employer concerns."
             >
               <InfoList items={interventionStrategies} variant="default" />
@@ -919,10 +919,10 @@ const BusinessApprentices = () => {
               Interactive Tools
             </h2>
 
-            <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <p className="text-sm text-white flex items-center gap-2">
                 <Zap className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-                Advanced 2025 tools for apprentice planning, cost optimization, and compliance
+                Tools for apprentice planning, cost optimisation, and compliance
                 management.
               </p>
             </div>
@@ -932,7 +932,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Advanced Cost Calculator"
               icon={Calculator}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Calculate total apprentice investment including government incentives, training costs, and ROI projections."
             >
               <EnhancedCostCalculator />
@@ -941,7 +941,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Skills Gap Analyser"
               icon={Brain}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Assess current competencies and identify development priorities for individual apprentices."
             >
               <DigitalSkillsAnalyser />
@@ -950,7 +950,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Training Schedule Optimiser"
               icon={Calendar}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Plan and optimise off-the-job training time allocation for maximum efficiency."
             >
               <TrainingScheduleOptimiser />
@@ -959,26 +959,26 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Compliance Checker"
               icon={Shield}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Verify legal compliance status across employment, training, and health & safety requirements."
             >
               <ComplianceChecker />
             </ContentBlock>
 
             <ContentBlock
-              title="2025 Business Impact Summary"
+              title="Business Impact Summary"
               icon={TrendingUp}
-              accentColor="rose"
+              accentColor="yellow"
               summary="Financial benefits, operational advantages, and strategic impact of apprentice programmes."
             >
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Financial Benefits</h4>
                   <ul className="space-y-1 text-xs text-white">
-                    <li>287% ROI over 5 years</li>
-                    <li>£15,000 saved vs. external</li>
-                    <li>Up to £4,000 gov incentives</li>
-                    <li>Reduced agency fees</li>
+                    <li>Wage costs well below qualified rates</li>
+                    <li>Up to £3,000 in combined incentives</li>
+                    <li>Training costs largely or fully funded</li>
+                    <li>No agency fees on future hires</li>
                   </ul>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
@@ -1005,7 +1005,7 @@ const BusinessApprentices = () => {
         </div>
 
         {/* Support Footer Card */}
-        <div className="mt-8 p-4 rounded-2xl bg-yellow-400/10 border border-yellow-400/20">
+        <div className="mt-8 p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-lg bg-yellow-400/20">
               <Phone className="h-4 w-4 text-yellow-400" />

@@ -11,6 +11,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import {
   TextAction,
@@ -42,6 +43,43 @@ const humanise = (k: string) =>
 
 const fmtHour = (h: number) => `${String(h).padStart(2, '0')}:00`;
 
+/** Marketing email preference — backed by email_suppressions via RPCs, so the
+    toggle and the unsubscribe links in emails always agree. */
+const useMarketingEmailPref = () => {
+  const [optedOut, setOptedOut] = useState<boolean | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (supabase as any)
+      .rpc('get_marketing_email_optout')
+      .then(({ data, error }: { data: boolean | null; error: unknown }) =>
+        // On failure assume opted-in so the toggle stays usable — a wrong
+        // guess here is corrected the moment they flip it.
+        setOptedOut(error ? false : data === true)
+      );
+  }, []);
+
+  const setPref = async (receiveEmails: boolean) => {
+    setSaving(true);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).rpc('set_marketing_email_optout', {
+        p_optout: !receiveEmails,
+      });
+      if (error) throw error;
+      setOptedOut(!receiveEmails);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return { optedOut, saving, setPref };
+};
+
 const timeAgo = (iso: string): string => {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
@@ -67,6 +105,7 @@ interface RecentNotif {
 }
 
 const NotificationsTab = () => {
+  const marketing = useMarketingEmailPref();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { addNotification } = useNotifications();
@@ -412,6 +451,34 @@ const NotificationsTab = () => {
               )}
             </>
           )}
+        </SettingsCard>
+      </motion.section>
+
+      {/* ── EMAIL ── */}
+      <motion.section variants={itemVariants} className="h-full">
+        <SettingsCard eyebrow="05" title="Email">
+          <ToggleRow
+            label="Marketing & tips emails"
+            subtitle={
+              marketing.optedOut === null
+                ? 'Checking your preference…'
+                : marketing.optedOut
+                  ? 'Unsubscribed — only account and document emails'
+                  : 'Product updates, offers and tips from Elec-Mate'
+            }
+            checked={marketing.optedOut === false}
+            disabled={marketing.optedOut === null || marketing.saving}
+            onCheckedChange={async (on: boolean) => {
+              const ok = await marketing.setPref(on);
+              if (!ok) toast.error('Could not save your email preference');
+            }}
+          />
+          <div className="px-5 sm:px-6 py-3.5 border-t border-white/[0.06]">
+            <p className="text-[11.5px] text-white/70 leading-relaxed">
+              Transactional email — certificates you send, invoices, receipts and security
+              notices — always arrives regardless of this setting.
+            </p>
+          </div>
         </SettingsCard>
       </motion.section>
     </motion.div>

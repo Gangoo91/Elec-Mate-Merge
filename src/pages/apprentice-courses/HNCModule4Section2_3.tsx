@@ -300,7 +300,7 @@ const HNCModule4Section2_3 = () => {
                 fault before insulation breakdown in reality.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 434.5.2; BS 7671 Appendix 4 (current-carrying capacity); Appendix 11 (harmonic effects)."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 434.5.2; BS 7671 Appendix 4 (current-carrying capacity), Section 5.5 (triplen-harmonic rating factors); Regulations 523.6.3 and 524.2.2."
           />
 
           <LearningOutcomes
@@ -646,7 +646,7 @@ const HNCModule4Section2_3 = () => {
             whatToDo={
               <>
                 C_a (40&nbsp;°C, 90&nbsp;°C XLPE) ≈ 0.91 (Appendix 4 Table 4B1). C_g (8 circuits
-                grouped on tray) ≈ 0.52 (Table 4C1). 3rd harmonic 15–33%: Appendix 11 derate
+                grouped on tray) ≈ 0.52 (Table 4C1). 3rd harmonic 15–33%: Appendix 4 Section 5.5 derate
                 applies to neutral-loaded circuits — use the line-current rating without
                 adjustment unless &gt; 33%, where the derating bites. Combined: I_z = I_t × 0.91
                 × 0.52 = 0.47 × I_t. A 70&nbsp;mm² XLPE rated at 254&nbsp;A clipped becomes
@@ -677,7 +677,7 @@ const HNCModule4Section2_3 = () => {
               'C_a corrects for ambient temperature; pick the right column for cable insulation type (70&nbsp;°C TP vs 90&nbsp;°C XLPE).',
               'C_g corrects for grouping — 6 cables grouped typically loses 40–45%, 9 cables loses 50%+.',
               'C_i applies when cables run through thermal insulation (loft, wall void, floor) — a single &lsquo;buried in insulation&rsquo; cable can lose 50%.',
-              'C_f (Appendix 11) applies for 3rd-harmonic content above 33% — affects three-phase circuits with neutral loading.',
+              'The Appendix 4 Section 5.5 rating factor applies once triplen content exceeds 33% (Reg 524.2.2) — affects three-phase circuits with neutral loading. Above 15% the neutral already counts as a loaded conductor (Reg 523.6.3).',
               'Multiply all applicable factors: I_z = I_t × C_a × C_g × C_i × C_f. Pick the combination that applies, do not just take the lowest.',
               'Reg 311.1 ties cable sizing to thermal limits; Reg 434.5.2 ties device characteristics to fault-current protection — both rely on honest I_z.',
               'Document every derating factor on the cable schedule for verification under Part 6 — auditors check the workings, not just the final figure.',

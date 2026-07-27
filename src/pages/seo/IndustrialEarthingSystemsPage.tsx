@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'When is a TT earthing system required for an industrial installation?',
     answer:
-      'A TT earthing system (using an earth electrode with no metallic connection to the supply earth) is used where the DNO cannot provide an earth terminal (common in rural areas), where a private HV/LV transformer is used and the designer chooses to create a separate TT earth, or where the installer wants to avoid the risks associated with TN-C-S PME earthing (e.g., in agricultural premises or marinas where the BS 7671 Appendix 11 prohibition of PME applies). TT systems require RCD protection on all circuits and a sufficiently low earth electrode resistance to ensure disconnection time requirements are met (Ra × IΔn ≤ 50 V).',
+      'A TT earthing system (using an earth electrode with no metallic connection to the supply earth) is used where the DNO cannot provide an earth terminal (common in rural areas), where a private HV/LV transformer is used and the designer chooses to create a separate TT earth, or where the installer wants to avoid the risks associated with TN-C-S PME earthing. Be precise about where PME is actually ruled out — these are Part 7 regulations, not an appendix. In marinas, socket-outlet protective conductors shall not be connected to a PME earthing facility (Reg 709.553.1.14), and the ESQCR prohibits connecting a PME earthing facility to any metalwork in a boat. Agricultural premises are often quoted but the rule there is different: Reg 705.411.4 prohibits a PEN conductor within the installation, and NOTE 1 states explicitly that this does not preclude the use of TN-C-S; NOTE 2 says only that unless a metal grid is laid in the floor, use of a PME earthing facility is not recommended. TT systems require RCD protection on all circuits and a sufficiently low earth electrode resistance to ensure disconnection time requirements are met (Ra × IΔn ≤ 50 V).',
   },
   {
     question: 'What is supplementary equipotential bonding and when is it required?',
@@ -264,10 +264,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Where PME is prohibited</strong> — BS 7671 Appendix 11 prohibits the use of
-                PME earthing in agricultural premises, caravan parks, marinas, and locations
-                accessible to livestock. In these locations, a TT earthing system with local earth
-                electrode must be used.
+                <strong>Where PME is prohibited</strong> — the restrictions are Part 7 regulations,
+                not an appendix, and they differ by location. A PME earthing facility shall not be
+                used as the means of earthing on construction and demolition sites (Reg 704.411.3.1),
+                for mobile or transportable units (Reg 717.411.4), for exhibitions, shows and stands
+                (Reg 711.411.4), for the protective conductor of an EV charging point
+                (Reg 722.411.4.1), for fairgrounds and circuses (Reg 740.411.4.1), or for onshore
+                units supplying inland navigation vessels (Reg 730.411.4). On caravan parks and in
+                marinas the rule is narrower: socket-outlet protective conductors shall not be
+                connected to a PME earthing facility (Regs 708.553.1.14 and 709.553.1.14). Where
+                PME cannot be used, a TT arrangement with a local earth electrode is the usual
+                answer.
               </span>
             </li>
             <li className="flex items-start gap-3">

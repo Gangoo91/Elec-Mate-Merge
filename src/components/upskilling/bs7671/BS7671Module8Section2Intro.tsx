@@ -13,7 +13,7 @@ const BS7671Module8Section2Intro = () => {
       <CardContent className="text-foreground space-y-4">
         <p>
           Professional electrical installation documentation ensures regulatory compliance and
-          quality standards. BS 7671:2018+A3:2025 provides standardised forms, schedules, and
+          quality standards. BS 7671:2018+A4:2026 provides standardised forms, schedules, and
           reference charts for consistent documentation across the UK electrical industry.
         </p>
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600 mt-4">

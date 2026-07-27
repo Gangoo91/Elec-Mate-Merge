@@ -54,7 +54,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 2,
     explanation:
-      'BS 7671 Appendix 1 recommends 100% of the first group of socket outlets plus a reduced percentage (typically 40-50%) of the remainder for commercial installations.',
+      'On-Site Guide Table A2 gives, for small shops, stores, offices and business premises, 100% of the current demand of the largest point of utilization plus 70% of every other point. It gives no figures at all for large commercial or industrial premises.',
   },
   {
     id: 'admd-meaning',
@@ -125,7 +125,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'BS 7671 Appendix 1 Table 1A provides guidance on:',
+    question: 'On-Site Guide Table A2 provides guidance on:',
     options: [
       'Diversity allowances for domestic installations',
       'Maximum earth fault loop impedance values',
@@ -134,7 +134,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Table 1A in BS 7671 Appendix 1 provides diversity factors specifically for domestic installations. Commercial diversity requires engineering judgement.',
+      'Table 1A in IET On-Site Guide Appendix A provides diversity factors specifically for domestic installations. Commercial diversity requires engineering judgement.',
   },
   {
     id: 5,
@@ -276,7 +276,7 @@ const HNCModule4Section1_2 = () => {
           <TLDR
             points={[
               'Diversity is the recognition that connected load almost never operates simultaneously at full rating — engineering judgement turns total connected into real maximum demand.',
-              'BS 7671 Appendix 1 Table 1A gives diversity guidance for domestic only. Commercial and industrial diversity rests on CIBSE benchmarks plus measured data from comparable installations.',
+              'On-Site Guide Table A2 gives diversity guidance for domestic only. Commercial and industrial diversity rests on CIBSE benchmarks plus measured data from comparable installations.',
               'ADMD (After Diversity Maximum Demand) is how DNOs size LV networks for residential developments — typical UK dwelling 2–3 kVA, with inter-dwelling diversity reducing further as the count rises.',
               'Emergency lighting, fire alarm, smoke extract and any life-safety load is always 100% — no diversity. Apply diversity here and people die in a fire.',
               'Apply diversity at one defined level in the distribution hierarchy — never compound it twice.',
@@ -296,7 +296,7 @@ const HNCModule4Section1_2 = () => {
                 commercial job and your design submission will not survive scrutiny.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; BS 7671 Appendix 1 Table 1A; CIBSE Guide F."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; On-Site Guide Table A2; CIBSE Guide F."
           />
 
           <LearningOutcomes
@@ -378,7 +378,7 @@ const HNCModule4Section1_2 = () => {
 
           <ConceptBlock title="BS 7671 Table 1A Guidance">
             <p>
-              BS 7671 Appendix 1, Table 1A provides diversity factors specifically for domestic
+              On-Site Guide Table A2 provides diversity factors specifically for domestic
               installations. These are guidance values that have proven reliable over many years of
               application.
             </p>
@@ -707,7 +707,7 @@ const HNCModule4Section1_2 = () => {
           <KeyTakeaways
             points={[
               'Maximum Demand = Connected Load × Diversity Factor — the diversity factor is always ≤ 1.0.',
-              'BS 7671 Appendix 1 Table 1A is for domestic only. Commercial and industrial diversity is on you as the designer, evidenced from CIBSE Guide F or measured data.',
+              'On-Site Guide Table A2 is for domestic only. Commercial and industrial diversity is on you as the designer, evidenced from CIBSE Guide F or measured data.',
               'Reg 311.1 authorises diversity at device-rating level and refers to manufacturer instructions — document the factors and the basis.',
               'Emergency systems (emergency lighting, fire alarm, smoke extract, sprinkler pumps) are ALWAYS 100% — no diversity reduction permitted.',
               'ADMD for UK dwellings: 1.5–3 kVA gas-heated, 4–6 kVA all-electric, +1–2 kVA per dwelling for EV-ready installations.',

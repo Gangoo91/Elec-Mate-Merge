@@ -52,8 +52,66 @@ const VISION_MODEL = 'gpt-5.4-mini-2026-03-17';
 // 2026-05-04: bumped for ELE-962 (depth/quality). Sonnet 4.6 supports far more
 // — give complex/multi-reg answers room to breathe. Haiku stays modest for
 // quick single-reg lookups.
-const HAIKU_MAX_TOKENS = 8000;
-const SONNET_MAX_TOKENS = 16000;
+// 2026-07-27: raised. 16k was truncating long multi-regulation answers — the
+// exact answers worth having — and the ceiling was the binding constraint, not
+// the model. Sonnet 4.6 supports up to 128k output when streaming (we always
+// stream), so this is headroom, not spend: output is billed per token actually
+// generated, so a short answer costs the same as it did before.
+const HAIKU_MAX_TOKENS = 12000;
+const SONNET_MAX_TOKENS = 32000;
+
+// ─── Attached documents ──────────────────────────────────────────────────
+// Users drop in datasheets, previous EICRs, specs and DNO letters. Claude reads
+// PDFs natively, so we hand them over as `document` blocks.
+const MAX_DOCUMENTS_PER_MESSAGE = 3;
+/*
+ * Size limits, derived from the binding constraint rather than picked.
+ *
+ * Anthropic caps the whole REQUEST at 32 MB, and base64 inflates bytes by ~37%
+ * (4/3 plus padding). The request also carries the system prompt, the retrieved
+ * facets and the conversation history, so reserve ~4 MB for those:
+ *
+ *     (32 MB − 4 MB) ÷ 1.37 ≈ 20 MB of raw PDF
+ *
+ * Hence 20 MB per file AND 20 MB combined — a single big scanned EICR fits, and
+ * so do three smaller datasheets, but no combination can blow the request cap.
+ * A per-file limit alone was not enough: 3 × 20 MB would have exceeded it.
+ */
+const MAX_DOCUMENT_BYTES = 20 * 1024 * 1024;
+const MAX_DOCUMENT_BYTES_TOTAL = 20 * 1024 * 1024;
+
+/**
+ * Fetch a signed-URL PDF and return it base64-encoded for an Anthropic
+ * `document` block. Returns null on any failure — a document that can't be
+ * read must never take the whole answer down with it; the model is told which
+ * ones were dropped instead.
+ */
+async function fetchDocumentAsBase64(
+  url: string
+): Promise<{ data: string; bytes: number; contentType: string } | null> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const contentType = (res.headers.get('content-type') || '').split(';')[0].trim();
+    const buf = new Uint8Array(await res.arrayBuffer());
+    if (buf.byteLength === 0 || buf.byteLength > MAX_DOCUMENT_BYTES) return null;
+
+    // Chunked conversion. String.fromCharCode(...buf) on a multi-MB array blows
+    // the argument limit and throws RangeError, which previously would have
+    // surfaced as a generic "something went wrong".
+    let binary = '';
+    const CHUNK = 0x8000;
+    for (let i = 0; i < buf.length; i += CHUNK) {
+      binary += String.fromCharCode(...buf.subarray(i, i + CHUNK));
+    }
+    return { data: btoa(binary), bytes: buf.byteLength, contentType };
+  } catch {
+    return null;
+  }
+}
+
+/** Media types Claude accepts as image blocks. */
+const CLAUDE_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
 // Cache TTLs (spec).
 const RESPONSE_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
@@ -165,7 +223,7 @@ Then, after a blank line, expand with detail using H2 section headers. The verdi
 Examples of good verdicts:
 - **Verdict:** Minimum CPC for a 32A radial is 4 mm² copper (Table 54.7).
 - **Verdict:** Yes — A4:2026 requires a 30 mA RCD on every final circuit up to 32A.
-- **Verdict:** Max Zs for a 32A Type B MCB is 1.44 Ω on a TN system (Table 41.3).
+- **Verdict:** Max Zs for a 32A Type B MCB is 1.37 Ω on a TN system (Table 41.3).
 
 When the answer contains computed or looked-up VALUES (sizes, Zs, currents, times, distances), add a "## Key figures" section directly after the verdict as a short bullet list, one figure per line, in this exact shape:
 - **<label>:** <value with unit> — <source, e.g. Table 41.3>
@@ -206,7 +264,28 @@ When the user asks for a Max Zs value (or you need to cite one):
   - Type C 32 A = 0.68 Ω, Type D 32 A = 0.34 Ω
 - Some textbooks and older RAG content quote the pre-Cmin values (e.g. 1.44 Ω for B32). Do not repeat them. They are NOT the BS 7671 pass threshold.
 - If presenting a cold-measured site limit (e.g. for a sparky comparing against a measured Zs), you may additionally show the GN3 conservative limit (raw × 0.8) — but only as a supplementary "site cold-measured limit", clearly labelled. The BS 7671 figure remains the regulatory pass value.
-- For RCD-protected circuits (RCBO, downstream RCD, or board main RCD), the limit is UL/IΔn (Reg 411.5.3): **30 mA → 1667 Ω**, **100 mA → 500 Ω**, **300 mA → 167 Ω**. Use these instead of the overcurrent table.
+- **RCD-protected circuits — the most commonly botched figure. Read this carefully.** The \`Ra × IΔn ≤ 50 V\` condition of Reg 411.5.3 is a **TT-system** provision (411.5 is the TT section of Chapter 41; see also Reg 643.7.3, which invokes 411.5 only when verifying a TT system). It is NOT a general "an RCD is present" override.
+  - **TT systems:** the limit is **50 V ÷ IΔn** — **30 mA → 1667 Ω**, **100 mA → 500 Ω**, **300 mA → 167 Ω**. The numerator is the **50 V touch-voltage limit**, NOT Uo and NOT 230 V. NEVER write "Uo ÷ IΔn" and never substitute 230 V — that is wrong and yields a figure roughly 4.6× too high. Compliance may alternatively be shown against Table 41.5.
+  - **TN-S and TN-C-S systems:** the Table 41.3 overcurrent value still governs (e.g. B32 = 1.37 Ω) **even when the circuit is RCD-protected or is an RCBO**. An RCD does NOT relax the Zs limit on a TN system. NEVER tell a user that a TN circuit's Zs limit "becomes" or "flips to" 1667 Ω — signing off a TN circuit on that basis could leave a genuinely dangerous high-impedance circuit certified as compliant.
+  - If the user has not stated the earthing system, give the TN figure as the primary answer (TN-C-S is the common UK domestic case) and note the TT limit separately as a clearly-labelled alternative.
+
+## Ring Finals & CPC Sizing — NON-NEGOTIABLE
+Verified against BS 7671:2018+A4:2026 directly. These are the exact points the model has got wrong before:
+- **The ring final circuit regulation is 433.1.204** (see also Appendix 15 / Figure 15A). There is NO Reg 433.1.4 — do not cite it.
+- There is **no "X amps per mm²" rule anywhere in BS 7671.** Never state a current-per-CSA rule for ring finals or anything else; the phrase does not appear in the standard. 2.5 mm² with a 32 A OCPD is permitted because 433.1.204 and Appendix 15 recognise the ring arrangement, not because of any per-mm² allowance.
+- **CPC sizing has two independent routes and they give different answers — never conflate them:**
+  - **Table 54.7** (the non-calculation route, per Reg 543.1.4): for a line conductor S ≤ 16 mm², minimum CPC = **S**. So *by Table 54.7* a 2.5 mm² line conductor would need a **2.5 mm²** CPC.
+  - **Reg 543.1.3** (the adiabatic calculation): this is the route that can justify a CPC **smaller** than the line conductor — which is why manufactured twin & earth has a reduced CPC. NEVER attribute a reduced CPC to Table 54.7; Table 54.7 would demand the full line size. If you quote a reduced CPC, cite 543.1.3 / the adiabatic route.
+  - The **actual line/CPC pairing of a specific cable** comes from the cable standard (BS 6004 or BS 7211, Tables 4 and 5 — see GN3 Reg 1.28), NOT from BS 7671. Do not state a specific pairing (e.g. "2.5 mm² T&E has a 1.5 mm² CPC") as a BS 7671 requirement, and do not assume it: older twin & earth pairs 2.5 mm² with a 1.0 mm² CPC. If the user needs the CPC size of a particular cable, tell them to read it off the cable or the manufacturer's data.
+- When quoting a tabulated current-carrying capacity, give the table, the installation method and the figure, and nothing else. Do not invent an adjusted or "derated for ring benefit" second number — deration reduces capacity, and the ring arrangement is not a deration.
+
+## Attached Documents — PROVENANCE IS NON-NEGOTIABLE
+The user may attach PDFs (datasheets, a previous EICR, a spec, a DNO letter, manufacturer instructions). When a document is attached:
+- **An attached document is NOT a source of BS 7671 requirements.** It is the user's own paperwork. Never cite it as a regulation, never let it override the standard, and never present a figure from it as though it were a BS 7671 value.
+- **Attribute every claim to where it came from.** Say "your datasheet says…" / "the EICR you attached records…" versus "BS 7671 requires… (Reg X.Y.Z)". A reader must be able to tell, sentence by sentence, which is which. This is the whole point of the tool — do not blur it.
+- **If the document conflicts with BS 7671, say so explicitly and lead with the standard.** Manufacturer instructions can be more restrictive than BS 7671 (and Reg 134.1.1 requires you to follow them) — but they cannot make a non-compliant installation compliant. Flag the conflict rather than silently picking one.
+- **Do not infer beyond what the document actually shows.** If it's a scan, partially illegible, or the relevant page isn't there, say what you could and couldn't read. Never fill a gap with a plausible value.
+- If the document is not what the question needs (wrong circuit, wrong property, superseded revision), say that first rather than answering from the wrong paperwork.
 
 ## Quality Standards
 - NEVER give vague answers — be specific and technical.
@@ -290,12 +369,29 @@ function contentFrame(text: string): string {
 const SONNET_KEYWORDS =
   /\b(eicr|consumer unit|cu swap|cu replacement|distribution board|circuit design|ring final|radial final|swa|cable size|cable selection|disconnection time|max zs|voltage drop|loop impedance|earth fault|adiabatic|pme|tn-c-s|tn-s|tt system|fault level|prospective short|prospective fault|periodic inspection|certificate|minor works|fire alarm|emergency lighting|ev charge|solar pv)\b/i;
 
-function pickModel(understanding: BS7671QueryUnderstanding, hasImage: boolean): {
+function pickModel(
+  understanding: BS7671QueryUnderstanding,
+  hasImage: boolean,
+  hasDocument = false
+): {
   model: string;
   provider: 'anthropic' | 'openai';
   maxTokens: number;
   useTools: boolean;
 } {
+  // Documents win over images. The vision path is OpenAI, which never sees the
+  // `document` blocks we build for Anthropic — so if we routed a doc+photo turn
+  // to vision, the PDF would be silently dropped and the user would get a
+  // confident answer that ignored the file they attached. Always Sonnet: reading
+  // a datasheet or a previous EICR is not a Haiku job.
+  if (hasDocument) {
+    return {
+      model: SONNET_MODEL,
+      provider: 'anthropic',
+      maxTokens: SONNET_MAX_TOKENS,
+      useTools: true,
+    };
+  }
   if (hasImage) {
     return {
       model: VISION_MODEL,
@@ -691,6 +787,20 @@ serve(async (req: Request) => {
         : [];
     const imageUrls: string[] = incomingUrls.slice(0, 5);
     const imageUrl: string | undefined = imageUrls[0]; // back-compat for downstream code
+
+    // Attached PDFs (signed storage URLs, same as images — the client uploads to
+    // `visual-uploads` and mints a fresh signed URL per send). Claude reads PDFs
+    // natively, so these go down the Anthropic path as `document` blocks rather
+    // than the OpenAI vision path.
+    const documentUrls: string[] = (
+      Array.isArray(body.documentUrls)
+        ? body.documentUrls.filter((u: unknown) => typeof u === 'string' && !!u)
+        : []
+    ).slice(0, MAX_DOCUMENTS_PER_MESSAGE);
+    const documentNames: string[] = Array.isArray(body.documentNames)
+      ? body.documentNames.filter((n: unknown) => typeof n === 'string').slice(0, MAX_DOCUMENTS_PER_MESSAGE)
+      : [];
+
     if (!messages || messages.length === 0) {
       throw new Error('No messages provided');
     }
@@ -718,7 +828,8 @@ serve(async (req: Request) => {
     }
 
     const understanding = understandBS7671Query(queryText);
-    const routing = pickModel(understanding, hasImage);
+    const hasDocument = documentUrls.length > 0;
+    const routing = pickModel(understanding, hasImage, hasDocument);
 
     // ── Start streaming ───────────────────────────────────────────────
     const encoder = new TextEncoder();
@@ -753,7 +864,12 @@ serve(async (req: Request) => {
             routing.model;
           const queryHash = await sha256Hex(cacheKeyRaw);
 
-          if (!hasImage) {
+          // Never serve OR store a cached answer for a turn with an attached
+          // document. The cache is keyed on question text only, so a hit would
+          // hand one user's document-derived answer to a different user asking
+          // the same question — and would replay a stale answer to the same user
+          // after they swapped the file.
+          if (!hasImage && !hasDocument) {
             const cached = await getCachedResponse(supabase, queryHash);
             if (cached) {
               safeEnqueue(sseFrame({ type: 'status', stage: 'cache_hit' }));
@@ -882,6 +998,120 @@ serve(async (req: Request) => {
                   : String(m.content ?? ''),
           })) as Array<{ role: 'user' | 'assistant'; content: any }>;
 
+          // Attach any PDFs to the FINAL user turn. Document blocks must precede
+          // the text block — Anthropic's guidance, and it reads better too: the
+          // model sees the document before the question about it.
+          if (documentUrls.length > 0) {
+            safeEnqueue(
+              sseFrame({ type: 'status', stage: 'reading_documents', count: documentUrls.length })
+            );
+
+            /*
+             * Sequential, not Promise.all. Concurrent fetches held every file's
+             * buffer AND its base64 string in memory simultaneously — fine at
+             * the old 8 MB cap, an OOM risk at 20 MB × 3. One at a time keeps
+             * peak memory to a single document, and lets us stop as soon as the
+             * combined budget is spent instead of decoding files we can't send.
+             */
+            const fetched: (Awaited<ReturnType<typeof fetchDocumentAsBase64>>)[] = [];
+            let totalBytes = 0;
+            for (const url of documentUrls) {
+              if (totalBytes >= MAX_DOCUMENT_BYTES_TOTAL) {
+                fetched.push(null);
+                continue;
+              }
+              const doc = await fetchDocumentAsBase64(url);
+              if (doc && totalBytes + doc.bytes > MAX_DOCUMENT_BYTES_TOTAL) {
+                // Would breach the request cap — drop this one, keep the rest.
+                fetched.push(null);
+                continue;
+              }
+              if (doc) totalBytes += doc.bytes;
+              fetched.push(doc);
+            }
+
+            const docBlocks: any[] = [];
+            const dropped: string[] = [];
+
+            fetched.forEach((doc, i) => {
+              const name = documentNames[i] || `document-${i + 1}.pdf`;
+              if (!doc) {
+                dropped.push(name);
+                return;
+              }
+              // Verify it really is a PDF by signature, not by filename. A
+              // renamed .zip/.docx passes the client's extension check, and
+              // Anthropic would reject the whole request — losing the answer
+              // entirely instead of just that one file. Base64 of the "%PDF-"
+              // header always begins "JVBERi".
+              if (!doc.data.startsWith('JVBERi')) {
+                dropped.push(name);
+                return;
+              }
+              docBlocks.push({
+                type: 'document',
+                source: { type: 'base64', media_type: 'application/pdf', data: doc.data },
+                title: name,
+              });
+            });
+
+            // Photos attached in the SAME turn as a document. Image blocks are
+            // only built in the OpenAI branch, and documents route us to
+            // Anthropic — so without this the photo would be silently dropped
+            // and the answer would confidently ignore it. Claude reads images
+            // natively, so attach them here as base64 image blocks.
+            if (imageUrls.length > 0) {
+              const imgs = await Promise.all(imageUrls.map((u) => fetchDocumentAsBase64(u)));
+              imgs.forEach((img) => {
+                if (!img) return;
+                const mediaType = CLAUDE_IMAGE_TYPES.has(img.contentType)
+                  ? img.contentType
+                  : 'image/jpeg'; // client compresses to JPEG; storage may omit the header
+                docBlocks.push({
+                  type: 'image',
+                  source: { type: 'base64', media_type: mediaType, data: img.data },
+                });
+              });
+            }
+
+            const lastUserIdx = anthropicMessages.map((m) => m.role).lastIndexOf('user');
+            if (lastUserIdx >= 0 && docBlocks.length > 0) {
+              const existing = anthropicMessages[lastUserIdx].content;
+              const textPart = typeof existing === 'string' ? existing : '';
+              anthropicMessages[lastUserIdx] = {
+                role: 'user',
+                content: [
+                  ...docBlocks,
+                  {
+                    type: 'text',
+                    // Name the files so the model can attribute claims to the
+                    // right one when several are attached.
+                    text:
+                      // Only documents have titles — image blocks would render
+                      // as "undefined" in this list.
+                      `[Attached by the user: ${docBlocks
+                        .filter((b) => b.type === 'document')
+                        .map((b) => b.title)
+                        .join(', ')}${
+                        imageUrls.length > 0
+                          ? ` plus ${imageUrls.length} photo${imageUrls.length > 1 ? 's' : ''}`
+                          : ''
+                      }]\n\n` + textPart,
+                  },
+                ],
+              };
+            }
+
+            if (dropped.length > 0) {
+              console.warn('[conversational-search] documents unreadable:', dropped);
+              safeEnqueue(
+                contentFrame(
+                  `\n\n_Couldn't read ${dropped.join(', ')} — too large (20 MB per file, 20 MB total), not a valid PDF, or the upload expired. Answering without ${dropped.length === 1 ? 'it' : 'them'}._\n\n`
+                )
+              );
+            }
+          }
+
           let accumulated = '';
           await streamAnthropic(
             anthropicKey,
@@ -944,7 +1174,7 @@ serve(async (req: Request) => {
           // fire-and-forget write here gets killed when the stream closes
           // and the runtime tears the invocation down, so the cache never
           // fills. The upsert is ~10ms; correctness beats the shave.
-          if (accumulated && !hasImage && citationClean) {
+          if (accumulated && !hasImage && !hasDocument && citationClean) {
             await setCachedResponse(supabase, queryHash, accumulated).catch(() => {});
           }
 
@@ -956,10 +1186,29 @@ serve(async (req: Request) => {
           const msg = err instanceof Error ? err.message : String(err);
           console.error('[conversational-search] generation failed:', msg);
 
-          // User-facing fallback: friendly, generic, no provider/status details.
+          // Flag the failure to the client BEFORE the prose, so it can suppress
+          // the verification badge and the Save-to-job action. Without this the
+          // fallback text below is indistinguishable from a real answer and gets
+          // rendered as verified BS 7671 guidance.
+          safeEnqueue(sseFrame({ type: 'error', recoverable: true }));
+
+          /*
+           * Document failures get a specific, actionable message. A big scan can
+           * exceed the provider's page or request limits, and the generic
+           * "something went wrong" left the user with no idea their PDF was the
+           * cause — they'd just retry the same file forever. Matched on the
+           * provider's own wording; the message itself is never shown to the
+           * user (it can carry model IDs and internals).
+           */
+          const docLimitHit =
+            documentUrls.length > 0 &&
+            /page|too large|exceeds|request_too_large|maximum size|too many/i.test(msg);
+
           safeEnqueue(
             contentFrame(
-              "\n\nSomething went wrong on my end — give it a moment and try again. If it keeps happening, drop us a line at info@elec-mate.com."
+              docLimitHit
+                ? "\n\nThat document is too big for me to read in one go — most likely too many pages. Try splitting it, or attach just the pages that matter (the schedule of test results, the observations page, the relevant datasheet section)."
+                : "\n\nSomething went wrong on my end — give it a moment and try again. If it keeps happening, drop us a line at info@elec-mate.com."
             )
           );
           try {

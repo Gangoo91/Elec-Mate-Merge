@@ -363,13 +363,6 @@ export const searchablePages: SearchablePage[] = [
     icon: MessageSquare,
     category: 'AI Agents',
   },
-  {
-    name: 'Install Planner',
-    path: '/electrician/install-planner',
-    keywords: ['install', 'planner', 'plan', 'ai'],
-    icon: PenTool,
-    category: 'AI Agents',
-  },
 
   // ──── Inspection & Testing ────
   {

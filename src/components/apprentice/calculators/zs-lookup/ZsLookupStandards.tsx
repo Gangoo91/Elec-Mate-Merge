@@ -295,7 +295,7 @@ const ZsLookupStandards = () => {
         </div>
 
         <p className="text-[12px] text-white/55 leading-relaxed">
-          <strong>Note:</strong> This tool provides guidance based on BS 7671:2018+A3:2024. Always
+          <strong>Note:</strong> This tool provides guidance based on BS 7671:2018+A4:2026. Always
           refer to the latest edition of BS 7671 and relevant standards for authoritative
           requirements.
         </p>

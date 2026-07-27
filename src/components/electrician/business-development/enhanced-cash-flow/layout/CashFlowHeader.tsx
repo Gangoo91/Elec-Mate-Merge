@@ -72,7 +72,7 @@ export const CashFlowHeader = ({
           {/* Templates - Mobile only */}
           <button
             onClick={onLoadTemplates}
-            className="lg:hidden h-10 px-3 flex items-center gap-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium hover:bg-blue-500/20 transition-colors"
+            className="lg:hidden h-10 px-3 flex items-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-blue-400 text-sm font-medium hover:bg-blue-500/20 transition-colors"
           >
             <FileText className="h-4 w-4" />
             <span className="hidden sm:inline">Templates</span>

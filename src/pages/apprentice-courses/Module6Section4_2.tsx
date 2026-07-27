@@ -280,7 +280,7 @@ const Module6Section4_2 = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>
-                      Appendix 15 provides specific guidance on ring circuit design and testing
+                      Appendix 15 provides specific guidance on ring circuit design (testing is Reg 643.2.1)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">

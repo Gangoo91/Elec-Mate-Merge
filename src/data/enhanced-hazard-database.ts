@@ -1877,7 +1877,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
         'Five-year review cycle compliance',
       ],
       engineering: [
-        'Full testing sequence per Appendix 15',
+        'Full testing sequence per Part 6, Chapter 64',
         'Continuity, insulation resistance, polarity, earth fault loop impedance, RCD testing',
       ],
     },
@@ -2178,7 +2178,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       'Part 6 - Section 612',
       '411.4 - Automatic disconnection of supply',
       '411.5.3 - Maximum Zs values',
-      'Appendix 2 - Maximum earth fault loop impedance tables',
+      'Tables 41.2 to 41.5 - Maximum earth fault loop impedance',
     ],
     category: 'testing-inspection',
     workType: ['testing', 'commissioning'],

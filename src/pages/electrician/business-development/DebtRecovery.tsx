@@ -45,10 +45,10 @@ const DebtRecovery = () => {
   ];
 
   const keyStats = [
-    { label: 'Late Payment Rate', value: '45%', sublabel: 'UK SME average' },
-    { label: 'Recovery Window', value: '90 days', sublabel: 'Best success rate' },
-    { label: 'Small Claims Limit', value: '£10,000', sublabel: 'No solicitor needed' },
-    { label: 'Statutory Interest', value: '8%+', sublabel: 'Above BoE base rate' },
+    { label: 'Statutory interest (B2B)', value: '11.75%', sublabel: '8% + 3.75% BoE base rate' },
+    { label: 'Fixed recovery costs', value: '£40-100', sublabel: 'Per late invoice, by debt size' },
+    { label: 'Small claims limit', value: '£10,000', sublabel: 'No solicitor needed' },
+    { label: 'Court fee range', value: '£35-455', sublabel: 'Claims up to £10,000' },
   ];
 
   const canonical = `${window.location.origin}/electrician/business-development/debt-recovery`;
@@ -69,7 +69,7 @@ const DebtRecovery = () => {
         subtitle="Strategies for managing late payments and protecting your cash flow"
         icon={CreditCard}
         backUrl="/electrician/business-development"
-        accentColor="orange"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -79,7 +79,7 @@ const DebtRecovery = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
-          accentColor="orange"
+          accentColor="yellow"
         />
 
         {/* Content Sections */}
@@ -89,7 +89,7 @@ const DebtRecovery = () => {
             id="prevention"
             title="Debt Prevention"
             icon={Shield}
-            accentColor="orange"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 The best debt recovery strategy is prevention. Strong terms, clear communication,
@@ -219,7 +219,7 @@ const DebtRecovery = () => {
             id="process"
             title="Recovery Process"
             icon={FileText}
-            accentColor="orange"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Act quickly when payments are overdue. The longer a debt ages, the harder it becomes
@@ -253,17 +253,32 @@ const DebtRecovery = () => {
                         'Formal written reminder. State intent to add statutory interest if not paid within 7 days',
                     },
                     {
-                      title: 'Day 21 - Final Notice',
+                      title: 'Day 21 - Letter Before Action',
                       description:
-                        'Letter before action. Final opportunity to pay before legal proceedings begin',
+                        'Formal letter before court. Business debtors: 14 days to pay. Homeowners and sole traders: the Pre-Action Protocol requires 30 days plus reply and financial statement forms — send by post',
                     },
                     {
-                      title: 'Day 28+ - Legal Action',
+                      title: 'After the deadline - Legal Action',
                       description:
-                        'Small claims court for under £10k, or debt collection agency. Add statutory interest and costs',
+                        'Small claims court (Money Claim Online) for under £10k, or a debt collection agency. Add statutory interest and fixed costs to the claim',
                     },
                   ]}
                 />
+              </div>
+
+              <div className="p-5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
+                  Built into Elec-Mate
+                </p>
+                <h4 className="mt-1.5 text-[15px] font-semibold text-white tracking-tight">
+                  Chase overdue invoices from the invoice itself
+                </h4>
+                <p className="mt-2 text-sm text-white/70 leading-relaxed">
+                  Open any overdue invoice and tap "Need help getting paid?" — Elec-Mate writes the
+                  reminder and the letter before action for you, works out the statutory interest
+                  and fixed costs at today's rates, adapts the wording for homeowners versus
+                  business clients, and emails it directly to the client under your company name.
+                </p>
               </div>
 
               {/* Communication Templates */}
@@ -361,7 +376,7 @@ const DebtRecovery = () => {
             id="legal"
             title="Legal Options"
             icon={Scale}
-            accentColor="orange"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 When informal recovery fails, legal options are available. Small claims court
@@ -457,7 +472,8 @@ const DebtRecovery = () => {
                       <span className="text-xs text-yellow-400">8% + BoE base rate</span>
                     </div>
                     <p className="text-sm text-white">
-                      Currently 13.25% annually (5.25% base + 8%)
+                      Currently 11.75% annually (8% + 3.75% Bank of England base rate). The rate is
+                      fixed for six months at a time using the base rate on 30 June or 31 December.
                     </p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
@@ -509,7 +525,7 @@ const DebtRecovery = () => {
             id="protection"
             title="Business Protection"
             icon={Lock}
-            accentColor="orange"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Protect your business from bad debts through proper contracts, insurance, and credit
@@ -666,7 +682,7 @@ const DebtRecovery = () => {
         {/* Legal Considerations Card */}
         <div className="mt-8 p-5 rounded-2xl bg-yellow-400/5 border border-yellow-400/20">
           <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
               <AlertTriangle className="h-5 w-5 text-yellow-400" />
             </div>
             <div>

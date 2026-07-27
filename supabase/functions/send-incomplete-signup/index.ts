@@ -1356,7 +1356,10 @@ Deno.serve(async (req) => {
         await supabaseAdmin.from('email_logs').insert({
           to_email: userWithEmail.email,
           subject: 'Your Elec-Mate account is waiting for you',
-          template: isApprentice ? 'incomplete_signup_apprentice' : 'incomplete_signup_electrician',
+          template:
+            profile.role === 'apprentice'
+              ? 'incomplete_signup_apprentice'
+              : 'incomplete_signup_electrician',
           status: 'sent',
           metadata: { user_id: userId, role: profile.role, resend_id: emailData?.id },
         });
@@ -1451,9 +1454,10 @@ Deno.serve(async (req) => {
             await supabaseAdmin.from('email_logs').insert({
               to_email: userWithEmail.email,
               subject: 'Your Elec-Mate account is waiting for you',
-              template: isApprentice
-                ? 'incomplete_signup_apprentice'
-                : 'incomplete_signup_electrician',
+              template:
+                profile.role === 'apprentice'
+                  ? 'incomplete_signup_apprentice'
+                  : 'incomplete_signup_electrician',
               status: 'sent',
               metadata: { user_id: uid, role: profile.role, resend_id: bulkEmailData?.id },
             });

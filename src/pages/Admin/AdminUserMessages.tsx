@@ -9,21 +9,25 @@ import { Avatar as ShadAvatar, AvatarFallback, AvatarImage } from '@/components/
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
-  Send,
   RefreshCw,
-  Loader2,
   ArrowLeft,
   Search,
   Users,
   CheckCheck,
   PenSquare,
 } from 'lucide-react';
-import { format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
+import ChatThread from '@/components/messaging/ChatThread';
+import {
+  useAdminInbox,
+  sortAdminConversations,
+  ADMIN_INBOX_QUERY_KEY,
+  type AdminConversation,
+} from '@/hooks/useAdminInbox';
 import {
   PageFrame,
   PageHero,
@@ -69,49 +73,8 @@ function roleToTone(role: string | null | undefined): Tone {
   }
 }
 
-interface AdminMessage {
-  id: string;
-  sender_id: string;
-  recipient_id: string;
-  subject: string;
-  message: string;
-  message_type: 'email' | 'in_app' | 'both';
-  read_at: string | null;
-  created_at: string;
-}
 
-interface AdminMessageRow extends AdminMessage {
-  sender: {
-    id: string;
-    full_name: string | null;
-    avatar_url: string | null;
-    role: string | null;
-    admin_role: string | null;
-  } | null;
-  recipient: {
-    id: string;
-    full_name: string | null;
-    avatar_url: string | null;
-    role: string | null;
-    admin_role: string | null;
-  } | null;
-}
 
-interface ConversationPartner {
-  partnerId: string;
-  partner: {
-    id: string;
-    full_name: string | null;
-    avatar_url: string | null;
-    role: string | null;
-  } | null;
-  lastMessage: AdminMessage;
-  unreadCount: number;
-  messages: AdminMessageRow[];
-  // Team-inbox flags — "the admins" are one recipient, whichever id a row hit
-  hasInboundToAdmin: boolean;
-  hasAdminReply: boolean;
-}
 
 export default function AdminUserMessages() {
   const { user } = useAuth();
@@ -119,10 +82,13 @@ export default function AdminUserMessages() {
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState<'all' | 'unread' | 'read' | 'sent'>('all');
-  const [selectedConversation, setSelectedConversation] = useState<ConversationPartner | null>(
-    null
-  );
-  const [replyMessage, setReplyMessage] = useState('');
+  // ELE-1416 — hold only the partner id, never a snapshot of the conversation.
+  // Previously this stored the whole AdminConversation object captured when
+  // the thread was opened. Sending a reply invalidated the query and refetched
+  // the LIST, but the open thread kept rendering the stale captured `messages`
+  // array — so the "Reply sent" toast fired and the reply never appeared.
+  // Deriving from live query data means the thread updates on every refetch.
+  const [selectedPartnerId, setSelectedPartnerId] = useState<string | null>(null);
   const [composeOpen, setComposeOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState<{
@@ -132,88 +98,9 @@ export default function AdminUserMessages() {
     role?: string;
   } | null>(null);
 
-  const {
-    data: conversations,
-    isLoading,
-    refetch,
-    isFetching,
-  } = useQuery({
-    queryKey: ['admin-user-messages'],
-    queryFn: async () => {
-      if (!user?.id) return [];
-
-      const { data, error } = await supabase
-        .from('admin_messages')
-        .select(
-          `
-          id,
-          sender_id,
-          recipient_id,
-          subject,
-          message,
-          message_type,
-          read_at,
-          created_at,
-          sender:profiles!admin_messages_sender_id_fkey(id, full_name, avatar_url, role, admin_role),
-          recipient:profiles!admin_messages_recipient_id_fkey(id, full_name, avatar_url, role, admin_role)
-        `
-        )
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching messages:', error);
-        return [];
-      }
-
-      const conversationMap = new Map<string, ConversationPartner>();
-
-      (data as AdminMessageRow[] | null)?.forEach((msg) => {
-        const senderIsAdmin = !!msg.sender?.admin_role || msg.sender_id === user.id;
-        const partnerId = senderIsAdmin ? msg.recipient_id : msg.sender_id;
-        const partner = senderIsAdmin ? msg.recipient : msg.sender;
-
-        if (partner?.admin_role) {
-          return;
-        }
-
-        if (!conversationMap.has(partnerId)) {
-          conversationMap.set(partnerId, {
-            partnerId,
-            partner,
-            lastMessage: msg,
-            unreadCount: 0,
-            messages: [],
-            hasInboundToAdmin: false,
-            hasAdminReply: false,
-          });
-        }
-
-        const conv = conversationMap.get(partnerId)!;
-        conv.messages.push(msg);
-
-        // Inbound messages are addressed to ONE admin's id, but the whole
-        // admin team owns the inbox — count unread for any admin recipient.
-        if (msg.recipient?.admin_role) {
-          conv.hasInboundToAdmin = true;
-          if (!msg.read_at) conv.unreadCount++;
-        }
-        if (senderIsAdmin) {
-          conv.hasAdminReply = true;
-        }
-      });
-
-      conversationMap.forEach((conv) => {
-        conv.messages.sort(
-          (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-        );
-      });
-
-      return Array.from(conversationMap.values());
-    },
-    enabled: !!user?.id,
-    staleTime: 10 * 1000,
-    refetchInterval: 30 * 1000,
-  });
+  // ELE-1415/1417 — grouping moved to the shared useAdminInbox hook so the
+  // admin page and the user-side Messages sheet read the same conversations.
+  const { data: conversations, isLoading, refetch, isFetching } = useAdminInbox();
 
   const { data: searchResults } = useQuery({
     queryKey: ['user-search', searchQuery],
@@ -267,9 +154,8 @@ export default function AdminUserMessages() {
     },
     onSuccess: () => {
       haptic.success();
-      queryClient.invalidateQueries({ queryKey: ['admin-user-messages'] });
-      setReplyMessage('');
-      toast({ title: 'Reply sent' });
+      // ChatThread owns the draft and clears it on send.
+      queryClient.invalidateQueries({ queryKey: ADMIN_INBOX_QUERY_KEY });
     },
     onError: (error) => {
       haptic.error();
@@ -281,8 +167,13 @@ export default function AdminUserMessages() {
     },
   });
 
-  const handleOpenConversation = (conv: ConversationPartner) => {
-    setSelectedConversation(conv);
+  // ELE-1416 — resolved from live query data on every render, so a reply that
+  // lands via invalidateQueries appears in the open thread immediately.
+  const selectedConversation =
+    conversations?.find((c) => c.partnerId === selectedPartnerId) ?? null;
+
+  const handleOpenConversation = (conv: AdminConversation) => {
+    setSelectedPartnerId(conv.partnerId);
 
     const unreadIds = conv.messages
       .filter((m) => !!m.recipient?.admin_role && !m.read_at)
@@ -290,22 +181,6 @@ export default function AdminUserMessages() {
 
     if (unreadIds.length > 0) {
       markAsReadMutation.mutate(unreadIds);
-    }
-  };
-
-  const handleSendReply = () => {
-    if (!replyMessage.trim() || !selectedConversation) return;
-
-    sendReplyMutation.mutate({
-      recipientId: selectedConversation.partnerId,
-      message: replyMessage.trim(),
-    });
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendReply();
     }
   };
 
@@ -321,7 +196,7 @@ export default function AdminUserMessages() {
 
   const stats = useMemo(() => {
     if (!conversations) {
-      return { unread: 0, today: 0, thisWeek: 0, total: 0 };
+      return { unread: 0, today: 0, thisWeek: 0, total: 0, awaiting: 0 };
     }
     const now = new Date();
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -331,9 +206,13 @@ export default function AdminUserMessages() {
     let today = 0;
     let thisWeek = 0;
     let total = 0;
+    // ELE-1415 — conversations where the user spoke last, i.e. people actually
+    // waiting on us. Counted per conversation, not per message.
+    let awaiting = 0;
 
     conversations.forEach((conv) => {
       unread += conv.unreadCount;
+      if (conv.awaitingReply) awaiting += 1;
       conv.messages.forEach((m) => {
         total += 1;
         const t = new Date(m.created_at).getTime();
@@ -342,33 +221,39 @@ export default function AdminUserMessages() {
       });
     });
 
-    return { unread, today, thisWeek, total };
+    return { unread, today, thisWeek, total, awaiting };
   }, [conversations]);
 
   const filteredConversations = useMemo(() => {
     if (!conversations) return [];
     const searchLower = search.toLowerCase();
 
-    return conversations.filter((conv) => {
-      if (searchLower) {
-        const matchesSearch =
-          conv.partner?.full_name?.toLowerCase().includes(searchLower) ||
-          conv.lastMessage.message?.toLowerCase().includes(searchLower);
-        if (!matchesSearch) return false;
-      }
+    const filtered = conversations.filter((conv) => {
+        if (searchLower) {
+          // Search the whole thread, not just the last message — the thing you
+          // remember is rarely the most recent line.
+          const matchesSearch =
+            conv.partner?.full_name?.toLowerCase().includes(searchLower) ||
+            conv.messages.some((m) => m.message?.toLowerCase().includes(searchLower));
+          if (!matchesSearch) return false;
+        }
 
-      switch (activeTab) {
-        case 'unread':
-          return conv.unreadCount > 0;
-        case 'read':
-          return conv.unreadCount === 0 && conv.hasInboundToAdmin;
-        case 'sent':
-          return conv.hasAdminReply;
-        case 'all':
-        default:
-          return true;
-      }
-    });
+        switch (activeTab) {
+          case 'unread':
+            return conv.unreadCount > 0;
+          case 'read':
+            return conv.unreadCount === 0 && conv.hasInboundToAdmin;
+          case 'sent':
+            return conv.hasAdminReply;
+          case 'all':
+          default:
+            return true;
+        }
+      });
+
+    // ELE-1415 — the list had no sort at all, so ordering fell out of Map
+    // insertion. Shared sort: needs answering, then unopened, then recency.
+    return sortAdminConversations(filtered);
   }, [conversations, search, activeTab, user?.id]);
 
   const tabs = useMemo(
@@ -413,10 +298,15 @@ export default function AdminUserMessages() {
           columns={4}
           stats={[
             {
+              label: 'Awaiting reply',
+              value: stats.awaiting,
+              tone: 'yellow',
+              sub: stats.awaiting === 0 ? 'All answered' : 'User spoke last',
+            },
+            {
               label: 'Unread',
               value: stats.unread,
-              tone: 'yellow',
-              sub: stats.unread === 0 ? 'All caught up' : 'Awaiting reply',
+              sub: stats.unread === 0 ? 'All opened' : 'Not yet opened',
             },
             {
               label: 'Today',
@@ -427,11 +317,6 @@ export default function AdminUserMessages() {
               label: 'This Week',
               value: stats.thisWeek,
               sub: 'Last 7 days',
-            },
-            {
-              label: 'Total',
-              value: stats.total,
-              sub: 'All-time messages',
             },
           ]}
         />
@@ -473,7 +358,6 @@ export default function AdminUserMessages() {
               {filteredConversations.map((conv) => {
                 const unread = conv.unreadCount > 0;
                 const role = conv.partner?.role;
-                const roleTone = roleToTone(role);
                 const preview =
                   conv.lastMessage.message.length > 140
                     ? conv.lastMessage.message.slice(0, 137) + '…'
@@ -482,26 +366,60 @@ export default function AdminUserMessages() {
                 return (
                   <ListRow
                     key={conv.partnerId}
-                    accent={unread ? 'yellow' : undefined}
+                    // ELE-1415 — the accent marks "needs you", not merely
+                    // "unopened". A thread you have read but not answered still
+                    // has someone waiting at the other end of it.
+                    accent={conv.awaitingReply || unread ? 'yellow' : undefined}
                     lead={<Avatar initials={getInitials(conv.partner?.full_name)} />}
+                    // Everything lives in title/subtitle, nothing in `trailing`.
+                    // ListRow's trailing slot is shrink-0 while the text block is
+                    // flex-1 min-w-0, so pills in trailing ate the whole row on a
+                    // phone and the name and preview collapsed to nothing.
                     title={
-                      <span className={unread ? 'font-semibold' : ''}>
-                        {conv.partner?.full_name || 'Unknown User'}
-                      </span>
-                    }
-                    subtitle={preview}
-                    trailing={
-                      <>
-                        {role && (
-                          <Pill tone={roleTone} className="capitalize">
-                            {role}
-                          </Pill>
+                      <span className="flex items-baseline gap-2">
+                        <span
+                          className={cn(
+                            'truncate',
+                            conv.awaitingReply || unread ? 'font-semibold' : ''
+                          )}
+                        >
+                          {conv.partner?.full_name || 'Unknown User'}
+                        </span>
+                        {unread && (
+                          <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold tabular-nums flex items-center justify-center">
+                            {conv.unreadCount}
+                          </span>
                         )}
-                        {unread && <Pill tone="yellow">{conv.unreadCount}</Pill>}
-                        <span className="text-[11px] text-white tabular-nums">
+                        <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white/55">
                           {relativeTime(new Date(conv.lastMessage.created_at))}
                         </span>
-                      </>
+                      </span>
+                    }
+                    subtitle={
+                      <span className="flex items-baseline gap-1.5">
+                        {conv.awaitingReply && (
+                          <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
+                            Awaiting
+                          </span>
+                        )}
+                        <span
+                          className={cn(
+                            'truncate',
+                            conv.awaitingReply ? 'text-white' : 'text-white/70'
+                          )}
+                        >
+                          {/* Say who spoke last, or your own reply reads as theirs. */}
+                          {!conv.awaitingReply && conv.hasAdminReply && (
+                            <span className="text-white/45">You: </span>
+                          )}
+                          {preview}
+                        </span>
+                        {role && (
+                          <span className="ml-auto shrink-0 hidden sm:inline text-[10px] uppercase tracking-[0.12em] text-white/45 capitalize">
+                            {role}
+                          </span>
+                        )}
+                      </span>
                     }
                     onClick={() => handleOpenConversation(conv)}
                   />
@@ -511,7 +429,7 @@ export default function AdminUserMessages() {
           </ListCard>
         )}
 
-        <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedConversation(null)}>
+        <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedPartnerId(null)}>
           <SheetContent side="bottom" className="h-[92vh] rounded-t-3xl p-0 border-0">
             <div className="flex flex-col h-full bg-background">
               <div className="flex justify-center pt-3 pb-1">
@@ -524,7 +442,7 @@ export default function AdminUserMessages() {
                     variant="ghost"
                     size="icon"
                     className="h-11 w-11 rounded-xl shrink-0 touch-manipulation"
-                    onClick={() => setSelectedConversation(null)}
+                    onClick={() => setSelectedPartnerId(null)}
                   >
                     <ArrowLeft className="h-5 w-5" />
                   </Button>
@@ -556,88 +474,37 @@ export default function AdminUserMessages() {
                 </div>
               </SheetHeader>
 
-              <ScrollArea className="flex-1 px-4 py-4">
-                <div className="space-y-3">
-                  {selectedConversation?.messages.map((msg, index) => {
-                    const isFromUser = msg.sender_id === selectedConversation.partnerId;
-                    const showDate =
-                      index === 0 ||
-                      new Date(msg.created_at).toDateString() !==
-                        new Date(
-                          selectedConversation.messages[index - 1].created_at
-                        ).toDateString();
-
-                    return (
-                      <div key={msg.id}>
-                        {showDate && (
-                          <div className="flex justify-center my-4">
-                            <span className="text-[10px] uppercase tracking-[0.18em] text-white font-semibold bg-white/[0.04] border border-white/[0.06] px-3 py-1 rounded-full">
-                              {format(new Date(msg.created_at), 'd MMM yyyy')}
-                            </span>
-                          </div>
-                        )}
-                        <div className={cn('flex', isFromUser ? 'justify-start' : 'justify-end')}>
-                          <div
-                            className={cn(
-                              'max-w-[80%] rounded-2xl px-4 py-2.5 border',
-                              isFromUser
-                                ? 'bg-white/[0.04] border-white/[0.06] text-white rounded-bl-md'
-                                : 'bg-elec-yellow text-black border-elec-yellow rounded-br-md'
-                            )}
-                          >
-                            <p className="text-[14.5px] leading-relaxed whitespace-pre-wrap">
-                              {msg.message}
-                            </p>
-                            <div
-                              className={cn(
-                                'flex items-center gap-1.5 mt-1.5',
-                                isFromUser ? 'justify-start' : 'justify-end'
-                              )}
-                            >
-                              <span
-                                className={cn(
-                                  'text-[10px] tabular-nums',
-                                  isFromUser ? 'text-white' : 'text-black/60'
-                                )}
-                              >
-                                {format(new Date(msg.created_at), 'h:mm a')}
-                              </span>
-                              {!isFromUser && msg.read_at && (
-                                <CheckCheck className="h-3 w-3 text-black/60" />
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </ScrollArea>
-
-              <div className="p-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
-                <div className="flex gap-2">
-                  <Input
-                    value={replyMessage}
-                    onChange={(e) => setReplyMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Type your reply…"
-                    disabled={sendReplyMutation.isPending}
-                    className="flex-1 h-11 rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] text-[13px] text-white touch-manipulation focus:border-elec-yellow/60 placeholder:text-white/35"
-                  />
-                  <Button
-                    onClick={handleSendReply}
-                    disabled={!replyMessage.trim() || sendReplyMutation.isPending}
-                    size="icon"
-                    className="h-11 w-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black shrink-0 rounded-full"
-                  >
-                    {sendReplyMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Send className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </div>
+              {/* ELE-1417 — thread + composer now come from the shared
+                  ChatThread so the admin and user sides cannot drift apart. */}
+              <ChatThread
+                messages={(selectedConversation?.messages ?? []).map((m) => ({
+                  id: m.id,
+                  body: m.message,
+                  createdAt: m.created_at,
+                  // Own SIDE, not "me": the inbox is shared by several admins.
+                  isOwn: m.sender_id !== selectedConversation?.partnerId,
+                  // Attribute a colleague's reply so it does not read as yours.
+                  authorLabel:
+                    m.sender_id !== selectedConversation?.partnerId && m.sender_id !== user?.id
+                      ? (m.sender?.full_name ?? 'Team')
+                      : undefined,
+                }))}
+                // mutateAsync so ChatThread can mark the bubble if it fails.
+                onSend={(body) => {
+                  if (!selectedConversation) return;
+                  return sendReplyMutation.mutateAsync({
+                    recipientId: selectedConversation.partnerId,
+                    message: body,
+                  });
+                }}
+                isSending={sendReplyMutation.isPending}
+                placeholder="Write a reply…"
+                emptyState={
+                  <p className="text-[13.5px] text-white/60">
+                    No messages in this conversation yet.
+                  </p>
+                }
+              />
             </div>
           </SheetContent>
         </Sheet>

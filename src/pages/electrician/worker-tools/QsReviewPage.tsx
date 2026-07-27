@@ -123,6 +123,14 @@ export default function QsReviewPage() {
     setTab('pending');
   };
 
+  // ELE-1421 — follow the certificate. A decision moves it out of Pending, so
+  // dropping the reviewer back on a Pending-filtered queue showed them an empty
+  // space where the cert they just signed used to be, and read as data loss.
+  const handleDecided = (status: 'approved' | 'returned') => {
+    setSelectedId(null);
+    setTab(status);
+  };
+
   const counts = useMemo(() => {
     const c = { pending: 0, approved: 0, returned: 0, cancelled: 0 };
     for (const it of allItems) {
@@ -206,7 +214,12 @@ export default function QsReviewPage() {
         }
       >
         <div className="lg:hidden">
-          <QsReviewDetail item={selectedItem} onBack={() => setSelectedId(null)} side={effectiveSide} />
+          <QsReviewDetail
+            item={selectedItem}
+            onBack={() => setSelectedId(null)}
+            onDecided={handleDecided}
+            side={effectiveSide}
+          />
         </div>
         {/* Desktop falls through to the split queue+detail layout. */}
         <div className="hidden lg:block">
@@ -315,6 +328,14 @@ function QueueAndDetail({
   amIQs,
   onSwitchSide,
 }: QueueAndDetailProps) {
+  // ELE-1421 — desktop split view: same follow-the-certificate behaviour as the
+  // mobile view above, built from the setTab/setSelectedId props this component
+  // already receives rather than threading another callback down.
+  const handleDecided = (status: 'approved' | 'returned') => {
+    setSelectedId(null);
+    setTab(status);
+  };
+
   // Originator ⇄ reviewer toggle — only shown to a worker who is also a QS.
   const sideToggle = amIQs ? (
     <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
@@ -439,7 +460,12 @@ function QueueAndDetail({
 
   // Right-hand pane (desktop only): the selected review, or a prompt to pick one.
   const detailPane = selectedItem ? (
-    <QsReviewDetail item={selectedItem} onBack={() => setSelectedId(null)} side={side} />
+    <QsReviewDetail
+      item={selectedItem}
+      onBack={() => setSelectedId(null)}
+      onDecided={handleDecided}
+      side={side}
+    />
   ) : (
     <div className="rounded-2xl border border-dashed border-white/[0.10] bg-[hsl(0_0%_10%)] px-6 py-16 text-center">
       <p className="text-sm font-medium text-white/70">Select a certificate to review</p>
@@ -511,10 +537,17 @@ function DetailField({ label, value }: { label: string; value: string | null | u
 function QsReviewDetail({
   item,
   onBack,
+  onDecided,
   side = 'review',
 }: {
   item: QsQueueItem;
   onBack: () => void;
+  /**
+   * ELE-1421 — called instead of onBack once a decision lands, so the page can
+   * follow the certificate to the tab it just moved to. Returning to a queue
+   * still filtered to Pending is what made a signed-off cert look deleted.
+   */
+  onDecided?: (status: 'approved' | 'returned') => void;
   /** 'review' = QS reviewing someone's cert (approve/return); 'mine' = the
    *  originator acting on QS feedback (edit + resubmit). */
   side?: 'review' | 'mine';
@@ -603,9 +636,10 @@ function QsReviewDetail({
       });
       toast({
         title: 'Certificate approved',
-        description: 'Your countersignature will appear on the generated PDF.',
+        description: 'Moved to Approved — it also appears in your certificates.',
       });
-      onBack();
+      if (onDecided) onDecided('approved');
+      else onBack();
     } catch (error) {
       toast({
         title: 'Could not approve',
@@ -626,8 +660,12 @@ function QsReviewDetail({
     }
     try {
       await returnMutation.mutateAsync({ reviewId: item.review_id, comments: comments.trim() });
-      toast({ title: 'Certificate returned', description: 'The electrician has been notified.' });
-      onBack();
+      toast({
+        title: 'Certificate returned',
+        description: 'Moved to Returned — the electrician has been notified.',
+      });
+      if (onDecided) onDecided('returned');
+      else onBack();
     } catch (error) {
       toast({
         title: 'Could not return',

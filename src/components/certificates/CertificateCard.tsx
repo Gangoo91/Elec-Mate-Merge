@@ -20,6 +20,12 @@ export interface CertificateData {
   qsReviewStatus?: 'pending' | 'approved' | 'returned' | 'cancelled';
   /** Name of the QS who approved/returned the latest review, when present. */
   qsReviewerName?: string | null;
+  /**
+   * ELE-1421 — set only when the cert belongs to a TEAM MEMBER rather than the
+   * signed-in user. Presence is what marks a card as someone else's work, so it
+   * also drives the read-only treatment (no bulk checkbox).
+   */
+  ownerName?: string;
 }
 
 const QS_CHIP: Record<string, { label: string; className: string }> = {
@@ -137,10 +143,18 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   isSelected = false,
   onSelectToggle,
 }) => {
+  // ELE-1421 — a team member's cert is someone else's record. Bulk status change
+  // and bulk delete both end in `.eq('user_id', <me>)`, which matches zero rows
+  // yet still returns success: the UI would report "12 updated" having changed
+  // nothing. Team cards are therefore excluded from selection outright.
+  const isTeamCert = !!certificate.ownerName;
+  const selectable = !isTeamCert;
+
   const handleCardTap = () => {
-    if (isBulkMode && onSelectToggle) {
+    if (isBulkMode) {
+      if (!selectable) return;
       navigator.vibrate?.(10);
-      onSelectToggle();
+      onSelectToggle?.();
     } else {
       onTap();
     }
@@ -156,22 +170,29 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   const versionMatch = certificate.id.match(/-V(\d+)$/);
   const version = versionMatch ? parseInt(versionMatch[1], 10) : 1;
   const qs = certificate.qsReviewStatus && QS_CHIP[certificate.qsReviewStatus];
+  // First name only — the card is 2-up on a phone and a full name eats the row.
+  // The title attribute keeps the full name reachable.
+  const ownerFirstName = certificate.ownerName?.trim().split(/\s+/)[0] ?? '';
+  const ownerInitial = ownerFirstName.charAt(0).toUpperCase();
 
   return (
     <button
       type="button"
       onClick={handleCardTap}
+      aria-disabled={isBulkMode && !selectable}
       className={cn(
         'group relative flex h-full w-full flex-col text-left rounded-2xl border p-3.5 sm:p-4 transition-all touch-manipulation',
         'focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50 active:scale-[0.99]',
         isSelected
           ? 'border-elec-yellow/40 bg-elec-yellow/[0.07]'
-          : 'border-white/[0.09] bg-gradient-to-b from-white/[0.05] to-white/[0.015] hover:border-elec-yellow/30 hover:from-elec-yellow/[0.06] hover:to-white/[0.01]'
+          : 'border-white/[0.09] bg-gradient-to-b from-white/[0.05] to-white/[0.015] hover:border-elec-yellow/30 hover:from-elec-yellow/[0.06] hover:to-white/[0.01]',
+        // Not yours to bulk-edit — say so visually instead of failing silently.
+        isBulkMode && !selectable && 'opacity-40 active:scale-100 cursor-not-allowed'
       )}
     >
       {/* Header — type badge (or bulk checkbox) left, lock + status dot right */}
       <div className="flex items-center justify-between gap-2">
-        {isBulkMode ? (
+        {isBulkMode && selectable ? (
           <div onClick={(e) => e.stopPropagation()}>
             <Checkbox
               checked={isSelected}
@@ -230,17 +251,42 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         {certificate.installationAddress || 'No address'}
       </p>
 
-      {/* QS review chip, when present */}
-      {qs && (
-        <span
-          className={cn(
-            'mt-2 inline-flex w-fit items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.12em] border rounded px-1.5 py-0.5',
-            qs.className
+      {/* Attribution + review state. One wrapping row so a team cert carrying
+          both chips never pushes the footer out of alignment with its neighbour. */}
+      {(certificate.ownerName || qs) && (
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          {/* ELE-1421 — whose work this is. Only ever rendered for a team
+              member's cert, so its presence alone reads as "not mine". */}
+          {certificate.ownerName && (
+            <span
+              title={certificate.ownerName}
+              className="inline-flex max-w-full items-center gap-1 rounded border border-white/[0.14] bg-white/[0.06] py-0.5 pl-0.5 pr-1.5"
+            >
+              <span
+                className="grid h-[15px] w-[15px] shrink-0 place-items-center rounded-[3px] bg-elec-yellow/20 text-[8px] font-bold leading-none text-elec-yellow"
+                aria-hidden
+              >
+                {ownerInitial}
+              </span>
+              <span className="truncate text-[9.5px] font-semibold text-white/85">
+                {ownerFirstName}
+              </span>
+            </span>
           )}
-          title={certificate.qsReviewerName ? `${qs.label} — ${certificate.qsReviewerName}` : undefined}
-        >
-          {qs.label}
-        </span>
+          {qs && (
+            <span
+              className={cn(
+                'inline-flex w-fit items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.12em] border rounded px-1.5 py-0.5',
+                qs.className
+              )}
+              title={
+                certificate.qsReviewerName ? `${qs.label} — ${certificate.qsReviewerName}` : undefined
+              }
+            >
+              {qs.label}
+            </span>
+          )}
+        </div>
       )}
 
       {/* Spacer keeps every card in a row the same height */}

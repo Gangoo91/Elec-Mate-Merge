@@ -250,7 +250,7 @@ const LegalRequirementsChecklist = () => {
           </div>
         ))}
 
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4">
           <h4 className="font-medium text-blue-400 mb-3 flex items-center gap-2">
             <AlertTriangle className="h-4 w-4" />
             Important Reminders

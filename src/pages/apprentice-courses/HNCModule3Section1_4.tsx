@@ -715,8 +715,8 @@ const HNCModule3Section1_4 = () => {
                 6 + 3 = 18 A. Pick the next standard device above 18 A — a 20 A Type B
                 MCB — and check the upstream cable I_z is at least 20 A under installation
                 method, ambient and grouping factors. Confirm voltage drop on the longest
-                branch using mV/A/m × length × I_b. Allow diversity per BS 7671
-                Appendix 1 if all four circuits are not switched on simultaneously.
+                branch using mV/A/m × length × I_b. Allow diversity per the IET On-Site
+                Guide Appendix A if all four circuits are not switched on simultaneously.
               </>
             }
             whyItMatters={
@@ -744,7 +744,7 @@ const HNCModule3Section1_4 = () => {
               'Current-divider rule: Iₙ = I_T × (R_T / Rₙ) — lower-resistance branch carries more current.',
               'Parallel reduces effective conductor resistance — why a ring final has roughly half the loop impedance of a single radial of the same conductor.',
               'Parallel paths give redundancy — lose one branch and the rest keep working, the design model for dual-feed UPS and dual-source switchgear.',
-              'Diversity (BS 7671 Appendix 1) lets you size the upstream device below the simple sum of branch currents when not all loads run together.',
+              'Diversity (IET On-Site Guide Appendix A) lets you size the upstream device below the simple sum of branch currents when not all loads run together.',
             ]}
           />
 

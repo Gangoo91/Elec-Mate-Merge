@@ -6,14 +6,14 @@ import { cn } from '@/lib/utils';
 type AccentColor = 'yellow' | 'blue' | 'green' | 'purple' | 'orange' | 'emerald' | 'rose' | 'cyan';
 
 const accentConfig: Record<AccentColor, { iconText: string }> = {
-  yellow: { iconText: 'text-yellow-400' },
-  blue: { iconText: 'text-blue-400' },
-  green: { iconText: 'text-green-400' },
-  purple: { iconText: 'text-purple-400' },
-  orange: { iconText: 'text-orange-400' },
-  emerald: { iconText: 'text-emerald-400' },
-  rose: { iconText: 'text-rose-400' },
-  cyan: { iconText: 'text-cyan-400' },
+  yellow: { iconText: 'text-elec-yellow' },
+  blue: { iconText: 'text-elec-yellow' },
+  green: { iconText: 'text-elec-yellow' },
+  purple: { iconText: 'text-elec-yellow' },
+  orange: { iconText: 'text-elec-yellow' },
+  emerald: { iconText: 'text-elec-yellow' },
+  rose: { iconText: 'text-elec-yellow' },
+  cyan: { iconText: 'text-elec-yellow' },
 };
 
 interface BusinessPageLayoutProps {

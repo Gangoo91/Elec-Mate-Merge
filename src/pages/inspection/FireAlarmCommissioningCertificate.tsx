@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { maybePromptLogBook } from '@/utils/fireAlarmLogBookPrompt';
 import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
@@ -219,6 +220,7 @@ const {
       setGeneratedPdfUrl(fn.pdfUrl);
       setPdfFilename(`FA-G3-${formData.certificateNumber || 'cert'}.pdf`);
       toast.success('Commissioning certificate generated');
+      maybePromptLogBook(formData, navigate);
     } catch (e: any) {
       setGenerationError(e.message);
       toast.error('PDF generation failed');

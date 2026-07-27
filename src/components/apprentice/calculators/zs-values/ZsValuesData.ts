@@ -1,5 +1,11 @@
-// BS 7671:2018+A3:2024 Maximum Zs Values - Official Tables 41.2, 41.3, 41.4, 41.5
+// BS 7671:2018+A4:2026 Maximum Zs Values - Official Tables 41.2, 41.3, 41.4, 41.5
 // All values for 230V nominal voltage (Uo)
+//
+// ELE-1390 — relabelled A3:2024 → A4:2026 only AFTER checking the figures against
+// the A4:2026 text, because the header is a claim about the data. Table 41.3
+// Type B (all 13 ratings, 3 A–125 A) and Type C (all 12) match the published
+// A4 values exactly; they are unchanged between A3 and A4. Confirmed by Andrew.
+// If these tables are ever edited, re-verify before touching this header.
 
 // Helper function to get 80% test value
 export const get80PercentZs = (maxZs: number): number => {

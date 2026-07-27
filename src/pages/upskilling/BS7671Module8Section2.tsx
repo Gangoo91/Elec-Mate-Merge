@@ -28,7 +28,7 @@ const inlineChecks = [
       'Appendix 3 — Time/current characteristics',
       'Appendix 4 — Current-carrying capacity',
       'Appendix 6 — Model forms for certification and reporting',
-      'Appendix 17 — Energy efficiency',
+      'Appendix 16 — Devices for protection against overvoltage',
     ],
     correctIndex: 2,
     explanation:

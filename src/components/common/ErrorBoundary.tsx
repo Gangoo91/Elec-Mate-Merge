@@ -92,6 +92,18 @@ class ErrorBoundary extends Component<Props, State> {
       }
       sessionStorage.setItem(reloadKey, Date.now().toString());
       console.log('[ErrorBoundary] Chunk load error, auto-refreshing...');
+      // ELE-1413: report the FIRST occurrence too. This used to return without
+      // telling Sentry ("deployment artifact, not a bug"), which meant a user
+      // stuck in a refresh→crash loop produced zero telemetry — we could not
+      // diagnose a paying customer who could not reach the cancel page. The
+      // auto-refresh usually recovers, so beforeSend downgrades these to
+      // `warning` (category: chunk) rather than alerting.
+      captureError(error, {
+        componentStack: errorInfo.componentStack,
+        url: window.location.href,
+        errorBoundary: true,
+        chunkAutoRecovering: true,
+      });
       // Cache-busting URL reload — plain reload() can hit the same stale HTML
       // from disk cache on Firefox/Windows and loop forever.
       const sep = window.location.href.includes('?') ? '&' : '?';
@@ -107,7 +119,7 @@ class ErrorBoundary extends Component<Props, State> {
       } else {
         navigate();
       }
-      return; // Don't log to Sentry - deployment artifact, not a bug
+      return; // Already reported above as a downgraded `chunk` warning
     }
 
     // Add breadcrumb with component stack for debugging

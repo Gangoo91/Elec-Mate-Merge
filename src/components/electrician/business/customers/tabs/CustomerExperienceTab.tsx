@@ -226,7 +226,7 @@ const CustomerExperienceTab = () => {
                   Technical Compliance Standards
                 </h4>
                 <ul className="space-y-2 text-sm text-slate-200">
-                  <li>• BS7671:2018+A3:2024 (18th Edition Wiring Regulations) full compliance</li>
+                  <li>• BS 7671:2018+A4:2026 (18th Edition Wiring Regulations) full compliance</li>
                   <li>• Proper testing and inspection procedures with calibrated equipment</li>
                   <li>• Electrical Installation Certificates completed accurately and promptly</li>
                   <li>• Part P Building Regulations compliance for all notifiable work</li>

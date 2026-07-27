@@ -245,7 +245,7 @@ const CommercialCircuitGuide = () => {
     description:
       'Commercial cable sizing must account for diversity, grouping factors, and voltage drop over longer runs',
     diversityFactors: {
-      title: 'Diversity Factors (BS 7671 Appendix 1)',
+      title: 'Diversity Factors (IET On-Site Guide Appendix A)',
       note: 'Commercial diversity differs from domestic - generally lower diversity due to simultaneous use',
       factors: [
         {

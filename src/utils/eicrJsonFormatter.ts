@@ -6,6 +6,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { getBoardWays, getMainBoard, MAIN_BOARD_ID, sortBoards } from '@/types/distributionBoard';
+import { formatBsAmendment, formatDesignStandard } from '@/data/standards';
 import type { EICRPayload } from '@/types/eicr-payload';
 
 const toSnakeCase = (str: string): string =>
@@ -974,14 +975,17 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       extent_of_inspection: get('extentOfInspection'),
       limitations_of_inspection: get('limitationsOfInspection'),
       operational_limitations: get('operationalLimitations'),
-      bs_amendment: get('bsAmendment'),
+      bs_amendment: formatBsAmendment(get('bsAmendment')), // ELE-1390 — was printing the raw code
       next_inspection_date: get('nextInspectionDate'),
       inspection_interval: get('inspectionInterval'),
       interval_reasons: get('intervalReasons'),
     },
 
     standards_compliance: {
-      design_standard: get('designStandard', 'BS7671'),
+      // ELE-1390 — was emitting the raw stored code ('BS7671'), so EICR PDFs
+      // printed "BS7671" with no amendment at all. Formatted the same way the
+      // EIC does, from the shared helper.
+      design_standard: formatDesignStandard(get('designStandard')),
       part_p_compliance: get('partPCompliance') || 'N/A',
     },
 
@@ -1672,7 +1676,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // Section D - Extent & Limitations
     agreed_with: get('agreedWith'),
     operational_limitations: get('operationalLimitations'),
-    bs_amendment: get('bsAmendment'),
+    bs_amendment: formatBsAmendment(get('bsAmendment')), // ELE-1390 — was printing the raw code
     interval_reasons: get('intervalReasons'),
 
     // Section I - Supply Characteristics

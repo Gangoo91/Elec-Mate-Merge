@@ -537,7 +537,7 @@ const BS7671ExamGuide = () => {
                     <li>• Appendix 3: Time/current characteristics</li>
                     <li>• Appendix 4: Current-carrying capacity tables</li>
                     <li>• Appendix 5: Classification of external influences</li>
-                    <li>• Appendix 15: Ring final circuit testing</li>
+                    <li>• Appendix 15: Ring and radial final circuit arrangements (design — testing is Reg 643.2.1)</li>
                   </ul>
                 </div>
               </div>

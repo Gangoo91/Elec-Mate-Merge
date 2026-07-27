@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Hook for admin messages - supports two-way chat between users and admin
  */
@@ -207,71 +206,3 @@ export function useAdminMessages() {
   };
 }
 
-// Hook for admin to see all conversations
-export function useAdminConversations() {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
-
-  const { data: conversations, isLoading } = useQuery({
-    queryKey: ['admin-all-conversations'],
-    queryFn: async () => {
-      if (!user?.id) return [];
-
-      // Get unique users who have messaged
-      const { data, error } = await supabase
-        .from('admin_messages')
-        .select(
-          `
-          id,
-          sender_id,
-          recipient_id,
-          subject,
-          message,
-          read_at,
-          created_at,
-          sender:profiles!admin_messages_sender_id_fkey(id, full_name, avatar_url, role),
-          recipient:profiles!admin_messages_recipient_id_fkey(id, full_name, avatar_url, role)
-        `
-        )
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching conversations:', error);
-        return [];
-      }
-
-      // Group by conversation partner
-      const conversationMap = new Map();
-      data?.forEach((msg: any) => {
-        const partnerId = msg.sender_id === user.id ? msg.recipient_id : msg.sender_id;
-        const partner = msg.sender_id === user.id ? msg.recipient : msg.sender;
-
-        if (!conversationMap.has(partnerId)) {
-          conversationMap.set(partnerId, {
-            partnerId,
-            partner,
-            lastMessage: msg,
-            unreadCount: 0,
-          });
-        }
-
-        // Count unread
-        if (msg.recipient_id === user.id && !msg.read_at) {
-          const conv = conversationMap.get(partnerId);
-          conv.unreadCount++;
-        }
-      });
-
-      return Array.from(conversationMap.values());
-    },
-    enabled: !!user?.id,
-    staleTime: 10 * 1000,
-    refetchInterval: 30 * 1000,
-  });
-
-  return {
-    conversations: conversations || [],
-    isLoading,
-    refetch: () => queryClient.invalidateQueries({ queryKey: ['admin-all-conversations'] }),
-  };
-}

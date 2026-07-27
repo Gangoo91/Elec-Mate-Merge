@@ -25,7 +25,7 @@ const BS7671Module8Section1Summary = () => {
                 <li>
                   • Appendix 4 (Section 6.4): Voltage drop calculations must consider circuit type and loading
                 </li>
-                <li>• Appendix 14: Zs values are critical for protective device coordination</li>
+                <li>• Appendix 3: Zs limits are critical for protective device coordination — A3 moved the loop-impedance content here from Appendix 14</li>
                 <li>• Cross-referencing between appendices is essential for accurate design</li>
                 <li>• Amendment 3 updates include enhanced safety margins</li>
               </ul>
@@ -134,7 +134,7 @@ const BS7671Module8Section1Summary = () => {
               <BookOpen className="h-5 w-5 text-elec-yellow mb-2" />
               <h6 className="font-bold text-foreground mb-2">Essential References</h6>
               <ul className="text-xs space-y-1">
-                <li>• BS 7671:2018+A3:2025</li>
+                <li>• BS 7671:2018+A4:2026</li>
                 <li>• IET Guidance Notes</li>
                 <li>• IET On-Site Guide</li>
                 <li>• IET Code of Practice</li>

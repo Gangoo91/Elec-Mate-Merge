@@ -35,7 +35,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Conduit is selected by material (steel or PVC), type (rigid or flexible), and installation environment. BS EN 61386 governs the performance classification of conduit systems using a four-digit code covering mechanical, thermal, electromagnetic and electrical properties.',
-  'Fill calculations for conduit and trunking must comply with BS 7671:2018+A4:2026 Appendix 5 and the associated cable factor tables. Overfilling conduit creates heat build-up and makes future cable changes impractical.',
+  'Fill calculations for conduit and trunking are made using the cable factor tables in the IET On-Site Guide, Appendix E — BS 7671 itself sets the principle (Reg 522.8.1, conductors shall be able to be drawn in without damage) but publishes no cable factors. Overfilling conduit creates heat build-up and makes future cable changes impractical.',
   'Steel conduit used as a circuit protective conductor (CPC) must be continuous throughout, with screwed fittings only — no push-fit joints are permissible. Cross-sectional area must be verified against BS 7671 Table 54.7.',
   'Outdoor and underground conduit installations require appropriate IP-rated fittings and boxes. Buried conduit must meet BS 7671 Regulation 522.8.10 regarding depth and mechanical protection.',
   'Fire stopping around conduit penetrations through fire-resisting structures is a legal requirement under Building Regulations Approved Document B and must be carried out with intumescent materials rated to match the element being penetrated.',
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'How do I calculate how many cables I can fit in a conduit?',
     answer:
-      'BS 7671 Appendix 5 provides cable factor tables for conduit and trunking fill. Each cable size has a factor value, and each conduit size has a maximum total factor. For example, a 20mm conduit has a factor of 460 for straight runs but only 294 for runs with one bend. A 2.5mm\u00b2 single core PVC cable has a factor of around 30 to 35 depending on the conductor type. Divide the conduit factor by the cable factor to find the maximum number of cables. Always allow spare capacity — aim for no more than 45% of conduit space to be occupied, leaving room for future additions and heat dissipation.',
+      'The IET On-Site Guide, Appendix E provides the cable factor tables for conduit and trunking fill — Table E1 for conduit in short straight runs, Table E5 for trunking. BS 7671 does not tabulate cable factors. Each cable size has a factor value, and each conduit size has a maximum total factor. For example, a 20mm conduit has a factor of 460 for straight runs but only 294 for runs with one bend. A 2.5mm\u00b2 single core PVC cable has a factor of around 30 to 35 depending on the conductor type. Divide the conduit factor by the cable factor to find the maximum number of cables. Always allow spare capacity — aim for no more than 45% of conduit space to be occupied, leaving room for future additions and heat dissipation.',
   },
   {
     question: 'Can I use PVC conduit outdoors?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'What trunking fill percentage is recommended under BS 7671?',
     answer:
-      'BS 7671 Appendix 5 specifies cable factors for trunking fill. The space factor — the ratio of the sum of the effective cross-sectional areas of all cables to the internal cross-sectional area of the trunking — should not exceed 45% for new installations. This 45% limit allows adequate space for heat dissipation, for cables to lie without damage, and for future additions. Where multi-core cables of different sizes are mixed, calculate the total cable factor using the individual cable factors from the appendix tables and compare against the trunking factor for the selected size. Mini trunking (e.g. 16\u00d716mm, 25\u00d716mm) has published factors in manufacturers\u2019 data and Appendix 5.',
+      'The IET On-Site Guide Appendix E, Table E5 gives the cable factors for trunking fill. The space factor — the ratio of the sum of the effective cross-sectional areas of all cables to the internal cross-sectional area of the trunking — should not exceed 45% for new installations. This 45% limit allows adequate space for heat dissipation, for cables to lie without damage, and for future additions. Where multi-core cables of different sizes are mixed, calculate the total cable factor using the individual cable factors from the appendix tables and compare against the trunking factor for the selected size. Mini trunking (e.g. 16\u00d716mm, 25\u00d716mm) has published factors in manufacturers\u2019 data and Appendix 5.',
   },
 ];
 
@@ -221,12 +221,12 @@ const sections = [
   },
   {
     id: 'trunking-fill',
-    heading: 'Trunking Fill Calculations (BS 7671 Appendix 5)',
+    heading: 'Trunking Fill Calculations (On-Site Guide Appendix E)',
     content: (
       <>
         <p>
           Overloading conduit or trunking with too many cables is one of the most common
-          installation defects identified on EICRs. The fill limits in BS 7671 Appendix 5 exist to
+          installation defects identified on EICRs. The On-Site Guide Appendix E fill limits exist to
           ensure cables can dissipate heat safely and can be withdrawn and replaced without damage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -236,7 +236,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1:</strong> Identify the cable type and conductor size for each cable
-                to be installed. Look up the cable factor from BS 7671 Appendix 5 Table 5A
+                to be installed. Look up the cable factor from On-Site Guide Appendix E, Table E1
                 (single-core PVC), Table 5B (multi-core PVC), or equivalent.
               </span>
             </li>
@@ -281,7 +281,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Trunking space factor:</strong> For cable trunking, BS 7671 Appendix 5
+                <strong>Trunking space factor:</strong> For cable trunking, On-Site Guide Appendix E
                 specifies that the ratio of the sum of cable cross-sectional areas to the internal
                 trunking cross-sectional area (the space factor) should not exceed 45%. This applies
                 to all new installations.
@@ -605,7 +605,7 @@ export default function ElectricalInstallationConduitPage() {
           <span className="text-yellow-400">— Complete UK Guide</span>
         </>
       }
-      heroSubtitle="Steel vs PVC conduit, BS EN 61386 classification, trunking fill calculations per BS 7671 Appendix 5, earthing requirements, IP ratings, and fire stopping — everything electricians need for compliant conduit installations."
+      heroSubtitle="Steel vs PVC conduit, BS EN 61386 classification, trunking fill calculations per the On-Site Guide Appendix E, earthing requirements, IP ratings, and fire stopping — everything electricians need for compliant conduit installations."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { PenTool, Type, Upload } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -28,17 +28,47 @@ const SignatureInput = ({
   const [digitalSignature, setDigitalSignature] = useState<string | null>(isBase64Image ? value! : null);
   const signaturePadRef = useRef<SignaturePadRef>(null);
 
+  /*
+   * `value` is owned by the parent form, but the text/draw state above is local
+   * and was only ever seeded by the useState initialisers — i.e. once, at mount.
+   * So when a parent filled the field AFTER mount ("Load from business profile"
+   * on the certs), `value` updated but this component kept rendering its stale
+   * empty state, and the signature looked like it hadn't loaded. Every other
+   * field on those forms is a plain controlled input, which is why the signature
+   * was the only one that appeared to fail.
+   *
+   * We track the last value we emitted so that only *external* changes are
+   * adopted — otherwise this would fight the user mid-keystroke.
+   */
+  const lastEmittedRef = useRef<string | null>(value ?? null);
+
+  useEffect(() => {
+    const incoming = value ?? null;
+    if (incoming === lastEmittedRef.current) return;
+    lastEmittedRef.current = incoming;
+
+    const incomingIsImage = !!incoming?.startsWith('data:image');
+    setDigitalSignature(incomingIsImage ? incoming : null);
+    setTextSignature(incomingIsImage ? '' : (incoming ?? ''));
+    // Only jump tabs when there is actually something to show, so clearing the
+    // field doesn't yank the user out of the tab they were working in.
+    if (incoming) setActiveTab(incomingIsImage ? 'draw' : 'text');
+  }, [value]);
+
   const handleTextChange = (text: string) => {
+    lastEmittedRef.current = text || null;
     setTextSignature(text);
     onChange?.(text || null);
   };
 
   const handleDigitalSignatureChange = (signature: string | null) => {
+    lastEmittedRef.current = signature;
     setDigitalSignature(signature);
     onChange?.(signature);
   };
 
   const handleSavedSignatureSelect = (signature: SignatureProfile) => {
+    lastEmittedRef.current = signature.signatureData;
     setDigitalSignature(signature.signatureData);
     onChange?.(signature.signatureData);
     setActiveTab('draw');
@@ -80,6 +110,16 @@ const SignatureInput = ({
           value={textSignature}
           onChange={(e) => handleTextChange(e.target.value)}
           placeholder={placeholder}
+          /*
+           * A signature is a proper name on a legal document: capitalise each
+           * word, but keep autocorrect and spell check OFF. Autocorrect happily
+           * "fixes" surnames into real words, and this value is printed onto
+           * the certificate — a mangled name there is a defective cert.
+           */
+          autoCapitalize="words"
+          autoCorrect="off"
+          spellCheck={false}
+          autoComplete="name"
           className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow"
         />
       )}
@@ -92,8 +132,15 @@ const SignatureInput = ({
             </div>
             <button
               type="button"
-              onClick={() => { setDigitalSignature(null); signaturePadRef.current?.clear(); }}
-              className="w-full h-8 rounded-lg text-[10px] font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+              onClick={() => {
+                // Must clear the PARENT too, not just the local preview. Clearing
+                // only local state left the form still holding the old signature
+                // while the UI showed an empty pad — so a cert could be issued
+                // with a signature the user believed they had removed.
+                handleDigitalSignatureChange(null);
+                signaturePadRef.current?.clear();
+              }}
+              className="w-full h-11 rounded-lg text-[11px] font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] sm:h-8"
             >
               Redraw
             </button>

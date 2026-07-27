@@ -19,74 +19,82 @@ interface WelcomeScreenProps {
 }
 
 interface ExampleQuery {
-  number: string;
   category: string;
   tone: Tone;
   query: string;
+  /**
+   * What the answer will actually hand back. The old card showed a sequence
+   * number ("01"), which told the user nothing — this sets the expectation
+   * that an answer arrives with a figure and a citation, not an essay.
+   */
+  yields: string;
 }
 
 // Pool of examples — four are shown per visit so the screen stays fresh for
 // returning users and quietly teaches the assistant's breadth.
 const EXAMPLE_POOL: ExampleQuery[] = [
+  // Written the way a spark actually asks on site: a real value, a real
+  // decision, a yes/no. The previous pool was all textbook phrasing
+  // ("What is the correct procedure for…"), which under-sold the tool — it
+  // reads like a search box rather than someone who answers questions.
   {
-    number: '01',
-    category: 'REGULATIONS',
+    category: 'PASS OR FAIL',
     tone: 'yellow',
-    query: 'What are the RCD requirements for socket-outlets in kitchens?',
+    query: "I measured Zs of 1.62 Ω on a B32 final circuit, TN-C-S. Does it pass?",
+    yields: 'Verdict + Table 41.3 limit',
   },
   {
-    number: '02',
-    category: 'CALCULATIONS',
+    category: 'EICR CODING',
+    tone: 'purple',
+    query: 'Kitchen sockets with no RCD protection on a 1998 board — what code do I give it?',
+    yields: 'C1/C2/C3 + reasoning',
+  },
+  {
+    category: 'CABLE SIZING',
     tone: 'emerald',
-    query: 'How do I calculate voltage drop for a 6mm twin & earth cable?',
+    query: 'What size SWA for a 60 A three-phase submain, 40 m, buried in ground?',
+    yields: 'CSA + volt drop check',
   },
   {
-    number: '03',
+    category: 'A4:2026 CHANGES',
+    tone: 'blue',
+    query: 'Where are AFDDs actually required under A4:2026, and where are they only recommended?',
+    yields: 'Scope + exact regs',
+  },
+  {
     category: 'TESTING',
     tone: 'blue',
-    query: 'What is the correct procedure for testing loop impedance?',
+    query: 'What order do I do the dead tests in, and why does the order matter?',
+    yields: 'Sequence + rationale',
   },
   {
-    number: '04',
-    category: 'PRACTICAL',
-    tone: 'purple',
-    query: 'How do I wire a consumer unit with dual RCD split-load?',
-  },
-  {
-    number: '05',
-    category: 'REGULATIONS',
-    tone: 'yellow',
-    query: 'Where are AFDDs required under A4:2026?',
-  },
-  {
-    number: '06',
     category: 'CALCULATIONS',
     tone: 'emerald',
-    query: 'What is the maximum Zs for a 32A Type B MCB on a TN-C-S system?',
+    query: 'Volt drop on 6 mm² twin & earth, 32 A over 28 m — am I inside 3%?',
+    yields: 'mV/A/m working shown',
   },
   {
-    number: '07',
-    category: 'TESTING',
-    tone: 'blue',
-    query: 'What order should dead tests be carried out in, and why?',
+    category: 'RCD SELECTION',
+    tone: 'yellow',
+    query: 'EV charger on a TT supply — which RCD type, and what Ra do I need?',
+    yields: 'RCD type + Ra limit',
   },
   {
-    number: '08',
     category: 'PRACTICAL',
     tone: 'purple',
-    query: 'What size SWA do I need for a 60A three-phase submain over 40 metres?',
+    query: 'Board change on a rented flat — what must I test and what goes on the cert?',
+    yields: 'Test list + cert fields',
   },
 ];
 
-// Deterministic-per-mount selection: two "core four" anchors + two rotating.
+// Deterministic-per-mount selection: two fixed anchors (the two highest-value
+// daily jobs — pass/fail and EICR coding) plus two rotating, so returning users
+// keep discovering breadth without the first screen ever feeling random.
 function pickExamples(): ExampleQuery[] {
   const anchors = EXAMPLE_POOL.slice(0, 2);
   const rest = EXAMPLE_POOL.slice(2);
   const shuffled = [...rest].sort(() => Math.random() - 0.5).slice(0, 2);
-  return [...anchors, ...shuffled].map((q, i) => ({
-    ...q,
-    number: String(i + 1).padStart(2, '0'),
-  }));
+  return [...anchors, ...shuffled];
 }
 
 const CAPABILITIES = [
@@ -119,7 +127,7 @@ export function WelcomeScreen({
   }, [recentSessions, onResumeSession]);
 
   return (
-    <div className="mx-auto w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl px-1 sm:px-4 lg:px-10 py-8 sm:py-12">
+    <div className="mx-auto w-full max-w-5xl lg:max-w-5xl xl:max-w-6xl px-1 sm:px-4 lg:px-10 py-8 sm:py-12">
       {/* Hero — editorial, text-led. The page header already says which
           assistant this is, so no duplicate eyebrow here. */}
       <motion.div
@@ -134,7 +142,7 @@ export function WelcomeScreen({
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
             Every reg. Every table. <span className="text-elec-yellow">On tap.</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-[13.5px] sm:text-sm text-white/85 leading-relaxed">
+          <p className="mt-4 max-w-2xl text-[13.5px] sm:text-sm text-white leading-relaxed">
             Ask anything on BS 7671:2018+A4:2026 — regulations, calculations, test procedures,
             installation practice. Every answer is cited to the exact regulation, and every
             citation is checked against the standard before you see it.
@@ -145,7 +153,7 @@ export function WelcomeScreen({
             {CAPABILITIES.map((cap) => (
               <span
                 key={cap}
-                className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[11.5px] font-medium text-white/70"
+                className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[11.5px] font-medium text-white"
               >
                 {cap}
               </span>
@@ -162,7 +170,7 @@ export function WelcomeScreen({
           transition={{ delay: 0.12 }}
           className="mt-8"
         >
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/50">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Pick up where you left off
           </div>
           <div className="mt-3 flex flex-col sm:flex-row gap-2">
@@ -173,11 +181,11 @@ export function WelcomeScreen({
                 onClick={() => onResumeSession?.(s.id)}
                 className="group flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-left transition-colors hover:bg-white/[0.06] active:scale-[0.99] touch-manipulation"
               >
-                <Clock className="h-4 w-4 flex-shrink-0 text-white/40" />
+                <Clock className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
                 <span className="min-w-0 flex-1 truncate text-[13.5px] font-medium text-white">
                   {s.title || 'Previous conversation'}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 text-elec-yellow/70 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 text-elec-yellow transition-transform group-hover:translate-x-0.5" />
               </button>
             ))}
           </div>
@@ -189,7 +197,7 @@ export function WelcomeScreen({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.18 }}
-        className="mt-8 sm:mt-10 text-[10px] font-medium uppercase tracking-[0.22em] text-white/50"
+        className="mt-8 sm:mt-10 text-[10px] font-medium uppercase tracking-[0.22em] text-white"
       >
         Try asking
       </motion.div>
@@ -204,11 +212,11 @@ export function WelcomeScreen({
             onClick={() => onSelectQuery(item.query)}
             className={cn(
               'group relative overflow-hidden text-left',
-              'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]',
-              'border border-white/[0.06] rounded-2xl',
-              'p-5 sm:p-6 lg:p-7 lg:min-h-[160px]',
-              'transition-colors touch-manipulation',
-              'active:scale-[0.995]'
+              'flex flex-col bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]',
+              'border border-white/[0.06] hover:border-white/[0.12] rounded-2xl',
+              'p-5 sm:p-6 lg:p-6 min-h-[150px] lg:min-h-[168px]',
+              'transition-[background-color,border-color,transform] duration-150 touch-manipulation',
+              'active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
             )}
           >
             <div
@@ -218,23 +226,31 @@ export function WelcomeScreen({
               )}
             />
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <div
                 className={cn(
                   'text-[10px] font-medium uppercase tracking-[0.22em]',
                   toneText[item.tone]
                 )}
               >
-                {item.number} · {item.category}
+                {item.category}
               </div>
-              <span className="text-[13px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-                Ask →
+              <span className="shrink-0 text-[13px] font-medium text-elec-yellow transition-transform group-hover:translate-x-0.5">
+                Ask &rarr;
               </span>
             </div>
 
-            <p className="mt-4 text-[16px] sm:text-[17px] lg:text-[18px] font-semibold text-white leading-snug tracking-tight">
+            <p className="mt-3.5 text-[16px] sm:text-[17px] lg:text-[17.5px] font-semibold text-white leading-snug tracking-tight">
               {item.query}
             </p>
+
+            {/* What you get back. Sets the expectation of a figure + a citation
+                rather than an essay — and it's the honest differentiator against
+                asking a generic chatbot the same question. */}
+            <div className="mt-auto flex items-center gap-2 pt-4">
+              <span className="h-1 w-1 shrink-0 rounded-full bg-elec-yellow" />
+              <span className="text-[11.5px] font-medium text-white">{item.yields}</span>
+            </div>
           </motion.button>
         ))}
       </div>

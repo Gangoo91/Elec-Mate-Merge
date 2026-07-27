@@ -39,6 +39,8 @@ const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
 const PublicEmployerQuote = lazy(() => import('@/pages/PublicEmployerQuote'));
+const FireLogShared = lazy(() => import('@/pages/public/FireLogShared'));
+import MfaGate from '@/components/auth/MfaGate';
 const PublicEmployerInvoice = lazy(() => import('@/pages/PublicEmployerInvoice'));
 const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
@@ -69,11 +71,6 @@ const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteB
 const InvoiceViewPage = lazy(() => import('@/pages/electrician/InvoiceViewPage'));
 const QuoteViewPage = lazy(() => import('@/pages/electrician/QuoteViewPage'));
 const AdminRAGProcessor = lazy(() => import('@/pages/AdminRAGProcessor'));
-const ConsultationResults = lazy(() =>
-  import('@/components/install-planner-v2/ConsultationResults').then((m) => ({
-    default: m.ConsultationResults,
-  }))
-);
 const ProcessOnsiteGuide = lazy(() => import('@/pages/ProcessOnsiteGuide'));
 const AutoProcessOnsite = lazy(() => import('@/pages/AutoProcessOnsite'));
 const KnowledgeUploader = lazy(() => import('@/pages/Admin/KnowledgeUploader'));
@@ -108,7 +105,6 @@ const AdminBulkCreate = lazy(() => import('@/pages/Admin/AdminBulkCreate'));
 const AdminPricingModeration = lazy(() => import('@/pages/Admin/AdminPricingModeration'));
 const AdminDocumentReview = lazy(() => import('@/pages/Admin/AdminDocumentReview'));
 const AdminFounders = lazy(() => import('@/pages/Admin/AdminFounders'));
-const AdminEarlyAccess = lazy(() => import('@/pages/Admin/AdminEarlyAccess'));
 const AdminTrials = lazy(() => import('@/pages/Admin/AdminTrials'));
 const AdminWinback = lazy(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazy(() => import('@/pages/Admin/AdminIncompleteSignup'));
@@ -311,6 +307,7 @@ const AppRouter = () => {
   return (
     <>
       <PendingCollegeInviteRedeemer />
+      <MfaGate />
       <AnimatePresence mode="sync">
         <Routes location={location} key={location.pathname}>
           {/* Walkthrough (first launch only) */}
@@ -500,6 +497,14 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <PublicQuote />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/fire-log/:token"
+            element={
+              <LazyRoute>
+                <FireLogShared />
               </LazyRoute>
             }
           />
@@ -1805,14 +1810,12 @@ const AppRouter = () => {
                   </LazyRoute>
                 }
               />
-              <Route
-                path="early-access"
-                element={
-                  <LazyRoute>
-                    <AdminEarlyAccess />
-                  </LazyRoute>
-                }
-              />
+              {/*
+                Early Access retired 2026-07-27 — the campaign is finished and its
+                edge functions (send-early-access-invite/-reminder plus the four
+                open/click trackers) were deleted. AdminFounders is a separate
+                campaign and still live.
+              */}
               <Route
                 path="trials"
                 element={
@@ -1948,14 +1951,6 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <CircuitDesigner />
-                </LazyRoute>
-              }
-            />
-            <Route
-              path="install-planner/results/:conversationId"
-              element={
-                <LazyRoute>
-                  <ConsultationResults />
                 </LazyRoute>
               }
             />

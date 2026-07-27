@@ -876,7 +876,7 @@ export const MarketingTab = () => {
                 </p>
 
                 <div className="space-y-4">
-                  <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 space-y-3">
+                  <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4 space-y-3">
                     <h4
                       className={`font-semibold text-green-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}
                     >
@@ -908,7 +908,7 @@ export const MarketingTab = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-3">
+                  <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4 space-y-3">
                     <h4
                       className={`font-semibold text-blue-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}
                     >
@@ -940,7 +940,7 @@ export const MarketingTab = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 space-y-3">
+                  <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4 space-y-3">
                     <h4
                       className={`font-semibold text-purple-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}
                     >
@@ -969,7 +969,7 @@ export const MarketingTab = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4 space-y-3">
+                  <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4 space-y-3">
                     <h4
                       className={`font-semibold text-orange-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}
                     >
@@ -1036,7 +1036,7 @@ export const MarketingTab = () => {
                     </div>
                   </div>
 
-                  <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4 space-y-3">
+                  <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4 space-y-3">
                     <h4
                       className={`font-semibold text-cyan-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}
                     >

@@ -617,7 +617,7 @@ const Module3Section3_1: React.FC = () => {
                   continuity
                 </li>
                 <li>
-                  <strong>Appendix 15:</strong> Safety procedures for live working
+                  <strong>Regulation 4 of the Electricity at Work Regulations 1989:</strong> safe working on or near live conductors
                 </li>
                 <li>
                   <strong>Part 6:</strong> Inspection and testing requirements for installations

@@ -12,22 +12,22 @@ interface CalloutCardProps {
 
 const variantConfig = {
   tip: {
-    bg: 'bg-yellow-400/10',
-    border: 'border-yellow-400/20',
-    iconBg: 'bg-yellow-400/20',
-    iconText: 'text-yellow-400',
+    bg: 'bg-white/[0.05]',
+    border: 'border-white/[0.08]',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
   },
   warning: {
-    bg: 'bg-orange-400/10',
-    border: 'border-orange-400/20',
-    iconBg: 'bg-orange-400/20',
-    iconText: 'text-orange-400',
+    bg: 'bg-white/[0.05]',
+    border: 'border-white/[0.08]',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
   },
   info: {
-    bg: 'bg-blue-400/10',
-    border: 'border-blue-400/20',
-    iconBg: 'bg-blue-400/20',
-    iconText: 'text-blue-400',
+    bg: 'bg-white/[0.05]',
+    border: 'border-white/[0.08]',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
   },
 };
 

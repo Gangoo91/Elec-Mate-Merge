@@ -24,7 +24,7 @@ import {
   SaveToJobSheet,
 } from './chat';
 import { SourcesRail } from './chat/SourcesRail';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, ArrowDown, FileText, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Message {
@@ -40,13 +40,34 @@ interface Message {
   imageUrl?: string;
   /** All attached images on the user message (max 5) — paths or legacy URLs. */
   imageUrls?: string[];
+  /**
+   * Filenames of PDFs attached to this question. Names only, not paths — this
+   * exists so the transcript still shows WHAT was asked about after a reload.
+   * Without it the question reads as though no document was ever attached.
+   */
+  documentNames?: string[];
   /** Regulation numbers cited in this answer (populated post-stream). */
   citedRegulations?: string[];
   /** Thumbs feedback given on this answer (persists with history). */
   feedback?: 'positive' | 'negative';
+  /**
+   * Server signalled generation failed — this message is the fallback apology,
+   * not an answer. Suppresses the verification badge and Save-to-job.
+   */
+  isError?: boolean;
 }
 
 const MAX_IMAGES_PER_MESSAGE = 5;
+// Must stay in step with the same constants in the conversational-search edge
+// function — it enforces them again server-side.
+const MAX_DOCUMENTS_PER_MESSAGE = 3;
+// Per-file AND combined ceilings — see the derivation in the edge function.
+// Anthropic caps the whole request at 32 MB and base64 inflates by ~37%, so a
+// per-file limit alone wasn't safe: 3 × 20 MB would have blown the cap.
+// Enforced again server-side; these exist to fail fast with a clear message.
+const MAX_DOCUMENT_BYTES = 20 * 1024 * 1024;
+const MAX_DOCUMENT_BYTES_TOTAL = 20 * 1024 * 1024;
+const mb = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(0)} MB`;
 
 const STREAM_STAGES = [
   'Reading your question…',
@@ -127,12 +148,20 @@ export default function ConversationalSearch() {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isCompressing, setIsCompressing] = useState(false);
+  /** Attached PDFs — datasheets, a previous EICR, a spec, a DNO letter. */
+  const [selectedDocuments, setSelectedDocuments] = useState<File[]>([]);
+  const [isDraggingDoc, setIsDraggingDoc] = useState(false);
+  /** True while attachments upload — before the request is even made. */
+  const [isUploading, setIsUploading] = useState(false);
+  /** Blocks re-entry into handleSend while attachments are still uploading. */
+  const sendingRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const isNearBottomRef = useRef(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const docInputRef = useRef<HTMLInputElement>(null);
   const haptic = useHaptic();
   const offlineCache = useOfflineAICache();
 
@@ -200,8 +229,49 @@ export default function ConversationalSearch() {
   // their question, with streaming content growing below the fold. We pin the
   // new user message to the top of the viewport and leave scroll alone
   // thereafter — the reader sets the pace.
-  const handleScrollPosition = useCallback((_e: React.UIEvent<HTMLDivElement>) => {
-    // Retained for API compatibility with ChatMessagesArea onScroll; intentionally no-op.
+  // Deliberately NOT auto-scrolling (see above) leaves one gap: on a long
+  // streamed answer the text grows below the fold with no way back down. Track
+  // distance from the bottom so we can offer a jump — the reader keeps control,
+  // but never loses the end of the answer.
+  const [isAwayFromLatest, setIsAwayFromLatest] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Threshold, not zero: sub-pixel rounding and the streaming tail would
+  // otherwise flicker the control on and off. Identical values don't re-render,
+  // so recomputing freely is cheap.
+  const recomputeAwayFromLatest = useCallback((el: HTMLElement | null) => {
+    if (!el) return;
+    setIsAwayFromLatest(el.scrollHeight - el.scrollTop - el.clientHeight > 260);
+  }, []);
+
+  const handleScrollPosition = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => recomputeAwayFromLatest(e.currentTarget),
+    [recomputeAwayFromLatest]
+  );
+
+  // Scroll events are not enough. While an answer streams, content grows below a
+  // stationary viewport — scrollHeight changes but the browser fires no scroll
+  // event, so a scroll-only listener stays stale through exactly the case this
+  // control exists for.
+  //
+  // Do NOT drive this off the streamed text. `displayedText` updates on every
+  // animation frame (useSmoothedStreaming's rAF loop), so an effect keyed on it
+  // calls setState ~60×/sec and React never settles — that produced
+  // "Maximum update depth exceeded". A low-rate poll while streaming is ample
+  // for a jump affordance and cannot feed back into itself; scroll events still
+  // update it instantly.
+  useEffect(() => {
+    recomputeAwayFromLatest(scrollContainerRef.current);
+    if (!isStreaming) return;
+    const id = window.setInterval(
+      () => recomputeAwayFromLatest(scrollContainerRef.current),
+      300
+    );
+    return () => window.clearInterval(id);
+  }, [isStreaming, messages.length, recomputeAwayFromLatest]);
+
+  const scrollToLatest = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, []);
 
   // When a new user message is appended, scroll it to the top of the chat area
@@ -295,6 +365,126 @@ export default function ConversationalSearch() {
     setSelectedImages([]);
   }, []);
 
+  // Document handling. Deliberately reuses the `visual-uploads` bucket rather
+  // than adding a new one: its RLS is already correct, and creating a bucket
+  // whose SELECT policy is wrong silently breaks uploads entirely (an
+  // INSERT..RETURNING checks SELECT). Same limits as the edge function.
+  const handleDocumentSelect = useCallback(
+    (files: File[]) => {
+      const pdfs = files.filter(
+        (f) => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')
+      );
+      if (pdfs.length === 0) {
+        // Only reached via the Document button (the drop zone routes by type
+        // before getting here), so name what this control is for.
+        // Plain apostrophe: this is a JS string handed to a toast, not JSX, so
+        // an HTML entity would be shown to the user literally.
+        toast.error('That file type isn’t supported', {
+          description: 'PDFs here; photos via Camera or Photo.',
+        });
+        return;
+      }
+      const oversized = pdfs.filter((f) => f.size > MAX_DOCUMENT_BYTES);
+      if (oversized.length > 0) {
+        toast.error(`${oversized[0].name} is too big`, {
+          description: `Maximum ${mb(MAX_DOCUMENT_BYTES)} per PDF. Try attaching just the pages you need.`,
+        });
+      }
+      const usable = pdfs.filter((f) => f.size <= MAX_DOCUMENT_BYTES);
+      if (usable.length === 0) return;
+
+      setSelectedDocuments((prev) => {
+        const room = MAX_DOCUMENTS_PER_MESSAGE - prev.length;
+        if (room <= 0) {
+          toast.message(`Up to ${MAX_DOCUMENTS_PER_MESSAGE} documents per question`);
+          return prev;
+        }
+
+        // Combined budget. Accept files while they fit so one huge PDF can't
+        // silently push a later small one out server-side — better to say no
+        // here, with the reason, than to drop it after upload.
+        let running = prev.reduce((sum, f) => sum + f.size, 0);
+        const accepted: File[] = [];
+        let rejectedForTotal = 0;
+        for (const f of usable.slice(0, room)) {
+          if (running + f.size > MAX_DOCUMENT_BYTES_TOTAL) {
+            rejectedForTotal += 1;
+            continue;
+          }
+          running += f.size;
+          accepted.push(f);
+        }
+        if (rejectedForTotal > 0) {
+          toast.error("That's over the combined limit", {
+            description: `${mb(MAX_DOCUMENT_BYTES_TOTAL)} total across attachments. Remove one, or attach fewer pages.`,
+          });
+        }
+        if (usable.length > room) {
+          toast.message(`Only the first ${room} added — ${MAX_DOCUMENTS_PER_MESSAGE} max per question`);
+        }
+        if (accepted.length === 0) return prev;
+        return [...prev, ...accepted];
+      });
+      haptic.selection();
+    },
+    [haptic]
+  );
+
+  const removeDocument = useCallback((idx: number) => {
+    setSelectedDocuments((prev) => prev.filter((_, i) => i !== idx));
+  }, []);
+
+  /**
+   * Anything dropped on the conversation. Routes by type rather than demanding
+   * the user pick the right button first: PDFs become documents, images (PNG,
+   * JPEG, HEIC…) go through the existing photo pipeline with its compression
+   * and size validation. Only genuinely unsupported types get an error.
+   */
+  const handleDroppedFiles = useCallback(
+    async (files: File[]) => {
+      if (files.length === 0) return;
+
+      const pdfs = files.filter(
+        (f) => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')
+      );
+      const images = files.filter((f) => isImageFile(f));
+      const unsupported = files.filter((f) => !pdfs.includes(f) && !images.includes(f));
+
+      if (pdfs.length > 0) handleDocumentSelect(pdfs);
+      // Sequential: each image may be compressed, and handleImageSelect owns the
+      // per-file cap and toasts.
+      for (const img of images) await handleImageSelect(img);
+
+      if (unsupported.length > 0 && pdfs.length === 0 && images.length === 0) {
+        toast.error(`Can't read ${unsupported[0].name}`, {
+          description: 'Drop a PDF or an image (PNG, JPEG, HEIC).',
+        });
+      }
+    },
+    [handleDocumentSelect, handleImageSelect]
+  );
+
+  const uploadDocument = useCallback(async (file: File): Promise<string> => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    // Keep the original filename in the path — it's what the user recognises if
+    // they ever go looking, and the edge function passes it to the model as the
+    // document title so answers can attribute per-file.
+    const safeName = file.name.replace(/[^\w.-]+/g, '_').slice(-80);
+    const fileName = `${user.id}/elec-ai/docs/${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}-${safeName}`;
+
+    const { error } = await supabase.storage.from('visual-uploads').upload(fileName, file, {
+      contentType: 'application/pdf',
+    });
+    if (error) throw error;
+    return fileName;
+  }, []);
+
   // Returns the bare storage PATH (not a URL) — the message keeps the path so
   // history survives the visual-uploads privacy flip; rendering resolves it
   // and the edge fn gets a fresh signed URL minted at send time.
@@ -317,7 +507,16 @@ export default function ConversationalSearch() {
     async (queryText?: string, options?: { replaceLastAssistant?: boolean }) => {
       const messageText = queryText || input.trim();
 
-      if (!messageText && selectedImages.length === 0) return;
+      // A document with no caption is a valid request ("what's wrong with this
+      // EICR?"), same as a photo with no caption.
+      if (!messageText && selectedImages.length === 0 && selectedDocuments.length === 0) return;
+
+      // Re-entry guard. Attachments upload BEFORE `isStreaming` is set, and the
+      // input's own submit guard only checks `isStreaming` — so during an upload
+      // (up to 8 MB per PDF, on site 4G) a second tap on Send would run this
+      // whole function again: two uploads, two user messages, two requests.
+      if (sendingRef.current) return;
+      sendingRef.current = true;
 
       haptic.medium();
 
@@ -325,6 +524,9 @@ export default function ConversationalSearch() {
       // legacy `imageUrl` for back-compat, full set lives in `imageUrls`.
       // Messages store bare storage PATHS; the edge fn (which fetches the
       // images server-side) gets fresh signed URLs minted at send time.
+      const hasAttachments = selectedImages.length > 0 || selectedDocuments.length > 0;
+      if (hasAttachments) setIsUploading(true);
+
       let imageUrls: string[] = [];
       let sendImageUrls: string[] = [];
       if (selectedImages.length > 0) {
@@ -339,10 +541,34 @@ export default function ConversationalSearch() {
           clearImage();
         } catch {
           toast.error('Failed to upload one or more images');
+          setIsUploading(false);
+          sendingRef.current = false;
           return;
         }
       }
       const imageUrl = imageUrls[0];
+
+      // Same shape for documents: upload, then hand the edge function fresh
+      // signed URLs (it fetches and base64-encodes them for Claude server-side,
+      // so a multi-MB PDF never travels through the request body).
+      let sendDocumentUrls: string[] = [];
+      let sendDocumentNames: string[] = [];
+      if (selectedDocuments.length > 0) {
+        try {
+          const paths = await Promise.all(selectedDocuments.map((f) => uploadDocument(f)));
+          sendDocumentUrls = (
+            await Promise.all(paths.map((p) => mintFreshSignedUrl('visual-uploads', p)))
+          ).filter((u): u is string => !!u);
+          if (sendDocumentUrls.length !== paths.length) throw new Error('signing failed');
+          sendDocumentNames = selectedDocuments.map((f) => f.name);
+          setSelectedDocuments([]);
+        } catch {
+          toast.error('Failed to upload one or more documents');
+          setIsUploading(false);
+          sendingRef.current = false;
+          return;
+        }
+      }
 
       const isRegenerate = !!options?.replaceLastAssistant;
 
@@ -368,12 +594,14 @@ export default function ConversationalSearch() {
         timestamp: new Date(),
         imageUrl,
         imageUrls: imageUrls.length > 0 ? imageUrls : undefined,
+        documentNames: sendDocumentNames.length > 0 ? sendDocumentNames : undefined,
       };
 
       if (!isRegenerate) {
         setMessages((prev) => [...prev, userMessage]);
       }
       setInput('');
+      setIsUploading(false);
       setIsSearching(true);
       setIsStreaming(true);
       streaming.reset();
@@ -404,6 +632,8 @@ export default function ConversationalSearch() {
             // Fresh signed URLs — the backend fetches these server-side.
             imageUrl: sendImageUrls[0],
             imageUrls: sendImageUrls.length > 0 ? sendImageUrls : undefined,
+            documentUrls: sendDocumentUrls.length > 0 ? sendDocumentUrls : undefined,
+            documentNames: sendDocumentNames.length > 0 ? sendDocumentNames : undefined,
           }),
           signal: abortControllerRef.current.signal,
         });
@@ -434,6 +664,9 @@ export default function ConversationalSearch() {
 
         const decoder = new TextDecoder();
         let buffer = '';
+        // Set by an `{ type: 'error' }` frame — the stream still completes with a
+        // 200 and apology prose, so this is the only way to know it failed.
+        let sawStreamError = false;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -477,16 +710,22 @@ export default function ConversationalSearch() {
                 if (citedRegs.length > 0) {
                   lastMessage.citedRegulations = citedRegs;
                 }
+                if (sawStreamError) {
+                  lastMessage.isError = true;
+                }
               }
               return newMessages;
             });
 
-            // Persist to offline cache — fire-and-forget.
-            void offlineCache.save({
-              question: userMessage.content,
-              answer: cleanedContent,
-              sources: citedRegs.map((n) => ({ regulation_number: n })),
-            });
+            // Persist to offline cache — fire-and-forget. Never cache a failure:
+            // it would be served back offline as though it were an answer.
+            if (!sawStreamError) {
+              void offlineCache.save({
+                question: userMessage.content,
+                answer: cleanedContent,
+                sources: citedRegs.map((n) => ({ regulation_number: n })),
+              });
+            }
             break;
           }
 
@@ -502,6 +741,14 @@ export default function ConversationalSearch() {
 
               try {
                 const parsed = JSON.parse(data);
+
+                // Server hit an error mid-stream. The prose that follows is the
+                // generic apology, not an answer — flag it so the footer drops
+                // the verification badge and Save-to-job.
+                if (parsed?.type === 'error') {
+                  sawStreamError = true;
+                  continue;
+                }
 
                 // Optional status event, eg `{ type: 'status', stage: '…' }`.
                 // Rendered as a human line that shows the machinery working —
@@ -520,6 +767,10 @@ export default function ConversationalSearch() {
                         : 'Ranking sources…',
                     answering: 'Writing your answer…',
                     tool_call: 'Running a BS 7671 lookup…',
+                    reading_documents:
+                      typeof parsed.count === 'number' && parsed.count > 1
+                        ? `Reading your ${parsed.count} documents…`
+                        : 'Reading your document…',
                     cache_hit: '',
                   };
                   setStreamStatus(stageLabels[parsed.stage] ?? parsed.stage);
@@ -565,9 +816,26 @@ export default function ConversationalSearch() {
           stageTimerRef.current = null;
         }
         setStreamStatus(null);
+        setIsUploading(false);
+        sendingRef.current = false;
       }
     },
-    [input, messages, streaming, haptic, selectedImages, uploadImage, clearImage, offlineCache]
+    [
+      input,
+      messages,
+      streaming,
+      haptic,
+      selectedImages,
+      uploadImage,
+      clearImage,
+      offlineCache,
+      // Load-bearing: without these the callback closes over a stale empty
+      // document list, so attaching a PDF and pressing Send silently posts the
+      // question with no document at all. `selectedImages` was already here,
+      // which is why the image path never showed the same bug.
+      selectedDocuments,
+      uploadDocument,
+    ]
   );
 
   const handleNewChat = useCallback(() => {
@@ -751,7 +1019,52 @@ export default function ConversationalSearch() {
   );
 
   return (
-    <ChatContainer>
+    <ChatContainer
+      /*
+       * Desktop drag-and-drop. Dropping a PDF onto the conversation is the
+       * natural gesture and there was nowhere to do it. dragenter/over must both
+       * preventDefault or the browser navigates away to the file instead.
+       * `relatedTarget === null` is the reliable "left the window" signal —
+       * dragleave also fires when crossing between child elements.
+       */
+      onDragEnter={(e) => {
+        if (!e.dataTransfer?.types?.includes('Files')) return;
+        e.preventDefault();
+        setIsDraggingDoc(true);
+      }}
+      onDragOver={(e) => {
+        if (!e.dataTransfer?.types?.includes('Files')) return;
+        e.preventDefault();
+      }}
+      onDragLeave={(e) => {
+        if (e.relatedTarget === null) setIsDraggingDoc(false);
+      }}
+      onDrop={(e) => {
+        if (!e.dataTransfer?.types?.includes('Files')) return;
+        e.preventDefault();
+        setIsDraggingDoc(false);
+        void handleDroppedFiles(Array.from(e.dataTransfer.files ?? []));
+      }}
+    >
+      {/* Drop affordance — only while a file is actually over the window */}
+      <AnimatePresence>
+        {isDraggingDoc && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.12 }}
+            className="pointer-events-none absolute inset-3 z-40 flex flex-col items-center justify-center
+              rounded-2xl border-2 border-dashed border-elec-yellow/60 bg-black/70 backdrop-blur-sm"
+          >
+            <FileText className="h-8 w-8 text-elec-yellow" />
+            <p className="mt-3 text-[15px] font-semibold text-white">Drop it here</p>
+            <p className="mt-1 text-[12.5px] text-white">
+              PDF or photo &middot; up to {MAX_DOCUMENTS_PER_MESSAGE} documents, {mb(MAX_DOCUMENT_BYTES)} each
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Editorial header — no icons */}
       <header className="shrink-0 bg-[#0a0a0a] border-b border-white/[0.06]">
         <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-6 h-14">
@@ -843,10 +1156,11 @@ export default function ConversationalSearch() {
         <ChatMessagesArea
           messagesEndRef={messagesEndRef}
           onScroll={handleScrollPosition}
+          scrollContainerRef={scrollContainerRef}
           className="px-3 sm:px-6 lg:px-10"
         >
           <div className="mx-auto flex max-w-4xl lg:max-w-5xl xl:max-w-7xl gap-0 py-4 sm:py-6">
-            <div className="min-w-0 flex-1 space-y-6 sm:space-y-8 xl:pr-8">
+            <div className="min-w-0 flex-1 space-y-6 sm:space-y-8 lg:pr-6 xl:pr-8">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
                 const isCurrentlyStreaming =
@@ -910,6 +1224,25 @@ export default function ConversationalSearch() {
                               </div>
                             );
                           })()}
+                          {/* Attached PDFs stay visible in the transcript. Without
+                              this the question reads as though nothing was
+                              attached, which makes the answer look unfounded on
+                              a reload or when scrolling back. */}
+                          {message.documentNames && message.documentNames.length > 0 && (
+                            <div className="flex flex-col items-end gap-1.5">
+                              {message.documentNames.map((name, i) => (
+                                <span
+                                  key={`${name}-${i}`}
+                                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.07] px-3 py-2"
+                                >
+                                  <FileText className="h-3.5 w-3.5 shrink-0 text-elec-yellow" />
+                                  <span className="min-w-0 truncate text-[12.5px] font-medium text-white">
+                                    {name}
+                                  </span>
+                                </span>
+                              ))}
+                            </div>
+                          )}
                           <div className="rounded-2xl px-3.5 py-3 sm:px-4 bg-elec-yellow/10 border border-elec-yellow/20 text-white">
                             <div
                               className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
@@ -935,10 +1268,13 @@ export default function ConversationalSearch() {
                                 ? streaming.displayedText
                                 : message.content,
                               agentName: 'Elec-AI',
+                              isError: message.isError,
                             }}
                             isStreaming={isCurrentlyStreaming}
                             onSaveToJob={
-                              !isCurrentlyStreaming ? () => handleOpenSaveSheet(message) : undefined
+                              !isCurrentlyStreaming && !message.isError
+                                ? () => handleOpenSaveSheet(message)
+                                : undefined
                             }
                             onOpenSources={
                               !isCurrentlyStreaming && message.citedRegulations?.length
@@ -957,7 +1293,7 @@ export default function ConversationalSearch() {
 
                           {/* Streaming machinery line — quiet, human, alive */}
                           {isCurrentlyStreaming && streamStatus && (
-                            <div className="flex items-center gap-2 text-[12.5px] text-white/60">
+                            <div className="flex items-center gap-2 text-[12.5px] text-white">
                               <span className="relative flex h-1.5 w-1.5">
                                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/60" />
                                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
@@ -1045,6 +1381,32 @@ export default function ConversationalSearch() {
 
       {/* Input area */}
       <ChatInputArea>
+        {/*
+          Jump to latest. Sits above the input rather than over the transcript
+          so it never covers the answer being read. Only while there is a
+          conversation and the reader has actually moved away from the end.
+        */}
+        <AnimatePresence>
+          {messages.length > 0 && isAwayFromLatest && (
+            <motion.button
+              type="button"
+              initial={{ opacity: 0, y: 6, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 6, scale: 0.96 }}
+              transition={{ duration: 0.15 }}
+              onClick={scrollToLatest}
+              aria-label="Jump to the latest message"
+              className="absolute -top-12 left-1/2 z-30 inline-flex h-10 -translate-x-1/2 items-center gap-1.5
+                rounded-full border border-white/[0.12] bg-[hsl(0_0%_14%)] px-4 text-[12.5px] font-medium
+                text-white shadow-lg shadow-black/40 backdrop-blur transition-colors
+                hover:bg-[hsl(0_0%_18%)] active:scale-[0.97] touch-manipulation"
+            >
+              <ArrowDown className="h-3.5 w-3.5 text-elec-yellow" />
+              {isStreaming ? 'Follow answer' : 'Latest'}
+            </motion.button>
+          )}
+        </AnimatePresence>
+
         <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl">
           {/* Compression indicator */}
           <AnimatePresence>
@@ -1058,6 +1420,25 @@ export default function ConversationalSearch() {
                 <div className="flex items-center gap-2 text-[12px] text-white">
                   <span className="h-3 w-3 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
                   <span>Optimising image…</span>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Upload feedback. Attachments upload BEFORE the request is made,
+                so without this the Send tap looked like it did nothing —
+                seconds of apparent deadness on site 4G with a multi-MB PDF. */}
+            {isUploading && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="pb-2"
+              >
+                <div className="flex items-center gap-2 text-[12px] text-white">
+                  <span className="h-3 w-3 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
+                  <span>
+                    {selectedDocuments.length > 0 ? 'Uploading your document…' : 'Uploading…'}
+                  </span>
                 </div>
               </motion.div>
             )}
@@ -1099,6 +1480,35 @@ export default function ConversationalSearch() {
             )}
           </AnimatePresence>
 
+          {/* Attached documents — visible and removable before sending, so
+              nobody sends a 40-page EICR they picked by mistake. */}
+          {selectedDocuments.length > 0 && (
+            <div className="flex flex-wrap gap-2 pb-2">
+              {selectedDocuments.map((doc, i) => (
+                <span
+                  key={`${doc.name}-${i}`}
+                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-elec-yellow/25 bg-elec-yellow/10 px-3 py-2"
+                >
+                  <FileText className="h-3.5 w-3.5 shrink-0 text-elec-yellow" />
+                  <span className="min-w-0 truncate text-[12.5px] font-medium text-white">
+                    {doc.name}
+                  </span>
+                  <span className="shrink-0 text-[11px] tabular-nums text-white">
+                    {(doc.size / 1024 / 1024).toFixed(1)} MB
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeDocument(i)}
+                    aria-label={`Remove ${doc.name}`}
+                    className="shrink-0 rounded-full p-1 text-white transition-colors hover:bg-white/10 touch-manipulation"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* Attachment pills — text-only */}
           <div className="flex items-center gap-2 pb-2">
             <button
@@ -1116,6 +1526,14 @@ export default function ConversationalSearch() {
               aria-label="Attach photo from library"
             >
               Photo
+            </button>
+            <button
+              onClick={() => docInputRef.current?.click()}
+              disabled={isCompressing}
+              className="text-[12px] font-medium text-white px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Attach a PDF document"
+            >
+              Document
             </button>
           </div>
 
@@ -1146,6 +1564,19 @@ export default function ConversationalSearch() {
             className="hidden"
           />
 
+          <input
+            ref={docInputRef}
+            type="file"
+            accept="application/pdf,.pdf"
+            multiple
+            onChange={(e) => {
+              handleDocumentSelect(Array.from(e.target.files ?? []));
+              // Reset so the same file can be re-attached after a remove.
+              e.target.value = '';
+            }}
+            className="hidden"
+          />
+
           <MobileChatInput
             value={input}
             onChange={setInput}
@@ -1158,7 +1589,7 @@ export default function ConversationalSearch() {
             showClearButton={messages.length > 0}
             voiceEnabled
             onTranscript={handleVoiceTranscript}
-            canSubmitWithoutText={selectedImages.length > 0}
+            canSubmitWithoutText={selectedImages.length > 0 || selectedDocuments.length > 0}
           />
         </div>
       </ChatInputArea>

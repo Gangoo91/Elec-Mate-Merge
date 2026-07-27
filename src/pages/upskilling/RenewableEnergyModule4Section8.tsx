@@ -302,7 +302,7 @@ const faqs = [
   {
     question: 'What about future course modules (5-12) — when are they written?',
     answer:
-      'The Renewable Energy Systems course is 12 modules × 8 sections. Modules 1-4 (currently complete) cover: industry/regulatory landscape; Solar PV principles; Solar PV design + installation; Hybrid PV+BESS (this module). Modules 5-12 (planned): Module 5 (BESS deep dive — chemistry, BMS, Chapter 57 in depth, BS EN IEC 62485, PAS 63100, fire safety, sizing); Module 6 (EV charging domestic); Module 7 (EV charging commercial); Module 8 (Heat pumps); Module 9 (Other LCT); Module 10 (Hybrid LCT + EMS); Module 11 (Appendix 17 → 19th Edition Part 8 + fault current + lightning at scale); Module 12 (Testing + commissioning at integration scale). Each module follows the same pedagogy and BS 7671-grounded approach.',
+      'The Renewable Energy Systems course is 12 modules × 8 sections. Modules 1-4 (currently complete) cover: industry/regulatory landscape; Solar PV principles; Solar PV design + installation; Hybrid PV+BESS (this module). Modules 5-12 (planned): Module 5 (BESS deep dive — chemistry, BMS, Chapter 57 in depth, BS EN IEC 62485, PAS 63100, fire safety, sizing); Module 6 (EV charging domestic); Module 7 (EV charging commercial); Module 8 (Heat pumps); Module 9 (Other LCT); Module 10 (Hybrid LCT + EMS); Module 11 (Part 8 energy efficiency / Chapter 81 + fault current + lightning at scale); Module 12 (Testing + commissioning at integration scale). Each module follows the same pedagogy and BS 7671-grounded approach.',
   },
   {
     question: 'How does the Renewable Energy course interact with the BS 7671 18th Edition course?',

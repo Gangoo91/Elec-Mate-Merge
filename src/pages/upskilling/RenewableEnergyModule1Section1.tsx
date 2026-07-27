@@ -93,7 +93,7 @@ const inlineChecks = [
   {
     id: 'm1s1-chapter-81-convergence',
     question:
-      'A4:2026 introduced Appendix 17 (energy efficiency) into BS 7671 — explicitly framed as the precursor to a future Part 8. What is the strategic significance?',
+      'A4:2026 deleted Appendix 17 and introduced Chapter 81 (energy efficiency) in the new Part 8. What is the strategic significance?',
     options: [
       'It is a relabelling exercise with no real impact on day-to-day design',
       'It is convergence — BS 7671 takes on Part L energy-efficiency design in the Part 6 cert',
@@ -102,7 +102,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Energy efficiency design historically lived in Building Regulations Part L assessments. Appendix 17 brings the BS 7671 designer into that conversation and makes certain decisions recordable on Part 6 certs. The 19th Edition is expected to promote Appendix 17 into a full Part 8. The competent LCT designer in 2027 onwards needs Part L-aware design competence, not just BS 7671 competence.',
+      'Energy efficiency design historically lived in Building Regulations Part L assessments. Chapter 81 brings the BS 7671 designer into that conversation and makes certain decisions recordable on Part 6 certs. Note that the promotion has already happened: A4 deleted the informative Appendix 17 and introduced Chapter 81 inside Part 8. The competent LCT designer in 2027 onwards needs Part L-aware design competence, not just BS 7671 competence.',
   },
   {
     id: 'm1s1-19th-edition',
@@ -217,7 +217,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'A4 is part of a trajectory. Reg 133.1.3 (equipment usage), Reg 551.7.1(c) (bidirectional device — a recordable design choice), Appendix 17 (energy-efficiency design — recordable on cert) all push the same way: the cert is the durable audit trail. The 19th Edition is expected to push further.',
+      'A4 is part of a trajectory. Reg 133.1.3 (equipment usage), Reg 551.7.1(c) (bidirectional device — a recordable design choice), Chapter 81 (energy-efficiency design — recordable on cert) all push the same way: the cert is the durable audit trail. The 19th Edition is expected to push further.',
   },
   {
     id: 8,
@@ -258,7 +258,7 @@ const faqs = [
     question:
       'Does Appendix 17 (energy efficiency) actually change what an LCT designer needs to do on a day-to-day install?',
     answer:
-      'Selectively, yes. Appendix 17 introduces loss-minimisation design considerations and makes certain decisions recordable on Part 6 certs. For routine domestic installs the recordable items are narrower than the cross-cutting design philosophy. The deeper change is cultural: BS 7671 designers are increasingly expected to think about energy efficiency as a design dimension, not just protection coordination. The 19th Edition is expected to push further, promoting Appendix 17 into a full Part 8.',
+      'Selectively, yes. Chapter 81 introduces loss-minimisation design considerations and makes certain decisions recordable on Part 6 certs. For routine domestic installs the recordable items are narrower than the cross-cutting design philosophy. The deeper change is cultural: BS 7671 designers are increasingly expected to think about energy efficiency as a design dimension, not just protection coordination. The 19th Edition is expected to push further, promoting Appendix 17 into a full Part 8.',
   },
   {
     question:
@@ -556,7 +556,7 @@ export default function RenewableEnergyModule1Section1() {
             onSite="On any install where loss minimisation matters — long sub-mains, three-phase commercial work, motor circuits — Appendix 17 design considerations are now within scope."
           >
             <p>
-              Appendix 17 is the new energy-efficiency appendix introduced in A4:2026, and
+              Chapter 81 is the new energy-efficiency chapter introduced in A4:2026 in place of the deleted Appendix 17, and
               is explicitly framed as the precursor to a new Part 8 of BS 7671 in a future
               amendment.
             </p>
@@ -574,7 +574,7 @@ export default function RenewableEnergyModule1Section1() {
               into the energy-efficiency domain.
             </p>
             <p>
-              The 19th Edition is expected to promote Appendix 17 into a full Part 8.
+              Part 8 already exists in A4, holding Chapter 81 (energy efficiency) and Chapter 82 (prosumer&apos;s LV installations).
               Energy-efficiency design becomes the same architectural tier as the existing
               Parts. The LCT designer of 2027 onwards needs Part L-aware loss thinking
               alongside protection coordination.

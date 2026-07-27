@@ -138,7 +138,7 @@ const InteractiveToolsTab = () => {
         <Zap className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
           Advanced 2025 digital tools for apprentice planning, cost optimization, and compliance
-          management. Designed for maximum ROI and business outcomes with BS7671:2018+A3:2024
+          management. Designed for maximum ROI and business outcomes with BS 7671:2018+A4:2026
           compliance.
         </AlertDescription>
       </Alert>

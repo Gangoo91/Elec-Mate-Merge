@@ -137,8 +137,6 @@ const InventoryPage = lazy(() => import('@/pages/electrician/InventoryPage'));
 const InvoiceBuilderCreate = lazy(() => import('@/pages/electrician/InvoiceBuilderCreate'));
 const QuoteInvoiceDashboard = lazy(() => import('@/pages/electrician/QuoteInvoiceDashboard'));
 const Calculations = lazy(() => import('@/pages/electrician-tools/Calculations'));
-const InstallPlannerV2 = lazy(() => import('@/pages/electrician-tools/InstallPlannerV2'));
-const InstallPlannerResults = lazy(() => import('@/pages/electrician-tools/InstallPlannerResults'));
 const SiteSafety = lazy(() => import('@/pages/electrician-tools/SiteSafety'));
 const AgentSelectorPage = lazy(() => import('@/pages/electrician-tools/AgentSelectorPage'));
 const CircuitDesigner = lazy(() => import('@/pages/electrician-tools/CircuitDesigner'));
@@ -148,8 +146,6 @@ const InstallationSpecialistPage = lazy(
   () => import('@/pages/electrician-tools/InstallationSpecialistPage')
 );
 const HealthSafetyPage = lazy(() => import('@/pages/electrician-tools/HealthSafetyPage'));
-const CommissioningPage = lazy(() => import('@/pages/electrician-tools/CommissioningPage'));
-const ProjectManagerPage = lazy(() => import('@/pages/electrician-tools/ProjectManagerPage'));
 const MaintenancePage = lazy(() => import('@/pages/electrician-tools/MaintenancePage'));
 const TutorPage = lazy(() => import('@/pages/electrician-tools/TutorPage'));
 const AIMethodStatementPage = lazy(() => import('@/pages/electrician-tools/AIMethodStatementPage'));
@@ -944,22 +940,13 @@ const ElectricianHubRoutes = () => (
         </LazyRoute>
       }
     />
-    <Route
-      path="commissioning"
-      element={
-        <LazyRoute>
-          <CommissioningPage />
-        </LazyRoute>
-      }
-    />
-    <Route
-      path="project-manager"
-      element={
-        <LazyRoute>
-          <ProjectManagerPage />
-        </LazyRoute>
-      }
-    />
+    {/*
+      Commissioning and Project Manager retired 2026-07-27. Their edge functions
+      (commissioning-v3, create/process/cancel-commissioning-job, project-mgmt-v3,
+      generate-project-management-pdf) were deleted, so these routes could only
+      have errored. The GN3 commissioning course content, the Fire Alarm
+      commissioning certificate and the G98/G99 certs are unrelated and untouched.
+    */}
     <Route
       path="maintenance"
       element={
@@ -989,22 +976,6 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <Calculations />
-        </LazyRoute>
-      }
-    />
-    <Route
-      path="install-planner"
-      element={
-        <LazyRoute>
-          <InstallPlannerV2 />
-        </LazyRoute>
-      }
-    />
-    <Route
-      path="install-planner/results/:conversationId?"
-      element={
-        <LazyRoute>
-          <InstallPlannerResults />
         </LazyRoute>
       }
     />

@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
+import FAG6LogBookBridge from '../FAG6LogBookBridge';
 
 const textareaCn =
   'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
@@ -316,6 +317,9 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
         </div>
       </Section>
 
+      {/* Log book bridge — pulls history from the ELE-1396 digital log */}
+      <FAG6LogBookBridge formData={formData} onUpdate={onUpdate} />
+
       {/* False Alarm Records */}
       <Section title="False Alarm Records" accentColor="from-red-500/40 to-rose-400/20">
         <Field label="False alarms since last inspection">
@@ -370,6 +374,69 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             )}
           </>
         )}
+      </Section>
+
+      {/* Service History (G6 — BS 5839-1:2025 expects the cert to reference
+          maintenance carried out since the last inspection) */}
+      <Section title="Service History Since Last Inspection" accentColor="from-red-500/40 to-rose-400/20">
+        <Field label="Maintenance and service visits in the period">
+          <Textarea
+            value={formData.serviceHistorySummary || ''}
+            onChange={(e) => onUpdate('serviceHistorySummary', e.target.value)}
+            className={cn(textareaCn, 'min-h-[110px]')}
+            placeholder={'One per line, e.g.\n12 Mar 2026 — service visit by FireCo: six-monthly inspection (satisfactory)\n03 May 2026 — battery change (panel standby)'}
+          />
+        </Field>
+        <p className="text-[11px] text-white/40 leading-relaxed -mt-1">
+          Linked a log book above? This fills itself — service visits, battery changes and
+          firmware updates recorded in the period.
+        </p>
+      </Section>
+
+      {/* Plan & Cause-and-Effect References */}
+      <Section title="Zone Plan & Cause-and-Effect" accentColor="from-red-500/40 to-rose-400/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label="Zone plan reference">
+            <Input
+              value={formData.zonePlanRef || ''}
+              onChange={(e) => onUpdate('zonePlanRef', e.target.value)}
+              className="h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+              placeholder="Drawing no. / chart by panel"
+            />
+          </Field>
+          <Field label="Cause &amp; effect reference">
+            <Input
+              value={formData.causeEffectReference || ''}
+              onChange={(e) => onUpdate('causeEffectReference', e.target.value)}
+              className="h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+              placeholder="Matrix ref / 'simultaneous evacuation'"
+            />
+          </Field>
+        </div>
+        <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <Checkbox
+            checked={formData.zonePlanVerified || false}
+            onCheckedChange={(v) => onUpdate('zonePlanVerified', v)}
+            className={checkboxCn}
+          />
+          <span className="text-sm text-white">
+            Zone plan present at the panel and checked against the CIE zone text
+          </span>
+        </div>
+        <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <Checkbox
+            checked={formData.causeEffectVerified || false}
+            onCheckedChange={(v) => onUpdate('causeEffectVerified', v)}
+            className={checkboxCn}
+          />
+          <span className="text-sm text-white">
+            Cause &amp; effect operation verified during this inspection
+          </span>
+        </div>
+        <p className="text-[11px] text-white/40 leading-relaxed">
+          BS 5839-1:2025 treats a missing zone plan in multi-zone premises as an unacceptable
+          variation — flag it as a defect if absent.
+        </p>
       </Section>
     </div>
   );

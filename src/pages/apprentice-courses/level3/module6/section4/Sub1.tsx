@@ -529,7 +529,7 @@ export default function Sub1() {
                 <strong>Three-phase grouping with mixed circuits.</strong> Cg for mixed single-phase / three-phase groups is properly handled in Appendix 4 Tables 4C1–4C5 with the full method; the OSG gives a simplified version that can over-derate.
               </li>
               <li>
-                <strong>Harmonic content above 15 percent.</strong> The harmonic correction for multi-core cables carrying significant third-harmonic neutral current (typical of switched-mode loads, UPS, large LED arrays) lives in BS 7671 Appendix 11 — not the OSG at all.
+                <strong>Harmonic content above 15 percent.</strong> The harmonic correction for multi-core cables carrying significant third-harmonic neutral current (typical of switched-mode loads, UPS, large LED arrays) lives in BS 7671 Appendix 4 Section 5.5 — not the OSG at all.
               </li>
               <li>
                 <strong>Underground cables in soil.</strong> Appendix 4 Tables 4D4 / 4E4 publish CCC values for direct-buried and ducted cables with thermal-resistivity correction factors (Table 4B3); the OSG only summarises the most common case.

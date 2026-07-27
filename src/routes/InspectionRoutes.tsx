@@ -21,6 +21,8 @@ const FireAlarmInspectionCertificate = lazy(
 const FireAlarmModificationCertificate = lazy(
   () => import('@/pages/inspection/FireAlarmModificationCertificate')
 );
+const FireAlarmLogBooks = lazy(() => import('@/pages/inspection/FireAlarmLogBooks'));
+const FireAlarmLogBookDetail = lazy(() => import('@/pages/inspection/FireAlarmLogBookDetail'));
 const EVChargingCertificate = lazy(() => import('@/pages/inspection/EVChargingCertificate'));
 const EmergencyLightingCertificate = lazy(
   () => import('@/pages/inspection/EmergencyLightingCertificate')
@@ -81,6 +83,8 @@ export default function InspectionRoutes() {
         {/* Fire Alarm Certificates (BS 5839) */}
         <Route path="fire-alarm/new" element={<FireAlarmCertificate />} />
         <Route path="fire-alarm/:id" element={<FireAlarmCertificate />} />
+        <Route path="fire-alarm-log-books" element={<FireAlarmLogBooks />} />
+        <Route path="fire-alarm-log-books/:id" element={<FireAlarmLogBookDetail />} />
         <Route path="fire-alarm-design/new" element={<FireAlarmDesignCertificate />} />
         <Route path="fire-alarm-design/:id" element={<FireAlarmDesignCertificate />} />
         <Route

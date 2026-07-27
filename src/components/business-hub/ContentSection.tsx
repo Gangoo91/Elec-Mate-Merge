@@ -20,52 +20,52 @@ const colorConfig: Record<
   { iconBg: string; iconText: string; border: string; headerBg: string }
 > = {
   blue: {
-    iconBg: 'bg-blue-500/20',
-    iconText: 'text-blue-400',
-    border: 'border-blue-500/20',
-    headerBg: 'bg-blue-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   green: {
-    iconBg: 'bg-green-500/20',
-    iconText: 'text-green-400',
-    border: 'border-green-500/20',
-    headerBg: 'bg-green-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   orange: {
-    iconBg: 'bg-orange-500/20',
-    iconText: 'text-orange-400',
-    border: 'border-orange-500/20',
-    headerBg: 'bg-orange-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   purple: {
-    iconBg: 'bg-purple-500/20',
-    iconText: 'text-purple-400',
-    border: 'border-purple-500/20',
-    headerBg: 'bg-purple-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   pink: {
-    iconBg: 'bg-pink-500/20',
-    iconText: 'text-pink-400',
-    border: 'border-pink-500/20',
-    headerBg: 'bg-pink-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   yellow: {
-    iconBg: 'bg-yellow-500/20',
-    iconText: 'text-yellow-400',
-    border: 'border-yellow-500/20',
-    headerBg: 'bg-yellow-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   emerald: {
-    iconBg: 'bg-emerald-500/20',
-    iconText: 'text-emerald-400',
-    border: 'border-emerald-500/20',
-    headerBg: 'bg-emerald-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
   rose: {
-    iconBg: 'bg-rose-500/20',
-    iconText: 'text-rose-400',
-    border: 'border-rose-500/20',
-    headerBg: 'bg-rose-500/5',
+    iconBg: 'bg-white/[0.05]',
+    iconText: 'text-elec-yellow',
+    border: 'border-white/[0.08]',
+    headerBg: '',
   },
 };
 
@@ -135,7 +135,7 @@ const ContentSection = ({
           <div
             className={cn(
               'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300',
-              isExpanded ? 'bg-yellow-400/20 rotate-180' : 'bg-white/10'
+              isExpanded ? 'bg-white/[0.08] rotate-180' : 'bg-white/[0.06]'
             )}
           >
             <ChevronDown

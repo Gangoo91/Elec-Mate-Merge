@@ -24,6 +24,15 @@ export interface CertificateActionSheetProps {
   onDelete: () => void;
   /** ELE-881 — duplicate cert as template for similar jobs (e.g. block of apartments) */
   onDuplicate?: () => void;
+  /**
+   * ELE-1421 — the cert belongs to a team member, so the signed-in QS may open,
+   * edit and download it (the `QS can update team reports` policy allows that)
+   * but may NOT delete it: soft-delete sets deleted_at, which that policy's WITH
+   * CHECK rejects. Offering the button would produce a failure, not a deletion.
+   */
+  readOnly?: boolean;
+  /** Name of the team member who owns the cert, shown in the sheet header. */
+  ownerName?: string;
 }
 
 interface Tile {
@@ -58,6 +67,8 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   onUnlinkCustomer,
   onDelete,
   onDuplicate,
+  readOnly = false,
+  ownerName,
 }) => {
   if (!certificate) return null;
 
@@ -92,14 +103,21 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   if (certificate.reportType === 'eicr' && certificate.canExportToEIC && onExportToEIC) {
     tiles.push({ label: 'Export to EIC', sub: 'New EIC from this cert', icon: <ArrowRight className="h-4 w-4 text-elec-yellow" />, onClick: run(onExportToEIC) });
   }
-  if (!certificate.hasCustomer && onLinkCustomer) {
-    tiles.push({ label: 'Link to customer', sub: 'Attach to a client', icon: <Users className="h-4 w-4 text-white/85" />, onClick: run(onLinkCustomer) });
-  }
-  if (certificate.hasCustomer && onLinkCustomer) {
-    tiles.push({ label: 'Change customer', sub: 'Switch the linked client', icon: <Users className="h-4 w-4 text-blue-400" />, onClick: run(onLinkCustomer) });
-  }
-  if (certificate.hasCustomer && onUnlinkCustomer) {
-    tiles.push({ label: 'Unlink customer', sub: 'Detach the client', icon: <Users className="h-4 w-4 text-amber-400" />, onClick: run(onUnlinkCustomer) });
+  // ELE-1421 — customer linking is withheld on a team member's certificate.
+  // `customers` is SELECT-scoped to auth.uid(), but the reports UPDATE would
+  // succeed under the `QS can update team reports` policy — so a QS attaching
+  // one of THEIR clients to a colleague's cert writes a customer_id the owner
+  // can never resolve. The write is permitted; the resulting row is broken.
+  if (!readOnly) {
+    if (!certificate.hasCustomer && onLinkCustomer) {
+      tiles.push({ label: 'Link to customer', sub: 'Attach to a client', icon: <Users className="h-4 w-4 text-white/85" />, onClick: run(onLinkCustomer) });
+    }
+    if (certificate.hasCustomer && onLinkCustomer) {
+      tiles.push({ label: 'Change customer', sub: 'Switch the linked client', icon: <Users className="h-4 w-4 text-blue-400" />, onClick: run(onLinkCustomer) });
+    }
+    if (certificate.hasCustomer && onUnlinkCustomer) {
+      tiles.push({ label: 'Unlink customer', sub: 'Detach the client', icon: <Users className="h-4 w-4 text-amber-400" />, onClick: run(onUnlinkCustomer) });
+    }
   }
   if (onDuplicate) {
     tiles.push({ label: 'Duplicate as template', sub: 'For similar jobs', icon: <Copy className="h-4 w-4 text-elec-yellow" />, onClick: run(onDuplicate) });
@@ -124,6 +142,11 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
               <p className="text-[11px] text-white/55 font-mono truncate">
                 {typeLabel} · {shortId}
               </p>
+              {ownerName && (
+                <p className="mt-1 text-[11px] text-white/70 truncate">
+                  {ownerName}'s certificate
+                </p>
+              )}
             </div>
             <span className="flex-shrink-0 text-[11px] font-bold text-elec-yellow px-2.5 py-1 rounded-md bg-elec-yellow/[0.10] border border-elec-yellow/20">
               {typeLabel}
@@ -159,19 +182,32 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
             ))}
           </div>
 
-          {/* Destructive — separated below the grid */}
-          <button
-            onClick={run(onDelete)}
-            className="mt-2 w-full flex items-center gap-3 p-3.5 rounded-xl bg-red-500/[0.06] border border-red-500/20 hover:bg-red-500/[0.10] active:scale-[0.99] touch-manipulation transition-all text-left select-none"
-          >
-            <span className="h-10 w-10 rounded-xl bg-red-500/[0.10] border border-red-500/20 flex items-center justify-center flex-shrink-0">
-              <Trash2 className="h-4 w-4 text-red-400" />
-            </span>
-            <span>
-              <span className="block text-[13px] font-semibold text-red-300">Delete certificate</span>
-              <span className="block text-[11px] text-red-300/60 mt-0.5">This can't be undone</span>
-            </span>
-          </button>
+          {/* Destructive — separated below the grid. Withheld on a team
+              member's cert: the delete would be rejected by RLS, and a button
+              that always fails is worse than no button. */}
+          {readOnly ? (
+            <p className="mt-2 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-3 text-[11.5px] leading-relaxed text-white/70">
+              Only {ownerName || 'the electrician who created this'} can delete it. You can open,
+              edit and download it as their supervisor.
+            </p>
+          ) : (
+            <button
+              onClick={run(onDelete)}
+              className="mt-2 w-full flex items-center gap-3 p-3.5 rounded-xl bg-red-500/[0.06] border border-red-500/20 hover:bg-red-500/[0.10] active:scale-[0.99] touch-manipulation transition-all text-left select-none"
+            >
+              <span className="h-10 w-10 rounded-xl bg-red-500/[0.10] border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                <Trash2 className="h-4 w-4 text-red-400" />
+              </span>
+              <span>
+                <span className="block text-[13px] font-semibold text-red-300">
+                  Delete certificate
+                </span>
+                <span className="block text-[11px] text-red-300/60 mt-0.5">
+                  This can't be undone
+                </span>
+              </span>
+            </button>
+          )}
         </div>
       </SheetContent>
     </Sheet>

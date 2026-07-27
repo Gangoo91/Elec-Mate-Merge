@@ -14,6 +14,12 @@ interface SwipeableRowProps {
   leftAction?: SwipeAction;
   rightAction?: SwipeAction;
   className?: string;
+  /**
+   * Overrides the sliding panel's own background. It defaults to `bg-card`,
+   * which sits as an opaque layer behind translucent rows — pass e.g.
+   * `bg-transparent` where the child already provides its own surface.
+   */
+  contentClassName?: string;
 }
 
 const variantStyles = {
@@ -22,7 +28,13 @@ const variantStyles = {
   success: 'bg-success',
 };
 
-export function SwipeableRow({ children, leftAction, rightAction, className }: SwipeableRowProps) {
+export function SwipeableRow({
+  children,
+  leftAction,
+  rightAction,
+  className,
+  contentClassName,
+}: SwipeableRowProps) {
   const [translateX, setTranslateX] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const startX = useRef(0);
@@ -98,7 +110,8 @@ export function SwipeableRow({ children, leftAction, rightAction, className }: S
       <div
         className={cn(
           'relative bg-card',
-          isAnimating && 'transition-transform duration-200 ease-out'
+          isAnimating && 'transition-transform duration-200 ease-out',
+          contentClassName
         )}
         style={{ transform: `translateX(${translateX}px)` }}
         onTouchStart={handleTouchStart}

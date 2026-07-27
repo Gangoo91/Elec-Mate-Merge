@@ -23,24 +23,26 @@ export interface UseSimpleAgentReturn {
   } | null;
 }
 
-const AGENT_FUNCTIONS: Record<AgentType, string> = {
+/**
+ * Partial, not Record — 'project-manager' and 'commissioning' were retired on
+ * 2026-07-27 and their edge functions deleted, but AgentType is shared with a
+ * dozen other files so the union itself is left alone. An unmapped agent now
+ * fails loudly here instead of invoking a function that no longer exists.
+ */
+const AGENT_FUNCTIONS: Partial<Record<AgentType, string>> = {
   designer: 'designer-agent',
   'cost-engineer': 'cost-engineer',
   'health-safety': 'health-safety-v3',
   installer: 'installer-v3',
-  'project-manager': 'project-mgmt-v3',
-  commissioning: 'commissioning-v3',
   maintenance: 'maintenance-v3',
   tutor: 'tutor-v3',
 };
 
-const AGENT_NAMES: Record<AgentType, string> = {
+const AGENT_NAMES: Partial<Record<AgentType, string>> = {
   designer: 'Circuit Designer',
   'cost-engineer': 'Cost Engineer',
   'health-safety': 'Health & Safety Advisor',
   installer: 'Installation Specialist',
-  'project-manager': 'Project Manager',
-  commissioning: 'Commissioning Specialist',
   maintenance: 'Maintenance Specialist',
   tutor: 'Training Tutor',
 };
@@ -62,15 +64,22 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
     setProgress({ stage: 'initializing', message: 'Starting up...' });
 
     const functionName = AGENT_FUNCTIONS[agent];
-    const agentName = AGENT_NAMES[agent];
+    const agentName = AGENT_NAMES[agent] ?? agent;
+    if (!functionName) {
+      const msg = `The ${agentName} assistant is no longer available.`;
+      setError(msg);
+      setIsLoading(false);
+      setProgress(null);
+      toast.error(msg);
+      return null;
+    }
     const startTime = Date.now();
 
     console.log(`🤖 Calling ${agentName} (${functionName})`, request);
 
     // Standard JSON-based call for all agents (including cost-engineer)
     // Identify long-running agents
-    const isLongRunningAgent =
-      agent === 'project-manager' || agent === 'health-safety' || agent === 'cost-engineer';
+    const isLongRunningAgent = agent === 'health-safety' || agent === 'cost-engineer';
 
     // Client-side progress simulation with better feedback
     const progressTimer = setInterval(() => {

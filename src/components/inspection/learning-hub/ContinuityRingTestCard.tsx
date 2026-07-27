@@ -99,7 +99,7 @@ const ContinuityRingTestCard = () => {
             Ring Final Circuit Continuity Test
           </CardTitle>
           <CardDescription className="text-gray-300">
-            Comprehensive ring circuit testing - BS 7671 Appendix 15
+            Comprehensive ring circuit testing - BS 7671 Reg 643.2.1
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

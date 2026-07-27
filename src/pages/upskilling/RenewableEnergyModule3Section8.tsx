@@ -235,7 +235,7 @@ const faqs = [
   {
     question: 'How is BS 7671 Section 712 likely to change in the 19th Edition?',
     answer:
-      'Section 712 will evolve in the 19th Edition (currently planned for late-2020s) to reflect emerging UK PV practice — larger arrays, more complex multi-MPPT topologies, integration with BESS (Chapter 57 also evolving) and prosumer arrangements (Chapter 82 added in A4:2026). Expected directions: more explicit rapid-shutdown / arc-fault requirements; refined Type B RCD criteria with the growth of transformerless-with-internal-DC-management inverters; tighter integration with BESS for the prosumer use case; energy-efficiency requirements (Appendix 17 planned to become Part 8). Exact timing and content not yet published; the 19th Edition development is ongoing through 2026-2028.',
+      'Section 712 will evolve in the 19th Edition (currently planned for late-2020s) to reflect emerging UK PV practice — larger arrays, more complex multi-MPPT topologies, integration with BESS (Chapter 57 also evolving) and prosumer arrangements (Chapter 82 added in A4:2026). Expected directions: more explicit rapid-shutdown / arc-fault requirements; refined Type B RCD criteria with the growth of transformerless-with-internal-DC-management inverters; tighter integration with BESS for the prosumer use case; further development of the Part 8 energy-efficiency content (Chapter 81, which replaced the deleted Appendix 17). Exact timing and content not yet published; the 19th Edition development is ongoing through 2026-2028.',
   },
   {
     question: "What's the difference between Section 712, the IET CoP, and MCS MIS 3002?",
@@ -316,7 +316,7 @@ export default function RenewableEnergyModule3Section8() {
               'A4:2026 changes affecting PV: Reg 551.7.1(d) source-connection rule (NEW — PV not on load side of existing RCD); Reg 551.7.1(c) bidirectional protective device (NEW); Chapter 82 Prosumer\'s Electrical Installations (NEW); Reg 531.3.3 Type AC RCD restriction (UPDATED — only for fixed equipment with no DC components); the PV-specific Reg 712.531.3.5.1 sets Type B default with three exceptions; "TN-C-S (PNB)" terminology update.',
               'Every Section 712 reg maps to a design / install / commissioning stage: 712.433.101.1 (design sizing); 712.431.101 / 102 (design + install string fuses); 712.421 (throughout — cable / connectors / isolators / install / commissioning); 712.512.2.1 (design + install thermal); 712.542.102 (design + install bonding); 712.521.102 (design + install routing).',
               'Cert evidence bundle structure: (1) MCS MIS 3002 design pack; (2) install photographs; (3) BS EN 62446-1 commissioning records + SoTR; (4) MCS certificate; (5) EREC G98/G99/G100 documents; (6) DNO confirmation; (7) customer handover pack. Archived 25 years.',
-              '19th Edition (planned late-2020s) will evolve Section 712 — likely additions: explicit rapid-shutdown / arc-fault requirements; refined Type B RCD criteria; tighter BESS / prosumer integration; energy-efficiency (Appendix 17 → Part 8). Development ongoing 2026-2028.',
+              '19th Edition (planned late-2020s) will evolve Section 712 — likely additions: explicit rapid-shutdown / arc-fault requirements; refined Type B RCD criteria; tighter BESS / prosumer integration; further development of the Part 8 energy-efficiency content in Chapter 81. Development ongoing 2026-2028.',
             ]}
           />
 
@@ -664,9 +664,10 @@ export default function RenewableEnergyModule3Section8() {
                 manufacturer states Type B not required. Detailed in Section 6
               </li>
               <li>
-                <strong className="text-white">Appendix 17 — Energy efficiency (NEW)</strong>:
-                planning framework for energy-efficient install design. Planned to become Part 8 in
-                19th Edition
+                <strong className="text-white">Chapter 81 — Energy efficiency (NEW)</strong>: A4:2026
+                deleted Appendix 17 and promoted its content into a new Chapter 81 in Part 8 — the
+                planning framework for energy-efficient installation design is now in the body of
+                the standard, not an informative appendix
               </li>
               <li>
                 <strong className="text-white">TN-C-S (PNB) terminology (UPDATED)</strong>: UK PME
@@ -860,7 +861,7 @@ export default function RenewableEnergyModule3Section8() {
               </li>
               <li>
                 <strong className="text-white">Energy efficiency — Appendix 17 → Part 8</strong> —
-                A4:2026\'s Appendix 17 planned to become a full Part 8 in 19th Edition.
+                A4:2026 deleted Appendix 17 and introduced Chapter 81 in the new Part 8.
                 Energy-efficiency design requirements will become more prominent
               </li>
               <li>
@@ -918,11 +919,11 @@ export default function RenewableEnergyModule3Section8() {
             points={[
               'BS 7671 Section 712 is the regulatory framework for UK PV electrical installations. Covers DC side from module to AC-side connection.',
               'Section 712 + IET CoP for Grid-Connected Solar PV Installations + MCS MIS 3002 = the full UK PV install standard. Three documents, one competent workflow.',
-              "A4:2026 changes affecting PV: Reg 551.7.1(c)/(d) source-connection rules (NEW); Chapter 82 Prosumer's Electrical Installations (NEW); Chapter 57 Stationary Secondary Batteries (NEW); Reg 531.3.3 Type AC restriction (UPDATED); the PV-specific Reg 712.531.3.5.1 sets Type B default with three exceptions; Appendix 17 energy efficiency (planned Part 8 in 19th Edition); Reg 722.411.4.1 PME exception removed; TN-C-S (PNB) terminology update.",
+              "A4:2026 changes affecting PV: Reg 551.7.1(c)/(d) source-connection rules (NEW); Chapter 82 Prosumer's Electrical Installations (NEW); Chapter 57 Stationary Secondary Batteries (NEW); Reg 531.3.3 Type AC restriction (UPDATED); the PV-specific Reg 712.531.3.5.1 sets Type B default with three exceptions; Appendix 17 deleted, energy efficiency now Chapter 81 in Part 8; Reg 722.411.4.1 PME exception removed; TN-C-S (PNB) terminology update.",
               'Every Section 712 reg maps to a design / install / commissioning stage: 712.433.101.1 (sizing); 712.431.101 / 102 (fuses); 712.421 (fire — throughout); 712.512.2.1 (thermal); 712.542.102 (bonding); 712.521.102 (lightning loop).',
               'Cert evidence bundle structure: (1) MCS MIS 3002 design pack; (2) install photographs; (3) BS EN 62446-1 commissioning records + SoTR; (4) MCS certificate; (5) EREC G98/G99/G100 documents; (6) DNO confirmation; (7) customer handover pack. Archived 25 years, multi-format.',
               'Bundle used over install life for: MCS audit (sample), EICR-style periodic inspection (5-yearly), customer service / fault investigation, ownership transfer, insurance claim, end-of-life decision.',
-              '19th Edition (planned late-2020s) will refine Section 712: likely additions for rapid-shutdown / arc-fault, refined Type B criteria, tighter BESS / prosumer integration, energy efficiency (Appendix 17 → Part 8).',
+              '19th Edition (planned late-2020s) will refine Section 712: likely additions for rapid-shutdown / arc-fault, refined Type B criteria, tighter BESS / prosumer integration, further development of the Part 8 energy-efficiency content in Chapter 81.',
               'The next courses (Module 4-12) build on Module 3 foundations: diverters, off-grid, hybrid (Module 4); BESS (Module 5 + Chapter 57); EV charging (Modules 6-7); heat pumps (Module 8); other LCT (Module 9); hybrid + EMS (Module 10); arc-fault + lightning + 19th Edition (Module 11); commissioning + handover at integration scale (Module 12).',
             ]}
           />

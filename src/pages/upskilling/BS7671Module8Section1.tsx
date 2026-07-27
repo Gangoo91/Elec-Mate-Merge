@@ -55,8 +55,8 @@ const inlineChecks = [
     options: [
       'Appendix 1 — British Standards',
       'Appendix 5 — classification of external influences',
-      'Appendix 8 — earthing requirements for installations with high earth leakage',
-      'Appendix 16 — model EICR inspection items',
+      'Appendix 8 — busbar trunking and powertrack systems',
+      'Appendix 16 — devices for protection against overvoltage',
     ],
     correctIndex: 1,
     explanation:
@@ -82,9 +82,9 @@ const inlineChecks = [
       'On a domestic single-phase TN-C-S supply, you measure prospective fault current at the cut-out as 6.2 kA on L-N and 4.8 kA on L-PE. Reg 643.7 requires you to record prospective fault current. Which appendix gives the method for determining and recording PSCC and PEFC?',
     options: [
       'Appendix 3 — time-current characteristics for protective devices',
-      'Appendix 8 — high protective-conductor current installations',
+      'Appendix 8 — busbar trunking and powertrack systems',
       'Appendix 14 — determination of prospective fault current',
-      'Appendix 16 — model EICR inspection items',
+      'Appendix 16 — devices for protection against overvoltage',
     ],
     correctIndex: 2,
     explanation:
@@ -93,16 +93,16 @@ const inlineChecks = [
   {
     id: 'm8s1-app7-cable-colours',
     question:
-      'You are extending a single-phase circuit installed before 31 March 2004 (red phase, black neutral). The new conductors use the harmonised colours (brown line, blue neutral). What does Appendix 7 require?',
+      'You are extending a single-phase circuit installed before 31 March 2004 (red line, black neutral) using harmonised colours (brown line, blue neutral). A colleague tells you to "go and read Appendix 7". What is wrong with that advice?',
     options: [
-      'Replace the entire installation, as mixing old and new colours is not permitted',
-      'No marking is required, since the colours are self-explanatory at each terminal',
-      'A permanent warning notice plus sleeving at every termination where the colours meet',
-      'Mark only the line conductor; neutral and CPC marking are optional',
+      'Nothing — Appendix 7 still sets out the transition rules for mixing old and new colours',
+      'Appendix 7 was deleted by A2:2022, along with Reg 514.14 on non-standard colours; conductor identification is now Table 51 in Chapter 51',
+      'Appendix 7 applies only to three-phase installations, so it is the wrong reference here',
+      'Appendix 7 was renumbered to Appendix 11 when the warning-label appendix was introduced',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
-      'Appendix 7 covers harmonised cable core colours and the transition from the pre-2004 colours. Where new harmonised conductors are connected to existing pre-harmonised conductors, a permanent warning notice must be fixed at the origin and at any consumer unit, and conductors of differing colour codes must be identified at every termination — typically by sleeving (brown sleeve on red, etc.). The notice is the audit trail; the sleeving is the physical safety control.',
+      'Open the book at Appendix 7 in BS 7671:2018+A4:2026 and the page reads "Deleted by BS 7671:2018+A2:2022" — and Regulation 514.14, which carried the non-standard-colours requirements, was deleted by the same amendment. Conductor identification now sits in Table 51 of Chapter 51, which A4:2026 revised again to add identification for a combined protective and functional earthing conductor and to change the d.c. colour identification. Sleeving each conductor where the two colour codes meet, and labelling at the origin, remains exactly what a competent inspector expects to see and what you should still do — but it is now good practice rather than a lettered appendix you can cite. Writing "as per Appendix 7" on a cert or design note dates the document by three amendments.',
   },
 ];
 
@@ -115,7 +115,7 @@ const quizQuestions = [
       'Appendix 1 (British Standards) and Appendix 2 (statutory regs)',
       'Appendix 3 (device curves) and Appendix 6 (model forms)',
       'Appendix 4 (current-carrying capacity and voltage drop) and Appendix 3 (time-current characteristics — to verify ADS Zs)',
-      'Appendix 14 (PSCC) and Appendix 16 (EICR wording)',
+      'Appendix 14 (PSCC) and Appendix 16 (overvoltage protection devices)',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,7 +128,7 @@ const quizQuestions = [
     options: [
       'Appendix 1 — British Standards referenced in BS 7671',
       'Appendix 5 — classification of external influences',
-      'Appendix 16 — model EICR inspection items',
+      'Appendix 16 — devices for protection against overvoltage',
       'Appendix 2 — statutory regulations and associated memoranda',
     ],
     correctAnswer: 3,
@@ -152,30 +152,30 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'You are authoring an EICR. Which appendix gives you the standard wording for inspection items (so two engineers writing the same observation reach the same wording)?',
+      'You are authoring an EICR. Which appendix gives you both the model form and the examples of items requiring inspection?',
     options: [
-      'Appendix 6',
-      'Appendix 14',
-      'Appendix 16 — model EICR inspection items',
-      'Appendix 5',
+      'Appendix 6 — model forms for certification and reporting',
+      'Appendix 14 — determination of prospective fault current',
+      'Appendix 16 — devices for protection against overvoltage',
+      'Appendix 5 — classification of external influences',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Appendix 16 contains the model EICR inspection items — the standard list of items to be inspected and the standard wording for observations. It pairs with Appendix 6 (the EICR model form itself). The pair makes the cert defensible: App 16 wording defines what was assessed and how it would be recorded; App 6 defines the cert layout. GN3 references App 16 throughout.',
+      'It is all Appendix 6. The appendix holds the model EIC, EICR and MEIWC forms, the Schedule of Circuit Details and Schedule of Test Results, the guidance for recipients, and the notes for the person producing the report. A4:2026 added to it a simplified schedule of inspections for initial verification, an example checklist of items requiring inspection at initial verification, and examples of items requiring inspection for an EICR. There is no separate "inspection items" appendix to look for — a common exam trap. Appendix 16 is devices for protection against overvoltage.',
   },
   {
     id: 5,
     question:
-      'A motor circuit feeds a hospital theatre lift; the standby generator and UPS produce significant earth-leakage current under normal operation. Which appendix gives the earthing requirements where high protective-conductor current is unavoidable?',
+      'A bank of power-electronic converters and their UPS will draw a total protective conductor current well above 10 mA in normal service. Where in BS 7671 are the earthing requirements for this?',
     options: [
-      'Appendix 4',
-      'Appendix 7',
-      'Appendix 8 — earthing requirements for installations with high protective-conductor current',
-      'Appendix 14',
+      'Appendix 8 — it covers installations with high earth leakage current',
+      'Regulation 543.7 — there is no appendix for it; Appendix 8 is busbar trunking and powertrack',
+      'Appendix 5 — under the external-influence code for leakage current',
+      'Appendix 14 — protective conductor current is derived from prospective fault current',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Appendix 8 (formerly "high earth leakage current") covers the design requirements where load earth-leakage exceeds 10 mA — duplicated CPC, larger CPC cross-section, dedicated final circuits, and labelling. The appendix references Reg 543.7. Healthcare and large IT-server installations are typical applications.',
+      'There is no appendix for high protective conductor current — the requirements sit in Regulation 543.7. Where the total protective conductor current in normal service is likely to exceed 10 mA, the circuit needs a high integrity protective conductor connection to Reg 543.7.1: a single CPC of at least 10 mm²; or a single copper CPC of at least 4 mm² enclosed against mechanical damage (for example in flexible conduit); or two individual protective conductors; or an earth monitoring system to BS 4444 that disconnects on loss of continuity; or supply through a double-wound transformer. A ring final circuit with a ring CPC is acceptable as it stands; a radial needs either its CPC connected as a ring or a separate CPC at the final socket-outlet. Reg 543.7.1.205 (with Reg 514.17) then requires information at the distribution board, visible to anyone later extending the circuit. Appendix 8 is a different subject entirely: rating factors for current-carrying capacity and voltage drop of busbar trunking and powertrack, cross-referenced from Reg 521.4.',
   },
   {
     id: 6,
@@ -198,7 +198,7 @@ const quizQuestions = [
     options: [
       'Appendix 1 — British Standards referenced in BS 7671',
       'Appendix 6 — model forms for certification and reporting',
-      'Appendix 16 — model EICR inspection items',
+      'Appendix 16 — devices for protection against overvoltage',
       'Appendix 4 — alongside the current-carrying capacity tables',
     ],
     correctAnswer: 3,

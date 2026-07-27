@@ -483,7 +483,7 @@ const DomesticPlanningSection = () => {
           </Alert>
 
           <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
-            <h4 className="font-medium text-white mb-3">Diversity Factors (BS 7671 Appendix 1)</h4>
+            <h4 className="font-medium text-white mb-3">Diversity Factors (IET On-Site Guide Appendix A)</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>

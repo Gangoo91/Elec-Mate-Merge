@@ -1,5 +1,13 @@
 import React, { memo, useState } from 'react';
-import { Zap } from 'lucide-react';
+import {
+  Zap,
+  Copy,
+  Check,
+  BookmarkPlus,
+  BookOpen,
+  RotateCw,
+  AlertTriangle,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -17,6 +25,11 @@ interface InspectorMessageProps {
     citations?: Array<{ number: string; title: string }>;
     agentName?: string;
     imageUrl?: string;
+    /**
+     * This message is a generation-failure notice, not an answer. Suppresses the
+     * reg-check footer badge so an outage can never read as verified guidance.
+     */
+    isError?: boolean;
   };
   isStreaming?: boolean;
   /** Open SaveToJobSheet for this assistant answer. */
@@ -55,6 +68,7 @@ export const InspectorMessage = memo(
     const [copied, setCopied] = useState(false);
     const [showWorking, setShowWorking] = useState(false);
     const isUser = message.role === 'user';
+    const isError = !!message.isError;
 
     const handleCopy = async () => {
       if (message.content) {
@@ -154,7 +168,15 @@ export const InspectorMessage = memo(
             )}
             <div className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em]">
               <span className="text-elec-yellow">{message.agentName || 'Elec-AI'}</span>
-              <span className="text-white">BS 7671 A4:2026</span>
+              {/* Never badge a failure with the standard rev — it reads as guidance */}
+              {isError ? (
+                <span className="inline-flex items-center gap-1.5 text-amber-300">
+                  <AlertTriangle className="h-3 w-3" />
+                  Couldn&rsquo;t answer
+                </span>
+              ) : (
+                <span className="text-white">BS 7671 A4:2026</span>
+              )}
               {isStreaming && (
                 <span className="text-white normal-case tracking-normal">composing…</span>
               )}
@@ -174,8 +196,23 @@ export const InspectorMessage = memo(
                 )}
 
                 {/* Key figures — the numbers a spark needs, scannable in one glance */}
+                {/*
+                  Key figures and the Working toggle are only extracted once the
+                  stream ends (restructuring mid-stream made the text jump
+                  around). That means the answer visibly re-lays-out the instant
+                  streaming stops — most noticeable on a wide desktop column,
+                  where a bullet list becomes a four-tile grid in one frame.
+                  Fading the new blocks in makes that read as the answer settling
+                  rather than a jolt. Prose reflows instantly as before; only the
+                  newly-appearing structure is animated.
+                */}
                 {keyFigures.length > 0 && (
-                  <div className="not-prose my-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                    className="not-prose my-4 grid grid-cols-2 gap-2 sm:grid-cols-4"
+                  >
                     {keyFigures.map((f) => (
                       <div
                         key={f.label}
@@ -184,15 +221,15 @@ export const InspectorMessage = memo(
                         <div className="text-[17px] font-semibold leading-tight text-white tabular-nums">
                           {f.value}
                         </div>
-                        <div className="mt-1 text-[10.5px] font-medium uppercase tracking-[0.08em] text-white/45">
+                        <div className="mt-1 text-[10.5px] font-medium uppercase tracking-[0.08em] text-white">
                           {f.label}
                         </div>
                         {f.source && (
-                          <div className="mt-0.5 text-[10.5px] text-elec-yellow/70">{f.source}</div>
+                          <div className="mt-0.5 text-[10.5px] text-elec-yellow">{f.source}</div>
                         )}
                       </div>
                     ))}
-                  </div>
+                  </motion.div>
                 )}
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -316,13 +353,20 @@ export const InspectorMessage = memo(
                   {markdownBody}
                 </ReactMarkdown>
 
-                {/* Working — folded by default; the number came first above */}
+                {/* Working — folded by default; the number came first above.
+                    Fades in with the same timing as the figures grid so the
+                    whole post-stream restructure settles as one motion. */}
                 {workingSection && (
-                  <div className="not-prose my-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.22, ease: 'easeOut', delay: 0.04 }}
+                    className="not-prose my-4"
+                  >
                     <button
                       type="button"
                       onClick={() => setShowWorking((v) => !v)}
-                      className="text-[12.5px] font-medium text-elec-yellow/80 hover:text-elec-yellow transition-colors touch-manipulation"
+                      className="h-11 text-[12.5px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors touch-manipulation sm:h-auto"
                     >
                       {showWorking ? 'Hide working' : 'Show working'}
                     </button>
@@ -332,12 +376,12 @@ export const InspectorMessage = memo(
                           remarkPlugins={[remarkGfm]}
                           components={{
                             p: ({ children }) => (
-                              <p className="text-[13.5px] leading-relaxed my-2 text-white/85">
+                              <p className="text-[13.5px] leading-relaxed my-2 text-white">
                                 {transformInlineChildren(children, inlineCtx, 'wp')}
                               </p>
                             ),
                             li: ({ children }) => (
-                              <li className="text-[13.5px] leading-relaxed text-white/85">
+                              <li className="text-[13.5px] leading-relaxed text-white">
                                 {transformInlineChildren(children, inlineCtx, 'wli')}
                               </li>
                             ),
@@ -355,7 +399,7 @@ export const InspectorMessage = memo(
                         </ReactMarkdown>
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* Streaming cursor */}
@@ -373,51 +417,82 @@ export const InspectorMessage = memo(
             )}
           </motion.div>
 
-          {/* Text-only footer actions */}
+          {/* Footer actions — real tap targets, not text links (44px on mobile) */}
           {!isStreaming && message.content && (
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px]">
-              <button
-                onClick={handleCopy}
-                className="font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-              >
-                {copied ? 'Copied' : 'Copy'}
-              </button>
-              {onSaveToJob && (
+            <div className="mt-1 space-y-2.5 border-t border-white/[0.06] pt-3">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <button
-                  onClick={onSaveToJob}
-                  className="font-medium text-white hover:text-white transition-colors touch-manipulation"
+                  onClick={handleCopy}
+                  aria-label={copied ? 'Copied to clipboard' : 'Copy answer'}
+                  className={cn(
+                    'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-medium',
+                    'touch-manipulation transition-colors active:scale-[0.97]',
+                    'sm:h-9',
+                    copied
+                      ? 'bg-emerald-400/15 text-emerald-300'
+                      : 'bg-white/[0.05] text-white hover:bg-white/[0.09]'
+                  )}
                 >
-                  Save to job
+                  {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copied ? 'Copied' : 'Copy'}
                 </button>
-              )}
-              {onOpenSources && (
-                <button
-                  onClick={onOpenSources}
-                  className="font-medium text-white hover:text-white transition-colors touch-manipulation"
-                >
-                  Open sources
-                </button>
-              )}
-              {onRegenerate && (
-                <button
-                  onClick={onRegenerate}
-                  className="font-medium text-white hover:text-white transition-colors touch-manipulation"
-                >
-                  Regenerate
-                </button>
-              )}
-              {message.content.includes('⚠️ **Citation check:**') ? (
-                // Server-side verifier flagged a citation — mirror it here so
-                // the caution can't be missed at the end of a long answer.
-                <span className="uppercase tracking-[0.18em] text-amber-400/90">
-                  Check citations before relying on this
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1.5 uppercase tracking-[0.18em] text-white">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400/90" />
-                  Citations verified · BS 7671 A4:2026
-                </span>
-              )}
+                {onSaveToJob && (
+                  <button
+                    onClick={onSaveToJob}
+                    aria-label="Save answer to a job"
+                    className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-white/[0.05] px-3 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.09] active:scale-[0.97] sm:h-9"
+                  >
+                    <BookmarkPlus className="h-3.5 w-3.5" />
+                    Save to job
+                  </button>
+                )}
+                {onOpenSources && (
+                  <button
+                    onClick={onOpenSources}
+                    aria-label="Open cited regulation sources"
+                    className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-white/[0.05] px-3 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.09] active:scale-[0.97] sm:h-9"
+                  >
+                    <BookOpen className="h-3.5 w-3.5" />
+                    Sources
+                  </button>
+                )}
+                {onRegenerate && (
+                  <button
+                    onClick={onRegenerate}
+                    aria-label={isError ? 'Try again' : 'Regenerate answer'}
+                    className={cn(
+                      'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-medium',
+                      'touch-manipulation transition-colors active:scale-[0.97] sm:h-9',
+                      isError
+                        ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                        : 'bg-white/[0.05] text-white hover:bg-white/[0.09]'
+                    )}
+                  >
+                    <RotateCw className="h-3.5 w-3.5" />
+                    {isError ? 'Try again' : 'Regenerate'}
+                  </button>
+                )}
+              </div>
+
+              {/*
+                Provenance line. Three states, and the distinction matters:
+                the verifier checks that cited reg NUMBERS exist — it does not
+                validate formulae or earthing-system logic. Claiming "citations
+                verified" overstated that, so the wording is deliberately narrow.
+                On a failure we say nothing at all.
+              */}
+              {!isError &&
+                (message.content.includes('⚠️ **Citation check:**') ? (
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300">
+                    <AlertTriangle className="h-3 w-3" />
+                    Check citations before relying on this
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    Reg numbers checked · BS 7671 A4:2026
+                  </span>
+                ))}
             </div>
           )}
         </div>
@@ -429,7 +504,11 @@ export const InspectorMessage = memo(
     if (nextProps.isStreaming) return false;
     return (
       prevProps.message.content === nextProps.message.content &&
-      prevProps.message.role === nextProps.message.role
+      prevProps.message.role === nextProps.message.role &&
+      // Must be compared: the error flag lands in the same state update as the
+      // final content, and if that content is unchanged the footer would keep
+      // showing the verified badge on a failed answer.
+      prevProps.message.isError === nextProps.message.isError
     );
   }
 );

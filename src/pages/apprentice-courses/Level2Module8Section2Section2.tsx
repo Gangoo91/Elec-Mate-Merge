@@ -528,7 +528,7 @@ const Level2Module8Section2Section2 = () => {
                   </div>
                   <div>
                     <strong>Appendix Strategy:</strong> Tables in Appendix 4 for calculations,
-                    Appendix 1 for definitions
+                    Part 2 for definitions
                   </div>
                   <div>
                     <strong>Cross-References:</strong> Follow regulation cross-references for

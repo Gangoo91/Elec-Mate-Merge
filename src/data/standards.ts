@@ -144,3 +144,43 @@ export const voltageDropLimits = [
     calculation: 'During starting period with starting current',
   },
 ];
+
+// ELE-1390 — single source of truth for the standard string printed on
+// certificates. Lived only in eicJsonFormatter, so the EICR formatter emitted
+// the raw stored code ('BS7671') instead of a readable standard. Both now
+// import this so they cannot drift apart again.
+//
+// New certs default to the current amendment (A4:2026). The legacy 'BS7671'
+// code maps to A3:2024 deliberately: a cert designed and certified under
+// Amendment 3 must keep stating A3 and must not be retrospectively relabelled.
+export function formatDesignStandard(value: unknown): string {
+  const v = String(value || '').trim();
+  switch (v) {
+    case '':
+    case 'BS7671-A4':
+      return 'BS 7671:2018+A4:2026';
+    case 'BS7671':
+      return 'BS 7671:2018+A3:2024';
+    case 'other':
+      return 'Other';
+    default:
+      return v;
+  }
+}
+
+// ELE-1390 — the EICR form stores the amendment as a code ('amd4-2026') and the
+// live PDF template renders it directly, so certificates were printing the raw
+// code. Map it to the published amendment designation. Empty is returned as ''
+// so the template's own `| default: "A4:2026"` still applies.
+export function formatBsAmendment(value: unknown): string {
+  const v = String(value || '').trim();
+  if (!v) return '';
+  const codes: Record<string, string> = {
+    'amd1-2020': 'A1:2020',
+    'amd2-2022': 'A2:2022',
+    'amd3-2024': 'A3:2024',
+    'amd4-2026': 'A4:2026',
+  };
+  // Values already stored in a readable form (e.g. 'BS 7671:2018+A2:2022') pass through.
+  return codes[v] ?? v;
+}

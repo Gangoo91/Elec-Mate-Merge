@@ -159,7 +159,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'The footnote § on the Generic Schedule of Circuit Details makes column 12 explicitly source-flexible. Most commonly it is the Table 41.3 maximum Zs at 70°C. But it can also be Annex A4 (Appendix 14) corrected values, or a designer-set tighter limit (for example, where a circuit needs to discriminate with an upstream device). When the value is not the Table 41.3 default, the source must be declared in column 31 (Remarks) of the Schedule of Test Results. This is one of the genuinely useful A4:2026 clarifications.',
+      'The footnote § on the Generic Schedule of Circuit Details makes column 12 explicitly source-flexible. Most commonly it is the Table 41.3 maximum Zs at 70°C. But it can also be an Appendix 3 temperature-corrected value, or a designer-set tighter limit (for example, where a circuit needs to discriminate with an upstream device). When the value is not the Table 41.3 default, the source must be declared in column 31 (Remarks) of the Schedule of Test Results. This is one of the genuinely useful A4:2026 clarifications.',
   },
   {
     id: 7,

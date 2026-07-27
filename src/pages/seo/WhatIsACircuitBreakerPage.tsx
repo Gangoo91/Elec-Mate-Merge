@@ -382,7 +382,7 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>B20 — Radial socket circuit.</strong> 20A radials wired in 2.5mm² cable are
-                used for areas serving up to 50m² floor area (Appendix 15 of the On-Site Guide).
+                used for areas serving up to 50m² floor area (On-Site Guide Appendix H, standard circuit arrangements).
               </span>
             </li>
             <li className="flex items-start gap-3">

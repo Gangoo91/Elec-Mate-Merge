@@ -12,7 +12,7 @@ const BS7671Module8Section1Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          The BS 7671:2018+A3:2025 appendices form the backbone of electrical design calculations
+          The BS 7671:2018+A4:2026 appendices form the backbone of electrical design calculations
           and verification procedures. These reference materials are essential tools that every
           electrical professional must master for safe, compliant installations.
         </p>
@@ -26,7 +26,8 @@ const BS7671Module8Section1Intro = () => {
           <ul className="text-sm space-y-1">
             <li>• Appendix 4: Current-carrying capacities and correction factors</li>
             <li>• Appendix 4 (Section 6.4): Voltage drop calculations and compliance limits</li>
-            <li>• Appendix 14: Earth fault loop impedance values</li>
+            <li>• Appendix 3: Earth fault loop impedance and device time/current curves</li>
+            <li>• Appendix 14: Determination of prospective fault current</li>
             <li>• Appendix 15: Ring final circuit calculations</li>
             <li>• Reference charts and derating tables</li>
           </ul>

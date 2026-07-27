@@ -294,12 +294,24 @@ const PublicQuoteView = () => {
         viewTrackedRef.current = true;
         supabase.auth.getUser().then(({ data }) => {
           if (data?.user?.id === convertedQuote.user_id) return; // owner preview — don't count
-          void (
-            supabase.rpc as unknown as (
-              fn: string,
-              args: Record<string, unknown>
-            ) => Promise<{ error: unknown }>
-          )('mark_quote_viewed', { p_quote_id: convertedQuote.id }).catch(() => {});
+          // supabase.rpc() returns a PostgrestFilterBuilder — a thenable, NOT a
+          // Promise, so it has no .catch(). Typing it as PromiseLike (not Promise)
+          // is deliberate: it keeps .catch() from being reintroduced. Await inside
+          // try/catch instead — a builder only issues its request once awaited, so
+          // calling .catch() on it threw before the RPC was ever sent and this
+          // notification never fired once between 25 and 27 July.
+          void (async () => {
+            try {
+              await (
+                supabase.rpc as unknown as (
+                  fn: string,
+                  args: Record<string, unknown>
+                ) => PromiseLike<{ error: unknown }>
+              )('mark_quote_viewed', { p_quote_id: convertedQuote.id });
+            } catch {
+              // fire-and-forget — never block the client's view of the quote
+            }
+          })();
         });
       }
 

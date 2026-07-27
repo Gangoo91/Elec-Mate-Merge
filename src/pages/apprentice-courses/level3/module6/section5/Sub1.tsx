@@ -203,7 +203,7 @@ const faqs = [
   {
     question: 'What changed in Table 41.3 in A4:2026?',
     answer:
-      "A4:2026 recalculated all the Table 41.3 maximum Zs values using Cmin = 0.95 from Appendix 14, replacing the previous practice that did not explicitly apply Cmin in the table. The new values are about 5 percent lower than the old ones — for example a B32 MCB on TN went from 1.44 Ω (A2 / pre-A4) to 1.37 Ω (A4:2026). If you have an old design pack or an old Zs lookup app, the limits are tighter now. Always confirm you are working from the A4:2026 edition. The regulation that mandates this is unchanged in principle but the number is now demonstrably the right one for the supply tolerance.",
+      "A4:2026 recalculated all the Table 41.3 maximum Zs values using Cmin = 0.95 from Appendix 3, replacing the previous practice that did not explicitly apply Cmin in the table. The new values are about 5 percent lower than the old ones — for example a B32 MCB on TN went from 1.44 Ω (A2 / pre-A4) to 1.37 Ω (A4:2026). If you have an old design pack or an old Zs lookup app, the limits are tighter now. Always confirm you are working from the A4:2026 edition. The regulation that mandates this is unchanged in principle but the number is now demonstrably the right one for the supply tolerance.",
   },
   {
     question: 'Does Zs apply to circuits on a TT system?',

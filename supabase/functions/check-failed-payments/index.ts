@@ -71,9 +71,19 @@ serve(async (req: Request) => {
 
     // ── Payday retry mode (Friday-morning cron) ─────────────────────────────
     let bodyMode: string | undefined;
+    // Dry run: report exactly what a real run WOULD do, without a single
+    // side effect — no card attempted, no subscription cancelled, no invoice
+    // voided, no email sent, no row written.
+    //
+    // This exists because verifying the deploy on 2026-07-27 cost three real
+    // customers a bank decline: the only way to exercise this function was to
+    // let it charge people. A function that touches cards must be testable
+    // without touching cards.
+    let dryRun = false;
     try {
       const body = await req.json();
       bodyMode = body?.mode;
+      dryRun = body?.dry_run === true;
     } catch {
       // empty/malformed body — normal for the daily dunning cron
     }
@@ -88,25 +98,112 @@ serve(async (req: Request) => {
       const stripe = new Stripe(paydayStripeKey, { apiVersion: '2023-10-16' });
 
       // Hard declines that a retry can never fix — do not reattempt these.
+      // We always retry the SAME stored card, so any code meaning "these card
+      // details are wrong" is permanent by definition, not just unlikely:
+      // dphp1123's number was simply incorrect and we re-attempted it three
+      // times in four days (2026-07-27 audit).
       const HARD_DECLINES = new Set([
         'stolen_card',
         'lost_card',
         'pickup_card',
         'expired_card',
+        'incorrect_number',
+        'invalid_number',
+        'incorrect_cvc',
+        'invalid_cvc',
+        'invalid_expiry_month',
+        'invalid_expiry_year',
+        'card_not_supported',
+        'no_account',
+        'account_closed',
         'fraudulent',
         'do_not_honor',
         'restricted_card',
         'revocation_of_all_authorizations',
       ]);
 
-      const openInvoices = await stripe.invoices.list({
-        status: 'open',
-        limit: 100,
-        expand: ['data.charge', 'data.subscription'],
-      });
+      // Paginate. A bare limit:100 silently ignores invoice 101 — and the ones
+      // it drops are the OLDEST, which is exactly where zombie subscriptions
+      // accumulate. A cap that hides the cases you are hunting is worse than no
+      // sweep at all, because it reports success.
+      const openInvoiceData: Stripe.Invoice[] = [];
+      let invoiceCursor: string | undefined;
+      // Bounded so a pagination bug can never spin forever; 20 pages = 2,000
+      // open invoices, far beyond any plausible real state, and we log if hit.
+      for (let page = 0; page < 20; page++) {
+        const batch = await stripe.invoices.list({
+          status: 'open',
+          limit: 100,
+          ...(invoiceCursor ? { starting_after: invoiceCursor } : {}),
+          expand: ['data.charge', 'data.subscription'],
+        });
+        openInvoiceData.push(...batch.data);
+        if (!batch.has_more || batch.data.length === 0) break;
+        invoiceCursor = batch.data[batch.data.length - 1].id;
+        if (page === 19) {
+          logger.error('Open-invoice pagination cap hit — some invoices not swept', {
+            swept: openInvoiceData.length,
+          });
+        }
+      }
+      const openInvoices = { data: openInvoiceData };
 
-      const results = { attempted: 0, recovered: 0, declined: 0, skipped: 0 };
+      const results = {
+        attempted: 0,
+        recovered: 0,
+        declined: 0,
+        skipped: 0,
+        // Zombie subscriptions cancelled because we are no longer serving them.
+        reconciled: 0,
+        // Open invoices we could not tie back to a user — never billed.
+        unidentified: 0,
+      };
       const recoveredIds: string[] = [];
+
+      // ── Our own truth about who we are serving ────────────────────────────
+      // Billing must be decided against THIS, never against Stripe's opinion of
+      // the subscription. The two drift, and when they do it is the customer who
+      // pays: on 2026-07-27 four people whose access we had already revoked were
+      // still having their banks hit — Mathew Bayley among them, who had
+      // cancelled what he could see (his Apple sub) and had no way to stop the
+      // Stripe one because the billing portal button is dead in production.
+      //
+      // The invariant, in one line: if we are not giving someone access, we do
+      // not take their money.
+      const invoiceCustomerId = (inv: Stripe.Invoice): string | null =>
+        typeof inv.customer === 'string' ? inv.customer : (inv.customer?.id ?? null);
+
+      const customerIds = [
+        ...new Set(
+          openInvoices.data
+            .map((inv: Stripe.Invoice) => invoiceCustomerId(inv))
+            .filter((c: string | null): c is string => !!c)
+        ),
+      ];
+      const servedByCustomer = new Map<string, boolean>();
+      if (customerIds.length > 0) {
+        const { data: profileRows, error: profileErr } = await supabase
+          .from('profiles')
+          .select('stripe_customer_id, subscribed')
+          .in('stripe_customer_id', customerIds);
+        if (profileErr) {
+          // Without our own state we cannot safely bill anyone. Refuse the run
+          // rather than silently degrade to Stripe-only logic — that degraded
+          // mode IS the bug this guard exists to prevent.
+          logger.error('Payday retry aborted — subscription state unavailable', {
+            error: profileErr.message,
+          });
+          return new Response(
+            JSON.stringify({ error: 'subscription state unavailable — no payments attempted' }),
+            { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+        for (const row of profileRows ?? []) {
+          if (row.stripe_customer_id) {
+            servedByCustomer.set(row.stripe_customer_id, !!row.subscribed);
+          }
+        }
+      }
       // Age cap: past ~30 days the card is dead and the user has churned —
       // retrying forever gets 0% recovery, pings churned users' banking apps
       // weekly, and looks like card-testing to Stripe Radar. (2026-07-05: a
@@ -121,10 +218,6 @@ serve(async (req: Request) => {
           results.skipped++;
           continue;
         }
-        if (invoice.created < oldestRetryable) {
-          results.skipped++;
-          continue;
-        }
         // Never retry someone who has cancelled — their leftover open invoice
         // would otherwise be re-attempted every Friday (Sarah Palmer, Jul 2026).
         const sub = invoice.subscription as Stripe.Subscription | string;
@@ -134,6 +227,62 @@ serve(async (req: Request) => {
             invoiceId: invoice.id,
             subscriptionId: sub.id,
           });
+          continue;
+        }
+
+        // ── The invariant ───────────────────────────────────────────────────
+        // Checked BEFORE the age cap: a zombie older than the cap must still be
+        // cancelled, not merely skipped. Skipping only stops OUR retries —
+        // Stripe's own Smart Retries carry on hitting the bank regardless (it
+        // was a Sunday Stripe retry, not this cron, that hit Mathew on 26 Jul).
+        // Cancelling the subscription and voiding the invoice is the only thing
+        // that actually stops the contact.
+        //
+        // Safe by construction: an OPEN invoice means the current period was
+        // never paid for, so there is nothing here the customer is owed. And a
+        // just-paid customer is `active`, never sat on an open invoice — so a
+        // lagging webhook cannot cause a wrongful cancellation here.
+        const custId = invoiceCustomerId(invoice);
+        const isServed = custId ? servedByCustomer.get(custId) : undefined;
+
+        if (custId && isServed === false) {
+          const subId = typeof sub === 'string' ? sub : sub.id;
+          try {
+            if (!dryRun) {
+              await stripe.subscriptions.cancel(subId);
+              await stripe.invoices.voidInvoice(invoice.id);
+            }
+            results.reconciled++;
+            logger.warn('Cancelled zombie subscription — access revoked but still billing', {
+              invoiceId: invoice.id,
+              subscriptionId: subId,
+              customerId: custId,
+              amountDue: invoice.amount_due,
+            });
+          } catch (cancelError: unknown) {
+            results.skipped++;
+            logger.error('Failed to cancel zombie subscription', {
+              invoiceId: invoice.id,
+              subscriptionId: subId,
+              error: cancelError instanceof Error ? cancelError.message : String(cancelError),
+            });
+          }
+          continue;
+        }
+
+        // Unknown customer — we cannot show they are a customer of ours, so we
+        // do not touch their card. Never charge someone you cannot identify.
+        if (isServed === undefined) {
+          results.unidentified++;
+          logger.warn('Payday retry skipping unidentified customer', {
+            invoiceId: invoice.id,
+            customerId: custId,
+          });
+          continue;
+        }
+
+        if (invoice.created < oldestRetryable) {
+          results.skipped++;
           continue;
         }
         const lastCharge = invoice.charge as Stripe.Charge | null;
@@ -156,6 +305,16 @@ serve(async (req: Request) => {
           continue;
         }
         results.attempted++;
+        if (dryRun) {
+          // Counted as attempted so the dry run's shape matches a real run;
+          // the outcome is genuinely unknown without asking the bank, so it is
+          // deliberately neither recovered nor declined.
+          logger.info('Dry run — would attempt payment', {
+            invoiceId: invoice.id,
+            amount: invoice.amount_due,
+          });
+          continue;
+        }
         try {
           await stripe.invoices.pay(invoice.id);
           results.recovered++;
@@ -174,7 +333,7 @@ serve(async (req: Request) => {
       }
 
       // Mark recovered invoices resolved so the dunning email sequence stops.
-      if (recoveredIds.length > 0) {
+      if (!dryRun && recoveredIds.length > 0) {
         await supabase
           .from('failed_payment_emails')
           .update({ resolved: true })
@@ -182,8 +341,8 @@ serve(async (req: Request) => {
           .eq('resolved', false);
       }
 
-      logger.info('Payday retry sweep complete', results);
-      return new Response(JSON.stringify({ mode: 'payday_retry', ...results }), {
+      logger.info('Payday retry sweep complete', { ...results, dryRun });
+      return new Response(JSON.stringify({ mode: 'payday_retry', dry_run: dryRun, ...results }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -271,6 +430,12 @@ serve(async (req: Request) => {
               ? invoice.subscription
               : (invoice.subscription as Stripe.Subscription)?.id || null;
 
+          if (dryRun) {
+            backfilled++;
+            existingIds.add(invoice.id);
+            continue;
+          }
+
           const { error: insertErr } = await supabase.from('failed_payment_emails').insert({
             user_id: userId,
             stripe_invoice_id: invoice.id,
@@ -298,10 +463,12 @@ serve(async (req: Request) => {
           try {
             const inv = await stripe.invoices.retrieve(row.stripe_invoice_id);
             if (inv.status === 'paid') {
-              await supabase
-                .from('failed_payment_emails')
-                .update({ resolved: true, resolved_at: new Date().toISOString() })
-                .eq('id', row.id);
+              if (!dryRun) {
+                await supabase
+                  .from('failed_payment_emails')
+                  .update({ resolved: true, resolved_at: new Date().toISOString() })
+                  .eq('id', row.id);
+              }
               autoResolved++;
             }
           } catch {
@@ -347,6 +514,21 @@ serve(async (req: Request) => {
     }
 
     logger.info('Processing failed payment rows', { count: rows.length });
+
+    // NOTE — the "don't touch people we aren't serving" invariant deliberately
+    // does NOT gate these emails, though an earlier version of this file tried.
+    //
+    // check-subscription treats only 'active'/'trialing' as subscribed, and it
+    // writes profiles.subscribed on app open. So a card failing puts the
+    // subscription in past_due and the very next app open revokes access —
+    // there is no grace period. Gating dunning on `subscribed` would therefore
+    // silence it for every user who still opens the app, which is precisely the
+    // population most likely to fix their card.
+    //
+    // The distinction that matters: taking money from someone we aren't serving
+    // is wrong; TELLING them their payment failed and how to fix or cancel it is
+    // the opposite — going quiet leaves them locked out with no explanation.
+    // Charging is guarded (see the payday retry above). Communicating is not.
 
     let emailsSent = 0;
     let skipped = 0;
@@ -428,6 +610,13 @@ serve(async (req: Request) => {
         } else {
           subject = 'Final notice — your Elec-Mate subscription';
           html = generateEmail3Html(userName, amountFormatted, payUrl);
+        }
+
+        if (dryRun) {
+          emailsSent++;
+          results.push({ id: row.id, status: 'would-send', emailNumber });
+          logger.info(`Dry run — would send Email ${emailNumber}`, { trackingId: row.id });
+          continue;
         }
 
         const { error: sendError } = await resend.emails.send({

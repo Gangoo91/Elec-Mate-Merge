@@ -41,7 +41,6 @@ import {
 import { format, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import {
-  getInitials,
   ROLE_COLORS,
   calculateEngagementScore,
   formatTimeShort,
@@ -60,9 +59,9 @@ import {
   ListCard,
   ListCardHeader,
   ListBody,
-  ListRow,
-  Avatar,
   Pill,
+  toneDot,
+  toneText,
   IconButton,
   LoadingBlocks,
   EmptyState,
@@ -995,7 +994,7 @@ export default function AdminUsers() {
                 </div>
               }
             />
-            <ListBody>
+            <ListBody className="divide-y-[1.5px] divide-black/60">
               {paginatedUsers.map((user) => {
                 const roleKey = user.role?.toLowerCase() || 'visitor';
                 const accentTone = roleToneMap[roleKey] || 'cyan';
@@ -1035,122 +1034,166 @@ export default function AdminUsers() {
                     ]}
                   >
                     <div className={`relative ${isSelected ? 'bg-white/[0.04]' : ''}`}>
-                      <ListRow
-                        accent={accentTone}
-                        lead={
-                          <div
-                            className="flex items-center gap-3"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <span
-                              role="button"
-                              tabIndex={0}
-                              className="min-h-[44px] min-w-[28px] flex items-center justify-center touch-manipulation cursor-pointer"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleSelection(user.id);
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  toggleSelection(user.id);
-                                }
-                              }}
-                              aria-label={isSelected ? 'Deselect' : 'Select'}
-                            >
-                              <Checkbox
-                                checked={isSelected}
-                                className="h-4 w-4 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black pointer-events-none"
-                              />
-                            </span>
-                            <Avatar
-                              initials={getInitials(user.full_name) || '—'}
-                              online={user.isOnline ? true : undefined}
-                            />
-                          </div>
-                        }
-                        title={
-                          <span className="flex items-center gap-1.5">
-                            <span className="truncate">{user.full_name || 'No name'}</span>
-                            {user.admin_role && (
-                              <Shield className="h-3 w-3 text-elec-yellow shrink-0" />
-                            )}
-                          </span>
-                        }
-                        subtitle={
-                          <span className="flex flex-col gap-1">
-                            <span className="truncate">
-                              {user.email || (user.username ? `@${user.username}` : '—')}
-                            </span>
-                            <span className="flex items-center gap-1.5 flex-wrap">
-                              <Pill tone={accentTone}>{user.role || 'visitor'}</Pill>
-                              <Pill tone={status.tone}>{status.label}</Pill>
-                              {engagementScore !== undefined && (
-                                <Pill
-                                  tone={
-                                    engagementScore >= 70
-                                      ? 'emerald'
-                                      : engagementScore >= 40
-                                        ? 'amber'
-                                        : 'cyan'
-                                  }
-                                >
-                                  {engagementScore}
-                                </Pill>
+                      {/*
+                        Purpose-built mobile card. The old ListRow spent ~80px of
+                        a 390px screen on a lead column before any content, then
+                        stacked email, pills and meta in a nowrap box — names and
+                        emails truncated, the meta line sliced off mid-character,
+                        ~190px per card, roughly three users on screen out of
+                        1,373.
+
+                        Two columns now: a narrow rail (role bar + checkbox) and
+                        everything else. No initials badge — it carried no
+                        information the name doesn't already give, and it cost
+                        40px of the width the email actually needed. Online state
+                        lives in the meta line, so nothing is lost with it gone.
+                      */}
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => handleUserClick(user)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleUserClick(user);
+                          }
+                        }}
+                        className="group flex w-full gap-2.5 bg-[hsl(0_0%_15%)] px-3 py-2.5 text-left touch-manipulation cursor-pointer transition-colors hover:bg-[hsl(0_0%_18%)] active:bg-[hsl(0_0%_20%)] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60 sm:px-5 sm:py-3"
+                      >
+                        {/* Rail — role colour and selection, 3px + 32px total */}
+                        <span
+                          aria-hidden
+                          className={`w-[3px] self-stretch shrink-0 rounded-full ${toneDot[accentTone]}`}
+                        />
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          className="-my-2 min-h-[44px] min-w-[30px] shrink-0 flex items-start justify-center pt-2.5 touch-manipulation cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSelection(user.id);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleSelection(user.id);
+                            }
+                          }}
+                          aria-label={isSelected ? 'Deselect' : 'Select'}
+                        >
+                          <Checkbox
+                            checked={isSelected}
+                            className="h-4 w-4 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black pointer-events-none"
+                          />
+                        </span>
+
+                        {/* Content — one flex column, so no padding maths */}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="min-w-0 flex-1 flex items-center gap-1.5">
+                              <span className="truncate text-[14.5px] font-semibold text-white">
+                                {user.full_name || 'No name'}
+                              </span>
+                              {user.admin_role && (
+                                <Shield className="h-3 w-3 text-elec-yellow shrink-0" />
                               )}
                             </span>
-                            <span className="flex items-center gap-2 text-[10.5px] text-white">
+
+                            {/* Billing status — the one thing worth reading down
+                                the whole column. A word in its own colour beats a
+                                filled chip: same signal, none of the weight. */}
+                            <span
+                              className={`shrink-0 text-[11px] font-semibold tracking-tight ${toneText[status.tone]}`}
+                            >
+                              {status.label}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openGrantSheet(user);
+                              }}
+                              className="h-8 w-8 -my-1 -mr-1 flex items-center justify-center rounded-full text-emerald-400 hover:bg-emerald-500/10 active:bg-emerald-500/15 touch-manipulation shrink-0"
+                              aria-label={`Grant free access to ${user.full_name || 'user'}`}
+                              title="Grant free access"
+                            >
+                              <Gift className="h-4 w-4" />
+                            </button>
+                          </div>
+
+                          <p className="truncate text-[12px] text-white/90">
+                            {user.email || (user.username ? `@${user.username}` : '—')}
+                          </p>
+
+                          <div className="mt-1 flex items-end justify-between gap-3">
+                            <div className="min-w-0 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[10.5px] leading-tight text-white">
+                              <span className={`font-medium ${toneText[accentTone]}`}>
+                                {user.role || 'visitor'}
+                              </span>
+                              <span aria-hidden className="text-white/30">·</span>
                               <span>
                                 {joinedDays !== null
                                   ? joinedDays === 0
-                                    ? 'Joined today'
-                                    : `Joined ${joinedDays}d ago`
-                                  : 'Joined'}
+                                    ? 'today'
+                                    : `${joinedDays}d`
+                                  : '—'}
                               </span>
                               {user.isOnline ? (
                                 <>
-                                  <span>·</span>
-                                  <span className="flex items-center gap-1">
+                                  <span aria-hidden className="text-white/30">·</span>
+                                  <span className="flex items-center gap-1 text-green-400">
                                     <Dot tone="green" />
-                                    Online
+                                    online
                                   </span>
                                 </>
                               ) : user.last_seen ? (
                                 <>
-                                  <span>·</span>
+                                  <span aria-hidden className="text-white/30">·</span>
                                   <span>{relativeTime(user.last_seen)}</span>
                                 </>
                               ) : null}
                               {rawEngagement && (
                                 <>
-                                  <span>·</span>
+                                  <span aria-hidden className="text-white/30">·</span>
                                   <span>
                                     {formatTimeShort(rawEngagement.total_seconds_tracked)}
                                   </span>
-                                  <span>·</span>
+                                  <span aria-hidden className="text-white/30">·</span>
                                   <span>{rawEngagement.login_count} logins</span>
                                 </>
                               )}
-                            </span>
-                          </span>
-                        }
-                        trailing={
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              openGrantSheet(user);
-                            }}
-                            className="h-11 w-11 flex items-center justify-center rounded-full text-emerald-400 hover:bg-emerald-500/10 active:bg-emerald-500/15 touch-manipulation shrink-0"
-                            aria-label={`Grant free access to ${user.full_name || 'user'}`}
-                            title="Grant free access"
-                          >
-                            <Gift className="h-4 w-4" />
-                          </button>
-                        }
-                        onClick={() => handleUserClick(user)}
-                      />
+                            </div>
+
+                            {/* Engagement meter — a bare number told you nothing;
+                                a filled track is comparable down the column. */}
+                            {engagementScore !== undefined && (
+                              <div
+                                className="flex shrink-0 items-center gap-1.5"
+                                title={`Engagement score ${engagementScore} of 100`}
+                              >
+                                <span className="h-1 w-8 overflow-hidden rounded-full bg-white/[0.12]">
+                                  <span
+                                    className={`block h-full rounded-full ${
+                                      engagementScore >= 70
+                                        ? 'bg-emerald-400'
+                                        : engagementScore >= 40
+                                          ? 'bg-amber-400'
+                                          : 'bg-white/50'
+                                    }`}
+                                    style={{
+                                      width: `${Math.max(4, Math.min(100, engagementScore))}%`,
+                                    }}
+                                  />
+                                </span>
+                                <span className="text-[10.5px] font-semibold tabular-nums text-white">
+                                  {engagementScore}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </SwipeableAdminRow>
                 );

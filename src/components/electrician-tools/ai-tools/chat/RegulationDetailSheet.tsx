@@ -272,7 +272,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
               <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
                 Section {regulationNumber} — sub-regulations
               </div>
-              <p className="text-[12px] text-white/70 leading-relaxed mb-3">
+              <p className="text-[12px] text-white leading-relaxed mb-3">
                 {regulationNumber} is a section heading. The actual regulations live
                 under it — listed below.
               </p>
@@ -291,7 +291,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                       </div>
                     )}
                     {s.full_text && (
-                      <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed line-clamp-4">
+                      <p className="mt-1.5 text-[13px] text-white leading-relaxed line-clamp-4">
                         {normaliseRegText(s.full_text)}
                       </p>
                     )}

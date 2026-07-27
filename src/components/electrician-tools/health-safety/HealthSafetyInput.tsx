@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
-import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import { AgentInbox } from '@/components/electrician-tools/agent-shared/AgentInbox';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { cn } from '@/lib/utils';
 import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';

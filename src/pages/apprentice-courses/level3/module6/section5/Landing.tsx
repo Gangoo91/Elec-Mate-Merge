@@ -23,7 +23,7 @@ const subsections = [
   {
     number: 'Subsection 2',
     title: 'Calculating Zs at design stage (Cmin 0.95)',
-    description: 'The Cmin voltage factor minimum from BS 7671 Appendix 14.',
+    description: 'The Cmin voltage factor minimum from BS 7671 Appendix 3.',
     icon: ClipboardCheck,
     href: '/study-centre/apprentice/level3-module6-section5-2',
   },

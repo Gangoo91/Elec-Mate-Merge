@@ -259,10 +259,15 @@ const sections = [
           </div>
         </div>
         <p>
-          BS 7671 Table 7.3(ii) (in the EV charging section, Appendix 7) identifies where
-          Type B RCDs are required for EV charging applications. The same principle applies
-          to other DC-generating equipment — always check Table 7.3(ii) and the equipment
-          manufacturer's installation manual for the specific RCD type requirement.
+          BS 7671 Reg 531.3.3 defines the RCD types — AC, A, F and B — by how they behave in
+          the presence of DC components, and a Type A is only guaranteed to trip with a smooth
+          DC residual current of up to 6 mA superimposed. That limit is why Section 722
+          (Reg 722.531.3.101) requires an EV charging point to be protected either by a Type B
+          RCD or by a Type A RCD combined with a residual direct current detecting device
+          (RDC-DD) or protective device (RDC-PD) providing 6 mA DC detection. The same
+          principle applies to other DC-generating equipment — check the relevant Part 7
+          section and the equipment manufacturer's installation manual for the specific RCD
+          type required.
         </p>
       </>
     ),

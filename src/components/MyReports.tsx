@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { SortDropdown, SortOption } from './reports/SortDropdown';
 import { BulkActionsBar } from './reports/BulkActionsBar';
-import { reportCloud, CloudReport, ReportsResponse } from '@/utils/reportCloud';
+import { reportCloud, CloudReport, ReportsResponse, LibraryScope } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
@@ -170,6 +170,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showNewCertSheet, setShowNewCertSheet] = useState(false);
+  // ELE-1421 — whose certificates: the company's (default), only mine, only the
+  // team's. Defaults to 'all' deliberately. The bug being fixed was a signed-off
+  // cert sitting behind a view nobody opened, so team work has to be present on
+  // arrival, not one tap away.
+  const [scope, setScope] = useState<LibraryScope>('all');
 
   // Action sheet state
   const [actionSheetOpen, setActionSheetOpen] = useState(false);
@@ -251,12 +256,15 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       statusFilter,
       resolvedDateRange.from,
       resolvedDateRange.to,
+      // ELE-1421 — scope is part of the key: switching Mine/Team must refetch
+      // server-side, not re-slice a page that was never fetched.
+      scope,
     ],
     queryFn: async () => {
       if (!user) {
         return { reports: [], totalCount: 0, hasMore: false };
       }
-      const result = await reportCloud.getUserReports(user.id, {
+      const options = {
         page: currentPage,
         pageSize: 20,
         reportType: typeFilter,
@@ -266,8 +274,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         // ELE-1305 — the library shows auto-saved work (badged "Auto-saved");
         // only the dashboard's Recent Certs hides it.
         includeAutoDrafts: true,
-      });
-      return result;
+      };
+      try {
+        // ELE-1421 — one path for everyone. For a solo account the RPC resolves
+        // no team, so it returns exactly the personal query's rows; for a company
+        // owner or QS it also carries their team's finished work. A single path
+        // means the library can't behave differently depending on who you are.
+        return await reportCloud.getCertificateLibrary({ ...options, scope });
+      } catch (error) {
+        // Fall back to the personal query rather than showing an empty library.
+        // "You have no certificates" is the most alarming lie this screen can
+        // tell, so a broken RPC degrades to your own certs, never to nothing.
+        console.error('[MyReports] Company library failed, using personal certs:', error);
+        return await reportCloud.getUserReports(user.id, options);
+      }
     },
     enabled: !!user,
   });
@@ -275,11 +295,27 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // ELE-NEW — per-type counts across the WHOLE library (not just the current
   // page) so tabs always show real numbers like "EIC (12)" even when the
   // user has 100+ certs and EICs only appear on page 3.
+  // Company-team membership. Declared up here because both the team realtime
+  // subscription and the QS badge lookup below depend on it.
+  const { data: qsTeamContext } = useQsTeamContext();
+
   const { data: countsData, refetch: refetchCounts } = useQuery({
-    queryKey: ['my-reports-counts', user?.id],
+    queryKey: ['my-reports-counts', user?.id, scope],
     queryFn: async () => {
-      if (!user) return { total: 0, byType: {}, byStatus: {} };
-      return await reportCloud.getReportCounts(user.id, { includeAutoDrafts: true });
+      if (!user)
+        return { total: 0, mine: 0, team: 0, scopedTotal: 0, byType: {}, byStatus: {} };
+      const counts = await reportCloud.getCertificateLibraryCounts({
+        includeAutoDrafts: true,
+        scope,
+      });
+      // getCertificateLibraryCounts swallows its own errors and returns zeroes.
+      // Zero total with certs on screen means the RPC is unavailable, so fall
+      // back rather than render every tab as "0" over a populated list.
+      if (counts.total === 0) {
+        const personal = await reportCloud.getReportCounts(user.id, { includeAutoDrafts: true });
+        return { ...personal, mine: personal.total, team: 0, scopedTotal: personal.total };
+      }
+      return counts;
     },
     enabled: !!user,
   });
@@ -303,7 +339,28 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // commit and this clear ran last, wiping the just-set list.
   useEffect(() => {
     setCurrentPage(1);
-  }, [typeFilter, statusFilter, datePreset, dateFrom, dateTo]);
+  }, [typeFilter, statusFilter, datePreset, dateFrom, dateTo, scope]);
+
+  // ELE-1421 — a selection is a set of report_ids from the previous scope's page.
+  // Carrying it across a scope switch would act on rows no longer on screen.
+  useEffect(() => {
+    setSelectedReports(new Set());
+  }, [scope]);
+
+  /**
+   * ELE-1421 — change scope and reset the page in ONE update.
+   *
+   * Resetting the page from an effect instead would leave a render in which the
+   * query key is {new scope, old page}: React Query fires that fetch, and if
+   * "page 4 of Mine" resolves after the page reset, the accumulator appends it
+   * to a list it doesn't belong to. Setting both together means the stale key
+   * never exists. The effect above keeps `scope` in its deps as a backstop —
+   * setting currentPage to 1 when it is already 1 is a no-op.
+   */
+  const changeScope = (next: LibraryScope) => {
+    setScope(next);
+    setCurrentPage(1);
+  };
 
   // Realtime subscription — show toast + refetch when agent creates/updates certs
   useEffect(() => {
@@ -337,6 +394,35 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     };
   }, [user, refetchReports, refetchCounts, toast]);
 
+  // ELE-1421 — the channel above filters on `user_id=eq.<me>`, so by definition
+  // it can never fire for a team member's cert. QS sign-off is the moment a team
+  // cert becomes visible here, so watch the review table too — the same signal
+  // the QS queue already refreshes on. A team member merely completing a cert
+  // (no review) still lands via refetch-on-mount or pull-to-refresh.
+  // Opened only for accounts on a company team — this screen is the app's
+  // most-visited list, so a sole trader should not hold a subscription that can
+  // never deliver them a row. Keyed on team MEMBERSHIP rather than on the team
+  // cert count, or the very first cert a team member gets signed off would be
+  // the one event nobody was listening for.
+  const watchTeamReviews = !!user && !!qsTeamContext?.is_team_member;
+  useEffect(() => {
+    if (!watchTeamReviews) return;
+    const channel = supabase
+      .channel(realtimeChannelName('library-team-certs'))
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'report_qs_reviews' },
+        () => {
+          refetchReports();
+          refetchCounts();
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [watchTeamReviews, refetchReports, refetchCounts]);
+
   const reports = allReports;
   const hasMore = reportsData?.hasMore || false;
   const totalCount = reportsData?.totalCount || 0;
@@ -349,7 +435,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       const draftCount =
         (countsData.byStatus.draft || 0) + (countsData.byStatus['auto-draft'] || 0);
       return {
-        all: countsData.total,
+        // Scoped, not company-wide: this row describes the list on screen.
+        all: countsData.scopedTotal,
         draft: draftCount,
         'in-progress': countsData.byStatus['in-progress'] || 0,
         completed: countsData.byStatus.completed || 0,
@@ -375,7 +462,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       (report) =>
         report.report_id.toLowerCase().includes(query) ||
         report.client_name?.toLowerCase().includes(query) ||
-        report.installation_address?.toLowerCase().includes(query)
+        report.installation_address?.toLowerCase().includes(query) ||
+        // ELE-1421 — a QS looking for "Rad" means their team member, not a
+        // client. Owner is only ever set on team rows, so this adds nothing to
+        // a sole trader's search.
+        report.owner_name?.toLowerCase().includes(query)
     );
   }, [reports, searchQuery]);
 
@@ -411,21 +502,28 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     }
   }, [filteredReports, sortBy]);
 
-  // QS review badges — only fetched when the user is on a company team
-  const { data: qsTeamContext } = useQsTeamContext();
+  // ELE-1421 — the library RPC returns each row's review state inline, so this
+  // extra round-trip is only needed when the personal fallback served the page.
+  // `is_team_cert` is defined on every RPC row and on none of the fallback's,
+  // so a loaded page tells us which path produced it.
+  const reviewStateInline =
+    reports.length > 0 && reports.every((r) => r.is_team_cert !== undefined);
   const { data: qsReviewMap } = useQsReviewStatuses(
     reports
       .filter((r) => QS_REVIEWABLE_TYPES.includes(r.report_type as QsReviewableType))
       .map((r) => r.report_id),
-    !!qsTeamContext?.is_team_member
+    !reviewStateInline && !!qsTeamContext?.is_team_member
   );
 
   // Convert CloudReport to CertificateData for the card
   const toCertificateData = (report: CloudReport): CertificateData => ({
     id: report.report_id,
     reportType: report.report_type,
-    qsReviewStatus: qsReviewMap?.[report.report_id]?.status,
-    qsReviewerName: qsReviewMap?.[report.report_id]?.reviewer_name,
+    // The library RPC already carries the review state for every row it returns;
+    // the batched map only covers rows fetched by the personal fallback path.
+    qsReviewStatus: report.qs_review_status ?? qsReviewMap?.[report.report_id]?.status,
+    qsReviewerName: report.qs_reviewer_name ?? qsReviewMap?.[report.report_id]?.reviewer_name,
+    ownerName: report.is_team_cert ? report.owner_name || 'Team member' : undefined,
     clientName: report.client_name || undefined,
     installationAddress: report.installation_address || undefined,
     inspectionDate: report.data?.inspectionDate || report.data?.dateOfInspection || undefined,
@@ -464,10 +562,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // Delete handlers
   const handleDeleteReport = (reportId: string) => {
     const report = reports.find((r) => r.report_id === reportId);
-    if (report) {
-      setReportToDelete(report);
-      setDeleteDialogOpen(true);
+    if (!report) return;
+    // ELE-1421 — belt and braces behind the hidden delete button. Soft-delete
+    // sets deleted_at, which the `QS can update team reports` policy rejects, so
+    // this would fail server-side after the user confirmed a scary dialog.
+    if (report.is_team_cert) {
+      toast({
+        title: 'Not yours to delete',
+        description: `This certificate belongs to ${report.owner_name || 'a team member'}. Only they can delete it.`,
+        variant: 'destructive',
+      });
+      return;
     }
+    setReportToDelete(report);
+    setDeleteDialogOpen(true);
   };
 
   const confirmDelete = async () => {
@@ -817,6 +925,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
   // Bulk mode handlers
   const handleSelectToggle = (id: string) => {
+    // ELE-1421 — a team cert can't be bulk-edited (see CertificateCard), and the
+    // card won't offer it. Enforced here too so a selection can never survive a
+    // scope switch and reach a bulk mutation that would silently no-op.
+    if (reports.find((r) => r.report_id === id)?.is_team_cert) return;
     setSelectedReports((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(id)) {
@@ -1138,6 +1250,59 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             )}
           </AnimatePresence>
 
+          {/* ELE-1421 — whose certificates. Rendered only for accounts that
+              actually have team work to show, so a sole trader's library is
+              untouched. Sits above the status control because it's the wider
+              question: whose work first, then what state it's in. */}
+          {(countsData?.team ?? 0) > 0 && (
+            <div className="px-4 pt-2">
+              <div className="flex items-center gap-1.5">
+                <Users className="h-3.5 w-3.5 shrink-0 text-white/40" aria-hidden />
+                <div
+                  role="group"
+                  aria-label="Filter by whose certificates"
+                  className="flex flex-1 gap-1 p-0.5 rounded-lg bg-white/[0.03] border border-white/[0.06]"
+                >
+                  {[
+                    { value: 'all' as LibraryScope, label: 'Everyone', count: countsData?.total },
+                    { value: 'mine' as LibraryScope, label: 'Mine', count: countsData?.mine },
+                    { value: 'team' as LibraryScope, label: 'My team', count: countsData?.team },
+                  ].map(({ value, label, count }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-pressed={scope === value}
+                      onClick={() => {
+                        navigator.vibrate?.(10);
+                        changeScope(value);
+                      }}
+                      className={cn(
+                        // h-9 inside the p-0.5 rail matches the status control
+                        // below and keeps the tappable row at ~44px.
+                        'flex-1 min-w-0 h-9 rounded-md text-[11px] font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5',
+                        scope === value
+                          ? 'bg-white/[0.10] text-white ring-1 ring-inset ring-white/15'
+                          : 'text-white/60 hover:text-white'
+                      )}
+                    >
+                      <span className="truncate">{label}</span>
+                      {(count ?? 0) > 0 && (
+                        <span
+                          className={cn(
+                            'text-[10px] tabular-nums leading-none',
+                            scope === value ? 'text-white/60' : 'text-white/35'
+                          )}
+                        >
+                          {count}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Status filter — full-width segmented control */}
           <div className="px-4 py-2">
             <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06]">
@@ -1212,7 +1377,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 }
                 const { value, label } = item;
                 const count =
-                  value === 'all' ? countsData?.total ?? 0 : countsData?.byType[value] ?? 0;
+                  value === 'all' ? countsData?.scopedTotal ?? 0 : countsData?.byType[value] ?? 0;
                 return (
                   <button
                     key={value}
@@ -1315,7 +1480,25 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
           <div className="max-w-6xl mx-auto px-4 py-4">
             {filteredReports.length === 0 ? (
-              searchQuery || statusFilter !== 'all' || typeFilter !== 'all' || datePreset !== 'all' ? (
+              // ELE-1421 — a QS filtered to their team's work hasn't got an empty
+              // library, they've got a team with nothing finished yet. Offering
+              // "Create Certificate" here would be answering a question nobody
+              // asked; the way out is back to their own certs.
+              scope === 'team' &&
+              !searchQuery &&
+              statusFilter === 'all' &&
+              typeFilter === 'all' &&
+              datePreset === 'all' ? (
+                <EmptyState
+                  icon={Users}
+                  title="Nothing from your team yet"
+                  description="Certificates your team completes or you sign off appear here alongside your own."
+                  secondaryAction={{
+                    label: 'Show my certificates',
+                    onClick: () => changeScope('mine'),
+                  }}
+                />
+              ) : searchQuery || statusFilter !== 'all' || typeFilter !== 'all' || datePreset !== 'all' ? (
                 <EmptyState
                   icon={Search}
                   title="No certificates found"
@@ -1349,6 +1532,15 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 <div className="flex items-end justify-between gap-3 px-0.5">
                   <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                     {typeFilter === 'all' ? 'Certificates' : typeFilter.replace(/-/g, ' ')}
+                    {/* ELE-1421 — name the active scope. Mixed lists are the
+                        default, so the heading is what tells a QS at a glance
+                        that they're looking at the company's work, not only
+                        their own. Silent on 'all' — that's the resting state. */}
+                    {scope !== 'all' && (
+                      <span className="ml-1.5 text-white/30 normal-case tracking-normal">
+                        · {scope === 'mine' ? 'mine only' : 'my team'}
+                      </span>
+                    )}
                   </h2>
                   <span className="text-[10.5px] text-white/30 tabular-nums">
                     {sortedReports.length}
@@ -1480,6 +1672,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   ),
               }
             : null
+        }
+        readOnly={!!selectedCertificate?.is_team_cert}
+        ownerName={
+          selectedCertificate?.is_team_cert
+            ? selectedCertificate.owner_name || 'Team member'
+            : undefined
         }
         onEdit={() => {
           if (selectedCertificate) {

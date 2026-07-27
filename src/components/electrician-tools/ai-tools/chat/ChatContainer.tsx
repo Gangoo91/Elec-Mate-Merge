@@ -1,7 +1,12 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
-interface ChatContainerProps {
+/**
+ * Extends the div props so callers can attach drag-and-drop (and any other
+ * native handlers) to the shell without this component having to enumerate
+ * them. `children`/`className` stay explicit for clarity.
+ */
+interface ChatContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   /** Ref to scroll to bottom */
@@ -16,13 +21,31 @@ interface ChatContainerProps {
  * Flat `bg-[#0a0a0a]` background. No ambient gradients, no glow.
  * Safe-area aware. Fills the viewport region provided by its parent.
  */
-export function ChatContainer({ children, className }: ChatContainerProps) {
+export function ChatContainer({
+  children,
+  className,
+  scrollRef: _scrollRef,
+  smoothScroll: _smoothScroll,
+  ...divProps
+}: ChatContainerProps) {
   return (
     <div
+      {...divProps}
       className={cn(
         'flex flex-col h-full w-full min-w-0 bg-[#0a0a0a] overflow-hidden relative',
         className
       )}
+      /*
+       * Landscape safe area. The app isn't orientation-locked, so on a notched
+       * phone held sideways the notch and the rounded corners eat into the left
+       * or right edge — text and the send button ended up underneath them.
+       * Applied once here so everything in the chat is inset; resolves to 0 on
+       * devices without insets, so nothing changes in portrait or on desktop.
+       */
+      style={{
+        paddingLeft: 'env(safe-area-inset-left, 0px)',
+        paddingRight: 'env(safe-area-inset-right, 0px)',
+      }}
     >
       <div className="relative flex flex-col h-full min-w-0 z-10">{children}</div>
     </div>
@@ -40,6 +63,13 @@ interface ChatMessagesAreaProps {
   autoScrollToBottom?: boolean;
   /** Ref for the messages end element */
   messagesEndRef?: React.RefObject<HTMLDivElement>;
+  /**
+   * Exposes the scroll container to the caller. Needed because scroll position
+   * can change without a scroll event: while an answer streams, the content
+   * grows underneath a stationary viewport, so `onScroll` alone never fires and
+   * any derived "is the user near the bottom" state goes stale.
+   */
+  scrollContainerRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 /**
@@ -54,8 +84,11 @@ export function ChatMessagesArea({
   onScrollTop,
   onScroll,
   messagesEndRef,
+  scrollContainerRef,
 }: ChatMessagesAreaProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  // No local container ref: it was declared but never read, and assigning to a
+  // `useRef<T>(null)` is a type error anyway (its `current` is readonly). The
+  // caller's optional ref is the only consumer.
 
   const handleScroll = useCallback(
     (e: React.UIEvent<HTMLDivElement>) => {
@@ -73,7 +106,9 @@ export function ChatMessagesArea({
 
   return (
     <div
-      ref={containerRef}
+      ref={(el) => {
+        if (scrollContainerRef) scrollContainerRef.current = el;
+      }}
       onScroll={handleScroll}
       className={cn(
         'flex-1 min-w-0 overflow-y-auto overflow-x-hidden overscroll-none scroll-smooth',

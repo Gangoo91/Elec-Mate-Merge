@@ -42,8 +42,8 @@ const BusinessTemplates = () => {
 
   const keyStats = [
     { label: 'Template Types', value: '20+', sublabel: 'Essential documents' },
-    { label: 'Time Saved', value: '5+ hrs', sublabel: 'Per week' },
-    { label: 'Professional', value: '100%', sublabel: 'Industry standard' },
+    { label: 'Payment Terms', value: '14-30 days', sublabel: 'Put them in writing, every time' },
+    { label: 'Statutory Interest', value: '11.75%', sublabel: 'If B2B invoices run late' },
     { label: 'Customisable', value: 'Yes', sublabel: 'Your branding' },
   ];
 
@@ -65,7 +65,7 @@ const BusinessTemplates = () => {
         subtitle="Professional templates and tools for your electrical business"
         icon={FileText}
         backUrl="/electrician/business-development"
-        accentColor="cyan"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -75,7 +75,7 @@ const BusinessTemplates = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
-          accentColor="cyan"
+          accentColor="yellow"
         />
 
         {/* Content Sections */}
@@ -85,7 +85,7 @@ const BusinessTemplates = () => {
             id="quotes-invoices"
             title="Quotes & Invoices"
             icon={Receipt}
-            accentColor="cyan"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Professional quotes and invoices are essential for winning work and getting paid on
@@ -252,7 +252,7 @@ const BusinessTemplates = () => {
             id="contracts"
             title="Contracts & Terms"
             icon={FileCheck}
-            accentColor="cyan"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Proper contracts protect both you and your customers. Clear terms and conditions
@@ -351,7 +351,7 @@ const BusinessTemplates = () => {
             id="operations"
             title="Operations & Admin"
             icon={ClipboardList}
-            accentColor="cyan"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Streamline your daily operations with checklists, job sheets, and tracking
@@ -458,7 +458,7 @@ const BusinessTemplates = () => {
             id="hr-safety"
             title="HR & Safety"
             icon={Shield}
-            accentColor="cyan"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Essential documents for managing employees, apprentices, and maintaining workplace
@@ -588,7 +588,7 @@ const BusinessTemplates = () => {
         {/* Coming Soon Notice */}
         <div className="mt-8 p-5 rounded-2xl bg-yellow-400/5 border border-yellow-400/20">
           <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
               <Download className="h-5 w-5 text-yellow-400" />
             </div>
             <div>

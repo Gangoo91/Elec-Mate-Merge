@@ -33,7 +33,8 @@ const AppendicesNavigationSection = () => {
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Protection and Safety Data:</h6>
               <ul className="text-sm space-y-1">
-                <li>• Appendix 14: Maximum Zs values</li>
+                <li>• Appendix 3: Maximum earth fault loop impedance and device curves</li>
+                <li>• Appendix 14: Determination of prospective fault current</li>
                 <li>• Time/current characteristics</li>
                 <li>• RCD operation parameters</li>
                 <li>• Arc fault protection requirements</li>
@@ -74,7 +75,8 @@ const AppendicesNavigationSection = () => {
                 Step 4: Verify Protection Coordination
               </h6>
               <p className="text-sm">
-                Check Appendix 14 for maximum Zs values and confirm protective device
+                Check Tables 41.2 to 41.5 for maximum Zs values — Appendix 3 carries the device
+                time/current curves those limits are derived from — and confirm protective device
                 characteristics match circuit requirements.
               </p>
             </div>

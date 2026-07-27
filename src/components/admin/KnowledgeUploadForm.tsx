@@ -314,7 +314,7 @@ export default function KnowledgeUploadForm({
       <Alert>
         <AlertDescription>
           {targetType === 'bs7671' &&
-            'Upload the full BS 7671:2018+A3:2024 text file. The parser will extract individual regulations and generate embeddings.'}
+            'Upload the full BS 7671:2018+A4:2026 text file. The parser will extract individual regulations and generate embeddings.'}
           {targetType === 'installation' &&
             'Upload installation guides, On-Site Guide content, or technical documentation.'}
           {targetType === 'pricing' &&

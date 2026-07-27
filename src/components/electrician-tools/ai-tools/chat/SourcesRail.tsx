@@ -80,16 +80,19 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
   if (regNumbers.length === 0) return null;
 
   return (
-    <aside className="hidden xl:block w-[300px] flex-shrink-0">
+    // Shown from lg, not xl. At xl-only, every 1024–1279px laptop — a big share
+    // of desktop use — got no rail at all despite having room for one; it just
+    // starts narrower there and widens at xl.
+    <aside className="hidden lg:block w-[248px] xl:w-[300px] flex-shrink-0">
       {/* Sticky wrapper owns its OWN scroll — a sticky element can't ride the
           page scroll past the viewport, so without this the tail sources were
           simply unreachable. */}
-      <div className="sticky top-2 flex max-h-[calc(100vh-140px)] flex-col pl-6 border-l border-white/[0.06]">
+      <div className="sticky top-2 flex max-h-[calc(100vh-140px)] supports-[height:100dvh]:max-h-[calc(100dvh-140px)] flex-col pl-4 xl:pl-6 border-l border-white/[0.06]">
         <div className="flex items-baseline justify-between pb-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/45">
+          <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Sources
           </span>
-          <span className="text-[10px] tabular-nums text-white/30">
+          <span className="text-[10px] tabular-nums text-white">
             {isStreaming ? 'updating…' : sources.length}
           </span>
         </div>
@@ -109,11 +112,11 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
               <div className="text-[12.5px] leading-snug">
                 <span className="font-semibold text-elec-yellow">Reg {s.reg_number}</span>
                 {s.title && (
-                  <span className="font-medium text-white/85"> — {s.title}</span>
+                  <span className="font-medium text-white"> — {s.title}</span>
                 )}
               </div>
               {s.excerpt && (
-                <p className="mt-1 text-[11.5px] leading-relaxed text-white/40 line-clamp-2">
+                <p className="mt-1 text-[11.5px] leading-relaxed text-white line-clamp-2">
                   {s.excerpt}
                 </p>
               )}
@@ -121,7 +124,7 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
           ))}
         </div>
 
-        <div className="pt-3 mt-1 border-t border-white/[0.06] text-[10.5px] leading-relaxed text-white/30">
+        <div className="pt-3 mt-1 border-t border-white/[0.06] text-[10.5px] leading-relaxed text-white">
           BS 7671:2018+A4:2026 · every citation machine-checked
         </div>
       </div>

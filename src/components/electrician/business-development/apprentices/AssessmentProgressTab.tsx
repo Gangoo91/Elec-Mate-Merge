@@ -37,7 +37,7 @@ const AssessmentProgressTab = () => {
       timing: 'Week 1-2',
       description: 'Comprehensive digital skills baseline using EPA-aligned standards',
       components: [
-        'Interactive knowledge assessment (BS 7671:2018+A3:2024)',
+        'Interactive knowledge assessment (BS 7671:2018+A4:2026)',
         'Digital portfolio setup and training',
         'Health & safety competency evaluation',
         'Functional skills diagnostic (Maths & English)',

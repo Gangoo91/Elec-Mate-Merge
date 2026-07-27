@@ -49,6 +49,7 @@ const BS5266EmergencyLightingStandardPage = lazy(
   () => import('@/pages/seo/BS5266EmergencyLightingStandardPage')
 );
 const BS5839FireAlarmStandardPage = lazy(() => import('@/pages/seo/BS5839FireAlarmStandardPage'));
+const FireAlarmLogBookPage = lazy(() => import('@/pages/seo/FireAlarmLogBookPage'));
 const BS7671EighteenthEditionGuidePage = lazy(
   () => import('@/pages/seo/BS7671EighteenthEditionGuidePage')
 );
@@ -2710,6 +2711,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <BS5839FireAlarmStandardPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/fire-alarm-log-book"
+        element={
+          <LazyRoute>
+            <FireAlarmLogBookPage />
           </LazyRoute>
         }
       />

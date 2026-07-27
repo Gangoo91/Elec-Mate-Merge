@@ -80,6 +80,26 @@ export const MobileChatInput = memo(function MobileChatInput({
   const [isFocused, setIsFocused] = useState(false);
   const haptic = useHaptic();
 
+  /**
+   * Coarse pointer ⇒ touch device. It decides what Enter does (see handleKeyDown)
+   * and which Return-key label the on-screen keyboard shows. Guessing wrong in
+   * either direction is a daily annoyance, so we ask the platform rather than
+   * sniffing the user agent or the viewport width (a tablet with a keyboard and
+   * a narrow desktop window both break width-based guesses).
+   */
+  // Resolved synchronously on first render, not in an effect — starting at a
+  // default would leave the very first Enter behaving as the wrong platform.
+  const [isTouch, setIsTouch] = useState(
+    () => typeof window !== 'undefined' && !!window.matchMedia?.('(pointer: coarse)').matches
+  );
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(pointer: coarse)');
+    const onPointerChange = (e: MediaQueryListEvent) => setIsTouch(e.matches);
+    mq.addEventListener?.('change', onPointerChange);
+    return () => mq.removeEventListener?.('change', onPointerChange);
+  }, []);
+
   const adjustHeight = useCallback(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -87,6 +107,10 @@ export const MobileChatInput = memo(function MobileChatInput({
     const maxHeight = 120;
     const newHeight = Math.min(textarea.scrollHeight, maxHeight);
     textarea.style.height = `${newHeight}px`;
+    // Only show a scrollbar once we've actually hit the ceiling. Leaving
+    // overflow on permanently makes the bar flicker in and out on every
+    // keystroke that reflows the text.
+    textarea.style.overflowY = newHeight >= maxHeight ? 'auto' : 'hidden';
   }, []);
 
   useEffect(() => {
@@ -96,9 +120,10 @@ export const MobileChatInput = memo(function MobileChatInput({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value;
-      if (newValue.length <= maxLength) {
-        onChange(newValue);
-      }
+      // Truncate rather than reject. The old guard dropped the entire change
+      // when it would exceed maxLength, so pasting a long question did
+      // *nothing at all* — indistinguishable from a broken input.
+      onChange(newValue.length > maxLength ? newValue.slice(0, maxLength) : newValue);
     },
     [onChange, maxLength]
   );
@@ -112,27 +137,33 @@ export const MobileChatInput = memo(function MobileChatInput({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      // Cmd/Ctrl + Enter → always send.
-      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      if (e.key !== 'Enter') return;
+
+      // Never submit mid-composition. Predictive/swipe keyboards and CJK IMEs
+      // use Enter to commit the highlighted candidate — without this guard that
+      // keystroke fires the message off half-written.
+      if ((e.nativeEvent as unknown as { isComposing?: boolean }).isComposing) return;
+
+      // Cmd/Ctrl + Enter → always send, on any device.
+      if (e.metaKey || e.ctrlKey) {
         e.preventDefault();
-        if (value.trim() && !isStreaming) {
-          handleSubmit();
-        }
+        handleSubmit();
         return;
       }
-      // Shift + Enter → insert newline (native default).
-      if (e.key === 'Enter' && e.shiftKey) {
-        return;
-      }
-      // Bare Enter → send (mobile-friendly; keeps prior behaviour).
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (value.trim() && !isStreaming) {
-          handleSubmit();
-        }
-      }
+
+      // Shift + Enter → newline (native default).
+      if (e.shiftKey) return;
+
+      // Touch keyboards: Enter inserts a newline and Send sends. Previously
+      // bare Enter submitted here too, which meant a multi-line question was
+      // impossible to type on a phone — you got sent after the first line.
+      if (isTouch) return;
+
+      // Physical keyboard: Enter sends, which is what desktop chat users expect.
+      e.preventDefault();
+      handleSubmit();
     },
-    [value, isStreaming, handleSubmit]
+    [handleSubmit, isTouch]
   );
 
   const handleTranscript = useCallback(
@@ -216,12 +247,25 @@ export const MobileChatInput = memo(function MobileChatInput({
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           rows={1}
+          /*
+           * Typing quality. None of these were set, so on a phone the field
+           * opened lower-case with no spell check — every question started
+           * "what is the max zs..." and typos went uncorrected.
+           */
+          autoCapitalize="sentences"
+          autoCorrect="on"
+          spellCheck
+          autoComplete="off"
+          inputMode="text"
+          /* Label the Return key to match what it actually does (see handleKeyDown). */
+          enterKeyHint={isTouch ? 'enter' : 'send'}
           className={cn(
             'flex-1 bg-transparent border-none outline-none resize-none',
             'text-white placeholder:text-white',
             'min-h-[40px] max-h-[120px]',
             'leading-relaxed py-2 px-2.5'
           )}
+          /* 16px is load-bearing: anything smaller makes iOS Safari zoom on focus. */
           style={{ fontSize: '16px' }}
           aria-label="Message input"
         />

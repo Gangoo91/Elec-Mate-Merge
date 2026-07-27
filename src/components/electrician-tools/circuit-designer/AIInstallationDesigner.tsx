@@ -5,7 +5,7 @@ import { StructuredDesignWizard } from './structured-input/StructuredDesignWizar
 import EditorialDesignResults from './EditorialDesignResults';
 import { CircuitDesignStream } from './CircuitDesignStream';
 import { DesignInputs, CircuitInput } from '@/types/installation-design';
-import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import { AgentInbox } from '@/components/electrician-tools/agent-shared/AgentInbox';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useCircuitDesignGeneration } from '@/hooks/useCircuitDesignGeneration';

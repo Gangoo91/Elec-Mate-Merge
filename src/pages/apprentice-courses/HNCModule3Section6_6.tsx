@@ -545,7 +545,7 @@ const HNCModule3Section6_6 = () => {
                   <li>Assess maximum demand with diversity</li>
                   <li>Prevents over-specification of supply</li>
                   <li>Reduces transformer and cable losses</li>
-                  <li>Refer to Appendix 1 for diversity factors</li>
+                  <li>Refer to On-Site Guide Appendix A for diversity factors</li>
                 </ul>
 
               

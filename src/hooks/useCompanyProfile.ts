@@ -1,27 +1,44 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 import { CompanyProfile } from '@/types/company';
 import { toast } from '@/hooks/use-toast';
 import { logger, generateRequestId } from '@/utils/logger';
 
+/**
+ * Shared cache via React Query (ELE-684).
+ *
+ * This hook has 54 call sites. It previously held the profile in local state and
+ * ran `auth.getUser()` + `get_my_company_profile` on EVERY mount, so a screen
+ * with several consumers fired several identical round trips. The queryKey now
+ * dedupes them into one request — same fix as `useCourseProgress`.
+ *
+ * Only the READ path changed. `saveCompanyProfile` and `uploadLogo` still call
+ * `supabase.auth.getUser()` themselves: they are user-initiated, they were never
+ * part of the N+1, and they write `user_id`, so they keep verifying the session
+ * against the server rather than trusting a cached context value.
+ *
+ * The hook's return shape is unchanged, so no call site needed touching.
+ */
 export const useCompanyProfile = () => {
-  const [companyProfile, setCompanyProfile] = useState<CompanyProfile | null>(null);
-  const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
+  const userId = user?.id;
+  const queryClient = useQueryClient();
+  const [saving, setSaving] = useState(false);
 
-  const fetchCompanyProfile = useCallback(async () => {
-    const requestId = generateRequestId();
-    logger.api('company_profiles/fetch', requestId).start();
+  const queryKey = useMemo(() => [...QUERY_KEYS.COMPANY_PROFILE, userId] as const, [userId]);
 
-    try {
-      setLoading(true);
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        logger.info('No user found, skipping company profile fetch');
-        return;
-      }
+  const {
+    data: companyProfile = null,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey,
+    queryFn: async (): Promise<CompanyProfile | null> => {
+      const requestId = generateRequestId();
+      logger.api('company_profiles/fetch', requestId).start();
 
       // Use RPC function to bypass 406 error from direct table query
       const { data, error } = await supabase.rpc('get_my_company_profile');
@@ -34,31 +51,31 @@ export const useCompanyProfile = () => {
             'Could not load your company profile. Pull down to refresh or try again later.',
           variant: 'destructive',
         });
-        return;
+        // Throw rather than return null: React Query then retries and, crucially,
+        // does not cache a failure as though it were "this user has no profile".
+        throw error;
       }
 
       // RPC returns an array, get first item
       const profile = Array.isArray(data) ? data[0] : data;
 
-      if (profile) {
-        logger
-          .api('company_profiles/fetch', requestId)
-          .success({ companyName: profile.company_name });
-        setCompanyProfile({
-          ...profile,
-          bank_details: profile.bank_details || {},
-          created_at: new Date(profile.created_at),
-          updated_at: new Date(profile.updated_at),
-        } as CompanyProfile);
-      } else {
+      if (!profile) {
         logger.info('No company profile found for user');
+        return null;
       }
-    } catch (error) {
-      logger.api('company_profiles/fetch', requestId).error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+
+      logger.api('company_profiles/fetch', requestId).success({ companyName: profile.company_name });
+
+      return {
+        ...profile,
+        bank_details: profile.bank_details || {},
+        created_at: new Date(profile.created_at),
+        updated_at: new Date(profile.updated_at),
+      } as CompanyProfile;
+    },
+    enabled: !!userId,
+    ...QUERY_PRESETS.USER_DATA,
+  });
 
   const saveCompanyProfile = useCallback(
     async (profile: Partial<CompanyProfile>) => {
@@ -70,7 +87,7 @@ export const useCompanyProfile = () => {
       logger.action('Save company profile', 'company', { isUpdate });
 
       try {
-        setLoading(true);
+        setSaving(true);
         const {
           data: { user },
         } = await supabase.auth.getUser();
@@ -141,7 +158,9 @@ export const useCompanyProfile = () => {
           profileId: result.data.id,
         });
 
-        setCompanyProfile({
+        // Write straight into the shared cache so every consumer updates at once
+        // (this is what local setState used to do, for one component only).
+        queryClient.setQueryData(queryKey, {
           ...result.data,
           bank_details: result.data.bank_details || {},
           created_at: new Date(result.data.created_at),
@@ -209,10 +228,10 @@ export const useCompanyProfile = () => {
         });
         return false;
       } finally {
-        setLoading(false);
+        setSaving(false);
       }
     },
-    [companyProfile]
+    [companyProfile, queryClient, queryKey]
   );
 
   const uploadLogo = useCallback(
@@ -320,19 +339,15 @@ export const useCompanyProfile = () => {
     []
   );
 
-  useEffect(() => {
-    fetchCompanyProfile();
-  }, [fetchCompanyProfile]);
-
-  // NOTE: Removed automatic refetch on window focus as it was causing issues
-  // with file pickers resetting user selections. The profile is fetched once
-  // on mount and after saves - that's sufficient.
+  // NOTE: no refetch-on-window-focus — it was resetting file pickers mid-selection.
+  // QUERY_PRESETS.USER_DATA keeps the profile fresh for 5 minutes; saves write
+  // through to the cache immediately, so a manual refetch is rarely needed.
 
   return {
     companyProfile,
-    loading,
+    loading: isLoading || saving,
     saveCompanyProfile,
     uploadLogo,
-    refetch: fetchCompanyProfile,
+    refetch,
   };
 };

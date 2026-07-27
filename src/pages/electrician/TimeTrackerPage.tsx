@@ -46,9 +46,20 @@ import {
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { v4 as uuidv4 } from 'uuid';
+import { useHaptic } from '@/hooks/useHaptic';
 
 // ─── State machine ───────────────────────────────────────────
 type PageState = 'idle' | 'running' | 'summary' | 'success';
+
+/*
+ * A single session longer than this is almost certainly a timer someone forgot
+ * to stop, not a shift that was actually worked. It matters because these go
+ * straight into "To bill": one forgotten timer running since 20 July showed
+ * 165h 46m and £9,117 — 99.99% of the entire billable total. Invoicing that by
+ * accident is a serious problem with a customer, so it gets called out rather
+ * than quietly summed. We flag; we never silently alter the figures.
+ */
+const RUNAWAY_SESSION_SECONDS = 12 * 60 * 60;
 
 // ─── Helpers ─────────────────────────────────────────────────
 const formatTime = (totalSeconds: number) => {
@@ -163,6 +174,10 @@ const TimeTrackerPage = () => {
 
   // Multi-select mode for batch invoicing
   const [selectMode, setSelectMode] = useState(false);
+  // Physical feedback matters more here than anywhere else in the app: this is
+  // used one-handed, on site, often with gloves on, and the user needs to know
+  // a timer actually started without stopping to read the screen.
+  const haptic = useHaptic();
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [billingMulti, setBillingMulti] = useState(false);
 
@@ -220,6 +235,17 @@ const TimeTrackerPage = () => {
   const filteredSessions = useMemo(
     () => (notInvoicedOnly ? sessions.filter((s) => !s.invoice_id) : sessions),
     [sessions, notInvoicedOnly]
+  );
+
+  // Un-invoiced sessions long enough to be a forgotten timer. Surfaced before
+  // the user reaches the invoice step, because that is the point at which a
+  // phantom figure becomes a real problem with a customer.
+  const runawaySessions = useMemo(
+    () =>
+      sessions.filter(
+        (s) => !s.invoice_id && (s.duration_seconds ?? 0) >= RUNAWAY_SESSION_SECONDS
+      ),
+    [sessions]
   );
 
   // Cross-page hand-off — Projects page sets `time-tracker-prefill` in
@@ -292,6 +318,7 @@ const TimeTrackerPage = () => {
   // ─── Actions ─────────────────────────────────────────────
   const handleStart = useCallback(async () => {
     try {
+      haptic.success();
       await startSession(jobLabel || undefined, startProjectId);
       setJobLabel('');
       setStartProjectId(null);
@@ -313,10 +340,11 @@ const TimeTrackerPage = () => {
         });
       }, 1500);
     }
-  }, [startSession, jobLabel, startProjectId]);
+  }, [startSession, jobLabel, startProjectId, haptic]);
 
   const handleStop = useCallback(async () => {
     try {
+      haptic.heavy();
       const session = await stopSession();
       setStoppedSession(session);
       setPageState('summary');
@@ -327,7 +355,7 @@ const TimeTrackerPage = () => {
         variant: 'destructive',
       });
     }
-  }, [stopSession]);
+  }, [stopSession, haptic]);
 
   const handleSaveLabel = useCallback(async () => {
     if (!activeSession) return;
@@ -838,7 +866,7 @@ const TimeTrackerPage = () => {
             <button
               type="button"
               onClick={() => navigate('/settings')}
-              className="text-[12px] font-medium text-white/55 hover:text-white px-3 h-9 rounded-lg hover:bg-white/[0.06] touch-manipulation"
+              className="text-[12px] font-medium text-white hover:text-white px-3 h-9 rounded-lg hover:bg-white/[0.06] touch-manipulation"
             >
               {formatCurrency(hourlyRate)}/hr
             </button>
@@ -846,62 +874,98 @@ const TimeTrackerPage = () => {
         </div>
       </div>
 
-      {/* Hero metrics — Today / This week / To bill — always visible above the timer */}
-      <div className="px-4 lg:px-8 pt-4 lg:max-w-[1200px] lg:mx-auto">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3">
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-3 sm:px-4 sm:py-3.5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-              Today
-            </p>
-            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
-              {formatDuration(metrics.todaySec)}
-            </p>
-            <p className="mt-1 text-[11.5px] text-amber-400 tabular-nums">
-              {formatCurrency(metrics.todayVal)}
-            </p>
-          </div>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-3 sm:px-4 sm:py-3.5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-              This week
-            </p>
-            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
-              {formatDuration(metrics.weekSec)}
-            </p>
-            <p className="mt-1 text-[11.5px] text-amber-400 tabular-nums">
-              {formatCurrency(metrics.weekVal)}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setNotInvoicedOnly((v) => !v)}
-            className={`rounded-xl border px-3 py-3 sm:px-4 sm:py-3.5 text-left touch-manipulation transition-colors ${
-              metrics.billCount > 0
-                ? notInvoicedOnly
-                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                  : 'bg-elec-yellow/[0.06] border-elec-yellow/25 hover:bg-elec-yellow/[0.10]'
-                : 'bg-white/[0.03] border-white/[0.06]'
-            }`}
-            aria-pressed={notInvoicedOnly}
-          >
+      {/*
+        Hero metrics. Previously three equal columns, which put the two numbers
+        that are usually £0.00 (today, this week) across two-thirds of the width
+        and squeezed the one actionable figure — what you're owed — into a third,
+        where £9,118.80 ran to the card edges. To bill now leads at full width;
+        today and this week sit beneath it as supporting context.
+      */}
+      <div className="px-4 lg:px-8 pt-4 lg:max-w-[1200px] lg:mx-auto space-y-2 sm:space-y-3 lg:space-y-0 lg:grid lg:grid-cols-4 lg:gap-3 lg:items-stretch">
+        <button
+          type="button"
+          onClick={() => {
+            haptic.selection();
+            setNotInvoicedOnly((v) => !v);
+          }}
+          className={`w-full lg:col-span-2 rounded-xl border px-4 py-3.5 text-left touch-manipulation transition-colors ${
+            metrics.billCount > 0
+              ? notInvoicedOnly
+                ? 'bg-emerald-500/[0.10] border-emerald-500/40'
+                : 'bg-emerald-500/[0.06] border-emerald-500/25 hover:bg-emerald-500/[0.10]'
+              : 'bg-white/[0.03] border-white/[0.06]'
+          }`}
+          aria-pressed={notInvoicedOnly}
+        >
+          <div className="flex items-baseline justify-between gap-3">
             <p
               className={`text-[10px] font-semibold uppercase tracking-[0.16em] ${
-                metrics.billCount > 0 ? 'text-elec-yellow' : 'text-white/45'
+                metrics.billCount > 0 ? 'text-emerald-400' : 'text-white'
               }`}
             >
               To bill {metrics.billCount > 0 ? `· ${metrics.billCount}` : ''}
             </p>
-            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
+            {metrics.billCount > 0 && (
+              <span className="text-[10.5px] font-medium text-white">
+                {notInvoicedOnly ? 'Showing unbilled' : 'Tap to filter'}
+              </span>
+            )}
+          </div>
+          <div className="mt-1.5 flex items-baseline justify-between gap-3">
+            <p className="text-[26px] sm:text-[30px] font-bold text-white tabular-nums leading-none">
               {formatCurrency(metrics.billVal)}
             </p>
-            <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+            <p className="text-[13px] text-white tabular-nums shrink-0">
               {formatDuration(metrics.billSec)}
             </p>
-          </button>
+          </div>
+        </button>
+
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:contents">
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 lg:flex lg:flex-col lg:justify-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+              Today
+            </p>
+            <p className="mt-1 flex items-baseline gap-2">
+              <span className="text-[17px] font-bold text-white tabular-nums leading-none">
+                {formatDuration(metrics.todaySec)}
+              </span>
+              <span className="text-[11.5px] text-emerald-400 tabular-nums">
+                {formatCurrency(metrics.todayVal)}
+              </span>
+            </p>
+          </div>
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 lg:flex lg:flex-col lg:justify-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+              This week
+            </p>
+            <p className="mt-1 flex items-baseline gap-2">
+              <span className="text-[17px] font-bold text-white tabular-nums leading-none">
+                {formatDuration(metrics.weekSec)}
+              </span>
+              <span className="text-[11.5px] text-emerald-400 tabular-nums">
+                {formatCurrency(metrics.weekVal)}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Main content area */}
-      <div className="px-4 lg:px-8 lg:max-w-[1200px] lg:mx-auto space-y-5 mt-4">
+      {/*
+        Bottom clearance. The page had none, so the last session row sat under
+        the iOS home indicator / Android gesture bar — and when select mode
+        raises the fixed action bar, the final row was hidden behind it entirely
+        with no way to scroll further. Extra room only while that bar is up.
+      */}
+      <div
+        className="px-4 lg:px-8 lg:max-w-[1200px] lg:mx-auto space-y-5 mt-4"
+        style={{
+          paddingBottom: selectMode
+            ? 'calc(env(safe-area-inset-bottom, 0px) + 7rem)'
+            : 'calc(env(safe-area-inset-bottom, 0px) + 1.5rem)',
+        }}
+      >
         <AnimatePresence mode="wait">
           {/* ═══ SUCCESS STATE ═══ */}
           {pageState === 'success' && (
@@ -936,7 +1000,7 @@ const TimeTrackerPage = () => {
                 <div className="p-6 sm:p-8 flex flex-col items-center">
                   {/* Elapsed time */}
                   <div className="relative">
-                    <p className="font-mono text-6xl sm:text-7xl font-bold text-elec-yellow tracking-tight">
+                    <p className="font-mono text-6xl sm:text-7xl font-bold text-emerald-400 tracking-tight">
                       {formatTime(elapsedSeconds)}
                     </p>
                   </div>
@@ -953,7 +1017,7 @@ const TimeTrackerPage = () => {
                           value={editLabelValue}
                           onChange={(e) => setEditLabelValue(e.target.value)}
                           placeholder="Job description"
-                          className="h-11 text-base touch-manipulation border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white"
+                          className="h-11 text-base touch-manipulation border-white/[0.12] focus:border-emerald-500 focus:ring-emerald-500 bg-white/[0.04] text-white"
                           autoFocus
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') handleSaveLabel();
@@ -964,7 +1028,7 @@ const TimeTrackerPage = () => {
                           size="icon"
                           variant="ghost"
                           onClick={handleSaveLabel}
-                          className="h-11 w-11 text-amber-400 hover:text-amber-300 hover:bg-white/10 touch-manipulation"
+                          className="h-11 w-11 text-emerald-400 hover:text-emerald-300 hover:bg-white/10 touch-manipulation"
                         >
                           <CheckCircle2 className="h-5 w-5" />
                         </Button>
@@ -993,7 +1057,7 @@ const TimeTrackerPage = () => {
                           value={notesValue}
                           onChange={(e) => setNotesValue(e.target.value)}
                           placeholder="Add notes..."
-                          className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/[0.12] focus:border-elec-yellow bg-white/[0.04] text-white"
+                          className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-emerald-500/20 border-white/[0.12] focus:border-emerald-500 bg-white/[0.04] text-white"
                           autoFocus
                         />
                         <div className="flex gap-2 justify-end">
@@ -1008,7 +1072,7 @@ const TimeTrackerPage = () => {
                           <Button
                             size="sm"
                             onClick={handleSaveNotes}
-                            className="bg-amber-500 text-black hover:bg-amber-400 touch-manipulation h-11"
+                            className="bg-emerald-500 text-white hover:bg-emerald-400 touch-manipulation h-11"
                           >
                             Save
                           </Button>
@@ -1067,14 +1131,14 @@ const TimeTrackerPage = () => {
                 <p className="text-2xl font-bold text-white">
                   {formatDurationLong(stoppedSession.duration_seconds ?? 0)}
                 </p>
-                <p className="text-amber-400 text-sm mt-1">
+                <p className="text-emerald-400 text-sm mt-1">
                   @ {formatCurrency(stoppedSession.hourly_rate ?? hourlyRate)}/hr
                 </p>
               </div>
 
               {/* Value card */}
-              <div className="rounded-2xl bg-elec-yellow/[0.08] border border-elec-yellow/30 p-6 text-center">
-                <p className="text-5xl sm:text-6xl font-bold text-elec-yellow font-mono tabular-nums">
+              <div className="rounded-2xl bg-emerald-500/[0.08] border border-emerald-500/30 p-6 text-center">
+                <p className="text-5xl sm:text-6xl font-bold text-emerald-400 font-mono tabular-nums">
                   {formatCurrency(animatedValue)}
                 </p>
                 <p className="text-white text-sm mt-2">
@@ -1105,7 +1169,7 @@ const TimeTrackerPage = () => {
               <motion.div whileTap={{ scale: 0.97 }}>
                 <Button
                   onClick={() => setInvoiceSheetOpen(true)}
-                  className="w-full h-12 text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0 rounded-xl touch-manipulation active:scale-[0.98]"
+                  className="w-full h-12 text-[15px] font-semibold bg-emerald-500 hover:bg-emerald-500/90 text-black border-0 rounded-xl touch-manipulation active:scale-[0.98]"
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Add to invoice
@@ -1145,11 +1209,11 @@ const TimeTrackerPage = () => {
                   <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
                   <div className="text-[13px] leading-snug">
                     <p className="text-orange-300 font-medium">Default rate in use</p>
-                    <p className="text-white/60 mt-0.5">
+                    <p className="text-white mt-0.5">
                       Set your hourly rate in{' '}
                       <button
                         onClick={() => navigate('/settings')}
-                        className="text-amber-400 underline touch-manipulation"
+                        className="text-emerald-400 underline touch-manipulation"
                       >
                         Business Settings
                       </button>
@@ -1159,72 +1223,74 @@ const TimeTrackerPage = () => {
                 </div>
               )}
 
-              {/* Job label input + Start in one row on sm+, stacked on mobile */}
-              <div className="flex flex-col sm:flex-row gap-2.5">
+              {/*
+                One "start a session" card rather than three stacked full-width
+                slabs (input, then button, then project chip). Grouping them
+                reads as a single control and reclaims a row of vertical space
+                on a phone, where the session list was being pushed off screen.
+              */}
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3 space-y-2.5">
                 <Input
                   value={jobLabel}
                   onChange={(e) => setJobLabel(e.target.value)}
                   placeholder="What's the job? (optional)"
-                  className="h-12 text-base touch-manipulation border-white/[0.10] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white placeholder:text-white/40 rounded-xl flex-1"
+                  className="h-11 text-base touch-manipulation border-0 bg-transparent px-1 text-white placeholder:text-white/40 focus-visible:ring-0 focus-visible:ring-offset-0"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleStart();
                   }}
                 />
-                <motion.div whileTap={{ scale: isStarting ? 1 : 0.97 }} className="sm:w-[160px]">
-                  <Button
-                    onClick={handleStart}
-                    disabled={isStarting}
-                    className="w-full h-12 text-[15px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-white border-0 rounded-xl touch-manipulation disabled:opacity-70 active:scale-[0.98]"
-                  >
-                    {isStarting ? (
-                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                    ) : (
-                      <Play className="h-4 w-4 mr-2 fill-white" />
-                    )}
-                    {isStarting ? 'Starting…' : 'Start timer'}
-                  </Button>
-                </motion.div>
-              </div>
 
-              {/* Project tag chip — pick before starting so labour ties to a job */}
-              <button
-                type="button"
-                onClick={() => setStartProjectPickerOpen(true)}
-                className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border touch-manipulation transition-colors ${
-                  startProject
-                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] hover:bg-elec-yellow/[0.10]'
-                    : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05]'
-                }`}
-              >
-                <FolderOpen
-                  className={`h-4 w-4 shrink-0 ${
-                    startProject ? 'text-elec-yellow' : 'text-white/45'
-                  }`}
-                />
-                <span className="flex-1 text-left text-[13.5px] truncate">
-                  {startProject ? (
-                    <>
-                      <span className="text-white font-medium">{startProject.title}</span>
-                      {startProject.customerName && (
-                        <span className="text-white/45 ml-1.5">· {startProject.customerName}</span>
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-white/55">Tag to a project (optional)</span>
-                  )}
-                </span>
-                {startProject ? (
-                  <X
-                    className="h-3.5 w-3.5 text-white/45 hover:text-white"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setStartProjectId(null);
+                <div className="flex items-center gap-2">
+                  {/* Project tag — secondary, truncates so Start never shrinks */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.selection();
+                      setStartProjectPickerOpen(true);
                     }}
-                  />
-                ) : (
-                  <ChevronDown className="h-3.5 w-3.5 text-white/35" />
-                )}
-              </button>
+                    className={`flex min-w-0 flex-1 items-center gap-2 rounded-xl border px-3 h-11 touch-manipulation transition-colors ${
+                      startProject
+                        ? 'border-emerald-500/30 bg-emerald-500/[0.06] hover:bg-emerald-500/[0.10]'
+                        : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05]'
+                    }`}
+                  >
+                    <FolderOpen
+                      className={`h-4 w-4 shrink-0 ${
+                        startProject ? 'text-emerald-400' : 'text-white'
+                      }`}
+                    />
+                    <span className="min-w-0 flex-1 truncate text-left text-[13px] text-white">
+                      {startProject ? startProject.title : 'Tag a project'}
+                    </span>
+                    {startProject ? (
+                      <X
+                        className="h-3.5 w-3.5 shrink-0 text-white"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setStartProjectId(null);
+                        }}
+                      />
+                    ) : (
+                      <ChevronDown className="h-3.5 w-3.5 shrink-0 text-white" />
+                    )}
+                  </button>
+
+                  <motion.div whileTap={{ scale: isStarting ? 1 : 0.97 }} className="shrink-0">
+                    <Button
+                      onClick={handleStart}
+                      disabled={isStarting}
+                      className="h-11 px-4 text-[15px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-white border-0 rounded-xl touch-manipulation disabled:opacity-70 active:scale-[0.98]"
+                    >
+                      {isStarting ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Play className="h-4 w-4 mr-2 fill-white" />
+                      )}
+                      {isStarting ? 'Starting…' : 'Start'}
+                    </Button>
+                  </motion.div>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1237,9 +1303,29 @@ const TimeTrackerPage = () => {
             transition={{ delay: 0.2 }}
             className="mt-6 -mx-4 lg:-mx-0"
           >
+            {/* Forgotten-timer warning — before the invoice step, not after */}
+            {runawaySessions.length > 0 && (
+              <div className="mx-4 lg:mx-0 mb-3 rounded-xl border border-orange-500/25 bg-orange-500/[0.06] px-3.5 py-2.5 flex items-start gap-2.5">
+                <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
+                <div className="text-[13px] leading-snug min-w-0">
+                  <p className="text-orange-300 font-medium">
+                    {runawaySessions.length === 1
+                      ? 'One session looks like a timer left running'
+                      : `${runawaySessions.length} sessions look like timers left running`}
+                  </p>
+                  <p className="text-white mt-0.5">
+                    {runawaySessions.length === 1
+                      ? `${formatDuration(runawaySessions[0].duration_seconds ?? 0)} on one session — worth checking before you invoice it.`
+                      : 'Each is over 12 hours — worth checking before you invoice them.'}{' '}
+                    Tap a session to edit its times.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Heading + filter chips + select toggle */}
             <div className="flex items-center gap-3 px-4 lg:px-0 mb-2">
-              <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45 shrink-0">
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white shrink-0">
                 Sessions
               </h2>
               <div className="flex gap-1">
@@ -1249,7 +1335,7 @@ const TimeTrackerPage = () => {
                   className={`text-[12px] font-medium px-2.5 h-7 rounded-full touch-manipulation transition-colors ${
                     !notInvoicedOnly
                       ? 'bg-white/[0.10] text-white'
-                      : 'text-white/45 hover:text-white hover:bg-white/[0.05]'
+                      : 'text-white hover:text-white hover:bg-white/[0.05]'
                   }`}
                 >
                   All
@@ -1259,15 +1345,15 @@ const TimeTrackerPage = () => {
                   onClick={() => setNotInvoicedOnly(true)}
                   className={`text-[12px] font-medium px-2.5 h-7 rounded-full touch-manipulation transition-colors ${
                     notInvoicedOnly
-                      ? 'bg-elec-yellow/[0.15] text-elec-yellow ring-1 ring-elec-yellow/30'
-                      : 'text-white/45 hover:text-white hover:bg-white/[0.05]'
+                      ? 'bg-emerald-500/[0.15] text-emerald-400 ring-1 ring-emerald-500/30'
+                      : 'text-white hover:text-white hover:bg-white/[0.05]'
                   }`}
                 >
                   To bill
                 </button>
               </div>
               <div className="ml-auto flex items-center gap-2">
-                <span className="text-[11px] font-medium text-white/35 tabular-nums">
+                <span className="text-[11px] font-medium text-white tabular-nums">
                   {filteredSessions.length}
                 </span>
                 {filteredSessions.some((s) => !s.invoice_id) && (
@@ -1280,7 +1366,7 @@ const TimeTrackerPage = () => {
                     className={`text-[12px] font-medium px-2.5 h-7 rounded-full touch-manipulation transition-colors ${
                       selectMode
                         ? 'bg-white/[0.10] text-white'
-                        : 'text-white/55 hover:text-white hover:bg-white/[0.05]'
+                        : 'text-white hover:text-white hover:bg-white/[0.05]'
                     }`}
                   >
                     {selectMode ? 'Cancel' : 'Select'}
@@ -1291,8 +1377,8 @@ const TimeTrackerPage = () => {
 
             {filteredSessions.length === 0 ? (
               <div className="px-4 lg:px-0 py-12 text-center">
-                <Clock className="h-7 w-7 text-white/25 mx-auto mb-2" />
-                <p className="text-white/45 text-[13px]">
+                <Clock className="h-7 w-7 text-white mx-auto mb-2" />
+                <p className="text-white text-[13px]">
                   {notInvoicedOnly
                     ? 'Nothing waiting to be billed — everything is up to date.'
                     : 'No sessions yet — tap Start when you arrive on site.'}
@@ -1316,16 +1402,23 @@ const TimeTrackerPage = () => {
                       key={session.id}
                       onClick={() => {
                         if (selectMode) {
-                          if (selectable) toggleSelect(session.id);
+                          // Distinct feel for select vs open — the same tap does
+                          // two different things depending on mode, so it should
+                          // not feel identical.
+                          if (selectable) {
+                            haptic.selection();
+                            toggleSelect(session.id);
+                          }
                           return;
                         }
+                        haptic.light();
                         setDetailSession(session);
                       }}
                       className={`w-full flex items-center gap-3 px-4 py-3 transition-colors touch-manipulation text-left ${
                         selectMode && !selectable
                           ? 'opacity-40'
                           : 'hover:bg-white/[0.03] active:bg-white/[0.05]'
-                      } ${isSelected ? 'bg-elec-yellow/[0.06]' : ''}`}
+                      } ${isSelected ? 'bg-emerald-500/[0.06]' : ''}`}
                     >
                       {/* Leading — checkbox in select mode, status dot otherwise */}
                       {selectMode ? (
@@ -1335,7 +1428,7 @@ const TimeTrackerPage = () => {
                             !selectable
                               ? 'bg-white/[0.04] border border-white/10'
                               : isSelected
-                                ? 'bg-elec-yellow border border-elec-yellow'
+                                ? 'bg-emerald-500 border border-emerald-500'
                                 : 'bg-transparent border-2 border-white/25'
                           }`}
                         >
@@ -1347,7 +1440,7 @@ const TimeTrackerPage = () => {
                         <span
                           aria-hidden="true"
                           className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                            isInvoiced ? 'bg-emerald-400' : 'bg-amber-400'
+                            isInvoiced ? 'bg-emerald-400' : 'border-2 border-white bg-transparent'
                           }`}
                         />
                       )}
@@ -1357,24 +1450,43 @@ const TimeTrackerPage = () => {
                           {session.label ||
                             (linkedProject ? linkedProject.title : 'Untitled session')}
                         </p>
-                        <p className="text-[11.5px] text-white/45 truncate leading-snug mt-0.5">
+                        {/*
+                          Starting a timer from a project card copies the project
+                          title into the label, so both lines rendered the SAME
+                          truncated string — and the project name then pushed the
+                          billing status off the end, hiding the one thing that
+                          matters most in this list. Only show the project when it
+                          actually adds information.
+                        */}
+                        <p className="text-[11.5px] text-white truncate leading-snug mt-0.5">
                           {formatSessionDate(session.started_at)}
-                          {linkedProject && session.label ? ` · ${linkedProject.title}` : ''}
+                          {linkedProject &&
+                          session.label &&
+                          linkedProject.title.trim().toLowerCase() !==
+                            session.label.trim().toLowerCase()
+                            ? ` · ${linkedProject.title}`
+                            : ''}
                           {' · '}
                           {isInvoiced ? 'invoiced' : 'awaiting invoice'}
                         </p>
                       </div>
                       {/* Right — duration + value */}
                       <div className="text-right shrink-0">
-                        <p className="text-[13px] font-semibold text-white tabular-nums leading-tight">
+                        <p
+                          className={`text-[13px] font-semibold tabular-nums leading-tight ${
+                            (session.duration_seconds ?? 0) >= RUNAWAY_SESSION_SECONDS
+                              ? 'text-orange-300'
+                              : 'text-white'
+                          }`}
+                        >
                           {formatDuration(session.duration_seconds ?? 0)}
                         </p>
-                        <p className="text-[11.5px] text-amber-400 tabular-nums leading-tight">
+                        <p className="text-[11.5px] text-emerald-400 tabular-nums leading-tight">
                           {formatCurrency(value)}
                         </p>
                       </div>
                       {!selectMode && (
-                        <ChevronRight className="h-3.5 w-3.5 text-white/25 shrink-0" />
+                        <ChevronRight className="h-3.5 w-3.5 text-white shrink-0" />
                       )}
                     </button>
                   );
@@ -1399,7 +1511,7 @@ const TimeTrackerPage = () => {
               onClick={handleNewInvoice}
               className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.08] transition-colors touch-manipulation"
             >
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center flex-shrink-0">
                 <Plus className="h-5 w-5 text-white" />
               </div>
               <div className="text-left">
@@ -1467,14 +1579,14 @@ const TimeTrackerPage = () => {
               <div className="px-6 pb-8 space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/55 mb-1">Duration</p>
+                    <p className="text-xs text-white mb-1">Duration</p>
                     <p className="text-white font-mono font-bold tabular-nums">
                       {formatDuration(detailSession.duration_seconds ?? 0)}
                     </p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/55 mb-1">Value</p>
-                    <p className="text-elec-yellow font-mono font-bold tabular-nums">
+                    <p className="text-xs text-white mb-1">Value</p>
+                    <p className="text-emerald-400 font-mono font-bold tabular-nums">
                       {formatCurrency(
                         calculateValue(
                           detailSession.duration_seconds ?? 0,
@@ -1484,7 +1596,7 @@ const TimeTrackerPage = () => {
                     </p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/55 mb-1">Started</p>
+                    <p className="text-xs text-white mb-1">Started</p>
                     <p className="text-white text-sm">
                       {new Date(detailSession.started_at).toLocaleString('en-GB', {
                         day: 'numeric',
@@ -1495,7 +1607,7 @@ const TimeTrackerPage = () => {
                     </p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/55 mb-1">Rate</p>
+                    <p className="text-xs text-white mb-1">Rate</p>
                     <p className="text-white text-sm">
                       {formatCurrency(detailSession.hourly_rate ?? hourlyRate)}/hr
                     </p>
@@ -1511,34 +1623,34 @@ const TimeTrackerPage = () => {
                         onClick={openEditTimes}
                         className="w-full flex items-center justify-between px-3.5 py-2.5 text-left touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.06] transition-colors"
                       >
-                        <span className="flex items-center gap-2 text-[13px] text-white/70">
-                          <Pencil className="h-3.5 w-3.5 text-white/45" />
+                        <span className="flex items-center gap-2 text-[13px] text-white">
+                          <Pencil className="h-3.5 w-3.5 text-white" />
                           Edit start &amp; end times
                         </span>
-                        <ChevronRight className="h-3.5 w-3.5 text-white/30" />
+                        <ChevronRight className="h-3.5 w-3.5 text-white" />
                       </button>
                     ) : (
                       <div className="p-3.5 space-y-3">
                         <div>
-                          <label className="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-1.5 block">
+                          <label className="text-[11px] uppercase tracking-[0.14em] text-white mb-1.5 block">
                             Start
                           </label>
                           <Input
                             type="datetime-local"
                             value={editStartLocal}
                             onChange={(e) => setEditStartLocal(e.target.value)}
-                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white"
+                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-emerald-500 focus:ring-emerald-500 bg-white/[0.04] text-white"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] uppercase tracking-[0.14em] text-white/50 mb-1.5 block">
+                          <label className="text-[11px] uppercase tracking-[0.14em] text-white mb-1.5 block">
                             End
                           </label>
                           <Input
                             type="datetime-local"
                             value={editEndLocal}
                             onChange={(e) => setEditEndLocal(e.target.value)}
-                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white"
+                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-emerald-500 focus:ring-emerald-500 bg-white/[0.04] text-white"
                           />
                         </div>
                         <div className="flex gap-2 pt-1">
@@ -1546,14 +1658,14 @@ const TimeTrackerPage = () => {
                             variant="ghost"
                             onClick={cancelEditTimes}
                             disabled={savingTimes}
-                            className="flex-1 h-11 text-white/70 hover:text-white hover:bg-white/[0.06] touch-manipulation"
+                            className="flex-1 h-11 text-white hover:text-white hover:bg-white/[0.06] touch-manipulation"
                           >
                             Cancel
                           </Button>
                           <Button
                             onClick={saveEditTimes}
                             disabled={savingTimes}
-                            className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                            className="flex-1 h-11 bg-emerald-500 hover:bg-emerald-500/90 text-black font-semibold touch-manipulation"
                           >
                             {savingTimes ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
@@ -1579,7 +1691,7 @@ const TimeTrackerPage = () => {
                     className={`text-xs font-bold uppercase px-2 py-1 rounded-full ${
                       detailSession.invoice_id
                         ? 'bg-emerald-500/20 text-emerald-400'
-                        : 'bg-amber-500/20 text-amber-400'
+                        : 'bg-emerald-500/20 text-emerald-400'
                     }`}
                   >
                     {detailSession.invoice_id ? 'Invoiced' : 'Not invoiced'}
@@ -1593,13 +1705,13 @@ const TimeTrackerPage = () => {
                       onClick={() => setProjectPickerOpen(true)}
                       className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl border touch-manipulation transition-colors ${
                         detailProjectId
-                          ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] hover:bg-elec-yellow/[0.10]'
+                          ? 'border-emerald-500/30 bg-emerald-500/[0.06] hover:bg-emerald-500/[0.10]'
                           : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05]'
                       }`}
                     >
                       <FolderOpen
                         className={`h-4 w-4 shrink-0 ${
-                          detailProjectId ? 'text-elec-yellow' : 'text-white/55'
+                          detailProjectId ? 'text-emerald-400' : 'text-white'
                         }`}
                       />
                       <span className="flex-1 text-left text-sm text-white truncate">
@@ -1609,21 +1721,21 @@ const TimeTrackerPage = () => {
                       </span>
                       {detailProjectId ? (
                         <X
-                          className="h-3.5 w-3.5 text-white/55 hover:text-white"
+                          className="h-3.5 w-3.5 text-white hover:text-white"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleSetDetailProject(null);
                           }}
                         />
                       ) : (
-                        <ChevronDown className="h-3.5 w-3.5 text-white/45" />
+                        <ChevronDown className="h-3.5 w-3.5 text-white" />
                       )}
                     </button>
 
                     {/* Primary CTA — Create Invoice → opens full invoice wizard */}
                     <Button
                       onClick={handleOpenInvoiceWizard}
-                      className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
+                      className="w-full h-12 bg-emerald-500 hover:bg-emerald-500/90 text-black font-semibold rounded-xl touch-manipulation"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Create Invoice
@@ -1714,7 +1826,7 @@ const TimeTrackerPage = () => {
           </SheetHeader>
           <div className="px-6 pb-8 space-y-2 max-h-80 overflow-y-auto">
             {projects.length === 0 ? (
-              <p className="text-white/55 text-sm text-center py-6">
+              <p className="text-white text-sm text-center py-6">
                 No active projects — create one from the Projects page.
               </p>
             ) : (
@@ -1731,11 +1843,11 @@ const TimeTrackerPage = () => {
                   }`}
                 >
                   <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                    <X className="h-4 w-4 text-white/55" />
+                    <X className="h-4 w-4 text-white" />
                   </div>
                   <div className="flex-1">
                     <p className="text-white font-medium text-sm">No project</p>
-                    <p className="text-white/45 text-xs">Untagged time session</p>
+                    <p className="text-white text-xs">Untagged time session</p>
                   </div>
                   {!startProjectId && (
                     <CheckCircle2 className="h-4 w-4 text-white shrink-0" />
@@ -1750,21 +1862,21 @@ const TimeTrackerPage = () => {
                     }}
                     className={`w-full rounded-xl border p-3.5 flex items-center gap-3 transition-colors touch-manipulation text-left ${
                       startProjectId === proj.id
-                        ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                        ? 'border-emerald-500/50 bg-emerald-500/[0.06]'
                         : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05]'
                     }`}
                   >
                     <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                      <FolderOpen className="h-4 w-4 text-white/70" />
+                      <FolderOpen className="h-4 w-4 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-white font-medium text-sm truncate">{proj.title}</p>
                       {proj.customerName && (
-                        <p className="text-white/45 text-xs truncate">{proj.customerName}</p>
+                        <p className="text-white text-xs truncate">{proj.customerName}</p>
                       )}
                     </div>
                     {startProjectId === proj.id && (
-                      <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                     )}
                   </button>
                 ))}
@@ -1796,7 +1908,7 @@ const TimeTrackerPage = () => {
                   }}
                   className={`w-full rounded-xl border p-4 flex items-center gap-3 transition-colors touch-manipulation text-left ${
                     detailProjectId === proj.id
-                      ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                      ? 'border-emerald-500/50 bg-emerald-500/[0.06]'
                       : 'border-white/[0.08] bg-white/[0.04] active:bg-white/[0.08]'
                   }`}
                 >
@@ -1810,7 +1922,7 @@ const TimeTrackerPage = () => {
                     )}
                   </div>
                   {detailProjectId === proj.id && (
-                    <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
                   )}
                 </button>
               ))
@@ -1835,21 +1947,21 @@ const TimeTrackerPage = () => {
                   <p className="text-[13px] font-semibold text-white leading-tight tabular-nums">
                     {selectedTotals.count} selected · {formatCurrency(selectedTotals.value)}
                   </p>
-                  <p className="text-[11.5px] text-white/50 tabular-nums leading-tight">
+                  <p className="text-[11.5px] text-white tabular-nums leading-tight">
                     {formatDuration(selectedTotals.seconds)} of work
                   </p>
                 </div>
                 <Button
                   variant="ghost"
                   onClick={exitSelectMode}
-                  className="h-10 px-3 text-[13px] text-white/70 hover:text-white hover:bg-white/[0.06] touch-manipulation"
+                  className="h-10 px-3 text-[13px] text-white hover:text-white hover:bg-white/[0.06] touch-manipulation"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleBillSelected}
                   disabled={billingMulti}
-                  className="h-10 px-4 text-[13.5px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-60"
+                  className="h-10 px-4 text-[13.5px] font-semibold bg-emerald-500 hover:bg-emerald-500/90 text-black rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-60"
                 >
                   {billingMulti ? (
                     <>

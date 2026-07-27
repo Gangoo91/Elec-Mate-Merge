@@ -431,6 +431,27 @@ export const fireAlarmPayloadSchema = z.object({
   devices_tested_percentage: z.number().default(0),
   device_testing_complete: z.boolean().default(false),
 
+  // Device sampling detail (periodic, 2025 edition — ELE-1397)
+  sampled_devices: z
+    .array(
+      z.object({
+        ref: z.string().default(''),
+        zone: z.string().default(''),
+        result: z.string().default(''),
+      })
+    )
+    .default([]),
+  has_sampled_devices: z.boolean().default(false),
+  devices_not_tested_reason: z.string().default(''),
+  all_devices_tested_12mo: z.string().default(''),
+  all_devices_tested_12mo_display: z.string().default(''),
+
+  // Service history since last inspection (periodic, 2025 edition — ELE-1397)
+  service_history_summary: z.string().default(''),
+  has_service_history: z.boolean().default(false),
+  linked_log_book: z.boolean().default(false),
+  zone_plan_verified: z.boolean().default(false),
+
   // Extent & limitations (periodic/verification)
   extent_of_inspection: z.string().default(''),
   inspection_limitations: z.string().default(''),

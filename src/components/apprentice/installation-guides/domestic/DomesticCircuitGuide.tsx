@@ -165,7 +165,7 @@ const DomesticCircuitGuide = () => {
 
   const diversityCalculations = {
     title: 'Diversity Calculations for Domestic Premises',
-    description: 'Standard diversity factors from IET Guidance Note 1 and BS 7671 Appendix 1',
+    description: 'Standard diversity factors from IET Guidance Note 1 and IET On-Site Guide Appendix A',
     currentDemand: [
       {
         load: 'Lighting',

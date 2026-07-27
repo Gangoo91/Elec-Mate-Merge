@@ -298,6 +298,37 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
     false_alarm_action: get('falseAlarmAction'),
     has_false_alarms: parseInt(get('falseAlarmCount') || '0') > 0,
 
+    // Service history since last inspection (2025 — pulled from the log book when linked)
+    service_history_summary: get('serviceHistorySummary'),
+    has_service_history: !!get('serviceHistorySummary')?.trim(),
+    linked_log_book: !!get('linkedLogBookId'),
+
+    // Device sampling detail (2025 — specific devices, not just counts)
+    sampled_devices: Array.isArray(formData.sampledDevices)
+      ? (formData.sampledDevices as { ref: string; zone: string; result: string }[]).filter(
+          (d) => d.ref?.trim()
+        )
+      : [],
+    has_sampled_devices:
+      Array.isArray(formData.sampledDevices) &&
+      (formData.sampledDevices as { ref: string }[]).some((d) => d.ref?.trim()),
+    devices_not_tested_reason: get('devicesNotTestedReason'),
+    all_devices_tested_12mo: get('allDevicesTested12mo'),
+    all_devices_tested_12mo_display:
+      get('allDevicesTested12mo') === 'yes'
+        ? 'Yes — all devices tested within the 12-month cycle'
+        : get('allDevicesTested12mo') === 'no'
+          ? 'No — outstanding devices recorded'
+          : get('allDevicesTested12mo') === 'unknown'
+            ? 'Not known — no complete record available'
+            : '',
+
+    // Plan & cause-and-effect references (2025)
+    zone_plan_ref: get('zonePlanRef'),
+    zone_plan_verified: getBool('zonePlanVerified'),
+    cause_effect_ref: get('causeEffectReference'),
+    cause_effect_verified: getBool('causeEffectVerified'),
+
     // Previous Certificate (G6 unique)
     previous_cert_ref: get('previousCertificateRef'),
     previous_cert_date: getDate('previousInspectionDate'),

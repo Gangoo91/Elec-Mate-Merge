@@ -87,7 +87,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           severity: 'warning',
           title: 'High R1+R2 for Ring Circuit',
           description: `R1+R2 of ${result.r1r2}Ω is high for a ring final circuit.`,
-          regulation: 'BS 7671 Appendix 15',
+          regulation: 'BS 7671 Reg 643.2.1',
           suggestion: 'Check ring continuity and verify all connections are secure.',
         });
       }

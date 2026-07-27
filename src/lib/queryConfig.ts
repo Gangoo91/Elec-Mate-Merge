@@ -90,6 +90,7 @@ export const QUERY_KEYS = {
   // User & Auth
   USER_PROFILE: ['user-profile'] as const,
   SUBSCRIPTION: ['subscription'] as const,
+  COMPANY_PROFILE: ['company-profile'] as const,
 
   // Business
   JOBS: ['employer-jobs'] as const,

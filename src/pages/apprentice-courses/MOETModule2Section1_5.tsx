@@ -1076,8 +1076,11 @@ const MOETModule2Section1_5 = () => {
                 (L1), Yellow (L2), Blue (L3), Black (N). New installations use: Brown (L1), Black
                 (L2), Grey (L3), Blue (N). Particular care is needed where old and new systems meet
                 — blue was previously L3 but is now N, and black was previously N but is now L2.
-                Always verify by testing, never assume based on colour alone. Conversion labels per
-                BS 7671 Appendix 7 should be applied at interface points.
+                Always verify by testing, never assume based on colour alone. Conversion labels at
+                interface points remain sound practice and are what an inspector expects to see,
+                but note that Appendix 7 and Regulation 514.14 — which used to carry the
+                non-standard-colours requirements — were both deleted by BS 7671:2018+A2:2022.
+                Conductor identification is now set out in Table 51 of Chapter 51.
               </p>
             </div>
 

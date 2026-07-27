@@ -263,7 +263,7 @@ const faqItems = [
   {
     question: 'Can I derate voltage drop using diversity on the sub-main?',
     answer:
-      'Yes — Reg 311.1 (maximum demand) explicitly permits diversity. The Ib used for voltage drop on a sub-main is the diversified maximum demand, not the arithmetic sum of every downstream final-circuit In. This is exactly how a 100 A sub-main supplies a board with 6 × 32 A ways — diversity reduces the calculated Ib so the conductor copes thermally and the voltage drop budget is workable. Document the diversity assumption — IET On-Site Guide Appendix 1 / GN1 Section 1 give the typical figures.',
+      'Yes — Reg 311.1 (maximum demand) explicitly permits diversity. The Ib used for voltage drop on a sub-main is the diversified maximum demand, not the arithmetic sum of every downstream final-circuit In. This is exactly how a 100 A sub-main supplies a board with 6 × 32 A ways — diversity reduces the calculated Ib so the conductor copes thermally and the voltage drop budget is workable. Document the diversity assumption — IET On-Site Guide On-Site Guide Appendix A / GN1 Section 1 give the typical figures.',
   },
   {
     question: 'What if my design fails the 3 % / 5 % limit but the equipment is happy?',

@@ -2,7 +2,7 @@
  * Formats Solar PV Installation Certificate data for PDF generation
  *
  * Standards Compliance:
- * - BS 7671:2018+A4:2026 (18th Edition Amendment 3)
+ * - BS 7671:2018+A4:2026 (18th Edition Amendment 4)
  * - BS EN IEC 62446-1:2016+A1:2018
  * - MIS 3002:2025 V5.0 (MCS Solar PV Installation Standard)
  */

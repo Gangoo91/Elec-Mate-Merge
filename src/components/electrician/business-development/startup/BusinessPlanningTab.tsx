@@ -478,7 +478,7 @@ const BusinessPlanningTab = () => {
                   ].map((task, index) => (
                     <li
                       key={index}
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-center gap-2 p-2 rounded bg-orange-500/10 border border-orange-500/20`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-200 flex items-center gap-2 p-2 rounded bg-white/[0.04] border border-white/[0.08]`}
                     >
                       <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
                       {task}

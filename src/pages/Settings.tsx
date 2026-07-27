@@ -26,6 +26,7 @@ import BillingTab from '@/components/settings/BillingTab';
 import ReferralsTab from '@/components/settings/ReferralsTab';
 import SettingsNavGrid from '@/components/settings/SettingsNavGrid';
 import SettingsReadiness from '@/components/settings/SettingsReadiness';
+import SettingsSearch from '@/components/settings/SettingsSearch';
 
 const SETTINGS_TABS = [
   { id: 'account', label: 'Account', component: AccountTab },
@@ -192,6 +193,8 @@ const SettingsPage = () => {
                     Sign Out
                   </Button>
                 </div>
+
+                <SettingsSearch className="mt-5" />
               </div>
 
               {/* Business readiness — electricians and employers only */}
@@ -337,7 +340,9 @@ const SettingsPage = () => {
               </div>
             </div>
           </div>
-          <div className="shrink-0 flex items-center gap-2 pb-1">
+          <div className="shrink-0 flex flex-col items-end gap-3 pb-1">
+            <SettingsSearch className="w-72" />
+            <div className="flex items-center gap-2">
             {!isSubscribed && (
               <Button
                 onClick={() => navigate('/subscriptions')}
@@ -353,6 +358,7 @@ const SettingsPage = () => {
             >
               Sign Out
             </Button>
+            </div>
           </div>
         </div>
 

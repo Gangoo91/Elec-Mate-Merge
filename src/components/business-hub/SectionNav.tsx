@@ -172,19 +172,19 @@ const SectionNav = ({
     <div
       className={cn(
         'sticky top-14 z-40',
-        'bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 p-4',
+        'bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/[0.06] p-4',
         className
       )}
     >
       <div className="relative">
         {/* Gradient fade indicators */}
-        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#1a1a1a] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#1a1a1a] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
 
         {/* Scrollable tabs */}
         <div
           ref={tabsRef}
-          className="flex gap-2 overflow-x-auto px-1 py-1 -mx-1"
+          className="flex gap-0 overflow-x-auto px-1 -mx-1"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {sections.map((section) => {
@@ -198,43 +198,17 @@ const SectionNav = ({
                 ref={isActive ? activeTabRef : null}
                 onClick={() => scrollToSection(section.id)}
                 className={cn(
-                  'relative flex items-center gap-2 px-4 py-2.5 rounded-lg whitespace-nowrap',
-                  'min-h-[44px]',
-                  'text-xs sm:text-sm font-medium transition-all duration-200',
-                  'touch-manipulation active:scale-[0.97]',
+                  'relative px-1 pb-2.5 pt-2 mx-3 first:ml-1 whitespace-nowrap',
+                  'min-h-[44px] text-[13px] tracking-tight transition-colors duration-200',
+                  'touch-manipulation border-b-2',
                   'focus:outline-none focus-visible:ring-2',
                   accent.ring,
                   isActive
-                    ? cn(accent.activeBg, accent.activeText, 'border', accent.activeBorder)
-                    : 'bg-white/[0.03] text-white hover:text-white hover:bg-white/10'
+                    ? 'text-white font-semibold border-elec-yellow'
+                    : 'text-white/60 font-medium border-transparent hover:text-white'
                 )}
               >
-                {Icon && (
-                  <Icon
-                    className={cn(
-                      'h-4 w-4 flex-shrink-0',
-                      isActive ? accent.activeIcon : 'text-white'
-                    )}
-                  />
-                )}
                 <span>{section.label}</span>
-                {isActive && (
-                  <motion.div
-                    layoutId="section-nav-underline"
-                    className={cn(
-                      'absolute bottom-0 left-2 right-2 h-0.5 rounded-full',
-                      accentColor === 'yellow' && 'bg-yellow-400',
-                      accentColor === 'blue' && 'bg-blue-400',
-                      accentColor === 'green' && 'bg-green-400',
-                      accentColor === 'purple' && 'bg-purple-400',
-                      accentColor === 'orange' && 'bg-orange-400',
-                      accentColor === 'emerald' && 'bg-emerald-400',
-                      accentColor === 'rose' && 'bg-rose-400',
-                      accentColor === 'cyan' && 'bg-cyan-400'
-                    )}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
               </button>
             );
           })}

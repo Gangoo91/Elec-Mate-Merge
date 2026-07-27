@@ -25,6 +25,10 @@ export const formatDuration = (seconds: number): string => {
   if (seconds < 0) seconds = 0;
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
+  // Sub-minute sessions used to floor to "0m", so a 55-second call-out showed
+  // "0m" next to a real charge — it read as broken data rather than a short
+  // job. A true zero still shows "0m"; anything billable shows its seconds.
+  if (h === 0 && m === 0) return seconds === 0 ? '0m' : `${Math.floor(seconds)}s`;
   if (h === 0) return `${m}m`;
   return `${h}h ${String(m).padStart(2, '0')}m`;
 };

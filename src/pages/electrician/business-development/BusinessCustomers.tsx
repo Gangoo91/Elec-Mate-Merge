@@ -76,7 +76,7 @@ const BusinessCustomers = () => {
         subtitle="Proven methods to attract and retain clients for your electrical services"
         icon={HandHelping}
         backUrl="/electrician/business-development"
-        accentColor="purple"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -86,7 +86,7 @@ const BusinessCustomers = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
-          accentColor="purple"
+          accentColor="yellow"
         />
 
         {/* Content Sections */}
@@ -96,7 +96,7 @@ const BusinessCustomers = () => {
             id="market-research"
             title="Market Research"
             icon={Search}
-            accentColor="purple"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Understanding your local market is essential for targeting the right customers.
@@ -194,7 +194,7 @@ const BusinessCustomers = () => {
             id="digital-marketing"
             title="Digital Marketing"
             icon={Monitor}
-            accentColor="purple"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 A strong online presence is essential for modern electrical businesses. Over 80% of
@@ -318,8 +318,8 @@ const BusinessCustomers = () => {
                   <p className="text-xs text-white mt-1">Star rating needed</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
-                  <p className="text-2xl font-bold text-white">3-5x</p>
-                  <p className="text-xs text-white mt-1">ROI on SEO</p>
+                  <p className="text-2xl font-bold text-white">6-12 mo</p>
+                  <p className="text-xs text-white mt-1">Before SEO pays back</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">£500-2k</p>
@@ -334,7 +334,7 @@ const BusinessCustomers = () => {
             id="traditional-marketing"
             title="Traditional Marketing"
             icon={Megaphone}
-            accentColor="purple"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Traditional marketing methods still deliver excellent results for local electrical
@@ -458,7 +458,7 @@ const BusinessCustomers = () => {
             id="lead-generation"
             title="Lead Generation"
             icon={Target}
-            accentColor="purple"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Consistent lead generation ensures a steady pipeline of work. Diversify lead sources
@@ -559,7 +559,7 @@ const BusinessCustomers = () => {
             id="customer-experience"
             title="Customer Experience"
             icon={Users}
-            accentColor="purple"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Exceptional customer experience differentiates your business and generates
@@ -699,7 +699,7 @@ const BusinessCustomers = () => {
             id="retention-growth"
             title="Retention & Growth"
             icon={TrendingUp}
-            accentColor="purple"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Retaining existing customers costs 5-10x less than acquiring new ones. Focus on
@@ -825,7 +825,7 @@ const BusinessCustomers = () => {
         {/* Footer Tip */}
         <div className="mt-8 p-5 rounded-2xl bg-yellow-400/5 border border-yellow-400/20">
           <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
               <Heart className="h-5 w-5 text-yellow-400" />
             </div>
             <div>

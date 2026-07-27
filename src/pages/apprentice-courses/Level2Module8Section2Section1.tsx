@@ -796,7 +796,7 @@ const Level2Module8Section2Section1 = () => {
                           <strong>Green Tab:</strong> Part 6 (Inspection & testing)
                         </div>
                         <div>
-                          <strong>Blue Tab:</strong> Appendix 15 (Ring circuit tests)
+                          <strong>Blue Tab:</strong> Appendix 15 (Ring and radial circuit arrangements)
                         </div>
                         <div>
                           <strong>Purple Tab:</strong> Index (Quick reference finder)

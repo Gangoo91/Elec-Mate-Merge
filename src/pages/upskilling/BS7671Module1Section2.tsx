@@ -115,7 +115,7 @@ const inlineChecks = [
     ],
     correctIndex: 2,
     explanation:
-      'A4:2026 deleted the informative Appendix 17 and promoted the energy-efficiency content to Chapter 81 in Part 8 (functional aspects). The chapter is normative — part of BS 7671 — but refers the reader out to the Building Regulations and BS HD 60364-8-1:2019 for the detailed efficiency requirements. Chapter 57 (also new in A4) covers stationary secondary batteries.',
+      'A4:2026 deleted the informative Appendix 17 and promoted the energy-efficiency content to Chapter 81 in Part 8 (functional aspects). Chapter 81 is marked (Informative), so it gives recommendations rather than requirements, and it refers the reader out to the Building Regulations and BS HD 60364-8-1:2019 for the detailed efficiency requirements. Chapter 57 (also new in A4) covers stationary secondary batteries.',
   },
 ];
 

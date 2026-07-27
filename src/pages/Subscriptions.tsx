@@ -349,13 +349,26 @@ const Subscriptions = () => {
         return;
       }
 
-      if (isNative) {
-        const platform = Capacitor.getPlatform();
-        const url =
-          platform === 'ios'
-            ? 'https://apps.apple.com/account/subscriptions'
-            : 'https://play.google.com/store/account/subscriptions';
-        openExternalUrl(url);
+      // Ask what is actually billing this account BEFORE deciding where to send
+      // them. This used to short-circuit on isNative and open the App Store
+      // without ever looking at Stripe — so an iOS user with web billing was
+      // told to cancel at Apple, did so, and Stripe carried on taking money
+      // (Mathew Bayley, Jul 2026). The device someone is holding says nothing
+      // about who is charging them.
+      const { data, error } = await supabase.functions.invoke('get-billing-context');
+      if (error) throw new Error(error.message);
+      if (!data?.ok) throw new Error(data?.error || 'Could not load your billing info');
+
+      const platform = Capacitor.getPlatform();
+      const storeUrl =
+        platform === 'android'
+          ? 'https://play.google.com/store/account/subscriptions'
+          : 'https://apps.apple.com/account/subscriptions';
+
+      // No Stripe subscription and we're on a phone — the store is genuinely
+      // the right place, so send them there as before.
+      if (isNative && !data.subscription_id) {
+        openExternalUrl(storeUrl);
         toast({
           title: 'Cancel from your device',
           description:
@@ -366,9 +379,16 @@ const Subscriptions = () => {
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('get-billing-context');
-      if (error) throw new Error(error.message);
-      if (!data?.ok) throw new Error(data?.error || 'Could not load your billing info');
+      // On a phone WITH a live Stripe subscription, say so plainly. Cancelling
+      // at the store would leave the Stripe one running, which is the exact
+      // trap being fixed — so the in-app flow continues below.
+      if (isNative && data.subscription_id) {
+        toast({
+          title: 'You have a web subscription',
+          description:
+            'This account is billed through our website, not the app store. Cancelling here stops it. If you also subscribed in the app store, cancel that separately too.',
+        });
+      }
 
       if (!data.has_active_subscription || !data.subscription_id) {
         // No live Stripe sub. Two common cases:

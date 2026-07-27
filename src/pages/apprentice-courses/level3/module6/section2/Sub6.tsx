@@ -96,7 +96,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Each load block — retail, residential, EV, heat pump, lift, life-safety — has its own diversity logic. Consolidating means respecting each block's assumption and then assembling a phase-balanced view of the whole. The risk is mixing logics: applying domestic diversity to a commercial space, or treating an EV charger as an Appendix 1 socket-outlet circuit. The consolidated schedule documents the logic block by block before summing.",
+      "Each load block — retail, residential, EV, heat pump, lift, life-safety — has its own diversity logic. Consolidating means respecting each block's assumption and then assembling a phase-balanced view of the whole. The risk is mixing logics: applying domestic diversity to a commercial space, or treating an EV charger as an On-Site Guide Appendix A socket-outlet circuit. The consolidated schedule documents the logic block by block before summing.",
   },
   {
     id: 2,
@@ -200,7 +200,7 @@ const faqs = [
   {
     question: "How do I cite diversity assumptions on a consolidated schedule when each block uses a different reference?",
     answer:
-      "Cite each block's reference inline against its diversity row. Domestic flats: 'IET On-Site Guide Appendix A or BS 7671 Appendix 1 Table A1' for the per-flat MD calc. Retail commercial: 'engineering judgement based on retailer load survey, OSG Table A1 categories adjusted'. Lift: 'manufacturer datasheet plus 1.25 starting allowance'. Emergency lighting and fire alarm: 'BS 5266 / BS 5839 standby loads, 100 percent demand'. Each row stands on its own citation. The schedule then sums the per-block after-diversity figures and shows the consolidated total.",
+      "Cite each block's reference inline against its diversity row. Domestic flats: 'IET On-Site Guide Appendix A, Tables A1 and A2' for the per-flat MD calc. Retail commercial: 'engineering judgement based on retailer load survey, OSG Table A1 categories adjusted'. Lift: 'manufacturer datasheet plus 1.25 starting allowance'. Emergency lighting and fire alarm: 'BS 5266 / BS 5839 standby loads, 100 percent demand'. Each row stands on its own citation. The schedule then sums the per-block after-diversity figures and shows the consolidated total.",
   },
   {
     question: "Should the consolidated schedule include solar PV generation?",
@@ -274,7 +274,7 @@ export default function Sub6() {
             <p>
               On any installation more complicated than a single house, the load is split into blocks
               — flats, retail units, common services, life safety, vehicle charging, heat — and each
-              block uses its own diversity assumption. A flat uses domestic Appendix 1 / On-Site
+              block uses its own diversity assumption. A flat uses domestic On-Site Guide Appendix A / On-Site
               Guide Appendix A logic. A retail unit uses commercial after-diversity factors based
               on the tenant's likely fit-out. A lift uses the manufacturer datasheet plus a starting
               allowance. The consolidated schedule preserves each block's calc and cites it, then
@@ -420,7 +420,7 @@ export default function Sub6() {
               69.5 A per flat (single-phase).
             </p>
             <p>
-              Cite: 'IET On-Site Guide Appendix A Table A1 (residential single household with
+              Cite: 'IET On-Site Guide Appendix A, Table A1 (residential single household with
               electric cooking appliance), flat-by-flat assessment, simultaneity factor not applied
               between flats per OSG guidance for blocks of similar dwellings.'
             </p>

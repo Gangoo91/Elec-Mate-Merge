@@ -10,6 +10,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { getBoardWays } from '@/types/distributionBoard';
+import { formatDesignStandard } from '@/data/standards';
 import type { EICPayload } from '@/types/eic-payload';
 
 /* ------------------------------------------------------------------ */
@@ -94,24 +95,9 @@ function buildInstallationDescription(
   return parts.join(' — ');
 }
 
-// ELE-1390 — map the stored designStandard code to the standard string printed
-// on the certificate. New certs default to the current amendment (A4:2026); the
-// legacy 'BS7671' value stays A3:2024 so certs issued under Amendment 3 aren't
-// retrospectively relabelled.
-function formatDesignStandard(value: unknown): string {
-  const v = String(value || '').trim();
-  switch (v) {
-    case '':
-    case 'BS7671-A4':
-      return 'BS 7671:2018+A4:2026';
-    case 'BS7671':
-      return 'BS 7671:2018+A3:2024';
-    case 'other':
-      return 'Other';
-    default:
-      return v;
-  }
-}
+// ELE-1390 — formatDesignStandard moved to @/data/standards so the EIC and EICR
+// formatters share one definition. They had already drifted: the EICR emitted
+// the raw stored code because this helper only existed here.
 
 // Cover-page certification status. workType is a multi-select (comma-joined),
 // so a raw `work_type == 'new'` string match blanks everything when several are

@@ -51,8 +51,8 @@ const BusinessGrowth = () => {
 
   const keyStats = [
     { label: 'Revenue Growth', value: '15-25%', sublabel: 'Annual target' },
-    { label: 'Market ROI', value: '150-300%', sublabel: 'With strategic planning' },
-    { label: 'Productivity', value: '200-400%', sublabel: 'Team scaling efficiency' },
+    { label: 'EV Chargepoints', value: '2030', sublabel: 'New-build mandate driving demand' },
+    { label: 'VAT Threshold', value: '£90,000', sublabel: 'Plan growth around it, not into it' },
     { label: 'Value Increase', value: '£50-200k', sublabel: 'Annual business value' },
   ];
 
@@ -74,7 +74,7 @@ const BusinessGrowth = () => {
         subtitle="Strategies for expanding your electrical contracting business"
         icon={TrendingUp}
         backUrl="/electrician/business-development"
-        accentColor="green"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -84,7 +84,7 @@ const BusinessGrowth = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
-          accentColor="green"
+          accentColor="yellow"
         />
 
         {/* Content Sections */}
@@ -94,11 +94,12 @@ const BusinessGrowth = () => {
             id="growth-strategies"
             title="Growth Strategies"
             icon={Target}
-            accentColor="green"
+            accentColor="yellow"
             summary={
               <p className="text-white">
-                Strategic growth planning can increase business value by 200-400% over 2-3 years
-                with proper execution. Focus on market expansion, team development, digital
+                Growth that lasts is planned, not stumbled into. Decide which market you're
+                expanding into, who you need on the tools, and how the cash flow carries it —
+                before you commit. Focus on market expansion, team development, digital
                 transformation, and financial planning for sustainable growth.
               </p>
             }
@@ -107,7 +108,7 @@ const BusinessGrowth = () => {
               {/* Market Expansion */}
               <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+                  <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
                     <MapPin className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div>
@@ -115,7 +116,7 @@ const BusinessGrowth = () => {
                       Market Expansion Strategy
                     </h4>
                     <p className="text-sm text-white mt-1">
-                      6-18 months timeline • £15,000-50,000 investment • 150-300% expected ROI
+                      6-18 months timeline • £15,000-50,000 typical investment
                     </p>
                   </div>
                 </div>
@@ -134,7 +135,7 @@ const BusinessGrowth = () => {
                     {
                       title: 'Strategic Planning (2-3 months)',
                       description:
-                        'Develop expansion strategy, calculate investment requirements and expected ROI, establish local partnerships',
+                        'Develop expansion strategy, calculate investment requirements and payback period, establish local partnerships',
                     },
                     {
                       title: 'Market Entry (3-12 months)',
@@ -148,7 +149,7 @@ const BusinessGrowth = () => {
               {/* Team Scaling */}
               <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+                  <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
                     <Users className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div>
@@ -156,8 +157,7 @@ const BusinessGrowth = () => {
                       Strategic Team Development
                     </h4>
                     <p className="text-sm text-white mt-1">
-                      3-24 months timeline • £25,000-100,000 investment • 200-400% productivity
-                      return
+                      3-24 months timeline • £25,000-100,000 typical investment per hire cycle
                     </p>
                   </div>
                 </div>
@@ -189,7 +189,7 @@ const BusinessGrowth = () => {
               {/* Digital Transformation */}
               <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+                  <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
                     <Smartphone className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div>
@@ -226,11 +226,11 @@ const BusinessGrowth = () => {
                 />
               </div>
 
-              {/* UK 2025 Opportunities */}
+              {/* UK Market Opportunities */}
               <div className="p-4 rounded-xl bg-yellow-400/5 border border-yellow-400/20">
                 <h4 className="text-sm font-semibold text-yellow-400 mb-3 flex items-center gap-2">
                   <Zap className="h-4 w-4" />
-                  UK Market Opportunities 2025
+                  UK Market Opportunities
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
@@ -265,7 +265,7 @@ const BusinessGrowth = () => {
             id="pricing"
             title="Pricing Strategies"
             icon={PoundSterling}
-            accentColor="green"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Strategic pricing optimisation can increase profit margins by 15-35% while
@@ -382,7 +382,7 @@ const BusinessGrowth = () => {
             id="marketing"
             title="Marketing & Lead Generation"
             icon={Megaphone}
-            accentColor="green"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Effective marketing combines digital presence with traditional networking to
@@ -473,8 +473,8 @@ const BusinessGrowth = () => {
                   <p className="text-xs text-white mt-1">Cost per lead</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
-                  <p className="text-2xl font-bold text-white">150-300%</p>
-                  <p className="text-xs text-white mt-1">Marketing ROI</p>
+                  <p className="text-2xl font-bold text-white">Track it</p>
+                  <p className="text-xs text-white mt-1">Cost per job won, by channel</p>
                 </div>
               </div>
             </div>
@@ -485,7 +485,7 @@ const BusinessGrowth = () => {
             id="services"
             title="Service Diversification"
             icon={Wrench}
-            accentColor="green"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Expand your service offerings to increase revenue per customer and reduce dependency
@@ -631,7 +631,7 @@ const BusinessGrowth = () => {
             id="operations"
             title="Operations & Efficiency"
             icon={Settings}
-            accentColor="green"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Streamlined operations increase profitability by reducing waste, improving
@@ -757,7 +757,7 @@ const BusinessGrowth = () => {
             id="financial"
             title="Financial Management"
             icon={BarChart3}
-            accentColor="green"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Sound financial management ensures sustainable growth and business stability. Target
@@ -876,7 +876,7 @@ const BusinessGrowth = () => {
         {/* Footer Tip */}
         <div className="mt-8 p-5 rounded-2xl bg-yellow-400/5 border border-yellow-400/20">
           <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
               <Target className="h-5 w-5 text-yellow-400" />
             </div>
             <div>

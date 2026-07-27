@@ -102,7 +102,7 @@ const inlineChecks = [
     ],
     correctIndex: 2,
     explanation:
-      'Appendix 17 is explicitly framed in A4:2026 as the precursor to a Part 8 of BS 7671 in a future amendment — energy efficiency promoted from "recommendations in an appendix" to a full Part. The pattern matches how earlier LCT content evolved.',
+      'A4:2026 deleted Appendix 17 and promoted energy efficiency into the new Chapter 81 in Part 8 — from "recommendations in an informative appendix" to a chapter in the body of the standard. Part 8 is not a future thing: it exists now, with Chapter 81 (energy efficiency) and Chapter 82 (prosumer\'s low voltage electrical installations).',
   },
   {
     id: 'm1s2-iet-cops-slot',
@@ -194,7 +194,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A4:2026 introduced Appendix 17 as a new appendix. Which framing is most accurate?',
+      'A4:2026 changed where energy efficiency lives in BS 7671. Which framing is accurate?',
     options: [
       'A consolidated deletion notice listing all content removed by the A4:2026 amendment',
       'A design guide for earth electrode arrangements and protective-conductor sizing',
@@ -203,7 +203,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Appendix 17 is the new energy-efficiency appendix in A4:2026, giving recommendations to optimise efficient use of electricity, including installations with local production and storage. The stated intention is to develop it into a Part 8 in a future amendment.',
+      'A4:2026 deleted Appendix 17 and introduced Chapter 81 in its place — "Low voltage electrical installations: functional aspects — Energy efficiency", sitting in Part 8. It is marked (Informative) and gives recommendations to optimise the efficient use of electricity, including installations with local production and storage, and refers the reader to the Building Regulations and BS HD 60364-8-1:2019.',
   },
   {
     id: 7,
@@ -226,12 +226,12 @@ const quizQuestions = [
     options: [
       'Yes — the LCT chapter structure is now settled and no further consolidation is expected',
       'No — BS 7671 will shortly be replaced wholesale by the IEC standard BS EN 60364',
-      'No — the 19th Edition is expected to consolidate the scattered LCT chapters and promote Appendix 17 into a Part 8',
+      'No — the 19th Edition is expected to consolidate the scattered LCT chapters; the energy-efficiency move already happened in A4 (Appendix 17 deleted, Chapter 81 introduced)',
       'No — the IET has indicated it intends to hand the standard over to the HSE to maintain',
     ],
     correctAnswer: 2,
     explanation:
-      'The 18th Edition + A4 spreads LCT content across Sections 551, 712, 715, 722, 730, 753, Chapter 57 and Appendix 17. That fragmentation is expected to be consolidated in the 19th Edition, with Appendix 17 promoted to a Part 8. The 18th Edition + A4 remains in force during the transition.',
+      'The 18th Edition + A4 spreads LCT content across Sections 551, 712, 715, 722, 730, 753, Chapter 57 and now Part 8 (Chapters 81 and 82). That fragmentation is expected to be consolidated in the 19th Edition. Note the energy-efficiency step is already done: A4 deleted Appendix 17 and introduced Chapter 81. The 18th Edition + A4 remains in force during the transition.',
   },
 ];
 
@@ -276,7 +276,7 @@ const faqs = [
     question:
       'Will the 19th Edition consolidate the LCT chapters into a single Part?',
     answer:
-      'The expectation in the joint committee work to date is consolidation rather than wholesale rewrite. The 19th Edition is widely expected to gather the scattered LCT chapters into a clearer Part 7 LCT framework, with cross-referencing rather than duplication. Appendix 17 is expected to be promoted into a new Part 8 on energy efficiency. The 18th Edition with A4 amendments remains in force across the transition.',
+      'The expectation in the joint committee work to date is consolidation rather than wholesale rewrite. The 19th Edition is widely expected to gather the scattered LCT chapters into a clearer Part 7 LCT framework, with cross-referencing rather than duplication. The energy-efficiency promotion has already happened — A4 deleted Appendix 17 and introduced Chapter 81 in Part 8. The 18th Edition with A4 amendments remains in force across the transition.',
   },
   {
     question:
@@ -323,12 +323,12 @@ export default function RenewableEnergyModule1Section2() {
 
           <TLDR
             points={[
-              'BS 7671\'s LCT content is fragmented by historical accretion across multiple sections, the new Chapter 57 (stationary batteries), the new Chapter 82 (Prosumer\'s Electrical Installations / PEIs), and Appendix 17 (energy efficiency). The 19th Edition is expected to consolidate.',
+              'BS 7671\'s LCT content is fragmented by historical accretion across multiple sections, the new Chapter 57 (stationary batteries), and the new Part 8 — Chapter 81 (energy efficiency, which replaced the deleted Appendix 17) and Chapter 82 (Prosumer\'s Electrical Installations / PEIs). The 19th Edition is expected to consolidate.',
               'Section 551 (low voltage generating sets) is the spine every grid-tied LCT install touches — bidirectional flow protection, supply-side installation of the source, and the anti-islanding / isolation triad.',
               'A4:2026 introduced Reg 551.7.2.1 — stationary batteries (Chapter 57) are classified as a generating set, not a load. BESS gets the full Section 551 treatment.',
               'Chapter 57 (new in A4) is the dedicated stationary secondary battery chapter; Reg 551.8 was deleted and its content moved into Chapter 57. Pluggable UPS and emergency lighting batteries are explicitly excluded.',
               'Chapter 82 (new in A4) is the Prosumer\'s Electrical Installations chapter — treating hybrid installs (PV + BESS + EV + heat pump) as coherent systems rather than collections of independent installs. The system-level design discipline above the per-technology chapters.',
-              'Appendix 17 (new in A4) sets energy-efficiency design recommendations and is explicitly intended to be promoted into a Part 8 of BS 7671 in a future amendment.',
+              'Chapter 81 (new in A4, replacing the deleted Appendix 17) sets energy-efficiency design recommendations and sits in Part 8. It is informative and signposts the Building Regulations and BS HD 60364-8-1:2019.',
             ]}
           />
 
@@ -339,7 +339,7 @@ export default function RenewableEnergyModule1Section2() {
               'Identify the scope of the new Chapter 57 and the explicit exclusions (pluggable UPS, fire and emergency lighting systems, central safety power supplies).',
               'Read Chapter 82 (Prosumer\'s Electrical Installations) as the new system-level chapter for hybrid installs — sitting alongside the per-technology chapters and adding the design discipline for the prosumer case.',
               'Locate the A4:2026 updates to Section 722 (prosumer reference), Section 753 (extended embedded-heating scope) and Section 730 (new onshore inland-navigation section).',
-              'Read Appendix 17 as the precursor to a future Part 8 on energy efficiency.',
+              'Energy efficiency moved in A4: Appendix 17 deleted, Chapter 81 introduced in Part 8.',
               'Anticipate the 19th Edition\'s likely consolidation of the LCT chapters into a coherent Part 7 framework.',
             ]}
             initialVisibleCount={3}
@@ -653,15 +653,15 @@ export default function RenewableEnergyModule1Section2() {
 
           <SectionRule />
 
-          <ContentEyebrow>Appendix 17 — energy efficiency, the future Part 8</ContentEyebrow>
+          <ContentEyebrow>Chapter 81 — energy efficiency, the new Part 8</ContentEyebrow>
 
           <ConceptBlock
             title="Appendix 17 is the trail to Part 8 — read it as the trajectory"
-            plainEnglish="A4 added Appendix 17 on energy efficiency recommendations. The intention is that Appendix 17 will be promoted into a Part 8 of BS 7671 in a future amendment. For now: recommendations. Later: requirements."
+            plainEnglish="A4 deleted Appendix 17 and introduced Chapter 81 in its place, inside a new Part 8. The content is the same subject — energy efficiency recommendations — but it now sits in the body of the standard rather than in an appendix. It is still marked (Informative), so it is recommendations, not requirements."
             onSite="On commercial and industrial designs Appendix 17 considerations already affect cable sizing for loss minimisation, transformer efficiency class selection, motor efficiency class, and VSD specification. On domestic installs the appendix mostly does not apply."
           >
             <p>
-              Appendix 17 is the new energy efficiency appendix introduced in A4:2026. The
+              Chapter 81 is the new energy efficiency chapter introduced in A4:2026, replacing the deleted Appendix 17. The
               scope is recommendations for the design and erection of installations,
               including those with local production and storage of energy, to optimise
               overall efficient use of electricity.
@@ -670,7 +670,7 @@ export default function RenewableEnergyModule1Section2() {
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>Section 712 started as guidance, became a section, evolved through amendments</li>
               <li>Chapter 57 took the same trajectory and ended up as a chapter in A4</li>
-              <li>Appendix 17 is expected to become Part 8 — promoted from appendix to a full Part</li>
+              <li>Part 8 already exists in A4: Chapter 81 (energy efficiency) and Chapter 82 (prosumer&apos;s LV installations)</li>
             </ul>
             <p>
               The implication for the LCT designer is that the cert workflow built today
@@ -682,8 +682,8 @@ export default function RenewableEnergyModule1Section2() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · Appendix 17 (new in A4) — Energy efficiency"
-            clause="Appendix 17 is a new appendix providing recommendations for the design and erection of electrical installations, including those with local production and storage of energy, to optimise overall efficient use of electricity. It is intended that this appendix will be developed into Part 8 in a future amendment."
+            source="BS 7671:2018+A4:2026 · Chapter 81 (Informative) — Low voltage electrical installations: functional aspects — Energy efficiency"
+            clause="Appendix 17 has been deleted. A new Chapter 81 concerning energy efficiency has been introduced instead. Chapter 81 provides recommendations for the design and erection of electrical installations, including those with local production and storage of energy, to optimise the overall efficient use of electricity, and refers the reader to the Building Regulations and BS HD 60364-8-1:2019."
             meaning="The appendix is explicitly transitional — recommendations now, requirements in the future. The trajectory toward a full Part 8 places energy-efficiency design in the same architectural tier as the existing Parts."
           />
 
@@ -842,7 +842,7 @@ export default function RenewableEnergyModule1Section2() {
 
           <ConceptBlock
             title="The 19th Edition is expected to consolidate the LCT chapters"
-            plainEnglish="The current chapter map is the artefact of historical accretion. The 19th Edition is in committee. The expected direction is consolidation — a coherent Part 7 LCT framework, and Appendix 17 promoted into a full Part 8."
+            plainEnglish="The current chapter map is the artefact of historical accretion. The 19th Edition is in committee. The expected direction is consolidation — a coherent Part 7 LCT framework. The energy-efficiency move is already done — A4 deleted Appendix 17 and introduced Chapter 81 in Part 8."
             onSite="Build today\'s LCT cert workflow on the current chapter map but design it to accommodate consolidation. The 19th Edition preserves technical content; it changes architecture."
           >
             <p>The 19th Edition timeline:</p>
@@ -876,7 +876,7 @@ export default function RenewableEnergyModule1Section2() {
               'Chapter 82 (new in A4) is the Prosumer\'s Electrical Installations chapter — the system-level chapter that ties hybrid PV + BESS + EV + heat pump installs together as a coherent system rather than separate per-technology installs.',
               'Section 712 (PV) modifies the general Part 4 protective measures — disallows some, permits double / reinforced insulation (Class II construction).',
               'Section 722 (EV) gained a prosumer reference in A4 (cross-referencing Chapter 82) and the deletion of the "reasonably practicable" exception in 722.411.4.1.',
-              'Appendix 17 (new in A4) is the energy efficiency precursor to a future Part 8. The 19th Edition is expected to consolidate the LCT chapters into a coherent Part 7 framework, deepening Chapter 82 and promoting Appendix 17 to Part 8.',
+              'Chapter 81 (new in A4, replacing the deleted Appendix 17) carries energy efficiency in the new Part 8. The 19th Edition is expected to consolidate the LCT chapters into a coherent Part 7 framework and deepen Chapter 82.',
             ]}
           />
 

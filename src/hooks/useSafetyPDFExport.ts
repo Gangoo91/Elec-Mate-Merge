@@ -25,19 +25,32 @@ type PDFType =
   | 'hs-specialist'
   | 'rams';
 
-const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
-  permit: 'generate-permit-pdf',
-  coshh: 'generate-coshh-pdf',
-  inspection: 'generate-inspection-pdf',
-  accident: 'generate-accident-pdf',
-  'near-miss': 'generate-near-miss-pdf',
-  'pre-use-check': 'generate-pre-use-check-pdf',
-  'safe-isolation': 'generate-safe-isolation-pdf',
-  'fire-watch': 'generate-fire-watch-pdf',
-  observation: 'generate-observation-pdf',
-  'site-diary': 'generate-site-diary-pdf',
-  equipment: 'generate-equipment-pdf',
-  'riddor-report': 'generate-riddor-report-pdf',
+/**
+ * The 12 safety-record types are served by ONE edge function
+ * (`generate-safety-record-pdf`), selected by a `docType` field in the body.
+ * They previously had a function each — identical bar the source table, the
+ * HTML template and the filename prefix. The `docType` values below are the
+ * contract: they must match the registry keys in that function exactly.
+ */
+const SAFETY_RECORD_TYPES = new Set<PDFType>([
+  'permit',
+  'coshh',
+  'inspection',
+  'accident',
+  'near-miss',
+  'pre-use-check',
+  'safe-isolation',
+  'fire-watch',
+  'observation',
+  'site-diary',
+  'equipment',
+  'riddor-report',
+]);
+
+const SAFETY_RECORD_FN = 'generate-safety-record-pdf';
+
+/** Types that still have their own function — genuinely bespoke output. */
+const EDGE_FUNCTION_MAP: Partial<Record<PDFType, string>> = {
   'method-statement': 'generate-method-statement-pdf',
   briefing: 'generate-pdf-monkey',
   'safety-document': 'generate-safety-document-pdf',
@@ -135,13 +148,19 @@ export function useSafetyPDFExport() {
     setExportingId(recordId);
 
     try {
-      const functionName = EDGE_FUNCTION_MAP[type];
-      console.log('[PDF Export] Calling edge function:', functionName);
+      const isSafetyRecord = SAFETY_RECORD_TYPES.has(type);
+      const functionName = isSafetyRecord ? SAFETY_RECORD_FN : EDGE_FUNCTION_MAP[type];
+      if (!functionName) throw new Error(`No PDF generator configured for type: ${type}`);
+      console.log('[PDF Export] Calling edge function:', functionName, type);
 
       // RAMS pdf fn doesn't take a recordId — it takes the full ramsData +
       // methodData. Fetch them from rams_documents + method_statements
       // and shape the body the fn expects.
-      let body: Record<string, unknown> = { recordId, ...data };
+      // Safety records go to the shared function, so the type has to travel
+      // with the request — it's what selects the table and template there.
+      let body: Record<string, unknown> = isSafetyRecord
+        ? { docType: type, recordId, ...data }
+        : { recordId, ...data };
       if (type === 'rams') {
         const { data: doc, error: docErr } = await supabase
           .from('rams_documents')

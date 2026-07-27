@@ -25,17 +25,17 @@ const InfoList = ({ items, variant = 'default', className }: InfoListProps) => {
             key={index}
             className={cn(
               'flex items-start gap-4 p-4 rounded-xl',
-              'bg-white/[0.03] border border-white/10',
+              'bg-[hsl(0_0%_12%)] border border-white/[0.08]',
               'hover:bg-white/[0.05] transition-colors'
             )}
           >
             {/* Icon/Number */}
             {variant === 'numbered' ? (
-              <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
                 <span className="text-sm font-bold text-yellow-400">{index + 1}</span>
               </div>
             ) : Icon ? (
-              <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
                 <Icon className="h-4 w-4 text-yellow-400" />
               </div>
             ) : null}

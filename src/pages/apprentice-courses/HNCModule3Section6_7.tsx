@@ -713,9 +713,12 @@ const HNCModule3Section6_7 = () => {
             
 
             <p>
-              <strong>Diversity:</strong> BS 7671 Appendix 15 provides diversity factors for EV
-              charging - typically 0.6-0.8 for multiple domestic chargers, enabling significant
-              supply capacity savings.
+              <strong>Diversity:</strong> BS 7671 does not tabulate diversity for EV charging, and
+              Appendix 15 is ring and radial final circuit arrangements. A charge point drawing its
+              rated current for hours is normally assessed at 100% with no diversity. Reductions
+              are only justified where a load management or demand-control arrangement actively
+              limits the output — in which case size on the limited value and record the basis in
+              the design.
             </p>
           </ConceptBlock>
 

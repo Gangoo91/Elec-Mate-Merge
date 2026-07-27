@@ -11,52 +11,52 @@ const accentConfig: Record<
   { border: string; iconBg: string; iconBorder: string; iconText: string }
 > = {
   yellow: {
-    border: 'border-l-yellow-400',
-    iconBg: 'bg-yellow-400/10',
-    iconBorder: 'border-yellow-400/20',
-    iconText: 'text-yellow-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   blue: {
-    border: 'border-l-blue-400',
-    iconBg: 'bg-blue-400/10',
-    iconBorder: 'border-blue-400/20',
-    iconText: 'text-blue-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   green: {
-    border: 'border-l-green-400',
-    iconBg: 'bg-green-400/10',
-    iconBorder: 'border-green-400/20',
-    iconText: 'text-green-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   purple: {
-    border: 'border-l-purple-400',
-    iconBg: 'bg-purple-400/10',
-    iconBorder: 'border-purple-400/20',
-    iconText: 'text-purple-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   orange: {
-    border: 'border-l-orange-400',
-    iconBg: 'bg-orange-400/10',
-    iconBorder: 'border-orange-400/20',
-    iconText: 'text-orange-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   emerald: {
-    border: 'border-l-emerald-400',
-    iconBg: 'bg-emerald-400/10',
-    iconBorder: 'border-emerald-400/20',
-    iconText: 'text-emerald-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   rose: {
-    border: 'border-l-rose-400',
-    iconBg: 'bg-rose-400/10',
-    iconBorder: 'border-rose-400/20',
-    iconText: 'text-rose-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
   cyan: {
-    border: 'border-l-cyan-400',
-    iconBg: 'bg-cyan-400/10',
-    iconBorder: 'border-cyan-400/20',
-    iconText: 'text-cyan-400',
+    border: '',
+    iconBg: 'bg-white/[0.05]',
+    iconBorder: 'border-white/[0.08]',
+    iconText: 'text-elec-yellow',
   },
 };
 
@@ -95,8 +95,7 @@ const ContentBlock = ({
           id={id}
           className={cn(
             'rounded-2xl overflow-hidden scroll-mt-24',
-            'bg-white/[0.03] border border-white/10',
-            'border-l-4',
+            'bg-[hsl(0_0%_12%)] border border-white/[0.08]',
             accent.border,
             className
           )}
@@ -105,21 +104,21 @@ const ContentBlock = ({
           <CollapsibleTrigger asChild>
             <button
               type="button"
-              className="w-full px-6 py-5 border-b border-white/5 bg-white/[0.02] touch-manipulation active:bg-white/[0.04] transition-colors"
+              className="w-full px-5 sm:px-6 py-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.03] transition-colors"
             >
               <div className="flex items-center gap-4">
                 {Icon && (
                   <div
                     className={cn(
-                      'flex-shrink-0 w-12 h-12 rounded-xl border flex items-center justify-center',
+                      'flex-shrink-0 w-9 h-9 rounded-lg border flex items-center justify-center',
                       accent.iconBg,
                       accent.iconBorder
                     )}
                   >
-                    <Icon className={cn('h-6 w-6', accent.iconText)} />
+                    <Icon className={cn('h-4 w-4', accent.iconText)} />
                   </div>
                 )}
-                <h3 className="text-lg font-bold text-white flex-1 text-left">{title}</h3>
+                <h3 className="text-[15px] font-semibold text-white flex-1 text-left tracking-tight">{title}</h3>
                 <ChevronDown
                   className={cn(
                     'h-5 w-5 text-white flex-shrink-0 transition-transform duration-200',

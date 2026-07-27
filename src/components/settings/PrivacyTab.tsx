@@ -42,6 +42,7 @@ const isNative = Capacitor.isNativePlatform();
 interface CookiePreferences {
   essential: boolean;
   analytics: boolean;
+  marketing: boolean;
 }
 
 interface AuditEntry {
@@ -68,6 +69,7 @@ const PrivacyTab = () => {
   const [cookiePrefs, setCookiePrefs] = useState<CookiePreferences>({
     essential: true,
     analytics: true,
+    marketing: false,
   });
   const [auditLog, setAuditLog] = useState<AuditEntry[]>([]);
 
@@ -82,12 +84,26 @@ const PrivacyTab = () => {
           .eq('key', 'cookie_preferences')
           .maybeSingle();
         if (data?.value && typeof data.value === 'object') {
-          setCookiePrefs(data.value as CookiePreferences);
+          const v = data.value as Partial<CookiePreferences>;
+          setCookiePrefs({
+            essential: true,
+            analytics: v.analytics === true,
+            marketing: v.marketing === true,
+          });
           return;
         }
       }
-      const saved = storageGetJSONSync<CookiePreferences | null>(COOKIE_PREFERENCES_KEY, null);
-      if (saved) setCookiePrefs(saved);
+      const saved = storageGetJSONSync<Partial<CookiePreferences> | null>(
+        COOKIE_PREFERENCES_KEY,
+        null
+      );
+      if (saved) {
+        setCookiePrefs({
+          essential: true,
+          analytics: saved.analytics === true,
+          marketing: saved.marketing === true,
+        });
+      }
     };
     loadPrefs();
   }, [userId]);
@@ -128,7 +144,10 @@ const PrivacyTab = () => {
       }
       addNotification({
         title: 'Cookie Preferences Updated',
-        message: `Analytics cookies ${newPrefs.analytics ? 'enabled' : 'disabled'}`,
+        message:
+          key === 'marketing'
+            ? `Marketing cookies ${newPrefs.marketing ? 'enabled' : 'disabled'}`
+            : `Analytics cookies ${newPrefs.analytics ? 'enabled' : 'disabled'}`,
         type: 'success',
       });
     },
@@ -465,6 +484,20 @@ const PrivacyTab = () => {
               <Switch
                 checked={cookiePrefs.analytics}
                 onCheckedChange={() => handleCookieToggle('analytics')}
+              />
+            </div>
+            <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+              <div className="flex-1 min-w-0">
+                <div className="text-[15px] font-medium text-white truncate">
+                  Marketing Cookies
+                </div>
+                <div className="mt-0.5 text-[11.5px] text-white/65">
+                  Meta &amp; Google ads measurement; Vector company identification
+                </div>
+              </div>
+              <Switch
+                checked={cookiePrefs.marketing}
+                onCheckedChange={() => handleCookieToggle('marketing')}
               />
             </div>
           </SettingsCard>

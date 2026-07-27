@@ -31,7 +31,7 @@ const BusinessManagementTab = () => {
       title: 'Install Planner',
       description: 'Plan electrical installations with load calculations',
       icon: <MapPin className="h-5 w-5 text-elec-yellow" />,
-      link: '/electrician-tools/install-planner',
+      link: '/electrician/circuit-designer',
       status: 'Active',
     },
     {

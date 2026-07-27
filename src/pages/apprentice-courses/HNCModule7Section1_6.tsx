@@ -81,7 +81,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'According to BS 7671 Appendix 1, what diversity factor would typically apply to a domestic cooker rated at 12 kW?',
+      'According to IET On-Site Guide Appendix A, what diversity factor would typically apply to a domestic cooker rated at 12 kW?',
     options: [
       '100% of the full rating',
       '10A + 30% of remainder + 5A for socket',
@@ -90,7 +90,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 Appendix 1 provides a specific formula for domestic cookers: first 10A of rated current at 100%, plus 30% of the remainder, plus 5A if the cooker has a socket outlet.',
+      'IET On-Site Guide Appendix A provides a specific formula for domestic cookers: first 10A of rated current at 100%, plus 30% of the remainder, plus 5A if the cooker has a socket outlet.',
   },
   {
     id: 2,
@@ -173,7 +173,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Multiple dwelling developments attract significant diversity (typically 0.3-0.4 for 20+ units) because households have different usage patterns. BS 7671 Appendix 1 and ESQCR guidance provide specific factors based on dwelling count.',
+      'Multiple dwelling developments attract significant diversity (typically 0.3-0.4 for 20+ units) because households have different usage patterns. Note where this figure does NOT come from: On-Site Guide Appendix A states explicitly that no guidance is given for blocks of residential dwellings, large hotels, or industrial and large commercial premises. Block sub-mains are sized on after-diversity maximum demand (ADMD) figures from the DNO or network design guidance, agreed with the DNO as part of the connection application — not from a table lookup.',
   },
   {
     id: 8,
@@ -245,9 +245,9 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: 'How do I obtain diversity factors not listed in BS 7671 Appendix 1?',
+    question: 'How do I obtain diversity factors not listed in IET On-Site Guide Appendix A?',
     answer:
-      'BS 7671 Appendix 1 provides guidance for common domestic situations. For commercial and industrial applications, use industry guidance such as CIBSE Guide K (electricity in buildings), IET guidance notes, manufacturer data, or historical metering data from similar installations. When in doubt, consult with the DNO and apply conservative estimates.',
+      'IET On-Site Guide Appendix A provides guidance for common domestic situations. For commercial and industrial applications, use industry guidance such as CIBSE Guide K (electricity in buildings), IET guidance notes, manufacturer data, or historical metering data from similar installations. When in doubt, consult with the DNO and apply conservative estimates.',
   },
   {
     question: 'What happens if my maximum demand calculation is significantly wrong?',
@@ -301,7 +301,7 @@ const HNCModule7Section1_6 = () => {
           <LearningOutcomes
             outcomes={[
               "Calculate maximum demand using diversity factors",
-              "Apply BS 7671 Appendix 1 guidance correctly",
+              "Apply IET On-Site Guide Appendix A guidance correctly",
               "Assess DNO supply capacity requirements",
               "Determine appropriate load growth allowances",
               "Plan for future expansion and technology changes",
@@ -341,15 +341,26 @@ const HNCModule7Section1_6 = () => {
           <SectionRule />
 
           <ConceptBlock title="Diversity Factors by Load Type">
-            <p>Diversity factors reflect the statistical probability that loads will operate simultaneously. BS 7671 Appendix 1 provides guidance for domestic installations, while commercial and industrial applications require engineering judgement and industry-specific data.</p>
-            <p><strong>BS 7671 Appendix 1 - Domestic Diversity</strong></p>
+            <p>Diversity factors reflect the statistical probability that loads will operate simultaneously. BS 7671 Reg 311.1 requires maximum demand to be determined and permits diversity to be taken into account, but it does not tabulate the allowances — those are published in the IET On-Site Guide, Appendix A (current demand and diversity). Commercial and industrial applications sit outside that guidance and require engineering judgement and industry-specific data.</p>
+            <p><strong>On-Site Guide Appendix A, Table A2 — allowances for diversity (domestic)</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Lighting:</strong> 66% of total load — Assumes not all lights on simultaneously</li>
-              <li><strong>Heating (instantaneous):</strong> 100% of largest + 40% of others — Immersion heaters, electric heating</li>
-              <li><strong>Standard circuits:</strong> 100% of largest + 40% of others — Including ring final circuits</li>
-              <li><strong>Cooker:</strong> 10A + 30% remainder + 5A socket — Specific formula for domestic cookers</li>
-              <li><strong>Motors (AC):</strong> Full load + 1/3 starting current — Or largest at 125% + others at 100%</li>
+              <li><strong>Lighting:</strong> 66% of total current demand</li>
+              <li><strong>Heating and power</strong> (final circuits not otherwise listed): 100% of total current demand up to 10 A, plus 50% of any current demand in excess of 10 A</li>
+              <li><strong>Cooking appliances:</strong> 10 A + 30% f.l. of connected cooking appliances in excess of 10 A + 5 A if a socket-outlet is incorporated in the control unit</li>
+              <li><strong>Water heaters (instantaneous):</strong> 100% f.l. of the largest appliance + 100% f.l. of the second largest + 25% f.l. of the remaining appliances</li>
+              <li><strong>Water heaters (thermostatically controlled), floor warming, thermal storage space heating:</strong> no diversity allowable</li>
+              <li><strong>Motors</strong> (other than lift motors): <em>not applicable</em> for individual household installations</li>
+              <li><strong>Standard final circuit arrangements</strong> (to On-Site Guide Appendix H): 100% of the current demand of the largest circuit + 40% of every other circuit</li>
+              <li><strong>Socket-outlets and stationary equipment</strong> not covered above: 100% of the current demand of the largest point of utilization + 40% of every other point</li>
             </ul>
+            <p className="text-white">
+              Two cautions the On-Site Guide itself gives. Table A2 has not been updated for some
+              time and does not necessarily align with modern loads and usages, so the values may be
+              increased or decreased as the designer decides — and no guidance is given at all for
+              blocks of dwellings, large hotels, or industrial and large commercial premises. Separately,
+              distribution boards and consumer units must be rated for the total load connected to them
+              <em> without</em> any diversity applied.
+            </p>
             <p><strong>Commercial/Industrial Diversity</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>Lighting:</strong> 0.9 (90%) commercial</li>
@@ -456,9 +467,9 @@ const HNCModule7Section1_6 = () => {
               <li><strong>With EV charging (10 × 7 kW):</strong> +70 kVA (with diversity 0.3 = 21 kVA)</li>
               <li><strong>Revised design MD:</strong> 261 kVA → specify 300 kVA supply</li>
             </ul>
-            <p><strong>BS 7671 Appendix 1 Guidance</strong></p>
+            <p><strong>IET On-Site Guide Appendix A Guidance</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Appendix 1 provides current demand assessment methods</li>
+              <li>On-Site Guide Appendix A provides current demand assessment methods</li>
               <li>Encourages consideration of future requirements at design stage</li>
               <li>Notes that allowance should be made for anticipated load increases</li>
               <li>Recognises that good design accommodates change without major rework</li>

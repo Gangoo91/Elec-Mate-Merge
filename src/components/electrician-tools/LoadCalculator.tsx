@@ -41,14 +41,21 @@ const LoadCalculator = () => {
     const waterHeatingLoad = parseFloat(waterHeating) || 0;
     const motorLoad = parseFloat(motors) || 0;
 
-    // BS 7671 diversity factors
+    // ⚠️ ELE-1422: these are INDICATIVE planning factors, not On-Site Guide Table A2.
+    // Table A2 (individual household installations) is: lighting 66% of total current
+    // demand; heating and power 100% up to 10 A + 50% of the excess; cooking 10 A + 30%
+    // of the remainder + 5 A if a socket is in the control unit; motors NOT APPLICABLE;
+    // standard final circuits 100% of the largest + 40% of every other. It is expressed
+    // in AMPERES per circuit, not as flat percentages of a kW total, so it cannot be
+    // applied by the multipliers below. Do not relabel these as Table A2 without
+    // reworking the engine to work in current per circuit — see ELE-1423.
     const diversityFactors = {
-      lighting: 0.9, // 90% for lighting
-      sockets: 0.6, // 60% for socket outlets
-      heating: 0.8, // 80% for space heating
-      cooker: 0.6, // 60% for cooking (first 10kW + 30% remainder)
-      waterHeating: 1.0, // 100% for water heating
-      motors: 0.8, // 80% for motors
+      lighting: 0.9,
+      sockets: 0.6,
+      heating: 0.8,
+      cooker: 0.6,
+      waterHeating: 1.0,
+      motors: 0.8,
     };
 
     // Apply diversity factors
@@ -58,7 +65,9 @@ const LoadCalculator = () => {
     const waterHeatingAfterDiversity = waterHeatingLoad * diversityFactors.waterHeating;
     const motorsAfterDiversity = motorLoad * diversityFactors.motors;
 
-    // Special calculation for cookers (first 10kW at 100%, remainder at 30%)
+    // ⚠️ Approximation only. On-Site Guide Table A2 gives 10 A (not 10 kW) + 30% of the
+    // remainder + 5 A where a socket-outlet is in the control unit, and works in current.
+    // Applying the 10 threshold to a kW value is dimensionally wrong — see ELE-1423.
     let cookerAfterDiversity = 0;
     if (cookerLoad > 0) {
       if (cookerLoad <= 10) {
@@ -127,8 +136,8 @@ const LoadCalculator = () => {
           <div>
             <CardTitle>Load Assessment Calculator</CardTitle>
             <CardDescription className="mt-1">
-              Calculate total electrical load with BS 7671 diversity factors and supply
-              requirements.
+              Indicative total load and supply assessment. For a formal maximum demand
+              calculation, work from the On-Site Guide Appendix A tables per circuit.
             </CardDescription>
           </div>
           <Badge variant="outline" className="ml-auto">
@@ -357,9 +366,9 @@ const LoadCalculator = () => {
               <Info className="h-4 w-4 text-green-500" />
               <AlertDescription className="text-green-200">
                 <div className="space-y-2">
-                  <p className="font-medium">BS 7671 Regulations:</p>
+                  <p className="font-medium">Reference points:</p>
                   <ul className="text-sm space-y-1">
-                    <li>• Diversity factors from Appendix 1 Table 1B</li>
+                    <li>• Indicative planning factors — not On-Site Guide Table A2</li>
                     <li>• Main switch sizing per Section 537</li>
                     <li>• Supply adequacy assessment per Part 3</li>
                     <li>• Consider future expansion and load growth</li>

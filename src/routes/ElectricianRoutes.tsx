@@ -132,10 +132,6 @@ const ElectricianRoutes = () => (
     {/* Redirects to new canonical paths */}
     <Route path="calculations" element={<Navigate to="/electrician/calculations" replace />} />
     <Route
-      path="install-planner"
-      element={<Navigate to="/electrician/install-planner" replace />}
-    />
-    <Route
       path="inspection-testing"
       element={<Navigate to="/electrician/inspection-testing" replace />}
     />

@@ -194,8 +194,9 @@ export const CookieConsent = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-white">Marketing</p>
-                        <p className="text-xs text-white mt-0.5 line-clamp-1">
-                          Personalised content &amp; ads
+                        <p className="text-xs text-white mt-0.5">
+                          Meta &amp; Google ads measurement; Vector identifies your company from
+                          your IP for our outreach
                         </p>
                       </div>
                       <Switch

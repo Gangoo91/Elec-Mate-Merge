@@ -837,7 +837,7 @@ const ThreePhasePowerCalculator = () => {
               <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
               <p className="text-sm text-white">
                 <strong>UK Standard:</strong> Three-phase supply is 400V line-to-line, 230V
-                line-to-neutral, 50Hz (BS 7671:2018+A3:2024)
+                line-to-neutral, 50Hz (BS 7671:2018+A4:2026)
               </p>
             </div>
           </div>

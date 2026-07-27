@@ -194,7 +194,7 @@ const faqs = [
   {
     question: 'Do I need to know the whole 600-page book?',
     answer:
-      "Working knowledge of Parts 1, 2, 3 and 6 (and the day-to-day chapters of Parts 4 and 5 you use most — 411 ADS, 433 overload, 521 to 525 wiring systems) is the realistic floor. Beyond that, you need to know what is in the book so you can find it. Part 7 (special locations: bathrooms 701, swimming pools 702, agriculture 705, EV 722, PV 712, etc.) you read when the project type lands on your desk. Appendix 4 (cable CCC), Appendix 14 (now Appendix 3, voltage drop and EFLI worked examples), and Appendix 15 (ring final data) you use every day. Memorising the book is impossible and pointless; knowing where to look is the skill.",
+      "Working knowledge of Parts 1, 2, 3 and 6 (and the day-to-day chapters of Parts 4 and 5 you use most — 411 ADS, 433 overload, 521 to 525 wiring systems) is the realistic floor. Beyond that, you need to know what is in the book so you can find it. Part 7 (special locations: bathrooms 701, swimming pools 702, agriculture 705, EV 722, PV 712, etc.) you read when the project type lands on your desk. Appendix 4 (cable CCC, and voltage drop in Section 6), Appendix 3 (device time/current curves and maximum earth fault loop impedance — it absorbed the old Appendix 14 content, and Appendix 14 now covers determination of prospective fault current), and Appendix 15 (ring final data) you use every day. Memorising the book is impossible and pointless; knowing where to look is the skill.",
   },
   {
     question: 'How often does BS 7671 change?',

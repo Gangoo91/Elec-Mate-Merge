@@ -763,9 +763,9 @@ export function BusinessAISalesView() {
               {
                 say: '"Plan my day"',
                 arrow: 'becomes',
-                appears: 'An optimised route across the day in your install planner',
-                where: '/electrician/install-planner',
-                whereLabel: 'Install planner',
+                appears: 'An optimised plan for the day across your live jobs',
+                where: '/electrician/projects',
+                whereLabel: 'Projects',
               },
               {
                 say: '"Create RAMS for the Walsh job"',

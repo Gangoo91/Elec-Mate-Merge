@@ -370,7 +370,7 @@ const MarketingStrategyTab = () => {
                 <p className="text-xs text-white">maintenance level</p>
               </div>
             </div>
-            <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-md">
+            <div className="p-3 bg-white/[0.04] border border-white/[0.08] rounded-md">
               <p className="text-sm text-blue-200">
                 <strong>Pro Tip:</strong> Start with digital-first approach as it's more
                 cost-effective and measurable. Track which channels bring the best quality leads and

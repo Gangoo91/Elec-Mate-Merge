@@ -154,6 +154,76 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('User authenticated:', user.id);
 
     // ========================================================================
+    // STEP 2.4: Fire alarm log book mode (ELE-1396)
+    // Emails the client-side Annex H PDF to the responsible person. Same
+    // slot-scarcity reasoning as the danger-notice mode below.
+    // ========================================================================
+    if (body.fireLogMode) {
+      const recipient = String(body.recipientEmail || '').trim();
+      const buildingName = String(body.buildingName || 'your building');
+      const periodLabel = String(body.periodLabel || '');
+      const pdfBase64 = String(body.pdfBase64 || '');
+
+      if (!isValidEmail(recipient)) {
+        return new Response(JSON.stringify({ error: 'Valid recipient email required' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      // Brevo rejects oversized payloads — keep the attachment under ~9MB.
+      if (!pdfBase64 || pdfBase64.length > 12_000_000) {
+        return new Response(JSON.stringify({ error: 'PDF missing or too large to email' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const { data: fireLogProfile } = await supabaseClient
+        .from('company_profiles')
+        .select('company_name, company_email, company_phone')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      const flCompanyName = fireLogProfile?.company_name || 'Your electrical contractor';
+
+      const flHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
+          <p>Hello,</p>
+          <p>Please find attached the fire detection and alarm system log book record for
+          <strong>${buildingName}</strong>${periodLabel ? ` covering ${periodLabel}` : ''}.</p>
+          <p>The record is kept in accordance with BS 5839-1:2025 Clause 48.2 and laid out on
+          the Annex H model log book, so it can be presented to a fire risk assessor or the
+          fire and rescue authority as the system record.</p>
+          <p>If anything in the record needs discussing, just reply to this email.</p>
+          <p>Kind regards,<br/>${flCompanyName}${fireLogProfile?.company_phone ? `<br/>${fireLogProfile.company_phone}` : ''}</p>
+        </div>`;
+
+      const flSender = clientFacingSender({
+        companyName: flCompanyName,
+        companyEmail: fireLogProfile?.company_email || undefined,
+      });
+      const { data: flEmail, error: flError } = await resend.emails.send({
+        ...flSender,
+        to: [recipient],
+        subject: `Fire alarm log book — ${buildingName}`,
+        html: flHtml,
+        text: htmlToPlainText(flHtml),
+        attachments: [
+          {
+            filename: `fire-alarm-log-${buildingName.replace(/[^\w\- ]+/g, '').trim().replace(/ +/g, '-')}.pdf`,
+            content: pdfBase64,
+          },
+        ],
+      });
+      if (flError) {
+        throw new Error(`Fire log email failed: ${flError.message}`);
+      }
+      return new Response(
+        JSON.stringify({ success: true, emailId: flEmail?.id }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // ========================================================================
     // STEP 2.5: Danger Notice sign-off mode (ELE-1288/1289)
     // Emails the dutyholder a signing link instead of a certificate PDF.
     // Lives here rather than in its own function — edge function slots are

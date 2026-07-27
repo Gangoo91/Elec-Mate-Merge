@@ -42,9 +42,11 @@ const BusinessCard = ({
   className,
   variant = 'standard',
   liveSubtitle,
-  accentColor = 'from-elec-yellow via-amber-400 to-orange-400',
+  // House style: one muted tile treatment, yellow icon, plain hairline accent.
+  // accentColor/iconColor/iconBg remain overridable but default to the system.
+  accentColor = '',
   iconColor = 'text-elec-yellow',
-  iconBg = 'bg-elec-yellow/10 border border-elec-yellow/20',
+  iconBg = 'bg-white/[0.05] border border-white/[0.08]',
 }: BusinessCardProps) => {
   const subtitle = liveSubtitle || description;
   const isOverdue = liveSubtitle?.includes('overdue');
@@ -62,13 +64,11 @@ const BusinessCard = ({
         className
       )}
     >
-      {/* Top accent line */}
+      {/* Top accent line — plain yellow hairline, brightens on hover */}
       <div
         className={cn(
-          'absolute inset-x-0 top-0 h-[2px]',
-          'bg-gradient-to-r',
-          accentColor,
-          'opacity-30 group-hover:opacity-80',
+          'absolute inset-x-0 top-0 h-[2px] bg-elec-yellow',
+          'opacity-25 group-hover:opacity-70',
           'transition-opacity duration-200'
         )}
       />

@@ -234,7 +234,7 @@ const sections = [
                 <SEOInternalLink href="/tools/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
-                with diversity applied per BS 7671 Appendix 1.
+                with diversity applied per IET On-Site Guide Appendix A.
               </span>
             </li>
             <li className="flex items-start gap-3">

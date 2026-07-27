@@ -20,7 +20,6 @@ import {
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { QRCodeSVG } from 'qrcode.react';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
-import ElecIdWallet from './ElecIdWallet';
 import {
   Eyebrow,
   ListCard,
@@ -411,9 +410,6 @@ const ElecIdShare = () => {
         onConfirm={handleDeleteLink}
         isLoading={isDeletingLink}
       />
-
-      {/* Phone Wallet */}
-      <ElecIdWallet elecIdNumber={elecIdNumber} />
 
       {/* QR hero */}
       <motion.div

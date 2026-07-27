@@ -269,7 +269,7 @@ const HNCModule4Section2_1 = () => {
               'Cable selection hierarchy: I_b (design current) ≤ I_n (device rating) ≤ I_z (cable capacity after derating).',
               'BS 7671 Appendix 4 gives I_t (tabulated current) under reference conditions; you derate for grouping (Cg), ambient (Ca), thermal insulation (Ci) and harmonics (Cf).',
               'Reference method (A–G) is set by how the cable is installed — clipped direct, in conduit, in trunking, on a tray, in a duct, in thermal insulation. Get the method wrong and your I_z is wrong.',
-              'For three-phase circuits with high triplen-harmonic content (>33% 3rd), Appendix 11 sets a fourth derating factor for neutral loading.',
+              'For three-phase circuits with high triplen-harmonic content (>33% 3rd), Reg 524.2.2 and Appendix 4 Section 5.5 set a further rating factor for neutral loading.',
               'BS 7671 Reg 311.1 obliges design within thermal limits and admissible voltage drop — current-carrying capacity is the &lsquo;thermal limits&rsquo; half of that duty.',
             ]}
           />
@@ -288,7 +288,7 @@ const HNCModule4Section2_1 = () => {
                 fire.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; BS 7671 Appendix 4 (Current-carrying capacity); BS 7671 Appendix 11 (Effect of harmonic content)."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; BS 7671 Appendix 4 (Current-carrying capacity), Section 5.5 (effect of triplen harmonic currents); Regulations 523.6.3 and 524.2.2."
           />
 
           <LearningOutcomes
@@ -696,7 +696,7 @@ const HNCModule4Section2_1 = () => {
               'BS 7671 Appendix 4 tabulates I_t under reference conditions (30&nbsp;°C ambient, no grouping, single circuit, no thermal insulation).',
               'Apply every derating factor that applies: C_g (grouping), C_a (ambient), C_i (thermal insulation), C_f (harmonics) — multiply, do not pick the lowest.',
               'Reference method (A–G) follows the actual installation. Clipped direct (C) is more generous than in-trunking (B) is more generous than fully embedded (A).',
-              'For three-phase circuits with >33% 3rd harmonic, apply BS 7671 Appendix 11 derating to account for neutral loading.',
+              'For three-phase circuits with >33% 3rd harmonic, apply the BS 7671 Appendix 4 Section 5.5 rating factor to account for neutral loading.',
               'Cu vs Al: Al cables need ≈ 30% larger CSA for the same I_t. Match terminations and bi-metal joints to avoid corrosion failures.',
               'Reg 311.1 mandates design within thermal limits and admissible voltage drop — current-carrying capacity is the thermal-limits half.',
               'Always document the reference method, derating factors and resulting I_z on the cable schedule for verification under Part 6.',

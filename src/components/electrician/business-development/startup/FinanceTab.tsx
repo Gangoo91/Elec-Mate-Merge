@@ -232,7 +232,7 @@ const FinanceTab = () => {
               ))}
             </div>
 
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+            <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg p-4">
               <h4 className="font-medium text-blue-400 mb-2">Break-even Analysis</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>

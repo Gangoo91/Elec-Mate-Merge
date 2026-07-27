@@ -53,7 +53,7 @@ const TaxFinances = () => {
 
   const keyStats = [
     { label: 'Tax Year End', value: '5 April', sublabel: 'Plan ahead' },
-    { label: 'VAT Threshold', value: '£90,000', sublabel: '2024/25' },
+    { label: 'VAT Threshold', value: '£90,000', sublabel: '2026/27' },
     { label: 'Personal Allowance', value: '£12,570', sublabel: 'Tax-free' },
     { label: 'Basic Rate', value: '20%', sublabel: 'Up to £50,270' },
   ];
@@ -76,7 +76,7 @@ const TaxFinances = () => {
         subtitle="Financial management and tax guidance for electrical contractors"
         icon={Calculator}
         backUrl="/electrician/business-development"
-        accentColor="blue"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -86,7 +86,7 @@ const TaxFinances = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
-          accentColor="blue"
+          accentColor="yellow"
         />
 
         {/* Content Sections */}
@@ -96,7 +96,7 @@ const TaxFinances = () => {
             id="structure"
             title="Business Structure"
             icon={FileText}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Choosing the right business structure affects your tax liability, personal
@@ -219,7 +219,7 @@ const TaxFinances = () => {
             id="expenses"
             title="Allowable Expenses"
             icon={Calculator}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Claiming all allowable expenses reduces your taxable profit and tax bill. Keep
@@ -368,7 +368,7 @@ const TaxFinances = () => {
             id="cashflow"
             title="Cash Flow Management"
             icon={TrendingUp}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Cash flow is the lifeblood of your business. Poor cash flow is the number one cause
@@ -494,16 +494,39 @@ const TaxFinances = () => {
             id="vat"
             title="VAT & HMRC"
             icon={PoundSterling}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
-                VAT registration is mandatory when your taxable turnover exceeds £90,000 (2024/25
+                VAT registration is mandatory when your taxable turnover exceeds £90,000 (2026/27
                 threshold). You can voluntarily register earlier, which has pros and cons to
                 consider.
               </p>
             }
           >
             <div className="space-y-6">
+              {/* Making Tax Digital — live since 6 April 2026 */}
+              <div className="p-5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08]">
+                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 mb-2">
+                  In force now
+                </div>
+                <h4 className="text-base font-semibold text-white">
+                  Making Tax Digital for Income Tax
+                </h4>
+                <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+                  Since 6 April 2026, sole traders with qualifying income over £50,000 must keep
+                  digital records and send HMRC quarterly updates through recognised software —
+                  the annual Self Assessment return is replaced by four updates (due 7 August,
+                  7 November, 7 February and 7 May) plus a final declaration by 31 January.
+                  The threshold drops to £30,000 from April 2027, so most established
+                  electricians will be in scope within a year.
+                </p>
+                <p className="mt-2 text-[12px] text-white/50">
+                  If your books live in Elec-Mate and your accountant uses MTD-recognised
+                  software, the quarterly updates come from records you already keep — the worst
+                  outcome is finding out at year end that they weren't digital.
+                </p>
+              </div>
+
               {/* VAT Schemes */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
@@ -630,7 +653,7 @@ const TaxFinances = () => {
             id="tax-planning"
             title="Tax Planning"
             icon={Clock}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Proactive tax planning legally minimises your tax liability. The key is timing
@@ -673,11 +696,11 @@ const TaxFinances = () => {
                 />
               </div>
 
-              {/* Tax Rates 2024/25 */}
+              {/* Tax Rates 2026/27 */}
               <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
                 <h4 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
                   <BarChart3 className="h-5 w-5 text-yellow-400" />
-                  Income Tax Rates 2024/25
+                  Income Tax Rates 2026/27
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
@@ -704,6 +727,75 @@ const TaxFinances = () => {
                 </div>
               </div>
             </div>
+
+              {/* Self-employed National Insurance 2026/27 — verified rates */}
+              <div className="p-5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08]">
+                <h4 className="text-base font-semibold text-white">
+                  National Insurance when self-employed (2026/27)
+                </h4>
+                <div className="mt-3 divide-y divide-white/[0.06] text-[13px]">
+                  <div className="flex justify-between py-2">
+                    <span className="text-white/70">Class 4 — profits £12,570 to £50,270</span>
+                    <span className="font-semibold text-white tabular-nums">6%</span>
+                  </div>
+                  <div className="flex justify-between py-2">
+                    <span className="text-white/70">Class 4 — profits above £50,270</span>
+                    <span className="font-semibold text-white tabular-nums">2%</span>
+                  </div>
+                  <div className="flex justify-between py-2">
+                    <span className="text-white/70">
+                      Class 2 — voluntary, protects State Pension record if profits are low
+                    </span>
+                    <span className="font-semibold text-white tabular-nums">£3.65/week</span>
+                  </div>
+                </div>
+                <p className="mt-3 text-[12px] text-white/50 leading-relaxed">
+                  Class 2 became voluntary in 2024 — if your profits are above roughly £7,100 your
+                  pension record is credited automatically. Below that, paying the £3.65 keeps
+                  your State Pension years intact for under £190 a year.
+                </p>
+              </div>
+
+              {/* The first-year tax trap — payments on account */}
+              <div className="p-5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08]">
+                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 mb-2">
+                  The first-year trap
+                </div>
+                <h4 className="text-base font-semibold text-white">
+                  Your first tax bill is 150%, not 100%
+                </h4>
+                <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+                  The first January after going self-employed, HMRC asks for the whole of last
+                  year's tax <em>plus</em> half of next year's in advance (a "payment on
+                  account") — then the other half in July. An electrician expecting a £8,000 bill
+                  gets asked for £12,000 in January and £4,000 in July. It catches thousands of
+                  new sole traders every year.
+                </p>
+                <p className="mt-2 text-[12px] text-white/50 leading-relaxed">
+                  The defence is boring and works: put a fixed slice of every paid invoice — 25 to
+                  30% is the usual range for basic-rate profits — into a separate account from day
+                  one, and it's simply there in January.
+                </p>
+              </div>
+
+              {/* CIS refunds — subbies overpay by design */}
+              <div className="p-5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08]">
+                <h4 className="text-base font-semibold text-white">
+                  On the tools as a subbie? Your CIS refund is waiting
+                </h4>
+                <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+                  CIS deducts a flat 20% from your labour — but it ignores your personal
+                  allowance, expenses and materials, so most subcontractors overpay tax through
+                  the year. The overpayment comes back through your Self Assessment: file in
+                  April or May rather than January and the refund lands months earlier. Every
+                  deduction statement from your contractors counts, so keep them all.
+                </p>
+                <p className="mt-2 text-[12px] text-white/50 leading-relaxed">
+                  With gross payment status (turnover, compliance and business tests with HMRC)
+                  contractors stop deducting at all and you manage the tax yourself — worth it
+                  once your cash flow can carry the responsibility.
+                </p>
+              </div>
           </ContentBlock>
 
           {/* Insurance Section */}
@@ -711,7 +803,7 @@ const TaxFinances = () => {
             id="insurance"
             title="Business Insurance"
             icon={Shield}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Adequate insurance protects you from financial ruin due to accidents, claims, or
@@ -807,7 +899,7 @@ const TaxFinances = () => {
             id="retirement"
             title="Pensions & Retirement"
             icon={PiggyBank}
-            accentColor="blue"
+            accentColor="yellow"
             summary={
               <p className="text-white">
                 Self-employed workers don't have employer pension contributions, making personal
@@ -857,11 +949,11 @@ const TaxFinances = () => {
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">25%</p>
-                  <p className="text-xs text-white mt-1">Tax-free at 55</p>
+                  <p className="text-xs text-white mt-1">Tax-free lump sum</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
-                  <p className="text-2xl font-bold text-white">55-57</p>
-                  <p className="text-xs text-white mt-1">Access age</p>
+                  <p className="text-2xl font-bold text-white">55</p>
+                  <p className="text-xs text-white mt-1">Access age — rises to 57 in April 2028</p>
                 </div>
               </div>
 
@@ -899,7 +991,7 @@ const TaxFinances = () => {
         {/* Disclaimer Card */}
         <div className="mt-8 p-5 rounded-2xl bg-yellow-400/5 border border-yellow-400/20">
           <div className="flex items-start gap-4">
-            <div className="p-2 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
+            <div className="p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
               <AlertTriangle className="h-5 w-5 text-yellow-400" />
             </div>
             <div>

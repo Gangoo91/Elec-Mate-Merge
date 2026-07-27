@@ -449,7 +449,7 @@ const EICContent = () => {
                   <h5 className="text-foreground font-medium mb-2">Calculation Steps</h5>
                   <ul className="text-foreground text-sm space-y-1">
                     <li>• Calculate total connected load by circuit type</li>
-                    <li>• Apply appropriate diversity factors per BS 7671 Appendix 1</li>
+                    <li>• Apply appropriate diversity factors per IET On-Site Guide Appendix A</li>
                     <li>• Consider simultaneous operation likelihood</li>
                     <li>• Account for future expansion requirements</li>
                     <li>• Verify against supply capacity and protection settings</li>

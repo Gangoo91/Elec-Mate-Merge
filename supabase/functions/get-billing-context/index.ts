@@ -63,15 +63,31 @@ serve(async (req) => {
     // Pull tier from profile (authoritative)
     const { data: profile } = await serviceClient
       .from('profiles')
-      .select('subscription_tier, subscribed')
+      .select('subscription_tier, subscribed, stripe_customer_id')
       .eq('id', user.id)
       .single();
 
     const tier = profile?.subscription_tier ?? null;
 
-    // Look up Stripe customer by email
+    // Look up the Stripe customer by email AND by the id stored on the profile.
+    // Email alone misses anyone whose Stripe customer carries a different
+    // address from their login — and missing a customer here reads to the user
+    // as "you have no subscription" while we carry on billing them.
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
-    const customers = await stripe.customers.list({ email: user.email, limit: 5 });
+    const byEmail = await stripe.customers.list({ email: user.email, limit: 5 });
+    const customerList = [...byEmail.data];
+    const storedId = profile?.stripe_customer_id as string | undefined;
+    if (storedId && !customerList.some((c) => c.id === storedId)) {
+      try {
+        const stored = await stripe.customers.retrieve(storedId);
+        if (!('deleted' in stored) || !stored.deleted) {
+          customerList.push(stored as Stripe.Customer);
+        }
+      } catch {
+        // customer no longer exists in Stripe — fall through
+      }
+    }
+    const customers = { data: customerList };
 
     if (customers.data.length === 0) {
       log('No Stripe customer for email — likely app-store sub', { email: user.email });
@@ -85,15 +101,29 @@ serve(async (req) => {
       });
     }
 
-    // Walk customers, return the first active or trialing subscription found.
+    // Walk customers and return the first subscription Stripe can still bill.
+    //
+    // past_due / unpaid / incomplete are included deliberately. Restricting this
+    // to active|trialing meant that the instant a card failed, the subscription
+    // vanished from the cancel flow and the user was told "your previous
+    // subscription has already ended" — while Stripe was still dunning them and
+    // our payday cron was still retrying the card. The one subscription someone
+    // most urgently wants to stop was the one we hid (Mathew Bayley, Jul 2026).
+    const CANCELLABLE = ['active', 'trialing', 'past_due', 'unpaid', 'incomplete'];
     for (const c of customers.data) {
-      const subs = await stripe.subscriptions.list({ customer: c.id, limit: 10 });
-      const live = subs.data.find((s) => s.status === 'active' || s.status === 'trialing');
+      const subs = await stripe.subscriptions.list({ customer: c.id, status: 'all', limit: 10 });
+      // Prefer a healthy subscription if one exists, else the failing one.
+      const live =
+        subs.data.find((s: Stripe.Subscription) => s.status === 'active' || s.status === 'trialing') ??
+        subs.data.find((s: Stripe.Subscription) => CANCELLABLE.includes(s.status));
       if (live) {
         return jsonResponse({
           ok: true,
           has_active_subscription: true,
           subscription_id: live.id,
+          // Reported so the UI can be honest about a failing subscription
+          // rather than presenting it as healthy.
+          subscription_status: live.status,
           stripe_customer_id: c.id,
           tier,
           managed_by: 'stripe',

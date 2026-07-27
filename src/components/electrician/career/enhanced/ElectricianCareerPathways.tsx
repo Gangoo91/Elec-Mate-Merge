@@ -8,52 +8,270 @@
  * type-led not icon-led.
  */
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import CareerDetailModal from '../modals/CareerDetailModal';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import {
   careerSections,
   getSectionById,
+  isDetailList,
   type ContentItem,
   type CareerSection,
+  type ContentSection,
 } from '../data/careerPathwaysData';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
 type ViewState = 'hub' | 'section';
 
+const topicAnchorId = (itemId: string) => `topic-${itemId}`;
+
+/**
+ * Body of a detail section. Written-up sections carry `{ term, detail }` rows
+ * — term stays scannable, detail says what competent actually looks like.
+ * Plain string lists still render as before for sections not yet written up.
+ */
+const TopicBody = ({ body }: { body: ContentSection['content'] }) => {
+  if (!Array.isArray(body)) {
+    return <p className="text-[14px] leading-[1.65] text-white">{body}</p>;
+  }
+
+  if (isDetailList(body)) {
+    return (
+      <ul className="space-y-4">
+        {body.map((row, idx) => (
+          <li key={row.term} className="flex items-baseline gap-3">
+            <span className="text-[10px] tabular-nums font-semibold text-white/45 shrink-0 w-5">
+              {String(idx + 1).padStart(2, '0')}
+            </span>
+            <div className="min-w-0">
+              <p className="text-[14px] font-semibold leading-snug tracking-tight text-white">
+                {row.term}
+              </p>
+              <p className="mt-1 text-[13.5px] leading-[1.6] text-white/85">{row.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <ul className="space-y-2.5">
+      {(body as string[]).map((line, idx) => (
+        <li key={idx} className="flex items-baseline gap-3 text-[14px] leading-relaxed text-white">
+          <span className="text-[10px] tabular-nums font-semibold text-white/45 shrink-0 w-5">
+            {String(idx + 1).padStart(2, '0')}
+          </span>
+          <span className="min-w-0">{line}</span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+/**
+ * One topic, rendered inline. This content used to live behind a modal —
+ * three taps from the hub and unreadable end-to-end. It is now part of the
+ * page so the whole route reads as one document.
+ */
+const TopicArticle = ({ item, index }: { item: ContentItem; index: number }) => {
+  const { content } = item;
+  return (
+    <article
+      id={topicAnchorId(item.id)}
+      // Clear the app header AND the sticky chip row when jumping to a topic;
+      // on desktop there is no chip row, so only the header plus a little air.
+      style={{
+        scrollMarginTop: 'calc(var(--header-height, 56px) + 4.5rem)',
+      }}
+      className={cn(
+        // Quiet panel, house depth recipe — no gradients, no coloured glow.
+        // Edge-to-edge and chrome-free on mobile (house mobile-flat rule),
+        // a proper raised surface from sm up.
+        '-mx-4 border-y border-white/[0.12] bg-white/[0.055] px-4 py-7',
+        'sm:mx-0 sm:rounded-2xl sm:border sm:px-7 sm:py-8 lg:px-9',
+        'sm:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_30px_-14px_rgba(0,0,0,0.7)]'
+      )}
+    >
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        {/* Badge is a label, not an emphasis — the accent is spent on the
+            section number and the active contents item, one per screen. */}
+        {item.badge && (
+          <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.14] rounded-md px-2 py-0.5">
+            {item.badge}
+          </span>
+        )}
+      </div>
+
+      <h3 className="mt-3 text-[23px] sm:text-[30px] font-semibold tracking-[-0.02em] leading-[1.1] text-white">
+        {item.title}
+      </h3>
+      <p className="mt-2 text-[14px] leading-relaxed text-white/85 max-w-[62ch]">
+        {item.description}
+      </p>
+
+      {item.stats && item.stats.length > 0 && (
+        <dl className="mt-5 inline-flex flex-wrap items-stretch divide-x divide-white/[0.12] overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.04]">
+          {item.stats.map((stat) => (
+            <div key={stat.label} className="px-4 py-2.5 sm:px-5">
+              <dd className="text-[18px] font-semibold tabular-nums tracking-tight text-white">
+                {stat.value}
+              </dd>
+              <dt className="mt-0.5 uppercase tracking-[0.16em] text-[9.5px] text-white/60 font-semibold whitespace-nowrap">
+                {stat.label}
+              </dt>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      {content.overview && (
+        <p className="mt-6 text-[15px] leading-[1.65] text-white max-w-[68ch]">
+          {content.overview}
+        </p>
+      )}
+
+      {content.sections?.length > 0 && (
+        <div className="mt-7 divide-y divide-white/[0.10] border-t border-white/[0.10]">
+          {content.sections.map((section, idx) => (
+            <div key={section.title} className="py-5 first:pt-5">
+              <div className="flex items-baseline gap-3">
+                <span className="text-[10px] tabular-nums font-semibold text-white/45 shrink-0 w-5">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <h4 className="text-[15px] font-semibold tracking-tight text-white">
+                  {section.title}
+                </h4>
+              </div>
+              <div className="mt-3 sm:pl-8 max-w-[64ch]">
+                <TopicBody body={section.content} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {content.tips && content.tips.length > 0 && (
+        <div className="mt-6 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-4 sm:px-5">
+          <Eyebrow>IN PRACTICE</Eyebrow>
+          <ul className="mt-3 space-y-2.5 max-w-[64ch]">
+            {content.tips.map((tip, idx) => (
+              <li
+                key={idx}
+                className="flex items-baseline gap-3 text-[14px] leading-relaxed text-white"
+              >
+                <span className="text-[10px] tabular-nums font-semibold text-white/45 shrink-0 w-5">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <span className="min-w-0">{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {content.resources && content.resources.length > 0 && (
+        <div className="mt-6 border-t border-white/[0.10] pt-5">
+          <Eyebrow>WHERE TO GO NEXT</Eyebrow>
+          <ul className="mt-3 space-y-3 max-w-[64ch]">
+            {content.resources.map((resource) => (
+              <li key={resource.title}>
+                {resource.url ? (
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-baseline gap-1.5 text-[14px] font-semibold text-white hover:text-elec-yellow underline underline-offset-4 decoration-white/25 hover:decoration-elec-yellow/60 min-h-[32px] touch-manipulation transition-colors"
+                  >
+                    {resource.title}
+                    <ExternalLink className="h-3 w-3 shrink-0 self-center" />
+                  </a>
+                ) : (
+                  <span className="text-[14px] font-semibold text-white">{resource.title}</span>
+                )}
+                {resource.description && (
+                  <p className="mt-0.5 text-[13px] leading-relaxed text-white/75">
+                    {resource.description}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </article>
+  );
+};
+
+/** Scroll-spy: which topic is currently in view, for the contents nav. */
+const useActiveTopic = (items: ContentItem[]) => {
+  const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null);
+  // Keep the observer stable across re-renders but re-bind when the route changes.
+  const idsKey = items.map((i) => i.id).join('|');
+
+  useEffect(() => {
+    setActiveId(items[0]?.id ?? null);
+    if (typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible) setActiveId(visible.target.id.replace(/^topic-/, ''));
+      },
+      // Band across the upper part of the viewport so the active item changes
+      // as a heading reaches reading position, not when it fully clears.
+      { rootMargin: '-88px 0px -65% 0px', threshold: 0 }
+    );
+
+    const nodes = items
+      .map((item) => document.getElementById(topicAnchorId(item.id)))
+      .filter((n): n is HTMLElement => n !== null);
+    nodes.forEach((n) => observer.observe(n));
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idsKey]);
+
+  return activeId;
+};
+
 const ElectricianCareerPathways = () => {
   const [view, setView] = useState<ViewState>('hub');
   const [activeSection, setActiveSection] = useState<CareerSection | null>(null);
-  const [selectedItem, setSelectedItem] = useState<ContentItem | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const topRef = useRef<HTMLDivElement>(null);
+
+  const activeTopicId = useActiveTopic(activeSection?.items ?? []);
 
   const handleSectionClick = (sectionId: string) => {
     const section = getSectionById(sectionId);
     if (section) {
       setActiveSection(section);
       setView('section');
+      // Entering a route from a scrolled hub would otherwise drop the reader
+      // partway down the new page.
+      topRef.current?.scrollIntoView({ block: 'start' });
     }
   };
 
   const handleBackToHub = () => {
     setView('hub');
     setActiveSection(null);
+    topRef.current?.scrollIntoView({ block: 'start' });
   };
 
-  const handleItemClick = (item: ContentItem) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedItem(null);
-  };
+  const scrollToTopic = useCallback((itemId: string) => {
+    document
+      .getElementById(topicAnchorId(itemId))
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   return (
-    <div className="space-y-8 sm:space-y-10">
+    <div ref={topRef} className="space-y-8 sm:space-y-10 scroll-mt-4">
       <AnimatePresence mode="wait">
         {view === 'hub' ? (
           <motion.div
@@ -92,7 +310,7 @@ const ElectricianCareerPathways = () => {
                     key={section.id}
                     type="button"
                     onClick={() => handleSectionClick(section.id)}
-                    className="text-left group rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-elec-yellow/40 active:bg-white/[0.04] transition-colors p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] touch-manipulation min-h-[140px]"
+                    className="text-left group rounded-2xl bg-white/[0.055] border border-white/[0.12] hover:border-elec-yellow/40 active:bg-white/[0.09] transition-colors p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_10px_30px_-14px_rgba(0,0,0,0.7)] touch-manipulation min-h-[140px]"
                   >
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
@@ -151,98 +369,76 @@ const ElectricianCareerPathways = () => {
                     </button>
                     <Eyebrow>{activeSection.title.toUpperCase()}</Eyebrow>
                   </div>
-                  <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-semibold tracking-tight leading-[1.05]">
+                  <h2 className="text-[30px] sm:text-[38px] lg:text-[46px] font-semibold tracking-[-0.025em] leading-[1.03]">
                     <span className="text-white">{activeSection.title}.</span>
                   </h2>
-                  <p className="text-[13.5px] sm:text-[15px] leading-relaxed text-white max-w-3xl">
+                  <p className="text-[14.5px] sm:text-[16px] leading-relaxed text-white/85 max-w-[62ch]">
                     {activeSection.description}
                   </p>
                   {activeSection.previewStat && (
-                    <div className="flex items-baseline gap-3 pt-2">
-                      <span className="text-[24px] sm:text-[28px] font-semibold tabular-nums text-elec-yellow">
-                        {activeSection.previewStat}
-                      </span>
-                      <span className="text-[11.5px] uppercase tracking-[0.16em] text-white/85">
-                        {activeSection.statLabel}
-                      </span>
-                      <span className="text-[11px] text-white/65">·</span>
-                      <span className="text-[11.5px] tabular-nums text-white/85">
-                        {activeSection.items.length} topic
-                        {activeSection.items.length === 1 ? '' : 's'}
-                      </span>
-                    </div>
+                    <dl className="!mt-5 inline-flex flex-wrap items-stretch divide-x divide-white/[0.12] overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.055]">
+                      <div className="px-5 py-3">
+                        <dd className="text-[22px] sm:text-[26px] font-semibold tabular-nums tracking-tight text-elec-yellow">
+                          {activeSection.previewStat}
+                        </dd>
+                        <dt className="mt-0.5 text-[9.5px] uppercase tracking-[0.16em] font-semibold text-white/60">
+                          {activeSection.statLabel}
+                        </dt>
+                      </div>
+                      <div className="px-5 py-3">
+                        <dd className="text-[22px] sm:text-[26px] font-semibold tabular-nums tracking-tight text-white">
+                          {activeSection.items.length}
+                        </dd>
+                        <dt className="mt-0.5 text-[9.5px] uppercase tracking-[0.16em] font-semibold text-white/60">
+                          Topic{activeSection.items.length === 1 ? '' : 's'}
+                        </dt>
+                      </div>
+                    </dl>
                   )}
                 </section>
 
-                {/* Content cards */}
-                <section className="space-y-4">
-                  <Eyebrow>TOPICS</Eyebrow>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                {/* Mobile contents — sticky chip row, horizontally scrollable */}
+                <nav
+                  aria-label="Topics"
+                  // Offset by the real header height (Header.tsx publishes
+                  // --header-height: 48px mobile / 64px desktop) so the chips
+                  // pin below the app bar instead of sliding under it.
+                  style={{ top: 'var(--header-height, 56px)' }}
+                  className="sticky z-20 -mx-4 px-4 sm:-mx-6 sm:px-6 md:-mx-10 md:px-10 lg:-mx-16 lg:px-16 py-2.5 bg-background/95 backdrop-blur-sm border-b border-white/[0.10]"
+                >
+                  <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x">
                     {activeSection.items.map((item, idx) => (
                       <button
                         key={item.id}
                         type="button"
-                        onClick={() => handleItemClick(item)}
+                        onClick={() => scrollToTopic(item.id)}
                         className={cn(
-                          'text-left group rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-elec-yellow/40 active:bg-white/[0.04] transition-colors p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] touch-manipulation'
+                          'snap-start shrink-0 inline-flex items-center gap-1.5 rounded-full border px-3 min-h-[36px] text-[12px] font-semibold tracking-tight touch-manipulation transition-colors',
+                          activeTopicId === item.id
+                            ? 'border-elec-yellow/50 bg-elec-yellow/[0.10] text-elec-yellow'
+                            : 'border-white/15 text-white active:bg-white/[0.06]'
                         )}
                       >
-                        <div className="flex items-baseline justify-between gap-3">
-                          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-elec-yellow">
-                            {String(idx + 1).padStart(2, '0')}
-                          </span>
-                          {item.badge && (
-                            <span className="text-[10px] font-semibold tabular-nums text-elec-yellow/85 border border-elec-yellow/35 bg-elec-yellow/[0.08] rounded-md px-1.5 py-0.5">
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="mt-3 text-[16px] sm:text-[17px] font-semibold tracking-tight leading-tight text-white">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1.5 text-[12.5px] leading-relaxed text-white">
-                          {item.description}
-                        </p>
-                        {item.stats && Object.keys(item.stats).length > 0 && (
-                          <dl className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap gap-x-4 gap-y-1.5 text-[11px]">
-                            {Object.entries(item.stats)
-                              .slice(0, 3)
-                              .map(([k, v]) => (
-                                <div key={k} className="inline-flex items-baseline gap-1.5">
-                                  <dt className="uppercase tracking-[0.14em] text-[9.5px] text-white/65 font-semibold">
-                                    {k}
-                                  </dt>
-                                  <dd className="tabular-nums font-semibold text-white">
-                                    {String(v)}
-                                  </dd>
-                                </div>
-                              ))}
-                          </dl>
-                        )}
+                        <span className="text-[9.5px] tabular-nums opacity-70">
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                        {item.title}
                       </button>
                     ))}
                   </div>
+                </nav>
+
+                {/* Reading layout: contents rail + the topics themselves, all inline */}
+                <section className="space-y-5 sm:space-y-6">
+                  {activeSection.items.map((item, idx) => (
+                    <TopicArticle key={item.id} item={item} index={idx} />
+                  ))}
                 </section>
               </>
             )}
           </motion.div>
         )}
       </AnimatePresence>
-
-      {selectedItem && (
-        <CareerDetailModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          title={selectedItem.title}
-          description={selectedItem.description}
-          badge={selectedItem.badge}
-          icon={selectedItem.icon}
-          color={activeSection?.color || 'yellow'}
-          content={selectedItem.content}
-          ctaText="Got it"
-          ctaAction={handleCloseModal}
-        />
-      )}
     </div>
   );
 };

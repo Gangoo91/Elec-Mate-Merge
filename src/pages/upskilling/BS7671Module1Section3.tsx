@@ -108,14 +108,14 @@ const inlineChecks = [
     question:
       'The customer asks you which Appendix lists the items an inspector should consider in a periodic inspection — the source the EICR Schedule of Inspections is built from?',
     options: [
-      'Appendix 6 — Model forms',
-      'Appendix 16 — Schedule of items requiring inspection during a periodic inspection',
-      'Appendix 11 — Warning labels',
-      'Appendix 5 — External influences',
+      'Appendix 6 — Model forms for certification and reporting',
+      'Appendix 16 — Devices for protection against overvoltage',
+      'Appendix 11 — Warning and user instruction labels',
+      'Appendix 5 — Classification of external influences',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
-      'Appendix 16 lists the items that should be considered during a periodic inspection — it is the technical source for the EICR Schedule of Inspections in Appendix 6. App 6 is the model forms (the cert templates themselves). App 11 is warning / instruction labels. App 5 is the BA / AD / AE external-influence classification matrix used at the design stage.',
+      'Appendix 6 carries both halves: the model forms themselves (EIC, EICR, MEIWC, the schedules) and the examples of items requiring inspection that the Schedule of Inspections is built from — A4:2026 added an example checklist for initial verification and examples of items requiring inspection for an EICR to that same appendix. There is no separate inspection-items appendix. App 16 is devices for protection against overvoltage (SPD guidance, informative). App 11 is warning and user instruction labels. App 5 is the external-influence classification matrix used at the design stage.',
   },
 ];
 
@@ -197,7 +197,7 @@ const quizQuestions = [
       'Appendix 1 — referenced standards',
       'Appendix 2 — statutory regulations and memoranda',
       'Appendix 6 — Model forms for certification and reporting',
-      'Appendix 16 — items to consider during periodic inspection',
+      'Appendix 16 — devices for protection against overvoltage',
     ],
     correctAnswer: 2,
     explanation:
@@ -681,10 +681,11 @@ export default function BS7671Module1Section3() {
                 breaking capacity is adequate.
               </li>
               <li>
-                <strong className="text-white">Appendix 16.</strong> Schedule of items requiring
-                inspection during a periodic inspection — the technical source for the EICR Schedule
-                of Inspections in Appendix 6. When a customer queries why an inspection line is on
-                the cert, the answer is App 16.
+                <strong className="text-white">Appendix 16.</strong> Devices for protection against
+                overvoltage — informative guidance behind Section 534, including Figures 16A1–16A4
+                showing SPD arrangements in TN, TT and IT systems and the CT2 connection detail.
+                Note the common trap: the EICR inspection items are <em>not</em> in App 16, they are
+                in Appendix 6 alongside the model forms.
               </li>
             </ul>
           </ConceptBlock>
@@ -830,7 +831,7 @@ export default function BS7671Module1Section3() {
           <Scenario
             title="Periodic inspection on a 1990s commercial unit converted to a yoga studio with steam room"
             situation="Three-phase TN-C-S supply at the cut-out, 200 A main switch, six distribution circuits, no significant rework since 2009. The conversion has added a steam room (location containing a bath or shower under Section 701) with extract fan, lighting and a 230 V steam generator."
-            whatToDo="Drive the inspection from Part 6 (Chapter 65 — periodic inspection methodology). Apply Parts 1–5 modified by Part 7 Section 701 inside the steam room. Use Appendix 16 to drive the Schedule of Inspections; use Appendix 6 model EICR for the form itself. Critical numeric checks: Reg 411.3.3 (30 mA RCD on socket circuits), Reg 411.3.4 — A4 — (30 mA RCD on AC final circuits supplying luminaires inside domestic premises; this site is commercial so 411.3.4 does NOT apply, but Section 701 supplementary protection inside the steam room may capture the lighting on a similar route)."
+            whatToDo="Drive the inspection from Part 6 (Chapter 65 — periodic inspection methodology). Apply Parts 1–5 modified by Part 7 Section 701 inside the steam room. Appendix 6 gives you both halves — the examples of items requiring inspection that drive the Schedule of Inspections, and the model EICR form itself. Critical numeric checks: Reg 411.3.3 (30 mA RCD on socket circuits), Reg 411.3.4 — A4 — (30 mA RCD on AC final circuits supplying luminaires inside domestic premises; this site is commercial so 411.3.4 does NOT apply, but Section 701 supplementary protection inside the steam room may capture the lighting on a similar route)."
             whyItMatters="Driving the inspection from the wrong Part produces the wrong cert. Part 6 is the methodology; Part 7 is the special-location overlay; Parts 1–5 are the underlying technical requirements. Mixing them up — for example, applying domestic Reg 411.3.4 to a commercial property — is an audit-trail failure even if the underlying decision (RCD on the lighting) is the same."
           />
 

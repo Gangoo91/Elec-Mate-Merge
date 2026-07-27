@@ -23,7 +23,7 @@ const breadcrumbs = [
 
 const tocItems = [
   { id: 'what-is-load', label: 'What is Electrical Load?' },
-  { id: 'diversity-factors', label: 'Diversity Factors (BS 7671 Appendix 1)' },
+  { id: 'diversity-factors', label: 'Diversity Factors (IET On-Site Guide Appendix A)' },
   { id: 'maximum-demand', label: 'Maximum Demand Calculation' },
   { id: 'cable-sizing', label: 'Cable Sizing from Load Calculations' },
   { id: 'three-phase', label: 'Three-Phase vs Single-Phase' },
@@ -34,7 +34,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Electrical load calculation determines the maximum demand on a circuit, distribution board, or supply in order to select correctly rated protective devices, cables, and supply capacity. Under-sizing any of these elements creates a fire and shock risk.',
-  'BS 7671:2018+A4:2026 Appendix 1 provides diversity factors for domestic and commercial installations, allowing the calculated maximum demand to be reduced below the simple sum of all connected loads to reflect the realistic simultaneous usage pattern.',
+  'BS 7671 Reg 311.1 requires maximum demand to be determined and permits diversity to be taken into account, but it does not tabulate the allowances. Those are published in the IET On-Site Guide, Appendix A — Table A1 for the current demand to assume at each point of utilization, and Table A2 for the allowances for diversity. Table A2 covers three types of premises only: individual household installations, small shops, stores, offices and business premises, and small hotels, boarding houses and guest houses. It gives no guidance for blocks of dwellings, large hotels, or industrial and large commercial premises, which are assessed case by case.',
   'The IET On-Site Guide (OSG) provides tabulated diversity factors and simplified methods for domestic load calculations. For commercial and industrial premises, full calculations using first principles are required.',
   'Cable current-carrying capacity (CCC) must be derated for grouping, ambient temperature, and installation method using the correction factors in BS 7671 Appendix 4. The corrected CCC must not be less than the design current of the circuit.',
   'For three-phase supplies, phase balance should be considered during load allocation. Unbalanced loading increases neutral current, which must be accounted for in neutral conductor sizing under BS 7671 Regulation 523.6.',
@@ -45,12 +45,12 @@ const faqs = [
   {
     question: 'How do I calculate the maximum demand for a domestic property?',
     answer:
-      'For a typical domestic installation, the IET On-Site Guide (OSG) provides a simplified approach using diversity factors from BS 7671 Appendix 1. The method adds up the connected loads in each category (lighting, socket outlets, cooking appliances, water heating, space heating), applies the appropriate diversity factor to each category, and sums the results to give the assessed maximum demand. For example: lighting (100% of largest + 50% of remaining circuits), socket outlets (100% of largest + 40% of remaining), immersion heater (100%), cooker (10A + 30% of remainder + diversity for second appliance if present). The result is used to select the consumer unit main switch, incoming supply fuse, and supply cable. A typical 3-bed semi with all-electric services typically calculates at 40 to 60A maximum demand.',
+      'For a typical domestic installation, the IET On-Site Guide Appendix A provides a simplified approach. Take the current demand of each point of utilization from Table A1, then apply the Table A2 allowance for the relevant category and sum the results to give the assessed maximum demand. For an individual household installation the allowances are: lighting 66% of the total current demand; heating and power not otherwise listed, 100% up to 10 A plus 50% of the excess; cooking appliances 10 A + 30% of the full load above 10 A + 5 A if a socket-outlet is in the control unit; thermostatically controlled water heaters no diversity at all; socket-outlets and standard final circuit arrangements 100% of the largest plus 40% of every other. The result is used to select the consumer unit main switch, incoming supply fuse, and supply cable. A typical 3-bed semi with all-electric services typically calculates at 40 to 60A maximum demand.',
   },
   {
     question: 'What are diversity factors and why are they used?',
     answer:
-      'Diversity factors reflect the fact that not all electrical loads in an installation operate simultaneously at full power. If every circuit in a house ran at full load at the same moment, the total demand would far exceed the supply capacity — but in practice, loads are switched on and off at different times and rarely all reach full power simultaneously. BS 7671 Appendix 1 provides diversity factors that reduce the design current below the sum of all connected loads. Applying diversity factors allows the designer to select an appropriately sized main protective device and supply cable without the cost and impracticality of sizing for the theoretical worst case. However, diversity factors must not be applied where it is foreseeable that loads will actually run simultaneously — for example, EV chargers with fixed timed charging schedules.',
+      'Diversity factors reflect the fact that not all electrical loads in an installation operate simultaneously at full power. If every circuit in a house ran at full load at the same moment, the total demand would far exceed the supply capacity — but in practice, loads are switched on and off at different times and rarely all reach full power simultaneously. IET On-Site Guide Appendix A provides diversity factors that reduce the design current below the sum of all connected loads. Applying diversity factors allows the designer to select an appropriately sized main protective device and supply cable without the cost and impracticality of sizing for the theoretical worst case. However, diversity factors must not be applied where it is foreseeable that loads will actually run simultaneously — for example, EV chargers with fixed timed charging schedules.',
   },
   {
     question: 'How does cable current-carrying capacity relate to load calculations?',
@@ -61,7 +61,7 @@ const faqs = [
     question:
       'When do I need to do a full load calculation rather than use the IET OSG simplified method?',
     answer:
-      "The IET On-Site Guide simplified diversity method is intended for standard domestic installations. You should perform a full load calculation (using first principles from BS 7671 Appendix 1 and the IET Wiring Regulations) in the following circumstances: commercial or industrial premises of any size; domestic premises with unusually high connected loads (multiple EV chargers, heat pumps, electric showers, large cooking ranges); any premises where the supply authority's cutout fuse is 100A or larger; three-phase domestic installations; or any premises where the designer cannot confirm that the OSG diversity assumptions are realistic for the actual usage pattern. Full calculations should be documented and retained with the design information for the installation.",
+      "The IET On-Site Guide simplified diversity method is intended for standard domestic installations. You should perform a full load calculation (from first principles, since Table A2 does not cover them) in the following circumstances: commercial or industrial premises of any size; domestic premises with unusually high connected loads (multiple EV chargers, heat pumps, electric showers, large cooking ranges); any premises where the supply authority's cutout fuse is 100A or larger; three-phase domestic installations; or any premises where the designer cannot confirm that the OSG diversity assumptions are realistic for the actual usage pattern. Full calculations should be documented and retained with the design information for the installation.",
   },
   {
     question:
@@ -172,49 +172,69 @@ const sections = [
   },
   {
     id: 'diversity-factors',
-    heading: 'Diversity Factors — BS 7671 Appendix 1',
+    heading: 'Diversity Factors — IET On-Site Guide Appendix A',
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 Appendix 1 provides guidance on diversity factors for assessing the
+          the IET On-Site Guide Appendix A provides guidance on diversity factors for assessing the
           maximum demand of domestic and commercial installations. Diversity factors reduce the
           calculated maximum demand to reflect realistic simultaneous usage, rather than the
           theoretical worst-case where all loads run simultaneously.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">
-            Domestic Diversity Factors (from BS 7671 Appendix 1)
+            Domestic Diversity Factors (from IET On-Site Guide Appendix A)
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting:</strong> 66% of total connected lighting load (or 100% of the
-                largest circuit + 50% of remaining, per IET OSG method)
+                <strong>Lighting:</strong> 66% of the total current demand
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heating and water heating (thermostatically controlled):</strong> 100% of
-                the largest + 50% of remaining
+                <strong>Heating and power</strong> (final circuits not otherwise listed): 100% of
+                the total current demand up to 10 A, plus 50% of any current demand in excess of
+                10 A. Note that thermostatically controlled water heaters, floor warming and
+                thermal storage space heating each carry <strong>no diversity allowance at all</strong>
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cooking appliances:</strong> 10A + 30% of connected load above 10A + 5A if
-                second outlet on cooker control unit
+                <strong>Cooking appliances:</strong> 10 A + 30% of the full load of connected
+                cooking appliances in excess of 10 A + 5 A if a socket-outlet is incorporated in
+                the control unit
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket outlet circuits:</strong> 100% of largest + 40% of remaining
-                (residential); 100% of total in commercial
+                <strong>Socket-outlets and standard final circuit arrangements:</strong> 100% of
+                the current demand of the largest circuit or point of utilization + 40% of every
+                other one. In small shops, stores, offices and business premises the second figure
+                is 70% for socket-outlets, and 50% for standard final circuit arrangements
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>Motors</strong> (other than lift motors): <strong>not applicable</strong> to
+                individual household installations
               </span>
             </li>
           </ul>
+          <p className="text-white mt-4 text-sm">
+            Two cautions the On-Site Guide gives about Table A2 itself: the recommendations have not
+            been updated for some time and do not necessarily align with modern loads and usages, so
+            the values may be increased or decreased as the designer decides; and no guidance is
+            given for blocks of residential dwellings, large hotels, or industrial and large
+            commercial premises — those are assessed case by case. Separately, distribution boards
+            and consumer units must be rated to take the total connected load <em>without</em> any
+            diversity applied.
+          </p>
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -401,10 +421,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Demand diversity in commercial premises:</strong> BS 7671 Appendix 1
-                provides diversity factors for offices and commercial premises. For socket outlet
-                circuits, 100% of total connected load is often assumed in commercial locations —
-                unlike the 40% diversity applied in domestic.
+                <strong>Demand diversity in commercial premises:</strong> On-Site Guide Table A2
+                has a column for small shops, stores, offices and business premises, but nothing for
+                large commercial or industrial premises. Where it does apply, socket-outlets take
+                100% of the largest point of utilization plus 70% of every other — against 40% in
+                an individual household. Anything beyond &ldquo;small&rdquo; is a case-by-case
+                assessment on measured or benchmark data, not a table lookup.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -508,7 +530,7 @@ export default function ElectricalLoadCalculationPage() {
   return (
     <GuideTemplate
       title="Electrical Load Calculation — UK Guide 2024 | Diversity"
-      description="How to calculate electrical load for domestic and commercial premises. Diversity factors from BS 7671 Appendix 1, maximum demand calculation…"
+      description="How to calculate electrical load for domestic and commercial premises. Diversity factors from IET On-Site Guide Appendix A, maximum demand calculation…"
       datePublished="2024-06-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -521,7 +543,7 @@ export default function ElectricalLoadCalculationPage() {
           <span className="text-yellow-400">— UK Electrician Guide</span>
         </>
       }
-      heroSubtitle="A complete guide to calculating electrical load for domestic and commercial premises: diversity factors from BS 7671 Appendix 1, maximum demand, cable sizing correction factors, three-phase calculations, and IET On-Site Guide methods with worked examples."
+      heroSubtitle="A complete guide to calculating electrical load for domestic and commercial premises: diversity factors from IET On-Site Guide Appendix A, maximum demand, cable sizing correction factors, three-phase calculations, and IET On-Site Guide methods with worked examples."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

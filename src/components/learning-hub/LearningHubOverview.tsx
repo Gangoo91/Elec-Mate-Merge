@@ -241,7 +241,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400/60 rounded-l-2xl" />
           <div className="flex items-center justify-between pl-1">
             <div>
-              <p className="text-[12px] font-bold text-yellow-400">BS 7671:2018+A3:2024</p>
+              <p className="text-[12px] font-bold text-yellow-400">BS 7671:2018+A4:2026</p>
               <p className="text-[11px] text-white leading-relaxed mt-0.5">
                 All content verified against the current edition. A4 update coming.
               </p>

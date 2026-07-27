@@ -187,6 +187,19 @@ export function initSentry() {
           event.tags = { ...event.tags, category: 'realtime' };
         }
 
+        // Stale-deploy chunk errors that the ErrorBoundary is auto-recovering
+        // from (ELE-1413). Kept, not dropped — the silent `return` that used to
+        // sit in ErrorBoundary meant a user looping refresh→crash generated no
+        // telemetry at all. Downgraded to `warning` so the volume never masks
+        // real bugs; query `category:chunk` to see whether a deploy is stranding
+        // cached clients. A capture WITHOUT chunkAutoRecovering (i.e.
+        // `chunkReloadFailed`) stays at error level — the refresh did not save
+        // them and they are looking at a broken page.
+        if (event.extra?.chunkAutoRecovering === true) {
+          event.level = 'warning';
+          event.tags = { ...event.tags, category: 'chunk' };
+        }
+
         return event;
       },
 

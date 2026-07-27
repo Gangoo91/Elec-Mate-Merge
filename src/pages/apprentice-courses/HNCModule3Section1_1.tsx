@@ -248,7 +248,7 @@ const faqs = [
   {
     question: "What does 'diversity' mean in load calculations?",
     answer:
-      "Diversity accounts for the fact that not all loads operate simultaneously at full capacity. BS 7671 Appendix 1 provides diversity factors - for example, socket outlets in dwellings have diversity factors meaning a 32A ring can serve many sockets without overloading, as they won't all be used at once.",
+      "Diversity accounts for the fact that not all loads operate simultaneously at full capacity. IET On-Site Guide Appendix A provides diversity factors - for example, socket outlets in dwellings have diversity factors meaning a 32A ring can serve many sockets without overloading, as they won't all be used at once.",
   },
 ];
 

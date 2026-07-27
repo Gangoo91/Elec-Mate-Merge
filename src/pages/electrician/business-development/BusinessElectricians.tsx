@@ -65,7 +65,7 @@ const BusinessElectricians = () => {
         subtitle="Strategies for recruiting, integrating and retaining qualified electricians"
         icon={UserCheck}
         backUrl="/electrician/business-development"
-        accentColor="emerald"
+        accentColor="yellow"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -75,7 +75,7 @@ const BusinessElectricians = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
-          accentColor="emerald"
+          accentColor="yellow"
         />
 
         {/* Content Area */}
@@ -94,7 +94,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Recruitment Channels"
               icon={Target}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   The most effective recruitment combines specialist platforms, industry networks,
@@ -181,7 +181,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Selection & Interview Process"
               icon={CheckCircle}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   A structured selection process ensures you identify candidates with the right
@@ -230,7 +230,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Competitive Package Structure"
               icon={PoundSterling}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   Attracting quality electricians requires competitive compensation. The best
@@ -241,7 +241,7 @@ const BusinessElectricians = () => {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
-                  <h4 className="font-semibold text-white mb-3">Salary Benchmarks (2025)</h4>
+                  <h4 className="font-semibold text-white mb-3">Typical Salary Ranges</h4>
                   <div className="space-y-2">
                     {[
                       { role: 'Approved Electrician', range: '£38,000 - £48,000' },
@@ -299,7 +299,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="First Week Essentials"
               icon={Calendar}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   The first week sets the tone for the entire employment relationship. Focus on
@@ -351,7 +351,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="90-Day Integration Plan"
               icon={TrendingUp}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   A structured 90-day plan with clear milestones and regular check-ins ensures new
@@ -409,7 +409,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Key Retention Factors"
               icon={Heart}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   Research shows that while pay is important, factors like development
@@ -457,7 +457,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Development & Training"
               icon={Award}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   Ongoing development shows employees you're invested in their future. Training
@@ -527,7 +527,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Employment Law Essentials"
               icon={FileText}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   Understanding employment law protects your business and ensures fair treatment of
@@ -575,7 +575,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Performance Management"
               icon={TrendingUp}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   Regular performance conversations prevent issues from escalating and ensure
@@ -612,7 +612,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Handling Difficult Situations"
               icon={AlertTriangle}
-              accentColor="emerald"
+              accentColor="yellow"
               summary={
                 <p className="text-white">
                   Address performance or conduct issues promptly and fairly. Follow proper
@@ -654,7 +654,7 @@ const BusinessElectricians = () => {
         </div>
 
         {/* Support Footer */}
-        <div className="mt-10 p-5 rounded-2xl bg-yellow-400/10 border border-yellow-400/20">
+        <div className="mt-10 p-5 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
           <div className="flex items-start gap-4">
             <div className="p-2.5 rounded-xl bg-yellow-400/20">
               <Shield className="h-5 w-5 text-yellow-400" />

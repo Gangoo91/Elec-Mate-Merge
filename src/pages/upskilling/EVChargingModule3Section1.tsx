@@ -191,7 +191,7 @@ const EVChargingModule3Section1 = () => {
                     <strong>Regulation 722:</strong> EV charging equipment
                   </li>
                   <li>
-                    <strong>Appendix 15:</strong> Energy storage and EV
+                    <strong>Section 722:</strong> Electric vehicle charging installations
                   </li>
                   <li>
                     <strong>Section 528:</strong> Caravan/motor caravan parks

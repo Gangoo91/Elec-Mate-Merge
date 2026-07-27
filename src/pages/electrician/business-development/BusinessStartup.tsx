@@ -71,9 +71,10 @@ const BusinessStartup = () => {
           <div className="mb-8 text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-3">Business Planning</h2>
             <p className="text-base text-white leading-relaxed">
-              A comprehensive business plan is the foundation of every successful electrical
-              contracting business. Research shows that businesses with detailed plans are 300% more
-              likely to succeed and reach profitability 40% faster than those without.
+              A business plan isn't paperwork for the bank — it's where you decide your day rate,
+              your running costs and how much work you need each month before the van, the
+              insurance and the scheme fees eat the margin. An afternoon on these numbers now
+              saves a year of finding them out the hard way.
             </p>
           </div>
 
@@ -81,17 +82,25 @@ const BusinessStartup = () => {
           <DataGrid
             items={[
               {
-                label: 'Average Startup Cost',
-                value: '£15-35k',
-                sublabel: 'Total initial investment',
+                label: 'Companies House incorporation',
+                value: '£50',
+                sublabel: 'Online, usually same-day',
               },
               {
-                label: 'Break-even Timeline',
-                value: '6-12 months',
-                sublabel: 'With structured planning',
+                label: 'VAT registration threshold',
+                value: '£90,000',
+                sublabel: 'Taxable turnover, 2026/27',
               },
-              { label: 'Success Rate', value: '85%', sublabel: 'With detailed business plan' },
-              { label: 'Year 1 Revenue', value: '£8-15k/month', sublabel: 'Average achievable' },
+              {
+                label: "Employers' liability minimum",
+                value: '£5m',
+                sublabel: 'Legal requirement once you employ',
+              },
+              {
+                label: 'Typical break-even',
+                value: '6-12 months',
+                sublabel: 'Guideline — your plan sets yours',
+              },
             ]}
             columns={4}
           />
@@ -400,7 +409,7 @@ const BusinessStartup = () => {
                 </div>
               </div>
 
-              <div className="p-5 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
+              <div className="p-5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
                 <div className="flex items-start gap-3">
                   <Lightbulb className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
@@ -469,7 +478,7 @@ const BusinessStartup = () => {
                   desc: 'A separate legal entity from yourself, offering liability protection and potential tax advantages. Recommended once profits exceed £40-50k annually.',
                   pros: [
                     'Limited liability - personal assets protected',
-                    'More tax efficient at higher earnings (Corporation Tax 19-25%)',
+                    'Can be more tax-efficient at higher profits (Corporation Tax: 19% below £50,000 profit, 25% above £250,000, tapered between)',
                     'Professional image attracts commercial clients',
                     'Easier access to business finance and credit',
                   ],
@@ -571,7 +580,7 @@ const BusinessStartup = () => {
                   {
                     title: 'Choose business structure and complete registration',
                     description:
-                      'Register as sole trader with HMRC or incorporate limited company.',
+                      'Register for Self Assessment with HMRC (deadline: 5 October after the end of your first tax year) or incorporate a limited company at Companies House (£50 online). Register for CIS if you subcontract on construction sites.',
                   },
                   {
                     title: 'Arrange insurance and join competent person scheme',
@@ -592,21 +601,21 @@ const BusinessStartup = () => {
               />
 
               <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
-                <h4 className="font-semibold text-white mb-4">Key Success Milestones</h4>
+                <h4 className="font-semibold text-white mb-4">Milestones to Set Yourself</h4>
                 <div className="space-y-3">
                   {[
                     {
                       milestone: 'Month 1: First paying customer',
-                      target: 'Revenue: £2,000-4,000',
+                      target: 'Invoice raised, paid on time',
                     },
                     {
-                      milestone: 'Month 3: Established regular workflow',
-                      target: 'Revenue: £5,000-8,000/month',
+                      milestone: 'Month 3: Regular workflow established',
+                      target: 'Work booked 4-6 weeks ahead',
                     },
                     { milestone: 'Month 6: Break-even achieved', target: 'Covering all expenses' },
                     {
                       milestone: 'Month 12: Sustainable business',
-                      target: 'Revenue: £8,000-15,000/month',
+                      target: 'Steady margin + tax reserve building',
                     },
                     {
                       milestone: 'Year 2: Growth & scaling',
@@ -634,7 +643,7 @@ const BusinessStartup = () => {
             <p className="text-base text-white leading-relaxed">
               Operating legally is non-negotiable for electrical contractors. Understanding
               registration requirements, professional qualifications, and insurance obligations
-              protects both you and your clients. Non-compliance can result in fines up to £30,000
+              protects both you and your clients. Non-compliance is a criminal offence — councils can prosecute (unlimited fines) and force you to redo the work at your own cost
               and imprisonment.
             </p>
           </div>
@@ -673,7 +682,7 @@ const BusinessStartup = () => {
                 {
                   title: 'Companies House registration (Limited Company only)',
                   description:
-                    'Register your company name, director details, registered office address, and shareholding structure. Costs £12 online.',
+                    'Register your company name, director details, registered office address, and shareholding structure. Costs £50 online (fee since May 2024).',
                   detail: 'Approval typically within 24 hours',
                 },
                 {
@@ -683,7 +692,7 @@ const BusinessStartup = () => {
                   detail: 'Required for professional image and tax compliance',
                 },
                 {
-                  title: 'Register for VAT (when turnover exceeds £85,000)',
+                  title: 'Register for VAT (when taxable turnover exceeds £90,000)',
                   description:
                     'Mandatory registration required when taxable turnover exceeds the threshold. Consider voluntary registration earlier for credibility with commercial clients.',
                   detail: 'Can reclaim VAT on tools and materials',
@@ -851,7 +860,7 @@ const BusinessStartup = () => {
             items={[
               { label: 'Support Lines', value: '10+', sublabel: 'Free helplines available' },
               { label: 'Online Resources', value: '50+', sublabel: 'Guides & templates' },
-              { label: 'Success Rate', value: '90%+', sublabel: 'With mentor support' },
+              { label: 'Free mentoring', value: '0 cost', sublabel: 'Via gov-backed schemes' },
               { label: 'Training Providers', value: '20+', sublabel: 'Across the UK' },
             ]}
             columns={4}
@@ -1034,7 +1043,7 @@ const BusinessStartup = () => {
         </section>
 
         {/* Final Tip Card */}
-        <div className="p-5 rounded-2xl bg-yellow-400/10 border border-yellow-400/20 mt-10">
+        <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/[0.08] mt-10">
           <div className="flex items-start gap-4">
             <div className="p-2.5 rounded-xl bg-yellow-400/20">
               <TrendingUp className="h-5 w-5 text-yellow-400" />

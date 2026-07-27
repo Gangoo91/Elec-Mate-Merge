@@ -88,7 +88,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'A small commercial unit has a single-phase 100 A intake. The summed maximum demand of all final circuits before diversity is 142 A. After applying BS 7671 Appendix 1 / OSG diversity, the design demand comes in at ~78 A. The unit is:',
+      'A small commercial unit has a single-phase 100 A intake. The summed maximum demand of all final circuits before diversity is 142 A. After applying On-Site Guide Appendix A diversity, the design demand comes in at ~78 A. The unit is:',
     options: [
       'Over the supply rating — apply for a 3-phase upgrade.',
       'Inside the supply rating — install proceeds.',
@@ -203,7 +203,7 @@ const faqs = [
   {
     question: 'How do I know which BS 7671 diversity factor to apply to which load?',
     answer:
-      'BS 7671 Appendix 1 (and the matching On-Site Guide tables) gives diversity factors for each load type — sockets, cookers, water heaters, EV charge points, lighting, motors, instantaneous water heaters. The principle is that not every circuit will run at full load simultaneously. Some loads (EV, water heater) get no diversity (treat as 100 % of rated current); others (general sockets) get aggressive diversity (often 40 % of the largest plus 50 % of the rest). Always check the table for the specific load class.',
+      'IET On-Site Guide Appendix A (and the matching On-Site Guide tables) gives diversity factors for each load type — sockets, cookers, water heaters, EV charge points, lighting, motors, instantaneous water heaters. The principle is that not every circuit will run at full load simultaneously. Some loads (EV, water heater) get no diversity (treat as 100 % of rated current); others (general sockets) get aggressive diversity (often 40 % of the largest plus 50 % of the rest). Always check the table for the specific load class.',
   },
   {
     question: 'Why is the EV charger circuit treated separately from the general socket circuits?',
@@ -218,7 +218,7 @@ const faqs = [
   {
     question: 'How do I split a 100 A supply across 13 circuits without overloading the cut-out?',
     answer:
-      'You apply diversity. Sum the design current of every final circuit assuming each runs at its own rated load, then apply the BS 7671 Appendix 1 diversity factors per load class. The result is the after-diversity maximum demand — that is the figure you compare to the cut-out fuse rating. For a typical small commercial unit with mixed lighting, sockets, HVAC and one dedicated load (EV or shower), the after-diversity figure usually lands at 60–80 % of the connected total.',
+      'You apply diversity. Sum the design current of every final circuit assuming each runs at its own rated load, then apply the IET On-Site Guide Appendix A diversity factors per load class. The result is the after-diversity maximum demand — that is the figure you compare to the cut-out fuse rating. For a typical small commercial unit with mixed lighting, sockets, HVAC and one dedicated load (EV or shower), the after-diversity figure usually lands at 60–80 % of the connected total.',
   },
   {
     question: 'What goes in the final circuit schedule the supervisor signs off?',
@@ -265,7 +265,7 @@ export default function Sub8() {
           <LearningOutcomes
             outcomes={[
               'Read a small commercial brief (floor area, intake rating, load list) and produce a full final-circuit list with the correct shape (radial / ring / dedicated) for each load class.',
-              'Apply BS 7671 Appendix 1 diversity correctly to derive maximum demand and verify it sits inside the cut-out fuse rating.',
+              'Apply IET On-Site Guide Appendix A diversity correctly to derive maximum demand and verify it sits inside the cut-out fuse rating.',
               'Select the appropriate wiring system per circuit and per environment (T&E, SWA, conduit, trunking) using §3 Sub 3.2 reasoning.',
               'Size every final circuit using the §3 Sub 3.7 ten-gate process and produce a clean schedule row per circuit (Ib, In, cable, derated Iz, Vd, Zs).',
               'Pick the right protective device per circuit — MCB type (B/C/D), RCBO, RCD type (AC/A/B), AFDD where applicable, and the correct SPD type at the origin.',
@@ -313,7 +313,7 @@ export default function Sub8() {
 
           <ConceptBlock
             title="Build the load list, then apply diversity"
-            plainEnglish="Sum every circuit&rsquo;s rated demand assuming each runs at full load. That is the worst-case connected total. Apply BS 7671 Appendix 1 diversity to get the realistic maximum demand. Compare that to the 100 A supply."
+            plainEnglish="Sum every circuit&rsquo;s rated demand assuming each runs at full load. That is the worst-case connected total. Apply IET On-Site Guide Appendix A diversity to get the realistic maximum demand. Compare that to the 100 A supply."
             onSite="Diversity is the single biggest tool you have for keeping a small unit on a single-phase supply. Skip it and every job needs a 3-phase upgrade."
           >
             <p>
@@ -333,7 +333,7 @@ export default function Sub8() {
               circuit ran at full load simultaneously, which it will not.
             </p>
             <p>
-              <strong>After BS 7671 Appendix 1 / OSG diversity:</strong>
+              <strong>After On-Site Guide Appendix A diversity:</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Lighting — 90 % of total = ~22 A.</li>

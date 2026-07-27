@@ -51,7 +51,20 @@ export interface CloudReport {
   locked_at?: string | null;
   parent_report_id?: string | null;
   superseded_by?: string | null;
+  // ELE-1421 — team attribution. Only ever set on rows from the company library
+  // (get_my_certificate_library); the personal path leaves these undefined.
+  /** Owner of the cert. Differs from the signed-in user only on team rows. */
+  owner_id?: string;
+  /** Display name of the team member whose cert this is. Null on own certs. */
+  owner_name?: string | null;
+  /** True when this cert belongs to a team member, not the signed-in user. */
+  is_team_cert?: boolean;
+  qs_review_status?: 'pending' | 'approved' | 'returned' | 'cancelled' | null;
+  qs_reviewer_name?: string | null;
 }
+
+/** Which slice of the company library to load. */
+export type LibraryScope = 'all' | 'mine' | 'team';
 
 export interface VersionConflict {
   hasConflict: boolean;
@@ -248,7 +261,11 @@ export const reportCloud = {
         .from('reports')
         .select('report_type, status')
         .eq('user_id', userId)
-        .is('deleted_at', null);
+        .is('deleted_at', null)
+        // Match the list query, which hides superseded originals. Without this
+        // the tabs counted V1 *and* V2 of every amended cert, so a tab read
+        // "EICR 14" over a list of 12 and the numbers looked broken.
+        .is('superseded_by', null);
 
       if (!includeAutoDrafts) {
         query = query.neq('status', 'auto-draft');
@@ -269,6 +286,137 @@ export const reportCloud = {
     } catch (error) {
       console.error('[reportCloud] Failed to fetch report counts:', error);
       return { total: 0, byType: {}, byStatus: {} };
+    }
+  },
+
+  /**
+   * ELE-1421 — the COMPANY certificate library: the caller's own certs plus
+   * finished work by their team, in one server-paged query.
+   *
+   * This is the library path for EVERY account, not just company ones: for a
+   * sole trader the RPC resolves no team and returns exactly the rows
+   * getUserReports() would, so the library can't behave differently depending on
+   * who is looking. getUserReports() remains as the caller's fallback.
+   *
+   * A team row is another person's record, so callers must treat `is_team_cert`
+   * as read-only — see MyReports, which drops bulk mode and delete for them.
+   *
+   * Throws on failure rather than returning an empty page. An empty library and
+   * a failed fetch look identical on screen, and "you have no certificates" is
+   * the single most alarming lie this app can tell a user.
+   */
+  getCertificateLibrary: async (
+    options?: {
+      page?: number;
+      pageSize?: number;
+      reportType?: string;
+      status?: string;
+      dateFrom?: string;
+      dateTo?: string;
+      includeAutoDrafts?: boolean;
+      scope?: LibraryScope;
+    }
+  ): Promise<ReportsResponse> => {
+    const page = options?.page || 1;
+    const pageSize = options?.pageSize || 20;
+    const offset = (page - 1) * pageSize;
+    const reportType =
+      options?.reportType && options.reportType !== 'all' ? options.reportType : null;
+    const status = options?.status && options.status !== 'all' ? options.status : null;
+
+    // Called loosely — the RPC isn't in the generated Supabase types yet.
+    const rpc = supabase.rpc as unknown as (
+      fn: string,
+      args: Record<string, unknown>
+    ) => Promise<{ data: unknown; error: { message?: string } | null }>;
+
+    const { data, error } = await rpc('get_my_certificate_library', {
+      p_limit: pageSize,
+      p_offset: offset,
+      p_report_type: reportType,
+      p_status: status,
+      p_date_from: options?.dateFrom ?? null,
+      p_date_to: options?.dateTo ?? null,
+      p_include_auto_drafts: options?.includeAutoDrafts ?? false,
+      p_scope: options?.scope ?? 'all',
+    });
+
+    if (error) {
+      console.error('[reportCloud] Company library fetch failed:', error);
+      throw new Error(error.message || 'Failed to load your certificates');
+    }
+
+    type LibraryRow = {
+      total_count?: number;
+      data_inspection_date?: unknown;
+      data_date_of_inspection?: unknown;
+      data_satisfactory_for_continued_use?: unknown;
+      data_system_category?: unknown;
+    } & Record<string, unknown>;
+
+    const rows = (data ?? []) as LibraryRow[];
+    // total_count is a window count — identical on every row, absent when empty.
+    const totalCount = rows.length > 0 ? Number(rows[0].total_count ?? 0) : 0;
+
+    const reports = rows.map((row) => {
+      const {
+        total_count: _total,
+        data_inspection_date,
+        data_date_of_inspection,
+        data_satisfactory_for_continued_use,
+        data_system_category,
+        ...rest
+      } = row;
+      return {
+        ...rest,
+        data: {
+          inspectionDate: data_inspection_date,
+          dateOfInspection: data_date_of_inspection,
+          satisfactoryForContinuedUse: data_satisfactory_for_continued_use,
+          systemCategory: data_system_category,
+        },
+      } as CloudReport;
+    });
+
+    return { reports, totalCount, hasMore: offset + reports.length < totalCount };
+  },
+
+  /**
+   * ELE-1421 — whole-library tab counts for getCertificateLibrary, spanning
+   * every page so a tab never reads "EIC (0)" while page 3 holds twelve.
+   */
+  getCertificateLibraryCounts: async (options?: {
+    includeAutoDrafts?: boolean;
+    scope?: LibraryScope;
+  }): Promise<{
+    /** Whole visible library, ignoring scope — drives the Everyone/Mine/team chips. */
+    total: number;
+    mine: number;
+    team: number;
+    /** Count within the ACTIVE scope — drives the status row's "All" tab. */
+    scopedTotal: number;
+    byType: Record<string, number>;
+    byStatus: Record<string, number>;
+  }> => {
+    const empty = { total: 0, mine: 0, team: 0, scopedTotal: 0, byType: {}, byStatus: {} };
+    try {
+      // Called loosely — the RPC isn't in the generated Supabase types yet.
+      const rpc = supabase.rpc as unknown as (
+        fn: string,
+        args: Record<string, unknown>
+      ) => Promise<{ data: unknown; error: { message?: string } | null }>;
+
+      const { data, error } = await rpc('get_my_certificate_library_counts', {
+        p_include_auto_drafts: options?.includeAutoDrafts ?? false,
+        p_scope: options?.scope ?? 'all',
+      });
+      if (error) throw error;
+      return { ...empty, ...((data ?? {}) as Record<string, never>) };
+    } catch (error) {
+      // Counts only decorate the filter tabs — a failure here degrades the
+      // numbers, it must not blank the list the way a thrown error would.
+      console.error('[reportCloud] Library counts failed:', error);
+      return empty;
     }
   },
 

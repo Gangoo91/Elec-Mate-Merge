@@ -154,7 +154,7 @@ const sections: Section[] = [
       {
         title: 'Diagram Builder',
         body: 'Generate single-line diagrams, circuit layouts and schematics from a brief description.',
-        route: ELEC('install-planner'),
+        route: ELEC('circuit-designer'),
       },
       {
         title: 'On-site analysis',

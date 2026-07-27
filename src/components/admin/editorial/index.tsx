@@ -627,13 +627,25 @@ export function ListCardHeader({
   );
 }
 
-export function ListBody({ children }: { children: ReactNode }) {
+export function ListBody({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  /**
+   * Override the default divider. The 6%-white hairline all but disappears once
+   * rows carry their own lighter background (AdminUsers), so that list passes a
+   * stronger one. cn() runs through tailwind-merge, so a `divide-*` class here
+   * replaces the default rather than fighting it.
+   */
+  className?: string;
+}) {
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="divide-y divide-white/[0.06]"
+      className={cn('divide-y divide-white/[0.06]', className)}
     >
       {children}
     </motion.div>
@@ -648,6 +660,16 @@ interface ListRowProps {
   onClick?: () => void;
   className?: string;
   accent?: Tone;
+  /**
+   * Let the subtitle wrap onto multiple lines instead of truncating to one.
+   *
+   * The default `truncate` sets `white-space: nowrap`, which silently destroys
+   * any multi-line subtitle a caller passes in: AdminUsers stacks email, status
+   * pills and a joined/last-seen meta line, and the meta line was being sliced
+   * off mid-character at the card edge ("Joined today · 6…"). Opt-in so every
+   * existing single-line caller keeps its current behaviour.
+   */
+  subtitleWrap?: boolean;
 }
 
 export function ListRow({
@@ -658,6 +680,7 @@ export function ListRow({
   onClick,
   className,
   accent,
+  subtitleWrap = false,
 }: ListRowProps) {
   const Inner = (
     <>
@@ -667,7 +690,16 @@ export function ListRow({
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
+        {subtitle && (
+          <div
+            className={cn(
+              'mt-0.5 text-[11.5px] text-white',
+              subtitleWrap ? 'min-w-0' : 'truncate'
+            )}
+          >
+            {subtitle}
+          </div>
+        )}
       </div>
       {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
@@ -682,7 +714,12 @@ export function ListRow({
   );
 
   const base =
-    'group w-full flex items-center gap-3.5 px-4 sm:px-5 py-3.5 sm:py-4 text-left touch-manipulation';
+    cn(
+      'group w-full flex gap-3 sm:gap-3.5 px-3 sm:px-5 py-3 sm:py-4 text-left touch-manipulation',
+      // Multi-line rows top-align so the avatar sits beside the name rather than
+      // floating in the middle of a tall card; single-line rows stay centred.
+      subtitleWrap ? 'items-start' : 'items-center'
+    );
 
   return onClick ? (
     <motion.div

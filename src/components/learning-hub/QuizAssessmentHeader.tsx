@@ -9,7 +9,7 @@ const QuizAssessmentHeader = () => {
       <div className="flex justify-center gap-2 flex-wrap">
         <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
           <CheckCircle2 className="h-3 w-3 mr-1" />
-          BS 7671:2018+A3:2024
+          BS 7671:2018+A4:2026
         </Badge>
         <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
           <Calendar className="h-3 w-3 mr-1" />
@@ -36,7 +36,7 @@ const QuizAssessmentHeader = () => {
       </div>
       <p className="text-sm sm:text-base text-white max-w-3xl mx-auto px-2 sm:px-4">
         Master the essential inspection and testing procedures required for electrical
-        installations. Each assessment covers BS 7671:2018 Amendment 3:2024 requirements with
+        installations. Each assessment covers BS 7671:2018 Amendment 4:2026 requirements with
         practical scenarios and real-world applications.
       </p>
     </div>

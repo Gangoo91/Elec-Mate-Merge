@@ -190,7 +190,9 @@ const sections = [
                 <strong>45A radial circuit — larger range cookers</strong>
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   For range cookers rated up to 10.8kW or where the design current calculated using
-                  BS 7671 Appendix 15 diversity exceeds 32A. Cable: 10.0mm two-core and earth,
+                  the On-Site Guide Appendix A cooking-appliance allowance (10 A + 30% of the full
+                  load above 10 A + 5 A if a socket-outlet is in the control unit) exceeds 32 A.
+                  Cable: 10.0mm two-core and earth,
                   protected by a 45A Type B MCB. A 45A double-pole cooker switch (switch outlet
                   unit) is required regardless of the circuit protective device rating.
                 </p>

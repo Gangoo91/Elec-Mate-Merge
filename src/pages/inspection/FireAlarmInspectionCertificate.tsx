@@ -222,6 +222,51 @@ const {
       setGeneratedPdfUrl(fn.pdfUrl);
       setPdfFilename(`FA-G6-${formData.certificateNumber || 'cert'}.pdf`);
       toast.success('Inspection certificate generated');
+
+      // ELE-1397: close the loop — the inspection becomes a service entry in
+      // the building's log book, so next year's cert pulls it back out.
+      if (data.linkedLogBookId) {
+        try {
+          const {
+            data: { user: authUser },
+          } = await supabase.auth.getUser();
+          if (authUser) {
+            const entryDate = new Date().toISOString().slice(0, 10);
+            const db = supabase as any;
+            // Regenerating the same cert must not double-log the visit
+            const certRef = data.certificateNumber || '';
+            const { data: existing } = await db
+              .from('fire_alarm_log_entries')
+              .select('id')
+              .eq('log_book_id', data.linkedLogBookId)
+              .eq('entry_type', 'service')
+              .eq('data->>cert_ref', certRef)
+              .limit(1);
+            if (existing?.length) return;
+            await db.from('fire_alarm_log_entries').insert({
+              log_book_id: data.linkedLogBookId,
+              user_id: authUser.id,
+              entry_type: 'service',
+              entry_date: entryDate,
+              tester_name: data.inspectorName || '',
+              data: {
+                contractor: data.inspectorCompany || data.companyName || '',
+                scope: 'Periodic inspection and test (BS 5839-1 G6)',
+                outcome:
+                  data.overallResult === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory',
+                next_due: data.nextInspectionDue || '',
+                cert_ref: data.certificateNumber || '',
+              },
+            });
+            await db
+              .from('fire_alarm_log_books')
+              .update({ last_service_date: entryDate })
+              .eq('id', data.linkedLogBookId);
+          }
+        } catch (logErr) {
+          console.warn('Log book write-back failed (non-blocking):', logErr);
+        }
+      }
     } catch (e: any) {
       setGenerationError(e.message);
       toast.error('PDF generation failed');

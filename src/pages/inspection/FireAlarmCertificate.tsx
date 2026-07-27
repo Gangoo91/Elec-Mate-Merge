@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { ArrowLeft, Bell, Save, Download, Loader2, Mail } from 'lucide-react';
 import { toast } from 'sonner';
+import { maybePromptLogBook } from '@/utils/fireAlarmLogBookPrompt';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import {
@@ -405,6 +406,7 @@ const {
       }
 
       toast.success('Certificate generated successfully');
+      maybePromptLogBook(formData, navigate);
       recordPositiveAction();
     } catch (error) {
       const msg = error instanceof Error ? error.message : 'Failed to generate certificate';

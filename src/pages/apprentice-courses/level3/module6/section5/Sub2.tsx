@@ -5,7 +5,7 @@
  * Layered depth: 2366-03 Unit 304 / AC 5.2; 5393-03 Unit 104 / AC 5.2
  *
  * The Cmin 0.95 voltage factor — what it is, where it comes from
- * (Appendix 14), how it propagates into Table 41.3, and how to apply
+ * (Appendix 3), how it propagates into Table 41.3, and how to apply
  * it on the design pack so the calc lines up with the regs.
  */
 
@@ -33,7 +33,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Calculating Zs at design stage — Cmin 0.95 (5.2) | Level 3 Module 6.5.2 | Elec-Mate';
 const DESCRIPTION =
-  'The Cmin voltage factor minimum from BS 7671 Appendix 14. What it is, why A4:2026 made it explicit at 0.95, and how it propagates into the Reg 411.4.5 design check and the Table 41.3 max Zs values.';
+  'The Cmin voltage factor minimum from BS 7671 Appendix 3. What it is, why A4:2026 made it explicit at 0.95, and how it propagates into the Reg 411.4.5 design check and the Table 41.3 max Zs values.';
 
 const checks = [
   {
@@ -83,16 +83,17 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'BS 7671:2018+A4:2026 Appendix 14 deals with:',
+    question:
+      'Where in BS 7671:2018+A4:2026 is the voltage factor minimum Cmin = 0.95 set out?',
     options: [
-      'The current-carrying capacity tables for cables under the different installation reference methods, equivalent to Appendix 4.',
-      'The voltage factors C — Cmax (1.05 or 1.10) and Cmin (0.95) — used in fault-current and earth fault loop impedance determination.',
-      'The model forms for the Electrical Installation Certificate and the associated Schedule of Test Results.',
-      'The maximum demand and diversity allowances applied across the different installation and circuit types.',
+      'Appendix 14 — determination of prospective fault current',
+      'Appendix 3 — with the maximum earth fault loop impedance content that A3:2024 moved there from Appendix 14',
+      'Appendix 4 — alongside the current-carrying capacity tables',
+      'Appendix 6 — in the notes to the Schedule of Test Results',
     ],
     correctAnswer: 1,
     explanation:
-      "Appendix 14 of BS 7671:2018+A4:2026 is the home of the C voltage factors. Cmax (typically 1.05 for low voltage) is used in prospective fault current calculations (Reg 434 / 543) where the worst case is HIGH voltage — bigger fault current, bigger thermal stress on the cable. Cmin (0.95) is used in earth fault loop impedance calculations (Reg 411.4.5) where the worst case is LOW voltage — smaller driving voltage, smaller fault current, slower trip. Different worst cases for different calculations. Appendix 14 explains the harmonisation with IEC / HD 60364 and gives the rationale.",
+      "Appendix 3. A3:2024 moved the earth fault loop impedance content out of Appendix 14 and into Appendix 3, and Cmin moved with it — Appendix 3 gives the Regulations 411.4.4 to 411.4.204 expression Zs = (U0 × Cmin) / Ia, and notes that for a low voltage supply given in accordance with the ESQCR, Cmin is given the value 0.95. Appendix 14 in A4:2026 is a single page on determining prospective fault current and carries no voltage factors at all, so citing it for Cmin dates your notes by two amendments. Watch Cmax as well: BS 7671 gives Cmax the value 1.1, not 1.05, and it appears only in Annex A722 — used for sizing the earth electrode where an EV charging point cannot use a PME earthing facility. The 1.05 figure comes from IEC 60909-0, not from BS 7671.",
   },
   {
     id: 2,
@@ -114,11 +115,11 @@ const quizQuestions = [
       'Earth fault loop impedance calculations — for Reg 411.4.5 (Zs satisfaction), lowering U0 to give the worst-case slow trip.',
       'Voltage drop calculations — for Reg 525, raising the supply voltage to give the worst-case drop at the load.',
       'Diversity calculations — for Reg 311.1, lifting the connected load to give the worst-case maximum demand.',
-      'Prospective fault current calculations — for Reg 434.5 (cable thermal) and Section 543 (cpc adiabatic), lifting U0 by Cmax 1.05.',
+      'Prospective fault current calculations — lifting U0 so the calculated Ipf is the worst case for cable thermal withstand and cpc sizing.',
     ],
     correctAnswer: 3,
     explanation:
-      "Cmax is the upper voltage factor — used where the design worst case is HIGH voltage. Bigger driving voltage = bigger fault current = bigger I²t energy let-through = bigger thermal stress on the cable and cpc. So Cmax appears in: prospective fault current calculations under Reg 434 (cable thermal withstand) and Reg 543.1.3 (adiabatic equation for cpc selection). Cmin is the opposite — used where the design worst case is LOW voltage, giving smaller fault current and slower trip — so Cmin appears in Reg 411.4.5 (Zs satisfaction). Use Cmax 1.05 in fault-current calcs; use Cmin 0.95 in Zs calcs.",
+      "Cmax is the upper voltage factor — used where the design worst case is HIGH voltage. Bigger driving voltage = bigger fault current = bigger I²t energy let-through = bigger thermal stress on the cable and cpc, which is what Reg 434.5.2 (cable thermal withstand) and Reg 543.1.3 (the adiabatic equation for cpc selection) are testing. Cmin is the opposite — used where the design worst case is LOW voltage, giving smaller fault current and slower trip — so Cmin sits behind Reg 411.4.4 to 411.4.204 and the Table 41.2 to 41.4 Zs limits. ⚠️ Be precise about the numbers and their source. BS 7671 tabulates Cmax as 1.1, and refers to it in only one place: Annex A722, for sizing the earth electrode where an EV charging point cannot use a PME earthing facility. BS 7671 does not itself require a Cmax multiplier in the Reg 434 fault-current calculation — Appendix 14 gives approximation methods instead and states that other methods are not precluded. The familiar Cmax = 1.05 for low voltage comes from IEC 60909-0, which is where the practice originates.",
   },
   {
     id: 4,
@@ -157,7 +158,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "The principle is simple: each calc uses the voltage that gives the conservative answer for that check. Fault current calcs assume HIGH voltage (Cmax 1.05) so the calculated Ipf is the worst case for cable thermal withstand and adiabatic cpc sizing. Zs calcs assume LOW voltage (Cmin 0.95) so the calculated fault current is the worst case for trip time. Same supply, two different worst cases for two different calculations. Appendix 14 explains this with worked examples. Both factors derive from the harmonised IEC / HD 60364-4-41 / EN 60909 fault current standards.",
+      "The principle is simple: each calc uses the voltage that gives the conservative answer for that check. Fault current calcs assume HIGH voltage (Cmax 1.05) so the calculated Ipf is the worst case for cable thermal withstand and adiabatic cpc sizing. Zs calcs assume LOW voltage (Cmin 0.95) so the calculated fault current is the worst case for trip time. Same supply, two different worst cases for two different calculations. Note where each factor actually lives: Cmin is set out in Appendix 3, with the loop-impedance content A3:2024 moved there from Appendix 14. Cmax does not appear in Appendix 14 either — in BS 7671 it is given the value 1.1 and is used only in Annex A722 for EV charging earth electrodes. The 1.05 value quoted for fault current work comes from the IEC 60909-0 / HD 60364-4-41 family, not from BS 7671.",
   },
   {
     id: 7,
@@ -196,12 +197,12 @@ const faqs = [
   {
     question: 'Where does the value Cmin = 0.95 actually come from?',
     answer:
-      "From IEC 60909-0 and the harmonised HD 60364-4-41. The IEC family of fault-current standards uses C voltage factors to model real-world voltage variation: Cmax = 1.05 (low voltage, network in the upper part of its tolerance band) and Cmin = 0.95 (low voltage, network in the lower part of the band). The choice of 0.95 specifically is a calibration exercise — it gives a conservative Zs limit without being so tight that practical installation work fails routinely. Higher Cmin (like 0.90) would have made designs much harder for marginal cases; lower Cmin (closer to 1.00) would have provided less margin. 0.95 is the European-harmonised compromise. BS 7671 Appendix 14 explains the harmonisation route.",
+      "From IEC 60909-0 and the harmonised HD 60364-4-41. The IEC family of fault-current standards uses C voltage factors to model real-world voltage variation: Cmax = 1.05 (low voltage, network in the upper part of its tolerance band) and Cmin = 0.95 (low voltage, network in the lower part of the band). The choice of 0.95 specifically is a calibration exercise — it gives a conservative Zs limit without being so tight that practical installation work fails routinely. Higher Cmin (like 0.90) would have made designs much harder for marginal cases; lower Cmin (closer to 1.00) would have provided less margin. 0.95 is the European-harmonised compromise. BS 7671 adopts it in Appendix 3, which notes that for a low voltage supply given in accordance with the ESQCR, Cmin is given the value 0.95.",
   },
   {
     question: 'Does Cmin apply to all systems (TN, TT, IT) or just TN?',
     answer:
-      "Cmin appears in Reg 411.4.5 (TN systems) and Reg 411.5.3 (TT systems) — the same 0.95 factor. On TN it modifies the overcurrent device Zs check (Table 41.3 limits). On TT it modifies the touch voltage calculation (RA × IΔn ≤ 50 V × Cmin = 47.5 V — though most designers still use the round 50 V figure as conservative). On IT systems Reg 411.6 has its own treatment; Cmin still applies in principle but IT installations are rare in UK practice. The key point: Cmin is the universal voltage factor minimum across all earthed systems for the Zs check, derived once in Appendix 14, applied consistently.",
+      "Cmin appears in Reg 411.4.5 (TN systems) and Reg 411.5.3 (TT systems) — the same 0.95 factor. On TN it modifies the overcurrent device Zs check (Table 41.3 limits). On TT it modifies the touch voltage calculation (RA × IΔn ≤ 50 V × Cmin = 47.5 V — though most designers still use the round 50 V figure as conservative). On IT systems Reg 411.6 has its own treatment; Cmin still applies in principle but IT installations are rare in UK practice. The key point: Cmin is the universal voltage factor minimum across all earthed systems for the Zs check, derived once in Appendix 3, applied consistently.",
   },
   {
     question: 'How do I check whether my Zs spreadsheet or app is on the A4:2026 edition?',
@@ -238,7 +239,7 @@ export default function Sub2() {
           <PageHero
             eyebrow="Module 6 · Section 5 · Subsection 2"
             title="Calculating Zs at design stage — Cmin 0.95"
-            description="The voltage factor minimum from BS 7671 Appendix 14. What it represents, why A4:2026 made it explicit at 0.95, how it propagates into the Reg 411.4.5 design check and the Table 41.3 max Zs values, and how to apply the design method end-to-end on the pack."
+            description="The voltage factor minimum from BS 7671 Appendix 3. What it represents, why A4:2026 made it explicit at 0.95, how it propagates into the Reg 411.4.5 design check and the Table 41.3 max Zs values, and how to apply the design method end-to-end on the pack."
             tone="amber"
           />
 
@@ -252,8 +253,8 @@ export default function Sub2() {
 
           <LearningOutcomes
             outcomes={[
-              'State that Cmin = 0.95 is the voltage factor minimum from BS 7671:2018+A4:2026 Appendix 14, derived from harmonised IEC / HD 60364-4-41.',
-              'Explain why Cmin is used in earth fault loop impedance calculations (Reg 411.4.5) and Cmax (1.05) is used in prospective fault current calculations (Reg 434 / 543) — different worst cases for different checks.',
+              'State that Cmin = 0.95 is the voltage factor minimum given in BS 7671:2018+A4:2026 Appendix 3, derived from harmonised IEC / HD 60364-4-41.',
+              'Explain why Cmin lowers U0 for the earth fault loop impedance check while a maximum voltage factor raises it for prospective fault current work — different worst cases for different checks — and state that BS 7671 gives Cmax as 1.1 and uses it only in Annex A722, the 1.05 figure coming from IEC 60909-0.',
               'Recalculate any Table 41.3 maximum Zs value from first principles using max Zs = U0 × Cmin / Ia for the device fitted.',
               'Apply the design Zs method end-to-end: source Ze, calculate cold (R1 + R2), apply temperature correction, sum to design Zs, compare against Table 41.3.',
               'Identify when a pre-A4 Zs lookup app is being used and recalculate to the A4:2026 limits to avoid under-calling non-compliance.',
@@ -284,7 +285,7 @@ export default function Sub2() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li><strong>U0</strong> = nominal AC line voltage to earth = 230 V single-phase in the UK.</li>
-              <li><strong>Cmin</strong> = voltage factor minimum = 0.95 (from BS 7671 Appendix 14, harmonised with IEC 60909-0 / HD 60364-4-41).</li>
+              <li><strong>Cmin</strong> = voltage factor minimum = 0.95 (given in BS 7671 Appendix 3, harmonised with IEC 60909-0 / HD 60364-4-41).</li>
               <li><strong>Ia</strong> = current in amperes causing automatic operation of the protective device within the time required by Reg 411.3.2.2 (Table 41.1: 0.4 s for final ≤ 32 A on TN; 5 s for distribution and final &gt; 32 A on TN).</li>
             </ul>
             <p>
@@ -348,13 +349,13 @@ export default function Sub2() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 → A4:2026 — change record for Table 41.3"
-            clause="Maximum Zs values in Tables 41.2, 41.3 and 41.4 have been recalculated to incorporate the voltage factor minimum Cmin = 0.95 in accordance with Appendix 14. The previous values in BS 7671:2018+A2:2022 (which did not explicitly apply Cmin) are no longer applicable for a design under A4:2026. Designers and inspectors should ensure they are using the current edition limits."
+            clause="Maximum Zs values in Tables 41.2, 41.3 and 41.4 have been recalculated to incorporate the voltage factor minimum Cmin = 0.95 in accordance with Appendix 3. The previous values in BS 7671:2018+A2:2022 (which did not explicitly apply Cmin) are no longer applicable for a design under A4:2026. Designers and inspectors should ensure they are using the current edition limits."
             meaning={
               <>
                 This is the formal change note that explains why the Table 41.3 numbers shifted between A2 and A4:2026. Pre-A4: max Zs = U0 / Ia = 230 / Ia. Post-A4: max Zs = U0 × Cmin / Ia = 230 × 0.95 / Ia = 218.5 / Ia. The 5 percent reduction is the Cmin factor working through. Designs done under A2 with the old (more permissive) limits are not automatically non-compliant — the old limits were valid at the time of design — but any new design or any redesign as part of an EICR remedial must use the A4:2026 numbers. The pre-A4 values like B32 max Zs = 1.37 Ω should now be regarded as obsolete for design purposes.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Tables 41.2, 41.3, 41.4. See also Appendix 14 for the Cmin derivation and the harmonisation rationale with HD 60364-4-41."
+            cite="Source: BS 7671:2018+A4:2026 Tables 41.2, 41.3, 41.4. See also Appendix 3 for the Cmin expression and the ESQCR note giving it the value 0.95."
           />
 
           <InlineCheck
@@ -714,11 +715,11 @@ export default function Sub2() {
 
           <KeyTakeaways
             points={[
-              "Cmin = 0.95 is the voltage factor minimum from BS 7671:2018+A4:2026 Appendix 14. It accounts for supply tolerance and source-impedance voltage drop during fault — the available driving voltage in the Zs check is U0 × Cmin = 218.5 V, not 230 V.",
+              "Cmin = 0.95 is the voltage factor minimum given in BS 7671:2018+A4:2026 Appendix 3. It accounts for supply tolerance and source-impedance voltage drop during fault — the available driving voltage in the Zs check is U0 × Cmin = 218.5 V, not 230 V.",
               "Reg 411.4.5 (TN systems): Zs × Ia ≤ U0 × Cmin. Rearranged: max Zs = U0 × Cmin / Ia = 218.5 / Ia. Table 41.3 is this equation pre-solved for common BS EN 60898 MCBs.",
               "A4:2026 made Cmin explicit and recalculated all Tables 41.2 / 41.3 / 41.4 — every limit is approximately 5 percent tighter than pre-A4. B32 went from 1.44 Ω to 1.37 Ω. C32 went from 0.72 Ω to 0.68 Ω. D32 went from 0.36 Ω to 0.34 Ω.",
               "Cmin appears ONCE — in the derivation of the Table 41.3 limit. Do NOT multiply your field design Zs by Cmin (that double-counts). Design Zs = Ze + (R1 + R2) at 70 degrees C, compared against the A4:2026 Table 41.3 limit.",
-              "Cmin applies to Zs calcs (low-voltage worst case); Cmax (1.05) applies to fault current calcs for thermal withstand (high-voltage worst case). Same supply, different worst cases for different design checks.",
+              "Cmin applies to Zs calcs (low-voltage worst case); a maximum voltage factor applies to fault current calcs for thermal withstand (high-voltage worst case). Same supply, different worst cases. Note BS 7671 gives Cmax as 1.1 and cites it only in Annex A722 — the 1.05 used in fault-current practice is the IEC 60909-0 value.",
               "The six-step design Zs method: source Ze → identify cable and route → cold (R1+R2) from OSG Table I1 → apply temperature factor → sum and compare against Table 41.3 → document the trace with citations.",
               "Pre-A4 Zs lookup apps and cheat-sheets that give the higher (e.g. 1.44 Ω B32) limits are now obsolete for design. Always confirm the tool you use is on the A4:2026 edition with the lower (1.37 Ω B32) values.",
               "For TN-C-S domestic supplies with no Form 1, use Ze = 0.35 Ω as the BS 7671 assumed maximum. Document the citation on the design pack so the EIC trace is intact.",

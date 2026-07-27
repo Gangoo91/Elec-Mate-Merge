@@ -671,7 +671,7 @@ const HNCModule3Section4_4 = () => {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>List all connected loads with their ratings</li>
-              <li>Apply diversity factors from BS 7671 Appendix 1 or experience</li>
+              <li>Apply diversity factors from IET On-Site Guide Appendix A or experience</li>
               <li>Sum the diversified loads</li>
               <li>Apply an overall building diversity factor if appropriate</li>
               <li>Convert to kVA using expected power factor</li>
@@ -946,7 +946,7 @@ const HNCModule3Section4_4 = () => {
               <>
                 Always size transformers/generators in kVA. Include √3 (1.732) in every three-phase
                 calculation. Convert kW to kVA using the load's expected pf. Apply diversity from
-                BS 7671 Appendix 1 to every load type. Add 20-25% headroom for growth.
+                the IET On-Site Guide Appendix A allowances to every load type. Add 20-25% headroom for growth.
               </>
             }
           />

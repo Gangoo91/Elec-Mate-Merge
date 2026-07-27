@@ -1,106 +1,103 @@
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import {
-  ArrowLeft,
-  TrendingUp,
-  Briefcase,
-  GraduationCap,
-  UserCheck,
-  HandHelping,
-  Calculator,
-  CreditCard,
-  FileText,
-} from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { BusinessCard } from '@/components/business-hub';
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.06 },
-  },
+  visible: { transition: { staggerChildren: 0.05 } },
 };
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0 },
+};
+
+interface SectionRow {
+  title: string;
+  description: string;
+  link: string;
+}
+
+interface SectionGroup {
+  eyebrow: string;
+  title: string;
+  rows: SectionRow[];
+}
+
+const GROUPS: SectionGroup[] = [
+  {
+    eyebrow: '01',
+    title: 'Foundations',
+    rows: [
+      {
+        title: 'Starting a Business',
+        description: 'Structure, registration, insurance and scheme membership — the right way round',
+        link: '/electrician/business-development/startup',
+      },
+      {
+        title: 'Tax & Finances',
+        description: 'What you owe, when you owe it, and what you can claim back',
+        link: '/electrician/business-development/tax-finances',
+      },
+      {
+        title: 'Business Documents',
+        description: 'Quotes, invoices, contracts and the paperwork that protects you',
+        link: '/electrician/business-development/templates',
+      },
+    ],
+  },
+  {
+    eyebrow: '02',
+    title: 'Building the Team',
+    rows: [
+      {
+        title: 'Onboarding Apprentices',
+        description: 'Recruiting, funding, wage rules and turning first-years into assets',
+        link: '/electrician/business-development/apprentices',
+      },
+      {
+        title: 'Onboarding Electricians',
+        description: 'Hiring qualified sparks — and keeping them',
+        link: '/electrician/business-development/electricians',
+      },
+    ],
+  },
+  {
+    eyebrow: '03',
+    title: 'Winning Work',
+    rows: [
+      {
+        title: 'Customer Acquisition',
+        description: 'Where the good clients come from, and how to keep them coming',
+        link: '/electrician/business-development/customers',
+      },
+      {
+        title: 'Growing Your Business',
+        description: 'Pricing, new services and scaling without losing your margin',
+        link: '/electrician/business-development/growth',
+      },
+    ],
+  },
+  {
+    eyebrow: '04',
+    title: 'Getting Paid',
+    rows: [
+      {
+        title: 'Debt Recovery',
+        description: 'Prevention, chasing letters and the legal route — in the right order',
+        link: '/electrician/business-development/debt-recovery',
+      },
+    ],
+  },
+];
 
 const BusinessDevelopment = () => {
   const navigate = useNavigate();
-
-  const businessSections = [
-    {
-      id: 1,
-      title: 'Starting a Business',
-      description: 'Essential guidance for establishing your electrical contracting business',
-      icon: Briefcase,
-      link: '/electrician/business-development/startup',
-      gradient: 'from-yellow-400 to-amber-500',
-    },
-    {
-      id: 2,
-      title: 'Onboarding Apprentices',
-      description: 'Best practices for recruiting, mentoring and developing apprentices',
-      icon: GraduationCap,
-      link: '/electrician/business-development/apprentices',
-      gradient: 'from-rose-400 to-pink-500',
-    },
-    {
-      id: 3,
-      title: 'Onboarding Electricians',
-      description: 'Strategies for recruiting, integrating and retaining qualified electricians',
-      icon: UserCheck,
-      link: '/electrician/business-development/electricians',
-      gradient: 'from-emerald-400 to-teal-500',
-    },
-    {
-      id: 4,
-      title: 'Growing Your Business',
-      description: 'Strategies for expanding, from marketing to diversifying services',
-      icon: TrendingUp,
-      link: '/electrician/business-development/growth',
-      gradient: 'from-green-400 to-emerald-500',
-    },
-    {
-      id: 5,
-      title: 'Customer Acquisition',
-      description: 'Effective methods to attract and retain clients for your services',
-      icon: HandHelping,
-      link: '/electrician/business-development/customers',
-      gradient: 'from-purple-400 to-violet-500',
-    },
-    {
-      id: 6,
-      title: 'Tax & Finances',
-      description: 'Financial management, tax obligations, and accounting best practices',
-      icon: Calculator,
-      link: '/electrician/business-development/tax-finances',
-      gradient: 'from-blue-400 to-blue-600',
-    },
-    {
-      id: 7,
-      title: 'Debt Recovery',
-      description: 'Strategies for managing late payments and protecting your cash flow',
-      icon: CreditCard,
-      link: '/electrician/business-development/debt-recovery',
-      gradient: 'from-orange-400 to-red-500',
-    },
-    {
-      id: 8,
-      title: 'Business Documents',
-      description:
-        'Guidance on professional quotes, invoices, contracts, and health & safety documents',
-      icon: FileText,
-      link: '/electrician/business-development/templates',
-      gradient: 'from-cyan-400 to-blue-500',
-    },
-  ];
-
   const canonical = `${window.location.origin}/electrician/business-development`;
 
   return (
-    <motion.div
-      className="bg-[#1a1a1a] min-h-screen"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div className="min-h-screen bg-[#0a0a0a]">
       <Helmet>
         <title>Business Development for Electricians | Elec-Mate</title>
         <meta
@@ -111,7 +108,7 @@ const BusinessDevelopment = () => {
       </Helmet>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+      <header className="sticky top-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16">
             <button
@@ -121,67 +118,80 @@ const BusinessDevelopment = () => {
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
-            <div className="flex-1">
-              <h1 className="text-lg sm:text-xl font-bold text-white">Start & Grow</h1>
-            </div>
+            <h1 className="text-[15px] font-semibold text-white tracking-tight">Start & Grow</h1>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <motion.section
-        className="border-b border-white/10 bg-gradient-to-b from-yellow-500/5 to-[#1a1a1a]"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        <div className="px-4 sm:px-6 py-8 sm:py-12">
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            <div className="p-4 bg-yellow-400/10 rounded-2xl border border-yellow-400/20">
-              <TrendingUp className="h-10 w-10 sm:h-12 sm:w-12 text-yellow-400" />
-            </div>
-            <div className="text-center sm:text-left">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                Business Development
-              </h2>
-              <p className="mt-2 text-base sm:text-lg text-white">
-                Resources and guidance to establish and grow your electrical contracting business
-              </p>
-            </div>
-          </div>
+      <main className="px-4 sm:px-6 pb-24 max-w-5xl mx-auto">
+        {/* Hero */}
+        <div className="pt-8 sm:pt-10 pb-6 sm:pb-8">
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
+            Business Hub
+          </p>
+          <h2 className="mt-1.5 text-3xl sm:text-4xl font-semibold text-white tracking-[-0.02em] leading-[1.05]">
+            Start & Grow
+          </h2>
+          <p className="mt-3 text-[13.5px] text-white/60 max-w-lg leading-relaxed">
+            The business side of the trade — from first registration to a firm that runs without
+            you on the tools every day.
+          </p>
         </div>
-      </motion.section>
 
-      {/* Cards Grid */}
-      <main className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Section groups */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6"
         >
-          {businessSections.map((section) => (
-            <BusinessCard
-              key={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              href={section.link}
-              gradient={section.gradient}
-            />
+          {GROUPS.map((group) => (
+            <motion.section key={group.eyebrow} variants={itemVariants} className="h-full">
+              <div className="h-full flex flex-col rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] overflow-hidden">
+                <div className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06]">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
+                    {group.eyebrow}
+                  </div>
+                  <h3 className="mt-1 text-[17px] font-semibold text-white tracking-tight">
+                    {group.title}
+                  </h3>
+                </div>
+                <div className="flex-1 divide-y divide-white/[0.06]">
+                  {group.rows.map((row) => (
+                    <button
+                      key={row.link}
+                      onClick={() => navigate(row.link)}
+                      className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 text-left hover:bg-white/[0.03] transition-colors touch-manipulation min-h-[44px]"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[14.5px] font-medium text-white group-hover:text-elec-yellow transition-colors">
+                          {row.title}
+                        </div>
+                        <div className="mt-0.5 text-[12px] text-white/60 leading-snug">
+                          {row.description}
+                        </div>
+                      </div>
+                      <span
+                        aria-hidden
+                        className="text-[13px] font-medium text-elec-yellow/70 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0"
+                      >
+                        {'→'}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.section>
           ))}
         </motion.div>
 
         {/* Disclaimer */}
-        <div className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/10">
-          <p className="text-xs text-white leading-relaxed">
-            The information provided is for general guidance only and does not constitute financial,
-            legal, or business advice. Always consult with qualified professionals regarding your
-            specific business circumstances.
-          </p>
-        </div>
+        <p className="mt-8 px-1 text-[11px] text-white/45 leading-relaxed">
+          General guidance, not financial or legal advice — always confirm your specific
+          circumstances with a qualified professional.
+        </p>
       </main>
-    </motion.div>
+    </div>
   );
 };
 

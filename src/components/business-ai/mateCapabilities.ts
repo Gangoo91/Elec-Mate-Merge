@@ -369,7 +369,7 @@ export const toolMetaMap: Record<string, ToolMeta> = {
   plan_my_day: {
     tag: 'Day plan',
     label: 'Planned the day',
-    route: '/electrician/install-planner',
+    route: '/electrician/circuit-designer',
     minutesSaved: 30,
   },
   get_route_to_job: {

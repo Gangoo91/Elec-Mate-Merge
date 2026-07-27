@@ -57,13 +57,25 @@ export async function verifyCitations(
   if (cited.length === 0) return { cited, unverified: [], clean: true };
 
   try {
-    // Check the exact numbers AND their parents in one query: a cited
-    // sub-clause (e.g. 411.3.3.1) counts as verified if its parent clause
-    // is a known number — the corpus doesn't enumerate every leaf.
+    // Check the exact numbers AND, for DEEP leaves only, their parents.
+    //
+    // The parent fallback exists because the corpus doesn't enumerate every
+    // leaf. But applied to 3-part citations it was blessing invented ones:
+    // "Reg 433.1.4" doesn't exist, yet its parent 433.1 does, so it passed
+    // verification and earned the green badge (real case, 2026-07-27 — the
+    // answer also invented a "20 A per mm²" rule to go with it). There are 587
+    // known 2-part parents, so that hole covered any fabricated sub-clause
+    // under any of them.
+    //
+    // Corpus counts justify the asymmetry: 3-part numbers ARE well enumerated
+    // (810 of them), so a real 3-part reg should be found exactly and needs no
+    // fallback. 4-part leaves are the ones genuinely liable to be missing, so
+    // they keep it. Net effect: fabricated sub-clauses get flagged, real deep
+    // sub-clauses still don't get falsely accused.
     const candidates = new Set<string>(cited);
     for (const c of cited) {
       const parts = c.split('.');
-      if (parts.length > 2) candidates.add(parts.slice(0, -1).join('.'));
+      if (parts.length > 3) candidates.add(parts.slice(0, -1).join('.'));
     }
 
     const { data, error } = await supabase
@@ -73,9 +85,14 @@ export async function verifyCitations(
     if (error) throw error;
 
     const known = new Set((data || []).map((r: { reg_number: string }) => r.reg_number));
-    const unverified = cited.filter(
-      (c) => !known.has(c) && !known.has(c.split('.').slice(0, -1).join('.'))
-    );
+    const unverified = cited.filter((c) => {
+      if (known.has(c)) return false;
+      // Parent fallback for deep leaves only — must mirror the candidate set
+      // built above, or we'd check a parent we never queried.
+      const parts = c.split('.');
+      if (parts.length > 3 && known.has(parts.slice(0, -1).join('.'))) return false;
+      return true;
+    });
 
     return { cited, unverified, clean: unverified.length === 0 };
   } catch (err) {
