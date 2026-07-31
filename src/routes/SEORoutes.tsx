@@ -6,10 +6,6 @@ import { LazyRoute } from '@/components/LazyRoute';
 // 340 routes
 
 const ConnectAIPage = lazy(() => import('@/pages/seo/ConnectAIPage'));
-const BestAIToolElectriciansPage = lazy(() => import('@/pages/seo/BestAIToolElectriciansPage'));
-const BestInvoiceAppPage = lazy(() => import('@/pages/seo/BestInvoiceAppPage'));
-const ElecMateVsElectricalOMPage = lazy(() => import('@/pages/seo/ElecMateVsElectricalOMPage'));
-const ElecMateVsSimplyEICRPage = lazy(() => import('@/pages/seo/ElecMateVsSimplyEICRPage'));
 const EighteenthEditionExamTipsPage = lazy(
   () => import('@/pages/seo/EighteenthEditionExamTipsPage')
 );
@@ -610,18 +606,10 @@ const WorkingAtHeightCoursePage = lazy(() => import('@/pages/seo/WorkingAtHeight
 const AFDDGuidePage = lazy(() => import('@/pages/seo/AFDDGuidePage'));
 const AIToolsForElectriciansPage = lazy(() => import('@/pages/seo/AIToolsForElectriciansPage'));
 const BathroomElectricalRegsPage = lazy(() => import('@/pages/seo/BathroomElectricalRegsPage'));
-const BestApprenticeAppPage = lazy(() => import('@/pages/seo/BestApprenticeAppPage'));
-const BestCableSizingAppPage = lazy(() => import('@/pages/seo/BestCableSizingAppPage'));
-const BestEICRSoftwareUKPage = lazy(() => import('@/pages/seo/BestEICRSoftwareUKPage'));
-const BestElectricalTrainingAppPage = lazy(
-  () => import('@/pages/seo/BestElectricalTrainingAppPage')
-);
-const BestQuotingAppPage = lazy(() => import('@/pages/seo/BestQuotingAppPage'));
 const BS7671RunThroughPage = lazy(() => import('@/pages/seo/BS7671RunThroughPage'));
 const CableSizingGuideBS7671Page = lazy(() => import('@/pages/seo/CableSizingGuideBS7671Page'));
 const CDMRegulationsCoursePage = lazy(() => import('@/pages/seo/CDMRegulationsCoursePage'));
 const ConsumerUnitChangePage = lazy(() => import('@/pages/seo/ConsumerUnitChangePage'));
-const ElecMateVsEasyEICRPage = lazy(() => import('@/pages/seo/ElecMateVsEasyEICRPage'));
 const ElectricalBIMGuidePage = lazy(() => import('@/pages/seo/ElectricalBIMGuidePage'));
 const ElectricalBoardTypesPage = lazy(() => import('@/pages/seo/ElectricalBoardTypesPage'));
 const ElectricalConduitsGuidePage = lazy(() => import('@/pages/seo/ElectricalConduitsGuidePage'));
@@ -646,7 +634,6 @@ const ElectricalTestCertificatePage = lazy(
 const ElectricianAccountingSoftwarePage = lazy(
   () => import('@/pages/seo/ElectricianAccountingSoftwarePage')
 );
-const ElectricianAppForAndroidPage = lazy(() => import('@/pages/seo/ElectricianAppForAndroidPage'));
 const EmergencyElectricalRepairsPage = lazy(
   () => import('@/pages/seo/EmergencyElectricalRepairsPage')
 );
@@ -2266,11 +2253,9 @@ const ApprenticePortfolioGuidePage = lazy(() => import('@/pages/seo/ApprenticePo
 const ApprenticeTrainingPage = lazy(() => import('@/pages/seo/ApprenticeTrainingPage'));
 const BMSCoursePage = lazy(() => import('@/pages/seo/BMSCoursePage'));
 const BS7671ObservationCodesPage = lazy(() => import('@/pages/seo/BS7671ObservationCodesPage'));
-const BestElectricianAppPage = lazy(() => import('@/pages/seo/BestElectricianAppPage'));
 const CableSizingCalculatorPage = lazy(() => import('@/pages/seo/CableSizingCalculatorPage'));
 const CashFlowPlannerPage = lazy(() => import('@/pages/seo/CashFlowPlannerPage'));
 const CityGuilds2391Page = lazy(() => import('@/pages/seo/CityGuilds2391Page'));
-const CompareHubPage = lazy(() => import('@/pages/seo/CompareHubPage'));
 const ConduitFillCalculatorPage = lazy(() => import('@/pages/seo/ConduitFillCalculatorPage'));
 const DiversityFactorCalculatorPage = lazy(
   () => import('@/pages/seo/DiversityFactorCalculatorPage')
@@ -2279,19 +2264,6 @@ const EarthLoopImpedanceCalculatorPage = lazy(
   () => import('@/pages/seo/EarthLoopImpedanceCalculatorPage')
 );
 const EighteenthEditionCoursePage = lazy(() => import('@/pages/seo/EighteenthEditionCoursePage'));
-const ElecMateVsCertsAppPage = lazy(() => import('@/pages/seo/ElecMateVsCertsAppPage'));
-const ElecMateVsICertifiPage = lazy(() => import('@/pages/seo/ElecMateVsICertifiPage'));
-const ElecMateVsTradifyPage = lazy(() => import('@/pages/seo/ElecMateVsTradifyPage'));
-const ElecMateVsPoweredNowPage = lazy(() => import('@/pages/seo/ElecMateVsPoweredNowPage'));
-const ElecMateVsCertSuitePage = lazy(() => import('@/pages/seo/ElecMateVsCertSuitePage'));
-const ElecMateVsJobberPage = lazy(() => import('@/pages/seo/ElecMateVsJobberPage'));
-const ElecMateVsServiceM8Page = lazy(() => import('@/pages/seo/ElecMateVsServiceM8Page'));
-const ElecMateVsTradeCertPage = lazy(() => import('@/pages/seo/ElecMateVsTradeCertPage'));
-const ElecMateVsSpeedCertPage = lazy(() => import('@/pages/seo/ElecMateVsSpeedCertPage'));
-const ElecMateVsNapitFastTestPage = lazy(() => import('@/pages/seo/ElecMateVsNapitFastTestPage'));
-const ElecMateVsSimproPage = lazy(() => import('@/pages/seo/ElecMateVsSimproPage'));
-const ElecMateVsCommusoftPage = lazy(() => import('@/pages/seo/ElecMateVsCommusoftPage'));
-const ElecMateVsRamsAppsPage = lazy(() => import('@/pages/seo/ElecMateVsRamsAppsPage'));
 const ElectricalQuotingAppPage = lazy(() => import('@/pages/seo/ElectricalQuotingAppPage'));
 const ElectricalTestingCalculatorsPage = lazy(
   () => import('@/pages/seo/ElectricalTestingCalculatorsPage')
@@ -2479,38 +2451,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ConnectAIPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/best-ai-tool-electricians"
-        element={
-          <LazyRoute>
-            <BestAIToolElectriciansPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/best-invoice-app-electricians"
-        element={
-          <LazyRoute>
-            <BestInvoiceAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-electrical-om"
-        element={
-          <LazyRoute>
-            <ElecMateVsElectricalOMPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-simply-eicr"
-        element={
-          <LazyRoute>
-            <ElecMateVsSimplyEICRPage />
           </LazyRoute>
         }
       />
@@ -5581,46 +5521,6 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/compare/best-apprentice-app"
-        element={
-          <LazyRoute>
-            <BestApprenticeAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/best-cable-sizing-app"
-        element={
-          <LazyRoute>
-            <BestCableSizingAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/best-eicr-software-uk"
-        element={
-          <LazyRoute>
-            <BestEICRSoftwareUKPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/best-electrical-training-app"
-        element={
-          <LazyRoute>
-            <BestElectricalTrainingAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/best-quoting-app-electricians"
-        element={
-          <LazyRoute>
-            <BestQuotingAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
         path="/guides/bs-7671-run-through"
         element={
           <LazyRoute>
@@ -5649,14 +5549,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ConsumerUnitChangePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-easy-eicr"
-        element={
-          <LazyRoute>
-            <ElecMateVsEasyEICRPage />
           </LazyRoute>
         }
       />
@@ -5769,14 +5661,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ElectricianAccountingSoftwarePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/electrician-app-android"
-        element={
-          <LazyRoute>
-            <ElectricianAppForAndroidPage />
           </LazyRoute>
         }
       />
@@ -10917,22 +10801,6 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/best-electrician-app"
-        element={
-          <LazyRoute>
-            <BestElectricianAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare"
-        element={
-          <LazyRoute>
-            <CompareHubPage />
-          </LazyRoute>
-        }
-      />
-      <Route
         path="/tools/cable-sizing-calculator"
         element={
           <LazyRoute>
@@ -10985,110 +10853,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <EighteenthEditionCoursePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/elec-mate-vs-certs-app"
-        element={
-          <LazyRoute>
-            <ElecMateVsCertsAppPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/elec-mate-vs-i-certifi"
-        element={
-          <LazyRoute>
-            <ElecMateVsICertifiPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-tradify"
-        element={
-          <LazyRoute>
-            <ElecMateVsTradifyPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-powered-now"
-        element={
-          <LazyRoute>
-            <ElecMateVsPoweredNowPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-certsuite"
-        element={
-          <LazyRoute>
-            <ElecMateVsCertSuitePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-jobber"
-        element={
-          <LazyRoute>
-            <ElecMateVsJobberPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-servicem8"
-        element={
-          <LazyRoute>
-            <ElecMateVsServiceM8Page />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-tradecert"
-        element={
-          <LazyRoute>
-            <ElecMateVsTradeCertPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-speedcert"
-        element={
-          <LazyRoute>
-            <ElecMateVsSpeedCertPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-napit-fasttest"
-        element={
-          <LazyRoute>
-            <ElecMateVsNapitFastTestPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-simpro"
-        element={
-          <LazyRoute>
-            <ElecMateVsSimproPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/elec-mate-vs-commusoft"
-        element={
-          <LazyRoute>
-            <ElecMateVsCommusoftPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/compare/best-rams-app-electricians"
-        element={
-          <LazyRoute>
-            <ElecMateVsRamsAppsPage />
           </LazyRoute>
         }
       />

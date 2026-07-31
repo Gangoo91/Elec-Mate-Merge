@@ -627,14 +627,6 @@ export default function PATTestingGuideUKPage() {
           icon: Receipt,
           category: 'Business Tools',
         },
-        {
-          href: '/best-electrician-app-uk',
-          title: 'Best Electrician App UK',
-          description:
-            'Compare electrician apps for certificates, testing, AI tools, quoting, and business management.',
-          icon: Zap,
-          category: 'Comparison',
-        },
       ]}
       ctaHeading="Manage PAT Testing With Elec-Mate"
       ctaSubheading="Digital PAT certificates, customer management, quoting, invoicing, and AI-powered tools — everything you need to run a profitable PAT testing business. Try free for 7 days."

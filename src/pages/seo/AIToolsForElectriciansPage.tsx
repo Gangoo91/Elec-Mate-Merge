@@ -653,14 +653,6 @@ export default function AIToolsForElectriciansPage() {
           icon: FileText,
           category: 'Health & Safety',
         },
-        {
-          href: '/best-electrician-app',
-          title: 'Best Electrician App UK',
-          description:
-            'Compare electrician apps for certificates, testing, AI tools, quoting, and business management.',
-          icon: Sparkles,
-          category: 'Comparison',
-        },
       ]}
       ctaHeading="Try Elec-Mate's AI Tools Free for 7 Days"
       ctaSubheading="8 AI agents, 12 AI tools, certificates, calculators, quoting, invoicing — everything an electrician needs in one app. No charge until day 8."

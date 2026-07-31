@@ -154,6 +154,47 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('User authenticated:', user.id);
 
     // ========================================================================
+    // STEP 2.35: Cancel-flow founder message (replaces the mailto: black hole
+    // — message is already persisted to cancel_survey_responses by the client)
+    // ========================================================================
+    if (body.founderContactMode) {
+      const fcMessage = String(body.message || '').slice(0, 4000);
+      const fcReason = String(body.reason || 'unknown').slice(0, 40);
+      const fcTier = String(body.tier || '').slice(0, 40);
+
+      const { data: fcProfile } = await supabaseClient
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .maybeSingle();
+      const fcName = fcProfile?.full_name || user.email || 'A user';
+
+      const fcHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
+          <p><strong>${fcName}</strong> (${user.email || 'no email'}) wrote from the cancel flow:</p>
+          <blockquote style="border-left: 3px solid #FACC15; margin: 16px 0; padding: 8px 16px; background: #fafafa; white-space: pre-line;">${fcMessage || '(no message)'}</blockquote>
+          <p style="color:#555; font-size: 13px;">Reason: ${fcReason}${fcTier ? ` · Tier: ${fcTier}` : ''} · User: ${user.id}</p>
+          <p style="color:#555; font-size: 13px;">Reply to this email and it goes straight to them.</p>
+        </div>`;
+
+      const { data: fcSend, error: fcError } = await resend.emails.send({
+        from: 'Elec-Mate <noreply@elec-mate.com>',
+        to: ['founder@elec-mate.com'],
+        replyTo: user.email || undefined,
+        subject: `Cancel flow — ${fcReason} — ${fcName}`,
+        html: fcHtml,
+        text: htmlToPlainText(fcHtml),
+      });
+      if (fcError) {
+        throw new Error(`Founder message failed: ${fcError.message}`);
+      }
+      return new Response(JSON.stringify({ success: true, emailId: fcSend?.id }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // ========================================================================
     // STEP 2.4: Fire alarm log book mode (ELE-1396)
     // Emails the client-side Annex H PDF to the responsible person. Same
     // slot-scarcity reasoning as the danger-notice mode below.

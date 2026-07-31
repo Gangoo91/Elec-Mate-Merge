@@ -571,7 +571,6 @@ export default function ApprenticeTrainingPage() {
             <SEOInternalLink href="/guides/apprentice-flashcards-tool">Apprentice Flashcards Tool</SEOInternalLink>
             <SEOInternalLink href="/apprentice-progression-guide">Electrical Apprentice Career Progression</SEOInternalLink>
             <SEOInternalLink href="/guides/apprentice-toolbox-guide">Apprentice Toolbox Guide</SEOInternalLink>
-            <SEOInternalLink href="/compare/best-apprentice-app">Best Apprentice App 2026</SEOInternalLink>
             <SEOInternalLink href="/guides/on-the-job-training-guide">On-the-Job Training Guide</SEOInternalLink>
             <SEOInternalLink href="/guides/year-1-apprentice-guide">Year 1 Electrical Apprentice</SEOInternalLink>
           </div>

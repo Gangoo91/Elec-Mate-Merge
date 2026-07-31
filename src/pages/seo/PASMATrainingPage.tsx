@@ -470,9 +470,6 @@ export default function PASMATrainingPage() {
             <SEOInternalLink href="/guides/on-the-job-training-guide">
               On-the-Job Training Guide
             </SEOInternalLink>
-            <SEOInternalLink href="/guides/best-electrical-training-app">
-              Best Electrical Training App UK 2026
-            </SEOInternalLink>
             <SEOInternalLink href="/guides/off-job-training-hours">
               Off-the-Job Training Hours
             </SEOInternalLink>

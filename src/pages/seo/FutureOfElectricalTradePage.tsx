@@ -479,11 +479,8 @@ export default function FutureOfElectricalTradePage() {
                     <span>
                       <strong className="text-yellow-400">Adopt digital tools</strong> — Move from
                       paper certificates to digital. Use apps for quoting, invoicing, and job
-                      management. Embrace AI tools that reduce your admin time. The{' '}
-                      <SEOInternalLink href="/best-electrician-app">
-                        right app
-                      </SEOInternalLink>{' '}
-                      can save you 5-10 hours per week on paperwork.
+                      management. Embrace AI tools that reduce your admin time. The right app can save
+                      you 5-10 hours per week on paperwork.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">

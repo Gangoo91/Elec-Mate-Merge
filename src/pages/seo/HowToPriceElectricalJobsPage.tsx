@@ -628,14 +628,6 @@ export default function HowToPriceElectricalJobsPage() {
           icon: TrendingUp,
           category: 'Business Tools',
         },
-        {
-          href: '/best-electrician-app-uk',
-          title: 'Best Electrician App UK',
-          description:
-            'Compare electrician apps for certificates, quoting, invoicing, AI tools, and business management.',
-          icon: Zap,
-          category: 'Comparison',
-        },
       ]}
       ctaHeading="Price Every Job Profitably With Elec-Mate"
       ctaSubheading="AI cost estimation, professional quoting, invoicing, job profitability tracking, and cash flow planning — all the business tools an electrician needs. Try free for 7 days."

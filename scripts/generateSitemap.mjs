@@ -81,7 +81,7 @@ const STATIC_PAGES = [
   { url: '/guides', changefreq: 'weekly', priority: PRIORITY.HUB },
   { url: '/tools', changefreq: 'weekly', priority: PRIORITY.HUB },
   { url: '/training', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/compare', changefreq: 'weekly', priority: PRIORITY.HUB },
+  // /compare hub removed 2026-07-31 (ELE-1440) — do not re-add
   { url: '/privacy', changefreq: 'monthly', priority: PRIORITY.OTHER },
   { url: '/terms', changefreq: 'monthly', priority: PRIORITY.OTHER },
   { url: '/cookies', changefreq: 'monthly', priority: PRIORITY.OTHER },

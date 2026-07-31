@@ -89,16 +89,6 @@ const toolCollections = [
       { href: '/rams-generator', label: 'RAMS Generator' },
     ],
   },
-  {
-    heading: 'Learning and company tools',
-    description: 'Support apprentices, teams, and wider business workflows from the same platform.',
-    links: [
-      { href: '/study-centre', label: 'Study Centre' },
-      { href: '/apprentice-training', label: 'Electrical Apprentice Training' },
-      { href: '/tools/employer-electrical-platform', label: 'Employer Electrical Platform' },
-      { href: '/best-electrician-app', label: 'Why Electricians Choose Elec-Mate' },
-    ],
-  },
 ];
 
 const faqs = [

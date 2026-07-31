@@ -1005,7 +1005,7 @@ export const UK_ELECTRICAL_SKILLS = {
       'Socket & See Certification',
       'Megger ProInstall',
       'Regs4Sparks',
-      'Electrical OM (Trimble)',
+      'ElectricalOM',
       'On-Screen Takeoff',
       'Bluebeam Revu',
       'Microsoft Office/365',

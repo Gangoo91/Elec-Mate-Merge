@@ -608,7 +608,6 @@ export default function AIElectricianToolsPage() {
             <SEOInternalLink href="/tools/cv-builder-electrician">CV Builder for Electricians</SEOInternalLink>
             <SEOInternalLink href="/guides/commercial-electrician-guide">Commercial Electrician Guide</SEOInternalLink>
             <SEOInternalLink href="/guides/domestic-electrician-guide">Domestic Electrician Guide UK 2026</SEOInternalLink>
-            <SEOInternalLink href="/compare/electrician-app-android">Best Electrician App for Android 2026</SEOInternalLink>
             <SEOInternalLink href="/tools/electrician-app-iphone">Best Electrician App for iPhone 2026</SEOInternalLink>
           </div>
         </div>

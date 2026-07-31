@@ -136,9 +136,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 - [Battery Storage Installation](https://www.elec-mate.com/guides/battery-storage-installation) — Battery Storage Installation
 - [Become Electrician No Experience](https://www.elec-mate.com/guides/become-electrician-no-experience) — How to Become an Electrician with No Experience
 - [Best Cable Detector 2026](https://www.elec-mate.com/guides/best-cable-detector-2026) — Best Cable Detector 2026
-- [Best Eicr Software Uk](https://www.elec-mate.com/guides/best-eicr-software-uk) — Best EICR Software UK 2026
 - [Best Electrical Books](https://www.elec-mate.com/guides/best-electrical-books) — Best Electrical Books 2026
-- [Best Electrical Training App](https://www.elec-mate.com/guides/best-electrical-training-app) — Best Electrical Training App UK 2026
 - [Best Label Printer Electricians](https://www.elec-mate.com/guides/best-label-printer-electricians) — Best Label Printer for Electricians 2026
 - [Best Multifunction Tester 2026](https://www.elec-mate.com/guides/best-multifunction-tester-2026) — Best Multifunction Tester 2026
 - [Best Thermal Imaging Camera Electricians](https://www.elec-mate.com/guides/best-thermal-imaging-camera-electricians) — Best Thermal Imaging Camera for Electricians 2026
@@ -1114,20 +1112,9 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 
 ### Comparisons (14)
 
-- [Best Ai Tool Electricians](https://www.elec-mate.com/compare/best-ai-tool-electricians) — AI for Electricians: 5 Tools Tested 2026
-- [Best Apprentice App](https://www.elec-mate.com/compare/best-apprentice-app) — Best Apprentice App 2026
-- [Best Cable Sizing App](https://www.elec-mate.com/compare/best-cable-sizing-app) — Best Cable Sizing App 2026
-- [Best Invoice App Electricians](https://www.elec-mate.com/compare/best-invoice-app-electricians) — Best Invoice App for Electricians 2026
-- [Best Quoting App Electricians](https://www.elec-mate.com/compare/best-quoting-app-electricians) — Best Quoting App for Electricians 2026
-- [Checkatrade Vs Mybuilder Vs Bark](https://www.elec-mate.com/compare/checkatrade-vs-mybuilder-vs-bark) — Checkatrade vs MyBuilder vs Bark 2026
-- [Elec Mate Vs Easy Eicr](https://www.elec-mate.com/compare/elec-mate-vs-easy-eicr) — Elec-Mate vs Easy EICR 2026
-- [Elec Mate Vs Electrical Om](https://www.elec-mate.com/compare/elec-mate-vs-electrical-om) — Elec-Mate vs Electrical OM
-- [Elec Mate Vs Simply Eicr](https://www.elec-mate.com/compare/elec-mate-vs-simply-eicr) — Elec-Mate vs SimplyEICR
-- [Electrician App Android](https://www.elec-mate.com/compare/electrician-app-android) — Android Electrician Apps: 4 Tools Compared 2026
 - [Niceic Vs Napit Comparison](https://www.elec-mate.com/niceic-vs-napit-comparison) — NICEIC vs NAPIT
 - [Solar Pv System Design](https://www.elec-mate.com/solar-pv-system-design) — Solar PV System Design UK
 - [Solar Pv System Sizing](https://www.elec-mate.com/solar-pv-system-sizing) — Solar PV System Sizing — UK Guide 2024
-- [Compare](https://www.elec-mate.com/compare) — Compare Electrician Apps
 
 ### Hub pages (52)
 
@@ -1149,7 +1136,6 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 - [Ai Report Writer](https://www.elec-mate.com/tools/ai-report-writer) — AI Report Writer
 - [Ai Tutor](https://www.elec-mate.com/tools/ai-tutor) — AI Tutor for Electricians
 - [Ai Wiring Instructions](https://www.elec-mate.com/tools/ai-wiring-instructions) — AI Wiring Instructions
-- [Best Electrician App](https://www.elec-mate.com/best-electrician-app) — Best Electrician App UK 2026
 - [Board Scanner](https://www.elec-mate.com/tools/board-scanner) — AI Board Scanner
 - [Building Management System](https://www.elec-mate.com/building-management-system) — Building Management Systems (BMS) UK
 - [Business Analytics Electrician](https://www.elec-mate.com/tools/business-analytics-electrician) — Business Analytics for Electricians
@@ -1160,8 +1146,6 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 - [Customer Management Electrician](https://www.elec-mate.com/tools/customer-management-electrician) — Customer Management for Electricians
 - [Customer Reviews Electrician](https://www.elec-mate.com/customer-reviews-electrician) — Getting Customer Reviews as an Electrician UK
 - [Elecid Professional Card](https://www.elec-mate.com/tools/elecid-professional-card) — ElecID Professional Card
-- [Elec Mate Vs Certs App](https://www.elec-mate.com/elec-mate-vs-certs-app) — Elec-Mate vs CertsApp 2026
-- [Elec Mate Vs I Certifi](https://www.elec-mate.com/elec-mate-vs-i-certifi) — Elec-Mate vs iCertifi 2026
 - [Electrical App With Ai](https://www.elec-mate.com/tools/electrical-app-with-ai) — Electrical App with AI
 - [Electrical Apprenticeship Apply](https://www.elec-mate.com/electrical-apprenticeship-apply) — How to Apply for an Electrical Apprenticeship UK — Level 2, Level 3, ECS Card
 - [Electrical Business Partnership](https://www.elec-mate.com/electrical-business-partnership) — Electrical Business Partnership UK

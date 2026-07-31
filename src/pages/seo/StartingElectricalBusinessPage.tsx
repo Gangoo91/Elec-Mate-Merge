@@ -766,14 +766,6 @@ export default function StartingElectricalBusinessPage() {
           icon: TrendingUp,
           category: 'Business Tools',
         },
-        {
-          href: '/best-electrician-app-uk',
-          title: 'Best Electrician App UK',
-          description:
-            'Compare electrician apps for certificates, AI tools, quoting, invoicing, and business management.',
-          icon: Zap,
-          category: 'Comparison',
-        },
       ]}
       ctaHeading="Everything Your New Business Needs — In One App"
       ctaSubheading="Certificates, 5 AI agents, quoting, invoicing, expense tracking, customer management, cash flow planning, and calculators — all in one subscription. Start your 7-day free trial."

@@ -61,6 +61,24 @@ interface CancelFlowProps {
 }
 
 // ─── Copy / data ────────────────────────────────────────────────────────
+
+/** Structured follow-ups per reason — chips beat free text for analysis.
+    The chosen chip is prefixed into reason_detail so downstream analysis
+    (weekly churn digest) can aggregate without NLP. */
+const REASON_CHIPS: Record<string, { prompt: string; options: string[] }> = {
+  switching: {
+    prompt: 'Which app are you moving to?',
+    options: ['iCertifi', 'CertSuite (Tysoft)', 'NAPIT EasyCert', 'iCert Mobile', 'Paper certs', 'Other'],
+  },
+  too_expensive: {
+    prompt: 'What would feel fair?',
+    options: ['About half the price', 'Pay per certificate', 'Free tier + paid extras', "Wouldn't pay at any price"],
+  },
+  not_using: {
+    prompt: 'What got in the way?',
+    options: ['Work changed / less certs', 'Never got set up properly', 'Only needed it once', 'Too complicated'],
+  },
+};
 const REASONS: { id: Reason; label: string; hint: string }[] = [
   {
     id: 'too_expensive',
@@ -148,6 +166,8 @@ export function CancelFlow({
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [reason, setReason] = useState<Reason | null>(null);
   const [detail, setDetail] = useState('');
+  const [reasonChip, setReasonChip] = useState<string | null>(null);
+  const [founderMsg, setFounderMsg] = useState('');
   const [surveyId, setSurveyId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -201,7 +221,8 @@ export function CancelFlow({
         .insert({
           user_id: user.id,
           reason,
-          reason_detail: detail.trim() || null,
+          reason_detail:
+            [reasonChip, detail.trim()].filter(Boolean).join(' — ') || null,
           offered_intervention: offered,
           subscription_tier: tier ?? null,
           subscription_id: subscriptionId,
@@ -211,6 +232,7 @@ export function CancelFlow({
       if (error) throw error;
 
       setSurveyId(inserted?.id ?? null);
+      setFounderMsg(detail.trim());
       setStep(2);
     } catch (err) {
       console.error('[CancelFlow] reason save failed', err);
@@ -256,25 +278,55 @@ export function CancelFlow({
   };
 
   // ── Step 2 action B: message founder ─────────────────────────────────
-  const handleMessageFounder = () => {
-    const subject = encodeURIComponent(
-      reason === 'bug' ? "I'm hitting a bug" : 'Quick one before I cancel'
-    );
-    const body = encodeURIComponent(
-      `Hi Andrew,\n\n${detail ? detail + '\n\n' : ''}—\nSent from the Elec-Mate cancel flow.`
-    );
-    window.location.href = `mailto:founder@elec-mate.com?subject=${subject}&body=${body}`;
-
-    // Mark the survey as a "stayed via founder message" so we can follow up.
-    if (surveyId) {
-      void supabase
-        .from('cancel_survey_responses')
-        .update({ outcome: 'stayed', outcome_at: new Date().toISOString() })
-        .eq('id', surveyId);
+  // In-app send, not mailto: the message is saved to the survey row FIRST so
+  // it can never be lost (mailto silently no-ops without a mail client — we
+  // lost a paying customer's bug report that way, July 2026).
+  const handleMessageFounder = async () => {
+    const message = founderMsg.trim();
+    if (reason === 'bug' && message.length < 5) {
+      toast({
+        title: 'Tell us what broke',
+        description: 'A sentence is enough — it goes straight to Andrew.',
+        variant: 'destructive',
+      });
+      return;
     }
-    trackRetentionOfferAccepted({ offer: 'founder_message' });
-    onStayed?.();
-    resetAndClose();
+    setIsSubmitting(true);
+    try {
+      // 1. The message lives in the database whatever happens next
+      if (surveyId) {
+        await supabase
+          .from('cancel_survey_responses')
+          .update({
+            reason_detail: message || null,
+            outcome: 'stayed',
+            outcome_at: new Date().toISOString(),
+          })
+          .eq('id', surveyId);
+      }
+      // 2. Email Andrew — reply-to is the user, so replies just work
+      const { error } = await supabase.functions.invoke('send-certificate-resend', {
+        body: { founderContactMode: true, message, reason: reason ?? 'unknown', tier: tier ?? '' },
+      });
+      if (error) throw new Error(error.message);
+
+      toast({
+        title: 'Sent to Andrew',
+        description: 'He replies personally, usually the same day.',
+      });
+      trackRetentionOfferAccepted({ offer: 'founder_message' });
+      onStayed?.();
+      resetAndClose();
+    } catch (err) {
+      console.error('[CancelFlow] founder message failed', err);
+      toast({
+        title: 'Could not send',
+        description: 'Email founder@elec-mate.com directly and Andrew will pick it up.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // ── Step 3: actually cancel ──────────────────────────────────────────
@@ -338,7 +390,10 @@ export function CancelFlow({
                 <button
                   key={r.id}
                   type="button"
-                  onClick={() => setReason(r.id)}
+                  onClick={() => {
+                    setReason(r.id);
+                    setReasonChip(null);
+                  }}
                   className={cn(
                     'w-full touch-manipulation rounded-2xl border p-4 text-left transition-all',
                     active
@@ -360,10 +415,36 @@ export function CancelFlow({
             })}
           </div>
 
+          {reason && REASON_CHIPS[reason] && (
+            <div className="mt-4">
+              <p className="mb-2 text-[13px] font-medium text-white/80">
+                {REASON_CHIPS[reason].prompt}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {REASON_CHIPS[reason].options.map((opt) => (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => setReasonChip(reasonChip === opt ? null : opt)}
+                    className={cn(
+                      'h-11 px-3.5 rounded-xl text-[13px] font-medium touch-manipulation transition-colors border',
+                      reasonChip === opt
+                        ? 'bg-yellow-400/[0.12] text-yellow-300 border-yellow-400/60'
+                        : 'bg-white/[0.04] text-white border-white/[0.12] hover:border-white/25'
+                    )}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {(reason === 'missing_feature' ||
             reason === 'switching' ||
             reason === 'bug' ||
-            reason === 'other') && (
+            reason === 'other' ||
+            (reason && reasonChip === 'Other')) && (
             <div className="mt-4">
               <label
                 htmlFor="cancel-detail"
@@ -418,10 +499,23 @@ export function CancelFlow({
                 <div className="flex-1">
                   <p className="text-[15px] font-semibold text-white">Message the founder</p>
                   <p className="mt-1 text-[13px] leading-relaxed text-white/65">
-                    Opens your email app with a pre-filled note to founder@elec-mate.com.
+                    Goes straight to Andrew — replies come from him, not a queue.
                   </p>
                 </div>
               </div>
+              <textarea
+                value={founderMsg}
+                onChange={(e) => setFounderMsg(e.target.value)}
+                placeholder={
+                  reason === 'bug'
+                    ? 'What broke? Where were you in the app when it happened?'
+                    : "What's on your mind?"
+                }
+                className="mt-4 w-full min-h-[110px] rounded-xl bg-white/[0.08] border border-white/[0.16] px-4 py-3 text-[15px] text-white placeholder:text-white/45 outline-none focus:border-yellow-500/60 touch-manipulation"
+              />
+              <p className="mt-2 text-[11.5px] text-white/45">
+                Or email founder@elec-mate.com directly if you prefer.
+              </p>
             </div>
           </StepShell>
         );
@@ -549,9 +643,9 @@ export function CancelFlow({
             <Button
               onClick={handleMessageFounder}
               disabled={isSubmitting}
-              className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400"
+              className="h-12 touch-manipulation rounded-2xl bg-yellow-500 px-6 text-[14px] font-bold text-black hover:bg-yellow-400 disabled:opacity-50"
             >
-              Message Andrew
+              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Send to Andrew'}
             </Button>
           ) : (
             <Button

@@ -125,13 +125,6 @@ const relatedPages: RelatedPage[] = [
     icon: FileCheck2,
     category: 'Guide',
   },
-  {
-    href: '/guides/best-eicr-software-uk',
-    title: 'Best EICR Software UK',
-    description: 'Comparison of the top EICR and electrical certificate apps for UK electricians.',
-    icon: Search,
-    category: 'Comparison',
-  },
 ];
 
 // -------------------------------------------------------------------

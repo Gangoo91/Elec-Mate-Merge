@@ -106,15 +106,6 @@ const trainingCollections = [
     ],
   },
   {
-    heading: 'Study and progression',
-    links: [
-      { href: '/apprentice-portfolio-guide', label: 'Apprentice Portfolio' },
-      { href: '/study-centre', label: 'Study Centre' },
-      { href: '/ai-electrician-tools', label: 'AI Learning Tools' },
-      { href: '/best-electrician-app', label: 'Best Electrician App Overview' },
-    ],
-  },
-  {
     heading: 'Emerging topics',
     links: [
       { href: '/guides/ev-charging-regulations', label: 'EV Charging (Reg 722)' },

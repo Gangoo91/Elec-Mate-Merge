@@ -419,11 +419,8 @@ const sections = [
         <p>
           Compounded across a typical working week, these savings translate to approximately 4 to 6
           additional billable hours. At an average day rate of £300 to £400, that is £300 to £500
-          per week in recovered time — significantly more than the cost of an{' '}
-          <SEOInternalLink href="/best-electrician-app">
-            Elec-Mate subscription
-          </SEOInternalLink>
-          .
+          per week in recovered time — significantly more than the cost of an Elec-Mate
+          subscription.
         </p>
       </>
     ),

@@ -177,7 +177,6 @@ const guideCollections = [
         label: 'Starting an Electrical Business',
       },
       { href: '/guides/electrician-insurance-uk', label: 'Electrician Insurance UK' },
-      { href: '/compare/best-invoice-app-electricians', label: 'Best Invoice Apps Compared' },
     ],
   },
   {

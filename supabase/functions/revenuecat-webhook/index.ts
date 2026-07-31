@@ -122,6 +122,23 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
+    // Durable event log — feeds the weekly churn digest's app-store column.
+    // Non-blocking: a log failure must never affect billing state processing.
+    if (['CANCELLATION', 'UNCANCELLATION', 'EXPIRATION', 'INITIAL_PURCHASE'].includes(type)) {
+      try {
+        const { error: evtErr } = await supabase.from('billing_events').insert({
+          user_id: app_user_id && !app_user_id.startsWith('$RCAnonymousID') ? app_user_id : null,
+          source: 'revenuecat',
+          event_type: type,
+          store: store ?? '',
+          product_id: product_id ?? '',
+        });
+        if (evtErr) console.warn('billing_events log failed (non-blocking):', evtErr);
+      } catch (evtEx) {
+        console.warn('billing_events log threw (non-blocking):', evtEx);
+      }
+    }
+
     // Determine subscription state based on event type
     // See: https://www.revenuecat.com/docs/integrations/webhooks/event-types-and-fields
     const activeEvents = ['INITIAL_PURCHASE', 'RENEWAL', 'PRODUCT_CHANGE', 'UNCANCELLATION'];

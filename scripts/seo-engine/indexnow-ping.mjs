@@ -92,7 +92,6 @@ if (FROM_FILE) {
     '/guides/bs-7671-a4-2026-eic-model-form',
     '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
     '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
-    '/best-electrician-app',
     '/am2-exam-preparation',
     '/electrical-testing-calculators',
     '/tools',

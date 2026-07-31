@@ -143,24 +143,6 @@ iOS App Store: https://apps.apple.com/gb/app/elec-mate/id6758948665 (live since 
 **Who built Elec-Mate?**
 Andrew Moore — an electrician-turned-founder building Elec-Mate from real UK trade experience.
 
-**How does Elec-Mate compare to iCertifi?**
-iCertifi (icertifi.co.uk, since 2012) is the most popular UK certification app — iOS/iPad/Mac only, £15-40/month, focused on certificates (EIC, EICR, Minor Works, Part P) with BoardVision AI scanner. Elec-Mate runs on iOS, Android (pre-launch) and web; adds apprentice training (Level 2, Level 3, AM2, AM2E), 70+ standalone calculators, 8 specialist AI agents (not just cert generation), college tutor tools, and full business management (quoting, invoicing, OJT tracking).
-
-**How does Elec-Mate compare to Tradecert?**
-Tradecert (tradecert.app) is multi-platform with AI circuit extraction and a token-based pricing model (2p per AI token). Strong for cert workflows. Elec-Mate goes beyond certs: apprentice training pathway, AM2 prep, 70+ calculators, Stripe Connect payments, and a conversational AI agent (Mate) that takes actions via a 197-tool backend.
-
-**How does Elec-Mate compare to Zerta?**
-Zerta (zerta.co.uk) is a one-off-purchase app supporting BS 7671:2018+A4:2026 (EICs, MEIWCs, EICRs). Best for solo electricians on tight budgets. Elec-Mate is a full platform — broader certificate range (16 types), apprentice training, AI agents, and business tools — with a free 7-day trial and monthly subscription.
-
-**How does Elec-Mate compare to Electrical Certificate App (electricalcertificateapp.co.uk)?**
-Electrical Certificate App is widely used (5,000+ UK electricians), £15+VAT/month, focused on EICRs, Minor Works, PAT, with invoicing and scheduling. Elec-Mate adds apprentice training, AM2 prep, 70+ calculators, 8 AI specialist agents, and college tutor tooling that single-domain certificate apps don't cover.
-
-**How does Elec-Mate compare to ElectricalOM?**
-ElectricalOM is a desktop design + cable sizing + CAD suite for electrical contractors/consultants — ECA-partnered, very capable for design work. It's currently aligned to BS 7671:2018+A2:2022 (one amendment behind). Elec-Mate is mobile-first, A4:2026 aligned, and broader in scope (certs + training + AI + business) but does not replace ElectricalOM for full CAD/BIM design workflows.
-
-**How does Elec-Mate compare to Tradify or Powered Now?**
-Tradify (£34/month) and Powered Now are job management apps for trades — quoting, invoicing, scheduling, Xero/Sage integration. They are not electrical-specific. Elec-Mate combines job management with BS 7671-compliant calculators, certificate generation, apprentice training, and electrical-specific AI agents in one app.
-
 ## Compliance and standards
 
 All tools, certificates, training content and calculators on Elec-Mate are aligned to:
@@ -254,7 +236,6 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 - [Minor Works Certificate](https://www.elec-mate.com/minor-works-certificate)
 - [Solar Pv Certificate](https://www.elec-mate.com/solar-pv-certificate) — Solar PV Installation Certificate App
 - [Bs 7671 A4 2026 Eic Model Form](https://www.elec-mate.com/guides/bs-7671-a4-2026-eic-model-form)
-- [Best Eicr Software Uk](https://www.elec-mate.com/guides/best-eicr-software-uk) — Best EICR Software UK 2026
 - [Commercial Eicr Guide](https://www.elec-mate.com/guides/commercial-eicr-guide) — Commercial EICR Guide
 - [Continuity Testing Guide](https://www.elec-mate.com/continuity-testing-guide) — Continuity Testing Guide UK
 - [Continuity Testing Electricians Guide](https://www.elec-mate.com/guides/continuity-testing-electricians-guide) — Continuity Testing Guide for Electricians
@@ -319,20 +300,9 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 
 ### Comparison and "best of" content
 
-- [Best Ai Tool Electricians](https://www.elec-mate.com/compare/best-ai-tool-electricians) — AI for Electricians: 5 Tools Tested 2026
-- [Best Apprentice App](https://www.elec-mate.com/compare/best-apprentice-app) — Best Apprentice App 2026
-- [Best Cable Sizing App](https://www.elec-mate.com/compare/best-cable-sizing-app) — Best Cable Sizing App 2026
-- [Best Invoice App Electricians](https://www.elec-mate.com/compare/best-invoice-app-electricians) — Best Invoice App for Electricians 2026
-- [Best Quoting App Electricians](https://www.elec-mate.com/compare/best-quoting-app-electricians) — Best Quoting App for Electricians 2026
-- [Checkatrade Vs Mybuilder Vs Bark](https://www.elec-mate.com/compare/checkatrade-vs-mybuilder-vs-bark) — Checkatrade vs MyBuilder vs Bark 2026
-- [Elec Mate Vs Easy Eicr](https://www.elec-mate.com/compare/elec-mate-vs-easy-eicr) — Elec-Mate vs Easy EICR 2026
-- [Elec Mate Vs Electrical Om](https://www.elec-mate.com/compare/elec-mate-vs-electrical-om) — Elec-Mate vs Electrical OM
-- [Elec Mate Vs Simply Eicr](https://www.elec-mate.com/compare/elec-mate-vs-simply-eicr) — Elec-Mate vs SimplyEICR
-- [Electrician App Android](https://www.elec-mate.com/compare/electrician-app-android) — Android Electrician Apps: 4 Tools Compared 2026
 - [Niceic Vs Napit Comparison](https://www.elec-mate.com/niceic-vs-napit-comparison) — NICEIC vs NAPIT
 - [Solar Pv System Design](https://www.elec-mate.com/solar-pv-system-design) — Solar PV System Design UK
 - [Solar Pv System Sizing](https://www.elec-mate.com/solar-pv-system-sizing) — Solar PV System Sizing — UK Guide 2024
-- [Compare](https://www.elec-mate.com/compare) — Compare Electrician Apps
 
 
 

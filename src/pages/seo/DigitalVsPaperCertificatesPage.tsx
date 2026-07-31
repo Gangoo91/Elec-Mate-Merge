@@ -123,13 +123,6 @@ const relatedPages: RelatedPage[] = [
     icon: ClipboardCheck,
     category: 'Guide',
   },
-  {
-    href: '/guides/best-eicr-software-uk',
-    title: 'Best EICR Software UK',
-    description: 'Comparison of the top EICR and electrical certificate apps for UK electricians.',
-    icon: Smartphone,
-    category: 'Comparison',
-  },
 ];
 
 // -------------------------------------------------------------------
@@ -154,11 +147,7 @@ const sections = [
           three forces: scheme providers moving to online portals for certificate submission, the
           Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
           requiring landlords to provide EICRs to tenants (easiest as a PDF by email), and the
-          availability of purpose-built apps like{' '}
-          <SEOInternalLink href="/guides/best-eicr-software-uk">
-            electrical certificate software
-          </SEOInternalLink>{' '}
-          that run on a smartphone.
+          availability of purpose-built electrical certificate software that runs on a smartphone.
         </p>
         <p>
           Today, the majority of certificates submitted to NICEIC and NAPIT are produced digitally.

@@ -85,16 +85,7 @@ export default function ElectricianAppForiPhonePage() {
                 Elec-Mate combines tools that would otherwise require 5-6 separate apps: a
                 certificate app, a calculator app, a training platform, a quoting tool, an invoicing
                 tool, and an AI assistant. Having everything in one app means less switching, less
-                storage used, and a single subscription instead of multiple. See how we compare
-                against other options in our{' '}
-                <SEOInternalLink href="/best-electrician-app">
-                  best electrician app guide
-                </SEOInternalLink>
-                . On Android instead? See the{' '}
-                <SEOInternalLink href="/compare/electrician-app-android">
-                  best electrician app for Android
-                </SEOInternalLink>{' '}
-                comparison.
+                storage used, and a single subscription instead of multiple.
               </p>
             </>
           ),

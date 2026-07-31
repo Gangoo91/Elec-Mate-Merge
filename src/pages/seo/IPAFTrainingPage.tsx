@@ -461,7 +461,6 @@ export default function IPAFTrainingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             <SEOInternalLink href="/tools/apprentice-training-app">Apprentice Training App</SEOInternalLink>
             <SEOInternalLink href="/guides/on-the-job-training-guide">On-the-Job Training Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/best-electrical-training-app">Best Electrical Training App UK 2026</SEOInternalLink>
             <SEOInternalLink href="/guides/off-job-training-hours">Off-the-Job Training Hours</SEOInternalLink>
             <SEOInternalLink href="/guides/off-the-job-training-hours">Off-the-Job Training Hours</SEOInternalLink>
           </div>

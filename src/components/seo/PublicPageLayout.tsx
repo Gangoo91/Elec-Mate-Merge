@@ -97,9 +97,6 @@ const footerAIAndGuides = [
   { to: '/guides/earthing-arrangements', label: 'Earthing Systems' },
   { to: '/consumer-unit-regulations', label: 'Consumer Units' },
   { to: '/guides/testing-sequence-guide', label: 'Testing Sequence' },
-  { to: '/tools/best-electrician-app-uk', label: 'Why Elec-Mate?' },
-  { to: '/elec-mate-vs-i-certifi', label: 'vs iCertifi' },
-  { to: '/compare/elec-mate-vs-certsapp', label: 'vs CertsApp' },
 ];
 
 const socialLinks = [

@@ -36,7 +36,6 @@ export default function FlukeVsMeggerPage() {
       datePublished="2025-04-20"
       dateModified="2026-05-18"
       breadcrumbs={[
-        { label: 'Comparisons', href: '/compare' },
         { label: 'Fluke vs Megger', href: '/guides/fluke-vs-megger' },
       ]}
       tocItems={[

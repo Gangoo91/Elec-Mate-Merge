@@ -209,6 +209,136 @@
   ],
   "redirects": [
     {
+      "source": "/compare",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-electrical-om",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/elec-mate-vs-i-certifi",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/elec-mate-vs-certs-app",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-simply-eicr",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-easy-eicr",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-tradify",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-powered-now",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-certsuite",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-jobber",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-servicem8",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-tradecert",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-speedcert",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-napit-fasttest",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-simpro",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/elec-mate-vs-commusoft",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-rams-app-electricians",
+      "destination": "/guides/electrical-rams-template-uk",
+      "statusCode": 301
+    },
+    {
+      "source": "/guides/best-eicr-software-uk",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-electrician-app",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-quoting-app-electricians",
+      "destination": "/electrical-quoting-app",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-invoice-app-electricians",
+      "destination": "/electrician-invoice-app",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-ai-tool-electricians",
+      "destination": "/ai-electrician-tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-cable-sizing-app",
+      "destination": "/tools/cable-sizing-calculator",
+      "statusCode": 301
+    },
+    {
+      "source": "/guides/best-electrical-training-app",
+      "destination": "/training",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/electrician-app-android",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/compare/best-apprentice-app",
+      "destination": "/apprentice-training",
+      "statusCode": 301
+    },
+    {
       "source": "/training/first-aid-electrical-electrical",
       "destination": "/training/first-aid-electrical",
       "permanent": true
@@ -350,8 +480,8 @@
     },
     {
       "source": "/compare/elec-mate-vs-icertifi",
-      "destination": "/elec-mate-vs-i-certifi",
-      "permanent": true
+      "destination": "/",
+      "statusCode": 301
     },
     {
       "source": "/guides/bs7671-observation-codes",
@@ -650,8 +780,8 @@
     },
     {
       "source": "/compare/elec-mate-vs-certsapp",
-      "destination": "/elec-mate-vs-certs-app",
-      "permanent": true
+      "destination": "/",
+      "statusCode": 301
     },
     {
       "source": "/guides/earthing-arrangements",
@@ -695,8 +825,8 @@
     },
     {
       "source": "/tools/best-electrician-app-uk",
-      "destination": "/best-electrician-app",
-      "permanent": true
+      "destination": "/",
+      "statusCode": 301
     },
     {
       "source": "/tools/cash-flow-planner",

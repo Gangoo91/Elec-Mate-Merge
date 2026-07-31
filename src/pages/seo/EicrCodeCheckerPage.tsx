@@ -503,14 +503,6 @@ export default function EicrCodeCheckerPage() {
           icon: Wrench,
           category: 'Guide',
         },
-        {
-          href: '/guides/best-eicr-software-uk',
-          title: 'Best EICR Software UK',
-          description:
-            'Compare EICR apps and software for UK electricians — features, pricing and what actually matters on site.',
-          icon: FileCheck2,
-          category: 'Guide',
-        },
       ]}
       ctaHeading="Produce professional EICRs with Elec-Mate"
       ctaSubheading="Coded observations, photo evidence, automatic satisfactory/unsatisfactory logic and a polished PDF your clients can act on — plus quoting the remedial work from the same app."
