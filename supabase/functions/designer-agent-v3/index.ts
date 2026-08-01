@@ -9,6 +9,8 @@ import { createLogger } from '../_shared/logger.ts';
 import { DesignPipeline } from './design-pipeline.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
+import { setAiLogFn } from '../_shared/ai-log.ts';
+setAiLogFn('designer-agent-v3');
 
 const VERSION = 'v3.2.0-design-only';
 

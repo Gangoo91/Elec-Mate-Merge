@@ -5,14 +5,21 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect } from 'react';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import CertificateClientSection from '@/components/inspection/shared/CertificateClientSection';
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const comboTriggerCn =
+  'h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:bg-transparent hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const premisesTypeOptions = [
   { value: 'Office', label: 'Office' },
@@ -27,27 +34,8 @@ const premisesTypeOptions = [
   { value: 'Data Centre', label: 'Data Centre' },
 ];
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -60,7 +48,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -88,32 +76,27 @@ export default function FAG3ProjectReference({ formData, onUpdate }: Props) {
   }, []);
 
   return (
-    <div className="space-y-5">
-      <div className="border-b border-red-500/20 pb-3">
-        <p className="text-sm font-bold text-red-400">FIRE ALARM COMMISSIONING CERTIFICATE (G3)</p>
-        <p className="text-xs text-white mt-1">
-          BS 5839-1:2025 — Fire detection and fire alarm systems for buildings
-        </p>
-      </div>
-
-      <Section title="Certificate Reference" accentColor="from-white/20 to-white/5">
-        <Field label="Certificate Number">
-          <Input
-            value={formData.certificateNumber || ''}
-            onChange={(e) => onUpdate('certificateNumber', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-        <Field label="Commissioning Date">
-          <Input
-            type="date"
-            value={formData.commissioningDate || ''}
-            onChange={(e) => onUpdate('commissioningDate', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="G2 Installation Cert Ref">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Certificate reference */}
+      <div className={cardCn}>
+        <SectionHeader title="Certificate reference" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Certificate number">
+            <Input
+              value={formData.certificateNumber || ''}
+              onChange={(e) => onUpdate('certificateNumber', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Commissioning date">
+            <Input
+              type="date"
+              value={formData.commissioningDate || ''}
+              onChange={(e) => onUpdate('commissioningDate', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="G2 installation cert ref">
             <Input
               value={formData.installationCertRef || ''}
               onChange={(e) => onUpdate('installationCertRef', e.target.value)}
@@ -121,7 +104,7 @@ export default function FAG3ProjectReference({ formData, onUpdate }: Props) {
               placeholder="Reference of G2 cert"
             />
           </Field>
-          <Field label="G1 Design Cert Ref">
+          <Field label="G1 design cert ref">
             <Input
               value={formData.designCertReference || ''}
               onChange={(e) => onUpdate('designCertReference', e.target.value)}
@@ -130,12 +113,14 @@ export default function FAG3ProjectReference({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      <Section title="Client Details" accentColor="from-blue-500/40 to-cyan-400/20">
+      {/* Client details */}
+      <div className={cardCn}>
+        <SectionHeader title="Client details" />
         <CertificateClientSection formData={formData} onUpdate={onUpdate} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Client Name" required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Client name" required>
             <Input
               value={formData.clientName || ''}
               onChange={(e) => onUpdate('clientName', e.target.value)}
@@ -150,39 +135,50 @@ export default function FAG3ProjectReference({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
+          <Field label="Client email">
+            <Input
+              type="email"
+              inputMode="email"
+              value={formData.clientEmail || ''}
+              onChange={(e) => onUpdate('clientEmail', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
         </div>
-        <Field label="Client Address">
+        <Field label="Client address">
           <Input
             value={formData.clientAddress || ''}
             onChange={(e) => onUpdate('clientAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      <Section title="Premises" accentColor="from-red-500/40 to-orange-400/20">
-        <Field label="Premises Name">
+      {/* Premises */}
+      <div className={cardCn}>
+        <SectionHeader title="Premises" />
+        <Field label="Premises name">
           <Input
             value={formData.premisesName || ''}
             onChange={(e) => onUpdate('premisesName', e.target.value)}
             className={inputCn}
           />
         </Field>
-        <Field label="Premises Address" required>
+        <Field label="Premises address" required>
           <Input
             value={formData.premisesAddress || ''}
             onChange={(e) => onUpdate('premisesAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Premises Type">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Premises type">
             <ComboboxCell
               value={formData.premisesType || ''}
               onChange={(v) => onUpdate('premisesType', v)}
               options={premisesTypeOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className={comboTriggerCn}
             />
           </Field>
           <Field label="Floors">
@@ -195,11 +191,13 @@ export default function FAG3ProjectReference({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      <Section title="System Reference" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="System Category">
+      {/* System reference */}
+      <div className={cardCn}>
+        <SectionHeader title="System reference" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="System category">
             <Input
               value={formData.systemCategory || ''}
               onChange={(e) => onUpdate('systemCategory', e.target.value)}
@@ -207,22 +205,29 @@ export default function FAG3ProjectReference({ formData, onUpdate }: Props) {
               placeholder="e.g. L2"
             />
           </Field>
-          <Field label="Panel Make / Model">
+          <Field label="Panel make">
             <Input
-              value={`${formData.systemMake || ''} ${formData.systemModel || ''}`.trim()}
+              value={formData.systemMake || ''}
               onChange={(e) => onUpdate('systemMake', e.target.value)}
               className={inputCn}
             />
           </Field>
+          <Field label="Panel model">
+            <Input
+              value={formData.systemModel || ''}
+              onChange={(e) => onUpdate('systemModel', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
         </div>
-        <Field label="Panel Location">
+        <Field label="Panel location">
           <Input
             value={formData.panelLocation || ''}
             onChange={(e) => onUpdate('panelLocation', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
     </div>
   );
 }

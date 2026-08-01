@@ -1,5 +1,11 @@
-// IET On-Site Guide Table 1B / Table H2 Diversity Calculations
-// BS 7671:2018+A3:2024 Compliant
+// IET On-Site Guide Appendix A, Table A2 — Allowances for diversity.
+// BS 7671:2018+A4:2026.
+//
+// ELE-1423: the VALUES here are correct (66% domestic lighting, 40% remainder),
+// but the citations were stale — the current On-Site Guide numbers this table
+// A2, not "Table A2"/"Table H2", and the amendment is A4:2026 not A3:2024.
+// Verified against the printed table, pp.151-152. BS 7671 itself has no
+// diversity tables; Reg 311.1 merely permits diversity to be taken into account.
 import { CalculationError, validateInput } from '../utils/calculatorUtils';
 
 export interface CircuitLoad {
@@ -68,7 +74,7 @@ const DISPLAY_NAMES: Record<string, string> = {
 
 /**
  * Apply diversity for lighting circuits
- * IET On-Site Guide Table 1B item 1 (domestic): 66% of total current demand
+ * IET On-Site Guide Table A2 row 1 (domestic): 66% of total current demand
  * Table H2 item 1 (commercial/industrial): 90%
  */
 function applyLightingDiversity(
@@ -85,8 +91,8 @@ function applyLightingDiversity(
   const pct = (factor * 100).toFixed(0);
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table 1B item 1'
-      : 'IET On-Site Guide Table H2 item 1';
+      ? 'IET On-Site Guide Table A2 row 1'
+      : 'IET On-Site Guide Table A2 row 1 (non-domestic column)';
 
   return {
     installedLoad: totalPower,
@@ -106,7 +112,7 @@ function applyLightingDiversity(
 
 /**
  * Apply diversity for ring final circuits
- * IET On-Site Guide Table 1B item 2 (domestic):
+ * IET On-Site Guide Table A2 row 9/10 (domestic):
  *   Assumed 32A per ring. 100% of largest ring + 40% each additional ring
  */
 function applyRingFinalDiversity(
@@ -147,8 +153,8 @@ function applyRingFinalDiversity(
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table 1B item 2'
-      : 'IET On-Site Guide Table H2 item 2';
+      ? 'IET On-Site Guide Table A2 row 9/10'
+      : 'IET On-Site Guide Table A2 row 9/10 (non-domestic column)';
   steps.push(`Per ${ref}`);
 
   const formula =
@@ -170,7 +176,7 @@ function applyRingFinalDiversity(
 
 /**
  * Apply diversity for radial socket outlets
- * IET On-Site Guide Table 1B item 2 (domestic): 100% up to 10A + 40% of remainder
+ * IET On-Site Guide Table A2 row 9/10 (domestic): 100% up to 10A + 40% of remainder
  */
 function applyRadialSocketDiversity(
   circuits: CircuitLoad[],
@@ -208,8 +214,8 @@ function applyRadialSocketDiversity(
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table 1B item 2'
-      : 'IET On-Site Guide Table H2 item 2';
+      ? 'IET On-Site Guide Table A2 row 9/10'
+      : 'IET On-Site Guide Table A2 row 9/10 (non-domestic column)';
   steps.push(`Per ${ref}`);
 
   const formula =
@@ -231,7 +237,7 @@ function applyRadialSocketDiversity(
 
 /**
  * Apply diversity for cooker circuits
- * IET On-Site Guide Table 1B item 3 (domestic):
+ * IET On-Site Guide Table A2 row 3 (domestic):
  *   10A + 30% of remainder over 10A. +5A if cooker unit has socket outlet
  */
 function applyCookerDiversity(
@@ -277,7 +283,7 @@ function applyCookerDiversity(
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table 1B item 3'
+      ? 'IET On-Site Guide Table A2 row 3'
       : 'IET On-Site Guide Table H2 item 3';
   steps.push(`Per ${ref}`);
 
@@ -298,7 +304,7 @@ function applyCookerDiversity(
 
 /**
  * Apply diversity for space heating
- * IET On-Site Guide Table 1B item 4 (domestic):
+ * IET On-Site Guide Table A2 row 4 (domestic):
  *   Thermostatically controlled: 100% (no diversity)
  *   Non-thermostatically controlled: Largest 100% + 75% of remainder
  */
@@ -355,7 +361,7 @@ function applySpaceHeatingDiversity(
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table 1B item 4'
+      ? 'IET On-Site Guide Table A2 row 4'
       : 'IET On-Site Guide Table H2 item 4';
   steps.push(`Per ${ref}`);
 
@@ -382,7 +388,7 @@ function applySpaceHeatingDiversity(
 
 /**
  * Apply diversity for shower circuits
- * IET On-Site Guide Table 1B item 5 (domestic):
+ * IET On-Site Guide Table A2 row 5 (domestic):
  *   100% of largest + 100% of 2nd largest + 25% of remainder
  */
 function applyShowerDiversity(
@@ -434,7 +440,7 @@ function applyShowerDiversity(
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table 1B item 5'
+      ? 'IET On-Site Guide Table A2 row 5'
       : 'IET On-Site Guide Table H2 item 5';
   steps.push(`Per ${ref}`);
 
@@ -515,7 +521,7 @@ function applyMotorDiversity(
 
 /**
  * Apply no diversity (100%) for load types that do not permit diversity
- * Water heating (Table 1B item 7), Floor warming (Table 1B item 8),
+ * Water heating (Table A2 row 7), Floor warming (Table A2 row 8),
  * EV charging (BS 7671 Section 722.311), Thermal storage, Dedicated outlets
  */
 function applyNoDiversity(
@@ -527,12 +533,12 @@ function applyNoDiversity(
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
 
   const regulationMap: Record<string, string> = {
-    'water-heating': 'IET On-Site Guide Table 1B item 7',
-    'floor-warming': 'IET On-Site Guide Table 1B item 8',
+    'water-heating': 'IET On-Site Guide Table A2 row 7',
+    'floor-warming': 'IET On-Site Guide Table A2 row 8',
     'ev-charging': 'BS 7671:2018 Section 722.311',
     'thermal-storage': 'IET On-Site Guide Table H2 item 9',
     'dedicated-outlet': 'IET On-Site Guide — no diversity for dedicated circuits',
-    'small-power': 'IET On-Site Guide Table 1B item 2',
+    'small-power': 'IET On-Site Guide Table A2 row 9/10',
   };
 
   const regulation = regulationMap[loadType] || 'Conservative approach — no diversity applied';
@@ -574,7 +580,7 @@ function applySmallPowerDiversity(
   const factor = location === 'commercial' ? 0.75 : 0.8;
   const diversifiedCurrent = totalCurrent * factor;
   const diversifiedLoad = totalPower * factor;
-  const ref = 'IET On-Site Guide Table H2 item 2';
+  const ref = 'IET On-Site Guide Table A2 row 9/10 (non-domestic column)';
 
   return {
     installedLoad: totalPower,

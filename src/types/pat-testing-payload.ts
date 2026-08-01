@@ -98,6 +98,9 @@ export interface PATTestingPayloadType {
     site_contact_phone: string;
   };
 
+  // Test environment (°C — matches z.string() `test_temperature` in the Zod schema)
+  test_temperature: string;
+
   test_equipment: {
     make: string;
     model: string;

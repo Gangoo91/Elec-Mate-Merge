@@ -8,22 +8,19 @@ import { Input } from '@/components/ui/input';
 import { Avatar as ShadAvatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import {
-  RefreshCw,
-  ArrowLeft,
-  Search,
-  Users,
-  CheckCheck,
-  PenSquare,
-} from 'lucide-react';
+import { RefreshCw, ArrowLeft, Search, Users, CheckCheck, PenSquare, Archive } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import ChatThread from '@/components/messaging/ChatThread';
+import { SwipeableRow } from '@/components/ui/swipeable-row';
 import {
   useAdminInbox,
+  useArchiveConversation,
   sortAdminConversations,
   ADMIN_INBOX_QUERY_KEY,
   type AdminConversation,
@@ -73,9 +70,6 @@ function roleToTone(role: string | null | undefined): Tone {
   }
 }
 
-
-
-
 export default function AdminUserMessages() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -101,6 +95,40 @@ export default function AdminUserMessages() {
   // ELE-1415/1417 — grouping moved to the shared useAdminInbox hook so the
   // admin page and the user-side Messages sheet read the same conversations.
   const { data: conversations, isLoading, refetch, isFetching } = useAdminInbox();
+
+  const isMobile = useIsMobile();
+  const archive = useArchiveConversation();
+
+  // Swipe-to-archive, matching the Messages-sheet inbox. This page previously
+  // had no way at all to clear a conversation — a thread you had dealt with sat
+  // in the list for ever, so old items kept resurfacing and the queue never
+  // emptied. Archiving hides the row; it does not delete, so a mis-swipe on a
+  // phone costs nothing and the support record survives.
+  const archiveConversation = (conv: AdminConversation) => {
+    const ids = conv.messages.map((m) => m.id);
+    const name = conv.partner?.full_name || 'Conversation';
+    if (selectedPartnerId === conv.partnerId) setSelectedPartnerId(null);
+    archive.mutate(
+      { messageIds: ids, archived: true },
+      {
+        onSuccess: () =>
+          toast({
+            title: `${name} archived`,
+            description: 'Hidden from the inbox. Nothing was deleted.',
+            action: (
+              <ToastAction
+                altText="Undo archive"
+                onClick={() => archive.mutate({ messageIds: ids, archived: false })}
+              >
+                Undo
+              </ToastAction>
+            ),
+          }),
+        onError: (e: Error) =>
+          toast({ title: 'Could not archive', description: e.message, variant: 'destructive' }),
+      }
+    );
+  };
 
   const { data: searchResults } = useQuery({
     queryKey: ['user-search', searchQuery],
@@ -229,27 +257,27 @@ export default function AdminUserMessages() {
     const searchLower = search.toLowerCase();
 
     const filtered = conversations.filter((conv) => {
-        if (searchLower) {
-          // Search the whole thread, not just the last message — the thing you
-          // remember is rarely the most recent line.
-          const matchesSearch =
-            conv.partner?.full_name?.toLowerCase().includes(searchLower) ||
-            conv.messages.some((m) => m.message?.toLowerCase().includes(searchLower));
-          if (!matchesSearch) return false;
-        }
+      if (searchLower) {
+        // Search the whole thread, not just the last message — the thing you
+        // remember is rarely the most recent line.
+        const matchesSearch =
+          conv.partner?.full_name?.toLowerCase().includes(searchLower) ||
+          conv.messages.some((m) => m.message?.toLowerCase().includes(searchLower));
+        if (!matchesSearch) return false;
+      }
 
-        switch (activeTab) {
-          case 'unread':
-            return conv.unreadCount > 0;
-          case 'read':
-            return conv.unreadCount === 0 && conv.hasInboundToAdmin;
-          case 'sent':
-            return conv.hasAdminReply;
-          case 'all':
-          default:
-            return true;
-        }
-      });
+      switch (activeTab) {
+        case 'unread':
+          return conv.unreadCount > 0;
+        case 'read':
+          return conv.unreadCount === 0 && conv.hasInboundToAdmin;
+        case 'sent':
+          return conv.hasAdminReply;
+        case 'all':
+        default:
+          return true;
+      }
+    });
 
     // ELE-1415 — the list had no sort at all, so ordering fell out of Map
     // insertion. Shared sort: needs answering, then unopened, then recency.
@@ -263,8 +291,7 @@ export default function AdminUserMessages() {
       {
         value: 'read',
         label: 'Read',
-        count:
-          conversations?.filter((c) => c.unreadCount === 0 && c.hasInboundToAdmin).length ?? 0,
+        count: conversations?.filter((c) => c.unreadCount === 0 && c.hasInboundToAdmin).length ?? 0,
       },
       {
         value: 'sent',
@@ -364,65 +391,81 @@ export default function AdminUserMessages() {
                     : conv.lastMessage.message;
 
                 return (
-                  <ListRow
+                  <SwipeableRow
                     key={conv.partnerId}
-                    // ELE-1415 — the accent marks "needs you", not merely
-                    // "unopened". A thread you have read but not answered still
-                    // has someone waiting at the other end of it.
-                    accent={conv.awaitingReply || unread ? 'yellow' : undefined}
-                    lead={<Avatar initials={getInitials(conv.partner?.full_name)} />}
-                    // Everything lives in title/subtitle, nothing in `trailing`.
-                    // ListRow's trailing slot is shrink-0 while the text block is
-                    // flex-1 min-w-0, so pills in trailing ate the whole row on a
-                    // phone and the name and preview collapsed to nothing.
-                    title={
-                      <span className="flex items-baseline gap-2">
-                        <span
-                          className={cn(
-                            'truncate',
-                            conv.awaitingReply || unread ? 'font-semibold' : ''
-                          )}
-                        >
-                          {conv.partner?.full_name || 'Unknown User'}
-                        </span>
-                        {unread && (
-                          <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold tabular-nums flex items-center justify-center">
-                            {conv.unreadCount}
-                          </span>
-                        )}
-                        <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white/55">
-                          {relativeTime(new Date(conv.lastMessage.created_at))}
-                        </span>
-                      </span>
+                    contentClassName="bg-transparent"
+                    // Touch-only, same as the Messages-sheet inbox — wiring a
+                    // swipe on desktop just adds a gesture a mouse can't do.
+                    rightAction={
+                      isMobile
+                        ? {
+                            icon: <Archive className="h-4 w-4" />,
+                            label: 'Archive',
+                            onClick: () => archiveConversation(conv),
+                            variant: 'destructive',
+                          }
+                        : undefined
                     }
-                    subtitle={
-                      <span className="flex items-baseline gap-1.5">
-                        {conv.awaitingReply && (
-                          <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
-                            Awaiting
+                  >
+                    <ListRow
+                      // ELE-1415 — the accent marks "needs you", not merely
+                      // "unopened". A thread you have read but not answered still
+                      // has someone waiting at the other end of it.
+                      accent={conv.awaitingReply || unread ? 'yellow' : undefined}
+                      lead={<Avatar initials={getInitials(conv.partner?.full_name)} />}
+                      // Everything lives in title/subtitle, nothing in `trailing`.
+                      // ListRow's trailing slot is shrink-0 while the text block is
+                      // flex-1 min-w-0, so pills in trailing ate the whole row on a
+                      // phone and the name and preview collapsed to nothing.
+                      title={
+                        <span className="flex items-baseline gap-2">
+                          <span
+                            className={cn(
+                              'truncate',
+                              conv.awaitingReply || unread ? 'font-semibold' : ''
+                            )}
+                          >
+                            {conv.partner?.full_name || 'Unknown User'}
                           </span>
-                        )}
-                        <span
-                          className={cn(
-                            'truncate',
-                            conv.awaitingReply ? 'text-white' : 'text-white/70'
+                          {unread && (
+                            <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold tabular-nums flex items-center justify-center">
+                              {conv.unreadCount}
+                            </span>
                           )}
-                        >
-                          {/* Say who spoke last, or your own reply reads as theirs. */}
-                          {!conv.awaitingReply && conv.hasAdminReply && (
-                            <span className="text-white/45">You: </span>
-                          )}
-                          {preview}
+                          <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white/55">
+                            {relativeTime(new Date(conv.lastMessage.created_at))}
+                          </span>
                         </span>
-                        {role && (
-                          <span className="ml-auto shrink-0 hidden sm:inline text-[10px] uppercase tracking-[0.12em] text-white/45 capitalize">
-                            {role}
+                      }
+                      subtitle={
+                        <span className="flex items-baseline gap-1.5">
+                          {conv.awaitingReply && (
+                            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
+                              Awaiting
+                            </span>
+                          )}
+                          <span
+                            className={cn(
+                              'truncate',
+                              conv.awaitingReply ? 'text-white' : 'text-white/70'
+                            )}
+                          >
+                            {/* Say who spoke last, or your own reply reads as theirs. */}
+                            {!conv.awaitingReply && conv.hasAdminReply && (
+                              <span className="text-white/45">You: </span>
+                            )}
+                            {preview}
                           </span>
-                        )}
-                      </span>
-                    }
-                    onClick={() => handleOpenConversation(conv)}
-                  />
+                          {role && (
+                            <span className="ml-auto shrink-0 hidden sm:inline text-[10px] uppercase tracking-[0.12em] text-white/45 capitalize">
+                              {role}
+                            </span>
+                          )}
+                        </span>
+                      }
+                      onClick={() => handleOpenConversation(conv)}
+                    />
+                  </SwipeableRow>
                 );
               })}
             </ListBody>

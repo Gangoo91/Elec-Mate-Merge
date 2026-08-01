@@ -297,8 +297,8 @@ const sections = [
           ADMD (After Diversity Maximum Demand) is the average peak demand that each dwelling is
           assumed to contribute to the electricity network once diversity across a large group of
           dwellings has been taken into account. It is the figure a distribution network operator
-          (DNO) uses to size the cables, transformers and substations that serve a street or a
-          whole development — not the demand of any one house on its own.
+          (DNO) uses to size the cables, transformers and substations that serve a street or a whole
+          development — not the demand of any one house on its own.
         </p>
         <p>
           The key difference from the BS 7671 max demand assessment is scale. The assessment under

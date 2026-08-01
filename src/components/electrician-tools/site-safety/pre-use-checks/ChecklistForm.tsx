@@ -16,9 +16,10 @@ import {
   FormCard,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
   type Tone,
 } from '@/components/college/primitives';
+
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from '../common/SafetyDocField';
 import { SafetyMasthead } from '../common/SafetyModuleShell';
 import { ReadinessGate } from '../common/ReadinessGate';
 import { JobLinkField } from '../common/JobLinkField';
@@ -185,13 +186,15 @@ export function ChecklistForm({
             <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-blue-400">
               {reg.shortName}
             </p>
-            <p className="mt-1.5 text-[12.5px] text-white/85 leading-relaxed">{reg.description}</p>
+            <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">{reg.description}</p>
           </div>
         )}
 
         {/* Statutory inspection warning for linked equipment */}
         {linkedStatus && linkedStatus.status !== 'ok' && (
-          <div className={cn('rounded-2xl border p-4', STATUS_CLASS[STATUS_TONE[linkedStatus.status]])}>
+          <div
+            className={cn('rounded-2xl border p-4', STATUS_CLASS[STATUS_TONE[linkedStatus.status]])}
+          >
             <p className="text-[12.5px] font-medium">{linkedStatus.label}</p>
           </div>
         )}
@@ -215,12 +218,12 @@ export function ChecklistForm({
                       'h-11 px-3 rounded-xl text-[12.5px] font-medium flex items-center gap-2 touch-manipulation active:scale-[0.97] transition-all border',
                       active
                         ? 'bg-elec-yellow/15 border-elec-yellow/50 text-elec-yellow'
-                        : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white'
+                        : 'bg-white/[0.06] border-white/[0.12] text-white'
                     )}
                   >
                     <span className="truncate max-w-[180px]">{eq.name}</span>
                     {eq.serial_number && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-white/70">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/10 text-white">
                         {eq.serial_number}
                       </span>
                     )}
@@ -246,7 +249,7 @@ export function ChecklistForm({
                 if (selectedEquipmentId) setSelectedEquipmentId(null);
               }}
               placeholder="e.g. Fluke 1664 FC, serial #12345"
-              className={inputClass}
+              className={safetyInputCn}
             />
           </Field>
           <LocationAutoFill
@@ -289,7 +292,7 @@ export function ChecklistForm({
                         {failN}F
                       </span>
                     )}
-                    <span className="text-[10.5px] text-white/45 tabular-nums">
+                    <span className="text-[10.5px] text-white tabular-nums">
                       {passN + failN}/{total}
                     </span>
                   </div>
@@ -297,7 +300,9 @@ export function ChecklistForm({
                 <div className="divide-y divide-white/[0.04]">
                   {sec.items.map((item) => (
                     <div key={item.id} className="flex items-center gap-3 px-5 py-3">
-                      <span className="flex-1 text-[13px] text-white/90 leading-snug">{item.label}</span>
+                      <span className="flex-1 text-[13px] text-white leading-snug">
+                        {item.label}
+                      </span>
                       <div className="flex items-center gap-1 flex-shrink-0">
                         {(['pass', 'fail', 'na'] as const).map((r) => (
                           <button
@@ -307,7 +312,7 @@ export function ChecklistForm({
                               'h-10 px-2.5 min-w-[40px] flex items-center justify-center rounded-lg border text-[11px] font-medium touch-manipulation active:scale-90 transition-all',
                               item.result === r
                                 ? RESULT_BTN[r].on
-                                : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white/40'
+                                : 'bg-white/[0.06] border-white/[0.12] text-white'
                             )}
                             aria-label={RESULT_BTN[r].label}
                           >
@@ -325,14 +330,18 @@ export function ChecklistForm({
 
         {/* Evidence + inspector */}
         <FormCard eyebrow="Evidence & inspector">
-          <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} label="Evidence photos" />
+          <SafetyPhotoCapture
+            photos={photoUrls}
+            onPhotosChange={setPhotoUrls}
+            label="Evidence photos"
+          />
           <div className="grid grid-cols-2 gap-3">
             <Field label="Inspector name">
               <input
                 value={inspectorSigName}
                 onChange={(e) => setInspectorSigName(e.target.value)}
                 placeholder="Your name"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <Field label="Date">
@@ -340,7 +349,7 @@ export function ChecklistForm({
                 type="date"
                 value={inspectorSigDate}
                 onChange={(e) => setInspectorSigDate(e.target.value)}
-                className={cn(inputClass, '[color-scheme:dark]')}
+                className={cn(safetyInputCn, '[color-scheme:dark]')}
               />
             </Field>
           </div>

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
-import { Building2, Wrench, ClipboardCheck, PenTool } from 'lucide-react';
+import React, { useRef } from 'react';
 import FAG7ProjectOriginal from './tabs/FAG7ProjectOriginal';
 import FAG7ModificationDetails from './tabs/FAG7ModificationDetails';
 import FAG7Testing from './tabs/FAG7Testing';
@@ -17,89 +16,67 @@ interface Props {
   onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  onOpenEmailDialog?: () => void;
+  canEmail?: boolean;
+  /** Saved report id — threaded to tabs so photo uploads work before a reload. */
+  reportId?: string;
 }
+
+const TAB_ORDER = ['project', 'modification', 'testing', 'declaration'];
 
 const FireAlarmG7FormTabs: React.FC<Props> = ({
   currentTab,
-  onTabChange,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
   onCreateInvoice,
   canGenerateCertificate = true,
+  onOpenEmailDialog,
+  canEmail = false,
+  reportId,
 }) => {
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'project',
-      label: 'Project',
-      shortLabel: 'Project',
-      icon: <Building2 className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG7ProjectOriginal formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'modification',
-      label: 'Modification',
-      shortLabel: 'Mod.',
-      icon: <Wrench className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG7ModificationDetails formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'testing',
-      label: 'Testing',
-      shortLabel: 'Tests',
-      icon: <ClipboardCheck className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG7Testing formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'declaration',
-      label: 'Declaration',
-      shortLabel: 'Sign',
-      icon: <PenTool className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG7Declaration formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            onCreateInvoice={onCreateInvoice}
-            canGenerateCertificate={canGenerateCertificate}
-          />
-        </div>
-      ),
-    },
-  ];
+  // Track direction so the step slide matches travel (forward vs back).
+  const NEXT_LABELS = ['Continue to Modification', 'Continue to Testing', 'Continue to Sign off'];
 
-  const completedTabs: Record<string, boolean> = {
-    project: !!(formData.clientName && formData.premisesAddress && formData.originalCertRef),
-    modification: !!formData.modificationDescription,
-    testing: !!formData.modifiedDevicesTested,
-    declaration: !!(formData.modifierSignature && formData.overallResult),
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<string, React.ReactNode> = {
+    project: <FAG7ProjectOriginal formData={formData} onUpdate={onUpdate} />,
+    modification: <FAG7ModificationDetails formData={formData} onUpdate={onUpdate} />,
+    testing: <FAG7Testing formData={formData} onUpdate={onUpdate} reportId={reportId} />,
+    declaration: <FAG7Declaration formData={formData} onUpdate={onUpdate} />,
   };
 
+  const isLast = currentTab === 'declaration';
+
   return (
-    <SmartTabs
-      tabs={smartTabs}
-      value={currentTab}
-      onValueChange={onTabChange}
-      className="space-y-4"
-      completedTabs={completedTabs}
-    />
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack
+            ? 'motion-safe:animate-mw-step-back'
+            : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <FireAlarmTabNavigation
+        nextLabels={NEXT_LABELS}
+        {...tabNavigationProps}
+        onGenerateCertificate={
+          isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate
+        }
+        onCreateInvoice={onCreateInvoice}
+        canGenerateCertificate={canGenerateCertificate}
+        onOpenEmailDialog={onOpenEmailDialog}
+        canEmail={canEmail}
+      />
+    </>
   );
 };
 

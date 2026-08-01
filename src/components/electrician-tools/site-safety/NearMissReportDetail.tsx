@@ -144,7 +144,9 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   const StatusIcon = statusConf.icon;
 
   const { data: jobs = [] } = useSparkProjects('active');
-  const linkedJobTitle = report.job_id ? jobs.find((j) => j.id === report.job_id)?.title ?? null : null;
+  const linkedJobTitle = report.job_id
+    ? (jobs.find((j) => j.id === report.job_id)?.title ?? null)
+    : null;
 
   const handleStatusChange = async (newStatus: 'open' | 'in_progress' | 'closed') => {
     setIsUpdating(true);

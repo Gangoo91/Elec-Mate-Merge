@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
-import { Building2, Cpu, Grid3X3, Link2, FileCheck } from 'lucide-react';
+import React, { useRef } from 'react';
 import FAClientPremises from './tabs/FAClientPremises';
 import FASystemPanel from './tabs/FASystemPanel';
 import FAZonesDevices from './tabs/FAZonesDevices';
@@ -20,13 +19,16 @@ interface FireAlarmFormTabsProps {
   canGenerateCertificate?: boolean;
   onOpenEmailDialog?: () => void;
   canEmail?: boolean;
+  /** Database report id once autosave has created the report (route param may still be 'new') */
+  savedReportId?: string | null;
   // Keep unused props for backwards compat
   canAccessTab?: (tabId: any) => boolean;
 }
 
+const TAB_ORDER = ['client', 'system', 'zones', 'equipment', 'declarations'];
+
 const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
   currentTab,
-  onTabChange,
   formData,
   onUpdate,
   tabNavigationProps,
@@ -35,97 +37,52 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
   canGenerateCertificate = true,
   onOpenEmailDialog,
   canEmail = false,
+  savedReportId,
 }) => {
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'client',
-      label: 'Client & Premises',
-      shortLabel: 'Client',
-      icon: <Building2 className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAClientPremises formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'system',
-      label: 'System & Panel',
-      shortLabel: 'System',
-      icon: <Cpu className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FASystemPanel formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'zones',
-      label: 'Zones & Devices',
-      shortLabel: 'Zones',
-      icon: <Grid3X3 className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAZonesDevices formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'equipment',
-      label: 'Equipment',
-      shortLabel: 'Equip',
-      icon: <Link2 className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAEquipmentInterfaces formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'declarations',
-      label: 'Declarations',
-      shortLabel: 'Sign',
-      icon: <FileCheck className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FADeclarations formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            onCreateInvoice={onCreateInvoice}
-            canGenerateCertificate={canGenerateCertificate}
-            onOpenEmailDialog={onOpenEmailDialog}
-            canEmail={canEmail}
-          />
-        </div>
-      ),
-    },
-  ];
+  // Track direction so the step slide matches travel (forward vs back).
+  const NEXT_LABELS = ['Continue to System', 'Continue to Zones', 'Continue to Equipment', 'Continue to Sign off'];
 
-  // Calculate tab completion
-  const completedTabs: Record<string, boolean> = {
-    client: !!(formData.clientName && formData.premisesAddress),
-    system: !!(formData.systemCategory && formData.systemMake),
-    zones: !!(
-      formData.zones?.length > 0 &&
-      (formData.detectors?.length > 0 || formData.sounders?.length > 0)
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<string, React.ReactNode> = {
+    client: <FAClientPremises formData={formData} onUpdate={onUpdate} />,
+    system: <FASystemPanel formData={formData} onUpdate={onUpdate} />,
+    zones: <FAZonesDevices formData={formData} onUpdate={onUpdate} />,
+    equipment: <FAEquipmentInterfaces formData={formData} onUpdate={onUpdate} />,
+    declarations: (
+      <FADeclarations formData={formData} onUpdate={onUpdate} savedReportId={savedReportId} />
     ),
-    equipment: !!formData.asFittedDrawingsProvided,
-    declarations: !!(formData.installerSignature && formData.overallResult),
   };
 
+  const isLast = currentTab === 'declarations';
+
   return (
-    <SmartTabs
-      tabs={smartTabs}
-      value={currentTab}
-      onValueChange={onTabChange}
-      className="space-y-4"
-      completedTabs={completedTabs}
-    />
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack
+            ? 'motion-safe:animate-mw-step-back'
+            : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <FireAlarmTabNavigation
+        nextLabels={NEXT_LABELS}
+        {...tabNavigationProps}
+        onGenerateCertificate={
+          isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate
+        }
+        onCreateInvoice={onCreateInvoice}
+        canGenerateCertificate={canGenerateCertificate}
+        onOpenEmailDialog={onOpenEmailDialog}
+        canEmail={canEmail}
+      />
+    </>
   );
 };
 

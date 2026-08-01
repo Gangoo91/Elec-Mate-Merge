@@ -906,7 +906,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       </div>
 
       <div className="space-y-7 sm:space-y-10">
-
         {/* Partial completion banner — editorial style. Retry just the
             failed half if we know which one it is. */}
         {isPartial && (
@@ -1000,8 +999,18 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     const [yy, mm, dd] = toInputDate(ramsData.date).split('-');
                     const thisYear = new Date().getFullYear();
                     const MONTHS = [
-                      'January', 'February', 'March', 'April', 'May', 'June',
-                      'July', 'August', 'September', 'October', 'November', 'December',
+                      'January',
+                      'February',
+                      'March',
+                      'April',
+                      'May',
+                      'June',
+                      'July',
+                      'August',
+                      'September',
+                      'October',
+                      'November',
+                      'December',
                     ];
                     const selectCls =
                       'h-11 px-3 rounded-xl bg-white/[0.05] border border-white/[0.12] text-[14px] text-white touch-manipulation focus:border-elec-yellow/50 focus:outline-none [color-scheme:dark]';
@@ -1140,7 +1149,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow mb-1">
                         Safety contacts
                       </div>
-                      <h3 className="text-[17px] font-semibold text-white">Emergency &amp; site contacts</h3>
+                      <h3 className="text-[17px] font-semibold text-white">
+                        Emergency &amp; site contacts
+                      </h3>
                       <p className="text-[12.5px] leading-relaxed text-white/55 mt-1">
                         Who to call on site. These appear on the RAMS and the exported PDF.
                       </p>
@@ -1148,9 +1159,21 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       {(
                         [
-                          { label: 'Site manager', nameKey: 'siteManagerName', phoneKey: 'siteManagerPhone' },
-                          { label: 'First aider', nameKey: 'firstAiderName', phoneKey: 'firstAiderPhone' },
-                          { label: 'Safety officer', nameKey: 'safetyOfficerName', phoneKey: 'safetyOfficerPhone' },
+                          {
+                            label: 'Site manager',
+                            nameKey: 'siteManagerName',
+                            phoneKey: 'siteManagerPhone',
+                          },
+                          {
+                            label: 'First aider',
+                            nameKey: 'firstAiderName',
+                            phoneKey: 'firstAiderPhone',
+                          },
+                          {
+                            label: 'Safety officer',
+                            nameKey: 'safetyOfficerName',
+                            phoneKey: 'safetyOfficerPhone',
+                          },
                         ] as const
                       ).map((c) => (
                         <div key={c.nameKey} className="space-y-2">
@@ -1341,8 +1364,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     Method statement not generated
                   </h3>
                   <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
-                    The method statement didn't generate. Retry just this half to patch it
-                    into the existing RAMS.
+                    The method statement didn't generate. Retry just this half to patch it into the
+                    existing RAMS.
                   </p>
                   {onRetryAgent ? (
                     <button

@@ -114,15 +114,13 @@ export const validateInput = (value: number, min: number, max: number, name: str
 
 // BS 7671 specific utilities
 export const bs7671 = {
-  // Diversity factors for different load types
-  diversityFactors: {
-    lighting: 0.9,
-    smallPower: 0.75,
-    waterHeating: 1.0,
-    spaceHeating: 0.75,
-    motors: 0.8,
-    domestic: 0.6,
-  },
+  // ELE-1423 — the diversityFactors map that lived here (lighting 0.9,
+  // smallPower 0.75, waterHeating 1.0, spaceHeating 0.75, motors 0.8,
+  // domestic 0.6) was invented, unused, and filed under a `bs7671` namespace
+  // even though BS 7671 has no diversity tables at all — Reg 311.1 only permits
+  // diversity to be taken into account. Removed rather than corrected: the real
+  // allowances are the On-Site Guide Table A2 rules in
+  // src/utils/diversity-table-a2.ts, which cannot be expressed as flat factors.
 
   // Maximum Zs values for different protective devices - BS 7671:2018+A3:2024 Table 41.3 (0.4s)
   maxZsValues: {

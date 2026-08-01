@@ -123,7 +123,9 @@ Deno.serve(async (req) => {
   } catch (error) {
     await captureException(error, { functionName: 'generate-hazard-embeddings', requestUrl: req.url, requestMethod: req.method });
     console.error('❌ Error generating hazard embeddings:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(
+      JSON.stringify({ error: 'Something went wrong completing that — please try again.' }),
+      {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

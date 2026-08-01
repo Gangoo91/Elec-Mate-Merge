@@ -10,13 +10,35 @@ import { cn } from '@/lib/utils';
 import { SafetyMasthead } from './common/SafetyModuleShell';
 import { PageHero, Eyebrow, ListCard } from '@/components/college/primitives';
 
-const EMERGENCY_CONTACTS: { service: string; number: string; description: string; critical?: boolean }[] = [
-  { service: 'Emergency Services', number: '999', description: 'Fire, Police, Ambulance', critical: true },
+const EMERGENCY_CONTACTS: {
+  service: string;
+  number: string;
+  description: string;
+  critical?: boolean;
+}[] = [
+  {
+    service: 'Emergency Services',
+    number: '999',
+    description: 'Fire, Police, Ambulance',
+    critical: true,
+  },
   { service: 'Power Cut / Emergency', number: '105', description: 'Electricity network emergency' },
-  { service: 'Gas Emergency', number: '0800 111 999', description: 'National Gas Emergency Service' },
-  { service: 'HSE Incident Contact', number: '0345 300 9923', description: 'RIDDOR reporting line' },
+  {
+    service: 'Gas Emergency',
+    number: '0800 111 999',
+    description: 'National Gas Emergency Service',
+  },
+  {
+    service: 'HSE Incident Contact',
+    number: '0345 300 9923',
+    description: 'RIDDOR reporting line',
+  },
   { service: 'NHS Non-Emergency', number: '111', description: 'Medical advice' },
-  { service: 'Poison Information', number: '0344 892 0111', description: 'National Poisons Info (COSHH)' },
+  {
+    service: 'Poison Information',
+    number: '0344 892 0111',
+    description: 'National Poisons Info (COSHH)',
+  },
 ];
 
 const PROCEDURES: { id: string; title: string; steps: string[] }[] = [
@@ -142,9 +164,14 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
               >
                 <div className="flex-1 min-w-0">
                   <div className="text-[14px] font-medium text-white">{c.service}</div>
-                  <div className="text-[11.5px] text-white/55">{c.description}</div>
+                  <div className="text-[11.5px] text-white">{c.description}</div>
                 </div>
-                <span className={cn('text-[15px] font-semibold tabular-nums shrink-0', c.critical ? 'text-red-400' : 'text-white')}>
+                <span
+                  className={cn(
+                    'text-[15px] font-semibold tabular-nums shrink-0',
+                    c.critical ? 'text-red-400' : 'text-white'
+                  )}
+                >
                   {c.number}
                 </span>
               </a>
@@ -159,14 +186,25 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
             {PROCEDURES.map((proc) => {
               const isOpen = expanded.has(proc.id);
               return (
-                <div key={proc.id} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+                <div
+                  key={proc.id}
+                  className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
+                >
                   <button
                     onClick={() => toggle(proc.id)}
                     className="w-full flex items-center gap-3 px-5 py-4 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
                   >
                     <span className="text-[14px] font-medium text-white flex-1">{proc.title}</span>
-                    <span className="text-[11px] text-white/45 tabular-nums">{proc.steps.length} steps</span>
-                    <span className={cn('text-white/40 text-[13px] transition-transform duration-200', isOpen && 'rotate-180')} aria-hidden>
+                    <span className="text-[11px] text-white tabular-nums">
+                      {proc.steps.length} steps
+                    </span>
+                    <span
+                      className={cn(
+                        'text-white text-[13px] transition-transform duration-200',
+                        isOpen && 'rotate-180'
+                      )}
+                      aria-hidden
+                    >
                       ⌄
                     </span>
                   </button>
@@ -185,7 +223,9 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
                               <span className="w-5 text-[11px] font-medium tabular-nums text-elec-yellow/80 shrink-0 mt-0.5">
                                 {String(i + 1).padStart(2, '0')}
                               </span>
-                              <span className="text-[13px] text-white/85 leading-relaxed">{step}</span>
+                              <span className="text-[13px] text-white leading-relaxed">
+                                {step}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -210,8 +250,10 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 px-5 py-3.5 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
               >
-                <span className="text-[13px] text-white/90 flex-1">{link.title}</span>
-                <span className="text-elec-yellow/70 text-[13px] shrink-0" aria-hidden>↗</span>
+                <span className="text-[13px] text-white flex-1">{link.title}</span>
+                <span className="text-elec-yellow/70 text-[13px] shrink-0" aria-hidden>
+                  ↗
+                </span>
               </a>
             ))}
           </ListCard>

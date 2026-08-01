@@ -442,7 +442,10 @@ export default function ProjectDetailView({
                                 handleLongPress(photo);
                               }}
                               onTouchStart={() => {
-                                longPressTimerRef.current = setTimeout(() => handleLongPress(photo), 500);
+                                longPressTimerRef.current = setTimeout(
+                                  () => handleLongPress(photo),
+                                  500
+                                );
                               }}
                               onTouchEnd={() => clearTimeout(longPressTimerRef.current)}
                               onTouchMove={() => clearTimeout(longPressTimerRef.current)}
@@ -574,10 +577,14 @@ export default function ProjectDetailView({
       </div>
 
       {/* Camera Sheet (modal={false} prevents iOS scroll-to-top — ELE-722) */}
-      <Sheet modal={false} open={cameraOpen} onOpenChange={(open) => {
-        setCameraOpen(open);
-        if (!open) setCameraPhotoType(undefined);
-      }}>
+      <Sheet
+        modal={false}
+        open={cameraOpen}
+        onOpenChange={(open) => {
+          setCameraOpen(open);
+          if (!open) setCameraPhotoType(undefined);
+        }}
+      >
         <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
           <CameraTab
             onPhotoUploaded={handlePhotoUploaded}
@@ -608,7 +615,10 @@ export default function ProjectDetailView({
           </div>
           <div className="px-2 pb-4 space-y-1">
             <button
-              onClick={() => { setMenuOpen(false); setEditOpen(true); }}
+              onClick={() => {
+                setMenuOpen(false);
+                setEditOpen(true);
+              }}
               className="w-full flex items-center gap-3 px-4 h-12 rounded-xl text-white active:bg-white/5 touch-manipulation"
             >
               <Edit3 className="h-5 w-5 text-elec-yellow" />
@@ -670,12 +680,7 @@ export default function ProjectDetailView({
       />
 
       {/* Before/After Compare (ELE-721) */}
-      {compareOpen && (
-        <BeforeAfterCompare
-          photos={photos}
-          onClose={() => setCompareOpen(false)}
-        />
-      )}
+      {compareOpen && <BeforeAfterCompare photos={photos} onClose={() => setCompareOpen(false)} />}
 
       {/* Edit Project Sheet (ELE-725) */}
       <CreateProjectSheet

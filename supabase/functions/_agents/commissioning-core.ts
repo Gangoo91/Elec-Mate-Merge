@@ -5,6 +5,7 @@
  */
 
 import { enhanceQuery } from '../_shared/query-enhancer.ts';
+import { aiFetch } from '../_shared/ai-log.ts';
 import { retrieveCommissioningKnowledge } from '../_shared/rag-commissioning.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { extractCommissioningKeywords } from '../_shared/commissioning-keywords.ts';
@@ -400,7 +401,7 @@ PROJECT DETAILS:
 
       let response;
       try {
-        response = await fetch('https://api.openai.com/v1/chat/completions', {
+        response = await aiFetch('process-commissioning-job', 'https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${OPENAI_API_KEY}`,

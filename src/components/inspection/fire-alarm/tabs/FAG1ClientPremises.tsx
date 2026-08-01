@@ -12,11 +12,18 @@ import { supabase } from '@/integrations/supabase/client';
 import { useEffect } from 'react';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import CertificateClientSection from '@/components/inspection/shared/CertificateClientSection';
+import FireAlarmPhotoUpload from '@/components/inspection/fire-alarm/FireAlarmPhotoUpload';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 const premisesTypeOptions = [
   { value: 'Office', label: 'Office' },
@@ -42,27 +49,8 @@ const occupancyTypeOptions = [
   { value: 'Unoccupied', label: 'Unoccupied / Storage' },
 ];
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -75,7 +63,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -104,34 +92,29 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
   }, []);
 
   return (
-    <div className="space-y-5">
-      {/* Header Banner */}
-      <div className="border-b border-red-500/20 pb-3">
-        <p className="text-sm font-bold text-red-400">FIRE ALARM DESIGN CERTIFICATE (G1)</p>
-        <p className="text-xs text-white mt-1">
-          BS 5839-1:2025 — Fire detection and fire alarm systems for buildings
-        </p>
-      </div>
-
-      {/* Certificate Reference */}
-      <Section title="Certificate Reference" accentColor="from-white/20 to-white/5">
-        <Field label="Certificate Number">
-          <Input
-            value={formData.certificateNumber || ''}
-            onChange={(e) => onUpdate('certificateNumber', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-        <Field label="Design Date">
-          <Input
-            type="date"
-            value={formData.designDate || ''}
-            onChange={(e) => onUpdate('designDate', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Certificate reference */}
+      <div className={cardCn}>
+        <SectionHeader title="Certificate reference" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Certificate number">
+            <Input
+              value={formData.certificateNumber || ''}
+              onChange={(e) => onUpdate('certificateNumber', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Design date">
+            <Input
+              type="date"
+              value={formData.designDate || ''}
+              onChange={(e) => onUpdate('designDate', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+        </div>
         {/* New vs Modification */}
-        <Field label="System Type">
+        <Field label="System type">
           <div className="flex gap-2">
             {[
               { value: 'new', label: 'New System' },
@@ -142,10 +125,10 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
                 type="button"
                 onClick={() => onUpdate('systemScope', value)}
                 className={cn(
-                  'flex-1 p-3 rounded-xl border text-sm font-medium touch-manipulation active:scale-[0.98] transition-all',
+                  'flex-1 min-h-11 rounded-xl border px-3 py-2.5 text-sm touch-manipulation active:scale-[0.98] transition-all',
                   formData.systemScope === value
-                    ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                    : 'bg-white/[0.03] border-white/[0.06] text-white'
+                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
                 )}
               >
                 {label}
@@ -154,7 +137,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
           </div>
         </Field>
         {formData.systemScope === 'modification' && (
-          <Field label="Original Certificate Reference">
+          <Field label="Original certificate reference">
             <Input
               value={formData.originalCertRef || ''}
               onChange={(e) => onUpdate('originalCertRef', e.target.value)}
@@ -163,7 +146,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             />
           </Field>
         )}
-        <Field label="System Extent">
+        <Field label="System extent">
           <Textarea
             value={formData.systemExtent || ''}
             onChange={(e) => onUpdate('systemExtent', e.target.value)}
@@ -171,20 +154,21 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             placeholder="Describe the areas and floors covered by this system design..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Client Details */}
-      <Section title="Client Details" accentColor="from-blue-500/40 to-cyan-400/20">
+      {/* Client details */}
+      <div className={cardCn}>
+        <SectionHeader title="Client details" />
         <CertificateClientSection formData={formData} onUpdate={onUpdate} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Client Name" required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Client name" required>
             <Input
               value={formData.clientName || ''}
               onChange={(e) => onUpdate('clientName', e.target.value)}
               className={inputCn}
             />
           </Field>
-          <Field label="Client Position">
+          <Field label="Client position">
             <Input
               value={formData.clientPosition || ''}
               onChange={(e) => onUpdate('clientPosition', e.target.value)}
@@ -193,7 +177,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Phone">
             <Input
               type="tel"
@@ -211,18 +195,19 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <Field label="Client Address">
+        <Field label="Client address">
           <Input
             value={formData.clientAddress || ''}
             onChange={(e) => onUpdate('clientAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Premises Details */}
-      <Section title="Premises Details" accentColor="from-red-500/40 to-orange-400/20">
-        <Field label="Premises Name">
+      {/* Premises details */}
+      <div className={cardCn}>
+        <SectionHeader title="Premises details" />
+        <Field label="Premises name">
           <Input
             value={formData.premisesName || ''}
             onChange={(e) => onUpdate('premisesName', e.target.value)}
@@ -230,35 +215,35 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             placeholder="e.g. Acme Office Building"
           />
         </Field>
-        <Field label="Premises Address" required>
+        <Field label="Premises address" required>
           <Input
             value={formData.premisesAddress || ''}
             onChange={(e) => onUpdate('premisesAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Premises Type">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Premises type">
             <ComboboxCell
               value={formData.premisesType || ''}
               onChange={(v) => onUpdate('premisesType', v)}
               options={premisesTypeOptions}
               placeholder="Select or type..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
-          <Field label="Occupancy Type">
+          <Field label="Occupancy type">
             <ComboboxCell
               value={formData.occupancyType || ''}
               onChange={(v) => onUpdate('occupancyType', v)}
               options={occupancyTypeOptions}
               placeholder="Select or type..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Number of Floors">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Number of floors">
             <Input
               type="number"
               inputMode="numeric"
@@ -267,7 +252,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Floor Area (m2)">
+          <Field label="Floor area (m2)">
             <Input
               value={formData.floorArea || ''}
               onChange={(e) => onUpdate('floorArea', e.target.value)}
@@ -277,11 +262,12 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      {/* Building Construction (unique to G1) */}
-      <Section title="Building Construction" accentColor="from-red-500/40 to-rose-400/20">
-        <Field label="Ceiling Type and Height">
+      {/* Building construction (unique to G1) */}
+      <div className={cardCn}>
+        <SectionHeader title="Building construction" />
+        <Field label="Ceiling type and height">
           <ComboboxCell
             value={formData.ceilingType || ''}
             onChange={(v) => onUpdate('ceilingType', v)}
@@ -296,10 +282,10 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
               { value: 'Vaulted/pitched', label: 'Vaulted / pitched' },
             ]}
             placeholder="Select or type..."
-            className="h-12 text-base"
+            className="h-11 text-base"
           />
         </Field>
-        <Field label="Beam / Joist Spacing">
+        <Field label="Beam / joist spacing">
           <ComboboxCell
             value={formData.beamSpacing || ''}
             onChange={(v) => onUpdate('beamSpacing', v)}
@@ -311,10 +297,10 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
               { value: 'Widely spaced (>1m)', label: 'Widely spaced (>1m)' },
             ]}
             placeholder="Select or type..."
-            className="h-12 text-base"
+            className="h-11 text-base"
           />
         </Field>
-        <Field label="Ventilation and Airflow">
+        <Field label="Ventilation and airflow">
           <Input
             value={formData.ventilationNotes || ''}
             onChange={(e) => onUpdate('ventilationNotes', e.target.value)}
@@ -322,7 +308,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             placeholder="e.g. Mechanical extract in kitchen"
           />
         </Field>
-        <Field label="Construction Notes">
+        <Field label="Construction notes">
           <Textarea
             value={formData.buildingConstructionNotes || ''}
             onChange={(e) => onUpdate('buildingConstructionNotes', e.target.value)}
@@ -330,18 +316,26 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             placeholder="Any building features that affect detector performance or placement..."
           />
         </Field>
-      </Section>
+        <Field label="Survey photos">
+          <FireAlarmPhotoUpload
+            photos={formData.photos || []}
+            onPhotosChange={(photos) => onUpdate('photos', photos)}
+            title="Survey photos"
+          />
+        </Field>
+      </div>
 
-      {/* Fire Risk Assessment (mandatory for G1) */}
-      <Section title="Fire Risk Assessment" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 mb-3">
-          <p className="text-xs text-white leading-relaxed">
+      {/* Fire risk assessment (mandatory for G1) */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Fire risk assessment" />
+        <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+          <p className="text-[12px] text-white/85 leading-relaxed">
             The system design must be based on the building's fire risk assessment. Provide the FRA
             reference below.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="FRA Reference" required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="FRA reference" required>
             <Input
               value={formData.fraReference || ''}
               onChange={(e) => onUpdate('fraReference', e.target.value)}
@@ -349,7 +343,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
               placeholder="e.g. FRA-2026-001"
             />
           </Field>
-          <Field label="FRA Date">
+          <Field label="FRA date">
             <Input
               type="date"
               value={formData.fraDate || ''}
@@ -358,15 +352,15 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="FRA Author">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="FRA author">
             <Input
               value={formData.fraAuthor || ''}
               onChange={(e) => onUpdate('fraAuthor', e.target.value)}
               className={inputCn}
             />
           </Field>
-          <Field label="FRA Company">
+          <Field label="FRA company">
             <Input
               value={formData.fraCompany || ''}
               onChange={(e) => onUpdate('fraCompany', e.target.value)}
@@ -374,7 +368,7 @@ export default function FAG1ClientPremises({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
     </div>
   );
 }

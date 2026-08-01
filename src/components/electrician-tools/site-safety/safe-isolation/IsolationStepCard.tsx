@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Field, inputClass, PrimaryButton, SecondaryButton, Eyebrow } from '@/components/college/primitives';
+import { Field, PrimaryButton, SecondaryButton, Eyebrow } from '@/components/college/primitives';
+import { safetyInputCn } from '../common/SafetyDocField';
 import type { IsolationStep, VoltageReadings } from '@/hooks/useSafeIsolationRecords';
 
 /** Data passed back when a step is completed */
@@ -101,13 +102,13 @@ export function IsolationStepCard({
     ? 'bg-emerald-500 text-black'
     : isActive
       ? 'bg-amber-500 text-black'
-      : 'bg-white/[0.08] text-white/70';
+      : 'bg-white/[0.08] text-white';
   const statusLabel = isCompleted ? 'Done' : isActive ? 'Active' : 'Pending';
   const statusPill = isCompleted
     ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
     : isActive
       ? 'bg-amber-500/10 text-amber-400 border-amber-500/25'
-      : 'bg-white/[0.05] text-white/55 border-white/10';
+      : 'bg-white/[0.05] text-white border-white/10';
 
   // Dead/live verdict for the completed voltage readings display
   const readingsDead =
@@ -124,7 +125,11 @@ export function IsolationStepCard({
       layout
       className={cn(
         'relative rounded-2xl border bg-[hsl(0_0%_12%)] overflow-hidden transition-colors duration-200',
-        isActive ? 'border-amber-500/25' : isCompleted ? 'border-emerald-500/20' : 'border-white/[0.06]'
+        isActive
+          ? 'border-amber-500/25'
+          : isCompleted
+            ? 'border-emerald-500/20'
+            : 'border-white/[0.06]'
       )}
     >
       <span aria-hidden className={cn('absolute inset-y-0 left-0 w-[3px]', accent)} />
@@ -154,7 +159,7 @@ export function IsolationStepCard({
           </div>
 
           {isCompleted && step.completedAt && (
-            <p className="text-[11px] text-white/55 tabular-nums mb-1">
+            <p className="text-[11px] text-white tabular-nums mb-1">
               {new Date(step.completedAt).toLocaleTimeString('en-GB', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -163,10 +168,10 @@ export function IsolationStepCard({
           )}
 
           {/* Description */}
-          <p className="text-xs leading-relaxed text-white/70">{step.description}</p>
+          <p className="text-xs leading-relaxed text-white">{step.description}</p>
 
           {/* Notes */}
-          {step.notes && <p className="text-xs text-white/55 mt-1 italic">Note: {step.notes}</p>}
+          {step.notes && <p className="text-xs text-white mt-1 italic">Note: {step.notes}</p>}
 
           {/* Completed voltage readings display */}
           {isCompleted && step.voltageReadings && (
@@ -186,22 +191,33 @@ export function IsolationStepCard({
               </div>
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div>
-                  <p className="text-[10px] text-white/55">L-N</p>
-                  <p className="text-sm font-bold text-white tabular-nums">{step.voltageReadings.ln ?? '-'}V</p>
+                  <p className="text-[10px] text-white">L-N</p>
+                  <p className="text-sm font-bold text-white tabular-nums">
+                    {step.voltageReadings.ln ?? '-'}V
+                  </p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-white/55">L-E</p>
-                  <p className="text-sm font-bold text-white tabular-nums">{step.voltageReadings.le ?? '-'}V</p>
+                  <p className="text-[10px] text-white">L-E</p>
+                  <p className="text-sm font-bold text-white tabular-nums">
+                    {step.voltageReadings.le ?? '-'}V
+                  </p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-white/55">N-E</p>
-                  <p className="text-sm font-bold text-white tabular-nums">{step.voltageReadings.ne ?? '-'}V</p>
+                  <p className="text-[10px] text-white">N-E</p>
+                  <p className="text-sm font-bold text-white tabular-nums">
+                    {step.voltageReadings.ne ?? '-'}V
+                  </p>
                 </div>
               </div>
               {step.voltageReadings.testedAt && (
-                <p className="text-[10px] text-white/55 mt-1.5 text-right tabular-nums">
-                  Tested: {new Date(step.voltageReadings.testedAt).toLocaleString('en-GB', {
-                    day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit',
+                <p className="text-[10px] text-white mt-1.5 text-right tabular-nums">
+                  Tested:{' '}
+                  {new Date(step.voltageReadings.testedAt).toLocaleString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
                   })}
                 </p>
               )}
@@ -210,27 +226,27 @@ export function IsolationStepCard({
 
           {/* Completed lock-off number display */}
           {isCompleted && step.lockOffNumber && (
-            <p className="mt-2 text-xs text-white/70">Lock-off: {step.lockOffNumber}</p>
+            <p className="mt-2 text-xs text-white">Lock-off: {step.lockOffNumber}</p>
           )}
 
           {/* Completed instrument + proving unit display */}
-          {isCompleted && (step.instrumentModel || step.instrumentSerial || step.provingUnitSerial) && (
-            <div className="mt-2 p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] space-y-1">
-              {(step.instrumentModel || step.instrumentSerial) && (
-                <p className="text-xs text-white/70">
-                  Test instrument: {[step.instrumentModel, step.instrumentSerial].filter(Boolean).join(' — ')}
-                </p>
-              )}
-              {step.provingUnitSerial && (
-                <p className="text-xs text-white/70">Proving unit: {step.provingUnitSerial}</p>
-              )}
-            </div>
-          )}
+          {isCompleted &&
+            (step.instrumentModel || step.instrumentSerial || step.provingUnitSerial) && (
+              <div className="mt-2 p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] space-y-1">
+                {(step.instrumentModel || step.instrumentSerial) && (
+                  <p className="text-xs text-white">
+                    Test instrument:{' '}
+                    {[step.instrumentModel, step.instrumentSerial].filter(Boolean).join(' — ')}
+                  </p>
+                )}
+                {step.provingUnitSerial && (
+                  <p className="text-xs text-white">Proving unit: {step.provingUnitSerial}</p>
+                )}
+              </div>
+            )}
 
           {/* Photo indicator */}
-          {step.photoUrl && (
-            <p className="text-[10px] text-white/55 mt-2">Photo attached</p>
-          )}
+          {step.photoUrl && <p className="text-[10px] text-white mt-2">Photo attached</p>}
 
           {/* Step 6: Voltage reading inputs */}
           {isActive && isStep6 && (
@@ -242,7 +258,7 @@ export function IsolationStepCard({
             >
               <div className="p-3 rounded-xl bg-red-500/[0.06] border border-red-500/20 space-y-3">
                 <Eyebrow className="text-red-300/90">Record voltage readings · GS38</Eyebrow>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Test between all conductors at the point of work. All readings must be below{' '}
                   {DEAD_THRESHOLD_V}V to confirm dead.
                 </p>
@@ -254,7 +270,7 @@ export function IsolationStepCard({
                       min="0"
                       step="0.1"
                       placeholder="0"
-                      className={cn(inputClass, 'text-center text-base font-bold')}
+                      className={cn(safetyInputCn, 'text-center text-base font-bold')}
                       value={voltLN}
                       onChange={(e) => setVoltLN(e.target.value)}
                     />
@@ -266,7 +282,7 @@ export function IsolationStepCard({
                       min="0"
                       step="0.1"
                       placeholder="0"
-                      className={cn(inputClass, 'text-center text-base font-bold')}
+                      className={cn(safetyInputCn, 'text-center text-base font-bold')}
                       value={voltLE}
                       onChange={(e) => setVoltLE(e.target.value)}
                     />
@@ -278,7 +294,7 @@ export function IsolationStepCard({
                       min="0"
                       step="0.1"
                       placeholder="0"
-                      className={cn(inputClass, 'text-center text-base font-bold')}
+                      className={cn(safetyInputCn, 'text-center text-base font-bold')}
                       value={voltNE}
                       onChange={(e) => setVoltNE(e.target.value)}
                     />
@@ -297,8 +313,15 @@ export function IsolationStepCard({
                         : 'bg-red-500/10 border border-red-500/25'
                     )}
                   >
-                    <span className={cn('text-sm font-bold', allDead ? 'text-emerald-400' : 'text-red-400')}>
-                      {allDead ? 'Confirmed dead — safe to proceed' : 'Live detected — do NOT proceed'}
+                    <span
+                      className={cn(
+                        'text-sm font-bold',
+                        allDead ? 'text-emerald-400' : 'text-red-400'
+                      )}
+                    >
+                      {allDead
+                        ? 'Confirmed dead — safe to proceed'
+                        : 'Live detected — do NOT proceed'}
                     </span>
                   </motion.div>
                 )}
@@ -317,7 +340,7 @@ export function IsolationStepCard({
               <Field label="Lock-off number (optional)">
                 <input
                   placeholder="e.g. LOK-001"
-                  className={inputClass}
+                  className={safetyInputCn}
                   value={lockOffNumber}
                   onChange={(e) => setLockOffNumber(e.target.value)}
                 />
@@ -338,7 +361,7 @@ export function IsolationStepCard({
                 <Field label="Instrument make / model">
                   <input
                     placeholder="e.g. Fluke T6-1000, Martindale VI-15000"
-                    className={inputClass}
+                    className={safetyInputCn}
                     value={instrumentModel}
                     onChange={(e) => setInstrumentModel(e.target.value)}
                   />
@@ -346,7 +369,7 @@ export function IsolationStepCard({
                 <Field label="Instrument serial no.">
                   <input
                     placeholder="e.g. SN-987654"
-                    className={inputClass}
+                    className={safetyInputCn}
                     value={instrumentSerial}
                     onChange={(e) => setInstrumentSerial(e.target.value)}
                   />
@@ -354,7 +377,7 @@ export function IsolationStepCard({
                 <Field label="Proving unit serial no. (optional)">
                   <input
                     placeholder="e.g. PU-12345"
-                    className={inputClass}
+                    className={safetyInputCn}
                     value={provingUnitSerial}
                     onChange={(e) => setProvingUnitSerial(e.target.value)}
                   />
@@ -375,7 +398,9 @@ export function IsolationStepCard({
                 fullWidth
                 onClick={handleComplete}
                 disabled={!canComplete}
-                className={isStep6 && anyLive ? 'bg-red-500 text-white hover:bg-red-500/90' : undefined}
+                className={
+                  isStep6 && anyLive ? 'bg-red-500 text-white hover:bg-red-500/90' : undefined
+                }
               >
                 {isStep6
                   ? allReadingsEntered

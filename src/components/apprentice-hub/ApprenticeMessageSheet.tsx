@@ -393,6 +393,10 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
                   onChange={(e) => setDraft(e.target.value)}
                   rows={2}
                   placeholder="Write a message…"
+                  // ELE-1419 — the OS capitalises the first letter otherwise.
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                   className="flex-1 px-3.5 py-2.5 rounded-xl bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[14px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-elec-yellow/40 touch-manipulation resize-none"
                 />
                 <button

@@ -137,7 +137,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const [inspectedByOpen, setInspectedByOpen] = useState(true);
   const [authorisedByOpen, setAuthorisedByOpen] = useState(false);
 
-  // Email hook for sending certificates via Resend
+  // Email hook for sending certificates via Resend.
+  // formattedData is built at SEND time (formatEICRJson is async — it fetches
+  // photos), so it can't be computed here on every render. handleSendEmail
+  // writes the fresh payload into this ref just before sending, and the getter
+  // below hands it to the hook when the invoke fires — guaranteeing the emailed
+  // PDF is built from CURRENT data, never raw form_data or a stale pdf_payload.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const emailFormattedDataRef = useRef<Record<string, any> | undefined>(undefined);
   const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
     certificateType: 'EICR',
     reportId: effectiveReportId,
@@ -148,6 +155,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     inspectionDate: formData.inspectionDate,
     overallAssessment: formData.overallAssessment,
     companyName: formData.companyName,
+    get formattedData() {
+      return emailFormattedDataRef.current;
+    },
   });
 
   // Ref to always access the latest formData in async callbacks
@@ -610,12 +620,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   // Email send handler - ensures report is saved before emailing
   const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
     // First, ensure report is saved to database using sync hook
+    let reportIdForEmail = effectiveReportId;
     try {
       console.log('[Email] Syncing report before sending email...');
       const syncResult = await syncNow();
       if (!syncResult.success) {
         throw new Error('Failed to save report before emailing. Please try again.');
       }
+      if (syncResult.reportId) reportIdForEmail = syncResult.reportId;
       console.log('[Email] Report synced:', syncResult.reportId);
     } catch (saveError) {
       console.error('[Email] Failed to save report before emailing:', saveError);
@@ -625,6 +637,35 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         variant: 'destructive',
       });
       throw saveError;
+    }
+
+    // Build a FRESH formatted payload so send-certificate-resend attaches a PDF
+    // generated from the current form data — without this it falls back to a
+    // stale pdf_payload (post-edit emails) or raw camelCase form_data (never
+    // generated), which renders a blank certificate. Mirrors the EV reference.
+    try {
+      const latestFormData = getLatestFormData();
+      const formattedJson = await formatEICRJson(
+        {
+          ...latestFormData,
+          certificateNumber: latestFormData?.certificateNumber || `EICR-${Date.now()}`,
+        },
+        reportIdForEmail
+      );
+      emailFormattedDataRef.current = formattedJson;
+      // Keep the saved payload fresh too so the reports-page email path
+      // doesn't reuse a stale one.
+      const { error: payloadError } = await supabase
+        .from('reports')
+        .update({ pdf_payload: formattedJson })
+        .eq('report_id', reportIdForEmail);
+      if (payloadError) {
+        console.warn('[Email] Failed to refresh pdf_payload (non-blocking):', payloadError);
+      }
+    } catch (formatError) {
+      // Fall back to the server-side pdf_payload rather than blocking the send
+      console.warn('[Email] Failed to build formatted payload:', formatError);
+      emailFormattedDataRef.current = undefined;
     }
 
     // Now send the email
@@ -1497,8 +1538,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           </div>
 
           {/* Danger Notice — only when C1 observations exist */}
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {formData.defectObservations?.some((d: any) => d.defectCode === 'C1') && (() => {
-            const c1Observations = formData.defectObservations?.filter((d: any) => d.defectCode === 'C1') || [];
+            const c1Observations =
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              formData.defectObservations?.filter((d: any) => d.defectCode === 'C1') || [];
             const c1Count = c1Observations.length;
             return (
               <button
@@ -1518,6 +1562,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       inspectorEmail: formData.companyEmail || '',
                       inspectorRegistration: formData.registrationNumber || '',
                       inspectorScheme: formData.registrationScheme || '',
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       observations: c1Observations.map((obs: any) => ({
                         description: obs.description,
                         item: obs.item,
@@ -1635,7 +1680,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     <span>Cloud generation failed</span>
                   </div>
                   <p className="text-sm text-white">
-                    Attempting local generation as fallback...
+                    Please check your connection and try again.
                   </p>
                 </div>
               )}

@@ -110,7 +110,13 @@ serve(async (req) => {
       .select('id, employer_id')
       .eq('id', jobPackId)
       .single();
-    if (!pack || pack.employer_id !== user.id) {
+    // A co-admin acts for someone else's company, so comparing against the
+    // caller's own uid would reject them from their own firm's job packs.
+    // my_employer_scope() returns just [own uid] for an ordinary owner, so this
+    // is behaviour-identical for them.
+    const { data: scopeRows } = await userClient.rpc('my_employer_scope');
+    const allowedEmployerIds = ((scopeRows as string[] | null) ?? [user.id]);
+    if (!pack || !allowedEmployerIds.includes(pack.employer_id)) {
       return new Response(JSON.stringify({ success: false, error: 'Job pack not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

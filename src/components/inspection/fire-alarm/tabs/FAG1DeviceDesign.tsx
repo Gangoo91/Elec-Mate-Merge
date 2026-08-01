@@ -9,7 +9,6 @@ import { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2, AlertTriangle, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { FireAlarmZone } from '@/types/fire-alarm';
@@ -20,61 +19,50 @@ import {
   suggestZoneCount,
 } from '@/data/fireAlarmEquipmentDatabase';
 
-const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
-const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const Section = ({
-  title,
-  accentColor,
-  count,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  count?: number;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-        {title}
-        {count !== undefined && (
-          <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-            {count}
-          </span>
-        )}
-      </h2>
-    </div>
-    {children}
-  </div>
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const addButtonCn =
+  'w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] text-sm font-medium text-white touch-manipulation active:scale-[0.98] transition-transform';
+
+const removeButtonCn =
+  'h-11 px-2 text-sm font-medium text-red-400 touch-manipulation active:opacity-60 shrink-0';
+
+const SectionHeader = ({ title, count }: { title: string; count?: number }) => (
+  <h2 className="mb-3 flex items-center gap-2 text-[15px] font-semibold tracking-tight text-white">
+    {title}
+    {count !== undefined && (
+      <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] font-semibold text-white/80">
+        {count}
+      </span>
+    )}
+  </h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
 
-const ceilingTypeOptions = [
-  { value: 'Flat plasterboard 2.4m', label: 'Flat plasterboard 2.4m' },
-  { value: 'Flat plasterboard 2.7m', label: 'Flat plasterboard 2.7m' },
-  { value: 'Flat plasterboard 3.0m', label: 'Flat plasterboard 3.0m' },
-  { value: 'Suspended tiles 2.7m', label: 'Suspended tiles 2.7m' },
-  { value: 'Suspended tiles 3.0m', label: 'Suspended tiles 3.0m' },
-  { value: 'Exposed soffit 3.5m', label: 'Exposed soffit 3.5m' },
-  { value: 'Exposed soffit 4.0m+', label: 'Exposed soffit 4.0m+' },
-  { value: 'Vaulted/pitched', label: 'Vaulted / pitched' },
+const ceilingHeightOptions = [
+  { value: '2.4', label: '2.4' },
+  { value: '2.7', label: '2.7' },
+  { value: '3.0', label: '3.0' },
+  { value: '3.5', label: '3.5' },
+  { value: '4.0', label: '4.0' },
+  { value: '4.5', label: '4.5' },
+  { value: '5.0', label: '5.0' },
+  { value: '6.0', label: '6.0' },
 ];
 
 const beamSpacingOptions = [
@@ -206,23 +194,24 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
       (plannedSounders > 0 && zoneSounders !== plannedSounders));
 
   return (
-    <div className="space-y-5">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Empty state */}
       {zones.length === 0 && plannedDetectors === 0 && (
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 text-center">
+        <div className="rounded-xl bg-white/[0.05] p-4 text-center lg:col-span-2">
           <p className="text-sm font-medium text-white">
             Start by entering your planned device quantities
           </p>
-          <p className="text-xs text-white mt-1">
+          <p className="text-xs text-white/80 mt-1">
             Then add zones and assign device counts to each zone
           </p>
         </div>
       )}
 
-      {/* Planned Device Quantities */}
-      <Section title="Planned Device Quantities" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <Field label="Optical Smoke">
+      {/* Planned device quantities */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Planned device quantities" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4">
+          <Field label="Optical smoke">
             <Input
               type="number"
               inputMode="numeric"
@@ -267,7 +256,7 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Flame / CO">
+          <Field label="Flame">
             <Input
               type="number"
               inputMode="numeric"
@@ -276,9 +265,18 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
+          <Field label="CO">
+            <Input
+              type="number"
+              inputMode="numeric"
+              value={formData.plannedCO || ''}
+              onChange={(e) => onUpdate('plannedCO', parseInt(e.target.value) || 0)}
+              className={inputCn}
+            />
+          </Field>
         </div>
-        <div className="grid grid-cols-3 gap-3">
-          <Field label="Call Points">
+        <div className="grid grid-cols-3 gap-x-6 gap-y-4">
+          <Field label="Call points">
             <Input
               type="number"
               inputMode="numeric"
@@ -306,65 +304,51 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        {/* Summary cards */}
-        <div className="grid grid-cols-3 gap-3 mt-2">
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+        {/* Summary tiles */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
             <p className="text-2xl font-bold text-red-400">{plannedDetectors}</p>
-            <p className="text-[10px] text-white uppercase">Detectors</p>
+            <p className="text-[11px] text-white/80">Detectors</p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
-            <p className="text-2xl font-bold text-blue-400">{plannedSounders}</p>
-            <p className="text-[10px] text-white uppercase">Sounders</p>
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+            <p className="text-2xl font-bold text-elec-yellow">{plannedSounders}</p>
+            <p className="text-[11px] text-white/80">Sounders</p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
             <p className="text-2xl font-bold text-green-400">{plannedCPs}</p>
-            <p className="text-[10px] text-white uppercase">Call Points</p>
+            <p className="text-[11px] text-white/80">Call points</p>
           </div>
         </div>
-      </Section>
+      </div>
 
-      {/* Smart Suggestions */}
+      {/* Smart suggestions */}
       {(detectorSuggestion || cpSuggestion) && (
-        <div className="space-y-2">
+        <div className="space-y-2 lg:col-span-2">
           {detectorSuggestion && (
-            <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
-              <div className="flex items-start gap-2">
-                <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-xs font-semibold text-amber-400">
-                    Suggested: {detectorSuggestion.count} detectors minimum
-                  </p>
-                  <p className="text-xs text-white mt-1">{detectorSuggestion.reason}</p>
-                </div>
-              </div>
+            <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+              <p className="text-xs font-semibold text-amber-400">
+                Suggested: {detectorSuggestion.count} detectors minimum
+              </p>
+              <p className="text-xs text-white/85 mt-1">{detectorSuggestion.reason}</p>
             </div>
           )}
           {cpSuggestion && (
-            <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
-              <div className="flex items-start gap-2">
-                <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-xs font-semibold text-amber-400">
-                    Suggested: {cpSuggestion.count} call points minimum
-                  </p>
-                  <p className="text-xs text-white mt-1">{cpSuggestion.reason}</p>
-                </div>
-              </div>
+            <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+              <p className="text-xs font-semibold text-amber-400">
+                Suggested: {cpSuggestion.count} call points minimum
+              </p>
+              <p className="text-xs text-white/85 mt-1">{cpSuggestion.reason}</p>
             </div>
           )}
         </div>
       )}
 
-      {/* Zone Schedule */}
-      <Section
-        title="Zone Schedule"
-        accentColor="from-red-500/40 to-orange-400/20"
-        count={zones.length}
-      >
+      {/* Zone schedule */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Zone schedule" count={zones.length} />
         {/* Mismatch warning */}
         {hasMismatch && (
-          <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-            <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+          <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
             <p className="text-xs text-amber-400">
               Zone device totals don't match planned quantities above. Zones: {zoneDetectors} det /{' '}
               {zoneCPs} CP / {zoneSounders} snd vs Planned: {plannedDetectors} / {plannedCPs} /{' '}
@@ -373,27 +357,25 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
           </div>
         )}
         {zones.map((zone) => (
-          <div
-            key={zone.id}
-            className="p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-3"
-          >
+          <div key={zone.id} className="border-t border-white/[0.08] pt-4 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-elec-yellow">Zone {zone.zoneNumber}</span>
+              <span className="text-sm font-semibold text-white">Zone {zone.zoneNumber}</span>
               {zones.length > 1 && (
                 <button
+                  type="button"
                   onClick={() => removeZone(zone.id)}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                  className={removeButtonCn}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  Remove
                 </button>
               )}
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
               <Field label="Name">
                 <Input
                   value={zone.zoneName}
                   onChange={(e) => updateZone(zone.id, 'zoneName', e.target.value)}
-                  className={inputSmCn}
+                  className={inputCn}
                   placeholder="e.g. Ground Floor"
                 />
               </Field>
@@ -401,12 +383,12 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
                 <Input
                   value={zone.location}
                   onChange={(e) => updateZone(zone.id, 'location', e.target.value)}
-                  className={inputSmCn}
+                  className={inputCn}
                   placeholder="e.g. Main building"
                 />
               </Field>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-x-6 gap-y-4">
               <Field label="Detectors">
                 <Input
                   type="number"
@@ -415,7 +397,7 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
                   onChange={(e) =>
                     updateZone(zone.id, 'detectorCount', parseInt(e.target.value) || 0)
                   }
-                  className={inputSmCn}
+                  className={inputCn}
                 />
               </Field>
               <Field label="CPs">
@@ -426,7 +408,7 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
                   onChange={(e) =>
                     updateZone(zone.id, 'callPointCount', parseInt(e.target.value) || 0)
                   }
-                  className={inputSmCn}
+                  className={inputCn}
                 />
               </Field>
               <Field label="Sounders">
@@ -437,11 +419,11 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
                   onChange={(e) =>
                     updateZone(zone.id, 'sounderCount', parseInt(e.target.value) || 0)
                   }
-                  className={inputSmCn}
+                  className={inputCn}
                 />
               </Field>
             </div>
-            <Field label="Notification Method">
+            <Field label="Notification method">
               <ComboboxCell
                 value={zone.notificationMethod || ''}
                 onChange={(v) => updateZone(zone.id, 'notificationMethod', v)}
@@ -454,53 +436,48 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
                   { value: 'staff-alert', label: 'Staff Alert Only' },
                 ]}
                 placeholder="Select notification..."
-                className="h-10 text-sm"
+                className="h-11 text-base"
               />
             </Field>
           </div>
         ))}
         {zoneSuggestion && zones.length < zoneSuggestion.count && (
-          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
-            <div className="flex items-start gap-2">
-              <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-amber-400">
-                {zoneSuggestion.reason} — you have {zones.length} of {zoneSuggestion.count} minimum
-              </p>
-            </div>
+          <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+            <p className="text-xs text-amber-400">
+              {zoneSuggestion.reason} — you have {zones.length} of {zoneSuggestion.count} minimum
+            </p>
           </div>
         )}
-        <button
-          onClick={addZone}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-red-500/20 flex items-center justify-center gap-2 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Zone
+        <button type="button" onClick={addZone} className={addButtonCn}>
+          Add zone
         </button>
-      </Section>
+      </div>
 
-      {/* Detector Spacing Calculations */}
-      <Section title="Detector Spacing & Coverage" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Ceiling Height (m)">
+      {/* Detector spacing calculations */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Detector spacing & coverage" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Ceiling height (m)">
             <ComboboxCell
               value={formData.ceilingHeight || ''}
               onChange={(v) => onUpdate('ceilingHeight', v)}
-              options={ceilingTypeOptions}
+              options={ceilingHeightOptions}
               placeholder="Select or type..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
-          <Field label="Beam Spacing">
+          <Field label="Beam spacing">
             <ComboboxCell
               value={formData.beamSpacing || ''}
               onChange={(v) => onUpdate('beamSpacing', v)}
               options={beamSpacingOptions}
               placeholder="Select or type..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Detector Spacing (m)">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Detector spacing (m)">
             <Input
               value={formData.detectorSpacing || ''}
               onChange={(e) => onUpdate('detectorSpacing', e.target.value)}
@@ -509,7 +486,7 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
               placeholder="e.g. 5.3m radius"
             />
           </Field>
-          <Field label="Coverage per Detector (m2)">
+          <Field label="Coverage per detector (m2)">
             <Input
               value={formData.coveragePerDetector || ''}
               onChange={(e) => onUpdate('coveragePerDetector', e.target.value)}
@@ -519,7 +496,7 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <Field label="Spacing Calculations & Notes">
+        <Field label="Spacing calculations & notes">
           <Textarea
             value={formData.spacingCalculations || ''}
             onChange={(e) => onUpdate('spacingCalculations', e.target.value)}
@@ -527,77 +504,68 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
             placeholder="Document detector spacing calculations, coverage overlaps, any adjustments for ceiling type or beam spacing..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Interface Equipment */}
-      <Section
-        title="Planned Interface Equipment"
-        accentColor="from-cyan-500/40 to-blue-400/20"
-        count={interfaces.length}
-      >
+      {/* Interface equipment */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Planned interface equipment" count={interfaces.length} />
         {interfaces.map((iface: any, idx: number) => (
-          <div key={iface.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-cyan-400">
+          <div key={iface.id} className="border-t border-white/[0.08] pt-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold text-white">
                 Interface {idx + 1} of {interfaces.length}
               </span>
               <button
+                type="button"
                 onClick={() => removeInterface(iface.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className={removeButtonCn}
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <Field label="Type">
-                <ComboboxCell
-                  value={iface.type}
-                  onChange={(v) => updateInterface(iface.id, 'type', v)}
-                  options={interfaceTypeOptions}
-                  placeholder="Select type..."
-                  className="h-12 text-base"
-                />
-              </Field>
-              <Field label="Location">
-                <Input
-                  value={iface.location || ''}
-                  onChange={(e) => updateInterface(iface.id, 'location', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="e.g. Main entrance"
-                />
-              </Field>
-              <Field label="Details">
-                <Input
-                  value={iface.details || ''}
-                  onChange={(e) => updateInterface(iface.id, 'details', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="Design notes..."
-                />
-              </Field>
-            </div>
+            <Field label="Type">
+              <ComboboxCell
+                value={iface.type}
+                onChange={(v) => updateInterface(iface.id, 'type', v)}
+                options={interfaceTypeOptions}
+                placeholder="Select type..."
+                className="h-11 text-base"
+              />
+            </Field>
+            <Field label="Location">
+              <Input
+                value={iface.location || ''}
+                onChange={(e) => updateInterface(iface.id, 'location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Main entrance"
+              />
+            </Field>
+            <Field label="Details">
+              <Input
+                value={iface.details || ''}
+                onChange={(e) => updateInterface(iface.id, 'details', e.target.value)}
+                className={inputCn}
+                placeholder="Design notes..."
+              />
+            </Field>
           </div>
         ))}
-        <button
-          onClick={addInterface}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-cyan-500/20 flex items-center justify-center gap-2 text-sm font-medium text-cyan-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Interface
+        <button type="button" onClick={addInterface} className={addButtonCn}>
+          Add interface
         </button>
-      </Section>
+      </div>
 
-      {/* Drawing Schedule (G1 unique) */}
-      <Section
-        title="Drawing Schedule"
-        accentColor="from-amber-500/40 to-yellow-400/20"
-        count={(formData.drawings || []).length}
-      >
+      {/* Drawing schedule (G1 unique) */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Drawing schedule" count={(formData.drawings || []).length} />
         {(formData.drawings || []).map((dwg: any, idx: number) => (
-          <div key={dwg.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-amber-400">
+          <div key={dwg.id} className="border-t border-white/[0.08] pt-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold text-white">
                 Drawing {idx + 1} of {(formData.drawings || []).length}
               </span>
               <button
+                type="button"
                 onClick={() => {
                   haptic.medium();
                   onUpdate(
@@ -605,78 +573,77 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
                     (formData.drawings || []).filter((d: any) => d.id !== dwg.id)
                   );
                 }}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className={removeButtonCn}
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Drawing No.">
-                  <Input
-                    value={dwg.number || ''}
-                    onChange={(e) =>
-                      onUpdate(
-                        'drawings',
-                        (formData.drawings || []).map((d: any) =>
-                          d.id === dwg.id ? { ...d, number: e.target.value } : d
-                        )
-                      )
-                    }
-                    className={inputSmCn}
-                    placeholder="e.g. FA-001"
-                  />
-                </Field>
-                <Field label="Revision">
-                  <Input
-                    value={dwg.revision || ''}
-                    onChange={(e) =>
-                      onUpdate(
-                        'drawings',
-                        (formData.drawings || []).map((d: any) =>
-                          d.id === dwg.id ? { ...d, revision: e.target.value } : d
-                        )
-                      )
-                    }
-                    className={inputSmCn}
-                    placeholder="e.g. Rev A"
-                  />
-                </Field>
-              </div>
-              <Field label="Title">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Drawing no.">
                 <Input
-                  value={dwg.title || ''}
+                  value={dwg.number || ''}
                   onChange={(e) =>
                     onUpdate(
                       'drawings',
                       (formData.drawings || []).map((d: any) =>
-                        d.id === dwg.id ? { ...d, title: e.target.value } : d
+                        d.id === dwg.id ? { ...d, number: e.target.value } : d
                       )
                     )
                   }
-                  className={inputSmCn}
-                  placeholder="e.g. Ground Floor Detection Layout"
+                  className={inputCn}
+                  placeholder="e.g. FA-001"
                 />
               </Field>
-              <Field label="Date">
+              <Field label="Revision">
                 <Input
-                  type="date"
-                  value={dwg.date || ''}
+                  value={dwg.revision || ''}
                   onChange={(e) =>
                     onUpdate(
                       'drawings',
                       (formData.drawings || []).map((d: any) =>
-                        d.id === dwg.id ? { ...d, date: e.target.value } : d
+                        d.id === dwg.id ? { ...d, revision: e.target.value } : d
                       )
                     )
                   }
-                  className={cn(inputSmCn, '[color-scheme:dark]')}
+                  className={inputCn}
+                  placeholder="e.g. Rev A"
                 />
               </Field>
             </div>
+            <Field label="Title">
+              <Input
+                value={dwg.title || ''}
+                onChange={(e) =>
+                  onUpdate(
+                    'drawings',
+                    (formData.drawings || []).map((d: any) =>
+                      d.id === dwg.id ? { ...d, title: e.target.value } : d
+                    )
+                  )
+                }
+                className={inputCn}
+                placeholder="e.g. Ground Floor Detection Layout"
+              />
+            </Field>
+            <Field label="Date">
+              <Input
+                type="date"
+                value={dwg.date || ''}
+                onChange={(e) =>
+                  onUpdate(
+                    'drawings',
+                    (formData.drawings || []).map((d: any) =>
+                      d.id === dwg.id ? { ...d, date: e.target.value } : d
+                    )
+                  )
+                }
+                className={inputCn}
+              />
+            </Field>
           </div>
         ))}
         <button
+          type="button"
           onClick={() => {
             haptic.light();
             onUpdate('drawings', [
@@ -684,15 +651,16 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
               { id: crypto.randomUUID(), number: '', title: '', revision: '', date: '' },
             ]);
           }}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-amber-500/20 flex items-center justify-center gap-2 text-sm font-medium text-amber-400 touch-manipulation active:scale-[0.98]"
+          className={addButtonCn}
         >
-          <Plus className="h-4 w-4" /> Add Drawing
+          Add drawing
         </button>
-      </Section>
+      </div>
 
-      {/* Cable Route Notes */}
-      <Section title="Cable Route Design" accentColor="from-red-500/40 to-rose-400/20">
-        <Field label="Cable Route Notes">
+      {/* Cable route notes */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Cable route design" />
+        <Field label="Cable route notes">
           <Textarea
             value={formData.cableRouteNotes || ''}
             onChange={(e) => onUpdate('cableRouteNotes', e.target.value)}
@@ -700,7 +668,7 @@ export default function FAG1DeviceDesign({ formData, onUpdate }: Props) {
             placeholder="Describe planned cable routing, containment, segregation from other services..."
           />
         </Field>
-      </Section>
+      </div>
     </div>
   );
 }

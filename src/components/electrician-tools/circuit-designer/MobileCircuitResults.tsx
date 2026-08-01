@@ -41,6 +41,7 @@ import { MobileSystemSummary } from './mobile/MobileSystemSummary';
 import { cn } from '@/lib/utils';
 import { storeContextForAgent, type AgentType } from '@/utils/circuit-context-generator';
 import { toast } from 'sonner';
+import { getZsCheck } from './zs-compliance';
 
 interface MobileCircuitResultsProps {
   design: InstallationDesign;
@@ -117,14 +118,11 @@ export const MobileCircuitResults = ({
   // Use backend complianceStatus for consistent results, but always
   // override to fail if Zs > maxZs (safety-critical — 0.4 s disconnection)
   const allCircuitsCompliant = design.circuits.every((c) => {
-    const zsVal = c.calculations?.zs ?? 0;
-    const maxZsVal = c.calculations?.maxZs ?? 0;
-    const zsOk = !(maxZsVal > 0 && zsVal > maxZsVal);
+    // ELE-1426 — a circuit whose Zs never got calculated is not compliant.
+    const zsCheck = getZsCheck(c, design.consumerUnit?.incomingSupply?.Ze);
+    const zsOk = zsCheck.state === 'pass' || zsCheck.state === 'no-limit';
     const status = (c as any).complianceStatus;
-    const basePass = status
-      ? status === 'pass'
-      : c.calculations?.voltageDrop?.compliant &&
-          (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999);
+    const basePass = status ? status === 'pass' : c.calculations?.voltageDrop?.compliant;
     return basePass && zsOk;
   });
   const hasWarnings = design.circuits.some(
@@ -135,15 +133,11 @@ export const MobileCircuitResults = ({
   // Calculate compliance stats for MobileSystemSummary
   const complianceStats = design.circuits.reduce(
     (acc, circuit) => {
-      const zsVal = circuit.calculations?.zs ?? 0;
-      const maxZsVal = circuit.calculations?.maxZs ?? 0;
-      const zsOk = !(maxZsVal > 0 && zsVal > maxZsVal);
+      const zsCheck = getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze);
+      const zsOk = zsCheck.state === 'pass' || zsCheck.state === 'no-limit';
       const status = (circuit as any).complianceStatus;
       const basePass =
-        status === 'pass' ||
-        (!status &&
-          circuit.calculations?.voltageDrop?.compliant &&
-          (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999));
+        status === 'pass' || (!status && circuit.calculations?.voltageDrop?.compliant);
       if (basePass && zsOk) {
         acc.compliant++;
       } else if (!zsOk) {

@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 export type PayType = 'hourly' | 'annual' | 'day_rate';
 
@@ -41,7 +42,7 @@ export const getEmployees = async (): Promise<Employee[]> => {
   const { data, error } = await supabase
     .from('employer_employees')
     .select('*')
-    .eq('employer_id', user.id)
+    .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
     .order('name');
 
   if (error) {
@@ -87,7 +88,7 @@ export const createEmployee = async (employee: NewEmployee): Promise<Employee> =
     .insert({
       ...employee,
       email: employee.email?.toLowerCase() ?? null,
-      employer_id: user.id,
+      employer_id: (await getActingEmployerId(user.id)) ?? user.id,
     })
     .select()
     .single();
@@ -156,7 +157,7 @@ export const getActiveEmployees = async (): Promise<Employee[]> => {
   const { data, error } = await supabase
     .from('employer_employees')
     .select('*')
-    .eq('employer_id', user.id)
+    .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
     .ilike('status', 'active')
     .order('name');
 

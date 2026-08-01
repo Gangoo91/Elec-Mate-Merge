@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 export interface HireRecord {
   id: string;
@@ -34,7 +35,7 @@ export function useHireTracking() {
       try {
         const { error } = await supabase.from('elec_id_hire_records').insert({
           worker_profile_id: workerProfileId,
-          employer_id: user.id,
+          employer_id: (await getActingEmployerId(user.id)) ?? user.id,
           job_type: jobType,
           fee_amount: customFee ?? HIRE_FEE,
           fee_status: 'pending',
@@ -65,7 +66,7 @@ export function useHireTracking() {
       const { data, error } = await supabase
         .from('elec_id_hire_records')
         .select('*')
-        .eq('employer_id', user.id)
+        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
         .order('hired_at', { ascending: false });
 
       if (error) {
@@ -88,7 +89,7 @@ export function useHireTracking() {
       const { data, error } = await supabase
         .from('elec_id_hire_records')
         .select('fee_amount')
-        .eq('employer_id', user.id)
+        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
         .eq('fee_status', 'pending');
 
       if (error) {

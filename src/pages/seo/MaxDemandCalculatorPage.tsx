@@ -32,17 +32,17 @@ const faqs = [
   {
     question: 'Where do I find diversity factors in BS 7671?',
     answer:
-      'Diversity factors for estimating maximum demand are found in the IET On-Site Guide (the companion publication to BS 7671). Table 1B provides diversity factors for different types of final circuits in domestic and small commercial installations. The table is organised by circuit type (lighting, heating, cooking appliances, motors, etc.) and gives the diversity allowance as either a percentage or a formula. For example, for cooking appliances, Table 1B states "first 10 A of the total rated current plus 30% of the remainder plus 5 A if the cooker control unit has a socket outlet." It is important to note that these diversity factors are guidelines for typical installations — they are not mandatory requirements, and professional judgement should be applied.',
+      'Diversity factors for estimating maximum demand are found in the IET On-Site Guide (the companion publication to BS 7671). Table A2 provides diversity factors for different types of final circuits in domestic and small commercial installations. The table is organised by circuit type (lighting, heating, cooking appliances, motors, etc.) and gives the diversity allowance as either a percentage or a formula. For example, for cooking appliances, Table A2 states "first 10 A of the total rated current plus 30% of the remainder plus 5 A if the cooker control unit has a socket outlet." It is important to note that these diversity factors are guidelines for typical installations — they are not mandatory requirements, and professional judgement should be applied.',
   },
   {
     question: 'How do I calculate maximum demand for a domestic cooker?',
     answer:
-      'The diversity calculation for a domestic cooker to BS 7671 Table 1B is: take the first 10 A of the total rated current at full load, then add 30% of the remainder. If the cooker control unit incorporates a socket outlet, add a further 5 A. For example, a cooker rated at 12 kW on a 230 V supply draws a full load current of 12000 / 230 = 52.2 A. The first 10 A is counted in full. The remainder is 52.2 - 10 = 42.2 A, and 30% of that is 12.7 A. The diversified demand is therefore 10 + 12.7 = 22.7 A, plus 5 A if there is a socket outlet on the cooker control unit, giving 27.7 A. This is significantly less than the full 52.2 A because it is unlikely that every ring, every hob, and the oven will all be at maximum simultaneously.',
+      'The diversity calculation for a domestic cooker to IET On-Site Guide Table A2 is: take the first 10 A of the total rated current at full load, then add 30% of the remainder. If the cooker control unit incorporates a socket outlet, add a further 5 A. For example, a cooker rated at 12 kW on a 230 V supply draws a full load current of 12000 / 230 = 52.2 A. The first 10 A is counted in full. The remainder is 52.2 - 10 = 42.2 A, and 30% of that is 12.7 A. The diversified demand is therefore 10 + 12.7 = 22.7 A, plus 5 A if there is a socket outlet on the cooker control unit, giving 27.7 A. This is significantly less than the full 52.2 A because it is unlikely that every ring, every hob, and the oven will all be at maximum simultaneously.',
   },
   {
     question: 'Do I apply diversity to EV charger loads?',
     answer:
-      'This depends on the number of chargers and the installation type. For a single domestic EV charger, BS 7671 does not provide a specific diversity factor in Table 1B, and general practice is to include the full rated current of the charger (typically 32 A for a 7.4 kW single-phase unit) in the maximum demand calculation without diversity, since the charger runs at full power for extended periods (often overnight). For multiple EV chargers in a commercial or multi-occupancy setting, diversity can be applied — BEAMA and the IET have published guidance suggesting diversity factors for groups of EV chargers. Smart charging systems that dynamically manage load also reduce the effective maximum demand.',
+      'This depends on the number of chargers and the installation type. For a single domestic EV charger, BS 7671 does not provide a specific diversity factor in Table A2, and general practice is to include the full rated current of the charger (typically 32 A for a 7.4 kW single-phase unit) in the maximum demand calculation without diversity, since the charger runs at full power for extended periods (often overnight). For multiple EV chargers in a commercial or multi-occupancy setting, diversity can be applied — BEAMA and the IET have published guidance suggesting diversity factors for groups of EV chargers. Smart charging systems that dynamically manage load also reduce the effective maximum demand.',
   },
   {
     question: 'When should I NOT apply diversity?',
@@ -62,12 +62,12 @@ const howToSteps = [
     text: 'Create a complete list of every final circuit in the installation, noting the type of circuit (lighting, socket outlet, cooker, shower, immersion heater, EV charger, etc.) and the total connected load in watts or the design current in amps. For existing installations, take readings from the distribution board schedule. For new designs, use the equipment ratings from the specification.',
   },
   {
-    name: 'Look up diversity factors from Table 1B',
-    text: 'For each circuit type, find the applicable diversity factor from the IET On-Site Guide, Table 1B. Note that the factors differ depending on the circuit type: lighting uses a percentage method, cooking appliances use the "first 10 A plus 30% of remainder" formula, and some loads like immersion heaters and showers are taken at full load with no diversity (unless there are multiple units).',
+    name: 'Look up diversity factors from Table A2',
+    text: 'For each circuit type, find the applicable diversity factor from the IET On-Site Guide Table A2. Note that the factors differ depending on the circuit type: lighting uses a percentage method, cooking appliances use the "first 10 A plus 30% of remainder" formula, and some loads like immersion heaters and showers are taken at full load with no diversity (unless there are multiple units).',
   },
   {
     name: 'Apply diversity to each circuit',
-    text: 'Calculate the diversified demand for each circuit by applying the Table 1B factor to the connected load. For ring final circuits, Table 1B allows the current demand to be taken as the design current of the circuit. For lighting, the factor depends on the number of points and the type of premises. Work through each circuit systematically.',
+    text: 'Calculate the diversified demand for each circuit by applying the Table A2 factor to the connected load. For ring final circuits, Table A2 allows the current demand to be taken as the design current of the circuit. For lighting, the factor depends on the number of points and the type of premises. Work through each circuit systematically.',
   },
   {
     name: 'Sum the diversified demands',
@@ -84,7 +84,7 @@ const features = [
     icon: Calculator,
     title: 'Automatic Diversity Factors',
     description:
-      'All BS 7671 Table 1B diversity factors built in. Select the circuit type and load, and the correct factor is applied automatically.',
+      'All IET On-Site Guide Table A2 diversity factors built in. Select the circuit type and load, and the correct factor is applied automatically.',
   },
   {
     icon: Home,
@@ -114,7 +114,7 @@ const features = [
     icon: BookOpen,
     title: 'IET On-Site Guide Diversity',
     description:
-      'All calculations follow the diversity methodology in the IET On-Site Guide (Table 1B), the companion to BS 7671:2018+A4:2026. Verified against the current edition of the IET Wiring…',
+      'All calculations follow the diversity methodology in the IET On-Site Guide (Table A2), the companion to BS 7671:2018+A4:2026. Verified against the current edition of the IET Wiring…',
   },
 ];
 
@@ -124,7 +124,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate maximum demand using the IET On-Site Guide diversity factors (Table 1B). Covers domestic, commercial, cooker, shower, EV charger…',
+    'Calculate maximum demand using the IET On-Site Guide diversity factors (Table A2). Covers domestic, commercial, cooker, shower, EV charger…',
   url: 'https://www.elec-mate.com/tools/max-demand-calculator',
   offers: {
     '@type': 'Offer',
@@ -150,7 +150,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Calculate Maximum Demand to BS 7671',
   description:
-    'Step-by-step guide to calculating maximum demand for electrical installations in the UK using the IET On-Site Guide diversity factors (Table 1B).',
+    'Step-by-step guide to calculating maximum demand for electrical installations in the UK using the IET On-Site Guide diversity factors (Table A2).',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -163,7 +163,7 @@ export default function MaxDemandCalculatorPage() {
   useSEO({
     title: 'Maximum Demand Calculator BS 7671 | Diversity Factors',
     description:
-      'Calculate maximum demand using the IET On-Site Guide diversity factors (Table 1B). Covers domestic, commercial, cooker, shower, EV charger…',
+      'Calculate maximum demand using the IET On-Site Guide diversity factors (Table A2). Covers domestic, commercial, cooker, shower, EV charger…',
   });
 
   return (
@@ -193,7 +193,7 @@ export default function MaxDemandCalculatorPage() {
             <span className="block text-yellow-400 mt-1">BS 7671 Diversity Factors</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Calculate maximum demand using the IET On-Site Guide diversity factors (Table 1B).
+            Calculate maximum demand using the IET On-Site Guide diversity factors (Table A2).
             Supports domestic and commercial load assessments including cookers, showers, EV
             chargers, and heating loads.
           </p>
@@ -260,7 +260,7 @@ export default function MaxDemandCalculatorPage() {
               cooker rated at 12 kW, a kettle at 3 kW, a washing machine at 2.4 kW, a dishwasher at
               2.2 kW, and several other appliances — but they are rarely all drawing maximum current
               simultaneously. Diversity factors quantify this statistical reduction and are
-              published in the IET On-Site Guide, Table 1B.
+              published in the IET On-Site Guide Table A2.
             </p>
             <p>
               Getting maximum demand right is particularly important in the current era, as
@@ -281,7 +281,7 @@ export default function MaxDemandCalculatorPage() {
         </div>
       </section>
 
-      {/* IET On-Site Guide diversity (Table 1B) */}
+      {/* IET On-Site Guide diversity (Table A2) */}
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
@@ -289,26 +289,27 @@ export default function MaxDemandCalculatorPage() {
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              IET On-Site Guide Diversity (Table 1B)
+              IET On-Site Guide Diversity (Table A2)
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The IET On-Site Guide — the companion publication to BS 7671:2018+A4:2026 — addresses
               maximum demand estimation. It provides guidance on assessing the maximum demand of an
-              installation and includes Table 1A (standard circuit arrangements for domestic
-              premises) and Table 1B (allowances for diversity). Diversity guidance is not contained
+              installation and includes Table A1 (current demand to be assumed for points of
+              utilization), Table A2 (allowances for diversity) and Appendix H (standard circuit
+              arrangements for household and similar premises). Diversity guidance is not contained
               in a BS 7671 appendix.
             </p>
             <p>
-              <strong className="text-yellow-400">Table 1A</strong> lists the standard circuit
-              arrangements for a typical domestic dwelling, including the number and type of
+              <strong className="text-yellow-400">Appendix H</strong> gives the standard circuit
+              arrangements for household and similar premises, including the number and type of
               circuits for lighting, socket outlets, cooker, immersion heater, shower, and other
               fixed appliances. It serves as a reference for what circuits are expected in a
               standard domestic installation.
             </p>
             <p>
-              <strong className="text-yellow-400">Table 1B</strong> is the critical table for
+              <strong className="text-yellow-400">Table A2</strong> is the critical table for
               maximum demand calculations. It lists the diversity allowances that may be applied to
               different types of final circuits. The allowances are expressed differently depending
               on the circuit type:
@@ -358,7 +359,7 @@ export default function MaxDemandCalculatorPage() {
               </li>
             </ul>
             <p>
-              It is important to understand that the Table 1B factors are guidance, not absolute
+              It is important to understand that the Table A2 factors are guidance, not absolute
               rules. They represent typical usage patterns for domestic and small commercial
               installations. For unusual installations, high-demand premises, or applications where
               reliability is critical, a more conservative approach may be appropriate.
@@ -381,7 +382,7 @@ export default function MaxDemandCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Consider a typical three-bedroom semi-detached house with the following circuits and
-              loads. We will calculate the maximum demand step by step using the Table 1B diversity
+              loads. We will calculate the maximum demand step by step using the Table A2 diversity
               factors.
             </p>
           </div>
@@ -438,7 +439,7 @@ export default function MaxDemandCalculatorPage() {
               Wait — this exceeds the standard 100 A supply. But this is before applying the overall
               assessment. In practice, the shower and cooker are unlikely to run at full load
               simultaneously with the EV charger and all ring finals loaded. A realistic assessment,
-              using engineering judgement alongside Table 1B, would place this installation at
+              using engineering judgement alongside Table A2, would place this installation at
               approximately <strong className="text-yellow-400">80 to 90 A</strong> — within the
               capacity of a 100 A supply, though marginal. If the maximum demand is genuinely
               expected to exceed 100 A (for example, if the EV charger and shower are frequently
@@ -449,7 +450,7 @@ export default function MaxDemandCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               This example illustrates why maximum demand assessment requires professional judgement
-              as well as table look-ups. The Table 1B factors are a starting point, but the
+              as well as table look-ups. The Table A2 factors are a starting point, but the
               electrician must consider the actual usage patterns of the occupants. A household with
               two electric vehicles, an electric shower, and an induction hob will have very
               different peak demands from a retired couple with a gas cooker and no EV.
@@ -478,7 +479,7 @@ export default function MaxDemandCalculatorPage() {
               loaded phase.
             </p>
             <p>
-              For commercial premises, the diversity factors from Table 1B still apply where the
+              For commercial premises, the diversity factors from Table A2 still apply where the
               circuit types match, but many commercial loads — such as three-phase motors, air
               conditioning units, commercial kitchen equipment, and server rooms — require specific
               assessment. Motor loads should include the starting current requirements, as some
@@ -606,7 +607,7 @@ export default function MaxDemandCalculatorPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Purpose-built for UK electricians working to BS 7671. Faster and more reliable than
-            manual calculations with Table 1B.
+            manual calculations with Table A2.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>

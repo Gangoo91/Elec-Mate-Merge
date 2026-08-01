@@ -42,13 +42,15 @@ export function SafetyMasthead({
           <button
             type="button"
             onClick={onBack}
-            className="flex items-center gap-1.5 text-[12.5px] font-medium text-white hover:text-white/80 transition-colors touch-manipulation whitespace-nowrap -ml-1 h-11 px-1"
+            className="flex items-center gap-1.5 text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap -ml-1 h-11 px-1"
           >
-            <span aria-hidden className="text-white/70">←</span>
+            <span aria-hidden className="text-white">
+              ←
+            </span>
             {backLabel}
           </button>
           <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Site Safety
             </span>
             <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />

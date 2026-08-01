@@ -64,6 +64,11 @@ const ComplianceSection = lazy(() =>
     default: m.ComplianceSection,
   }))
 );
+const AccountsSection = lazy(() =>
+  import('@/components/employer/sections/AccountsSection').then((m) => ({
+    default: m.AccountsSection,
+  }))
+);
 const QuotesInvoicesSection = lazy(() =>
   import('@/components/employer/sections/QuotesInvoicesSection').then((m) => ({
     default: m.QuotesInvoicesSection,
@@ -262,6 +267,7 @@ export type Section =
   | 'quality'
   | 'safety'
   | 'quotes'
+  | 'accounts'
   | 'tenders'
   | 'reports'
   | 'settings'
@@ -315,6 +321,7 @@ const getParentSection = (section: Section): Section => {
     apprentices: 'peoplehub',
     vacancies: 'peoplehub',
     quotes: 'financehub',
+    accounts: 'financehub',
     tenders: 'financehub',
     expenses: 'financehub',
     procurement: 'financehub',
@@ -439,6 +446,11 @@ const sectionMetadata: Record<Section, SectionMeta> = {
     queryKeys: ['quotes', 'invoices', 'expense_claims', 'material_orders', 'price_book'],
   },
   quotes: { eyebrow: 'Finance', title: 'Quotes & Invoices', queryKeys: ['quotes', 'invoices'] },
+  accounts: {
+    eyebrow: 'Finance',
+    title: 'Accounts',
+    queryKeys: ['employer-pnl', 'employer-ledger'],
+  },
   tenders: { eyebrow: 'Finance', title: 'Tenders', queryKeys: ['tenders'] },
   expenses: { eyebrow: 'Finance', title: 'Expenses', queryKeys: ['expense_claims'] },
   procurement: {
@@ -638,6 +650,12 @@ const EmployerDashboard = () => {
       'id cards': 'elecid',
       identification: 'elecid',
       badges: 'elecid',
+      accounts: 'accounts',
+      ledger: 'accounts',
+      'profit and loss': 'accounts',
+      'p&l': 'accounts',
+      books: 'accounts',
+      accounting: 'accounts',
       timesheets: 'timesheets',
       'time sheets': 'timesheets',
       leave: 'timesheets',
@@ -883,6 +901,8 @@ const EmployerDashboard = () => {
         return <SafetyHRSection />;
       case 'quotes':
         return <QuotesInvoicesSection />;
+      case 'accounts':
+        return <AccountsSection />;
       case 'tenders':
         return <TenderSection />;
       case 'reports':

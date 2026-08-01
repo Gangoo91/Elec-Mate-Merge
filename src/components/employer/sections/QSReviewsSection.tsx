@@ -1,4 +1,5 @@
 import { openPrintRegister } from '@/utils/printRegister';
+import { cn } from '@/lib/utils';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -16,10 +17,6 @@ import { QsReviewComments } from '@/components/employer/sections/QsReviewComment
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { formatUKDate } from '@/utils/collegeHelpers';
 import {
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
   Pill,
   SectionHeader,
   LoadingState,
@@ -49,7 +46,7 @@ const STATUS_TONE: Record<string, 'amber' | 'emerald' | 'red' | 'blue'> = {
 const formatDate = (iso: string | null) =>
   iso ? new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : '—';
 
-export function QSReviewsSection() {
+export function QSReviewsSection({ embedded = false }: { embedded?: boolean } = {}) {
   const navigate = useNavigate();
   // Three views: the sign-off queue (pending/all) and Team Certificates — the
   // full library of the team's certs, open + edit like Inspection & Testing
@@ -78,17 +75,20 @@ export function QSReviewsSection() {
 
   return (
     <div className="space-y-5">
-      <SectionHeader
-        eyebrow="Compliance"
-        title="QS Reviews"
-        meta={
-          isError
-            ? 'Queue unavailable'
-            : pendingCount > 0
-              ? `${pendingCount} awaiting sign-off`
-              : 'Nothing waiting'
-        }
-      />
+      {/* The I&T bench provides its own page header — only the Employer Hub
+          rendering needs the section's heading. */}
+      {!embedded && (
+        <SectionHeader
+          title="QS Reviews"
+          meta={
+            isError
+              ? 'Queue unavailable'
+              : pendingCount > 0
+                ? `${pendingCount} awaiting sign-off`
+                : 'Nothing waiting'
+          }
+        />
+      )}
 
       {/* A failed queue load must never masquerade as an empty queue — this
           gates certificate issue, so "nothing waiting" has to be true. */}
@@ -139,7 +139,7 @@ export function QSReviewsSection() {
             });
             if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
           }}
-          className="h-10 px-4 rounded-lg text-[12.5px] font-semibold bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+          className="h-11 px-4 rounded-lg text-[12.5px] font-semibold bg-white/[0.07] border border-white/[0.14] text-white touch-manipulation active:scale-[0.98]"
         >
           Export register — assessment-ready
         </button>
@@ -155,8 +155,8 @@ export function QSReviewsSection() {
             className={
               'h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation active:scale-[0.98] border px-1 ' +
               (scope === s
-                ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border-white/[0.08] text-white')
+                ? 'bg-elec-yellow border-elec-yellow text-black'
+                : 'bg-white/[0.07] border-white/[0.14] text-white')
             }
           >
             {s === 'pending'
@@ -171,13 +171,12 @@ export function QSReviewsSection() {
       {scope === 'team' ? (
         <TeamCertificatesSection />
       ) : isError ? null : items.length === 0 ? (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-10 text-center space-y-3">
-          <ShieldCheck className="h-6 w-6 mx-auto text-white/30" />
+        <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] px-5 py-10 text-center space-y-3">
           <div className="space-y-1.5">
             <p className="text-sm font-medium text-white">
               {scope === 'pending' ? 'No certificates awaiting review' : 'No reviews yet'}
             </p>
-            <p className="text-xs text-white/50 max-w-sm mx-auto">
+            <p className="text-xs text-white/60 max-w-sm mx-auto">
               When a team member submits an EICR, EIC or Minor Works certificate for Qualifying
               Supervisor sign-off, it will appear here. To get started, add your team in the Team
               section and assign someone the QS role — team members link automatically when they
@@ -187,44 +186,58 @@ export function QSReviewsSection() {
           <button
             type="button"
             onClick={() => navigate('/employer?section=team')}
-            className="h-11 px-5 rounded-lg text-sm font-semibold bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow touch-manipulation active:scale-[0.98]"
+            className="h-11 px-6 rounded-xl text-sm font-bold bg-elec-yellow text-black touch-manipulation active:scale-[0.97] shadow-[0_4px_16px_rgba(245,184,28,0.18)]"
           >
             Set up your team
           </button>
         </div>
       ) : (
-        <ListCard>
-          <ListCardHeader
-            title={scope === 'pending' ? 'Awaiting sign-off' : 'All reviews'}
-            tone="amber"
-          />
-          <ListBody>
+        <div className="space-y-3">
+          <div className="flex items-baseline gap-2.5 px-0.5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              {scope === 'pending' ? 'Awaiting sign-off' : 'All reviews'}
+            </h3>
+            <span className="text-[12px] text-white/40 tabular-nums">{items.length}</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {items.map((item) => (
-              <ListRow
+              <button
                 key={item.review_id}
-                accent={STATUS_TONE[item.status]}
-                title={
-                  <span>
-                    {TYPE_LABEL[item.report_type] || item.report_type.toUpperCase()}
-                    {item.client_name ? ` — ${item.client_name}` : ''}
-                  </span>
-                }
-                subtitle={
-                  <span>
-                    {item.electrician_name} · {item.installation_address || 'No address'} ·
-                    submitted {formatDate(item.submitted_at)}
-                  </span>
-                }
-                trailing={
-                  <Pill tone={STATUS_TONE[item.status]}>
-                    {item.status === 'pending' ? 'Awaiting' : item.status}
-                  </Pill>
-                }
+                type="button"
                 onClick={() => setOpenItem(item)}
-              />
+                className={cn(
+                  'group relative flex flex-col overflow-hidden rounded-2xl p-4 text-left',
+                  'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
+                  'transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]',
+                  'touch-manipulation focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50'
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
+                    {TYPE_LABEL[item.report_type] || item.report_type.toUpperCase()}
+                  </span>
+                  <span className="ml-auto shrink-0">
+                    <Pill tone={STATUS_TONE[item.status]}>
+                      {item.status === 'pending' ? 'Awaiting' : item.status}
+                    </Pill>
+                  </span>
+                </div>
+                <h4 className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate">
+                  {item.client_name || 'Untitled'}
+                </h4>
+                <p className="text-[12px] text-white/60 truncate mt-0.5">
+                  {item.installation_address || 'No address'}
+                </p>
+                <div className="mt-3 pt-3 flex items-center justify-between gap-2 border-t border-white/[0.07]">
+                  <span className="min-w-0 truncate text-[11.5px] text-white/50">
+                    {item.electrician_name} · {formatDate(item.submitted_at)}
+                  </span>
+                  <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
+                </div>
+              </button>
             ))}
-          </ListBody>
-        </ListCard>
+          </div>
+        </div>
       )}
 
       <QsReviewDetailSheet item={openItem} onClose={() => setOpenItem(null)} />

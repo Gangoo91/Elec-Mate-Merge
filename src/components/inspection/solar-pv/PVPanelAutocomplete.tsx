@@ -1,21 +1,16 @@
 /**
- * PV Panel Autocomplete Component
- *
- * Searchable combobox for selecting solar panels with:
- * - Panels grouped by manufacturer
- * - Search across make/model/wattage
- * - Auto-fill badge showing populated fields
- * - Callback for applying panel defaults
+ * PV Panel Autocomplete
+ * Searchable solar panel picker — bottom sheet on mobile, popover on desktop.
+ * No icons, clean dark design matching the ChargerAutocomplete pattern.
  */
 
 import * as React from 'react';
-import { Check, ChevronsUpDown, Sparkles, Zap, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -30,6 +25,9 @@ import {
   getPanelCount,
   type SolarPanel,
 } from '@/data/solarPanelDatabase';
+
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 interface PVPanelAutocompleteProps {
   value?: string;
@@ -66,7 +64,6 @@ export function PVPanelAutocomplete({
   // Find panel by value (make + model string)
   const selectedPanel = React.useMemo(() => {
     if (!value) return null;
-    // Search through all panels to find match
     const allPanels = Object.values(panelsGrouped).flat();
     return allPanels.find((p) => `${p.make} ${p.model}` === value) || null;
   }, [value, panelsGrouped]);
@@ -86,11 +83,21 @@ export function PVPanelAutocomplete({
     [value, onValueChange, onPanelSelect]
   );
 
+  const handleClear = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onPanelSelect?.(null);
+      onValueChange?.('');
+      setSearch('');
+    },
+    [onPanelSelect, onValueChange]
+  );
+
   // Format display value
   const displayValue = React.useMemo(() => {
-    if (!selectedPanel) return placeholder;
+    if (!selectedPanel) return null;
     return `${selectedPanel.make} ${selectedPanel.model}`;
-  }, [selectedPanel, placeholder]);
+  }, [selectedPanel]);
 
   // Check if panel has auto-fill data
   const hasAutoFill = React.useMemo(() => {
@@ -99,267 +106,282 @@ export function PVPanelAutocomplete({
     return defaults !== null;
   }, [selectedPanel]);
 
-  // Trigger button shared between mobile and desktop
+  // Panel list item — neutral surface, solid volt when selected
+  const renderPanelItem = (panel: SolarPanel, forMobile = false) => {
+    const isSelected = selectedPanel?.id === panel.id;
+    return (
+      <div
+        key={panel.id}
+        onClick={() => handleSelect(panel)}
+        className={cn(
+          'rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
+          forMobile ? 'p-3.5' : 'p-2.5 mx-1',
+          isSelected
+            ? 'bg-elec-yellow border border-elec-yellow'
+            : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]'
+        )}
+      >
+        {/* Make + Model */}
+        <div className="flex items-baseline gap-1.5 mb-1.5">
+          <span
+            className={cn(
+              'font-bold',
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
+            )}
+          >
+            {panel.make}
+          </span>
+          <span
+            className={cn(
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
+            )}
+          >
+            {panel.model}
+          </span>
+        </div>
+
+        {/* Spec badges — no icons, coloured text on neutral surfaces */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span
+            className={cn(
+              'font-bold px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-elec-yellow',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {panel.wattage}W
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {panel.efficiency}%
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {panel.cellType}
+          </span>
+          {panel.mcsCertified && (
+            <span
+              className={cn(
+                'font-bold px-1.5 py-0.5 rounded',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-emerald-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              MCS
+            </span>
+          )}
+          {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
+            <span
+              className={cn(
+                'font-bold px-1.5 py-0.5 rounded',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-elec-yellow',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              New
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // Trigger button — clean, no icons
   const triggerButton = (
     <button
       type="button"
       role="combobox"
       aria-expanded={open}
       disabled={disabled}
-      onClick={() => setOpen(true)}
+      onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full h-12 text-sm px-3 rounded-xl',
-        'bg-white/[0.06] border border-white/[0.08] text-white',
-        'flex items-center justify-between gap-2',
-        'focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation',
-        'hover:bg-white/[0.08] active:scale-[0.98] transition-all',
-        !selectedPanel && 'text-white',
+        'w-full h-11 px-3.5 flex items-center justify-between rounded-xl text-left touch-manipulation active:scale-[0.98] transition-all',
+        'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className="truncate text-left flex-1">{displayValue}</span>
-      <ChevronsUpDown className="h-3.5 w-3.5 opacity-40 flex-shrink-0" />
+      <div className="flex-1 min-w-0">
+        {displayValue ? (
+          <div>
+            <span className="text-sm font-medium text-white truncate block">{displayValue}</span>
+            <span className="text-[10px] text-elec-yellow">
+              {selectedPanel?.wattage}W · {selectedPanel?.efficiency}%
+            </span>
+          </div>
+        ) : (
+          <span className="text-sm text-white/80">{placeholder}</span>
+        )}
+      </div>
+      {selectedPanel && (
+        // Not a <button> — nested buttons are invalid DOM.
+        <span
+          role="button"
+          tabIndex={0}
+          aria-label="Clear selected panel"
+          onClick={handleClear}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleClear(e as unknown as React.MouseEvent);
+            }
+          }}
+          className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0 text-white text-base leading-none"
+        >
+          &times;
+        </span>
+      )}
     </button>
   );
 
-  // Render panel item — card-style for mobile, compact for desktop
-  const renderPanelItem = (panel: SolarPanel, showMake = false, forMobile = false) => {
-    const isSelected = selectedPanel?.id === panel.id;
-    return (
-      <button
-        key={panel.id}
-        type="button"
-        onClick={() => handleSelect(panel)}
-        className={cn(
-          'w-full text-left flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-all',
-          forMobile
-            ? 'my-1 px-3 py-3 rounded-xl border'
-            : 'px-2 py-2 rounded-lg',
-          isSelected
-            ? forMobile
-              ? 'bg-elec-yellow/10 border-elec-yellow/20'
-              : 'bg-elec-yellow/10'
-            : forMobile
-              ? 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]'
-              : 'hover:bg-white/[0.04]'
-        )}
-      >
-        <div
-          className={cn(
-            'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-            isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/20'
-          )}
-        >
-          {isSelected && <Check className="h-3 w-3 text-black" />}
-        </div>
-        <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn('font-medium truncate', isSelected ? 'text-elec-yellow' : 'text-white', forMobile && 'text-sm')}>
-            {showMake ? `${panel.make} ${panel.model}` : panel.model}
-          </span>
-          <span className="text-xs text-white/50 truncate">
-            {panel.wattage}W • {panel.efficiency}% • {panel.cellType}
-          </span>
-        </div>
-        {(panel.mcsCertified || (panel.yearIntroduced && panel.yearIntroduced >= 2024)) && (
-          <div className="flex items-center gap-1 flex-shrink-0 ml-1">
-            {panel.mcsCertified && (
-              <span className="text-[8px] text-green-400 bg-green-500/15 px-1 py-0.5 rounded font-bold">MCS</span>
-            )}
-            {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-              <span className="text-[8px] text-elec-yellow bg-elec-yellow/15 px-1 py-0.5 rounded font-bold">NEW</span>
-            )}
-          </div>
-        )}
-      </button>
-    );
-  };
+  const autoFillBadge = showAutoFillBadge && hasAutoFill && (
+    <div className="absolute -top-3 right-2 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
+      Auto-filled
+    </div>
+  );
 
-  // Mobile: Use SwipeableBottomSheet
+  // Mobile: SwipeableBottomSheet
   if (isMobile) {
     return (
       <div className="relative">
         {triggerButton}
+        {autoFillBadge}
 
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
+          title="Select Panel"
           contentClassName="p-0"
         >
-          <div className="flex flex-col max-h-[65vh]">
-            {/* Header */}
+          <div className="flex flex-col max-h-[70vh]">
+            {/* Search */}
             <div className="px-4 pt-1 pb-3 sticky top-0 bg-background z-10">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-[10px] font-bold text-white uppercase tracking-wider">
-                  {filteredPanels ? `${filteredPanels.length} results` : `${getPanelCount()} panels`}
-                </p>
-                {selectedPanel && (
-                  <button
-                    onClick={() => { onPanelSelect?.(null); onValueChange?.(''); setOpen(false); }}
-                    className="text-[10px] text-red-400 font-medium touch-manipulation"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
-              <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
-                <Search className="h-4 w-4 text-white flex-shrink-0" />
-                <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by make, model, wattage..."
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
-                />
-                {search && (
-                  <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                )}
-              </div>
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="e.g. Longi, JA Solar, 440"
+                className={searchInputCn}
+              />
             </div>
 
             {/* Panel list */}
-            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y pb-6 px-4">
-              {filteredPanels && filteredPanels.length > 0 ? (
-                <div className="space-y-1">
-                  {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
-                </div>
-              ) : search.trim() ? (
-                <div className="py-12 text-center">
-                  <Zap className="h-8 w-8 mx-auto mb-2 text-white/20" />
-                  <p className="text-sm text-white">No panels found</p>
-                </div>
+            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y px-3 py-2 pb-6">
+              {filteredPanels ? (
+                filteredPanels.length > 0 ? (
+                  <div className="space-y-2">
+                    {filteredPanels.map((panel) => renderPanelItem(panel, true))}
+                  </div>
+                ) : (
+                  <div className="py-12 text-center">
+                    <p className="text-sm font-semibold text-white">No panels found</p>
+                    <p className="text-[12px] text-white/80 mt-1">Try a different make or model</p>
+                  </div>
+                )
               ) : (
                 Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
                   <div key={manufacturer} className="mb-3">
-                    <p className="py-2 text-[10px] font-bold text-white/50 uppercase tracking-wider sticky top-0 bg-background">
+                    <p className="py-2 text-[12px] font-semibold text-white/80 sticky top-0 bg-background">
                       {manufacturer}
                     </p>
-                    <div className="space-y-1">
-                      {panels.map((panel) => renderPanelItem(panel, false, true))}
+                    <div className="space-y-2">
+                      {panels.map((panel) => renderPanelItem(panel, true))}
                     </div>
                   </div>
                 ))
               )}
             </div>
+
+            {/* Footer */}
+            <div className="border-t border-white/[0.06] px-4 py-2.5">
+              <p className="text-[11px] text-white/80 text-center">
+                {getPanelCount()} MCS-certified panels
+              </p>
+            </div>
           </div>
         </SwipeableBottomSheet>
-
-        {/* Auto-fill badge */}
-        {showAutoFillBadge && hasAutoFill && (
-          <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
-            <Sparkles className="h-3 w-3" />
-            Auto-filled
-          </div>
-        )}
       </div>
     );
   }
 
-  // Desktop: Use Popover
+  // Desktop: Popover
   return (
     <div className="relative">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border border-white/20 shadow-lg z-[100]"
+          className="w-[calc(100vw-2rem)] sm:w-[420px] p-0 bg-background border-white/[0.08] shadow-xl z-[100]"
           align="start"
           sideOffset={4}
         >
           <Command className="bg-background" shouldFilter={false}>
-            <CommandInput
-              placeholder="Search panels..."
-              value={search}
-              onValueChange={setSearch}
-              className="border-none bg-background text-white placeholder:text-white"
-            />
-            <CommandList className="bg-background max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-white">No panels found.</CommandEmpty>
+            <div className="px-3 pt-1 pb-2.5">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="e.g. Longi, JA Solar, 440"
+                className={searchInputCn}
+              />
+            </div>
 
-              {/* Show search results if searching */}
-              {filteredPanels && filteredPanels.length > 0 ? (
-                <CommandGroup heading="Search Results" className="bg-background">
-                  {filteredPanels.map((panel) => (
-                    <CommandItem
-                      key={panel.id}
-                      value={panel.id}
-                      onSelect={() => handleSelect(panel)}
-                      className="bg-background hover:bg-white/10 cursor-pointer text-white py-2"
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4 shrink-0',
-                          selectedPanel?.id === panel.id
-                            ? 'opacity-100 text-elec-yellow'
-                            : 'opacity-0'
-                        )}
-                      />
-                      <div className="flex flex-col flex-1 min-w-0">
-                        <span className="font-medium truncate">
-                          {panel.make} {panel.model}
-                        </span>
-                        <span className="text-xs text-white truncate">
-                          {panel.wattage}W • {panel.efficiency}% • {panel.cellType}
-                        </span>
-                      </div>
-                      <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-amber-500/20 text-amber-400 rounded">
-                        {panel.wattage}W
-                      </span>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+            <CommandList className="max-h-[320px]">
+              {filteredPanels ? (
+                filteredPanels.length > 0 ? (
+                  <CommandGroup className="py-2">
+                    {filteredPanels.map((panel) => (
+                      <CommandItem
+                        key={panel.id}
+                        value={panel.id}
+                        onSelect={() => handleSelect(panel)}
+                        className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
+                      >
+                        {renderPanelItem(panel)}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                ) : (
+                  <CommandEmpty className="py-6 text-center">
+                    <p className="text-white text-sm">No panels found</p>
+                  </CommandEmpty>
+                )
               ) : (
-                /* Show grouped by manufacturer when not searching */
                 Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
-                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-background">
+                  <CommandGroup key={manufacturer} heading={manufacturer} className="py-2">
                     {panels.map((panel) => (
                       <CommandItem
                         key={panel.id}
                         value={panel.id}
                         onSelect={() => handleSelect(panel)}
-                        className="bg-background hover:bg-white/10 cursor-pointer text-white py-2"
+                        className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
                       >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4 shrink-0',
-                            selectedPanel?.id === panel.id
-                              ? 'opacity-100 text-elec-yellow'
-                              : 'opacity-0'
-                          )}
-                        />
-                        <div className="flex flex-col flex-1 min-w-0">
-                          <span className="font-medium truncate">{panel.model}</span>
-                          <span className="text-xs text-white truncate">
-                            {panel.wattage}W • {panel.efficiency}%
-                          </span>
-                        </div>
-                        {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-                          <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded">
-                            NEW
-                          </span>
-                        )}
+                        {renderPanelItem(panel)}
                       </CommandItem>
                     ))}
                   </CommandGroup>
                 ))
               )}
-
-              {/* Database footer */}
-              <div className="p-2 text-xs text-white border-t border-white/10 text-center">
-                {getPanelCount()} MCS-certified panels
-              </div>
             </CommandList>
+
+            <div className="border-t border-white/[0.06] px-3 py-2">
+              <p className="text-[11px] text-white/80 text-center">
+                {getPanelCount()} MCS-certified panels
+              </p>
+            </div>
           </Command>
         </PopoverContent>
       </Popover>
-
-      {/* Auto-fill badge - positioned above and to the right */}
-      {showAutoFillBadge && hasAutoFill && (
-        <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
-          <Sparkles className="h-3 w-3" />
-          Auto-filled
-        </div>
-      )}
+      {autoFillBadge}
     </div>
   );
 }
@@ -382,48 +404,45 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
   if (!panel) return null;
 
   return (
-    <div className={cn('p-3 bg-background/50 border border-white/10 rounded-lg text-sm', className)}>
+    <div className={cn('rounded-xl bg-white/[0.05] px-3.5 py-3 text-sm', className)}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-medium text-white">
             {panel.make} {panel.model}
           </p>
-          <p className="text-xs text-white mt-0.5">
-            {panel.cellType} • {panel.cells} cells
+          <p className="text-[12px] text-white/80 mt-0.5">
+            {panel.cellType} · {panel.cells} cells
           </p>
         </div>
-        <span className="px-2 py-1 text-xs font-semibold bg-amber-500/20 text-amber-400 rounded">
+        <span className="px-2 py-1 text-xs font-semibold bg-white/[0.06] text-elec-yellow rounded">
           {panel.wattage}W
         </span>
       </div>
 
-      <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+      <div className="mt-2 grid grid-cols-2 gap-2 text-[12px]">
         <div>
-          <span className="text-white">Efficiency:</span>{' '}
+          <span className="text-white/80">Efficiency:</span>{' '}
           <span className="text-white">{panel.efficiency}%</span>
         </div>
         <div>
-          <span className="text-white">Voc:</span>{' '}
+          <span className="text-white/80">Voc:</span>{' '}
           <span className="text-white">{panel.voc}V</span>
         </div>
         <div>
-          <span className="text-white">Isc:</span>{' '}
+          <span className="text-white/80">Isc:</span>{' '}
           <span className="text-white">{panel.isc}A</span>
         </div>
         <div>
-          <span className="text-white">Vmp:</span>{' '}
+          <span className="text-white/80">Vmp:</span>{' '}
           <span className="text-white">{panel.vmp}V</span>
         </div>
       </div>
 
-      <div className="mt-2 flex items-center gap-2">
+      <div className="mt-2 flex items-center gap-3">
         {panel.mcsCertified && (
-          <span className="flex items-center gap-1 text-green-400 text-xs">
-            <Zap className="h-3 w-3" />
-            MCS Certified
-          </span>
+          <span className="text-emerald-400 text-[12px] font-semibold">MCS Certified</span>
         )}
-        <span className="text-xs text-white">
+        <span className="text-[12px] text-white/80">
           {panel.warranty.product}yr product / {panel.warranty.performance}yr performance
         </span>
       </div>

@@ -37,6 +37,7 @@ export const formatFireAlarmG7Json = (formData: Record<string, any>) => {
     // Client
     client_name: get('clientName'),
     client_telephone: get('clientTelephone'),
+    client_email: get('clientEmail'),
     client_address: get('clientAddress'),
 
     // Premises
@@ -131,6 +132,7 @@ export const formatFireAlarmG7Json = (formData: Record<string, any>) => {
     company_address: get('companyAddress'),
     company_phone: get('companyPhone'),
     company_email: get('companyEmail'),
+    company_website: get('companyWebsite'),
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || '#dc2626',
     registration_scheme_logo: get('registrationSchemeLogo'),

@@ -303,7 +303,7 @@ const PublicQuoteView = () => {
           void (async () => {
             try {
               await (
-                supabase.rpc as unknown as (
+                (supabase.rpc.bind(supabase) as unknown) as (
                   fn: string,
                   args: Record<string, unknown>
                 ) => PromiseLike<{ error: unknown }>

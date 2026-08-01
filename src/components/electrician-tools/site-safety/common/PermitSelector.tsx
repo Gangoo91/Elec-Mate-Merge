@@ -22,8 +22,7 @@ export function PermitSelector({
   const { data: activePermits = [] } = useActivePermits();
 
   const filteredPermits = useMemo(
-    () =>
-      permitTypes ? activePermits.filter((p) => permitTypes.includes(p.type)) : activePermits,
+    () => (permitTypes ? activePermits.filter((p) => permitTypes.includes(p.type)) : activePermits),
     [activePermits, permitTypes]
   );
 

@@ -26,7 +26,7 @@ const PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string> = {
   green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
 // The single colour dimension: positive observations read green; improvements
@@ -40,7 +40,13 @@ function rowTone(obs: SafetyObservation): Tone {
   return status === 'closed' ? 'green' : status === 'in_progress' ? 'blue' : 'amber';
 }
 
-function Pill({ tone, children }: { tone: 'amber' | 'green' | 'red' | 'blue' | 'neutral'; children: React.ReactNode }) {
+function Pill({
+  tone,
+  children,
+}: {
+  tone: 'amber' | 'green' | 'red' | 'blue' | 'neutral';
+  children: React.ReactNode;
+}) {
   return (
     <span
       className={cn(
@@ -73,7 +79,12 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
   const grouped = useMemo(() => groupByDate(observations), [observations]);
 
   if (observations.length === 0) {
-    return <EmptyState title="No matching observations" description="Try a different filter tab or clear your search." />;
+    return (
+      <EmptyState
+        title="No matching observations"
+        description="Try a different filter tab or clear your search."
+      />
+    );
   }
 
   return (
@@ -101,14 +112,36 @@ export function ObservationFeed({ observations, onViewDetails }: ObservationFeed
                   accent={tone}
                   title={obs.description}
                   subtitle={
-                    [obs.category, obs.location, obs.person_observed].filter(Boolean).join(' · ') || time
+                    [obs.category, obs.location, obs.person_observed].filter(Boolean).join(' · ') ||
+                    time
                   }
                   trailing={
                     <div className="flex flex-col items-end gap-1">
-                      <Pill tone={isPositive ? 'green' : tone === 'green' ? 'green' : tone === 'red' ? 'red' : tone === 'blue' ? 'blue' : 'amber'}>
-                        {isPositive ? 'Positive' : obs.severity ? obs.severity : STATUS_LABEL[obs.status || 'open']}
+                      <Pill
+                        tone={
+                          isPositive
+                            ? 'green'
+                            : tone === 'green'
+                              ? 'green'
+                              : tone === 'red'
+                                ? 'red'
+                                : tone === 'blue'
+                                  ? 'blue'
+                                  : 'amber'
+                        }
+                      >
+                        {isPositive
+                          ? 'Positive'
+                          : obs.severity
+                            ? obs.severity
+                            : STATUS_LABEL[obs.status || 'open']}
                       </Pill>
-                      <span className={cn('text-[11px] tabular-nums', overdue ? 'text-red-400' : 'text-white/45')}>
+                      <span
+                        className={cn(
+                          'text-[11px] tabular-nums',
+                          overdue ? 'text-red-400' : 'text-white'
+                        )}
+                      >
                         {overdue ? 'Overdue' : time}
                       </span>
                     </div>

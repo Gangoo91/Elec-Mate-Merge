@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
-import { Wrench, CheckCircle, AlertTriangle, AlertCircle, Plus, ShieldCheck, ChevronRight } from 'lucide-react';
+import {
+  Wrench,
+  CheckCircle,
+  AlertTriangle,
+  AlertCircle,
+  Plus,
+  ShieldCheck,
+  ChevronRight,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

@@ -86,7 +86,10 @@ const SummarySection: React.FC<SummarySectionProps> = ({
       <CollapsibleContent>
         <ul className="space-y-2 pb-4">
           {items.map((item, idx) => (
-            <li key={idx} className="flex items-baseline gap-3 text-[13.5px] text-white/85 leading-relaxed">
+            <li
+              key={idx}
+              className="flex items-baseline gap-3 text-[13.5px] text-white/85 leading-relaxed"
+            >
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/40 w-8 shrink-0">
                 {String(idx + 1).padStart(2, '0')}
               </span>

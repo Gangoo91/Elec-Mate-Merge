@@ -596,8 +596,20 @@ export function checkZsCompliance(
 }
 
 /**
- * Temperature correction for Zs measurements
- * Per BS 7671 Appendix 14
+ * Temperature correction for Zs measurements.
+ *
+ * ELE-1422 — this cited "BS 7671 Appendix 14", which is wrong: A3 moved the
+ * earth-fault-loop content out of Appendix 14 and into Appendix 3, and in
+ * A4:2026 Appendix 14 is "Determination of prospective fault current".
+ *
+ * The correct anchors, confirmed against bs7671_facets:
+ *   • NOTE 2 to the Zs tables (41.2–41.4, 41.6) states the assumed temperatures
+ *     — line conductors at the maximum permitted operating temperature of
+ *     Table 52.2, protective conductors at the assumed initial temperature of
+ *     Tables 54.2/54.3.
+ *   • Appendix 3 gives the METHOD of adjustment where conductors are at a
+ *     different temperature when tested ("See Appendix 3 for the method of
+ *     adjustment").
  */
 export function applyTemperatureCorrection(
   measuredZs: number,
@@ -633,7 +645,11 @@ export function applyTemperatureCorrection(
 // the engineer can see the practical 0.95 limit too, and the user can toggle
 // in settings later.
 //
-// References: IET Guidance Note 3, BS 7671 Appendix 14.
+// References: IET Guidance Note 3 for the 0.8 rule-of-thumb factor — it is a
+// GN3 convention, not a BS 7671 requirement. The underlying condition is
+// NOTE 2 to BS 7671 Tables 41.2-41.4 (conductors at operating temperature per
+// Table 52.2 / Tables 54.2-54.3). Corrected under ELE-1422; the previous
+// "BS 7671 Appendix 14" citation was stale by two amendments.
 
 /** GN3 / NICEIC conservative factor — multiply table Max Zs by this for site limit. */
 export const ZS_TEMP_FACTOR_GN3 = 0.8;

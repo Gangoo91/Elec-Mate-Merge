@@ -70,16 +70,49 @@ export const PROTECTION_RATING_OPTIONS = [
 
 const TABLE_41_3: Record<string, Record<number, number>> = {
   B: {
-    6: 7.28, 10: 4.37, 13: 3.36, 16: 2.73, 20: 2.19, 25: 1.75, 32: 1.37,
-    40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35,
+    6: 7.28,
+    10: 4.37,
+    13: 3.36,
+    16: 2.73,
+    20: 2.19,
+    25: 1.75,
+    32: 1.37,
+    40: 1.09,
+    50: 0.87,
+    63: 0.69,
+    80: 0.55,
+    100: 0.44,
+    125: 0.35,
   },
   C: {
-    6: 3.64, 10: 2.19, 13: 1.68, 16: 1.37, 20: 1.09, 25: 0.87, 32: 0.68,
-    40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17,
+    6: 3.64,
+    10: 2.19,
+    13: 1.68,
+    16: 1.37,
+    20: 1.09,
+    25: 0.87,
+    32: 0.68,
+    40: 0.55,
+    50: 0.44,
+    63: 0.35,
+    80: 0.27,
+    100: 0.22,
+    125: 0.17,
   },
   D: {
-    6: 1.82, 10: 1.09, 13: 0.84, 16: 0.68, 20: 0.55, 25: 0.44, 32: 0.34,
-    40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09,
+    6: 1.82,
+    10: 1.09,
+    13: 0.84,
+    16: 0.68,
+    20: 0.55,
+    25: 0.44,
+    32: 0.34,
+    40: 0.27,
+    50: 0.22,
+    63: 0.17,
+    80: 0.14,
+    100: 0.11,
+    125: 0.09,
   },
 };
 
@@ -87,19 +120,41 @@ const TABLE_41_3: Record<string, Record<number, number>> = {
 // gG general purpose fuses (also applies to BS 1361, BS 3036 mappings below)
 
 const TABLE_41_4_BS88: Record<number, number> = {
-  6: 8.89, 10: 5.33, 16: 2.82, 20: 1.85, 25: 1.44, 32: 1.04,
-  40: 0.86, 50: 0.63, 63: 0.42, 80: 0.32, 100: 0.25, 125: 0.19,
-  160: 0.15, 200: 0.12,
+  6: 8.89,
+  10: 5.33,
+  16: 2.82,
+  20: 1.85,
+  25: 1.44,
+  32: 1.04,
+  40: 0.86,
+  50: 0.63,
+  63: 0.42,
+  80: 0.32,
+  100: 0.25,
+  125: 0.19,
+  160: 0.15,
+  200: 0.12,
 };
 
 // BS 1361 fuse links (domestic consumer unit fuses)
 const TABLE_41_4_BS1361: Record<number, number> = {
-  5: 9.58, 15: 3.43, 20: 2.14, 30: 1.27, 45: 0.67, 60: 0.48, 80: 0.33, 100: 0.25,
+  5: 9.58,
+  15: 3.43,
+  20: 2.14,
+  30: 1.27,
+  45: 0.67,
+  60: 0.48,
+  80: 0.33,
+  100: 0.25,
 };
 
 // BS 3036 rewirable fuses (older installations)
 const TABLE_41_4_BS3036: Record<number, number> = {
-  5: 9.21, 15: 2.93, 20: 1.85, 30: 1.09, 45: 0.60,
+  5: 9.21,
+  15: 2.93,
+  20: 1.85,
+  30: 1.09,
+  45: 0.6,
 };
 
 /** Normalise a device curve / type string to a lookup key. */
@@ -130,18 +185,81 @@ export function lookupMaxZs(curve: string | undefined, rating: number): number |
 // vast majority of edits. Extend as needed.
 
 const IZ_TABLE_70C_TE: Record<number, number> = {
-  1.0: 13, 1.5: 16, 2.5: 24, 4: 32, 6: 41, 10: 57, 16: 76, 25: 101, 35: 125, 50: 151,
+  1.0: 13,
+  1.5: 16,
+  2.5: 24,
+  4: 32,
+  6: 41,
+  10: 57,
+  16: 76,
+  25: 101,
+  35: 125,
+  50: 151,
 };
 const IZ_TABLE_90C_XLPE_TE: Record<number, number> = {
-  1.0: 16, 1.5: 20, 2.5: 30, 4: 40, 6: 51, 10: 70, 16: 94, 25: 125, 35: 156, 50: 188,
+  1.0: 16,
+  1.5: 20,
+  2.5: 30,
+  4: 40,
+  6: 51,
+  10: 70,
+  16: 94,
+  25: 125,
+  35: 156,
+  50: 188,
 };
 // 90°C XLPE singles in conduit Method B (from 4E1A, 1φ AC, two cables loaded)
 const IZ_TABLE_90C_SINGLES: Record<number, number> = {
-  1.5: 22, 2.5: 30, 4: 40, 6: 52, 10: 71, 16: 96, 25: 127, 35: 157, 50: 192,
+  1.5: 22,
+  2.5: 30,
+  4: 40,
+  6: 52,
+  10: 71,
+  16: 96,
+  25: 127,
+  35: 157,
+  50: 192,
+};
+// Multicore ARMOURED (SWA), 70°C thermoplastic, Method C — Table 4D4A.
+// Verified against bs7671_facets ("Cable rating Iz … · Method C · Table 4D4A").
+//
+// Armoured cable has its own construction and its own table: before this, an
+// SWA cable fell through to the twin-and-earth tables above, because "SWA XLPE"
+// matches the /xlpe/ test. A 16 mm² SWA was being credited with 94 A (the T&E
+// figure) against a true 85 A — overstating capacity, which is the unsafe
+// direction.
+//
+// These are the 70°C thermoplastic figures. Thermosetting (XLPE) armoured is
+// Table 4E4A and carries MORE (the standard gives 16 mm² as 99 A there), but
+// 4E4A is not ingested, so we apply the lower 4D4A values to all armoured
+// cable. That under-rates XLPE SWA — conservative, and honest about it.
+const IZ_TABLE_SWA_4D4A: Record<number, number> = {
+  1.5: 20,
+  2.5: 27,
+  4: 37,
+  6: 47,
+  10: 64,
+  16: 85,
+  25: 112,
+  35: 137,
+  50: 164,
+  70: 201,
+  95: 238,
+  120: 274,
+  150: 310,
+  185: 348,
+  240: 399,
+  300: 450,
+  400: 511,
+  500: 569,
+  630: 640,
 };
 
 function isXLPEorLSZH(cableType: string): boolean {
   return /xlpe|lszh|6491|6181y/i.test(cableType);
+}
+function isArmoured(cableType: string): boolean {
+  return /\bswa\b|steel\s*wire\s*armour/i.test(cableType);
 }
 function isSinglesInConduit(cableType: string): boolean {
   return /singles?\s*in\s*conduit|6491b|lszh.*single/i.test(cableType);
@@ -149,6 +267,9 @@ function isSinglesInConduit(cableType: string): boolean {
 
 function lookupIz(cableSize: number, cableType: string | undefined): number | null {
   const t = String(cableType ?? '').toLowerCase();
+  // Armoured FIRST: "SWA XLPE" would otherwise match the XLPE test and be
+  // costed as twin and earth, which is a different cable entirely.
+  if (isArmoured(t)) return IZ_TABLE_SWA_4D4A[cableSize] ?? null;
   if (isSinglesInConduit(t)) return IZ_TABLE_90C_SINGLES[cableSize] ?? null;
   if (isXLPEorLSZH(t)) return IZ_TABLE_90C_XLPE_TE[cableSize] ?? null;
   return IZ_TABLE_70C_TE[cableSize] ?? null;
@@ -165,20 +286,64 @@ export { lookupIz };
 // Source: Appendix 4, Tables 4D2B (T&E 1φ), 4D4B (SWA), with the 1φ values
 // for 230 V supplies and 3φ values for 400 V line-to-line.
 const VD_FACTORS_TE_1PH: Record<number, number> = {
-  1.0: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.75, 35: 1.25, 50: 0.93,
+  1.0: 44,
+  1.5: 29,
+  2.5: 18,
+  4: 11,
+  6: 7.3,
+  10: 4.4,
+  16: 2.8,
+  25: 1.75,
+  35: 1.25,
+  50: 0.93,
 };
 const VD_FACTORS_TE_3PH: Record<number, number> = {
   // 3φ T&E is uncommon (rare for 4-core T&E) but we hold values for completeness.
-  1.0: 38, 1.5: 25, 2.5: 15, 4: 9.5, 6: 6.4, 10: 3.8, 16: 2.4, 25: 1.5, 35: 1.1, 50: 0.80,
+  1.0: 38,
+  1.5: 25,
+  2.5: 15,
+  4: 9.5,
+  6: 6.4,
+  10: 3.8,
+  16: 2.4,
+  25: 1.5,
+  35: 1.1,
+  50: 0.8,
 };
 const VD_FACTORS_SWA_1PH: Record<number, number> = {
   // SWA Cu, ~70°C, single-phase 230V (Table 4D4B).
-  1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.75, 35: 1.25, 50: 0.93,
-  70: 0.63, 95: 0.46, 120: 0.36, 150: 0.29, 185: 0.24, 240: 0.18,
+  1.5: 29,
+  2.5: 18,
+  4: 11,
+  6: 7.3,
+  10: 4.4,
+  16: 2.8,
+  25: 1.75,
+  35: 1.25,
+  50: 0.93,
+  70: 0.63,
+  95: 0.46,
+  120: 0.36,
+  150: 0.29,
+  185: 0.24,
+  240: 0.18,
 };
 const VD_FACTORS_SWA_3PH: Record<number, number> = {
-  1.5: 25, 2.5: 15, 4: 9.5, 6: 6.4, 10: 3.8, 16: 2.4, 25: 1.5, 35: 1.1, 50: 0.80,
-  70: 0.55, 95: 0.40, 120: 0.31, 150: 0.25, 185: 0.21, 240: 0.16,
+  1.5: 25,
+  2.5: 15,
+  4: 9.5,
+  6: 6.4,
+  10: 3.8,
+  16: 2.4,
+  25: 1.5,
+  35: 1.1,
+  50: 0.8,
+  70: 0.55,
+  95: 0.4,
+  120: 0.31,
+  150: 0.25,
+  185: 0.21,
+  240: 0.16,
 };
 
 // Backwards-compat alias — old call sites use VD_FACTORS_TE for 1φ T&E.
@@ -188,7 +353,11 @@ const VD_FACTORS_TE = VD_FACTORS_TE_1PH;
  * Pick the right Vd factor table for the circuit's cable family + phase
  * count. Falls through to T&E single-phase if cable type is unknown.
  */
-function vdFactorFor(cableSizeMm2: number, cableType: string | undefined, isThreePhase: boolean): number | null {
+export function vdFactorFor(
+  cableSizeMm2: number,
+  cableType: string | undefined,
+  isThreePhase: boolean
+): number | null {
   const t = String(cableType ?? '').toLowerCase();
   const isSwa = /swa|steel\s*wire\s*armoured/i.test(t);
   const table = isSwa
@@ -201,7 +370,13 @@ function vdFactorFor(cableSizeMm2: number, cableType: string | undefined, isThre
   return table[cableSizeMm2] ?? null;
 }
 
-const STANDARD_CABLE_SIZES = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
+// Extended past 120 mm² so submains can be sized: the armoured table runs to
+// 630 mm², and a 320 A submain needs 185 mm² — which could not be recommended
+// while this list stopped at 120. These are all standard sizes; the shorter list
+// simply reflected domestic work. CABLE_SIZE_OPTIONS (the dropdown) is separate.
+export const STANDARD_CABLE_SIZES = [
+  1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500, 630,
+];
 const STANDARD_RATINGS = [6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
 
 // ─── Tier 4 lock detection ───────────────────────────────────────────────────
@@ -225,8 +400,7 @@ export function detectFireCircuit(circuit: any): boolean {
 
 export function detectBathroomSocket(circuit: any): boolean {
   const isSocket =
-    /socket/i.test(String(circuit?.loadType ?? '')) ||
-    /socket/i.test(String(circuit?.name ?? ''));
+    /socket/i.test(String(circuit?.loadType ?? '')) || /socket/i.test(String(circuit?.name ?? ''));
   return isSocket && String(circuit?.specialLocation ?? '') === 'bathroom';
 }
 
@@ -257,8 +431,7 @@ export function checkTier4Lock(circuit: any, field: string): Tier4Lock {
   if (detectBathroomSocket(circuit)) {
     if (field === 'protectionType' || field === 'protectionDevice.type')
       return {
-        reason:
-          'Bathroom socket must be RCD-protected (RCBO or RCD+MCB) per BS 7671 701.411.3.3',
+        reason: 'Bathroom socket must be RCD-protected (RCBO or RCD+MCB) per BS 7671 701.411.3.3',
         reg: '701.411.3.3',
       };
   }
@@ -267,10 +440,7 @@ export function checkTier4Lock(circuit: any, field: string): Tier4Lock {
 
 // ─── Tier 2 delta validators ─────────────────────────────────────────────────
 
-export function validateCableSizeChange(
-  circuit: any,
-  newSize: number
-): ValidationResult {
+export function validateCableSizeChange(circuit: any, newSize: number): ValidationResult {
   const lock = checkTier4Lock(circuit, 'cableSize');
   if (lock) return { ok: false, error: lock.reason };
 
@@ -299,7 +469,11 @@ export function validateCableSizeChange(
       ok: false,
       error: `Iz ${iz} A < protection rating ${protectionRating} A — cable would be undersized for the device.`,
       suggestion: minOk
-        ? { field: 'cableSize', value: minOk, label: `try ${minOk} mm² (Iz ${lookupIz(minOk, circuit?.cableType)} A)` }
+        ? {
+            field: 'cableSize',
+            value: minOk,
+            label: `try ${minOk} mm² (Iz ${lookupIz(minOk, circuit?.cableType)} A)`,
+          }
         : undefined,
     };
   }
@@ -337,10 +511,7 @@ export function validateCableSizeChange(
   return { ok: true };
 }
 
-export function validateProtectionRatingChange(
-  circuit: any,
-  newRating: number
-): ValidationResult {
+export function validateProtectionRatingChange(circuit: any, newRating: number): ValidationResult {
   const lock = checkTier4Lock(circuit, 'protectionRating');
   if (lock) return { ok: false, error: lock.reason };
 
@@ -396,10 +567,7 @@ export function validateProtectionRatingChange(
   return { ok: true };
 }
 
-export function validateProtectionCurveChange(
-  circuit: any,
-  newCurve: string
-): ValidationResult {
+export function validateProtectionCurveChange(circuit: any, newCurve: string): ValidationResult {
   const allowed = ['B', 'C', 'D'];
   if (!allowed.includes(newCurve.toUpperCase())) {
     return { ok: false, error: 'Curve must be B, C, or D for MCB/RCBO devices.' };
@@ -435,10 +603,7 @@ export function validateProtectionCurveChange(
   return { ok: true };
 }
 
-export function validateLengthChange(
-  circuit: any,
-  newLength: number
-): ValidationResult {
+export function validateLengthChange(circuit: any, newLength: number): ValidationResult {
   if (!isFinite(newLength) || newLength <= 0) {
     return { ok: false, error: 'Length must be greater than zero.' };
   }
@@ -506,7 +671,8 @@ const SWA_PATTERN = /\bswa\b|steel\s*wire\s*armoured|6724/i;
 const FIRE_RATED_PATTERN = /fp\s*200|fp\s*400|micc|mineral\s*insulated/i;
 
 /** Cable family this type belongs to (used for compatibility checks). */
-export type CableFamily = 'TE' | 'XLPE_TE' | 'LSZH_SINGLES' | 'XLPE_SINGLES' | 'SWA' | 'FIRE' | 'OTHER';
+export type CableFamily =
+  'TE' | 'XLPE_TE' | 'LSZH_SINGLES' | 'XLPE_SINGLES' | 'SWA' | 'FIRE' | 'OTHER';
 
 export function getCableFamily(type: string): CableFamily {
   const t = String(type ?? '').toLowerCase();
@@ -551,22 +717,15 @@ export function getAllowedCableTypes(circuit: any): string[] {
   }
 
   // Industrial fixed plant: SWA preferred, no T&E
-  if (
-    /three-phase-motor|machine-tool|welding|compressor|production-line|extraction/.test(lt)
-  ) {
-    return CABLE_TYPE_OPTIONS.filter(
-      (t) => SWA_PATTERN.test(t) || /singles/i.test(t)
-    );
+  if (/three-phase-motor|machine-tool|welding|compressor|production-line|extraction/.test(lt)) {
+    return CABLE_TYPE_OPTIONS.filter((t) => SWA_PATTERN.test(t) || /singles/i.test(t));
   }
 
   // Default (indoor domestic / commercial): all except SWA-only specialised
   return CABLE_TYPE_OPTIONS;
 }
 
-export function validateCableTypeChange(
-  circuit: any,
-  newType: string
-): ValidationResult {
+export function validateCableTypeChange(circuit: any, newType: string): ValidationResult {
   const lock = checkTier4Lock(circuit, 'cableType');
   if (lock) return { ok: false, error: lock.reason };
 
@@ -676,10 +835,7 @@ export function validateInstallationMethodChange(
 
 // ─── Diversity factor editor ─────────────────────────────────────────────────
 
-export function validateDiversityFactorChange(
-  _circuit: any,
-  newFactor: number
-): ValidationResult {
+export function validateDiversityFactorChange(_circuit: any, newFactor: number): ValidationResult {
   if (!isFinite(newFactor) || newFactor <= 0) {
     return { ok: false, error: 'Diversity factor must be greater than 0.' };
   }
@@ -733,9 +889,7 @@ export function validateNotesChange(_circuit: any, newNotes: string): Validation
  * Returns a flat patch keyed by dot-paths so it can be applied alongside
  * the user's direct edits.
  */
-export function recomputeDerivedFields(
-  circuit: any
-): Record<string, unknown> {
+export function recomputeDerivedFields(circuit: any): Record<string, unknown> {
   const patch: Record<string, unknown> = {};
   const cableSize = Number(circuit?.cableSize ?? 0);
   const cableType = circuit?.cableType;
@@ -803,7 +957,11 @@ export function recomputeDerivedFields(
 
 // ─── Auto-fix attempts ───────────────────────────────────────────────────────
 
-const STANDARD_CABLE_SIZES_AF = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
+// Kept in step with STANDARD_CABLE_SIZES above. These had drifted: the
+// recommender could suggest 185 mm² for a submain while auto-fix, capped at
+// 120 mm², was unable to apply it — the UI naming a size the button could not
+// reach. Same list, same reason.
+const STANDARD_CABLE_SIZES_AF = STANDARD_CABLE_SIZES;
 const STANDARD_RATINGS_AF = [6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
 
 export interface AutoFix {
@@ -919,11 +1077,12 @@ export function attemptAutoFix(
       // (R1+R2) contribution to Zs. R2 share ≈ liveSize/(liveSize+cpcSize)
       // because R ∝ 1/A, so R2/R1 = liveSize/cpcSize.
       const totalCableContribution = Math.max(0, zs - supplyZe);
-      const r2Fraction = (liveSize > 0 && currentCpc > 0) ? liveSize / (liveSize + currentCpc) : 0.5;
+      const r2Fraction = liveSize > 0 && currentCpc > 0 ? liveSize / (liveSize + currentCpc) : 0.5;
       const r1Contribution = totalCableContribution * (1 - r2Fraction);
       const r2Contribution = totalCableContribution * r2Fraction;
-      for (const candidateCpc of CPC_SIZES_FULL.filter(s => s > currentCpc)) {
-        const newR2 = currentCpc > 0 ? r2Contribution * (currentCpc / candidateCpc) : r2Contribution;
+      for (const candidateCpc of CPC_SIZES_FULL.filter((s) => s > currentCpc)) {
+        const newR2 =
+          currentCpc > 0 ? r2Contribution * (currentCpc / candidateCpc) : r2Contribution;
         const estimatedNewZs = supplyZe + r1Contribution + newR2 + zdbDelta;
         if (estimatedNewZs <= maxZs) {
           fixes.push({

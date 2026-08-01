@@ -825,6 +825,10 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                           body: m.message,
                           createdAt: m.created_at,
                           isOwn: m.sender_id === user?.id,
+                          // read_at on a message we sent means an admin opened
+                          // the thread — that is what drives "Seen".
+                          readAt: m.read_at,
+                          system: m.message_type === 'system_ack',
                         }))}
                       onSend={(body) => sendReply({ message: body })}
                       isSending={isSendingReply}

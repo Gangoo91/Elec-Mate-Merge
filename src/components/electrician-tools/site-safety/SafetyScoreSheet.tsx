@@ -1,11 +1,7 @@
 import React from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import type {
-  WeeklySummary,
-  HudsonLevel,
-  ScoreCategory,
-} from '@/hooks/useWeeklySafetySummary';
+import type { WeeklySummary, HudsonLevel, ScoreCategory } from '@/hooks/useWeeklySafetySummary';
 
 interface SafetyScoreSheetProps {
   open: boolean;
@@ -41,7 +37,7 @@ const CATEGORY_LABEL: Record<ScoreCategory, string> = {
 const CATEGORY_DESC: Record<ScoreCategory, string> = {
   compliance: "What's overdue, expired, or unreported right now",
   activity: 'Are you using safety tools regularly',
-  proactive: "Are you surfacing risks before they bite",
+  proactive: 'Are you surfacing risks before they bite',
   quality: 'Depth and completeness of your safety records',
   outcomes: 'Accident-free posture',
 };
@@ -69,7 +65,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
 
   const scoreColor =
     score == null
-      ? 'text-white/40'
+      ? 'text-white'
       : hudsonLevel === 'generative'
         ? 'text-emerald-400'
         : hudsonLevel === 'proactive'
@@ -91,7 +87,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
       ? 'text-emerald-400'
       : trend === 'declining'
         ? 'text-red-400'
-        : 'text-white/55';
+        : 'text-white';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -120,7 +116,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                   <div className="text-[14.5px] font-semibold text-white">
                     Score capped at {hardCap.cap}/100
                   </div>
-                  <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
+                  <p className="mt-1 text-[12.5px] leading-relaxed text-white">
                     {hardCap.reason}
                     {hardCap.deadline && (
                       <>
@@ -148,10 +144,12 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
               {score ?? '—'}
             </span>
             <div className="flex flex-col gap-1.5">
-              <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-white">
                 Out of 100
               </span>
-              <span className={cn('text-[11px] font-semibold uppercase tracking-[0.18em]', scoreColor)}>
+              <span
+                className={cn('text-[11px] font-semibold uppercase tracking-[0.18em]', scoreColor)}
+              >
                 {hudsonLabel}
               </span>
               <span className={cn('text-[11px] font-semibold tabular-nums', trendTone)}>
@@ -160,17 +158,15 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
             </div>
           </section>
 
-          <p className="text-[13.5px] text-white/75 leading-relaxed">{hudsonSub}</p>
+          <p className="text-[13.5px] text-white leading-relaxed">{hudsonSub}</p>
 
-          {isLoading && (
-            <p className="text-[12px] text-white/55">Loading the breakdown…</p>
-          )}
+          {isLoading && <p className="text-[12px] text-white">Loading the breakdown…</p>}
 
           {summary && (
             <>
               {/* 5-dimension strip */}
               <section className="space-y-3">
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                   Breakdown by dimension
                 </div>
                 <div className="-mx-6 sm:mx-0 grid grid-cols-2 sm:grid-cols-5 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
@@ -195,11 +191,8 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                             ? 'text-amber-400'
                             : 'text-red-400';
                     return (
-                      <div
-                        key={key}
-                        className="bg-[hsl(0_0%_10%)] px-3 py-4 sm:px-4 sm:py-5"
-                      >
-                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                      <div key={key} className="bg-[hsl(0_0%_10%)] px-3 py-4 sm:px-4 sm:py-5">
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                           {CATEGORY_LABEL[key]}
                         </div>
                         <div
@@ -209,9 +202,9 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                           )}
                         >
                           {value}
-                          <span className="text-white/40 text-[14px]">/{max}</span>
+                          <span className="text-white text-[14px]">/{max}</span>
                         </div>
-                        <div className="mt-1 text-[10.5px] text-white/45 leading-snug">
+                        <div className="mt-1 text-[10.5px] text-white leading-snug">
                           {CATEGORY_DESC[key]}
                         </div>
                       </div>
@@ -233,10 +226,8 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                           −{d.points}
                         </span>
                         <div className="flex-1 min-w-0">
-                          <p className="text-[13.5px] text-white leading-relaxed">
-                            {d.label}
-                          </p>
-                          <p className="mt-0.5 text-[12px] text-white/55 leading-relaxed">
+                          <p className="text-[13.5px] text-white leading-relaxed">{d.label}</p>
+                          <p className="mt-0.5 text-[12px] text-white leading-relaxed">
                             {d.action}
                           </p>
                         </div>
@@ -258,7 +249,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                         <span className="text-[11.5px] font-semibold tabular-nums text-emerald-400 shrink-0 w-10">
                           +{g.points}
                         </span>
-                        <span className="text-[13.5px] text-white/85 flex-1 leading-relaxed">
+                        <span className="text-[13.5px] text-white flex-1 leading-relaxed">
                           {g.label}
                         </span>
                       </li>
@@ -276,10 +267,10 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
                   <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
                     {summary.recommendations.slice(0, 8).map((r, idx) => (
                       <li key={idx} className="py-3 flex items-baseline gap-3">
-                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/55 w-8 shrink-0">
+                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white w-8 shrink-0">
                           {String(idx + 1).padStart(2, '0')}
                         </span>
-                        <span className="text-[13.5px] text-white/85 flex-1 leading-relaxed">
+                        <span className="text-[13.5px] text-white flex-1 leading-relaxed">
                           {r.label}
                         </span>
                         <span className="text-[11.5px] font-semibold tabular-nums text-elec-yellow shrink-0">
@@ -292,9 +283,9 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
               )}
 
               {/* Period footer */}
-              <p className="text-[11px] text-white/45 tabular-nums">
-                30 days to {new Date(summary.period.end).toLocaleDateString('en-GB')} ·{' '}
-                Previous score {summary.previousScore}
+              <p className="text-[11px] text-white tabular-nums">
+                30 days to {new Date(summary.period.end).toLocaleDateString('en-GB')} · Previous
+                score {summary.previousScore}
               </p>
             </>
           )}

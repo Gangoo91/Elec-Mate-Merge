@@ -423,6 +423,11 @@ export async function formatEicJson(
       board_size: formData.boardSize || '',
       board_type: formData.boardType || '',
       board_location: formData.boardLocation || '',
+      // Board-scan autofill writes top-level boardBrand/boardModel
+      // (EICFormProvider handleBoardScanComplete) — read them here so the
+      // scanned make/model actually print.
+      board_make: formData.boardBrand || '',
+      board_model: formData.boardModel || '',
     },
 
     // Multi-board array — SPD simplified to operational + N/A (no T1/T2/T3)
@@ -432,8 +437,15 @@ export async function formatEicJson(
       board_type: board.boardType || board.type || '',
       // ELE-1388 — the EIC now captures one free-text "Board details" line
       // (e.g. "Wylex 10way"); fall back to it for make so the board still prints.
-      board_make: board.make || board.boardMake || board.boardDetails || '',
-      board_model: board.model || board.boardModel || '',
+      // Board-scan autofill writes top-level boardBrand/boardModel — fall back
+      // to those for the first board so scanned make/model print.
+      board_make:
+        board.make ||
+        board.boardMake ||
+        board.boardDetails ||
+        (index === 0 ? formData.boardBrand : '') ||
+        '',
+      board_model: board.model || board.boardModel || (index === 0 ? formData.boardModel : '') || '',
       board_details: board.boardDetails || '',
       total_ways: getBoardWays(board) || board.ways || '',
       used_ways: board.usedWays || '',
@@ -460,6 +472,9 @@ export async function formatEicJson(
       polarity_confirmed: board.confirmedCorrectPolarity ?? board.polarityConfirmed ?? false,
       phase_sequence_confirmed:
         board.confirmedPhaseSequence ?? board.phaseSequenceConfirmed ?? false,
+      // A4:2026 — Ring final circuit: Confirmed (BoardSection tick; EICR
+      // already emits this key, EIC was dropping it).
+      ring_final_circuit_confirmed: board.ringFinalCircuitConfirmed ?? false,
       supply_from: board.supplyFrom || 'Main',
       supply_cable_size: board.supplyCableSize || '',
       supply_cable_type: board.supplyCableType || '',
@@ -656,6 +671,11 @@ export async function formatEicJson(
         formData.distributionBoards?.[0]?.spdOperationalStatus ??
         false,
       spd_na: formData.spdNA ?? formData.distributionBoards?.[0]?.spdNA ?? false,
+      // A4:2026 — Ring final circuit: Confirmed (mirrors the per-board key)
+      ring_final_circuit_confirmed:
+        formData.ringFinalCircuitConfirmed ??
+        formData.distributionBoards?.[0]?.ringFinalCircuitConfirmed ??
+        false,
     },
 
     designer: {
@@ -686,6 +706,9 @@ export async function formatEicJson(
           phone: formData.designer2Phone || '',
           date: formData.designer2Date || '',
           signature: formData.designer2Signature || '',
+          // EICDeclarations captures designer2Bs7671Date; default matches the
+          // other declaration blocks (A4:2026) when left blank.
+          bs7671_amendment_date: formData.designer2Bs7671Date || 'A4:2026',
         }
       : {},
 
@@ -731,7 +754,14 @@ export async function formatEicJson(
     // sign the schedule separately. Name + date fall back to the inspector /
     // inspection date already captured elsewhere on the cert.
     schedule_tested_by_name: formData.scheduleTestedByName || formData.inspectorName || '',
-    schedule_tested_by_date: formData.scheduleTestedByDate || formData.inspectionDate || '',
+    // inspectionDate is an EICR key never set on the EIC form — fall back to
+    // the test/installation dates the EIC actually captures.
+    schedule_tested_by_date:
+      formData.scheduleTestedByDate ||
+      formData.inspectionDate ||
+      formData.testDate ||
+      formData.installationDate ||
+      '',
     schedule_tested_by_signature:
       formData.scheduleTestedBySignature || formData.inspectorSignature || '',
 
@@ -777,7 +807,14 @@ export async function formatEicJson(
       // override below still takes final precedence.
       report_authorised_by: {
         name: formData.reportAuthorisedByName || formData.inspectorName || '',
-        date: formData.reportAuthorisedByDate || formData.inspectionDate || '',
+        // inspectionDate is an EICR key never set on the EIC form — fall back
+        // to the test/installation dates the EIC actually captures.
+        date:
+          formData.reportAuthorisedByDate ||
+          formData.inspectionDate ||
+          formData.testDate ||
+          formData.installationDate ||
+          '',
         signature: formData.reportAuthorisedBySignature || formData.inspectorSignature || '',
         for_on_behalf_of:
           formData.reportAuthorisedByForOnBehalfOf || formData.inspectorCompany || '',

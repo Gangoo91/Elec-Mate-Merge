@@ -162,8 +162,14 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
   // Overall result
   const overallResult = get('overallResult');
 
-  // Photos
-  const photos = formData.photos || [];
+  // Photos — accept either string[] or {url, caption}[] and normalise
+  const photos = (Array.isArray(formData.photos) ? formData.photos : [])
+    .map((p: any) =>
+      typeof p === 'string'
+        ? { url: p, caption: '' }
+        : { url: p?.url || '', caption: p?.caption || '' }
+    )
+    .filter((p: { url: string }) => !!p.url);
 
   return {
     // Metadata
@@ -177,6 +183,7 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
     // Client
     client_name: get('clientName'),
     client_telephone: get('clientTelephone'),
+    client_email: get('clientEmail'),
     client_address: get('clientAddress'),
 
     // Premises
@@ -200,9 +207,9 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
     // Fault Tests
     fault_tests: faultTests,
 
-    // Cause & Effect
-    cause_effect_verified: getBool('causeAndEffectVerified'),
-    cause_effect_ref: get('causeAndEffectRef'),
+    // Cause & Effect — Tests tab keys first, Scope tab keys as fallback
+    cause_effect_verified: getBool('causeAndEffectVerified') || getBool('causeEffectVerified'),
+    cause_effect_ref: get('causeAndEffectRef') || get('causeEffectReference'),
     cause_effect_date: getDate('causeAndEffectDate'),
 
     // Soak Test
@@ -243,7 +250,19 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
     test_equipment: testEquipment,
     has_test_equipment: testEquipment.length > 0,
 
-    // Handover
+    // Handover — has_handover lets the template hide the checklist when nothing
+    // was captured (G6 UI has no handover section; keys exist only as defaults)
+    has_handover: !!(
+      get('handoverDate') ||
+      getBool('handoverAsBuiltDrawings') ||
+      getBool('handoverOperatingInstructions') ||
+      getBool('handoverLogBook') ||
+      getBool('handoverSpares') ||
+      getBool('handoverTraining') ||
+      getBool('handoverZoneChart') ||
+      getBool('handoverCauseEffect') ||
+      getBool('handoverOperationManual')
+    ),
     handover_date: getDate('handoverDate'),
     handover_as_built_drawings: getBool('handoverAsBuiltDrawings'),
     handover_operating_instructions: getBool('handoverOperatingInstructions'),
@@ -323,11 +342,9 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
             ? 'Not known — no complete record available'
             : '',
 
-    // Plan & cause-and-effect references (2025)
+    // Plan references (2025) — cause_effect_ref/verified emitted once above
     zone_plan_ref: get('zonePlanRef'),
     zone_plan_verified: getBool('zonePlanVerified'),
-    cause_effect_ref: get('causeEffectReference'),
-    cause_effect_verified: getBool('causeEffectVerified'),
 
     // Previous Certificate (G6 unique)
     previous_cert_ref: get('previousCertificateRef'),

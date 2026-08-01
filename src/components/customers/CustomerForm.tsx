@@ -22,7 +22,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Customer, CustomerStatus } from '@/hooks/inspection/useCustomers';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const customerSchema = z.object({
@@ -115,16 +114,16 @@ const TagInput = ({
           {value.map((tag) => (
             <span
               key={tag}
-              className="inline-flex h-7 items-center gap-1.5 rounded-full border border-elec-yellow/30 bg-elec-yellow/[0.08] pl-3 pr-1 text-[12px] font-medium text-elec-yellow"
+              className="inline-flex h-7 items-center gap-1 rounded-full border border-white/[0.12] bg-white/[0.06] pl-3 pr-1.5 text-[12px] font-medium text-white"
             >
               {tag}
               <button
                 type="button"
                 onClick={() => remove(tag)}
-                className="flex h-5 w-5 items-center justify-center rounded-full text-elec-yellow/70 transition-colors hover:bg-elec-yellow/15 hover:text-elec-yellow touch-manipulation"
+                className="flex h-5 items-center px-1 text-[14px] font-semibold leading-none text-white/50 transition-colors hover:text-white touch-manipulation"
                 aria-label={`Remove ${tag}`}
               >
-                <X className="h-3 w-3" />
+                ×
               </button>
             </span>
           ))}

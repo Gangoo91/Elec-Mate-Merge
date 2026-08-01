@@ -107,8 +107,13 @@ function StatusPill({ status }: { status: EquipmentStatus }) {
 function DetailRow({ label, value, tone }: { label: string; value: string; tone?: Tone }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-[12px] text-white/55">{label}</span>
-      <span className={cn('text-[12.5px] font-medium', tone ? TONE_PILL[tone].split(' ')[1] : 'text-white')}>
+      <span className="text-[12px] text-white">{label}</span>
+      <span
+        className={cn(
+          'text-[12.5px] font-medium',
+          tone ? TONE_PILL[tone].split(' ')[1] : 'text-white'
+        )}
+      >
         {value}
       </span>
     </div>
@@ -155,8 +160,10 @@ export function EquipmentDetailView({
         <FormCard eyebrow="Equipment">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h2 className="text-[18px] font-semibold text-white leading-tight">{equipment.name}</h2>
-              <p className="mt-1 text-[12.5px] text-white/60">
+              <h2 className="text-[18px] font-semibold text-white leading-tight">
+                {equipment.name}
+              </h2>
+              <p className="mt-1 text-[12.5px] text-white">
                 {category?.label || equipment.category}
                 {equipment.serial_number ? ` · S/N ${equipment.serial_number}` : ''}
               </p>
@@ -190,7 +197,10 @@ export function EquipmentDetailView({
               value={fmtDate(equipment.next_inspection)}
               tone={equipment.status === 'overdue' ? 'red' : undefined}
             />
-            <DetailRow label="Test frequency" value={fmtFrequency(equipment.inspection_interval_days)} />
+            <DetailRow
+              label="Test frequency"
+              value={fmtFrequency(equipment.inspection_interval_days)}
+            />
           </div>
           {equipment.requires_calibration && (
             <div className="space-y-2 pt-2 mt-1 border-t border-white/[0.06]">
@@ -222,7 +232,7 @@ export function EquipmentDetailView({
         {/* Notes */}
         {equipment.condition_notes && (
           <FormCard eyebrow="Notes">
-            <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-wrap">
+            <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
               {equipment.condition_notes}
             </p>
           </FormCard>
@@ -253,12 +263,12 @@ export function EquipmentDetailView({
                 return (
                   <div
                     key={check.id}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06]"
                   >
                     <span className="flex-1 min-w-0 text-[12.5px] text-white capitalize truncate">
                       {check.equipment_type.replace(/_/g, ' ')}
                     </span>
-                    <span className="text-[11px] text-white/45 tabular-nums">
+                    <span className="text-[11px] text-white tabular-nums">
                       {fmtDate(check.check_date || check.created_at)}
                     </span>
                     <span

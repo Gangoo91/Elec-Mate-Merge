@@ -23,7 +23,8 @@ export interface BusinessMetrics {
   expiringSoonCertifications: number;
   expiredCertifications: number;
   complianceRate: number;
-  safetyScore: number;
+  /** Incidents reported in the last 3 months. Null if the table is unavailable. */
+  recentIncidentCount: number | null;
 }
 
 export interface InvoiceSummary {
@@ -206,7 +207,11 @@ export function useBusinessMetrics() {
         .gte('reported_at', subMonths(now, 3).toISOString());
 
       // Table may not exist - default to perfect score
-      const safetyScore = incError ? 100 : Math.max(100 - (incidentCount || 0) * 5, 0);
+      // ELE-555 — this was "safetyScore = 100 - incidents * 5", an invented
+      // weighting that also returned a perfect 100 whenever the incidents table
+      // errored. Nothing ever read it. Report the countable fact instead; the
+      // real, sourced safety score is weekly-safety-summary (HSE HSG65).
+      const recentIncidentCount = incError ? null : (incidentCount ?? 0);
 
       return {
         revenue: {
@@ -228,7 +233,7 @@ export function useBusinessMetrics() {
         expiringSoonCertifications: expiringSoon,
         expiredCertifications: expired,
         complianceRate,
-        safetyScore,
+        recentIncidentCount,
       };
     },
   });

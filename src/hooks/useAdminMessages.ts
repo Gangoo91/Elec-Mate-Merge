@@ -12,7 +12,8 @@ interface AdminMessage {
   recipient_id: string;
   subject: string;
   message: string;
-  message_type: 'email' | 'in_app' | 'both';
+  /** 'system_ack' is the automatic "we've got your message" note. */
+  message_type: 'email' | 'in_app' | 'both' | 'system_ack';
   read_at: string | null;
   created_at: string;
 }

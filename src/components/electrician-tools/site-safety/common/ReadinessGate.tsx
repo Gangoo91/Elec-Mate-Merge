@@ -14,7 +14,13 @@ export interface ReadinessItem {
   label: string;
 }
 
-export function ReadinessGate({ items, title = 'Ready to issue?' }: { items: ReadinessItem[]; title?: string }) {
+export function ReadinessGate({
+  items,
+  title = 'Ready to issue?',
+}: {
+  items: ReadinessItem[];
+  title?: string;
+}) {
   return (
     <FormCard eyebrow={title}>
       <div className="space-y-2">
@@ -25,7 +31,9 @@ export function ReadinessGate({ items, title = 'Ready to issue?' }: { items: Rea
             ) : (
               <span className="h-2 w-2 rounded-full border border-white/25 shrink-0" />
             )}
-            <span className={cn('text-[12.5px]', r.ok ? 'text-white/90' : 'text-white/50')}>{r.label}</span>
+            <span className={cn('text-[12.5px]', r.ok ? 'text-white' : 'text-white')}>
+              {r.label}
+            </span>
           </div>
         ))}
       </div>

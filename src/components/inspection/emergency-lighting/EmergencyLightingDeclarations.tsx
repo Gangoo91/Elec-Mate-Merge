@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -10,27 +10,24 @@ import { OverdueBadge } from './ValidationBadge';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import type { EmergencyLightingFormData, Luminaire, LuxReading } from '@/types/emergency-lighting';
 
+// Section card — the only box on the page
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+// Paper-form underline input
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
 const pickerTrigger =
-  'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
-
-const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
-      {title}
-    </p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -43,7 +40,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -107,19 +104,43 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
     return d.toISOString().split('T')[0];
   };
 
+  // Commit the displayed fallback dates into formData — the inputs used to
+  // show a computed default without ever writing it, so the screen showed a
+  // date while the stored data (and the PDF) stayed blank.
+  useEffect(() => {
+    if (!formData.responsiblePersonDate) {
+      onUpdate('responsiblePersonDate', new Date().toISOString().split('T')[0]);
+    }
+    if (!formData.nextMonthlyTestDue) {
+      onUpdate('nextMonthlyTestDue', calculateNextMonthly());
+    }
+    if (!formData.nextAnnualTestDue) {
+      onUpdate('nextAnnualTestDue', calculateNextAnnual());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    formData.responsiblePersonDate,
+    formData.nextMonthlyTestDue,
+    formData.nextAnnualTestDue,
+    formData.testDate,
+  ]);
+
   return (
-    <div className="space-y-6">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Tester Declaration */}
-      <div className="space-y-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Tester Declaration" />
-        <LoadTesterButton onLoad={handleLoadTesterDetails} className="h-11 border-white/[0.08]" />
-        <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
-          <p className="text-[11px] text-white leading-relaxed">
+        <LoadTesterButton
+          onLoad={handleLoadTesterDetails}
+          className="h-11 rounded-xl bg-elec-yellow border-elec-yellow text-black text-sm font-semibold hover:bg-elec-yellow"
+        />
+        <div className="rounded-xl bg-white/[0.05] p-3.5">
+          <p className="text-xs text-white/80 leading-relaxed">
             I certify that the emergency lighting system has been inspected and tested in accordance
             with BS 5266, and the results are as recorded in this certificate.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Name" required>
             <Input
               value={formData.testerName || ''}
@@ -136,7 +157,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Qualifications">
             <Input
               value={formData.testerQualifications || ''}
@@ -164,15 +185,15 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
       </div>
 
       {/* Client Representative */}
-      <div className="space-y-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Client Representative" />
-        <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
-          <p className="text-[11px] text-white leading-relaxed">
+        <div className="rounded-xl bg-white/[0.05] p-3.5">
+          <p className="text-xs text-white/80 leading-relaxed">
             The responsible person at the premises acknowledges receipt of the test results per BS
             5266-1.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Name" required>
             <Input
               value={formData.responsiblePersonName || ''}
@@ -208,19 +229,19 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
       </div>
 
       {/* Service Schedule */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Service Schedule" />
-        <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3 space-y-1">
-          <p className="text-[11px] font-semibold text-white">BS 5266 Test Schedule</p>
-          <p className="text-[10px] text-white">
+        <div className="rounded-xl bg-white/[0.05] p-3.5 space-y-1">
+          <p className="text-[12px] font-semibold text-white">BS 5266 Test Schedule</p>
+          <p className="text-xs text-white/80">
             Daily — visual inspection | Monthly — flick test | Annually — full duration test |
             3-yearly — full inspection
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <Label className="text-white text-xs">Next Monthly Due</Label>
+            <div className="flex items-center gap-2 mb-1">
+              <Label className="text-[12px] font-medium text-white">Next Monthly Due</Label>
               {testDates.monthlyOverdue && (
                 <OverdueBadge
                   daysOverdue={Math.abs(testDates.daysUntilMonthly)}
@@ -232,15 +253,15 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
               type="date"
               value={formData.nextMonthlyTestDue || calculateNextMonthly()}
               onChange={(e) => onUpdate('nextMonthlyTestDue', e.target.value)}
-              className={cn(inputCn, testDates.monthlyOverdue && 'border-red-500/50')}
+              className={cn(inputCn, testDates.monthlyOverdue && 'border-red-500')}
             />
             {!testDates.monthlyOverdue && testDates.daysUntilMonthly > 0 && (
-              <p className="text-[10px] text-white mt-1">{testDates.daysUntilMonthly} days</p>
+              <p className="text-[11px] text-white/80 mt-1">{testDates.daysUntilMonthly} days</p>
             )}
           </div>
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <Label className="text-white text-xs">Next Annual Due</Label>
+            <div className="flex items-center gap-2 mb-1">
+              <Label className="text-[12px] font-medium text-white">Next Annual Due</Label>
               {testDates.annualOverdue && (
                 <OverdueBadge daysOverdue={Math.abs(testDates.daysUntilAnnual)} testType="annual" />
               )}
@@ -249,10 +270,10 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
               type="date"
               value={formData.nextAnnualTestDue || calculateNextAnnual()}
               onChange={(e) => onUpdate('nextAnnualTestDue', e.target.value)}
-              className={cn(inputCn, testDates.annualOverdue && 'border-red-500/50')}
+              className={cn(inputCn, testDates.annualOverdue && 'border-red-500')}
             />
             {!testDates.annualOverdue && testDates.daysUntilAnnual > 0 && (
-              <p className="text-[10px] text-white mt-1">{testDates.daysUntilAnnual} days</p>
+              <p className="text-[11px] text-white/80 mt-1">{testDates.daysUntilAnnual} days</p>
             )}
           </div>
         </div>
@@ -275,7 +296,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
       </div>
 
       {/* Overall Result */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Overall Result" />
         <Field label="Result">
           <MobileSelectPicker
@@ -300,7 +321,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
       </div>
 
       {/* Completion Summary */}
-      <div className="space-y-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Completion Summary" />
         <div className="space-y-2 text-xs">
           {[
@@ -324,11 +345,11 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             <div key={label} className="flex items-center justify-between">
               <span className="text-white">{label}</span>
               {value ? (
-                <span className="text-white">{value}</span>
+                <span className="font-medium text-white">{value}</span>
               ) : ok ? (
-                <span className="text-green-400">Complete</span>
+                <span className="font-medium text-green-400">Complete</span>
               ) : (
-                <span className="text-red-400">Incomplete</span>
+                <span className="font-medium text-red-400">Incomplete</span>
               )}
             </div>
           ))}
@@ -344,9 +365,10 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
               <div className="flex items-center justify-between">
                 <span className="text-white">Test Results</span>
                 <span
-                  className={
+                  className={cn(
+                    'font-medium',
                     tested === lums.length && lums.length > 0 ? 'text-green-400' : 'text-amber-400'
-                  }
+                  )}
                 >
                   {tested}/{lums.length} tested
                 </span>
@@ -363,13 +385,14 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
               <div className="flex items-center justify-between">
                 <span className="text-white">Lux Readings</span>
                 <span
-                  className={
+                  className={cn(
+                    'font-medium',
                     failed > 0
                       ? 'text-red-400'
                       : readings.length > 0
                         ? 'text-green-400'
                         : 'text-white'
-                  }
+                  )}
                 >
                   {readings.length === 0 ? 'None' : `${passed}/${readings.length} passed`}
                 </span>
@@ -386,7 +409,12 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             return (
               <div className="flex items-center justify-between">
                 <span className="text-white">Defects</span>
-                <span className={defects.length === 0 ? 'text-green-400' : 'text-amber-400'}>
+                <span
+                  className={cn(
+                    'font-medium',
+                    defects.length === 0 ? 'text-green-400' : 'text-amber-400'
+                  )}
+                >
                   {defects.length === 0
                     ? 'None'
                     : `${defects.length} found (${rectified} rectified)`}
@@ -397,14 +425,14 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
         </div>
 
         {isComplete ? (
-          <div className="rounded-lg bg-green-500/5 border border-green-500/15 p-3">
-            <p className="text-[11px] text-white">
+          <div className="rounded-xl border border-green-500/40 bg-white/[0.05] p-3.5">
+            <p className="text-xs text-white/80">
               Certificate ready for generation — all required fields complete.
             </p>
           </div>
         ) : (
-          <div className="rounded-lg bg-amber-500/5 border border-amber-500/15 p-3">
-            <p className="text-[11px] text-white">
+          <div className="rounded-xl border border-amber-500/40 bg-white/[0.05] p-3.5">
+            <p className="text-xs text-white/80">
               Complete all required sections before generating.
             </p>
           </div>

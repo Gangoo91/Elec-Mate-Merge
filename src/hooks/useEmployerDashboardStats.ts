@@ -19,7 +19,8 @@ export interface EmployerDashboardStats {
   revenueGrowthPercent: number;
 
   // Compliance
-  safetyScore: number;
+  /** % of team certificates still in date. Null when there are none to judge. */
+  certComplianceRate: number | null;
 
   // Deadlines (upcoming expirations)
   upcomingDeadlines: {
@@ -57,7 +58,7 @@ const DEFAULT_STATS: EmployerDashboardStats = {
   currentRevenue: 0,
   targetRevenue: 250000, // Default annual target
   revenueGrowthPercent: 0,
-  safetyScore: 100,
+  certComplianceRate: null,
   upcomingDeadlines: [],
   recentActivities: [],
 };
@@ -241,7 +242,13 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         if (!cert.expiry_date) return true;
         return isAfter(new Date(cert.expiry_date), now);
       }).length;
-      const safetyScore = totalCerts > 0 ? Math.round((validCerts / totalCerts) * 100) : 100;
+      // ELE-555 — this was called "safetyScore" and defaulted to 100 when the
+      // employer had no certificates at all, so an account with nothing set up
+      // displayed "Safety: 100%". It only ever measured certificate validity,
+      // so it is now named for what it measures and reports null — not a pass —
+      // when there is nothing to assess.
+      const certComplianceRate =
+        totalCerts > 0 ? Math.round((validCerts / totalCerts) * 100) : null;
 
       // Build recent activities (would need activity log table in production)
       const recentActivities: EmployerDashboardStats['recentActivities'] = [];
@@ -269,7 +276,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         currentRevenue,
         targetRevenue: 250000, // Could come from settings
         revenueGrowthPercent,
-        safetyScore,
+        certComplianceRate,
         upcomingDeadlines,
         recentActivities,
       });

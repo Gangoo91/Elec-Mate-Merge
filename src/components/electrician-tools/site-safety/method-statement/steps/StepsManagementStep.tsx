@@ -22,12 +22,14 @@ import {
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
-  inputClass,
-  selectTriggerClass,
   selectContentClass,
-  textareaClass,
   type Tone,
 } from '@/components/college/primitives';
+import {
+  safetyInputCn,
+  safetySelectTriggerCn,
+  safetyTextareaCn,
+} from '../../common/SafetyDocField';
 
 interface StepsManagementStepProps {
   steps: MethodStep[];
@@ -49,7 +51,7 @@ function RiskPill({ level }: { level: string }) {
     <span
       className={cn(
         'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        RISK_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+        RISK_PILL[level] ?? 'bg-white/[0.05] text-white border-white/10'
       )}
     >
       {level}
@@ -61,11 +63,7 @@ function RiskPill({ level }: { level: string }) {
 function accentBar(level: string) {
   return cn(
     'w-[3px] self-stretch rounded-full shrink-0',
-    level === 'low'
-      ? 'bg-emerald-400'
-      : level === 'high'
-        ? 'bg-red-400'
-        : 'bg-amber-400'
+    level === 'low' ? 'bg-emerald-400' : level === 'high' ? 'bg-red-400' : 'bg-amber-400'
   );
 }
 
@@ -140,7 +138,10 @@ const StepsManagementStep = ({
     onStepsChange([...steps, newStep]);
   };
 
-  const onDragEnd = (result: { source: { index: number }; destination?: { index: number } | null }) => {
+  const onDragEnd = (result: {
+    source: { index: number };
+    destination?: { index: number } | null;
+  }) => {
     if (!result.destination) return;
     const reordered = Array.from(steps);
     const [removed] = reordered.splice(result.source.index, 1);
@@ -209,7 +210,7 @@ const StepsManagementStep = ({
       <div className="flex gap-2">
         <input
           placeholder={placeholder}
-          className={inputClass}
+          className={safetyInputCn}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
@@ -248,7 +249,7 @@ const StepsManagementStep = ({
               <button
                 type="button"
                 onClick={() => removeArrayItem(stepId, field, index)}
-                className="text-white/50 hover:text-white touch-manipulation"
+                className="text-white hover:text-white touch-manipulation"
                 aria-label="Remove"
               >
                 ×
@@ -292,7 +293,7 @@ const StepsManagementStep = ({
                     <span className="block text-[13.5px] font-medium text-white truncate">
                       {template.title}
                     </span>
-                    <span className="block text-[11.5px] text-white/55 truncate">
+                    <span className="block text-[11.5px] text-white truncate">
                       {template.category}
                     </span>
                   </span>
@@ -327,7 +328,9 @@ const StepsManagementStep = ({
                           {...dragProvided.draggableProps}
                           className={cn(
                             'bg-[hsl(0_0%_12%)] border rounded-2xl overflow-hidden',
-                            snapshot.isDragging ? 'border-elec-yellow/60 shadow-lg' : 'border-white/[0.06]',
+                            snapshot.isDragging
+                              ? 'border-elec-yellow/60 shadow-lg'
+                              : 'border-white/[0.06]',
                             isExpanded && 'border-elec-yellow/40'
                           )}
                         >
@@ -336,7 +339,7 @@ const StepsManagementStep = ({
                             <span className={accentBar(step.riskLevel)} />
                             <div
                               {...dragProvided.dragHandleProps}
-                              className="text-white/40 hover:text-elec-yellow cursor-grab touch-manipulation shrink-0"
+                              className="text-white hover:text-elec-yellow cursor-grab touch-manipulation shrink-0"
                               aria-label="Drag to reorder"
                             >
                               <GripVertical className="h-4 w-4" />
@@ -357,7 +360,7 @@ const StepsManagementStep = ({
                                   </span>
                                 )}
                                 {step.estimatedDuration && (
-                                  <span className="text-[11px] text-white/45 tabular-nums">
+                                  <span className="text-[11px] text-white tabular-nums">
                                     {step.estimatedDuration}
                                   </span>
                                 )}
@@ -379,7 +382,7 @@ const StepsManagementStep = ({
                                   <input
                                     value={step.title}
                                     onChange={(e) => updateStep(step.id, { title: e.target.value })}
-                                    className={inputClass}
+                                    className={safetyInputCn}
                                     placeholder="Enter step title"
                                   />
                                 </Field>
@@ -389,7 +392,7 @@ const StepsManagementStep = ({
                                     onChange={(e) =>
                                       updateStep(step.id, { estimatedDuration: e.target.value })
                                     }
-                                    className={inputClass}
+                                    className={safetyInputCn}
                                     placeholder="e.g. 30 minutes"
                                   />
                                 </Field>
@@ -401,7 +404,7 @@ const StepsManagementStep = ({
                                   onChange={(e) =>
                                     updateStep(step.id, { description: e.target.value })
                                   }
-                                  className={textareaClass}
+                                  className={safetyTextareaCn}
                                   rows={3}
                                   placeholder="Describe what needs to be done in this step"
                                 />
@@ -414,7 +417,7 @@ const StepsManagementStep = ({
                                     updateStep(step.id, { riskLevel: value })
                                   }
                                 >
-                                  <SelectTrigger className={selectTriggerClass}>
+                                  <SelectTrigger className={safetySelectTriggerCn}>
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent className={selectContentClass}>
@@ -441,7 +444,7 @@ const StepsManagementStep = ({
                                             <div className="text-[13px] font-medium text-white truncate">
                                               {hazard.name}
                                             </div>
-                                            <div className="text-[11px] text-white/55 truncate">
+                                            <div className="text-[11px] text-white truncate">
                                               {hazard.category}
                                             </div>
                                           </div>
@@ -510,11 +513,11 @@ const StepsManagementStep = ({
                             (step.description || step.safetyRequirements.length > 0) && (
                               <div className="border-t border-white/[0.06] px-4 sm:px-5 py-3.5 space-y-2">
                                 {step.description && (
-                                  <p className="text-[12.5px] text-white/70 leading-relaxed">
+                                  <p className="text-[12.5px] text-white leading-relaxed">
                                     {step.description}
                                   </p>
                                 )}
-                                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white/45">
+                                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white">
                                   <span>{step.safetyRequirements.length} safety</span>
                                   <span>{step.equipmentNeeded.length} equipment</span>
                                   <span>{step.qualifications.length} qualifications</span>

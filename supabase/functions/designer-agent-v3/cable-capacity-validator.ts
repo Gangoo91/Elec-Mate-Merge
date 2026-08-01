@@ -6,7 +6,15 @@
 
 import type { DesignedCircuit } from './types.ts';
 
-// BS 7671 Table 4D4A - SWA Cable Capacities (3-core, XLPE 90°C, clipped direct)
+// BS 7671 Table 4D4A — multicore ARMOURED (SWA), 70°C THERMOPLASTIC, Method C
+// (clipped direct). Verified against bs7671_facets 2026-08-01.
+//
+// The previous comment described these as "XLPE 90°C", which is wrong: 4D4A is
+// the thermoplastic table. Thermosetting (XLPE) armoured is Table 4E4A and
+// carries more — the standard gives 16 mm² as 99 A there against 85 A here.
+// The VALUES below are correct for 4D4A; only the description was wrong.
+// 4E4A is not ingested, so these lower figures are applied to all armoured
+// cable: conservative for XLPE SWA, and stated rather than implied.
 const SWA_CAPACITIES_TABLE_4D4A: Record<number, number> = {
   1.5: 20,
   2.5: 27,
@@ -212,3 +220,167 @@ export function validateCableCapacity(circuit: DesignedCircuit, logger: any): Va
   return { valid: true, actualIz };
 }
 
+
+// ─── Auto-correcting capacity tripwire (ELE-1425) ───────────────────────────
+//
+// validateCableCapacity above compares the AI's *claimed* Iz against the table
+// — it catches the model misquoting a figure, and only spots undersizing as a
+// side effect. It also bails out entirely when the model omits `calculations.Iz`,
+// and it was flag-only: a 1.5mm² cable proposed for a 330A circuit was reported
+// and then left in the design for the user to act on.
+//
+// This asks the question that actually matters — can this cable carry this
+// circuit? — straight from the tables, independent of anything the model
+// claimed, and corrects the size when it cannot.
+//
+//   Reg 433.1.1: Ib ≤ In ≤ Iz, where Iz = It × Ca × Cg × Ci
+//
+// Ring finals are deliberately excluded: the two legs are in parallel, so a
+// 2.5mm² ring on a 32A device is the standard domestic arrangement (App 15)
+// and "correcting" it to 4mm² would be wrong on nearly every UK house.
+
+export interface CapacityCorrection {
+  circuitNumber?: number;
+  circuitName: string;
+  field: 'cableSize';
+  from: number;
+  to: number;
+  reason: string;
+}
+
+export interface CapacityUncorrectable {
+  circuitNumber?: number;
+  circuitName: string;
+  error: string;
+  recommendation: string;
+}
+
+function capacityTableFor(cableType: string): { table: Record<number, number>; name: string } | null {
+  const t = cableType.toLowerCase();
+  if (t.includes('swa')) return { table: SWA_CAPACITIES_TABLE_4D4A, name: 'Table 4D4A (SWA)' };
+  if (t.includes('twin') && t.includes('xlpe'))
+    return { table: XLPE_TWIN_EARTH_CAPACITIES, name: 'Table 4D5A (XLPE T&E)' };
+  if (t.includes('twin')) return { table: PVC_TWIN_EARTH_CAPACITIES, name: 'Table 4D1A (PVC T&E)' };
+  if (t.includes('single') && t.includes('xlpe'))
+    return { table: XLPE_SINGLE_CAPACITIES, name: 'Table 4D2A (XLPE singles)' };
+  if (t.includes('single')) return { table: PVC_SINGLE_CAPACITIES, name: 'Table 4D1A (PVC singles)' };
+  return null;
+}
+
+/** Ca × Cg × Ci, preferring an explicit overall when the design supplies one. */
+function deratingOf(circuit: DesignedCircuit): number {
+  const d = (circuit as any).deratingFactors;
+  if (!d) return 1;
+  const overall = Number(d.overall);
+  if (Number.isFinite(overall) && overall > 0) return overall;
+  const parts = [d.Ca, d.Cg, d.Ci].map(Number).filter((n) => Number.isFinite(n) && n > 0);
+  return parts.length ? parts.reduce((a, b) => a * b, 1) : 1;
+}
+
+export function applyCableCapacityTripwire(
+  circuits: DesignedCircuit[],
+  logger: any
+): {
+  circuits: DesignedCircuit[];
+  corrections: CapacityCorrection[];
+  uncorrectable: CapacityUncorrectable[];
+} {
+  const corrections: CapacityCorrection[] = [];
+  const uncorrectable: CapacityUncorrectable[] = [];
+
+  const out = circuits.map((circuit, index) => {
+    const name = circuit.name ?? `Circuit ${index + 1}`;
+    const number = (circuit as any).circuitNumber ?? index + 1;
+
+    // App 15 governs rings, not the radial rule — leave them alone.
+    if ((circuit as any).circuitTopology === 'ring') return circuit;
+
+    const size = Number(circuit.cableSize);
+    const cableType = String((circuit as any).cableType ?? '');
+    if (!Number.isFinite(size) || size <= 0 || !cableType) return circuit;
+
+    const ib = Number((circuit as any).designCurrent);
+    const inRating = Number(circuit.protectionDevice?.rating);
+    const candidates = [ib, inRating].filter((n) => Number.isFinite(n) && n > 0);
+    if (!candidates.length) return circuit;
+    const required = Math.max(...candidates);
+
+    const picked = capacityTableFor(cableType);
+    if (!picked) return circuit;
+
+    const derating = deratingOf(circuit);
+    const currentIt = picked.table[size];
+    if (currentIt == null) return circuit;
+
+    const currentIz = currentIt * derating;
+    if (currentIz >= required) return circuit;
+
+    // Smallest tabulated size that will carry it after derating.
+    const upgrade = Object.entries(picked.table)
+      .map(([s, it]) => ({ size: Number(s), it }))
+      .sort((a, b) => a.size - b.size)
+      .find((row) => row.it * derating >= required);
+
+    if (!upgrade) {
+      const msg =
+        `${size}mm² ${cableType} carries ${currentIz.toFixed(1)}A after derating but the ` +
+        `circuit requires ${required.toFixed(1)}A, and no size in ${picked.name} satisfies it.`;
+      logger?.error?.('🔴 Cable capacity: no tabulated size sufficient', {
+        circuit: name,
+        size,
+        required,
+        derating,
+      });
+      uncorrectable.push({
+        circuitNumber: number,
+        circuitName: name,
+        error: msg,
+        recommendation:
+          'Review the load, the installation method or split the circuit — this cannot be ' +
+          'resolved by cable size alone within ' + picked.name + '.',
+      });
+      return circuit;
+    }
+
+    const reason =
+      `${size}mm² carries ${currentIz.toFixed(1)}A after derating (${picked.name}, It ` +
+      `${currentIt}A × ${derating}) but the circuit requires ${required.toFixed(1)}A. ` +
+      `Corrected to ${upgrade.size}mm² (${(upgrade.it * derating).toFixed(1)}A). Reg 433.1.1.`;
+
+    logger?.warn?.('🛑 Cable capacity tripwire — corrected', {
+      circuit: name,
+      from: size,
+      to: upgrade.size,
+      required,
+      derating,
+      table: picked.name,
+    });
+
+    corrections.push({
+      circuitNumber: number,
+      circuitName: name,
+      field: 'cableSize',
+      from: size,
+      to: upgrade.size,
+      reason,
+    });
+
+    return {
+      ...circuit,
+      cableSize: upgrade.size,
+      calculations: {
+        ...circuit.calculations,
+        // Keep the stated Iz consistent with the size we just chose.
+        Iz: Number((upgrade.it * derating).toFixed(1)),
+      },
+    } as DesignedCircuit;
+  });
+
+  if (corrections.length) {
+    logger?.warn?.(`🛑 Cable capacity tripwire corrected ${corrections.length} circuit(s)`, {
+      corrections,
+    });
+  }
+
+  return { circuits: out, corrections, uncorrectable };
+}

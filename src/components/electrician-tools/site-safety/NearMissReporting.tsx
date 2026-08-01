@@ -11,8 +11,20 @@ import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 
 import { Switch } from '@/components/ui/switch';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 
 import {
   PageHero,
@@ -27,8 +39,6 @@ import {
   ListRow,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
-  selectTriggerClass,
   selectContentClass,
   type Tone,
 } from '@/components/college/primitives';
@@ -37,6 +47,7 @@ import { SignatureField } from './common/SignatureField';
 import { ReadinessGate } from './common/ReadinessGate';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
 import { SmartTextarea } from './common/SmartTextarea';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { NearMissReportDetail } from './NearMissReportDetail';
@@ -78,10 +89,38 @@ interface FormData {
 }
 
 const QUICK_TEMPLATES = [
-  { id: 'electrical', label: 'Electrical', category: 'electrical_hazard', severity: 'high', description: 'Near miss involving electrical hazard — exposed live parts, shock risk, or inadequate isolation discovered. Ref: EAWR 1989 Reg 4, GS38.' },
-  { id: 'fire', label: 'Fire risk', category: 'fire_risk', severity: 'critical', description: 'Near miss involving fire hazard — overheating connection, arcing, sparking, or potential ignition source. Ref: BS 7671 Chapter 42, RRO 2005.' },
-  { id: 'ppe', label: 'PPE issue', category: 'ppe_failure', severity: 'medium', description: 'Near miss due to PPE issue — missing, damaged, or incorrect PPE identified before work commenced. Ref: PPER 2022.' },
-  { id: 'worksite', label: 'Worksite', category: 'worksite_hazard', severity: 'medium', description: 'Near miss involving worksite hazard — trip hazard, cable strike risk, unstable surface, or access issue. Ref: CDM 2015, HSG47.' },
+  {
+    id: 'electrical',
+    label: 'Electrical',
+    category: 'electrical_hazard',
+    severity: 'high',
+    description:
+      'Near miss involving electrical hazard — exposed live parts, shock risk, or inadequate isolation discovered. Ref: EAWR 1989 Reg 4, GS38.',
+  },
+  {
+    id: 'fire',
+    label: 'Fire risk',
+    category: 'fire_risk',
+    severity: 'critical',
+    description:
+      'Near miss involving fire hazard — overheating connection, arcing, sparking, or potential ignition source. Ref: BS 7671 Chapter 42, RRO 2005.',
+  },
+  {
+    id: 'ppe',
+    label: 'PPE issue',
+    category: 'ppe_failure',
+    severity: 'medium',
+    description:
+      'Near miss due to PPE issue — missing, damaged, or incorrect PPE identified before work commenced. Ref: PPER 2022.',
+  },
+  {
+    id: 'worksite',
+    label: 'Worksite',
+    category: 'worksite_hazard',
+    severity: 'medium',
+    description:
+      'Near miss involving worksite hazard — trip hazard, cable strike risk, unstable surface, or access issue. Ref: CDM 2015, HSG47.',
+  },
 ];
 
 const CATEGORIES = [
@@ -137,7 +176,13 @@ const LIGHTING_CONDITIONS = [
 
 // One colour dimension = severity.
 function sevTone(severity: string): Tone {
-  return severity === 'critical' ? 'red' : severity === 'high' ? 'orange' : severity === 'medium' ? 'amber' : 'blue';
+  return severity === 'critical'
+    ? 'red'
+    : severity === 'high'
+      ? 'orange'
+      : severity === 'medium'
+        ? 'amber'
+        : 'blue';
 }
 const SEV_CLASS: Record<string, string> = {
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
@@ -148,19 +193,42 @@ const SEV_CLASS: Record<string, string> = {
 
 function SevPill({ severity }: { severity: string }) {
   return (
-    <span className={cn('inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap', SEV_CLASS[sevTone(severity)])}>
+    <span
+      className={cn(
+        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        SEV_CLASS[sevTone(severity)]
+      )}
+    >
       {(severity || '—').toUpperCase()}
     </span>
   );
 }
 
-function CollapsibleSection({ title, open, onOpenChange, children }: { title: string; open: boolean; onOpenChange: (o: boolean) => void; children: React.ReactNode }) {
+function CollapsibleSection({
+  title,
+  open,
+  onOpenChange,
+  children,
+}: {
+  title: string;
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+  children: React.ReactNode;
+}) {
   return (
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
       <Collapsible open={open} onOpenChange={onOpenChange}>
         <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
           <Eyebrow>{title}</Eyebrow>
-          <span className={cn('text-white/40 text-[13px] transition-transform duration-200', open && 'rotate-180')} aria-hidden>⌄</span>
+          <span
+            className={cn(
+              'text-white text-[13px] transition-transform duration-200',
+              open && 'rotate-180'
+            )}
+            aria-hidden
+          >
+            ⌄
+          </span>
         </CollapsibleTrigger>
         <CollapsibleContent className="px-5 pb-5 pt-1 space-y-4">{children}</CollapsibleContent>
       </Collapsible>
@@ -197,18 +265,39 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
 
   const now = new Date();
   const [formData, setFormData] = useState<FormData>({
-    category: '', severity: '', description: '', location: '',
-    incident_date: now.toISOString().split('T')[0], incident_time: now.toTimeString().slice(0, 5),
-    reporter_name: '', potential_consequences: '', immediate_actions: '', preventive_measures: '',
-    witnesses: [], third_party_involved: false, third_party_details: '', weather_conditions: '',
-    lighting_conditions: '', equipment_involved: '', equipment_faulty: false, equipment_fault_details: '',
-    supervisor_notified: false, supervisor_name: '', previous_similar_incidents: '', likelihood: 0,
+    category: '',
+    severity: '',
+    description: '',
+    location: '',
+    incident_date: now.toISOString().split('T')[0],
+    incident_time: now.toTimeString().slice(0, 5),
+    reporter_name: '',
+    potential_consequences: '',
+    immediate_actions: '',
+    preventive_measures: '',
+    witnesses: [],
+    third_party_involved: false,
+    third_party_details: '',
+    weather_conditions: '',
+    lighting_conditions: '',
+    equipment_involved: '',
+    equipment_faulty: false,
+    equipment_fault_details: '',
+    supervisor_notified: false,
+    supervisor_name: '',
+    previous_similar_incidents: '',
+    likelihood: 0,
   });
 
   const getTemplateData = () => ({
-    category: formData.category, severity: formData.severity, potential_consequences: formData.potential_consequences,
-    immediate_actions: formData.immediate_actions, preventive_measures: formData.preventive_measures,
-    weather_conditions: formData.weather_conditions, lighting_conditions: formData.lighting_conditions, likelihood: formData.likelihood,
+    category: formData.category,
+    severity: formData.severity,
+    potential_consequences: formData.potential_consequences,
+    immediate_actions: formData.immediate_actions,
+    preventive_measures: formData.preventive_measures,
+    weather_conditions: formData.weather_conditions,
+    lighting_conditions: formData.lighting_conditions,
+    likelihood: formData.likelihood,
   });
 
   const handleLoadTemplate = (data: Record<string, unknown>) => {
@@ -217,7 +306,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
       ...(data.category && { category: data.category as string }),
       ...(data.severity && { severity: data.severity as string }),
       ...(data.description && { description: data.description as string }),
-      ...(data.potential_consequences && { potential_consequences: data.potential_consequences as string }),
+      ...(data.potential_consequences && {
+        potential_consequences: data.potential_consequences as string,
+      }),
       ...(data.immediate_actions && { immediate_actions: data.immediate_actions as string }),
       ...(data.preventive_measures && { preventive_measures: data.preventive_measures as string }),
       ...(data.weather_conditions && { weather_conditions: data.weather_conditions as string }),
@@ -229,7 +320,11 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
   useEffect(() => {
     const loadProfile = async () => {
       if (!user) return;
-      const { data } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
+      const { data } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
       if (data?.full_name) setFormData((prev) => ({ ...prev, reporter_name: data.full_name }));
     };
     loadProfile();
@@ -261,7 +356,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
           ...prev,
           category: data.category || prev.category,
           severity: data.severity || prev.severity,
-          description: data.description ? `[Escalated from Observation] ${data.description}` : prev.description,
+          description: data.description
+            ? `[Escalated from Observation] ${data.description}`
+            : prev.description,
           location: data.location || prev.location,
         }));
         setShowForm(true);
@@ -275,12 +372,28 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
   const resetForm = () => {
     const n = new Date();
     setFormData({
-      category: '', severity: '', description: '', location: '',
-      incident_date: n.toISOString().split('T')[0], incident_time: n.toTimeString().slice(0, 5),
-      reporter_name: formData.reporter_name, potential_consequences: '', immediate_actions: '', preventive_measures: '',
-      witnesses: [], third_party_involved: false, third_party_details: '', weather_conditions: '',
-      lighting_conditions: '', equipment_involved: '', equipment_faulty: false, equipment_fault_details: '',
-      supervisor_notified: false, supervisor_name: '', previous_similar_incidents: '', likelihood: 0,
+      category: '',
+      severity: '',
+      description: '',
+      location: '',
+      incident_date: n.toISOString().split('T')[0],
+      incident_time: n.toTimeString().slice(0, 5),
+      reporter_name: formData.reporter_name,
+      potential_consequences: '',
+      immediate_actions: '',
+      preventive_measures: '',
+      witnesses: [],
+      third_party_involved: false,
+      third_party_details: '',
+      weather_conditions: '',
+      lighting_conditions: '',
+      equipment_involved: '',
+      equipment_faulty: false,
+      equipment_fault_details: '',
+      supervisor_notified: false,
+      supervisor_name: '',
+      previous_similar_incidents: '',
+      likelihood: 0,
     });
     setPhotoUrls([]);
     setErrors({});
@@ -293,7 +406,12 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     setLinkedJobTitle(null);
   };
 
-  const { status: draftStatus, recoveredData: recoveredDraft, clearDraft, dismissRecovery: dismissDraft } = useLocalDraft({
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
     key: 'near-miss-report',
     data: formData,
     enabled: showForm,
@@ -307,14 +425,24 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
 
   const applyTemplate = (template: (typeof QUICK_TEMPLATES)[0]) => {
     setSelectedTemplate(template.id);
-    setFormData((prev) => ({ ...prev, category: template.category, severity: template.severity, description: template.description }));
+    setFormData((prev) => ({
+      ...prev,
+      category: template.category,
+      severity: template.severity,
+      description: template.description,
+    }));
     setErrors({});
   };
 
-  const addWitness = () => setFormData((prev) => ({ ...prev, witnesses: [...prev.witnesses, { name: '', contact: '' }] }));
+  const addWitness = () =>
+    setFormData((prev) => ({ ...prev, witnesses: [...prev.witnesses, { name: '', contact: '' }] }));
   const updateWitness = (index: number, field: 'name' | 'contact', value: string) =>
-    setFormData((prev) => ({ ...prev, witnesses: prev.witnesses.map((w, i) => (i === index ? { ...w, [field]: value } : w)) }));
-  const removeWitness = (index: number) => setFormData((prev) => ({ ...prev, witnesses: prev.witnesses.filter((_, i) => i !== index) }));
+    setFormData((prev) => ({
+      ...prev,
+      witnesses: prev.witnesses.map((w, i) => (i === index ? { ...w, [field]: value } : w)),
+    }));
+  const removeWitness = (index: number) =>
+    setFormData((prev) => ({ ...prev, witnesses: prev.witnesses.filter((_, i) => i !== index) }));
 
   const readiness = [
     { ok: !!formData.incident_date && !!formData.incident_time, label: 'Date and time' },
@@ -340,7 +468,11 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
 
   const submitReport = async () => {
     if (!validateForm()) {
-      toast({ title: 'Missing required fields', description: 'Please complete the highlighted fields', variant: 'destructive' });
+      toast({
+        title: 'Missing required fields',
+        description: 'Please complete the highlighted fields',
+        variant: 'destructive',
+      });
       return;
     }
     if (!user) {
@@ -378,10 +510,17 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         photos: photoUrls.length > 0 ? photoUrls : null,
         reporter_signature: reporterSig || null,
         likelihood: formData.likelihood > 0 ? formData.likelihood : null,
-        risk_rating: formData.likelihood > 0 && formData.severity ? formData.likelihood * severityToNumber(formData.severity) : null,
+        risk_rating:
+          formData.likelihood > 0 && formData.severity
+            ? formData.likelihood * severityToNumber(formData.severity)
+            : null,
         job_id: linkedJobId,
       };
-      const { data, error } = await supabase.from('near_miss_reports').insert(insertData as Record<string, unknown>).select().single();
+      const { data, error } = await supabase
+        .from('near_miss_reports')
+        .insert(insertData as Record<string, unknown>)
+        .select()
+        .single();
       if (error) throw error;
       setLastSubmittedReport(data as unknown as NearMissReport);
       setReports((prev) => [data as unknown as NearMissReport, ...prev]);
@@ -398,7 +537,8 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     }
   };
 
-  const getCategoryLabel = (value: string) => CATEGORIES.find((c) => c.value === value)?.label || value;
+  const getCategoryLabel = (value: string) =>
+    CATEGORIES.find((c) => c.value === value)?.label || value;
 
   const filteredReports = useMemo(() => {
     return reports.filter((report) => {
@@ -412,15 +552,28 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
     });
   }, [reports, searchQuery, severityFilter]);
 
-  const { visible: visibleReports, hasMore: hasMoreReports, remaining: remainingReports, loadMore: loadMoreReports } = useShowMore(filteredReports);
+  const {
+    visible: visibleReports,
+    hasMore: hasMoreReports,
+    remaining: remainingReports,
+    loadMore: loadMoreReports,
+  } = useShowMore(filteredReports);
 
   const severityFilterTabs = useMemo(
     () => [
       { value: 'all', label: 'All', count: reports.length },
       { value: 'low', label: 'Minor', count: reports.filter((r) => r.severity === 'low').length },
-      { value: 'medium', label: 'Moderate', count: reports.filter((r) => r.severity === 'medium').length },
+      {
+        value: 'medium',
+        label: 'Moderate',
+        count: reports.filter((r) => r.severity === 'medium').length,
+      },
       { value: 'high', label: 'Major', count: reports.filter((r) => r.severity === 'high').length },
-      { value: 'critical', label: 'Critical', count: reports.filter((r) => r.severity === 'critical').length },
+      {
+        value: 'critical',
+        label: 'Critical',
+        count: reports.filter((r) => r.severity === 'critical').length,
+      },
     ],
     [reports]
   );
@@ -466,7 +619,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         />
         <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
           <AnimatePresence>
-            {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+            {recoveredDraft && (
+              <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+            )}
           </AnimatePresence>
 
           {/* Quick templates */}
@@ -479,7 +634,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                   onClick={() => applyTemplate(t)}
                   className={cn(
                     'p-3 rounded-xl border text-left text-[13px] font-medium touch-manipulation active:scale-[0.98] transition-all',
-                    selectedTemplate === t.id ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow' : 'border-white/[0.08] bg-[hsl(0_0%_12%)] text-white'
+                    selectedTemplate === t.id
+                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
+                      : 'border-white/[0.08] bg-[hsl(0_0%_12%)] text-white'
                   )}
                 >
                   {t.label}
@@ -503,7 +660,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                   type="date"
                   value={formData.incident_date}
                   onChange={(e) => setFormData((p) => ({ ...p, incident_date: e.target.value }))}
-                  className={cn(inputClass, '[color-scheme:dark]', errors.incident_date && 'border-red-500/60')}
+                  className={cn('[color-scheme:dark]', errors.incident_date && 'border-red-500/60')}
                 />
               </Field>
               <Field label="Time" required>
@@ -511,7 +668,7 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                   type="time"
                   value={formData.incident_time}
                   onChange={(e) => setFormData((p) => ({ ...p, incident_time: e.target.value }))}
-                  className={cn(inputClass, '[color-scheme:dark]', errors.incident_time && 'border-red-500/60')}
+                  className={cn('[color-scheme:dark]', errors.incident_time && 'border-red-500/60')}
                 />
               </Field>
             </div>
@@ -534,13 +691,20 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
           {/* What happened */}
           <FormCard eyebrow="What happened">
             <Field label="Category" required>
-              <Select value={formData.category} onValueChange={(v) => setFormData((p) => ({ ...p, category: v }))}>
-                <SelectTrigger className={cn(selectTriggerClass, errors.category && 'border-red-500/60')}>
+              <Select
+                value={formData.category}
+                onValueChange={(v) => setFormData((p) => ({ ...p, category: v }))}
+              >
+                <SelectTrigger
+                  className={cn(safetySelectTriggerCn, errors.category && 'border-red-400')}
+                >
                   <SelectValue placeholder="Select hazard type" />
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
                   {CATEGORIES.map((c) => (
-                    <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+                    <SelectItem key={c.value} value={c.value}>
+                      {c.label}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -557,11 +721,13 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                       onClick={() => setFormData((p) => ({ ...p, severity: s.value }))}
                       className={cn(
                         'p-3 rounded-xl border text-left transition-all active:scale-[0.98]',
-                        selected ? SEV_CLASS[sevTone(s.value)] : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                        selected
+                          ? SEV_CLASS[sevTone(s.value)]
+                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
                       )}
                     >
                       <span className="text-[13px] font-medium block">{s.label}</span>
-                      <span className="text-[11px] text-white/55">{s.description}</span>
+                      <span className="text-[11px] text-white">{s.description}</span>
                     </button>
                   );
                 })}
@@ -577,7 +743,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                     onClick={() => setFormData((p) => ({ ...p, likelihood: l.value }))}
                     className={cn(
                       'flex-1 h-11 rounded-xl border text-[13px] font-medium touch-manipulation active:scale-[0.97] transition-all',
-                      formData.likelihood === l.value ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                      formData.likelihood === l.value
+                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                        : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
                     )}
                   >
                     {l.value}
@@ -585,14 +753,18 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                 ))}
               </div>
               {formData.likelihood > 0 && (
-                <p className="text-[11px] text-white/55 mt-1.5">
-                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.label} — {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.description}
+                <p className="text-[11px] text-white mt-1.5">
+                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.label} —{' '}
+                  {LIKELIHOOD_LEVELS[formData.likelihood - 1]?.description}
                 </p>
               )}
             </Field>
 
             {formData.severity && formData.likelihood > 0 && (
-              <RiskMatrix selectedLikelihood={formData.likelihood} selectedSeverity={severityToNumber(formData.severity)} />
+              <RiskMatrix
+                selectedLikelihood={formData.likelihood}
+                selectedSeverity={severityToNumber(formData.severity)}
+              />
             )}
 
             <Field label="Description" required>
@@ -600,94 +772,199 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                 placeholder="Describe what happened…"
                 value={formData.description}
                 onChange={(val) => setFormData((p) => ({ ...p, description: val }))}
-                className={cn('min-h-[120px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl', errors.description && 'border-red-500/60')}
+                className={cn(
+                  safetyTextareaCn,
+                  'min-h-[120px]',
+                  errors.description && 'border-red-500/60'
+                )}
               />
-              <p className="text-[11px] text-white/45 text-right mt-1">{formData.description.length} chars</p>
+              <p className="text-[11px] text-white text-right mt-1">
+                {formData.description.length} chars
+              </p>
             </Field>
           </FormCard>
 
           {/* Actions */}
           <FormCard eyebrow="Actions (optional)">
             <Field label="Potential consequences">
-              <SmartTextarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(val) => setFormData((p) => ({ ...p, potential_consequences: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+              <SmartTextarea
+                placeholder="What could have happened?"
+                value={formData.potential_consequences}
+                onChange={(val) => setFormData((p) => ({ ...p, potential_consequences: val }))}
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
+              />
             </Field>
             <Field label="Immediate actions">
-              <SmartTextarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(val) => setFormData((p) => ({ ...p, immediate_actions: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+              <SmartTextarea
+                placeholder="What did you do?"
+                value={formData.immediate_actions}
+                onChange={(val) => setFormData((p) => ({ ...p, immediate_actions: val }))}
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
+              />
             </Field>
             <Field label="Preventive measures">
-              <SmartTextarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(val) => setFormData((p) => ({ ...p, preventive_measures: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+              <SmartTextarea
+                placeholder="How to prevent this?"
+                value={formData.preventive_measures}
+                onChange={(val) => setFormData((p) => ({ ...p, preventive_measures: val }))}
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
+              />
             </Field>
           </FormCard>
 
           {/* People */}
-          <CollapsibleSection title="People involved (optional)" open={peopleOpen} onOpenChange={setPeopleOpen}>
+          <CollapsibleSection
+            title="People involved (optional)"
+            open={peopleOpen}
+            onOpenChange={setPeopleOpen}
+          >
             <Field label="Witnesses">
               <div className="space-y-2">
                 {formData.witnesses.map((witness, index) => (
                   <div key={index} className="flex gap-2 items-start">
                     <div className="flex-1 space-y-2">
-                      <input placeholder="Name" value={witness.name} onChange={(e) => updateWitness(index, 'name', e.target.value)} className={inputClass} />
-                      <input placeholder="Contact (optional)" value={witness.contact} onChange={(e) => updateWitness(index, 'contact', e.target.value)} className={inputClass} />
+                      <input
+                        placeholder="Name"
+                        value={witness.name}
+                        onChange={(e) => updateWitness(index, 'name', e.target.value)}
+                        className={safetyInputCn}
+                      />
+                      <input
+                        placeholder="Contact (optional)"
+                        value={witness.contact}
+                        onChange={(e) => updateWitness(index, 'contact', e.target.value)}
+                        className={safetyInputCn}
+                      />
                     </div>
-                    <button onClick={() => removeWitness(index)} className="h-11 w-11 shrink-0 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/60 flex items-center justify-center touch-manipulation" aria-label="Remove witness">
+                    <button
+                      onClick={() => removeWitness(index)}
+                      className="h-11 w-11 shrink-0 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center touch-manipulation"
+                      aria-label="Remove witness"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                 ))}
-                <SecondaryButton fullWidth onClick={addWitness}>+ Add witness</SecondaryButton>
+                <SecondaryButton fullWidth onClick={addWitness}>
+                  + Add witness
+                </SecondaryButton>
               </div>
             </Field>
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">Third party involved?</span>
-              <Switch checked={formData.third_party_involved} onCheckedChange={(c) => setFormData((p) => ({ ...p, third_party_involved: c }))} />
+              <span className="text-[12.5px] text-white">Third party involved?</span>
+              <Switch
+                checked={formData.third_party_involved}
+                onCheckedChange={(c) => setFormData((p) => ({ ...p, third_party_involved: c }))}
+              />
             </div>
             {formData.third_party_involved && (
-              <SmartTextarea placeholder="Details about third party…" value={formData.third_party_details} onChange={(val) => setFormData((p) => ({ ...p, third_party_details: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+              <SmartTextarea
+                placeholder="Details about third party…"
+                value={formData.third_party_details}
+                onChange={(val) => setFormData((p) => ({ ...p, third_party_details: val }))}
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
+              />
             )}
           </CollapsibleSection>
 
           {/* Environment */}
-          <CollapsibleSection title="Environment & equipment (optional)" open={environmentOpen} onOpenChange={setEnvironmentOpen}>
+          <CollapsibleSection
+            title="Environment & equipment (optional)"
+            open={environmentOpen}
+            onOpenChange={setEnvironmentOpen}
+          >
             <div className="grid grid-cols-2 gap-3">
               <Field label="Weather">
-                <Select value={formData.weather_conditions} onValueChange={(v) => setFormData((p) => ({ ...p, weather_conditions: v }))}>
-                  <SelectTrigger className={selectTriggerClass}><SelectValue placeholder="Weather" /></SelectTrigger>
-                  <SelectContent className={selectContentClass}>{WEATHER_CONDITIONS.map((w) => <SelectItem key={w.value} value={w.value}>{w.label}</SelectItem>)}</SelectContent>
+                <Select
+                  value={formData.weather_conditions}
+                  onValueChange={(v) => setFormData((p) => ({ ...p, weather_conditions: v }))}
+                >
+                  <SelectTrigger className={safetySelectTriggerCn}>
+                    <SelectValue placeholder="Weather" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {WEATHER_CONDITIONS.map((w) => (
+                      <SelectItem key={w.value} value={w.value}>
+                        {w.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </Field>
               <Field label="Lighting">
-                <Select value={formData.lighting_conditions} onValueChange={(v) => setFormData((p) => ({ ...p, lighting_conditions: v }))}>
-                  <SelectTrigger className={selectTriggerClass}><SelectValue placeholder="Lighting" /></SelectTrigger>
-                  <SelectContent className={selectContentClass}>{LIGHTING_CONDITIONS.map((l) => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}</SelectContent>
+                <Select
+                  value={formData.lighting_conditions}
+                  onValueChange={(v) => setFormData((p) => ({ ...p, lighting_conditions: v }))}
+                >
+                  <SelectTrigger className={safetySelectTriggerCn}>
+                    <SelectValue placeholder="Lighting" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {LIGHTING_CONDITIONS.map((l) => (
+                      <SelectItem key={l.value} value={l.value}>
+                        {l.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </Field>
             </div>
             <Field label="Equipment involved">
-              <input placeholder="e.g. Power drill, scaffold, cable" value={formData.equipment_involved} onChange={(e) => setFormData((p) => ({ ...p, equipment_involved: e.target.value }))} className={inputClass} />
+              <input
+                placeholder="e.g. Power drill, scaffold, cable"
+                value={formData.equipment_involved}
+                onChange={(e) => setFormData((p) => ({ ...p, equipment_involved: e.target.value }))}
+                className={safetyInputCn}
+              />
             </Field>
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">Equipment faulty?</span>
-              <Switch checked={formData.equipment_faulty} onCheckedChange={(c) => setFormData((p) => ({ ...p, equipment_faulty: c }))} />
+              <span className="text-[12.5px] text-white">Equipment faulty?</span>
+              <Switch
+                checked={formData.equipment_faulty}
+                onCheckedChange={(c) => setFormData((p) => ({ ...p, equipment_faulty: c }))}
+              />
             </div>
             {formData.equipment_faulty && (
-              <SmartTextarea placeholder="Describe the fault…" value={formData.equipment_fault_details} onChange={(val) => setFormData((p) => ({ ...p, equipment_fault_details: val }))} className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+              <SmartTextarea
+                placeholder="Describe the fault…"
+                value={formData.equipment_fault_details}
+                onChange={(val) => setFormData((p) => ({ ...p, equipment_fault_details: val }))}
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
+              />
             )}
           </CollapsibleSection>
 
           {/* Investigation */}
-          <CollapsibleSection title="Investigation (optional)" open={investigationOpen} onOpenChange={setInvestigationOpen}>
+          <CollapsibleSection
+            title="Investigation (optional)"
+            open={investigationOpen}
+            onOpenChange={setInvestigationOpen}
+          >
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">Supervisor notified?</span>
-              <Switch checked={formData.supervisor_notified} onCheckedChange={(c) => setFormData((p) => ({ ...p, supervisor_notified: c }))} />
+              <span className="text-[12.5px] text-white">Supervisor notified?</span>
+              <Switch
+                checked={formData.supervisor_notified}
+                onCheckedChange={(c) => setFormData((p) => ({ ...p, supervisor_notified: c }))}
+              />
             </div>
             {formData.supervisor_notified && (
               <Field label="Supervisor name">
-                <input placeholder="Supervisor name" value={formData.supervisor_name} onChange={(e) => setFormData((p) => ({ ...p, supervisor_name: e.target.value }))} className={inputClass} />
+                <input
+                  placeholder="Supervisor name"
+                  value={formData.supervisor_name}
+                  onChange={(e) => setFormData((p) => ({ ...p, supervisor_name: e.target.value }))}
+                  className={safetyInputCn}
+                />
               </Field>
             )}
             <Field label="Previous similar incidents?">
-              <Select value={formData.previous_similar_incidents} onValueChange={(v) => setFormData((p) => ({ ...p, previous_similar_incidents: v }))}>
-                <SelectTrigger className={selectTriggerClass}><SelectValue placeholder="Select" /></SelectTrigger>
+              <Select
+                value={formData.previous_similar_incidents}
+                onValueChange={(v) => setFormData((p) => ({ ...p, previous_similar_incidents: v }))}
+              >
+                <SelectTrigger className={safetySelectTriggerCn}>
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
                 <SelectContent className={selectContentClass}>
                   <SelectItem value="yes">Yes</SelectItem>
                   <SelectItem value="no">No</SelectItem>
@@ -699,30 +976,67 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
 
           {/* Evidence + reporter */}
           <FormCard eyebrow="Evidence & reporter">
-            <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} maxPhotos={5} label="Evidence photos (optional)" />
+            <SafetyPhotoCapture
+              photos={photoUrls}
+              onPhotosChange={setPhotoUrls}
+              maxPhotos={5}
+              label="Evidence photos (optional)"
+            />
             <Field label="Your name">
-              <input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData((p) => ({ ...p, reporter_name: e.target.value }))} className={inputClass} />
+              <input
+                placeholder="Optional"
+                value={formData.reporter_name}
+                onChange={(e) => setFormData((p) => ({ ...p, reporter_name: e.target.value }))}
+                className={safetyInputCn}
+              />
             </Field>
-            <SignatureField label="Reporter signature" value={reporterSig} onChange={setReporterSig} />
+            <SignatureField
+              label="Reporter signature"
+              value={reporterSig}
+              onChange={setReporterSig}
+            />
           </FormCard>
 
           <ReadinessGate items={readiness} title="Ready to submit?" />
         </div>
 
         {/* Sticky submit */}
-        <div className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 space-y-2" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+        <div
+          className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 space-y-2"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
           <div className="mx-auto max-w-3xl space-y-2">
-            <PrimaryButton fullWidth size="lg" disabled={!formReady || isSubmitting} onClick={submitReport}>
+            <PrimaryButton
+              fullWidth
+              size="lg"
+              disabled={!formReady || isSubmitting}
+              onClick={submitReport}
+            >
               {isSubmitting ? 'Submitting…' : 'Submit report'}
             </PrimaryButton>
-            <button type="button" onClick={() => setShowSaveTemplate(true)} className="w-full h-9 text-[12px] font-medium text-white/60 hover:text-white touch-manipulation">
+            <button
+              type="button"
+              onClick={() => setShowSaveTemplate(true)}
+              className="w-full h-9 text-[12px] font-medium text-white hover:text-white touch-manipulation"
+            >
               Save as template
             </button>
           </div>
         </div>
 
-        <SaveAsTemplateSheet open={showSaveTemplate} onOpenChange={setShowSaveTemplate} moduleType="near-miss" getTemplateData={getTemplateData} />
-        <LoadTemplateSheet open={showLoadTemplate} onOpenChange={setShowLoadTemplate} moduleType="near-miss" onLoad={handleLoadTemplate} standardTemplates={NEAR_MISS_STANDARD_TEMPLATES} />
+        <SaveAsTemplateSheet
+          open={showSaveTemplate}
+          onOpenChange={setShowSaveTemplate}
+          moduleType="near-miss"
+          getTemplateData={getTemplateData}
+        />
+        <LoadTemplateSheet
+          open={showLoadTemplate}
+          onOpenChange={setShowLoadTemplate}
+          moduleType="near-miss"
+          onLoad={handleLoadTemplate}
+          standardTemplates={NEAR_MISS_STANDARD_TEMPLATES}
+        />
       </div>
     );
   }
@@ -730,7 +1044,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
   // ─── List ───
   const total = reports.length;
   const serious = reports.filter((r) => r.severity === 'high' || r.severity === 'critical').length;
-  const openCount = reports.filter((r) => !r.status || r.status === 'open' || r.status === 'in_progress').length;
+  const openCount = reports.filter(
+    (r) => !r.status || r.status === 'open' || r.status === 'in_progress'
+  ).length;
   const closedCount = reports.filter((r) => r.status === 'closed').length;
 
   return (
@@ -743,7 +1059,9 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
           title="Report and learn from near misses"
           description="Capture what nearly went wrong, rate the risk, and turn it into a toolbox talk — before it becomes an accident."
           tone="red"
-          actions={<PrimaryButton onClick={() => setShowForm(true)}>Report near miss</PrimaryButton>}
+          actions={
+            <PrimaryButton onClick={() => setShowForm(true)}>Report near miss</PrimaryButton>
+          }
         />
       }
       stats={
@@ -781,13 +1099,24 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
           onAction={() => setShowForm(true)}
         />
       ) : filteredReports.length === 0 ? (
-        <EmptyState title="No matching reports" description="Try a different severity tab or clear your search." />
+        <EmptyState
+          title="No matching reports"
+          description="Try a different severity tab or clear your search."
+        />
       ) : (
         <div className="space-y-2.5">
           {visibleReports.map((report) => (
             <SwipeableListItem
               key={report.id}
-              rightActions={[{ icon: Trash2, label: 'Delete', color: 'bg-red-500', textColor: 'text-white', onAction: () => setDeleteTarget(report.id) }]}
+              rightActions={[
+                {
+                  icon: Trash2,
+                  label: 'Delete',
+                  color: 'bg-red-500',
+                  textColor: 'text-white',
+                  onAction: () => setDeleteTarget(report.id),
+                },
+              ]}
             >
               <ListCard>
                 <ListRow
@@ -798,14 +1127,18 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
                   trailing={
                     <div className="flex flex-col items-end gap-1">
                       <SevPill severity={report.severity} />
-                      <span className="text-[11px] text-white/45 tabular-nums">{fmtCardDate(report.incident_date)}</span>
+                      <span className="text-[11px] text-white tabular-nums">
+                        {fmtCardDate(report.incident_date)}
+                      </span>
                     </div>
                   }
                 />
               </ListCard>
             </SwipeableListItem>
           ))}
-          {hasMoreReports && <LoadMoreButton onLoadMore={loadMoreReports} remaining={remainingReports} />}
+          {hasMoreReports && (
+            <LoadMoreButton onLoadMore={loadMoreReports} remaining={remainingReports} />
+          )}
         </div>
       )}
 
@@ -813,9 +1146,13 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         <DialogContent className="sm:max-w-[360px]">
           <DialogHeader className="text-center pb-2">
             <DialogTitle className="text-xl text-foreground">Report submitted</DialogTitle>
-            <DialogDescription className="text-base">Your near miss has been recorded successfully.</DialogDescription>
+            <DialogDescription className="text-base">
+              Your near miss has been recorded successfully.
+            </DialogDescription>
           </DialogHeader>
-          <PrimaryButton fullWidth onClick={() => setShowSuccessDialog(false)}>Done</PrimaryButton>
+          <PrimaryButton fullWidth onClick={() => setShowSuccessDialog(false)}>
+            Done
+          </PrimaryButton>
         </DialogContent>
       </Dialog>
 

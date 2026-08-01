@@ -151,11 +151,15 @@ export default function CameraTab({
     setCaptureState('details');
     // Auto-capture GPS when entering details (ELE-729)
     if (!location) {
-      getCurrentLocation().then((coords) => {
-        if (coords) {
-          setLocation(`${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`);
-        }
-      }).catch(() => { /* GPS unavailable — user can still add manually */ });
+      getCurrentLocation()
+        .then((coords) => {
+          if (coords) {
+            setLocation(`${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`);
+          }
+        })
+        .catch(() => {
+          /* GPS unavailable — user can still add manually */
+        });
     }
   }, [location, getCurrentLocation]);
 

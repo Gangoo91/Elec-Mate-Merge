@@ -6,7 +6,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,14 +16,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { maybePromptLogBook } from '@/utils/fireAlarmLogBookPrompt';
 import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import FireAlarmG3FormTabs from '@/components/inspection/fire-alarm/FireAlarmG3FormTabs';
-import { useFireAlarmG3Tabs } from '@/hooks/useFireAlarmG3Tabs';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import { useFireAlarmG3Tabs, type FAG3TabValue } from '@/hooks/useFireAlarmG3Tabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -32,11 +32,21 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG3Json } from '@/utils/fireAlarmG3JsonFormatter';
+import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { useCertificateEmail } from '@/hooks/useCertificateEmail';
+import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 
 const REPORT_TYPE = 'fire-alarm-commissioning' as const;
+
+const G3_STEPS = [
+  { id: 'project', label: 'Project' },
+  { id: 'tests', label: 'Tests' },
+  { id: 'sound', label: 'Sound' },
+  { id: 'handover', label: 'Handover' },
+  { id: 'declaration', label: 'Sign off' },
+];
 
 export default function FireAlarmCommissioningCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -57,6 +67,8 @@ export default function FireAlarmCommissioningCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailPhotos, setEmailPhotos] = useState<string[]>([]);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{
     data: Record<string, any>;
@@ -113,6 +125,62 @@ const {
 
   const tabProps = useFireAlarmG3Tabs(formData);
   const { loadCompanyBranding, hasSavedCompanyBranding } = useFireAlarmSmartForm();
+  const { companyProfile } = useCompanyProfile();
+
+  // inspection_photos stores the reports.id UUID (not the text report_id) —
+  // resolve it first, then build resized public URLs so PDFMonkey downloads
+  // thumbnails rather than multi-MB phone originals.
+  const fetchReportPhotos = useCallback(async (): Promise<string[]> => {
+    if (!savedReportId) return [];
+    try {
+      const { data: report } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('report_id', savedReportId)
+        .maybeSingle();
+      if (!report?.id) return [];
+      const { data: photoRows } = await supabase
+        .from('inspection_photos')
+        .select('file_path')
+        .eq('report_id', report.id)
+        .order('uploaded_at');
+      return (photoRows || []).map((p) => {
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('inspection-photos').getPublicUrl(p.file_path, {
+          transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+        });
+        return publicUrl;
+      });
+    } catch {
+      return []; // photos are best-effort — never block generation or email
+    }
+  }, [savedReportId]);
+
+  // Formatted payload for the email path — lets send-certificate-resend
+  // generate + attach the PDF even before the user ever taps Generate.
+  let emailFormattedData: Record<string, any> | undefined;
+  try {
+    emailFormattedData = formatFireAlarmG3Json({
+      ...formData,
+      certificateNumber: formData.certificateNumber || `FA/G3-${Date.now()}`,
+      photos: emailPhotos,
+    });
+  } catch {
+    emailFormattedData = undefined; // fall back to server-side pdf_payload
+  }
+
+  const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
+    certificateType: 'fire-alarm',
+    reportId: savedReportId || '',
+    certificateNumber: formData.certificateNumber,
+    clientName: formData.clientName,
+    clientEmail: formData.clientEmail,
+    installationAddress: formData.premisesAddress,
+    inspectionDate: formData.commissioningDate,
+    companyName: companyProfile?.company_name,
+    formattedData: emailFormattedData,
+  });
 
   useEffect(() => {
     if (!isNew || formData.certificateNumber) return;
@@ -178,6 +246,46 @@ const {
     }
   };
 
+  const handleOpenEmailDialog = async () => {
+    // Refresh photos first so the emailed PDF includes them — state lands
+    // (and formattedData recomputes) before the user can press Send.
+    try {
+      setEmailPhotos(await fetchReportPhotos());
+    } catch {
+      /* best-effort */
+    }
+    setShowEmailDialog(true);
+  };
+
+  const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
+    try {
+      await syncNowImmediate();
+      await sendCertificateEmail({
+        recipientEmail: email,
+        cc,
+        customMessage: message,
+      });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send email');
+      throw error;
+    }
+  };
+
+  const handleCreateInvoice = () => {
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientTelephone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.premisesAddress || '',
+      certificateType: 'Fire Alarm',
+      certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
+      pdfUrl: generatedPdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
   const handleGenerateCertificate = async () => {
     const missing: string[] = [];
     if (!formData.clientName) missing.push('Client Name');
@@ -205,6 +313,10 @@ const {
         const b = loadCompanyBranding();
         if (b) data = { ...data, ...b };
       }
+      // Commissioning photos live in inspection_photos, not formData —
+      // merge them in so the PDF's photos section is populated.
+      const photos = await fetchReportPhotos();
+      data = { ...data, photos };
       const pdfData = formatFireAlarmG3Json(data);
       if (savedReportId)
         await supabase
@@ -231,69 +343,52 @@ const {
 
   if (isLoading)
     return (
-      <div className="bg-background min-h-screen p-4">
-        <Skeleton className="h-12 w-48 mb-4" />
-        <Skeleton className="h-64 w-full" />
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
       </div>
     );
 
   return (
     <div className="bg-background min-h-screen">
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
-              We found an unsaved G3 Commissioning Certificate.
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
+              We found an unsaved fire alarm commissioning certificate.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      <div className="bg-background">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg font-bold text-white">Fire Alarm</h1>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">
-                    G3
-                  </span>
-                </div>
-                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">
-                  Commissioning Certificate
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95 disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Fire alarm commissioning"
+        subtitle={formData.certificateNumber ? `${formData.certificateNumber} · BS 5839-1` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={G3_STEPS}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as FAG3TabValue);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          project: !!tabProps.isTabComplete('project'),
+          tests: !!tabProps.isTabComplete('tests'),
+          sound: !!tabProps.isTabComplete('sound'),
+          handover: !!tabProps.isTabComplete('handover'),
+          declaration: !!tabProps.isTabComplete('declaration'),
+        }}
+      />
 
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
@@ -308,7 +403,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <FireAlarmG3FormTabs
           currentTab={tabProps.currentTab}
@@ -330,12 +425,29 @@ const {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
           }}
           onGenerateCertificate={handleGenerateCertificate}
-          onCreateInvoice={() => toast('Invoice creation coming soon')}
+          onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
+          onOpenEmailDialog={handleOpenEmailDialog}
+          canEmail={!!savedReportId}
+          reportId={savedReportId || undefined}
         />
       </div>
       </main>
+
+      <EmailCertificateDialog
+        open={showEmailDialog}
+        onOpenChange={setShowEmailDialog}
+        certificateType="Fire Alarm"
+        certificateNumber={formData.certificateNumber}
+        clientName={formData.clientName}
+        clientEmail={formData.clientEmail}
+        installationAddress={formData.premisesAddress}
+        inspectionDate={formData.commissioningDate}
+        companyName={companyProfile?.company_name}
+        onSend={handleSendEmail}
+        isLoading={isEmailSending}
+      />
 
       <CertificateGenerationDialog
         open={showGenerationDialog}

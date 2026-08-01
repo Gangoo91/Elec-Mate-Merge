@@ -42,7 +42,10 @@ const shouldHaveRCD = (result: TestResult): boolean => {
 
 // Enhanced Zs validation using correct BS 7671 Tables 41.2, 41.3, 41.4
 // Optional earthingArrangement param — when 'TT', use RCD-based Zs limits instead of fuse/MCB tables
-export const checkZsCompliance = (result: TestResult, earthingArrangement?: string): RegulationWarning[] => {
+export const checkZsCompliance = (
+  result: TestResult,
+  earthingArrangement?: string
+): RegulationWarning[] => {
   const warnings: RegulationWarning[] = [];
 
   if (!result.zs) return warnings;
@@ -73,7 +76,8 @@ export const checkZsCompliance = (result: TestResult, earthingArrangement?: stri
       warnings.push({
         severity: 'critical',
         title: 'TT System Requires RCD Protection',
-        description: 'TT earthing arrangements require RCD protection on all circuits (Reg 411.5.2). No RCD detected on this circuit.',
+        description:
+          'TT earthing arrangements require RCD protection on all circuits (Reg 411.5.2). No RCD detected on this circuit.',
         regulation: 'BS 7671 Regulation 411.5.2',
         suggestion: 'Install RCD protection (typically 30mA) for all circuits on TT systems.',
       });
@@ -119,7 +123,7 @@ export const checkZsCompliance = (result: TestResult, earthingArrangement?: stri
         severity: 'warning',
         title: 'Zs Close to Maximum Limit',
         description: `Zs of ${result.zs}Ω is within 10% of maximum ${zsLookup.maxZs}Ω. Consider temperature correction.`,
-        regulation: 'BS 7671 Appendix 14',
+        regulation: 'BS 7671 Tables 41.2–41.4, NOTE 2',
         suggestion:
           'Verify Zs value with temperature correction applied. Operating temperature may increase impedance.',
       });

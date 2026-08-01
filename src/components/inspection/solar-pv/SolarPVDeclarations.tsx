@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Solar PV Declarations Tab — Best-in-Class Mobile
+ * Solar PV Declarations Tab
  * Defects, handover, installer/electrician declarations, photos
  */
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2 } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { SolarPVFormData, Defect, COMPETENCE_SCHEMES } from '@/types/solar-pv';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -17,11 +18,13 @@ import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import SignatureInput from '@/components/signature/SignatureInput';
-import { Section, Field, inputCn, inputSmCn, textareaCn, CheckboxCard } from './SolarPVSection';
 
 interface Props {
   formData: SolarPVFormData;
   onUpdate: (field: string, value: unknown) => void;
+  /** Saved report id from the page — stays current after autosave creates the
+      report, while useParams still says 'new' until a reload. */
+  reportId?: string | null;
 }
 
 const severityOptions = [
@@ -30,16 +33,36 @@ const severityOptions = [
   { value: 'recommendation', label: 'Recommendation (C3)' },
 ];
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const checkboxCn =
+  'h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
+
+const checkRowCn = 'flex min-h-11 items-center gap-3 touch-manipulation cursor-pointer';
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+);
+
 // ============================================================================
 // Main Component
 // ============================================================================
 
-const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
+const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate, reportId }) => {
   const { id } = useParams<{ id: string }>();
   const haptic = useHaptic();
 
   const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
-    reportId: id || 'new',
+    reportId: reportId || id || 'new',
     reportType: 'solar-pv',
     itemId: 'general-photos',
   });
@@ -58,6 +81,15 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
     d.setFullYear(d.getFullYear() + 1);
     return d.toISOString().split('T')[0];
   })();
+
+  // Persist the auto-calculated date the user sees — display-only meant the
+  // formatter read an empty nextServiceDue and the PDF omitted the date.
+  const storedNextServiceDue = (formData as any).nextServiceDue;
+  useEffect(() => {
+    if (!storedNextServiceDue && autoNextService) {
+      onUpdate('nextServiceDue', autoNextService);
+    }
+  }, [storedNextServiceDue, autoNextService, onUpdate]);
 
   const addDefect = useCallback(() => {
     haptic.light();
@@ -102,81 +134,93 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Defects */}
-      <Section title="Defects & Observations" accentColor="from-orange-500/40 to-red-400/20" count={(formData.defects || []).length}>
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeading title="Defects & Observations" />
+
         {(formData.defects || []).length === 0 && (
-          <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-4 text-center">
+          <div className="rounded-xl bg-white/[0.05] p-4 text-center">
             <p className="text-sm font-medium text-green-400">No defects recorded</p>
           </div>
         )}
 
         {(formData.defects || []).map((defect: any, idx: number) => (
-          <div key={defect.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
+          <div key={defect.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
               <span className={cn(
-                'text-xs font-bold',
+                'text-sm font-semibold',
                 defect.severity === 'critical' ? 'text-red-400' : defect.severity === 'recommendation' ? 'text-blue-400' : 'text-orange-400'
               )}>
                 Defect {idx + 1}
               </span>
               <button
+                type="button"
                 onClick={() => removeDefect(defect.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="h-11 px-2 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.98]"
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <Field label="Description">
-                <Textarea value={defect.description || ''} onChange={(e) => updateDefect(defect.id, 'description', e.target.value)} placeholder="Describe the defect..." className={textareaCn} />
-              </Field>
-              <div className="grid grid-cols-2 gap-2.5">
-                <Field label="Severity">
-                  <ComboboxCell value={defect.severity || 'non-critical'} onChange={(v) => updateDefect(defect.id, 'severity', v)} options={severityOptions} className="h-10 text-sm" allowCustom />
-                </Field>
-                <Field label="Location">
-                  <Input value={defect.location || ''} onChange={(e) => updateDefect(defect.id, 'location', e.target.value)} placeholder="Where?" className={inputSmCn} />
-                </Field>
+            <div>
+              <Label className={labelCn}>Description</Label>
+              <Textarea value={defect.description || ''} onChange={(e) => updateDefect(defect.id, 'description', e.target.value)} placeholder="Describe the defect..." className={textareaCn} />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <div>
+                <Label className={labelCn}>Severity</Label>
+                <ComboboxCell value={defect.severity || 'non-critical'} onChange={(v) => updateDefect(defect.id, 'severity', v)} options={severityOptions} className="h-11 text-sm" allowCustom />
               </div>
-              <CheckboxCard
-                label="Rectified"
+              <div>
+                <Label className={labelCn}>Location</Label>
+                <Input value={defect.location || ''} onChange={(e) => updateDefect(defect.id, 'location', e.target.value)} placeholder="Where?" className={inputCn} />
+              </div>
+            </div>
+            <label className={checkRowCn}>
+              <Checkbox
                 checked={!!defect.rectified}
-                onChange={(v) => {
+                onCheckedChange={(checked) => {
+                  const v = checked === true;
                   updateDefect(defect.id, 'rectified', v);
                   if (v) updateDefect(defect.id, 'rectificationDate', new Date().toISOString().split('T')[0]);
                 }}
-                accentColor="green"
+                className={checkboxCn}
               />
-              {defect.rectified && (
-                <Field label="Rectification Date">
-                  <Input type="date" value={defect.rectificationDate || ''} onChange={(e) => updateDefect(defect.id, 'rectificationDate', e.target.value)} className={cn(inputSmCn, '[color-scheme:dark]')} />
-                </Field>
-              )}
-            </div>
+              <span className="text-sm text-white">Rectified</span>
+            </label>
+            {defect.rectified && (
+              <div>
+                <Label className={labelCn}>Rectification Date</Label>
+                <Input type="date" value={defect.rectificationDate || ''} onChange={(e) => updateDefect(defect.id, 'rectificationDate', e.target.value)} className={inputCn} />
+              </div>
+            )}
           </div>
         ))}
 
         <button
+          type="button"
           onClick={addDefect}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-orange-500/20 flex items-center justify-center gap-2 text-sm font-medium text-orange-400 touch-manipulation active:scale-[0.98]"
+          className="w-full h-12 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98] transition-transform"
         >
-          <Plus className="h-4 w-4" /> Add Defect
+          Add defect
         </button>
-      </Section>
+      </div>
 
       {/* Verification References (MCS / BS EN 62446-1 handover) */}
-      <Section title="Verification References" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-2 gap-2.5">
-          <Field label="Linked BS 7671 EIC Ref">
+      <div className={cardCn}>
+        <SectionHeading title="Verification References" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <Label className={labelCn}>Linked BS 7671 EIC Ref</Label>
             <Input
               value={formData.linkedEicReference || ''}
               onChange={(e) => onUpdate('linkedEicReference', e.target.value)}
               placeholder="EIC / cert number"
-              className={inputSmCn}
+              className={inputCn}
             />
-          </Field>
-          <Field label="Retest Within (years)">
+          </div>
+          <div>
+            <Label className={labelCn}>Retest Within (years)</Label>
             <Input
               type="number"
               inputMode="numeric"
@@ -184,19 +228,20 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
               onChange={(e) =>
                 onUpdate('recommendedRetestIntervalYears', parseInt(e.target.value) || 0)
               }
-              placeholder="e.g., 4"
-              className={inputSmCn}
+              placeholder="e.g. 4"
+              className={inputCn}
             />
-          </Field>
+          </div>
         </div>
-      </Section>
+      </div>
 
       {/* Handover Documentation */}
-      <Section title="Handover Documentation" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-[10px] text-white"><strong className="text-white">MCS Required:</strong> All items must be provided to the customer</p>
-        </div>
-        <div className="space-y-2">
+      <div className={cardCn}>
+        <SectionHeading title="Handover Documentation" />
+        <p className="text-[12px] text-white/80">
+          MCS required — all items must be provided to the customer.
+        </p>
+        <div className="space-y-1">
           {[
             { field: 'userManualProvided', label: 'User Manual Provided' },
             { field: 'warrantyDocsProvided', label: 'Warranty Documents Provided' },
@@ -208,157 +253,176 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
             { field: 'performanceEstimateProvided', label: 'Performance Estimate' },
             { field: 'dnoNotificationCopyProvided', label: 'DNO Notification Copy' },
           ].map((item) => (
-            <CheckboxCard
-              key={item.field}
-              label={item.label}
-              checked={!!(formData.handover as any)?.[item.field]}
-              onChange={(v) => updateHandover(item.field, v)}
-              accentColor="green"
-            />
+            <label key={item.field} className={checkRowCn}>
+              <Checkbox
+                checked={!!(formData.handover as any)?.[item.field]}
+                onCheckedChange={(checked) => updateHandover(item.field, checked === true)}
+                className={checkboxCn}
+              />
+              <span className="text-sm text-white">{item.label}</span>
+            </label>
           ))}
         </div>
-      </Section>
+      </div>
 
       {/* Installer Declaration */}
-      <Section title="Installer Declaration" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-xs text-white">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeading title="Installer Declaration" />
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-sm text-white/90">
             I certify that this Solar PV system has been designed, installed and commissioned in accordance with BS 7671, BS EN 62446, and MCS MIS-3002.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Installer Name *">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <Label className={labelCn}>Installer Name *</Label>
             <Input value={formData.installerDeclaration?.installerName || ''} onChange={(e) => updateInstaller('installerName', e.target.value)} placeholder="Full name" className={inputCn} />
-          </Field>
-          <Field label="Company">
+          </div>
+          <div>
+            <Label className={labelCn}>Company</Label>
             <Input value={formData.installerDeclaration?.installerCompany || ''} onChange={(e) => updateInstaller('installerCompany', e.target.value)} placeholder="Company name" className={inputCn} />
-          </Field>
-          <Field label="MCS Number *">
-            <Input value={formData.installerDeclaration?.installerMcsNumber || ''} onChange={(e) => updateInstaller('installerMcsNumber', e.target.value)} placeholder="e.g., NAP-12345" className={inputCn} />
-          </Field>
-          <Field label="Phone">
+          </div>
+          <div>
+            <Label className={labelCn}>MCS Number *</Label>
+            <Input value={formData.installerDeclaration?.installerMcsNumber || ''} onChange={(e) => updateInstaller('installerMcsNumber', e.target.value)} placeholder="e.g. NAP-12345" className={inputCn} />
+          </div>
+          <div>
+            <Label className={labelCn}>Phone</Label>
             <Input value={formData.installerDeclaration?.installerPhone || ''} onChange={(e) => updateInstaller('installerPhone', e.target.value)} placeholder="Contact number" className={inputCn} />
-          </Field>
-          <div className="sm:col-span-2">
-            <Field label="Email">
-              <Input type="email" value={formData.installerDeclaration?.installerEmail || ''} onChange={(e) => updateInstaller('installerEmail', e.target.value)} placeholder="email@company.com" className={inputCn} />
-            </Field>
+          </div>
+          <div>
+            <Label className={labelCn}>Email</Label>
+            <Input type="email" value={formData.installerDeclaration?.installerEmail || ''} onChange={(e) => updateInstaller('installerEmail', e.target.value)} placeholder="email@company.com" className={inputCn} />
+          </div>
+          <div>
+            <Label className={labelCn}>Date *</Label>
+            <Input type="date" value={formData.installerDeclaration?.installerDate || ''} onChange={(e) => updateInstaller('installerDate', e.target.value)} className={inputCn} />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <SignatureInput
-            label="Installer Signature *"
-            value={formData.installerDeclaration?.installerSignature || ''}
-            onChange={(sig) => updateInstaller('installerSignature', sig || '')}
-          />
-          <Field label="Date *">
-            <Input type="date" value={formData.installerDeclaration?.installerDate || ''} onChange={(e) => updateInstaller('installerDate', e.target.value)} className={inputCn} />
-          </Field>
-        </div>
-      </Section>
+        <SignatureInput
+          label="Installer Signature *"
+          value={formData.installerDeclaration?.installerSignature || ''}
+          onChange={(sig) => updateInstaller('installerSignature', sig || '')}
+        />
+      </div>
 
       {/* Electrician Declaration */}
-      <Section title="Electrician Declaration" accentColor="from-blue-500/40 to-cyan-400/20">
-        <CheckboxCard
-          label="AC Electrical Work by Different Person"
-          description="If a separate electrician carried out the AC installation"
-          checked={!!formData.electricianDeclaration?.required}
-          onChange={(v) => updateElectrician('required', v)}
-          accentColor="blue"
-        />
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeading title="Electrician Declaration" />
+        <label className={checkRowCn}>
+          <Checkbox
+            checked={!!formData.electricianDeclaration?.required}
+            onCheckedChange={(checked) => updateElectrician('required', checked === true)}
+            className={checkboxCn}
+          />
+          <span className="text-sm text-white">
+            AC Electrical Work by Different Person
+            <span className="block text-[12px] font-normal text-white/80">
+              If a separate electrician carried out the AC installation
+            </span>
+          </span>
+        </label>
 
         {formData.electricianDeclaration?.required && (
           <>
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <p className="text-xs text-white">
+            <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+              <p className="text-sm text-white/90">
                 I certify the AC electrical installation has been designed, installed and tested in accordance with BS 7671.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Electrician Name">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <div>
+                <Label className={labelCn}>Electrician Name</Label>
                 <Input value={formData.electricianDeclaration?.electricianName || ''} onChange={(e) => updateElectrician('electricianName', e.target.value)} placeholder="Full name" className={inputCn} />
-              </Field>
-              <Field label="Company">
+              </div>
+              <div>
+                <Label className={labelCn}>Company</Label>
                 <Input value={formData.electricianDeclaration?.electricianCompany || ''} onChange={(e) => updateElectrician('electricianCompany', e.target.value)} placeholder="Company name" className={inputCn} />
-              </Field>
-              <Field label="Registration Number">
-                <Input value={formData.electricianDeclaration?.electricianRegistration || ''} onChange={(e) => updateElectrician('electricianRegistration', e.target.value)} placeholder="e.g., NICEIC number" className={inputCn} />
-              </Field>
-              <Field label="Scheme">
+              </div>
+              <div>
+                <Label className={labelCn}>Registration Number</Label>
+                <Input value={formData.electricianDeclaration?.electricianRegistration || ''} onChange={(e) => updateElectrician('electricianRegistration', e.target.value)} placeholder="e.g. NICEIC number" className={inputCn} />
+              </div>
+              <div>
+                <Label className={labelCn}>Scheme</Label>
                 <ComboboxCell
                   value={formData.electricianDeclaration?.electricianScheme || ''}
                   onChange={(v) => updateElectrician('electricianScheme', v)}
                   options={COMPETENCE_SCHEMES.map((s) => ({ value: s.value, label: s.label }))}
                   placeholder="Select scheme..."
-                  className="h-12 text-base"
+                  className="h-11 text-base"
                   allowCustom
                 />
-              </Field>
+              </div>
+              <div>
+                <Label className={labelCn}>Date</Label>
+                <Input type="date" value={formData.electricianDeclaration?.electricianDate || ''} onChange={(e) => updateElectrician('electricianDate', e.target.value)} className={inputCn} />
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <SignatureInput
-                label="Electrician Signature"
-                value={formData.electricianDeclaration?.electricianSignature || ''}
-                onChange={(sig) => updateElectrician('electricianSignature', sig || '')}
-              />
-              <Field label="Date">
-                <Input type="date" value={formData.electricianDeclaration?.electricianDate || ''} onChange={(e) => updateElectrician('electricianDate', e.target.value)} className={inputCn} />
-              </Field>
-            </div>
+            <SignatureInput
+              label="Electrician Signature"
+              value={formData.electricianDeclaration?.electricianSignature || ''}
+              onChange={(sig) => updateElectrician('electricianSignature', sig || '')}
+            />
           </>
         )}
-      </Section>
+      </div>
 
       {/* Customer / Responsible Person */}
-      <Section title="Customer / Responsible Person" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Customer Name *">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeading title="Customer / Responsible Person" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <Label className={labelCn}>Customer Name *</Label>
             <Input value={(formData as any).customerName || ''} onChange={(e) => onUpdate('customerName', e.target.value)} placeholder="Full name" className={inputCn} />
-          </Field>
-          <Field label="Position">
-            <Input value={(formData as any).customerPosition || ''} onChange={(e) => onUpdate('customerPosition', e.target.value)} placeholder="e.g., Homeowner" className={inputCn} />
-          </Field>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <SignatureInput
-            label="Customer Signature *"
-            value={(formData as any).customerSignature || ''}
-            onChange={(sig) => onUpdate('customerSignature', sig || '')}
-          />
-          <Field label="Date *">
+          </div>
+          <div>
+            <Label className={labelCn}>Position</Label>
+            <Input value={(formData as any).customerPosition || ''} onChange={(e) => onUpdate('customerPosition', e.target.value)} placeholder="e.g. Homeowner" className={inputCn} />
+          </div>
+          <div>
+            <Label className={labelCn}>Date *</Label>
             <Input type="date" value={(formData as any).customerDate || ''} onChange={(e) => onUpdate('customerDate', e.target.value)} className={inputCn} />
-          </Field>
+          </div>
         </div>
-      </Section>
+        <SignatureInput
+          label="Customer Signature *"
+          value={(formData as any).customerSignature || ''}
+          onChange={(sig) => onUpdate('customerSignature', sig || '')}
+        />
+      </div>
 
       {/* Overall Assessment */}
-      <Section title="Overall Assessment" accentColor="from-amber-500/40 to-yellow-400/20">
+      <div className={cardCn}>
+        <SectionHeading title="Overall Assessment" />
+
         {/* Block satisfactory if critical defects not rectified */}
         {hasCriticalDefects && (
-          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-            <p className="text-xs text-red-300">
-              <strong>⚠ Critical defects not rectified</strong> — cannot mark as Satisfactory until all C1 defects are resolved.
+          <div className="rounded-xl border border-red-500/30 bg-white/[0.05] px-3.5 py-3">
+            <p className="text-sm text-red-400">
+              <span className="font-semibold">Critical defects not rectified</span> — cannot mark as Satisfactory until all C1 defects are resolved.
             </p>
           </div>
         )}
 
         {/* Signature warnings */}
         {!formData.installerDeclaration?.installerSignature && (
-          <div className="p-2.5 rounded-xl bg-yellow-500/5 border border-yellow-500/15">
-            <p className="text-[10px] text-yellow-200/80">⚡ Installer signature required before completion</p>
+          <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] px-3.5 py-2.5">
+            <p className="text-[12px] text-white/90">Installer signature required before completion</p>
           </div>
         )}
         {!(formData as any).customerSignature && (
-          <div className="p-2.5 rounded-xl bg-yellow-500/5 border border-yellow-500/15">
-            <p className="text-[10px] text-yellow-200/80">⚡ Customer signature required before completion</p>
+          <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] px-3.5 py-2.5">
+            <p className="text-[12px] text-white/90">Customer signature required before completion</p>
           </div>
         )}
 
-        <Field label="Assessment Result *">
+        <div>
+          <Label className={labelCn}>Assessment Result *</Label>
           <div className="flex gap-2">
             {[
               { val: true, label: 'Satisfactory', color: 'green' },
@@ -375,12 +439,12 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
                   onUpdate('overallSatisfactory', opt.val);
                 }}
                 className={cn(
-                  'flex-1 h-14 rounded-xl border text-sm font-bold touch-manipulation active:scale-[0.98] transition-all',
+                  'flex-1 h-12 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
                   formData.overallSatisfactory === opt.val
                     ? opt.color === 'green'
-                      ? 'bg-green-500/15 border-green-500/30 text-green-400'
-                      : 'bg-red-500/15 border-red-500/30 text-red-400'
-                    : 'bg-white/[0.03] border-white/[0.06] text-white/50',
+                      ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                      : 'bg-red-500 border border-red-500 text-white font-semibold'
+                    : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium',
                   opt.val === true && hasCriticalDefects && 'opacity-40 cursor-not-allowed'
                 )}
               >
@@ -388,32 +452,49 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
               </button>
             ))}
           </div>
-        </Field>
+        </div>
 
-        <Field label="Next Service / Inspection Due">
+        <div>
+          <Label className={labelCn}>Next Service / Inspection Due</Label>
           <Input type="date" value={(formData as any).nextServiceDue || autoNextService} onChange={(e) => onUpdate('nextServiceDue', e.target.value)} className={inputCn} />
-        </Field>
-      </Section>
+        </div>
+      </div>
+
+      {/* Additional Notes */}
+      <div className={cardCn}>
+        <SectionHeading title="Additional Notes" />
+        <div>
+          <Label className={labelCn}>Notes</Label>
+          <Textarea
+            value={formData.additionalNotes || ''}
+            onChange={(e) => onUpdate('additionalNotes', e.target.value)}
+            placeholder="Any additional notes, special conditions, or comments..."
+            className={textareaCn}
+          />
+        </div>
+      </div>
 
       {/* Photos — same pattern as EICR, uploads to Supabase Storage */}
-      <Section title="Installation Photos" accentColor="from-cyan-500/40 to-blue-400/20">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeading title="Installation Photos" />
         <InspectionPhotoUpload
           onPhotoCapture={async (file) => { await uploadPhoto(file); }}
           isUploading={isUploading}
         />
         {uploadedPhotos.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs text-white">{uploadedPhotos.length} photo{uploadedPhotos.length !== 1 ? 's' : ''} uploaded</p>
+            <p className="text-[12px] text-white/80">{uploadedPhotos.length} photo{uploadedPhotos.length !== 1 ? 's' : ''} uploaded</p>
             <div className="grid grid-cols-3 gap-2">
               {uploadedPhotos.map((photo) => (
                 <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-square">
                   <img src={photo.url || photo.thumbnailUrl} alt="Photo" className="w-full h-full object-cover" />
                   <button
                     type="button"
+                    aria-label="Delete photo"
                     onClick={() => deletePhoto(photo.id)}
-                    className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90"
+                    className="absolute top-1.5 right-1.5 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90 text-white text-base leading-none"
                   >
-                    <Trash2 className="h-3.5 w-3.5 text-white" />
+                    &times;
                   </button>
                 </div>
               ))}
@@ -421,24 +502,12 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
           </div>
         )}
         {uploadedPhotos.length === 0 && !isUploading && (
-          <div className="rounded-xl bg-white/[0.02] border border-dashed border-white/[0.08] p-6 text-center">
-            <p className="text-xs text-white">No photos yet</p>
-            <p className="text-[10px] text-white/30 mt-0.5">Take a photo or upload from gallery</p>
+          <div className="rounded-xl border border-dashed border-white/[0.2] p-6 text-center">
+            <p className="text-sm text-white">No photos yet</p>
+            <p className="text-[12px] text-white/80 mt-0.5">Take a photo or upload from gallery</p>
           </div>
         )}
-      </Section>
-
-      {/* Additional Notes */}
-      <Section title="Additional Notes" accentColor="from-white/20 to-white/5">
-        <Field label="Notes">
-          <Textarea
-            value={formData.additionalNotes || ''}
-            onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-            placeholder="Any additional notes, special conditions, or comments..."
-            className={textareaCn}
-          />
-        </Field>
-      </Section>
+      </div>
     </div>
   );
 };

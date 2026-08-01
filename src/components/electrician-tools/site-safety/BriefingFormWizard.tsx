@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { IOSInput } from '@/components/ui/ios-input';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import {
@@ -13,24 +12,15 @@ import {
   Sparkles,
   Save,
   FileText,
-  MapPin,
-  Home,
-  Clock,
-  Calendar,
   Users,
-  Camera,
   Loader2,
   X,
   Check,
   Plus,
-  ImagePlus,
   Trash2,
   Eye,
-  ShieldAlert,
-  AlertTriangle,
   ImageIcon,
   Share2,
-  UserPlus,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useStorageUrls } from '@/utils/storageUrls';
@@ -39,13 +29,17 @@ import {
   BriefingType,
   briefingTypes,
   HazardPillSelector,
-  defaultHazards,
   RiskLevelSlider,
   RiskLevel,
   BriefingShareSheet,
   PostSaveShareSheet,
 } from './briefings';
 import { TemplateSelector } from './briefing-templates/TemplateSelector';
+import { SafetyDocField } from './common/SafetyDocField';
+import SafetyDocShell, {
+  computeSafetyDocProgress,
+  type SafetyDocStepConfig,
+} from './common/SafetyDocShell';
 
 // Schema for the form
 const briefingSchema = z.object({
@@ -106,6 +100,31 @@ interface BriefingFormWizardProps {
 
 const STEP_TITLES = ['Type & Site', 'Briefing Content', 'Hazards', 'Photos', 'Attendees'];
 
+/**
+ * Tab labels plus the fields each step needs before it can honestly call itself
+ * complete. The old bar was `((step + 1) / totalSteps) * 100` — it measured how
+ * far the user had clicked, so an untouched briefing already read 20% on step
+ * one, and a briefing with every field blank still read 100% on the last step.
+ *
+ * The required set is taken from `briefingSchema` rather than chosen, so the
+ * ring and the submit button can never disagree: `hazards` is `.min(1)` and so
+ * counts; `photos` and `attendees` are `.optional()` and so do not. `riskLevel`
+ * is required but always has a default, so including it would hand out free
+ * progress. A step with no required fields never blocks and never claims
+ * completion it has not earned.
+ */
+const STEP_CONFIGS: SafetyDocStepConfig<string>[] = [
+  {
+    id: '0',
+    label: 'Site',
+    requiredFields: ['briefingType', 'siteName', 'briefingDate', 'briefingTime'],
+  },
+  { id: '1', label: 'Content', requiredFields: ['briefingTitle', 'briefingContent'] },
+  { id: '2', label: 'Hazards', requiredFields: ['hazards'] },
+  { id: '3', label: 'Photos', requiredFields: [] },
+  { id: '4', label: 'Attendees', requiredFields: [] },
+];
+
 export const BriefingFormWizard = ({
   initialData,
   nearMissData,
@@ -152,6 +171,9 @@ export const BriefingFormWizard = ({
     formState: { errors },
   } = methods;
   const formData = watch();
+
+  // Progress from what is filled in, not from how far the user has clicked.
+  const docProgress = computeSafetyDocProgress(STEP_CONFIGS, formData);
 
   // Resolve stored photo references for display — new uploads store bare
   // storage paths (privacy-ready); legacy entries hold full URLs (pass-through).
@@ -228,7 +250,7 @@ export const BriefingFormWizard = ({
   };
 
   // Photo upload
-  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -474,18 +496,16 @@ export const BriefingFormWizard = ({
               error={errors.briefingType?.message}
             />
 
-            <IOSInput
+            <SafetyDocField
               label="Site Name"
-              icon={<MapPin className="h-5 w-5" />}
               placeholder="e.g. Acme Construction"
               value={formData.siteName}
               onChange={(e) => setValue('siteName', e.target.value)}
               error={errors.siteName?.message}
             />
 
-            <IOSInput
+            <SafetyDocField
               label="Site Address"
-              icon={<Home className="h-5 w-5" />}
               placeholder="e.g. 123 High Street, Manchester"
               value={formData.siteAddress || ''}
               onChange={(e) => setValue('siteAddress', e.target.value)}
@@ -493,18 +513,16 @@ export const BriefingFormWizard = ({
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <IOSInput
+              <SafetyDocField
                 label="Date"
                 type="date"
-                icon={<Calendar className="h-5 w-5" />}
                 value={formData.briefingDate}
                 onChange={(e) => setValue('briefingDate', e.target.value)}
                 className="[color-scheme:dark]"
               />
-              <IOSInput
+              <SafetyDocField
                 label="Time"
                 type="time"
-                icon={<Clock className="h-5 w-5" />}
                 value={formData.briefingTime}
                 onChange={(e) => setValue('briefingTime', e.target.value)}
                 className="[color-scheme:dark]"
@@ -537,9 +555,8 @@ export const BriefingFormWizard = ({
               {aiGenerating ? 'Generating...' : 'AI Assist'}
             </Button>
 
-            <IOSInput
+            <SafetyDocField
               label="Briefing Title"
-              icon={<FileText className="h-5 w-5" />}
               placeholder="e.g. Daily Site Induction Briefing"
               value={formData.briefingTitle}
               onChange={(e) => setValue('briefingTitle', e.target.value)}
@@ -594,25 +611,16 @@ export const BriefingFormWizard = ({
 
         return (
           <div className="space-y-5">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Camera className="h-4.5 w-4.5 text-elec-yellow" />
-                <label className="text-sm font-semibold text-white">Site Photos</label>
-                <span className="text-xs text-white font-normal">(Optional)</span>
-              </div>
-              {photoCount > 0 && (
-                <motion.span
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow"
-                >
-                  {photoCount} of {maxPhotos}
-                </motion.span>
-              )}
+            {/* Heading is type, and the count is a figure rather than a pill —
+                the same treatment the certificates give a section count. */}
+            <div className="flex items-baseline justify-between gap-3">
+              <label className="text-[12px] font-medium text-white">Site photos (optional)</label>
+              <span className="shrink-0 text-[12px] font-medium tabular-nums text-white">
+                {photoCount} of {maxPhotos}
+              </span>
             </div>
-            <p className="text-xs text-white -mt-2">
-              Photograph site conditions, hazards, or relevant areas
+            <p className="-mt-3 text-[12px] leading-snug text-white">
+              Photograph site conditions, hazards or relevant areas.
             </p>
 
             {/* Upload Area */}
@@ -620,9 +628,9 @@ export const BriefingFormWizard = ({
               <label
                 className={cn(
                   'group flex flex-col items-center justify-center gap-3',
-                  'py-8 rounded-2xl border-2 border-dashed',
-                  'border-white/15 hover:border-elec-yellow/40',
-                  'bg-white/[0.03] hover:bg-white/[0.08]',
+                  'py-8 rounded-2xl border border-dashed',
+                  'border-white/20 hover:border-white/35',
+                  'bg-white/[0.03] hover:bg-white/[0.06]',
                   'cursor-pointer transition-all duration-300',
                   uploadingPhotos && 'pointer-events-none opacity-50'
                 )}
@@ -642,21 +650,11 @@ export const BriefingFormWizard = ({
                   </div>
                 ) : (
                   <>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className={cn(
-                        'flex items-center justify-center w-14 h-14 rounded-2xl',
-                        'bg-elec-yellow/10 group-hover:bg-elec-yellow/20',
-                        'transition-colors duration-300'
-                      )}
-                    >
-                      <ImagePlus className="h-7 w-7 text-elec-yellow/70 group-hover:text-elec-yellow transition-colors" />
-                    </motion.div>
                     <div className="text-center">
-                      <span className="block text-sm font-medium text-white group-hover:text-white transition-colors">
+                      <span className="block text-[15px] font-medium text-white">
                         Take or choose photos
                       </span>
-                      <span className="block text-xs text-white mt-1">
+                      <span className="mt-1 block text-[12px] text-white">
                         {remaining} {remaining === 1 ? 'slot' : 'slots'} remaining
                       </span>
                     </div>
@@ -821,145 +819,150 @@ export const BriefingFormWizard = ({
               Add everyone who needs to sign this briefing. Signatures are collected after sharing.
             </p>
 
-            {/* Add Attendee — quick add */}
+            {/* Add attendee — quick add */}
             <div className="space-y-2">
-              <div className="flex gap-2">
-                <IOSInput
-                  placeholder="Name(s) — e.g. John, Dave, Mike"
-                  value={newAttendeeName}
-                  onChange={(e) => setNewAttendeeName(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addAttendee())}
-                  icon={<UserPlus className="h-5 w-5" />}
-                />
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <SafetyDocField
+                    label="Add attendee"
+                    placeholder="Name(s) — e.g. John, Dave, Mike"
+                    value={newAttendeeName}
+                    onChange={(e) => setNewAttendeeName(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addAttendee())}
+                  />
+                </div>
                 <Button
                   type="button"
                   onClick={addAttendee}
                   disabled={!newAttendeeName.trim()}
-                  className="h-[50px] px-5 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-semibold"
+                  className="h-11 touch-manipulation bg-elec-yellow px-5 font-semibold text-black hover:bg-elec-yellow/90"
                 >
-                  <Plus className="h-4 w-4 mr-1" />
                   Add
                 </Button>
               </div>
-              <p className="text-xs text-white">
-                Separate multiple names with commas to add them all at once
+              {/* Hint sits below the row rather than inside the field, so it
+                  cannot push the Add button out of line with the input. */}
+              <p className="text-[11px] text-white">
+                Separate multiple names with commas to add them all at once.
               </p>
             </div>
 
-            {/* Attendee List — numbered register */}
-            <div className="space-y-2">
+            {/* Attendee register — a signing sheet, not a stack of cards.
+                Each person was a bordered pill with the row number in its own
+                grey tile; five attendees produced ten nested boxes. A register
+                is a list, so it is ruled like one: the number is type, the rule
+                is a hairline, and the role keeps the same underline field the
+                rest of the document uses. */}
+            <div>
               <AnimatePresence>
                 {(formData.attendees || []).map((attendee, idx) => (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -20, height: 0 }}
-                    transition={{ delay: idx * 0.03 }}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10"
+                    exit={{ opacity: 0, x: -16, height: 0 }}
+                    transition={{ delay: idx * 0.02 }}
+                    className="flex items-start gap-3 border-b border-white/[0.08] py-3"
                   >
-                    {/* Row number */}
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06] shrink-0">
-                      <span className="text-xs font-bold text-white">{idx + 1}</span>
-                    </div>
+                    <span className="w-5 shrink-0 pt-0.5 text-[13px] font-semibold tabular-nums text-white">
+                      {idx + 1}
+                    </span>
 
-                    {/* Name & role */}
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <p className="text-sm font-medium text-white truncate">{attendee.name}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[15px] font-medium text-white">{attendee.name}</p>
                       <input
                         type="text"
                         value={attendee.role || ''}
                         onChange={(e) => updateAttendeeRole(idx, e.target.value)}
                         placeholder="Trade / role (optional)"
                         className={cn(
-                          'w-full text-xs px-0 py-0.5 bg-transparent border-0 text-white',
-                          'placeholder:text-white focus:outline-none focus:text-white',
-                          'touch-manipulation'
+                          'mt-1 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent',
+                          'px-0 py-1 text-[13px] text-white placeholder:text-white',
+                          'caret-elec-yellow transition-colors hover:border-white/[0.3]',
+                          'focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation'
                         )}
                       />
                     </div>
 
-                    {/* Remove button */}
                     <button
                       type="button"
                       onClick={() => removeAttendee(idx)}
-                      className="flex items-center justify-center w-11 h-11 rounded-xl text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation shrink-0"
+                      aria-label={`Remove ${attendee.name}`}
+                      className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center text-[13px] font-medium text-white transition-colors hover:text-red-400 touch-manipulation"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      Remove
                     </button>
                   </motion.div>
                 ))}
               </AnimatePresence>
 
               {totalAttendees === 0 && (
-                <div className="text-center py-8">
-                  <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-dashed border-white/15 flex items-center justify-center mx-auto mb-3">
-                    <UserPlus className="h-7 w-7 text-white" />
-                  </div>
-                  <p className="text-sm font-medium text-white mb-1">No attendees added</p>
-                  <p className="text-xs text-white">
-                    Add the people who need to sign off on this briefing
-                  </p>
-                </div>
+                <p className="py-8 text-center text-[13px] text-white">
+                  No one added yet. Everyone who attends the briefing signs here.
+                </p>
               )}
             </div>
 
-            {/* Review Summary */}
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
-              <div className="px-4 pt-3 pb-2 border-b border-white/[0.06]">
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                  Review Summary
-                </span>
-              </div>
-              <div className="px-4 py-3 space-y-2.5">
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <FileText className="h-3.5 w-3.5 text-white" />
+            {/* Review summary — a definition list. Every row previously carried
+                its own icon tile restating the label in a picture. Type does
+                that job. Blank fields are named rather than rendered as an
+                empty line: a summary that shows nothing where the site name
+                should be reads as "no site required", which is how an
+                incomplete briefing gets signed. */}
+            <div className="-mx-4 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
+              <h3 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Review</h3>
+              <dl className="divide-y divide-white/[0.08]">
+                {[
+                  {
+                    term: 'Briefing',
+                    value:
+                      formData.briefingTitle?.trim() ||
+                      (briefingTypeInfo?.label ?? formData.briefingType) ||
+                      null,
+                    detail: formData.briefingTitle?.trim()
+                      ? (briefingTypeInfo?.label ?? formData.briefingType) || null
+                      : null,
+                  },
+                  { term: 'Site', value: formData.siteName?.trim() || null },
+                  {
+                    term: 'Date',
+                    value: formData.briefingDate
+                      ? `${new Date(formData.briefingDate + 'T00:00:00').toLocaleDateString(
+                          'en-GB',
+                          { day: 'numeric', month: 'long', year: 'numeric' }
+                        )}${formData.briefingTime ? ` at ${formData.briefingTime}` : ''}`
+                      : null,
+                  },
+                  {
+                    term: 'Hazards',
+                    value: formData.hazards?.length
+                      ? `${formData.hazards.length} identified`
+                      : null,
+                  },
+                  {
+                    term: 'Photos',
+                    value: formData.photos?.length
+                      ? `${formData.photos.length} attached`
+                      : 'None attached',
+                  },
+                  {
+                    term: 'Attendees',
+                    value: totalAttendees ? `${totalAttendees} on the register` : null,
+                  },
+                ].map(({ term, value, detail }) => (
+                  <div key={term} className="flex items-baseline gap-4 py-2.5">
+                    <dt className="w-24 shrink-0 text-[13px] text-white">{term}</dt>
+                    <dd className="min-w-0 flex-1 text-[14px] font-medium text-white">
+                      {value ?? <span className="font-normal text-white">Not yet set</span>}
+                      {detail && (
+                        <span className="mt-0.5 block text-[12px] font-normal text-white">
+                          {detail}
+                        </span>
+                      )}
+                    </dd>
                   </div>
-                  <span className="text-white truncate">
-                    {briefingTypeInfo?.label || formData.briefingType} — {formData.briefingTitle}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <MapPin className="h-3.5 w-3.5 text-white" />
-                  </div>
-                  <span className="text-white truncate">{formData.siteName}</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <Calendar className="h-3.5 w-3.5 text-white" />
-                  </div>
-                  <span className="text-white whitespace-nowrap">
-                    {formData.briefingDate
-                      ? new Date(formData.briefingDate + 'T00:00:00').toLocaleDateString('en-GB', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })
-                      : ''}{' '}
-                    at {formData.briefingTime}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                    <ShieldAlert className="h-3.5 w-3.5 text-white" />
-                  </div>
-                  <span className="text-white">
-                    {formData.hazards?.length || 0} hazards identified
-                  </span>
-                </div>
-                {(formData.photos?.length || 0) > 0 && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                      <Camera className="h-3.5 w-3.5 text-white" />
-                    </div>
-                    <span className="text-white">
-                      {formData.photos!.length} photo{formData.photos!.length > 1 ? 's' : ''}
-                    </span>
-                  </div>
-                )}
-              </div>
+                ))}
+              </dl>
             </div>
           </div>
         );
@@ -974,38 +977,24 @@ export const BriefingFormWizard = ({
     <FormProvider {...methods}>
       <div className="min-h-screen bg-elec-dark">
         {/* Header */}
-        <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur border-b border-white/10">
-          <div className="flex items-center justify-between px-4 py-3">
-            <button
-              onClick={step === 0 ? onClose : prevStep}
-              className="p-2.5 -ml-2 text-white hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-            <div className="text-center">
-              <p className="text-xs text-white">
-                Step {step + 1} of {totalSteps}
-              </p>
-              <p className="text-sm font-medium text-white">{STEP_TITLES[step]}</p>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2.5 -mr-2 text-white hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Progress bar */}
-          <div className="h-1 bg-white/10">
-            <motion.div
-              className="h-full bg-elec-yellow"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-        </div>
+        {/* Certificate shell — Back as a word, the document reference, save
+            state as a word, a progress ring and tappable step tabs. The arrow
+            icon, the centred "Step N of 5" caption, the X and the thin bar have
+            gone: this is the header an EV charging certificate uses, and a
+            briefing should not feel like a lesser document than a certificate. */}
+        <SafetyDocShell
+          onBack={step === 0 ? onClose : prevStep}
+          title="Team Briefing"
+          subtitle={formData.siteName ? `${formData.siteName} · HSG250` : 'Toolbox talk · HSG250'}
+          progressPercent={docProgress.progressPercent}
+          steps={docProgress.steps}
+          currentStep={String(step)}
+          onStepChange={(id) => {
+            setStep(Number(id));
+            window.scrollTo({ top: 0 });
+          }}
+          completedSteps={docProgress.completedSteps}
+        />
 
         {/* Content */}
         <div className="p-4 pb-32">

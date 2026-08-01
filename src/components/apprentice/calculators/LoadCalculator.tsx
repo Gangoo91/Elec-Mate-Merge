@@ -15,6 +15,7 @@ import {
 import { loadContent } from './content/load';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
+import { applyA2Row, kwToAmps, A2_TEXT, type A2Row } from '@/utils/diversity-table-a2';
 
 interface Appliance {
   id: string;
@@ -30,30 +31,39 @@ interface CableRecommendation {
   method: string;
 }
 
-const diversityFactors = {
-  lighting: 0.9,
-  socket: 0.4,
-  heating: 1.0,
-  motor: 0.8,
-  other: 0.7,
+// ELE-1423 — these were invented. The previous map (lighting 0.9, socket 0.4,
+// heating 1.0, motor 0.8, other 0.7) came from no published source, and did not
+// even agree with the copy in electrician-tools/LoadCalculator.tsx, which used
+// socket 0.6. Diversity now comes from On-Site Guide Appendix A, Table A2,
+// transcribed from the printed table — see src/utils/diversity-table-a2.ts.
+//
+// Table A2 works per appliance/point of utilization, so an appliance entered
+// with a quantity is expanded into that many entries: the "100% of the largest
+// + 40% of every other" rules need to know which one is largest.
+const A2_ROW_FOR_TYPE: Record<string, A2Row> = {
+  lighting: 'lighting',
+  socket: 'socketsAndStationary',
+  heating: 'heatingAndPower',
+  motor: 'motors',
+  other: 'heatingAndPower',
 };
 
 const cableData: CableRecommendation[] = [
   { size: '1.0mm²', current: 13, method: 'Method C (clipped direct)' },
   { size: '1.5mm²', current: 16, method: 'Method C (clipped direct)' },
-  { size: '2.5mm²', current: 23, method: 'Method C (clipped direct)' },
-  { size: '4.0mm²', current: 31, method: 'Method C (clipped direct)' },
+  { size: '2.5mm²', current: 24, method: 'Method C (clipped direct)' },
+  { size: '4.0mm²', current: 32, method: 'Method C (clipped direct)' },
   { size: '6.0mm²', current: 41, method: 'Method C (clipped direct)' },
   { size: '10.0mm²', current: 57, method: 'Method C (clipped direct)' },
   { size: '16.0mm²', current: 76, method: 'Method C (clipped direct)' },
 ];
 
 const typeOptions = [
-  { value: 'lighting', label: 'Lighting (90% diversity)' },
-  { value: 'socket', label: 'Socket Outlet (40% diversity)' },
-  { value: 'heating', label: 'Heating (100% diversity)' },
-  { value: 'motor', label: 'Motor (80% diversity)' },
-  { value: 'other', label: 'Other (70% diversity)' },
+  { value: 'lighting', label: 'Lighting (Table A2 row 1 — 66%)' },
+  { value: 'socket', label: 'Socket outlet (row 10 — 100% largest + 40% others)' },
+  { value: 'heating', label: 'Heating (row 2 — 100% to 10 A + 50% excess)' },
+  { value: 'motor', label: 'Motor (row 4 — not applicable to households)' },
+  { value: 'other', label: 'Other (row 2 — 100% to 10 A + 50% excess)' },
 ];
 
 const voltageOptions = [
@@ -114,20 +124,32 @@ export const LoadCalculator = () => {
     const breakdownByType: Record<string, { connected: number; demand: number; count: number }> =
       {};
 
+    // Group by type, expanding quantity so each appliance is its own entry.
+    const voltageForA2 = parseInt(voltage) || 230;
+    const currentsByType: Record<string, number[]> = {};
     appliances.forEach((appliance) => {
       const connected = appliance.power * appliance.quantity;
-      const diversity = diversityFactors[appliance.type];
-      const demand = connected * diversity;
-
       totalConnectedLoad += connected;
-      totalMaximumDemand += demand;
-
+      const each = kwToAmps(appliance.power / 1000, voltageForA2);
+      currentsByType[appliance.type] = [
+        ...(currentsByType[appliance.type] ?? []),
+        ...Array.from({ length: Math.max(1, appliance.quantity) }, () => each),
+      ];
       if (!breakdownByType[appliance.type]) {
         breakdownByType[appliance.type] = { connected: 0, demand: 0, count: 0 };
       }
       breakdownByType[appliance.type].connected += connected;
-      breakdownByType[appliance.type].demand += demand;
       breakdownByType[appliance.type].count += appliance.quantity;
+    });
+
+    // Apply the Table A2 row for each type, in amperes, then back to watts so
+    // the rest of the component keeps working in the units it already uses.
+    Object.entries(currentsByType).forEach(([type, currents]) => {
+      const row = A2_ROW_FOR_TYPE[type] ?? 'heatingAndPower';
+      const res = applyA2Row(row, 'household', { currents });
+      const demandWatts = res.diversified * voltageForA2;
+      breakdownByType[type].demand = demandWatts;
+      totalMaximumDemand += demandWatts;
     });
 
     const voltageNum = parseInt(voltage);
@@ -451,7 +473,7 @@ export const LoadCalculator = () => {
                         <div className="flex justify-between text-white">
                           <span>Diversity Factor:</span>
                           <span>
-                            {diversityFactors[type as keyof typeof diversityFactors] * 100}%
+                            {A2_TEXT[A2_ROW_FOR_TYPE[type] ?? 'heatingAndPower'].household}
                           </span>
                         </div>
                       </div>

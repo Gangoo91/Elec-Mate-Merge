@@ -9,36 +9,21 @@ import { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const checkboxCn =
-  'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const TestResultRow = ({
@@ -50,36 +35,21 @@ const TestResultRow = ({
   value: string;
   onChange: (v: string) => void;
 }) => (
-  <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-    <span className="text-sm text-white font-medium flex-1">{label}</span>
+  <div className="flex min-h-11 items-center justify-between gap-3">
+    <span className="flex-1 text-sm font-medium text-white">{label}</span>
     <div className="flex gap-1.5">
       {[
-        {
-          val: 'pass',
-          label: 'Pass',
-          active: 'bg-green-500 border-green-500 text-white',
-          inactive: 'border-green-500/30 text-green-400',
-        },
-        {
-          val: 'fail',
-          label: 'Fail',
-          active: 'bg-red-500 border-red-500 text-white',
-          inactive: 'border-red-500/30 text-red-400',
-        },
-        {
-          val: 'na',
-          label: 'N/A',
-          active: 'bg-white/20 border-white/30 text-white',
-          inactive: 'border-white/20 text-white',
-        },
+        { val: 'pass', label: 'Pass', active: 'border-green-500 bg-green-500 text-black' },
+        { val: 'fail', label: 'Fail', active: 'border-red-500 bg-red-500 text-white' },
+        { val: 'na', label: 'N/A', active: 'border-white/40 bg-white/25 text-white' },
       ].map((opt) => (
         <button
           key={opt.val}
           type="button"
           onClick={() => onChange(opt.val)}
           className={cn(
-            'px-3 py-1.5 rounded-lg text-xs font-bold border touch-manipulation active:scale-95 transition-all min-w-[44px]',
-            value === opt.val ? opt.active : opt.inactive + ' bg-transparent'
+            'h-11 min-w-[52px] rounded-xl border px-3 text-[12px] font-semibold touch-manipulation transition-all active:scale-95',
+            value === opt.val ? opt.active : 'border-white/[0.12] bg-white/[0.06] text-white'
           )}
         >
           {opt.label}
@@ -89,18 +59,18 @@ const TestResultRow = ({
   </div>
 );
 
-// "All Pass" button
+// "Mark all pass" speed tool
 const AllPassButton = ({ onClick }: { onClick: () => void }) => (
   <button
     type="button"
     onClick={onClick}
-    className="w-full h-10 rounded-xl border border-green-500/30 bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-wider touch-manipulation active:scale-[0.98] transition-all mb-2"
+    className="h-11 w-full rounded-xl border border-green-500/30 bg-white/[0.06] text-sm font-semibold text-green-400 touch-manipulation transition-all active:scale-[0.98]"
   >
-    Mark All Pass
+    Mark all pass
   </button>
 );
 
-// Coverage percentage badge
+// Coverage percentage tile
 const CoverageBadge = ({
   tested,
   total,
@@ -113,7 +83,7 @@ const CoverageBadge = ({
   if (!tested || !total) return null;
   const pct = Math.round((tested / total) * 100);
   return (
-    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+    <div className="rounded-xl bg-white/[0.05] p-3 text-center">
       <p
         className={cn(
           'text-xl font-bold',
@@ -122,7 +92,7 @@ const CoverageBadge = ({
       >
         {pct}%
       </p>
-      <p className="text-[10px] text-white uppercase">{label}</p>
+      <p className="text-[11px] text-white/80">{label}</p>
     </div>
   );
 };
@@ -181,33 +151,37 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
   }, [formData.soakTestStart, formData.soakTestEnd]);
 
   return (
-    <div className="space-y-5">
-      {/* Test Summary */}
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Test summary */}
       {testSummary.done > 0 && (
-        <div className="grid grid-cols-4 gap-2">
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
-            <p className="text-lg font-bold text-white">
-              {testSummary.done}/{testSummary.total}
-            </p>
-            <p className="text-[9px] text-white uppercase">Done</p>
-          </div>
-          <div className="p-2 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
-            <p className="text-lg font-bold text-green-400">{testSummary.pass}</p>
-            <p className="text-[9px] text-white uppercase">Pass</p>
-          </div>
-          <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-            <p className="text-lg font-bold text-red-400">{testSummary.fail}</p>
-            <p className="text-[9px] text-white uppercase">Fail</p>
-          </div>
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
-            <p className="text-lg font-bold text-white">{testSummary.na}</p>
-            <p className="text-[9px] text-white uppercase">N/A</p>
+        <div className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionHeader title="Test summary" />
+          <div className="grid grid-cols-4 gap-2">
+            <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+              <p className="text-lg font-bold text-white">
+                {testSummary.done}/{testSummary.total}
+              </p>
+              <p className="text-[11px] text-white/80">Done</p>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+              <p className="text-lg font-bold text-green-400">{testSummary.pass}</p>
+              <p className="text-[11px] text-white/80">Pass</p>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+              <p className="text-lg font-bold text-red-400">{testSummary.fail}</p>
+              <p className="text-[11px] text-white/80">Fail</p>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+              <p className="text-lg font-bold text-white">{testSummary.na}</p>
+              <p className="text-[11px] text-white/80">N/A</p>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Panel Tests */}
-      <Section title="Control Panel Tests" accentColor="from-red-500/40 to-rose-400/20">
+      {/* Panel tests */}
+      <div className={cardCn}>
+        <SectionHeader title="Control panel tests" />
         <AllPassButton
           onClick={() =>
             onUpdate('panelTests', {
@@ -224,45 +198,46 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
         />
         <div className="space-y-2">
           <TestResultRow
-            label="Power-on Test"
+            label="Power-on test"
             value={pt.powerOnTest || ''}
             onChange={(v) => updatePanelTest('powerOnTest', v)}
           />
           <TestResultRow
-            label="Zone Indicators"
+            label="Zone indicators"
             value={pt.zoneIndicators || ''}
             onChange={(v) => updatePanelTest('zoneIndicators', v)}
           />
           <TestResultRow
-            label="Fault Indicators"
+            label="Fault indicators"
             value={pt.faultIndicators || ''}
             onChange={(v) => updatePanelTest('faultIndicators', v)}
           />
           <TestResultRow
-            label="Silence Facility"
+            label="Silence facility"
             value={pt.silenceFacility || ''}
             onChange={(v) => updatePanelTest('silenceFacility', v)}
           />
           <TestResultRow
-            label="Reset Function"
+            label="Reset function"
             value={pt.resetFunction || ''}
             onChange={(v) => updatePanelTest('resetFunction', v)}
           />
           <TestResultRow
-            label="Event Log"
+            label="Event log"
             value={pt.eventLog || ''}
             onChange={(v) => updatePanelTest('eventLog', v)}
           />
           <TestResultRow
-            label="Remote Signalling"
+            label="Remote signalling"
             value={pt.remoteSignalling || ''}
             onChange={(v) => updatePanelTest('remoteSignalling', v)}
           />
         </div>
-      </Section>
+      </div>
 
-      {/* Power Tests */}
-      <Section title="Power & Battery Tests" accentColor="from-green-500/40 to-emerald-400/20">
+      {/* Power tests */}
+      <div className={cardCn}>
+        <SectionHeader title="Power & battery tests" />
         <AllPassButton
           onClick={() =>
             onUpdate('powerTests', {
@@ -276,12 +251,12 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
         />
         <div className="space-y-2">
           <TestResultRow
-            label="Mains Supply"
+            label="Mains supply"
             value={pw.mainsSupply || ''}
             onChange={(v) => updatePowerTest('mainsSupply', v)}
           />
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-            <Label className="text-white text-xs mb-1.5 block">Battery Voltage (V)</Label>
+          <div>
+            <Label className={labelCn}>Battery voltage (V)</Label>
             <Input
               value={pw.batteryVoltage || ''}
               onChange={(e) => updatePowerTest('batteryVoltage', e.target.value)}
@@ -291,25 +266,26 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             />
           </div>
           <TestResultRow
-            label="Battery Condition"
+            label="Battery condition"
             value={pw.batteryCondition || ''}
             onChange={(v) => updatePowerTest('batteryCondition', v)}
           />
           <TestResultRow
-            label="Charger Operation"
+            label="Charger operation"
             value={pw.chargerOperation || ''}
             onChange={(v) => updatePowerTest('chargerOperation', v)}
           />
           <TestResultRow
-            label="Standby Duration"
+            label="Standby duration"
             value={pw.standbyDuration || ''}
             onChange={(v) => updatePowerTest('standbyDuration', v)}
           />
         </div>
-      </Section>
+      </div>
 
-      {/* Fault Simulation */}
-      <Section title="Fault Simulation Tests" accentColor="from-amber-500/40 to-yellow-400/20">
+      {/* Fault simulation */}
+      <div className={cardCn}>
+        <SectionHeader title="Fault simulation tests" />
         <AllPassButton
           onClick={() =>
             onUpdate('faultTests', {
@@ -323,43 +299,46 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
         />
         <div className="space-y-2">
           <TestResultRow
-            label="Open Circuit"
+            label="Open circuit"
             value={ft.openCircuit || ''}
             onChange={(v) => updateFaultTest('openCircuit', v)}
           />
           <TestResultRow
-            label="Short Circuit"
+            label="Short circuit"
             value={ft.shortCircuit || ''}
             onChange={(v) => updateFaultTest('shortCircuit', v)}
           />
           <TestResultRow
-            label="Earth Fault"
+            label="Earth fault"
             value={ft.earthFault || ''}
             onChange={(v) => updateFaultTest('earthFault', v)}
           />
           <TestResultRow
-            label="Power Fail"
+            label="Power fail"
             value={ft.powerFail || ''}
             onChange={(v) => updateFaultTest('powerFail', v)}
           />
         </div>
-      </Section>
+      </div>
 
-      {/* Cause & Effect Verification */}
-      <Section title="Cause & Effect Verification" accentColor="from-blue-500/40 to-cyan-400/20">
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <Checkbox
-            checked={formData.causeAndEffectVerified || false}
-            onCheckedChange={(v) => onUpdate('causeAndEffectVerified', v)}
-            className={checkboxCn}
-          />
-          <Label className="text-sm text-white">
-            Cause & effect matrix verified — all outputs respond correctly
-          </Label>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Cause & effect verification */}
+      <div className={cardCn}>
+        <SectionHeader title="Cause & effect verification" />
+        <button
+          type="button"
+          onClick={() => onUpdate('causeAndEffectVerified', !formData.causeAndEffectVerified)}
+          className={cn(
+            'flex min-h-11 w-full items-center rounded-xl border px-3.5 py-3 text-left text-sm touch-manipulation transition-all active:scale-[0.98]',
+            formData.causeAndEffectVerified
+              ? 'border-green-500 bg-green-500 font-semibold text-black'
+              : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+          )}
+        >
+          Cause & effect matrix verified — all outputs respond correctly
+        </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label className="text-white text-xs mb-1.5 block">C&E Reference</Label>
+            <Label className={labelCn}>C&E reference</Label>
             <Input
               value={formData.causeAndEffectRef || ''}
               onChange={(e) => onUpdate('causeAndEffectRef', e.target.value)}
@@ -367,7 +346,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             />
           </div>
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Verification Date</Label>
+            <Label className={labelCn}>Verification date</Label>
             <Input
               type="date"
               value={formData.causeAndEffectDate || ''}
@@ -376,13 +355,14 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             />
           </div>
         </div>
-      </Section>
+      </div>
 
-      {/* Soak Test */}
-      <Section title="Soak Test" accentColor="from-red-500/40 to-orange-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Soak test */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Soak test" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Start Date</Label>
+            <Label className={labelCn}>Start date</Label>
             <Input
               type="date"
               value={formData.soakTestStart || ''}
@@ -391,7 +371,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             />
           </div>
           <div>
-            <Label className="text-white text-xs mb-1.5 block">End Date</Label>
+            <Label className={labelCn}>End date</Label>
             <Input
               type="date"
               value={formData.soakTestEnd || ''}
@@ -400,9 +380,9 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Duration</Label>
+            <Label className={labelCn}>Duration</Label>
             <Input
               value={formData.soakTestDuration || ''}
               onChange={(e) => onUpdate('soakTestDuration', e.target.value)}
@@ -410,15 +390,12 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
               placeholder={soakDays !== null ? `${soakDays} days (auto-calculated)` : 'e.g. 7 days'}
             />
             {soakDays !== null && !formData.soakTestDuration && (
-              <p className="text-[10px] text-white mt-1">{soakDays} days calculated from dates</p>
+              <p className="mt-1 text-[11px] text-white/80">{soakDays} days calculated from dates</p>
             )}
             {soakDays !== null && soakDays < 7 && (
-              <div className="flex items-center gap-1.5 mt-1">
-                <AlertTriangle className="h-3 w-3 text-amber-400 flex-shrink-0" />
-                <p className="text-[10px] text-amber-400">
-                  BS 5839-1 recommends minimum 7 days soak
-                </p>
-              </div>
+              <p className="mt-1 text-[11px] text-amber-400">
+                BS 5839-1 recommends minimum 7 days soak
+              </p>
             )}
           </div>
           <TestResultRow
@@ -428,21 +405,22 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
           />
         </div>
         <div>
-          <Label className="text-white text-xs mb-1.5 block">Soak Test Notes</Label>
+          <Label className={labelCn}>Soak test notes</Label>
           <Textarea
             value={formData.soakTestNotes || ''}
             onChange={(e) => onUpdate('soakTestNotes', e.target.value)}
-            className="touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+            className={textareaCn}
             placeholder="Any issues during soak period..."
           />
         </div>
-      </Section>
+      </div>
 
-      {/* Device Function Testing */}
-      <Section title="Device Function Testing" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="grid grid-cols-2 gap-3">
+      {/* Device function testing */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Device function testing" />
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Detectors Tested</Label>
+            <Label className={labelCn}>Detectors tested</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -452,7 +430,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                 className={inputCn}
                 placeholder="Tested"
               />
-              <span className="flex items-center text-white text-sm">/</span>
+              <span className="flex items-center text-sm text-white/80">/</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -464,7 +442,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             </div>
           </div>
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Call Points Tested</Label>
+            <Label className={labelCn}>Call points tested</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -474,7 +452,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                 className={inputCn}
                 placeholder="Tested"
               />
-              <span className="flex items-center text-white text-sm">/</span>
+              <span className="flex items-center text-sm text-white/80">/</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -486,7 +464,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             </div>
           </div>
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Sounders Verified</Label>
+            <Label className={labelCn}>Sounders verified</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -496,7 +474,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                 className={inputCn}
                 placeholder="Tested"
               />
-              <span className="flex items-center text-white text-sm">/</span>
+              <span className="flex items-center text-sm text-white/80">/</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -508,7 +486,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             </div>
           </div>
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Interfaces Verified</Label>
+            <Label className={labelCn}>Interfaces verified</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -518,7 +496,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                 className={inputCn}
                 placeholder="Tested"
               />
-              <span className="flex items-center text-white text-sm">/</span>
+              <span className="flex items-center text-sm text-white/80">/</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -540,7 +518,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
           <CoverageBadge
             tested={parseInt(formData.callPointsTestedCount || '0')}
             total={parseInt(formData.callPointsTotalCount || '0')}
-            label="Call Points"
+            label="Call points"
           />
           <CoverageBadge
             tested={parseInt(formData.soundersTestedCount || '0')}
@@ -565,8 +543,8 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
               : 0;
           if (detPct > 0 && detPct < 100) {
             return (
-              <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
-                <p className="text-xs text-amber-400">
+              <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] px-3.5 py-3">
+                <p className="text-sm text-amber-400">
                   You tested {detPct}% of detectors this visit. The remaining {100 - detPct}% must
                   be tested within the next 6 months to meet annual 100% coverage (BS 5839-1:2025).
                 </p>
@@ -575,8 +553,8 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
           }
           if (detPct >= 100) {
             return (
-              <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-3">
-                <p className="text-xs text-green-400">
+              <div className="rounded-xl border border-green-500/30 bg-white/[0.05] px-3.5 py-3">
+                <p className="text-sm text-green-400">
                   100% detector coverage achieved this visit.
                 </p>
               </div>
@@ -587,26 +565,28 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
 
         {/* Which devices, specifically — assessors want the list, not a percentage */}
         <div>
-          <div className="flex items-center justify-between mb-1.5">
-            <Label className="text-white text-xs block">Devices tested this visit</Label>
+          <div className="flex items-center justify-between">
+            <Label className="text-[12px] font-medium text-white block">
+              Devices tested this visit
+            </Label>
             <button
               type="button"
               onClick={() => {
                 const list = Array.isArray(formData.sampledDevices) ? formData.sampledDevices : [];
                 onUpdate('sampledDevices', [...list, { ref: '', zone: '', result: 'pass' }]);
               }}
-              className="text-[12px] font-medium text-elec-yellow touch-manipulation min-h-[44px] px-2"
+              className="min-h-11 px-2 text-sm font-semibold text-elec-yellow touch-manipulation"
             >
               + Add device
             </button>
           </div>
           {(Array.isArray(formData.sampledDevices) ? formData.sampledDevices : []).length === 0 && (
-            <p className="text-[11px] text-white/40 leading-relaxed">
+            <p className="text-[12px] leading-relaxed text-white/80">
               Optional but recommended — record each device by reference (e.g. Z2/D14) so the next
               visit knows exactly what's still to test in the cycle.
             </p>
           )}
-          <div className="space-y-2">
+          <div className="space-y-4">
             {(Array.isArray(formData.sampledDevices) ? formData.sampledDevices : []).map(
               (d: { ref: string; zone: string; result: string }, i: number) => {
                 const list = formData.sampledDevices as {
@@ -620,44 +600,48 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                     list.map((row, idx) => (idx === i ? { ...row, [field]: value } : row))
                   );
                 return (
-                  <div key={i} className="flex gap-2">
-                    <Input
-                      value={d.ref}
-                      onChange={(e) => set('ref', e.target.value)}
-                      className={cn(inputCn, 'flex-1')}
-                      placeholder="Device ref (Z2/D14)"
-                    />
-                    <Input
-                      value={d.zone}
-                      onChange={(e) => set('zone', e.target.value)}
-                      className={cn(inputCn, 'w-24')}
-                      placeholder="Zone"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => set('result', d.result === 'pass' ? 'fail' : 'pass')}
-                      className={cn(
-                        'shrink-0 w-16 h-12 rounded-lg text-[12px] font-semibold touch-manipulation border',
-                        d.result === 'pass'
-                          ? 'bg-green-500/15 text-green-400 border-green-500/30'
-                          : 'bg-red-500/15 text-red-400 border-red-500/30'
-                      )}
-                    >
-                      {d.result === 'pass' ? 'Pass' : 'Fail'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        onUpdate(
-                          'sampledDevices',
-                          list.filter((_, idx) => idx !== i)
-                        )
-                      }
-                      className="shrink-0 w-10 h-12 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.08] touch-manipulation"
-                      aria-label="Remove device"
-                    >
-                      ×
-                    </button>
+                  <div key={i} className="border-t border-white/[0.08] pt-4">
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <p className="text-sm font-semibold text-white">Device {i + 1}</p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onUpdate(
+                            'sampledDevices',
+                            list.filter((_, idx) => idx !== i)
+                          )
+                        }
+                        className="min-h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div className="flex gap-2">
+                      <Input
+                        value={d.ref}
+                        onChange={(e) => set('ref', e.target.value)}
+                        className={cn(inputCn, 'flex-1')}
+                        placeholder="Device ref (Z2/D14)"
+                      />
+                      <Input
+                        value={d.zone}
+                        onChange={(e) => set('zone', e.target.value)}
+                        className={cn(inputCn, 'w-24')}
+                        placeholder="Zone"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => set('result', d.result === 'pass' ? 'fail' : 'pass')}
+                        className={cn(
+                          'h-11 w-16 shrink-0 rounded-xl border text-[12px] font-semibold touch-manipulation',
+                          d.result === 'pass'
+                            ? 'border-green-500 bg-green-500 text-black'
+                            : 'border-red-500 bg-red-500 text-white'
+                        )}
+                      >
+                        {d.result === 'pass' ? 'Pass' : 'Fail'}
+                      </button>
+                    </div>
                   </div>
                 );
               }
@@ -667,20 +651,20 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
 
         {/* Reason devices were not tested */}
         <div>
-          <Label className="text-white text-xs mb-1.5 block">
+          <Label className={labelCn}>
             Devices not tested — reason (access, occupied areas…)
           </Label>
           <Textarea
             value={formData.devicesNotTestedReason || ''}
             onChange={(e) => onUpdate('devicesNotTestedReason', e.target.value)}
-            className="touch-manipulation text-base min-h-[70px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+            className={textareaCn}
             placeholder="e.g. Rooms 210-214 occupied — to be covered at the next visit"
           />
         </div>
 
         {/* 12-month cycle statement — recorded, not just hinted */}
         <div>
-          <Label className="text-white text-xs mb-1.5 block">
+          <Label className={labelCn}>
             Have all devices been tested within the last 12 months?
           </Label>
           <div className="grid grid-cols-3 gap-2">
@@ -696,12 +680,12 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                 type="button"
                 onClick={() => onUpdate('allDevicesTested12mo', value)}
                 className={cn(
-                  'h-11 rounded-lg text-[13px] font-medium touch-manipulation border transition-colors',
+                  'h-11 rounded-xl border text-sm touch-manipulation transition-colors',
                   formData.allDevicesTested12mo === value
                     ? value === 'no'
-                      ? 'bg-red-500/15 text-red-400 border-red-500/40'
-                      : 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-white/[0.06] text-white border-white/[0.12] hover:bg-white/[0.1]'
+                      ? 'border-red-500 bg-red-500 font-semibold text-white'
+                      : 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                    : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
                 )}
               >
                 {label}
@@ -709,15 +693,15 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
             ))}
           </div>
           {formData.allDevicesTested12mo === 'no' && (
-            <p className="mt-1.5 text-[11px] text-red-400 leading-relaxed">
+            <p className="mt-1.5 text-[12px] leading-relaxed text-red-400">
               Record which areas are outstanding above — BS 5839-1:2025 expects every device
               functionally tested over the 12-month cycle.
             </p>
           )}
         </div>
-      </Section>
+      </div>
 
-      {/* Compliance Score */}
+      {/* Compliance score */}
       {(() => {
         const pt = formData.panelTests || {};
         const pw = formData.powerTests || {};
@@ -740,14 +724,9 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
         const score = Math.round((passed / total) * 100);
         if (passed === 0) return null;
         return (
-          <div className="section">
-            <div className="border-b border-white/[0.06] pb-1 mb-3">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-amber-400/20 mb-2" />
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-                Compliance Score
-              </h2>
-            </div>
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+          <div className={cn(cardCn, 'lg:col-span-2')}>
+            <SectionHeader title="Compliance score" />
+            <div className="rounded-xl bg-white/[0.05] p-4 text-center">
               <p
                 className={cn(
                   'text-3xl font-bold',
@@ -756,10 +735,10 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
               >
                 {score}%
               </p>
-              <p className="text-[10px] text-white uppercase mt-1">
+              <p className="mt-1 text-[12px] text-white/80">
                 {passed} of {total} compliance checks passed
               </p>
-              <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden mt-3">
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/[0.06]">
                 <div
                   className={cn(
                     'h-full rounded-full transition-all',

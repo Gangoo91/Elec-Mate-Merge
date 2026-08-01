@@ -3,12 +3,7 @@ import { Plug, Zap, ArrowUpDown, Wrench, Shield, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type EquipmentCategory =
-  | 'pat-tester'
-  | 'test-equipment'
-  | 'ladders'
-  | 'power-tools'
-  | 'ppe'
-  | 'other';
+  'pat-tester' | 'test-equipment' | 'ladders' | 'power-tools' | 'ppe' | 'other';
 
 interface CategoryOption {
   id: EquipmentCategory;

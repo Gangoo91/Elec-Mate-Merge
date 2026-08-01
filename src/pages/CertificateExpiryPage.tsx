@@ -23,7 +23,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, ArrowRight, MapPin, FileText, Phone, Mail, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type TimeFilter = 'all' | 'overdue' | '30days' | '60days' | '90days';
@@ -158,6 +157,17 @@ export default function CertificateExpiryPage() {
     window.location.href = `mailto:${source.clientEmail}?subject=${subject}&body=${body}`;
   };
 
+  // When the active window is empty the page must still show the forward
+  // pipeline — the next re-inspections on the book, however far out.
+  const nextDue = useMemo(
+    () =>
+      [...(reminders ?? [])]
+        .filter((r) => new Date(r.expiry_date).getTime() > Date.now())
+        .sort((a, b) => new Date(a.expiry_date).getTime() - new Date(b.expiry_date).getTime())
+        .slice(0, 6),
+    [reminders]
+  );
+
   const filteredReminders = useMemo(() => {
     if (!reminders) return [];
     return reminders.filter((reminder) => {
@@ -235,41 +245,41 @@ export default function CertificateExpiryPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate(-1)}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Expiring Certificates</h1>
-          </div>
+      {/* Header — quiet, no rules or eyebrows */}
+      <div className="px-4 lg:px-8 pt-3 pb-1">
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+        >
+          Back
+        </button>
+        <div className="flex items-baseline gap-3 flex-wrap">
+          <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
+            Expiring Certificates
+          </h1>
+          <span className="text-[13px] text-white/50">
+            Your re-inspection pipeline — every renewal is repeat work
+          </span>
         </div>
-        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-4 space-y-5"
+        className="px-4 py-4 lg:px-8 space-y-5 lg:max-w-[1600px]"
       >
         {/* KPI tiles — editorial seam grid; each tile also filters the list */}
         <motion.div
           variants={itemVariants}
-          className="relative grid grid-cols-2 sm:grid-cols-4 gap-[1.5px] bg-white/[0.14] border border-white/[0.14] rounded-2xl overflow-hidden"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
         >
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
           {[
-            { label: 'Overdue', value: stats.overdue, filter: 'overdue' as TimeFilter, dot: 'bg-red-400' },
-            { label: 'Within 30 days', value: stats.urgent, filter: '30days' as TimeFilter, dot: 'bg-orange-400' },
-            { label: '30–60 days', value: stats.warning, filter: '60days' as TimeFilter, dot: 'bg-amber-400' },
-            { label: 'Revenue', value: `£${stats.revenue.toLocaleString()}`, filter: 'all' as TimeFilter, dot: 'bg-emerald-400', accentValue: true },
+            { label: 'Overdue', value: stats.overdue, filter: 'overdue' as TimeFilter, tone: stats.overdue > 0 ? 'text-red-400' : 'text-white' },
+            { label: 'Within 30 days', value: stats.urgent, filter: '30days' as TimeFilter, tone: stats.urgent > 0 ? 'text-amber-300' : 'text-white' },
+            { label: '30–60 days', value: stats.warning, filter: '60days' as TimeFilter, tone: 'text-white' },
+            { label: 'Pipeline value', value: `£${stats.revenue.toLocaleString()}`, filter: 'all' as TimeFilter, tone: 'text-elec-yellow' },
           ].map((kpi) => {
             const isActive = timeFilter === kpi.filter;
             return (
@@ -277,20 +287,21 @@ export default function CertificateExpiryPage() {
                 key={kpi.label}
                 onClick={() => setTimeFilter(kpi.filter)}
                 className={cn(
-                  'group relative flex flex-col text-left p-4 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50',
-                  isActive ? 'bg-elec-yellow/[0.07]' : 'hover:bg-elec-yellow/[0.05] active:bg-white/[0.05]'
+                  'group relative flex flex-col overflow-hidden rounded-2xl p-4 sm:p-5 text-left touch-manipulation',
+                  'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border transition-all duration-200',
+                  'focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50',
+                  isActive
+                    ? 'border-elec-yellow/60'
+                    : 'border-white/[0.12] hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]'
                 )}
               >
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', kpi.dot)} aria-hidden />
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/45 truncate">
-                    {kpi.label}
-                  </span>
-                </div>
+                <span className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/60 truncate">
+                  {kpi.label}
+                </span>
                 <span
                   className={cn(
-                    'mt-2.5 text-[26px] font-semibold tracking-tight tabular-nums leading-none',
-                    kpi.accentValue ? 'text-elec-yellow' : 'text-white'
+                    'mt-2.5 text-[28px] font-bold tracking-tight tabular-nums leading-none',
+                    kpi.tone
                   )}
                 >
                   {kpi.value}
@@ -307,10 +318,10 @@ export default function CertificateExpiryPage() {
               key={opt.value}
               onClick={() => setTimeFilter(opt.value)}
               className={cn(
-                'h-8 px-3 text-xs font-medium rounded-lg touch-manipulation transition-all whitespace-nowrap flex-shrink-0 active:scale-[0.98]',
+                'h-11 px-4 text-[12.5px] font-semibold rounded-lg touch-manipulation transition-all whitespace-nowrap flex-shrink-0 active:scale-[0.98]',
                 timeFilter === opt.value
-                  ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                  : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
+                  ? 'bg-elec-yellow text-black border border-elec-yellow'
+                  : 'bg-white/[0.07] text-white border border-white/[0.14] hover:bg-white/[0.1]'
               )}
             >
               {opt.label}
@@ -329,23 +340,50 @@ export default function CertificateExpiryPage() {
             <Skeleton className="h-28 w-full rounded-2xl bg-white/[0.03]" />
           </div>
         ) : filteredReminders.length === 0 ? (
-          <motion.div variants={itemVariants} className="flex flex-col items-center justify-center py-16 space-y-1.5">
-            <p className="text-sm font-semibold text-white">
-              {reminders?.length === 0 ? 'No expiring certificates' : 'No certificates match filter'}
-            </p>
-            <p className="text-xs text-white/50">
-              {reminders?.length === 0
-                ? 'Complete some inspections and they will appear here'
-                : 'Try a different time range'}
-            </p>
+          <motion.div variants={itemVariants} className="space-y-3">
+            <div className="flex flex-col items-center justify-center py-8 space-y-1.5">
+              <p className="text-sm font-semibold text-white">
+                {reminders?.length === 0 ? 'No re-inspection dates on file' : 'Nothing in this window'}
+              </p>
+              <p className="text-xs text-white/60">
+                {reminders?.length === 0
+                  ? 'Set Next Inspection Due when issuing certificates and your renewal pipeline appears here'
+                  : 'Nothing due in this range — here is what is next on the book'}
+              </p>
+            </div>
+            {nextDue.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {nextDue.map((reminder) => {
+                  const days = getDaysUntilExpiry(reminder.expiry_date);
+                  const title = reminder.client_name || 'Unknown client';
+                  return (
+                    <button
+                      key={reminder.id}
+                      onClick={() => setSelectedReminder(reminder)}
+                      className="group relative flex flex-col overflow-hidden rounded-2xl p-4 text-left bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12] transition-all duration-200 hover:border-white/[0.22] touch-manipulation focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
+                          Due {formatDate(reminder.expiry_date)}
+                        </span>
+                        <span className="ml-auto text-[11px] text-white/50 tabular-nums">{days}d away</span>
+                      </div>
+                      <h3 className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate">{title}</h3>
+                      <p className="text-[12px] text-white/60 truncate mt-0.5">
+                        {reminder.installation_address || 'No address'}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </motion.div>
         ) : (
           <motion.div
             variants={itemVariants}
-            className="relative border border-white/[0.14] rounded-2xl overflow-hidden"
+            className="grid grid-cols-1 md:grid-cols-2 gap-3"
           >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-            <div className="divide-y divide-white/[0.18]">
+            <>
               {filteredReminders.map((reminder) => {
                 const urgency = getExpiryUrgency(reminder.expiry_date);
                 const days = getDaysUntilExpiry(reminder.expiry_date);
@@ -356,7 +394,7 @@ export default function CertificateExpiryPage() {
                   <button
                     key={reminder.id}
                     onClick={() => setSelectedReminder(reminder)}
-                    className="group relative flex w-full flex-col text-left p-4 sm:p-5 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+                    className="group relative flex w-full flex-col overflow-hidden rounded-2xl text-left p-4 sm:p-5 bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12] transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05] touch-manipulation focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50"
                   >
                     {/* urgency dot + days-remaining badge */}
                     <div className="flex items-start justify-between gap-2">
@@ -376,18 +414,13 @@ export default function CertificateExpiryPage() {
                       {title}
                     </h3>
                     <p
+                      title={reminder.installation_address || undefined}
                       className={cn(
-                        'mt-1.5 flex items-center gap-1.5 text-[12px] leading-relaxed min-w-0',
-                        reminder.installation_address ? 'text-white/55' : 'text-white/35'
+                        'mt-1.5 text-[12px] leading-relaxed min-w-0 truncate',
+                        reminder.installation_address ? 'text-white/60' : 'text-white/40 italic'
                       )}
                     >
-                      <MapPin className="h-3 w-3 shrink-0" aria-hidden />
-                      <span
-                        title={reminder.installation_address || undefined}
-                        className={cn('truncate', !reminder.installation_address && 'italic')}
-                      >
-                        {reminder.installation_address || 'No address'}
-                      </span>
+                      {reminder.installation_address || 'No address'}
                     </p>
 
                     <div className="mt-3 flex items-center justify-between gap-3">
@@ -403,15 +436,12 @@ export default function CertificateExpiryPage() {
                           {formatDate(reminder.expiry_date)}
                         </span>
                       </span>
-                      <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow shrink-0">
-                        Details
-                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </span>
+                      <span className="text-[12px] font-bold text-elec-yellow shrink-0">Details</span>
                     </div>
                   </button>
                 );
               })}
-            </div>
+            </>
           </motion.div>
         )}
       </motion.main>
@@ -493,7 +523,6 @@ export default function CertificateExpiryPage() {
                     onClick={() => handleStartRenewal(selectedReminder)}
                     className="w-full h-11 text-sm font-semibold touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
                   >
-                    <RefreshCw className={cn('h-4 w-4 mr-2', isCreating && 'animate-spin')} />
                     {isCreating ? 'Creating renewal…' : 'Start renewal EICR'}
                   </Button>
 
@@ -509,7 +538,7 @@ export default function CertificateExpiryPage() {
                           }}
                           className="flex-1 h-11 text-[13px] font-medium touch-manipulation active:scale-[0.98] border-white/[0.08] text-white hover:bg-white/[0.06]"
                         >
-                          <FileText className="h-4 w-4 mr-1.5" /> Original
+                          Original
                         </Button>
                       )}
                       {source?.clientPhone && (
@@ -518,7 +547,7 @@ export default function CertificateExpiryPage() {
                           onClick={() => { window.location.href = `tel:${source.clientPhone}`; }}
                           className="flex-1 h-11 text-[13px] font-medium touch-manipulation active:scale-[0.98] border-white/[0.08] text-white hover:bg-white/[0.06]"
                         >
-                          <Phone className="h-4 w-4 mr-1.5" /> Call
+                          Call
                         </Button>
                       )}
                       {source?.clientEmail && (
@@ -527,7 +556,7 @@ export default function CertificateExpiryPage() {
                           onClick={() => handleContactEmail(selectedReminder)}
                           className="flex-1 h-11 text-[13px] font-medium touch-manipulation active:scale-[0.98] border-white/[0.08] text-white hover:bg-white/[0.06]"
                         >
-                          <Mail className="h-4 w-4 mr-1.5" /> Email
+                          Email
                         </Button>
                       )}
                     </div>

@@ -10,9 +10,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   IconButton,
-  inputClass,
   type Tone,
 } from '@/components/college/primitives';
+import { safetyInputCn } from '../common/SafetyDocField';
 import type { SafeIsolationRecord } from '@/hooks/useSafeIsolationRecords';
 import {
   getIsolationDuration,
@@ -26,7 +26,11 @@ import { ApprovalBadge, ApprovalInfoCard } from '../common/ApprovalBadge';
 import { ApprovalSheet } from '../common/ApprovalSheet';
 import { SignatureField } from '../common/SignatureField';
 import { RemoteSignShareSheet } from '../common/RemoteSignShareSheet';
-import { createSafetySignToken, buildSignUrl, useRecordSignatures } from '@/hooks/useRemoteSignToken';
+import {
+  createSafetySignToken,
+  buildSignUrl,
+  useRecordSignatures,
+} from '@/hooks/useRemoteSignToken';
 import { useRequestApproval } from '@/hooks/useSupervisorApproval';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { ReEnergisationSheet } from './ReEnergisationSheet';
@@ -57,7 +61,7 @@ const STATUS_PILL: Record<'amber' | 'red' | 'emerald' | 'neutral', string> = {
   amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
 const STATUS_DOT: Record<'amber' | 'red' | 'emerald' | 'neutral', string> = {
@@ -116,7 +120,9 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const requestApproval = useRequestApproval();
   const updateRecord = useUpdateIsolationRecord();
   const { data: jobs = [] } = useSparkProjects('active');
-  const linkedJobTitle = record.job_id ? jobs.find((j) => j.id === record.job_id)?.title ?? null : null;
+  const linkedJobTitle = record.job_id
+    ? (jobs.find((j) => j.id === record.job_id)?.title ?? null)
+    : null;
 
   // Inline signature capture state
   const [isolatorName, setIsolatorName] = useState(record.isolator_name || '');
@@ -216,7 +222,9 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         {onBack && (
           <div className="flex items-center gap-3 mb-2">
             <IconButton aria-label="Back" onClick={onBack}>
-              <span aria-hidden className="text-[18px] leading-none text-white">←</span>
+              <span aria-hidden className="text-[18px] leading-none text-white">
+                ←
+              </span>
             </IconButton>
             <div className="flex-1 min-w-0">
               <Eyebrow>GS38 safe isolation</Eyebrow>
@@ -232,13 +240,16 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         >
           <span
             aria-hidden
-            className={cn('absolute inset-y-0 left-0 w-[3px]', STATUS_DOT[statusTone(record.status)])}
+            className={cn(
+              'absolute inset-y-0 left-0 w-[3px]',
+              STATUS_DOT[statusTone(record.status)]
+            )}
           />
           <div className="flex items-center gap-3 pl-2">
             <div className="flex-1 min-w-0">
               <StatusPill status={record.status} />
               <div className="flex items-center gap-2 mt-1.5">
-                <p className="text-xs text-white/70 tabular-nums">
+                <p className="text-xs text-white tabular-nums">
                   {completedCount} of {record.steps.length} steps completed
                 </p>
                 <ApprovalBadge status={record.approval_status} approvedBy={record.approved_by} />
@@ -264,7 +275,11 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               aria-hidden
               className={cn(
                 'absolute inset-y-0 left-0 w-[3px]',
-                duration.isExpired ? 'bg-red-400' : duration.isExpiring ? 'bg-amber-400' : 'bg-white/15'
+                duration.isExpired
+                  ? 'bg-red-400'
+                  : duration.isExpiring
+                    ? 'bg-amber-400'
+                    : 'bg-white/15'
               )}
             />
             <div className="pl-2">
@@ -280,7 +295,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
               >
                 {duration.label}
               </p>
-              <p className="text-[10px] text-white/55 mt-0.5">
+              <p className="text-[10px] text-white mt-0.5">
                 {ISOLATION_TIMEOUT_HOURS}h isolation timeout (GS38)
               </p>
             </div>
@@ -292,7 +307,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           <motion.div variants={itemVariants} className="space-y-3">
             <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-4 space-y-1">
               <Eyebrow className="text-amber-300/90">Signatures required</Eyebrow>
-              <p className="text-xs text-white/70 leading-relaxed">
+              <p className="text-xs text-white leading-relaxed">
                 Both isolator and verifier signatures are required before re-energisation. Sign
                 below to proceed.
               </p>
@@ -308,7 +323,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                 <input
                   value={isolatorName}
                   onChange={(e) => setIsolatorName(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="Person carrying out isolation"
                 />
               </Field>
@@ -319,7 +334,10 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                 <div className="rounded-xl bg-emerald-500/[0.06] border border-emerald-500/25 px-3 py-2">
                   <p className="text-[11.5px] text-emerald-400">
                     Verified remotely by {remoteVerifier.signed_name || 'verifier'}
-                    {remoteVerifier.signed_at ? ` · ${new Date(remoteVerifier.signed_at).toLocaleDateString('en-GB')}` : ''} — confirm and save below.
+                    {remoteVerifier.signed_at
+                      ? ` · ${new Date(remoteVerifier.signed_at).toLocaleDateString('en-GB')}`
+                      : ''}{' '}
+                    — confirm and save below.
                   </p>
                 </div>
               )}
@@ -332,7 +350,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                 <input
                   value={verifierName}
                   onChange={(e) => setVerifierName(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="Second competent person"
                 />
               </Field>
@@ -359,15 +377,15 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           <FormCard eyebrow="Circuit details">
             <div className="space-y-1.5">
               <p className="text-sm text-white">{record.site_address}</p>
-              <p className="text-sm text-white/70">{record.circuit_description}</p>
+              <p className="text-sm text-white">{record.circuit_description}</p>
               {record.distribution_board && (
-                <p className="text-sm text-white/70">Board: {record.distribution_board}</p>
+                <p className="text-sm text-white">Board: {record.distribution_board}</p>
               )}
               {record.job_id && (
-                <p className="text-sm text-white/70">Project: {linkedJobTitle || 'Linked project'}</p>
+                <p className="text-sm text-white">Project: {linkedJobTitle || 'Linked project'}</p>
               )}
               {record.created_at && (
-                <p className="text-[12px] text-white/55 tabular-nums">
+                <p className="text-[12px] text-white tabular-nums">
                   Started:{' '}
                   {new Date(record.created_at).toLocaleString('en-GB', {
                     day: 'numeric',
@@ -408,21 +426,23 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                 {/* Instrument details */}
                 <div className="space-y-1">
                   {step3?.instrumentModel && (
-                    <p className="text-sm text-white/70">Make/Model: {step3.instrumentModel}</p>
+                    <p className="text-sm text-white">Make/Model: {step3.instrumentModel}</p>
                   )}
                   {(step3?.instrumentSerial || record.voltage_detector_serial) && (
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Serial: {step3?.instrumentSerial || record.voltage_detector_serial}
                     </p>
                   )}
                   {record.voltage_detector_calibration_date && (
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Calibration:{' '}
-                      {new Date(record.voltage_detector_calibration_date).toLocaleDateString('en-GB')}
+                      {new Date(record.voltage_detector_calibration_date).toLocaleDateString(
+                        'en-GB'
+                      )}
                     </p>
                   )}
                   {step3?.provingUnitSerial && (
-                    <p className="text-sm text-white/70">Proving unit: {step3.provingUnitSerial}</p>
+                    <p className="text-sm text-white">Proving unit: {step3.provingUnitSerial}</p>
                   )}
                 </div>
 
@@ -434,7 +454,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                         Dead test log
                       </span>
                       {step6!.voltageReadings!.testedAt && (
-                        <span className="text-[10px] text-white/55 tabular-nums">
+                        <span className="text-[10px] text-white tabular-nums">
                           {new Date(step6!.voltageReadings!.testedAt).toLocaleString('en-GB', {
                             day: 'numeric',
                             month: 'short',
@@ -447,19 +467,19 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                     </div>
                     <div className="grid grid-cols-3 gap-2 text-center">
                       <div>
-                        <p className="text-[10px] text-white/55">L-N</p>
+                        <p className="text-[10px] text-white">L-N</p>
                         <p className="text-sm font-bold text-white tabular-nums">
                           {step6!.voltageReadings!.ln ?? '-'}V
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-white/55">L-E</p>
+                        <p className="text-[10px] text-white">L-E</p>
                         <p className="text-sm font-bold text-white tabular-nums">
                           {step6!.voltageReadings!.le ?? '-'}V
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-white/55">N-E</p>
+                        <p className="text-[10px] text-white">N-E</p>
                         <p className="text-sm font-bold text-white tabular-nums">
                           {step6!.voltageReadings!.ne ?? '-'}V
                         </p>
@@ -496,7 +516,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
                     <span
                       className={cn(
                         'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold tabular-nums',
-                        step.completed ? 'bg-emerald-500 text-black' : 'bg-white/[0.08] text-white/70'
+                        step.completed ? 'bg-emerald-500 text-black' : 'bg-white/[0.08] text-white'
                       )}
                     >
                       {step.completed ? '✓' : step.stepNumber}
@@ -597,7 +617,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           <motion.div variants={itemVariants}>
             <FormCard eyebrow="Re-energised" className="border-emerald-500/20">
               <p className="text-sm text-white">By: {record.re_energisation_by ?? 'Unknown'}</p>
-              <p className="text-[12px] text-white/55 tabular-nums">
+              <p className="text-[12px] text-white tabular-nums">
                 {new Date(record.re_energisation_at).toLocaleString('en-GB', {
                   day: 'numeric',
                   month: 'short',
@@ -616,11 +636,11 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
         {/* GS38 reference */}
         <motion.div variants={itemVariants}>
           <FormCard eyebrow="GS38">
-            <p className="text-xs text-white/70 leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               Electrical test equipment for use on low voltage electrical systems. HSE Guidance
               Sheet 38, 4th edition.
             </p>
-            <p className="text-[10px] text-white/55">
+            <p className="text-[10px] text-white">
               Isolation timeout: {ISOLATION_TIMEOUT_HOURS}h. Both isolator and verifier signatures
               required.
             </p>

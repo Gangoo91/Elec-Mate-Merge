@@ -1,24 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {
-  Loader2,
-  FileText,
-  Clock,
-  CheckCircle,
-  Plus,
-  Users,
-  AlertTriangle,
-  Sparkles,
-  Play,
-} from 'lucide-react';
+import { Loader2, FileText, Plus } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { BriefingFormWizard } from './BriefingFormWizard';
 import { BriefingDetailView } from './BriefingDetailView';
 import { TemplateLibrary } from './briefing-templates/TemplateLibrary';
 import { BriefingFilterTabs, HistoryCard, PendingCard } from './briefings';
-import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface TeamBriefing {
   id: string;
@@ -64,112 +54,50 @@ interface NearMissData {
 
 type TabId = 'active' | 'recent' | 'templates';
 
-const TEMPLATES = [
-  {
-    id: 'site-induction',
-    name: 'Site Induction',
-    description: 'Standard site induction briefing',
-    hazardCount: 8,
-    isAIPowered: true,
-  },
-  {
-    id: 'toolbox-talk',
-    name: 'Toolbox Talk',
-    description: 'Daily toolbox talk template',
-    hazardCount: 5,
-    isAIPowered: true,
-  },
-  {
-    id: 'electrical-safety',
-    name: 'Electrical Safety',
-    description: 'Electrical work safety briefing',
-    hazardCount: 10,
-    isAIPowered: true,
-  },
-  {
-    id: 'hot-works',
-    name: 'Hot Works Permit',
-    description: 'Hot works safety briefing',
-    hazardCount: 7,
-    isAIPowered: false,
-  },
-  {
-    id: 'working-at-height',
-    name: 'Working at Height',
-    description: 'Ladders, scaffolds & platform safety',
-    hazardCount: 6,
-    isAIPowered: false,
-  },
-  {
-    id: 'safe-isolation-gs38',
-    name: 'Safe Isolation (GS38)',
-    description: 'GS38 safe isolation procedure',
-    hazardCount: 8,
-    isAIPowered: false,
-  },
-  {
-    id: 'cable-avoidance',
-    name: 'Cable Avoidance',
-    description: 'CAT & Genny safe use for buried services',
-    hazardCount: 5,
-    isAIPowered: false,
-  },
-  {
-    id: 'asbestos-awareness',
-    name: 'Asbestos Awareness',
-    description: 'Asbestos awareness for electricians',
-    hazardCount: 6,
-    isAIPowered: false,
-  },
-  {
-    id: 'manual-handling',
-    name: 'Manual Handling',
-    description: 'Cable drums, consumer units & heavy items',
-    hazardCount: 4,
-    isAIPowered: false,
-  },
-  {
-    id: 'arc-flash-burns',
-    name: 'Electrical Burns & Arc Flash',
-    description: 'Arc flash risk and burn prevention',
-    hazardCount: 7,
-    isAIPowered: false,
-  },
-  {
-    id: 'ppe-selection',
-    name: 'PPE Selection & Care',
-    description: 'Choosing and maintaining correct PPE',
-    hazardCount: 5,
-    isAIPowered: false,
-  },
-  {
-    id: 'fire-safety-site',
-    name: 'Fire Safety on Site',
-    description: 'Fire prevention and emergency procedures',
-    hazardCount: 6,
-    isAIPowered: false,
-  },
-  {
-    id: 'occupied-premises',
-    name: 'Working in Occupied Premises',
-    description: 'Customer property and public safety',
-    hazardCount: 5,
-    isAIPowered: false,
-  },
-  {
-    id: 'lone-working',
-    name: 'Lone Working Procedures',
-    description: 'Safe systems for working alone on site',
-    hazardCount: 6,
-    isAIPowered: false,
-  },
-];
+/**
+ * Briefing templates come from the `briefing_templates` table, which holds five
+ * real templates with section schemas ("Work Scope", "Hazard Analysis", "BS 7671
+ * Compliance", …).
+ *
+ * They used to be a hardcoded array of fourteen cards — "Site Induction", "Hot
+ * Works Permit", "Safe Isolation (GS38)" — none of which existed in the table,
+ * and every one of which called `handleCreateNew()` with no argument. Tapping
+ * "Hot Works Permit" opened exactly the same blank form as tapping "Site
+ * Induction". The templates were a picture of a feature: all five real templates
+ * still showed `usage_count: 0` because nothing could ever increment them.
+ */
+interface BriefingTemplate {
+  id: string;
+  name: string;
+  description: string | null;
+  template_type: string;
+  usage_count: number | null;
+  template_schema: { sections?: { id: string; title: string; required?: boolean }[] } | null;
+}
+
+/**
+ * The table and the wizard's type picker were written against different
+ * vocabularies: the table uses `site-work` / `lfe` / `hse-update` /
+ * `safety-alert`, the picker offers `site-induction` / `electrical` /
+ * `hot-works` / `height-work`. Only `toolbox-talk` exists in both.
+ *
+ * Rather than invent a mapping that quietly puts a briefing under the wrong
+ * heading, anything without a genuine counterpart seeds as `custom` — which is
+ * exactly what it is: a briefing whose content you write yourself.
+ */
+const TEMPLATE_TYPE_TO_BRIEFING_TYPE: Record<string, string> = {
+  'toolbox-talk': 'toolbox-talk',
+};
 
 const TeamBriefingTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAIWizard, setShowAIWizard] = useState(false);
+  const [templates, setTemplates] = useState<BriefingTemplate[]>([]);
+  const [templatesLoading, setTemplatesLoading] = useState(true);
+  /** Prefill for a briefing started from a template. Never carries an `id`. */
+  const [templateSeed, setTemplateSeed] = useState<Record<string, unknown> | null>(null);
   const [editingBriefing, setEditingBriefing] = useState<TeamBriefing | null>(null);
   const [viewingBriefing, setViewingBriefing] = useState<TeamBriefing | null>(null);
   const [nearMissData, setNearMissData] = useState<NearMissData | null>(null);
@@ -315,12 +243,77 @@ const TeamBriefingTemplates = () => {
     setShowAIWizard(false);
     setEditingBriefing(null);
     setNearMissData(null);
+    // Clear the template prefill too, or the next "New briefing" reopens the
+    // last template's skeleton.
+    setTemplateSeed(null);
   };
 
   const handleCreateNew = () => {
     setEditingBriefing(null);
     setNearMissData(null);
+    setTemplateSeed(null);
     setShowAIWizard(true);
+  };
+
+  /**
+   * Load the real templates. `is_public` covers the five defaults; a user's own
+   * templates come back under RLS.
+   */
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from('briefing_templates')
+        .select('id, name, description, template_type, usage_count, template_schema')
+        .order('usage_count', { ascending: false })
+        .order('name');
+      if (cancelled) return;
+      if (error) {
+        console.error('Error loading briefing templates:', error);
+      } else {
+        setTemplates((data ?? []) as BriefingTemplate[]);
+      }
+      setTemplatesLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  /**
+   * Actually apply the template.
+   *
+   * The seed deliberately carries **no `id`** — the wizard treats `initialData.id`
+   * as "this is an existing briefing" and switches from insert to update, so a
+   * seed with an id would overwrite whatever row that id belonged to.
+   *
+   * The section titles become a skeleton in the content field. That is the whole
+   * point of a template: "Site Work Installation" should hand you Work Scope,
+   * Hazard Analysis and BS 7671 Compliance to fill in, not a blank box.
+   */
+  const handleUseTemplate = (template: BriefingTemplate) => {
+    const sections = template.template_schema?.sections ?? [];
+    const skeleton = sections.length ? sections.map((s) => `${s.title}\n`).join('\n') : '';
+
+    setEditingBriefing(null);
+    setNearMissData(null);
+    setTemplateSeed({
+      briefing_type: TEMPLATE_TYPE_TO_BRIEFING_TYPE[template.template_type] ?? 'custom',
+      briefing_name: template.name,
+      briefing_description: skeleton,
+    });
+    setShowAIWizard(true);
+
+    // Fire-and-forget usage count. `.rpc()`/`.from()` return thenables, not real
+    // Promises — attaching `.catch()` throws and the request never sends, so the
+    // error is handled inside the await instead.
+    void (async () => {
+      const { error } = await supabase
+        .from('briefing_templates')
+        .update({ usage_count: (template.usage_count ?? 0) + 1 })
+        .eq('id', template.id);
+      if (error) console.error('Could not record template usage:', error);
+    })();
   };
 
   // Calculate stats
@@ -405,7 +398,7 @@ const TeamBriefingTemplates = () => {
   if (showAIWizard) {
     return (
       <BriefingFormWizard
-        initialData={editingBriefing}
+        initialData={editingBriefing ?? templateSeed}
         nearMissData={nearMissData}
         onClose={handleCloseWizard}
         onSuccess={() => {
@@ -418,58 +411,57 @@ const TeamBriefingTemplates = () => {
 
   return (
     <div className="space-y-4 pb-24">
-      {/* Compact header row */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20">
-            <Users className="h-5 w-5 text-purple-400" />
-          </div>
-          <h1 className="text-lg font-bold text-white">Team Briefings</h1>
+      {/* Header — typography only. The purple icon tile and the boxed stat
+          pills went: the design system carries hierarchy in type, and an accent
+          colour that is not elec-yellow reads as a different product. */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-lg font-bold text-white tracking-tight">Team Briefings</h1>
+          <p className="text-[11px] text-white tabular-nums tracking-wide">
+            Toolbox talks · HSG250
+          </p>
         </div>
         <button
           onClick={handleCreateNew}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation min-h-[44px] active:scale-[0.97] transition-transform"
+          className="h-11 shrink-0 rounded-xl bg-elec-yellow px-4 text-sm font-semibold text-black touch-manipulation active:scale-[0.97] transition-transform"
         >
-          <Plus className="h-4 w-4" />
-          New Briefing
+          New briefing
         </button>
       </div>
 
-      {/* Stat pills */}
-      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-        <div className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10">
-          <FileText className="h-3 w-3 text-white" />
-          <span className="text-xs font-semibold text-white">{stats.thisWeek} This Week</span>
+      {/* Stats as figures, not chips. Tabular nums so they do not jitter as the
+          counts change, and the pending figure carries the only colour — it is
+          the one that needs acting on. */}
+      <div className="flex items-baseline gap-6 border-b border-white/[0.1] pb-3">
+        <div>
+          <p className="text-xl font-bold text-white tabular-nums leading-none">{stats.thisWeek}</p>
+          <p className="mt-1 text-[11px] text-white">This week</p>
         </div>
-        <div className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20">
-          <Clock className="h-3 w-3 text-amber-400" />
-          <span className="text-xs font-semibold text-white">
-            {stats.pendingSignatures} Pending
-          </span>
+        <div>
+          <p
+            className={cn(
+              'text-xl font-bold tabular-nums leading-none',
+              stats.pendingSignatures > 0 ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            {stats.pendingSignatures}
+          </p>
+          <button
+            type="button"
+            onClick={() => stats.pendingSignatures > 0 && setActiveTab('active')}
+            disabled={stats.pendingSignatures === 0}
+            className="mt-1 text-[11px] text-white underline-offset-2 touch-manipulation enabled:underline"
+          >
+            Awaiting signature
+          </button>
         </div>
-        <div className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-          <CheckCircle className="h-3 w-3 text-emerald-400" />
-          <span className="text-xs font-semibold text-white">
-            {stats.signatureRate}% Sign-off Rate
-          </span>
+        <div>
+          <p className="text-xl font-bold text-white tabular-nums leading-none">
+            {stats.signatureRate}%
+          </p>
+          <p className="mt-1 text-[11px] text-white">Signed off</p>
         </div>
       </div>
-
-      {/* Pending signatures alert banner */}
-      {stats.pendingSignatures > 0 && (
-        <motion.button
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          onClick={() => setActiveTab('active')}
-          className="w-full flex items-center gap-2.5 px-4 py-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-left touch-manipulation active:bg-amber-500/15 transition-colors"
-        >
-          <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
-          <span className="text-sm text-white font-medium">
-            {stats.pendingSignatures} briefing{stats.pendingSignatures > 1 ? 's' : ''} awaiting
-            signatures
-          </span>
-        </motion.button>
-      )}
 
       {/* Tab Navigation */}
       <BriefingFilterTabs
@@ -503,10 +495,7 @@ const TeamBriefingTemplates = () => {
               ))
             ) : (
               <div className="flex flex-col items-center justify-center py-16">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-                  <CheckCircle className="h-8 w-8 text-emerald-400" />
-                </div>
-                <h3 className="text-base font-semibold text-white mb-1">All Clear</h3>
+                <h3 className="text-base font-semibold text-white mb-1">Nothing outstanding</h3>
                 <p className="text-sm text-white text-center max-w-xs mb-5">
                   No pending briefings — start one from Templates.
                 </p>
@@ -576,47 +565,61 @@ const TeamBriefingTemplates = () => {
           </div>
         )}
 
-        {/* Templates Tab — compact 2×2 grid */}
+        {/* Templates — one per row.
+            A two-column grid gave each card about 150px, so every title was
+            truncated ("Hot Works Per…", "Working at Hei…", "Safe Isolation (…")
+            and every description was clamped to one line ("Standard site…").
+            The user could not read what any template was without opening it.
+            Full-width rows fit the whole name and the whole description, and
+            the row itself is the tap target rather than a 10px "Use" link.
+
+            The identical yellow document icon that sat on all fourteen cards is
+            gone: an icon repeated on every row distinguishes nothing. */}
         {activeTab === 'templates' && (
           <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2">
-              {TEMPLATES.map((template, index) => (
-                <motion.button
-                  key={template.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.04, duration: 0.2 }}
-                  onClick={handleCreateNew}
-                  className="relative overflow-hidden rounded-2xl bg-[#1e1e1e] border border-white/10 p-4 text-left touch-manipulation active:scale-[0.97] active:bg-white/[0.06] transition-all"
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                      <FileText className="h-3.5 w-3.5 text-elec-yellow" />
-                    </div>
-                    {template.isAIPowered && (
-                      <Badge className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 text-[9px] px-1 py-0">
-                        <Sparkles className="h-2 w-2 mr-0.5" />
-                        AI
-                      </Badge>
-                    )}
-                  </div>
-                  <h3 className="text-sm font-semibold text-white mb-0.5 truncate">
-                    {template.name}
-                  </h3>
-                  <p className="text-[11px] text-white line-clamp-1">{template.description}</p>
-                  <div className="flex items-center gap-1.5 mt-2">
-                    <Play className="h-3 w-3 text-elec-yellow" />
-                    <span className="text-[10px] font-semibold text-elec-yellow">Use</span>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
+            {templatesLoading ? (
+              <div className="flex justify-center py-10">
+                <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+              </div>
+            ) : templates.length === 0 ? (
+              <p className="py-10 text-center text-[13px] text-white">
+                No templates available yet.
+              </p>
+            ) : (
+              <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                {templates.map((template, index) => {
+                  const sectionCount = template.template_schema?.sections?.length ?? 0;
+                  return (
+                    <motion.button
+                      key={template.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.03, duration: 0.2 }}
+                      onClick={() => handleUseTemplate(template)}
+                      className="w-full touch-manipulation px-1 py-3.5 text-left transition-colors active:bg-white/[0.04]"
+                    >
+                      <p className="text-[15px] font-semibold text-white">{template.name}</p>
+                      {template.description && (
+                        <p className="mt-0.5 text-[13px] leading-snug text-white">
+                          {template.description}
+                        </p>
+                      )}
+                      {sectionCount > 0 && (
+                        <p className="mt-1 text-[12px] tabular-nums text-white">
+                          {sectionCount} section{sectionCount === 1 ? '' : 's'} to complete
+                        </p>
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            )}
 
             <button
               onClick={() => setShowTemplateLibrary(true)}
-              className="w-full p-4 rounded-xl border border-dashed border-white/20 text-white hover:text-white hover:bg-white/5 hover:border-white/30 transition-all min-h-[56px] active:scale-[0.98] touch-manipulation"
+              className="min-h-[44px] w-full touch-manipulation rounded-xl border border-dashed border-white/20 p-3 text-[14px] font-medium text-white transition-colors hover:border-white/30 hover:bg-white/5 active:scale-[0.98]"
             >
-              View All Templates
+              Manage templates
             </button>
           </div>
         )}

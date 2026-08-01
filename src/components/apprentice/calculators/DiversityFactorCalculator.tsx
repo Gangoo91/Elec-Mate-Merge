@@ -522,7 +522,7 @@ const DiversityFactorCalculator = () => {
                     </div>
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
-                        <strong>IET On-Site Guide:</strong> Based on Table 1B diversity allowances
+                        <strong>IET On-Site Guide:</strong> Based on Table A2 diversity allowances
                         (domestic) and Table H2 (commercial/industrial)
                       </p>
                     </div>
@@ -653,7 +653,7 @@ const DiversityFactorCalculator = () => {
           <div className="space-y-3 pl-1">
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
-                <strong className="text-white">IET On-Site Guide Table 1B:</strong> Diversity
+                <strong className="text-white">IET On-Site Guide Table A2:</strong> Diversity
                 allowances for domestic installations
               </p>
             </div>

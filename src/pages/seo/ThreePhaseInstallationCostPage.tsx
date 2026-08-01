@@ -590,8 +590,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Always carry out a proper maximum demand assessment before quoting. This
                   determines the required supply capacity and informs the DNO application. Use
-                  diversity factors from BS 7671 Table 1A or Appendix A of the On-Site Guide to
-                  calculate the expected load per phase.
+                  diversity factors from IET On-Site Guide Table A2 or Appendix A of the On-Site
+                  Guide to calculate the expected load per phase.
                 </p>
               </div>
             </div>
@@ -619,10 +619,8 @@ const sections = [
                   Factor in adequate time for testing a 3-phase installation. Phase rotation checks,
                   loop impedance on all three phases, RCD testing, insulation resistance on each
                   phase, and continuity testing all take longer on a 3-phase system. Use{' '}
-                  <SEOInternalLink href="/eic-certificate">
-                    Elec-Mate's EIC app
-                  </SEOInternalLink>{' '}
-                  to complete the certification efficiently on site.
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate's EIC app</SEOInternalLink> to
+                  complete the certification efficiently on site.
                 </p>
               </div>
             </div>

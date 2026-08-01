@@ -1,7 +1,7 @@
 /**
  * Module 4 · Section 1 · Subsection 2 — Diversity Factors
  * HNC Electrical Engineering for Building Services (Building Services Specialist)
- *   BS 7671 Table 1A and ADMD: how to apply diversity to convert connected load into
+ *   IET On-Site Guide Table A2 and ADMD: how to apply diversity to convert connected load into
  *   maximum demand on domestic, commercial and mixed-tenure projects without overshooting
  *   the supply or under-sizing the incomer.
  */
@@ -26,7 +26,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Diversity Factors - HNC Module 4 Section 1.2';
 const DESCRIPTION =
-  'Master diversity factor application for building services: BS 7671 Table 1A guidance, ADMD calculations, typical values for commercial and industrial installations.';
+  'Master diversity factor application for building services: IET On-Site Guide Table A2 guidance, ADMD calculations, typical values for commercial and industrial installations.';
 
 const quickCheckQuestions = [
   {
@@ -72,12 +72,7 @@ const quickCheckQuestions = [
   {
     id: 'lighting-diversity',
     question: 'What diversity factor typically applies to office lighting?',
-    options: [
-      '100% (no diversity)',
-      '50%',
-      '75%',
-      '90%',
-    ],
+    options: ['100% (no diversity)', '50%', '75%', '90%'],
     correctIndex: 3,
     explanation:
       "Office lighting typically uses 90% diversity - almost all lights operate during occupied hours, but some areas (meeting rooms, stores) won't be fully lit continuously.",
@@ -101,12 +96,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A building has 100 × 3kW heaters. With 0.6 diversity, what is the diversified load?',
-    options: [
-      '100kW',
-      '300kW',
-      '180kW',
-      '60kW',
-    ],
+    options: ['100kW', '300kW', '180kW', '60kW'],
     correctAnswer: 2,
     explanation: 'Total connected = 100 × 3kW = 300kW. Diversified load = 300kW × 0.6 = 180kW',
   },
@@ -134,18 +124,13 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Table 1A in IET On-Site Guide Appendix A provides diversity factors specifically for domestic installations. Commercial diversity requires engineering judgement.',
+      'Table A2 in IET On-Site Guide Appendix A provides diversity factors specifically for domestic installations. Commercial diversity requires engineering judgement.',
   },
   {
     id: 5,
     question:
       'For a housing estate, ADMD is calculated per dwelling. A typical UK dwelling has ADMD of:',
-    options: [
-      '1-2 kVA',
-      '2-3 kVA',
-      '15-20 kVA',
-      '5-8 kVA',
-    ],
+    options: ['1-2 kVA', '2-3 kVA', '15-20 kVA', '5-8 kVA'],
     correctAnswer: 1,
     explanation:
       'Typical UK dwelling ADMD is 2-3 kVA (often 2.5 kVA used), though this varies with property size, heating type, and EV charging provision.',
@@ -180,12 +165,7 @@ const quizQuestions = [
   {
     id: 8,
     question: 'A commercial kitchen has 50kW of cooking equipment. What diversity might apply?',
-    options: [
-      '80-90%',
-      '100%',
-      '20-30%',
-      '40-50%',
-    ],
+    options: ['80-90%', '100%', '20-30%', '40-50%'],
     correctAnswer: 0,
     explanation:
       'Commercial kitchens typically operate at 80-90% of connected load during peak service times. Diversity is lower than offices because most equipment operates simultaneously during service.',
@@ -222,7 +202,7 @@ const faqs = [
   {
     question: 'Can I apply my own diversity factors or must I use published values?',
     answer:
-      'BS 7671 Table 1A provides guidance for domestic installations. For commercial and industrial buildings, diversity factors are based on engineering judgement, using CIBSE guidance, measured data from similar buildings, and operational knowledge. The designer takes responsibility for the factors applied.',
+      'IET On-Site Guide Table A2 provides guidance for domestic installations. For commercial and industrial buildings, diversity factors are based on engineering judgement, using CIBSE guidance, measured data from similar buildings, and operational knowledge. The designer takes responsibility for the factors applied.',
   },
   {
     question: 'How do I determine diversity for a unique building type?',
@@ -288,12 +268,12 @@ const HNCModule4Section1_2 = () => {
             clause="The rated current of a switch or RCCB may be based on the application of diversity factors to the downstream circuits according to Regulation 311.1. Where diversity is applied, the rated current of the OCPD shall be selected according to the manufacturer's instructions."
             meaning={
               <>
-                Reg 311.1 explicitly authorises diversity at the device-rating level and ties it
-                to manufacturer data. As the designer, you are accountable for the diversity
-                factors you apply: document them, justify them against CIBSE / measured data,
-                and never compound diversity across multiple distribution layers without spelling
-                out where it has been applied. Get caught using domestic Table 1A factors on a
-                commercial job and your design submission will not survive scrutiny.
+                Reg 311.1 explicitly authorises diversity at the device-rating level and ties it to
+                manufacturer data. As the designer, you are accountable for the diversity factors
+                you apply: document them, justify them against CIBSE / measured data, and never
+                compound diversity across multiple distribution layers without spelling out where it
+                has been applied. Get caught using domestic Table A2 factors on a commercial job and
+                your design submission will not survive scrutiny.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 311.1; On-Site Guide Table A2; CIBSE Guide F."
@@ -302,7 +282,7 @@ const HNCModule4Section1_2 = () => {
           <LearningOutcomes
             outcomes={[
               'Define diversity factor and its role in load assessment',
-              'Apply BS 7671 Table 1A diversity factors for domestic installations',
+              'Apply IET On-Site Guide Table A2 diversity factors for domestic installations',
               'Select appropriate diversity for commercial building services',
               'Calculate ADMD for individual dwellings and developments',
               'Understand when diversity should not be applied',
@@ -376,14 +356,14 @@ const HNCModule4Section1_2 = () => {
 
           <SectionRule />
 
-          <ConceptBlock title="BS 7671 Table 1A Guidance">
+          <ConceptBlock title="IET On-Site Guide Table A2 Guidance">
             <p>
               On-Site Guide Table A2 provides diversity factors specifically for domestic
               installations. These are guidance values that have proven reliable over many years of
               application.
             </p>
             <p>
-              <strong>BS 7671 Table 1A — domestic diversity:</strong>
+              <strong>IET On-Site Guide Table A2 — domestic diversity:</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -410,11 +390,11 @@ const HNCModule4Section1_2 = () => {
               </li>
             </ul>
             <p>
-              <strong>Important notes on Table 1A:</strong>
+              <strong>Important notes on Table A2:</strong>
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                Table 1A applies to <strong>domestic</strong> installations only
+                Table A2 applies to <strong>domestic</strong> installations only
               </li>
               <li>Commercial installations require engineering judgement</li>
               <li>
@@ -423,7 +403,7 @@ const HNCModule4Section1_2 = () => {
               <li>Designer responsibility to select appropriate values</li>
             </ul>
             <p>
-              <strong>Application note:</strong> Table 1A values are conservative for typical
+              <strong>Application note:</strong> Table A2 values are conservative for typical
               dwellings. Higher diversity might apply for small flats; lower diversity for large
               houses.
             </p>
@@ -661,7 +641,7 @@ const HNCModule4Section1_2 = () => {
                 </li>
               </ul>
             }
-            doInstead="Decide where in the distribution hierarchy diversity is applied and stick to it. Use BS 7671 Table 1A only for domestic; use CIBSE or measured data for commercial. Always design emergency / life-safety systems at 100% with no diversity reduction."
+            doInstead="Decide where in the distribution hierarchy diversity is applied and stick to it. Use IET On-Site Guide Table A2 only for domestic; use CIBSE or measured data for commercial. Always design emergency / life-safety systems at 100% with no diversity reduction."
           />
 
           <SectionRule />
@@ -671,29 +651,29 @@ const HNCModule4Section1_2 = () => {
             situation={
               <>
                 A mixed-use scheme: 24 × 2-bed flats over 2 retail units (one a small supermarket
-                with continuous refrigeration, one a coffee shop). Communal services include a
-                lift, landlord lighting and a heat-pump plant room. The DNO is asking for a single
-                ADMD figure for the supply and a per-tenure breakdown for the metering layout.
+                with continuous refrigeration, one a coffee shop). Communal services include a lift,
+                landlord lighting and a heat-pump plant room. The DNO is asking for a single ADMD
+                figure for the supply and a per-tenure breakdown for the metering layout.
               </>
             }
             whatToDo={
               <>
                 Split the calculation by tenure. Flats: 24 × 2.5&nbsp;kVA = 60&nbsp;kVA connected,
                 inter-dwelling diversity ≈ 0.55, so ≈ 33&nbsp;kVA. Supermarket: ≈ 0.9 diversity
-                (refrigeration is constant), coffee shop ≈ 0.7. Add landlord services at their
-                own diversities — emergency lighting at 1.0 (no diversity), lift at 0.6, heat
-                pump at 1.0 during peak winter. Sum to a single supply figure. Document every
-                factor against CIBSE Guide F and keep the breakdown for the Part L submission
-                and the metering schedule.
+                (refrigeration is constant), coffee shop ≈ 0.7. Add landlord services at their own
+                diversities — emergency lighting at 1.0 (no diversity), lift at 0.6, heat pump at
+                1.0 during peak winter. Sum to a single supply figure. Document every factor against
+                CIBSE Guide F and keep the breakdown for the Part L submission and the metering
+                schedule.
               </>
             }
             whyItMatters={
               <>
                 Reg 311.1 makes the diversity decision the designer&rsquo;s. Mis-apply
-                inter-dwelling diversity to a continuously-loaded supermarket and you under-size
-                the supply. Apply diversity to the emergency lighting and you have a life-safety
-                breach. Tenure-split documentation is also what the metering contractor needs to
-                position CTs and meters correctly.
+                inter-dwelling diversity to a continuously-loaded supermarket and you under-size the
+                supply. Apply diversity to the emergency lighting and you have a life-safety breach.
+                Tenure-split documentation is also what the metering contractor needs to position
+                CTs and meters correctly.
               </>
             }
           />

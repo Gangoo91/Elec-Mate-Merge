@@ -674,7 +674,7 @@ const MaximumDemandCalculator = () => {
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong>Table 1B:</strong> Diversity allowances for domestic installations
+                    <strong>Table A2:</strong> Diversity allowances for domestic installations
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">

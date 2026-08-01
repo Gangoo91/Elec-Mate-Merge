@@ -1,4 +1,4 @@
-import { useRef, useEffect, ReactNode } from 'react';
+import { useRef, useEffect, useState, useCallback, ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +25,21 @@ const HorizontalTabs = ({
 }: HorizontalTabsProps) => {
   const tabsRef = useRef<HTMLDivElement>(null);
   const activeTabRef = useRef<HTMLButtonElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const updateFades = useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 2);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 2);
+  }, []);
+
+  useEffect(() => {
+    updateFades();
+    window.addEventListener('resize', updateFades);
+    return () => window.removeEventListener('resize', updateFades);
+  }, [updateFades, tabs.length]);
 
   // Scroll active tab into view when it changes
   useEffect(() => {
@@ -45,13 +60,18 @@ const HorizontalTabs = ({
     <div className={cn('space-y-4', className)}>
       {/* Tabs Container */}
       <div className="relative">
-        {/* Gradient fade indicators */}
-        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#1a1a1a] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#1a1a1a] to-transparent z-10 pointer-events-none" />
+        {/* Scroll fade indicators — only while content overflows that edge */}
+        {canScrollLeft && (
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        )}
+        {canScrollRight && (
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        )}
 
         {/* Scrollable tabs */}
         <div
           ref={tabsRef}
+          onScroll={updateFades}
           className="flex gap-2 overflow-x-auto scrollbar-hide px-1 py-1 -mx-1"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >

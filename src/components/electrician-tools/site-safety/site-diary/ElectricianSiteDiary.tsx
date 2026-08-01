@@ -26,8 +26,9 @@ import {
   LoadingState,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
 } from '@/components/college/primitives';
+
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from '../common/SafetyDocField';
 import { SafetyMasthead } from '../common/SafetyModuleShell';
 import { SignatureField } from '../common/SignatureField';
 import { SmartTextarea } from '../common/SmartTextarea';
@@ -65,7 +66,11 @@ function generateCalendarDays(baseDate: Date): Date[] {
 }
 
 function isSameDay(a: Date, b: Date): boolean {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
 }
 
 function formatDateKey(d: Date): string {
@@ -83,7 +88,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  const validation = useFieldValidation({ siteName: { required: true, message: 'Site name is required' } });
+  const validation = useFieldValidation({
+    siteName: { required: true, message: 'Site name is required' },
+  });
 
   // Form field state
   const [siteAddress, setSiteAddress] = useState('');
@@ -105,13 +112,29 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const { data: activePermits = [] } = useActivePermits();
   const { data: approvedRams = [] } = useRAMSDocumentsByStatus('approved');
   const { data: jobs = [] } = useSparkProjects('active');
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
+  const jobTitleFor = (id: string | null) =>
+    id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
-  const { status: draftStatus, recoveredData: recoveredDraft, clearDraft, dismissRecovery: dismissDraft } = useLocalDraft({
+  const {
+    status: draftStatus,
+    recoveredData: recoveredDraft,
+    clearDraft,
+    dismissRecovery: dismissDraft,
+  } = useLocalDraft({
     key: 'site-diary',
     data: {
       siteName: validation.fields.siteName?.value ?? '',
-      siteAddress, weather, startTime, endTime, personnelCount, workCompleted, issues, materialsUsed, notes, selectedRamsIds, selectedPermitIds,
+      siteAddress,
+      weather,
+      startTime,
+      endTime,
+      personnelCount,
+      workCompleted,
+      issues,
+      materialsUsed,
+      notes,
+      selectedRamsIds,
+      selectedPermitIds,
     },
     enabled: showForm,
   });
@@ -129,7 +152,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     if (recoveredDraft.materialsUsed) setMaterialsUsed(recoveredDraft.materialsUsed);
     if (recoveredDraft.notes) setNotes(recoveredDraft.notes);
     if (recoveredDraft.selectedRamsIds?.length) setSelectedRamsIds(recoveredDraft.selectedRamsIds);
-    if (recoveredDraft.selectedPermitIds?.length) setSelectedPermitIds(recoveredDraft.selectedPermitIds);
+    if (recoveredDraft.selectedPermitIds?.length)
+      setSelectedPermitIds(recoveredDraft.selectedPermitIds);
     dismissDraft();
   };
 
@@ -156,10 +180,21 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
 
   const resetForm = () => {
     validation.reset();
-    setSiteAddress(''); setWeather(''); setStartTime(''); setEndTime(''); setPersonnelCount('');
-    setWorkCompleted(''); setIssues(''); setMaterialsUsed(''); setNotes(''); setDiaryPhotos([]);
-    setSelectedRamsIds([]); setSelectedPermitIds([]); setRecorderSig('');
-    setLinkedJobId(null); setLinkedJobTitle(null);
+    setSiteAddress('');
+    setWeather('');
+    setStartTime('');
+    setEndTime('');
+    setPersonnelCount('');
+    setWorkCompleted('');
+    setIssues('');
+    setMaterialsUsed('');
+    setNotes('');
+    setDiaryPhotos([]);
+    setSelectedRamsIds([]);
+    setSelectedPermitIds([]);
+    setRecorderSig('');
+    setLinkedJobId(null);
+    setLinkedJobTitle(null);
     clearDraft();
   };
 
@@ -172,7 +207,13 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setSelectedPermitIds(entry.permit_ids ?? []);
     setLinkedJobId(entry.job_id ?? null);
     setLinkedJobTitle(jobTitleFor(entry.job_id ?? null));
-    setStartTime(''); setEndTime(''); setWorkCompleted(''); setIssues(''); setMaterialsUsed(''); setNotes(''); setDiaryPhotos([]);
+    setStartTime('');
+    setEndTime('');
+    setWorkCompleted('');
+    setIssues('');
+    setMaterialsUsed('');
+    setNotes('');
+    setDiaryPhotos([]);
     setShowForm(true);
     haptic.success();
   };
@@ -213,7 +254,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   }, [refetch]);
 
   const scrollCalendar = (direction: 'left' | 'right') => {
-    if (calendarRef.current) calendarRef.current.scrollBy({ left: direction === 'left' ? -200 : 200, behavior: 'smooth' });
+    if (calendarRef.current)
+      calendarRef.current.scrollBy({ left: direction === 'left' ? -200 : 200, behavior: 'smooth' });
   };
 
   return (
@@ -227,14 +269,24 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       {/* Calendar strip */}
       <div className="border-b border-white/[0.06]">
         <div className="mx-auto max-w-3xl px-2 py-3 flex items-center gap-1">
-          <button onClick={() => scrollCalendar('left')} className="h-11 w-8 flex items-center justify-center text-white/50 touch-manipulation" aria-label="Earlier">
+          <button
+            onClick={() => scrollCalendar('left')}
+            className="h-11 w-8 flex items-center justify-center text-white touch-manipulation"
+            aria-label="Earlier"
+          >
             ‹
           </button>
-          <div ref={calendarRef} className="flex gap-2 overflow-x-auto hide-scrollbar flex-1" style={{ scrollbarWidth: 'none' }}>
+          <div
+            ref={calendarRef}
+            className="flex gap-2 overflow-x-auto hide-scrollbar flex-1"
+            style={{ scrollbarWidth: 'none' }}
+          >
             {calendarDays.map((day) => {
               const isSelected = isSameDay(day, selectedDate);
               const isToday = isSameDay(day, today);
-              const hasEntries = entries.some((e: SiteDiaryEntry) => e.entry_date === formatDateKey(day));
+              const hasEntries = entries.some(
+                (e: SiteDiaryEntry) => e.entry_date === formatDateKey(day)
+              );
               const isFuture = day > today && !isToday;
               return (
                 <button
@@ -244,7 +296,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   className={cn(
                     'flex-shrink-0 w-12 h-16 flex flex-col items-center justify-center rounded-xl text-center touch-manipulation active:scale-95 transition-all',
                     isFuture
-                      ? 'bg-white/[0.02] text-white/30 pointer-events-none'
+                      ? 'bg-white/[0.02] text-white pointer-events-none'
                       : isSelected
                         ? 'bg-elec-yellow text-black'
                         : isToday
@@ -252,14 +304,27 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                           : 'bg-white/[0.04] text-white'
                   )}
                 >
-                  <span className="text-[10px] font-medium uppercase tracking-[0.08em]">{day.toLocaleDateString('en-GB', { weekday: 'short' })}</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.08em]">
+                    {day.toLocaleDateString('en-GB', { weekday: 'short' })}
+                  </span>
                   <span className="text-[17px] font-semibold tabular-nums">{day.getDate()}</span>
-                  {hasEntries && <span className={cn('w-1.5 h-1.5 rounded-full mt-0.5', isSelected ? 'bg-black' : 'bg-elec-yellow')} />}
+                  {hasEntries && (
+                    <span
+                      className={cn(
+                        'w-1.5 h-1.5 rounded-full mt-0.5',
+                        isSelected ? 'bg-black' : 'bg-elec-yellow'
+                      )}
+                    />
+                  )}
                 </button>
               );
             })}
           </div>
-          <button onClick={() => scrollCalendar('right')} className="h-11 w-8 flex items-center justify-center text-white/50 touch-manipulation" aria-label="Later">
+          <button
+            onClick={() => scrollCalendar('right')}
+            className="h-11 w-8 flex items-center justify-center text-white touch-manipulation"
+            aria-label="Later"
+          >
             ›
           </button>
         </div>
@@ -269,19 +334,39 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
         <div className="mx-auto max-w-3xl px-4 py-4">
           <AnimatePresence mode="wait">
             {showForm ? (
-              <motion.div key="form" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.2 }} className="space-y-4">
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <Eyebrow>New entry</Eyebrow>
                     <h2 className="mt-1 text-[18px] font-semibold text-white">
-                      {selectedDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
+                      {selectedDate.toLocaleDateString('en-GB', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                      })}
                     </h2>
                   </div>
-                  <SecondaryButton onClick={() => { resetForm(); setShowForm(false); }}>Cancel</SecondaryButton>
+                  <SecondaryButton
+                    onClick={() => {
+                      resetForm();
+                      setShowForm(false);
+                    }}
+                  >
+                    Cancel
+                  </SecondaryButton>
                 </div>
 
                 <AnimatePresence>
-                  {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+                  {recoveredDraft && (
+                    <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+                  )}
                 </AnimatePresence>
 
                 <FormCard eyebrow="Site">
@@ -290,14 +375,21 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                       value={validation.fields.siteName?.value ?? ''}
                       onChange={(e) => validation.setValue('siteName', e.target.value)}
                       onBlur={() => validation.setTouched('siteName')}
-                      className={inputClass}
+                      className={safetyInputCn}
                       placeholder="e.g. 14 King Street Refurb"
                     />
                     {validation.fields.siteName?.touched && validation.fields.siteName?.error && (
-                      <p className="text-[11px] text-red-400 mt-1">{validation.fields.siteName.error}</p>
+                      <p className="text-[11px] text-red-400 mt-1">
+                        {validation.fields.siteName.error}
+                      </p>
                     )}
                   </Field>
-                  <LocationAutoFill value={siteAddress} onChange={setSiteAddress} label="Site address (optional)" placeholder="Full address" />
+                  <LocationAutoFill
+                    value={siteAddress}
+                    onChange={setSiteAddress}
+                    label="Site address (optional)"
+                    placeholder="Full address"
+                  />
                   <Field label="Weather">
                     <div className="flex gap-2 flex-wrap">
                       {WEATHER_OPTIONS.map((opt) => (
@@ -306,7 +398,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                           onClick={() => setWeather(weather === opt.value ? '' : opt.value)}
                           className={cn(
                             'h-10 px-4 rounded-xl text-[13px] font-medium touch-manipulation active:scale-95 transition-all border',
-                            weather === opt.value ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
+                            weather === opt.value
+                              ? 'bg-elec-yellow text-black border-elec-yellow'
+                              : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.08]'
                           )}
                         >
                           {opt.label}
@@ -319,27 +413,66 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                 <FormCard eyebrow="The day">
                   <div className="grid grid-cols-2 gap-3">
                     <Field label="Start time">
-                      <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} className={cn(inputClass, '[color-scheme:dark]')} />
+                      <input
+                        type="time"
+                        value={startTime}
+                        onChange={(e) => setStartTime(e.target.value)}
+                        className={cn(safetyInputCn, '[color-scheme:dark]')}
+                      />
                     </Field>
                     <Field label="End time">
-                      <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className={cn(inputClass, '[color-scheme:dark]', !timeValid && 'border-red-500/60')} />
+                      <input
+                        type="time"
+                        value={endTime}
+                        onChange={(e) => setEndTime(e.target.value)}
+                        className={cn('[color-scheme:dark]', !timeValid && 'border-red-500/60')}
+                      />
                     </Field>
                   </div>
-                  {!timeValid && <p className="text-[11px] text-red-400">End time must be after start time.</p>}
+                  {!timeValid && (
+                    <p className="text-[11px] text-red-400">End time must be after start time.</p>
+                  )}
                   <Field label="Personnel on site">
-                    <input type="number" inputMode="numeric" value={personnelCount} onChange={(e) => setPersonnelCount(e.target.value)} placeholder="Number of people" className={inputClass} />
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      value={personnelCount}
+                      onChange={(e) => setPersonnelCount(e.target.value)}
+                      placeholder="Number of people"
+                      className={safetyInputCn}
+                    />
                   </Field>
                   <Field label="Work completed">
-                    <SmartTextarea value={workCompleted} onChange={setWorkCompleted} placeholder="Describe work carried out today…" className="min-h-[110px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                    <SmartTextarea
+                      value={workCompleted}
+                      onChange={setWorkCompleted}
+                      placeholder="Describe work carried out today…"
+                      className={cn(safetyTextareaCn, 'min-h-[110px]')}
+                    />
                   </Field>
                   <Field label="Issues (optional)">
-                    <SmartTextarea value={issues} onChange={setIssues} placeholder="Any issues or problems encountered…" className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                    <SmartTextarea
+                      value={issues}
+                      onChange={setIssues}
+                      placeholder="Any issues or problems encountered…"
+                      className={cn(safetyTextareaCn, 'min-h-[80px]')}
+                    />
                   </Field>
                   <Field label="Materials used (optional)">
-                    <SmartTextarea value={materialsUsed} onChange={setMaterialsUsed} placeholder="List materials used on site…" className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                    <SmartTextarea
+                      value={materialsUsed}
+                      onChange={setMaterialsUsed}
+                      placeholder="List materials used on site…"
+                      className={cn(safetyTextareaCn, 'min-h-[80px]')}
+                    />
                   </Field>
                   <Field label="Additional notes (optional)">
-                    <SmartTextarea value={notes} onChange={setNotes} placeholder="Anything else to record…" className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl" />
+                    <SmartTextarea
+                      value={notes}
+                      onChange={setNotes}
+                      placeholder="Anything else to record…"
+                      className={cn(safetyTextareaCn, 'min-h-[80px]')}
+                    />
                   </Field>
                 </FormCard>
 
@@ -352,18 +485,39 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             {selectedRamsIds.map((id) => {
                               const doc = approvedRams.find((r) => r.id === id);
                               return (
-                                <span key={id} className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white/80 bg-white/[0.05] border border-white/10">
+                                <span
+                                  key={id}
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white bg-white/[0.05] border border-white/10"
+                                >
                                   {doc?.project_name ?? 'RAMS'}
-                                  <button onClick={() => setSelectedRamsIds((prev) => prev.filter((x) => x !== id))} className="text-white/50 hover:text-white" aria-label="Remove">×</button>
+                                  <button
+                                    onClick={() =>
+                                      setSelectedRamsIds((prev) => prev.filter((x) => x !== id))
+                                    }
+                                    className="text-white hover:text-white"
+                                    aria-label="Remove"
+                                  >
+                                    ×
+                                  </button>
                                 </span>
                               );
                             })}
                           </div>
                         )}
                         <ListCard>
-                          {approvedRams.filter((r) => !selectedRamsIds.includes(r.id)).map((r) => (
-                            <ListRow key={r.id} onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])} title={r.project_name} subtitle={r.location} trailing={<span className="text-elec-yellow/70 text-[13px]">+</span>} />
-                          ))}
+                          {approvedRams
+                            .filter((r) => !selectedRamsIds.includes(r.id))
+                            .map((r) => (
+                              <ListRow
+                                key={r.id}
+                                onClick={() => setSelectedRamsIds((prev) => [...prev, r.id])}
+                                title={r.project_name}
+                                subtitle={r.location}
+                                trailing={
+                                  <span className="text-elec-yellow/70 text-[13px]">+</span>
+                                }
+                              />
+                            ))}
                         </ListCard>
                       </Field>
                     )}
@@ -374,18 +528,39 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                             {selectedPermitIds.map((id) => {
                               const permit = activePermits.find((p) => p.id === id);
                               return (
-                                <span key={id} className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white/80 bg-white/[0.05] border border-white/10">
+                                <span
+                                  key={id}
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11.5px] text-white bg-white/[0.05] border border-white/10"
+                                >
                                   {permit?.title ?? 'Permit'}
-                                  <button onClick={() => setSelectedPermitIds((prev) => prev.filter((x) => x !== id))} className="text-white/50 hover:text-white" aria-label="Remove">×</button>
+                                  <button
+                                    onClick={() =>
+                                      setSelectedPermitIds((prev) => prev.filter((x) => x !== id))
+                                    }
+                                    className="text-white hover:text-white"
+                                    aria-label="Remove"
+                                  >
+                                    ×
+                                  </button>
                                 </span>
                               );
                             })}
                           </div>
                         )}
                         <ListCard>
-                          {activePermits.filter((p) => !selectedPermitIds.includes(p.id)).map((p) => (
-                            <ListRow key={p.id} onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])} title={p.title} subtitle={`${p.location} · ${new Date(p.end_time).toLocaleDateString('en-GB')}`} trailing={<span className="text-elec-yellow/70 text-[13px]">+</span>} />
-                          ))}
+                          {activePermits
+                            .filter((p) => !selectedPermitIds.includes(p.id))
+                            .map((p) => (
+                              <ListRow
+                                key={p.id}
+                                onClick={() => setSelectedPermitIds((prev) => [...prev, p.id])}
+                                title={p.title}
+                                subtitle={`${p.location} · ${new Date(p.end_time).toLocaleDateString('en-GB')}`}
+                                trailing={
+                                  <span className="text-elec-yellow/70 text-[13px]">+</span>
+                                }
+                              />
+                            ))}
                         </ListCard>
                       </Field>
                     )}
@@ -404,24 +579,49 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                 </FormCard>
 
                 <FormCard eyebrow="Evidence & sign-off">
-                  <SafetyPhotoCapture photos={diaryPhotos} onPhotosChange={setDiaryPhotos} maxPhotos={5} label="Site photos" />
-                  <SignatureField label="Recorder signature" value={recorderSig} onChange={setRecorderSig} />
+                  <SafetyPhotoCapture
+                    photos={diaryPhotos}
+                    onPhotosChange={setDiaryPhotos}
+                    maxPhotos={5}
+                    label="Site photos"
+                  />
+                  <SignatureField
+                    label="Recorder signature"
+                    value={recorderSig}
+                    onChange={setRecorderSig}
+                  />
                 </FormCard>
               </motion.div>
             ) : (
-              <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="space-y-4">
+              <motion.div
+                key="list"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <Eyebrow>{isSameDay(selectedDate, today) ? 'Today' : 'Selected day'}</Eyebrow>
                     <h2 className="mt-1 text-[18px] font-semibold text-white">
-                      {selectedDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
+                      {selectedDate.toLocaleDateString('en-GB', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                      })}
                     </h2>
                   </div>
                   <PrimaryButton onClick={() => setShowForm(true)}>New entry</PrimaryButton>
                 </div>
 
                 {entriesForDate.length > 0 && (
-                  <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search entries…" className={cn(inputClass, 'rounded-full')} />
+                  <input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search entries…"
+                    className={cn(safetyInputCn, 'rounded-full')}
+                  />
                 )}
 
                 {isLoading ? (
@@ -434,32 +634,64 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                     onAction={() => setShowForm(true)}
                   />
                 ) : filteredEntriesForDate.length === 0 ? (
-                  <EmptyState title="No matching entries" description="Try a different search term." />
+                  <EmptyState
+                    title="No matching entries"
+                    description="Try a different search term."
+                  />
                 ) : (
                   <div className="space-y-2.5">
                     {filteredEntriesForDate.map((entry: SiteDiaryEntry) => {
                       const meta: string[] = [];
                       if (entry.weather) meta.push(entry.weather);
-                      if (entry.start_time || entry.end_time) meta.push(`${entry.start_time ?? '?'}–${entry.end_time ?? '?'}`);
-                      if (entry.personnel_count != null) meta.push(`${entry.personnel_count} on site`);
+                      if (entry.start_time || entry.end_time)
+                        meta.push(`${entry.start_time ?? '?'}–${entry.end_time ?? '?'}`);
+                      if (entry.personnel_count != null)
+                        meta.push(`${entry.personnel_count} on site`);
                       const linkedJob = jobTitleFor(entry.job_id);
                       if (linkedJob) meta.push(linkedJob);
                       return (
                         <SwipeableListItem
                           key={entry.id}
-                          leftActions={[{ icon: Copy, label: 'Duplicate', color: 'bg-blue-500', textColor: 'text-white', onAction: () => handleDuplicate(entry) }]}
-                          rightActions={[{ icon: Trash2, label: 'Delete', color: 'bg-red-500', textColor: 'text-white', onAction: () => setDeleteTarget(entry.id) }]}
+                          leftActions={[
+                            {
+                              icon: Copy,
+                              label: 'Duplicate',
+                              color: 'bg-blue-500',
+                              textColor: 'text-white',
+                              onAction: () => handleDuplicate(entry),
+                            },
+                          ]}
+                          rightActions={[
+                            {
+                              icon: Trash2,
+                              label: 'Delete',
+                              color: 'bg-red-500',
+                              textColor: 'text-white',
+                              onAction: () => setDeleteTarget(entry.id),
+                            },
+                          ]}
                         >
                           <ListCard>
                             <ListRow
                               accent="blue"
-                              onClick={() => { setShareRecordId(entry.id); setShareRecordTitle(entry.site_name); }}
+                              onClick={() => {
+                                setShareRecordId(entry.id);
+                                setShareRecordTitle(entry.site_name);
+                              }}
                               title={entry.site_name}
-                              subtitle={entry.work_completed?.substring(0, 70) || (entry.site_address ?? '')}
+                              subtitle={
+                                entry.work_completed?.substring(0, 70) || (entry.site_address ?? '')
+                              }
                               trailing={
                                 <div className="flex flex-col items-end gap-1">
-                                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-blue-500/10 text-blue-400 border-blue-500/25">Recorded</span>
-                                  {meta.length > 0 && <span className="text-[11px] text-white/45">{meta.join(' · ')}</span>}
+                                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-blue-500/10 text-blue-400 border-blue-500/25">
+                                    Recorded
+                                  </span>
+                                  {meta.length > 0 && (
+                                    <span className="text-[11px] text-white">
+                                      {meta.join(' · ')}
+                                    </span>
+                                  )}
                                 </div>
                               }
                             />
@@ -477,9 +709,17 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
 
       {/* Sticky submit (form mode) */}
       {showForm && (
-        <div className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 z-40" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+        <div
+          className="fixed bottom-0 inset-x-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3 z-40"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
           <div className="mx-auto max-w-3xl">
-            <PrimaryButton fullWidth size="lg" disabled={!canSubmit || createEntry.isPending} onClick={handleSubmit}>
+            <PrimaryButton
+              fullWidth
+              size="lg"
+              disabled={!canSubmit || createEntry.isPending}
+              onClick={handleSubmit}
+            >
               {createEntry.isPending ? 'Saving…' : 'Save entry'}
             </PrimaryButton>
           </div>
@@ -488,7 +728,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
 
       <DeleteConfirmSheet
         open={!!deleteTarget}
-        onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
         onConfirm={() => {
           if (deleteTarget) deleteEntry.mutate(deleteTarget);
           setDeleteTarget(null);

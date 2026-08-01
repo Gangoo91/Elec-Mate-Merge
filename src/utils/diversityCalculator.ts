@@ -1,5 +1,5 @@
 /**
- * IET On-Site Guide Table 1B / Table H2 Diversity Calculator
+ * IET On-Site Guide Table A2 / Table H2 Diversity Calculator
  * BS 7671:2018+A4:2026 Compliant
  */
 
@@ -23,11 +23,11 @@ export interface DiversityResult {
 export type PremisesType = 'domestic' | 'commercial' | 'industrial' | 'hotel';
 
 /**
- * IET On-Site Guide Table 1B / Table H2 Diversity Allowances
+ * IET On-Site Guide Table A2 / Table H2 Diversity Allowances
  */
 export const diversityRules = {
   lighting: {
-    domestic: { factor: 0.66, formula: '66% of total current', regulation: 'Table 1B item 1' },
+    domestic: { factor: 0.66, formula: '66% of total current', regulation: 'Table A2 item 1' },
     commercial: { factor: 0.9, formula: '90% of total current', regulation: 'Table H2 item 1' },
     industrial: { factor: 0.9, formula: '90% of total current', regulation: 'Table H2 item 1' },
     hotel: { factor: 0.75, formula: '75% of total current', regulation: 'Table H2 item 1' },
@@ -36,7 +36,7 @@ export const diversityRules = {
     domestic: {
       assumedCurrent: 32,
       formula: 'Assumed 32A per ring (100% largest + 40% remainder for multiple rings)',
-      regulation: 'Table 1B item 2',
+      regulation: 'Table A2 item 2',
     },
     commercial: {
       assumedCurrent: 32,
@@ -47,7 +47,7 @@ export const diversityRules = {
   radialSocket: {
     domestic: {
       formula: '100% up to 10A + 40% of remainder',
-      regulation: 'Table 1B item 2',
+      regulation: 'Table A2 item 2',
     },
     commercial: {
       formula: '100% up to 10A + 50% of remainder',
@@ -61,13 +61,13 @@ export const diversityRules = {
   cooker: {
     domestic: {
       formula: '10A + 30% of excess over 10A (+ 5A if socket outlet)',
-      regulation: 'Table 1B item 3',
+      regulation: 'Table A2 item 3',
     },
   },
   shower: {
     domestic: {
       formula: '100% largest + 100% second + 25% of remainder',
-      regulation: 'Table 1B item 5',
+      regulation: 'Table A2 item 5',
     },
     commercial: {
       formula: '100% largest + 80% second + 60% of remainder',
@@ -98,7 +98,7 @@ export const diversityRules = {
     domestic: {
       factor: 1.0,
       formula: '100% (no diversity for space heating)',
-      regulation: 'Table 1B item 4',
+      regulation: 'Table A2 item 4',
     },
     commercial: { factor: 0.9, formula: '90% of total current', regulation: 'Table H2 item 4' },
     industrial: { factor: 1.0, formula: '100% (no diversity)', regulation: 'Table H2 item 4' },
@@ -462,9 +462,10 @@ export function calculateSystemDiversity(
       case 'floorWarming':
       case 'thermalStorage':
       case 'motor':
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         result = calculateNoDiversity(groupCircuits, type as any);
         break;
-      default:
+      default: {
         // Unknown type - no diversity
         const unknownCurrent = groupCircuits.reduce((sum, c) => sum + c.designCurrent, 0);
         result = {
@@ -474,6 +475,7 @@ export function calculateSystemDiversity(
           regulation: 'Conservative approach',
           breakdown: [`Unknown circuit type: 100% = ${unknownCurrent.toFixed(2)}A`],
         };
+      }
     }
 
     totalDiversifiedCurrent += result.diversifiedCurrent;

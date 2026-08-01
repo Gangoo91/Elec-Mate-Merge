@@ -1,5 +1,24 @@
-import { motion } from 'framer-motion';
-import { Shield, ShieldAlert, ShieldOff, TriangleAlert } from 'lucide-react';
+/**
+ * RiskLevelSlider — the overall risk rating for the briefing.
+ *
+ * Three 100px cards in a three-across grid, each with a shield icon in a
+ * coloured tile, a coloured label, an animated pulse on selection, a floating
+ * indicator dot and a description squeezed into a third of the screen width —
+ * "Additional safety measures required" wrapped to four lines on a phone, so
+ * the sentence explaining the choice was the hardest thing on screen to read.
+ *
+ * It is now a segmented chip row with the selected level explained underneath at
+ * full width. Same three choices, one line each, and the description is legible.
+ *
+ * On colour: selection is yellow, the same as every other chip in the document,
+ * because selection is selection. Severity is carried by the level name in the
+ * sentence below — amber for medium, red for high — so the meaning survives
+ * without three competing fills fighting the accent. Low is plain white rather
+ * than green: "low risk" is the ordinary case and does not need celebrating,
+ * and a green tick on a safety document is exactly the kind of unearned
+ * reassurance this app should not be handing out.
+ */
+
 import { cn } from '@/lib/utils';
 
 export type RiskLevel = 'low' | 'medium' | 'high';
@@ -10,153 +29,72 @@ interface RiskLevelSliderProps {
   error?: string;
 }
 
-const riskLevels: {
-  id: RiskLevel;
-  label: string;
-  description: string;
-  color: string;
-  icon: 'shield' | 'shield-alert' | 'shield-off';
-}[] = [
+const riskLevels: { id: RiskLevel; label: string; description: string; severity: string }[] = [
   {
     id: 'low',
     label: 'Low',
-    description: 'Standard precautions apply',
-    color: 'emerald',
-    icon: 'shield',
+    description: 'Standard precautions apply.',
+    severity: 'text-white',
   },
   {
     id: 'medium',
     label: 'Medium',
-    description: 'Additional safety measures required',
-    color: 'amber',
-    icon: 'shield-alert',
+    description: 'Additional safety measures required.',
+    severity: 'text-amber-400',
   },
   {
     id: 'high',
     label: 'High',
-    description: 'Strict controls and supervision needed',
-    color: 'red',
-    icon: 'shield-off',
+    description: 'Strict controls and supervision needed.',
+    severity: 'text-red-400',
   },
 ];
 
-const iconComponents = {
-  shield: Shield,
-  'shield-alert': ShieldAlert,
-  'shield-off': ShieldOff,
-};
-
-const colorMap = {
-  emerald: {
-    bg: 'bg-emerald-500/10',
-    bgActive: 'bg-emerald-500/20',
-    border: 'border-emerald-500/20',
-    borderActive: 'border-emerald-500/50',
-    text: 'text-emerald-400',
-    ring: 'ring-emerald-500/25',
-    iconBg: 'bg-emerald-500/15',
-    dot: 'bg-emerald-400',
-  },
-  amber: {
-    bg: 'bg-amber-500/10',
-    bgActive: 'bg-amber-500/20',
-    border: 'border-amber-500/20',
-    borderActive: 'border-amber-500/50',
-    text: 'text-amber-400',
-    ring: 'ring-amber-500/25',
-    iconBg: 'bg-amber-500/15',
-    dot: 'bg-amber-400',
-  },
-  red: {
-    bg: 'bg-red-500/10',
-    bgActive: 'bg-red-500/20',
-    border: 'border-red-500/20',
-    borderActive: 'border-red-500/50',
-    text: 'text-red-400',
-    ring: 'ring-red-500/25',
-    iconBg: 'bg-red-500/15',
-    dot: 'bg-red-400',
-  },
-};
+/** Verbatim from CLAUDE.md → Design System → Form Controls. */
+const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
 
 export function RiskLevelSlider({ value, onChange, error }: RiskLevelSliderProps) {
-  return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center gap-2">
-        <TriangleAlert className="h-4.5 w-4.5 text-elec-yellow" />
-        <label className="text-sm font-semibold text-white">Risk Level</label>
-      </div>
+  const selected = riskLevels.find((l) => l.id === value);
 
-      {/* Risk Level Cards */}
-      <div className="grid grid-cols-3 gap-2.5">
+  return (
+    <div className="space-y-3">
+      <label className="block text-[12px] font-medium text-white">
+        Overall risk level
+        <span className="text-elec-yellow"> *</span>
+      </label>
+
+      <div role="radiogroup" className="grid grid-cols-3 gap-2">
         {riskLevels.map((level) => {
           const isActive = level.id === value;
-          const colors = colorMap[level.color as keyof typeof colorMap];
-          const IconComponent = iconComponents[level.icon];
-
           return (
-            <motion.button
+            <button
               key={level.id}
               type="button"
-              whileTap={{ scale: 0.96 }}
+              role="radio"
+              aria-checked={isActive}
               onClick={() => onChange(level.id)}
               className={cn(
-                'relative flex flex-col items-center gap-2.5 p-4 rounded-xl',
-                'border transition-all duration-200',
-                'touch-manipulation min-h-[100px]',
+                'h-11 touch-manipulation rounded-full border text-[14px] transition-colors',
                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
-                isActive
-                  ? cn(colors.bgActive, colors.borderActive, 'ring-2', colors.ring, 'shadow-lg')
-                  : cn('bg-white/[0.04]', colors.border, 'hover:bg-white/[0.08]')
+                isActive ? chipOn : chipOff
               )}
             >
-              {/* Active indicator dot */}
-              {isActive && (
-                <motion.div
-                  layoutId="riskActiveIndicator"
-                  className={cn('absolute top-2 right-2 w-2 h-2 rounded-full', colors.dot)}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                />
-              )}
-
-              {/* Icon */}
-              <motion.div
-                animate={isActive ? { scale: [1, 1.1, 1] } : { scale: 1 }}
-                transition={{ duration: 0.3 }}
-                className={cn(
-                  'flex items-center justify-center w-10 h-10 rounded-xl transition-colors duration-200',
-                  isActive ? cn(colors.iconBg, colors.text) : 'bg-white/[0.06] text-white'
-                )}
-              >
-                <IconComponent className="h-5 w-5" />
-              </motion.div>
-
-              {/* Label */}
-              <span
-                className={cn(
-                  'text-sm font-semibold transition-colors duration-200',
-                  isActive ? colors.text : 'text-white'
-                )}
-              >
-                {level.label}
-              </span>
-
-              {/* Description */}
-              <span
-                className={cn(
-                  'text-xs leading-tight text-center transition-colors duration-200',
-                  isActive ? 'text-white' : 'text-white'
-                )}
-              >
-                {level.description}
-              </span>
-            </motion.button>
+              {level.label}
+            </button>
           );
         })}
       </div>
 
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {selected && (
+        <p className="text-[13px] leading-snug text-white">
+          <span className={cn('font-semibold', selected.severity)}>{selected.label} risk</span>
+          {' — '}
+          {selected.description}
+        </p>
+      )}
+
+      {error && <p className="text-[11px] font-medium text-red-400">{error}</p>}
     </div>
   );
 }

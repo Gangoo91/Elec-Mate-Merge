@@ -626,7 +626,6 @@ const IntegratedRAMSGenerator: React.FC = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 

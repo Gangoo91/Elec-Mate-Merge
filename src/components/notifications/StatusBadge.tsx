@@ -8,16 +8,16 @@ interface StatusBadgeProps {
 }
 
 const STATUS_STYLES = {
-  pending: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  'in-progress': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  pending: 'bg-white/[0.06] text-white/70 border-white/[0.12]',
+  'in-progress': 'bg-white/[0.06] text-white/70 border-white/[0.12]',
   submitted: 'bg-green-500/10 text-green-400 border-green-500/20',
-  overdue: 'bg-red-500/10 text-red-400 border-red-500/20 animate-pulse',
-  cancelled: 'bg-neutral-500/10 text-neutral-400 border-neutral-500/20',
+  overdue: 'bg-red-500/10 text-red-400 border-red-500/20',
+  cancelled: 'bg-white/[0.05] text-white/45 border-white/[0.1]',
 };
 
 const STATUS_LABELS = {
   pending: 'Pending',
-  'in-progress': 'In Progress',
+  'in-progress': 'In progress',
   submitted: 'Submitted',
   overdue: 'Overdue',
   cancelled: 'Cancelled',

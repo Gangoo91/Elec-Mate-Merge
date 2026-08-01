@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Formats Solar PV Installation Certificate data for PDF generation
  *
@@ -81,6 +82,12 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
         return 'Ground Mounted';
       case 'building-integrated':
         return 'Building Integrated (BIPV)';
+      case 'carport-mounted':
+        return 'Carport Mounted';
+      case 'flat-roof-ballasted':
+        return 'Flat Roof Ballasted';
+      case 'wall-mounted':
+        return 'Wall Mounted';
       default:
         return type || '';
     }
@@ -123,6 +130,8 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
         return 'LFP (Lithium Iron Phosphate)';
       case 'lead-acid':
         return 'Lead Acid';
+      case 'sodium-ion':
+        return 'Sodium-Ion';
       case 'other':
         return 'Other';
       default:
@@ -228,21 +237,31 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     }
   };
 
-  // Format work type for display
+  // Format work type for display — covers every WORK_TYPE_OPTIONS value.
+  // Unmapped (custom) values print as entered; only an empty value falls
+  // back to 'New Installation' (matching the work_type payload default).
   const formatWorkType = (type: string): string => {
     switch (type) {
       case 'new-installation':
         return 'New Installation';
+      case 'new-build':
+        return 'New Build Property';
       case 'retrofit':
         return 'Retrofit / Addition';
       case 'extension':
         return 'System Extension';
+      case 'battery-add':
+        return 'Battery Storage Addition';
       case 'replacement':
         return 'Component Replacement';
+      case 'repowering':
+        return 'Repowering (Full System Upgrade)';
       case 'repair':
         return 'Repair / Remedial Work';
+      case 'inspection':
+        return 'Inspection / Health Check';
       default:
-        return 'New Installation';
+        return type || 'New Installation';
     }
   };
 
@@ -307,6 +326,8 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       shading_percentage: ((1 - (arr.shadingFactor || 1)) * 100).toFixed(0),
       string_voc: arr.stringVoltageVoc || arr.stringVoltage || '',
       string_isc: arr.stringCurrentIsc || arr.stringCurrent || '',
+      string_vmp: arr.stringVoltageVmp || '',
+      string_imp: arr.stringCurrentImp || '',
       mounting_type: arr.mountingType || '',
       mounting_type_display: formatMountingType(arr.mountingType || ''),
       dc_cable_type: arr.dcCableType || '',
@@ -336,6 +357,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       type: inv.type || '',
       type_display: formatInverterType(inv.type || ''),
       mppt_count: inv.mpptCount || 1,
+      mppt_voltage_range: inv.mpptVoltageRange || '',
       max_input_voltage: inv.maxInputVoltage || '',
       max_input_current: inv.maxInputCurrent || '',
       efficiency: inv.efficiency || '',

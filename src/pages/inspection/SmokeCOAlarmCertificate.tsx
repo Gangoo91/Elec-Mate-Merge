@@ -1,12 +1,24 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Loader2, Trash2, Save } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import SignatureInput from '@/components/signature/SignatureInput';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import CertShellFooter, {
+  certFooterNeutralButton,
+} from '@/components/inspection/shared/CertShellFooter';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -14,13 +26,24 @@ import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { draftStorage } from '@/utils/draftStorage';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const textareaCn = 'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
-const pickerTrigger = 'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTrigger =
+  'h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const ALARM_MANUFACTURERS = ['Aico', 'Kidde / BRK', 'FireAngel', 'Honeywell', 'Other'];
 const FLOORS = ['Basement', 'Ground', 'First', 'Second', 'Third', 'Loft'];
@@ -153,34 +176,62 @@ const defaultData = (): SmokeCOData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-smoke-co';
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="space-y-3">
-    <div className="border-b border-white/[0.06] pb-1">
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
+type StepId = 'details' | 'system' | 'alarms' | 'signoff';
+
+const STEPS: { id: StepId; label: string }[] = [
+  { id: 'details', label: 'Details' },
+  { id: 'system', label: 'System' },
+  { id: 'alarms', label: 'Alarms' },
+  { id: 'signoff', label: 'Sign off' },
+];
+
+const Section = ({ title, className, children }: { title: string; className?: string; children: React.ReactNode }) => (
+  <section className={cn(cardCn, className)}>
+    <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
     {children}
-  </div>
+  </section>
 );
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+    <p className="shrink-0 text-[13px] font-semibold text-white">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
+  <div><Label className={labelCn}>{label}{required && ' *'}</Label>{children}</div>
 );
 
 const PassFailButtons = ({ value, onChange, includeNA }: { value: string; onChange: (v: string) => void; includeNA?: boolean }) => (
   <div className="flex gap-2">
     {['pass', 'fail', ...(includeNA ? [''] : [])].map((v) => (
       <button key={v || 'na'} type="button" onClick={() => onChange(v)}
-        className={cn('flex-1 h-11 rounded-lg text-xs font-semibold touch-manipulation transition-all',
-          value === v ? (v === 'pass' ? 'bg-green-500 text-white' : v === 'fail' ? 'bg-red-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+        className={cn('flex-1 h-11 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
+          value === v
+            ? (v === 'pass'
+                ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                : v === 'fail'
+                  ? 'bg-red-500 border border-red-500 text-white font-semibold'
+                  : 'bg-white/20 border border-white/20 text-white font-semibold')
+            : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium')}>
         {v === 'pass' ? 'Pass' : v === 'fail' ? 'Fail' : 'N/A'}
+      </button>
+    ))}
+  </div>
+);
+
+const YesNo = ({ value, onSelect }: { value: boolean; onSelect: (v: boolean) => void }) => (
+  <div className="flex shrink-0 gap-2">
+    {[true, false].map((v) => (
+      <button key={String(v)} type="button" onClick={() => onSelect(v)}
+        className={cn('h-11 w-16 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.97]',
+          value === v
+            ? (v
+                ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                : 'bg-white/20 border border-white/20 text-white font-semibold')
+            : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium')}>
+        {v ? 'Yes' : 'No'}
       </button>
     ))}
   </div>
@@ -209,8 +260,20 @@ export default function SmokeCOAlarmCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(editId !== 'new' ? editId || null : null);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(null);
+  const [currentStep, setCurrentStep] = useState<StepId>('details');
+
+  // Email dialog state
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailRecipient, setEmailRecipient] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   const [data, setData] = useState<SmokeCOData>(defaultData());
+
+  // Track direction so the step slide matches travel (forward vs back).
+  const currentStepIndex = STEPS.findIndex((s) => s.id === currentStep);
+  const prevIndexRef = useRef(currentStepIndex);
+  const isBack = currentStepIndex < prevIndexRef.current;
+  prevIndexRef.current = currentStepIndex;
 
     // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
@@ -278,7 +341,7 @@ const {
       if (!user) return;
       const { data: cpData } = await supabase.rpc('get_my_company_profile');
       const cp = Array.isArray(cpData) ? cpData[0] : cpData;
-      if (cp) setData((prev) => ({ ...prev, installerName: prev.installerName || cp.inspector_name || '', installerCompany: prev.installerCompany || cp.company_name || '', installerPhone: prev.installerPhone || cp.company_phone || '', installerEmail: prev.installerEmail || cp.company_email || '', registrationScheme: prev.registrationScheme || cp.registration_scheme || '', registrationNumber: prev.registrationNumber || cp.registration_number || '' }));
+      if (cp) setData((prev) => ({ ...prev, installerName: prev.installerName || cp.inspector_name || '', installerCompany: prev.installerCompany || cp.company_name || '', installerPhone: prev.installerPhone || cp.company_phone || '', installerEmail: prev.installerEmail || cp.company_email || '', registrationScheme: prev.registrationScheme || cp.registration_scheme || '', registrationNumber: prev.registrationNumber || cp.registration_number || '', installerSignature: prev.installerSignature || cp.signature_data || '' }));
     });
   }, []);
 
@@ -338,6 +401,66 @@ const {
     finally { setIsSaving(false); }
   };
 
+  const handleEmailCertificate = () => {
+    if (!savedReportId) {
+      toast.error('Please save the certificate first before emailing.');
+      return;
+    }
+    if (data.landlordEmail) setEmailRecipient(data.landlordEmail);
+    setShowEmailDialog(true);
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailRecipient || !emailRecipient.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    setIsSendingEmail(true);
+    try {
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the user emails before ever tapping Generate.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        let branding: Record<string, string> = {};
+        try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) branding = { companyName: cp.company_name || '', companyAddress: cp.company_address || '', companyPhone: cp.company_phone || '', companyEmail: cp.company_email || '', companyLogo: cp.company_logo || '' }; } catch { /* branding is optional */ }
+        const { formatSmokeCOJson } = await import('@/utils/smokeCOJsonFormatter');
+        formattedData = formatSmokeCOJson(
+          { ...data, referenceNumber: data.referenceNumber || `SCA-${Date.now().toString(36).toUpperCase()}` },
+          branding
+        );
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+      const { data: result, error: fnError } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        { body: { reportId: savedReportId, recipientEmail: emailRecipient, formattedData } }
+      );
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try { const parsed = JSON.parse(fnError.message); errorMessage = parsed.error || parsed.message || fnError.message; } catch { /* keep */ }
+        if (fnError.context?.body) {
+          try {
+            const bodyError = typeof fnError.context.body === 'string' ? JSON.parse(fnError.context.body) : fnError.context.body;
+            if (bodyError.error) errorMessage = bodyError.error;
+          } catch { /* keep */ }
+        }
+        throw new Error(errorMessage);
+      }
+      if (!result?.success) throw new Error(result?.error || 'Failed to send');
+      toast.success(
+        result?.pdfAttached
+          ? `Certificate emailed to ${emailRecipient} with the PDF attached`
+          : `Certificate emailed to ${emailRecipient}`
+      );
+      setShowEmailDialog(false);
+      setEmailRecipient('');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send certificate email.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
   const handleGeneratePDF = async () => {
     if (!data.propertyAddress) { toast.error('Property address required'); return; }
     setIsSaving(true);
@@ -350,9 +473,16 @@ const {
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
 
       let branding: Record<string, string> = {};
-      try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) branding = { companyName: cp.company_name || '', companyAddress: cp.company_address || '', companyPhone: cp.company_phone || '', companyEmail: cp.company_email || '', companyLogo: cp.company_logo || '' }; } catch {}
+      try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) branding = { companyName: cp.company_name || '', companyAddress: cp.company_address || '', companyPhone: cp.company_phone || '', companyEmail: cp.company_email || '', companyLogo: cp.company_logo || '' }; } catch { /* branding is optional */ }
       const { formatSmokeCOJson } = await import('@/utils/smokeCOJsonFormatter');
       const payload = formatSmokeCOJson(data, branding);
+
+      // Persist the formatted payload so server-side email/regeneration uses
+      // the exact data this PDF was generated from (not raw form_data).
+      if (savedReportId) {
+        await supabase.from('reports').update({ pdf_payload: payload }).eq('report_id', savedReportId);
+      }
+
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-smoke-co-alarm-pdf', { body: { formData: payload } });
       if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
       if (!pdfResult?.download_url) throw new Error('No PDF URL returned');
@@ -372,30 +502,371 @@ const {
     } finally { setIsSaving(false); }
   };
 
-  return (
-    <div className="bg-background min-h-screen">
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="h-4 w-4" />
+  // Live completion — drives the header progress ring and step ticks (visual only).
+  const alarmsComplete = data.alarms.length > 0 && data.alarms.every((a) => a.floor && a.room && a.alarmType);
+  const testsComplete = data.alarms.every((a) => a.functionalTest);
+  const completionChecks = [
+    !!data.propertyAddress,
+    !!data.installerName,
+    !!data.gradeAchieved && !!data.categoryAchieved,
+    alarmsComplete,
+    testsComplete,
+    !!data.installerSignature,
+  ];
+  const progress = Math.round((completionChecks.filter(Boolean).length / completionChecks.length) * 100);
+
+  const completedTabs: Record<string, boolean> = {
+    details: completionChecks[0] && completionChecks[1],
+    system: completionChecks[2],
+    alarms: alarmsComplete && testsComplete,
+    signoff: !!data.installerSignature,
+  };
+
+  const goToStep = (step: string) => {
+    setCurrentStep(step as StepId);
+    window.scrollTo({ top: 0 });
+  };
+
+  const stepContent: Record<StepId, React.ReactNode> = {
+    details: (
+      <>
+        {/* 1. Certificate details */}
+        <Section title="Certificate details">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Reference no."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+            <Field label="Certificate type">
+              <MobileSelectPicker value={data.certificateType} onValueChange={(v) => update('certificateType', v)} triggerClassName={pickerTrigger} options={[
+                { value: 'new-installation', label: 'New installation' }, { value: 'upgrade', label: 'Upgrade' },
+                { value: 'replacement', label: 'Replacement' }, { value: 'addition', label: 'Addition to existing' },
+              ]} />
+            </Field>
+          </div>
+          <Field label="Installation date"><Input type="date" value={data.installationDate} onChange={(e) => update('installationDate', e.target.value)} className={inputCn} /></Field>
+        </Section>
+
+        {/* 2. Property */}
+        <Section title="Property details">
+          <Field label="Property address" required><Input value={data.propertyAddress} onChange={(e) => update('propertyAddress', e.target.value)} className={inputCn} /></Field>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Type">
+              <MobileSelectPicker value={data.propertyType} onValueChange={(v) => update('propertyType', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+                { value: 'House', label: 'House' }, { value: 'Flat', label: 'Flat' }, { value: 'Bungalow', label: 'Bungalow' },
+                { value: 'Maisonette', label: 'Maisonette' }, { value: 'HMO', label: 'HMO' }, { value: 'Other', label: 'Other' },
+              ]} />
+            </Field>
+            <Field label="Tenure">
+              <MobileSelectPicker value={data.tenure} onValueChange={(v) => update('tenure', v)} triggerClassName={pickerTrigger} options={[
+                { value: 'private-rental', label: 'Private rental' }, { value: 'social-housing', label: 'Social housing' },
+                { value: 'owner-occupied', label: 'Owner-occupied' }, { value: 'HMO', label: 'HMO (licensed)' },
+              ]} />
+            </Field>
+          </div>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Storeys"><Input type="number" value={data.numberOfStoreys} onChange={(e) => update('numberOfStoreys', e.target.value)} className={inputCn} placeholder="2" /></Field>
+            <Field label="Rooms"><Input type="number" value={data.numberOfRooms} onChange={(e) => update('numberOfRooms', e.target.value)} className={inputCn} /></Field>
+          </div>
+          {data.tenure === 'HMO' && <Field label="HMO licence no."><Input value={data.hmoLicenceNumber} onChange={(e) => update('hmoLicenceNumber', e.target.value)} className={inputCn} /></Field>}
+          <Sub title="Combustion appliances" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {['Gas boiler', 'Oil boiler', 'Solid fuel', 'Gas fire', 'Open fire', 'None'].map((app) => (
+              <button key={app} type="button" onClick={() => toggleCombustionAppliance(app)}
+                className={cn('h-11 rounded-xl text-[13px] touch-manipulation transition-all active:scale-[0.98]',
+                  data.combustionAppliances.includes(app)
+                    ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium')}>
+                {app}
               </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">Smoke & CO Alarm</h1>
-                {data.referenceNumber && <p className="text-[10px] text-white font-mono mt-0.5">{data.referenceNumber}</p>}
+            ))}
+          </div>
+          {data.combustionAppliances.length > 0 && !data.combustionAppliances.includes('None') && (
+            <Field label="Locations"><Input value={data.combustionApplianceLocations} onChange={(e) => update('combustionApplianceLocations', e.target.value)} className={inputCn} placeholder="Kitchen (gas boiler), Living room (gas fire)" /></Field>
+          )}
+        </Section>
+
+        {/* 3. Landlord */}
+        <Section title="Landlord / client">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Name"><Input value={data.landlordName} onChange={(e) => update('landlordName', e.target.value)} className={inputCn} /></Field>
+            <Field label="Phone"><Input type="tel" value={data.landlordPhone} onChange={(e) => update('landlordPhone', e.target.value)} className={inputCn} /></Field>
+            <Field label="Email"><Input type="email" value={data.landlordEmail} onChange={(e) => update('landlordEmail', e.target.value)} className={inputCn} /></Field>
+            <Field label="Tenant"><Input value={data.tenantName} onChange={(e) => update('tenantName', e.target.value)} className={inputCn} placeholder="Optional" /></Field>
+          </div>
+          <Field label="Landlord address"><Input value={data.landlordAddress} onChange={(e) => update('landlordAddress', e.target.value)} className={inputCn} /></Field>
+          <Sub title="Managing agent" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Agent name"><Input value={data.managingAgentName} onChange={(e) => update('managingAgentName', e.target.value)} className={inputCn} placeholder="If applicable" /></Field>
+            <Field label="Company"><Input value={data.managingAgentCompany} onChange={(e) => update('managingAgentCompany', e.target.value)} className={inputCn} /></Field>
+          </div>
+          {data.managingAgentName && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Phone"><Input type="tel" value={data.managingAgentPhone} onChange={(e) => update('managingAgentPhone', e.target.value)} className={inputCn} /></Field>
+              <Field label="Email"><Input type="email" value={data.managingAgentEmail} onChange={(e) => update('managingAgentEmail', e.target.value)} className={inputCn} /></Field>
+            </div>
+          )}
+        </Section>
+
+        {/* 4. Installer */}
+        <Section title="Installer">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Name"><Input value={data.installerName} onChange={(e) => update('installerName', e.target.value)} className={inputCn} /></Field>
+            <Field label="Company"><Input value={data.installerCompany} onChange={(e) => update('installerCompany', e.target.value)} className={inputCn} /></Field>
+            <Field label="Phone"><Input type="tel" value={data.installerPhone} onChange={(e) => update('installerPhone', e.target.value)} className={inputCn} /></Field>
+            <Field label="Email"><Input type="email" value={data.installerEmail} onChange={(e) => update('installerEmail', e.target.value)} className={inputCn} /></Field>
+            <Field label="Scheme"><Input value={data.registrationScheme} onChange={(e) => update('registrationScheme', e.target.value)} className={inputCn} placeholder="NICEIC, NAPIT..." /></Field>
+            <Field label="Reg. no."><Input value={data.registrationNumber} onChange={(e) => update('registrationNumber', e.target.value)} className={inputCn} /></Field>
+          </div>
+          <div className="flex min-h-11 items-center justify-between gap-3">
+            <Label className="text-[13px] font-medium leading-snug text-white">Competent person (Part P)</Label>
+            <YesNo value={data.competentPersonScheme} onSelect={(v) => update('competentPersonScheme', v)} />
+          </div>
+        </Section>
+      </>
+    ),
+    system: (
+      <>
+        {(data.tenure === 'HMO' && data.gradeAchieved && data.gradeAchieved !== 'A' && data.gradeAchieved !== 'D') && (
+          <div className="rounded-xl border border-red-500/40 bg-white/[0.05] px-3.5 py-3 lg:col-span-2">
+            <p className="text-[13px] text-white">HMO: LACORS requires min Grade D (or A for large HMOs). Current: Grade {data.gradeAchieved}</p>
+          </div>
+        )}
+
+        {/* 5. System design */}
+        <Section title="System design (BS 5839-6)" className="lg:col-span-2">
+          <Sub title="Classification" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Grade" required>
+              <MobileSelectPicker value={data.gradeAchieved} onValueChange={(v) => update('gradeAchieved', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+                { value: 'A', label: 'A — Panel system' }, { value: 'B', label: 'B — Mains, no panel' },
+                { value: 'C', label: 'C — Dedicated supply' }, { value: 'D', label: 'D — Mains + battery' },
+                { value: 'E', label: 'E — Mains only' }, { value: 'F', label: 'F — Battery only' },
+              ]} />
+            </Field>
+            <Field label="Category" required>
+              <MobileSelectPicker value={data.categoryAchieved} onValueChange={(v) => update('categoryAchieved', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+                { value: 'LD1', label: 'LD1 — All rooms' }, { value: 'LD2', label: 'LD2 — Circ + high-risk' },
+                { value: 'LD3', label: 'LD3 — Circulation only' },
+              ]} />
+            </Field>
+          </div>
+          <Sub title="Interconnection & power" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Interconnection">
+              <MobileSelectPicker value={data.interconnectionMethod} onValueChange={(v) => update('interconnectionMethod', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+                { value: 'hardwired', label: 'Hardwired' }, { value: 'rf-wireless', label: 'RF wireless' },
+                { value: 'combination', label: 'Combination' }, { value: 'standalone', label: 'Standalone' },
+              ]} />
+            </Field>
+            <Field label="Power supply">
+              <MobileSelectPicker value={data.powerSupply} onValueChange={(v) => update('powerSupply', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+                { value: 'mains-sealed-lithium', label: 'Mains + lithium' }, { value: 'mains-rechargeable', label: 'Mains + rechargeable' },
+                { value: 'sealed-lithium', label: 'Lithium 10yr' }, { value: 'replaceable-battery', label: 'Replaceable battery' },
+              ]} />
+            </Field>
+          </div>
+          {data.interconnectionMethod === 'rf-wireless' && (
+            <Field label="RF system">
+              <MobileSelectPicker value={data.rfWirelessSystem} onValueChange={(v) => update('rfWirelessSystem', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+                { value: 'Aico RadioLINK+', label: 'Aico RadioLINK+' }, { value: 'FireAngel Wi-Safe 2', label: 'FireAngel Wi-Safe 2' }, { value: 'Other', label: 'Other' },
+              ]} />
+            </Field>
+          )}
+          {(data.interconnectionMethod === 'hardwired' || data.interconnectionMethod === 'combination') && (
+            <>
+              <Sub title="Wiring" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Circuit no."><Input value={data.circuitNumber} onChange={(e) => update('circuitNumber', e.target.value)} className={inputCn} /></Field>
+                <Field label="MCB"><Input value={data.mcbRating} onChange={(e) => update('mcbRating', e.target.value)} className={inputCn} placeholder="6A" /></Field>
+                <Field label="Cable"><Input value={data.cableType} onChange={(e) => update('cableType', e.target.value)} className={inputCn} placeholder="1.5mm² 3c+E" /></Field>
+                <div className="flex min-h-11 items-center justify-between gap-3 sm:self-end">
+                  <Label className="text-[13px] font-medium leading-snug text-white">RCD protected</Label>
+                  <YesNo value={data.rcdProtected} onSelect={(v) => update('rcdProtected', v)} />
+                </div>
+              </div>
+            </>
+          )}
+        </Section>
+      </>
+    ),
+    alarms: (
+      <>
+        {(totalStoreys > 0 && !hasSmokeEveryStorey) && (
+          <div className="rounded-xl border border-amber-500/40 bg-white/[0.05] px-3.5 py-3 lg:col-span-2">
+            <p className="text-[13px] text-white">Smoke alarm not on every storey ({smokeAlarmFloors.size}/{totalStoreys} covered)</p>
+          </div>
+        )}
+        {coAlarmNeeded && (
+          <div className="rounded-xl border border-red-500/40 bg-white/[0.05] px-3.5 py-3 lg:col-span-2">
+            <p className="text-[13px] text-white">Combustion appliance present but no CO alarm — required by 2022 Regulations</p>
+          </div>
+        )}
+
+        {/* 6. Alarm schedule */}
+        <Section title={`Alarm schedule (${data.alarms.length})`} className="lg:col-span-2">
+          {data.alarms.map((alarm, idx) => (
+            <div key={alarm.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-sm font-semibold text-white">Alarm {idx + 1}</h3>
+                <div className="flex items-center gap-2">
+                  {alarm.replacementDue && <span className="rounded-md bg-white/[0.06] px-2 py-1 text-[11px] tabular-nums text-white/80">Replace: {alarm.replacementDue}</span>}
+                  {data.alarms.length > 1 && (
+                    <button type="button" onClick={() => removeAlarm(alarm.id)} className="h-11 px-2 text-[13px] font-semibold text-red-400 touch-manipulation active:scale-[0.97]">
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Floor"><MobileSelectPicker value={alarm.floor} onValueChange={(v) => updateAlarm(alarm.id, 'floor', v)} placeholder="Floor" triggerClassName={pickerTrigger} options={FLOORS.map((f) => ({ value: f, label: f }))} /></Field>
+                <Field label="Room"><MobileSelectPicker value={alarm.room} onValueChange={(v) => updateAlarm(alarm.id, 'room', v)} placeholder="Room" triggerClassName={pickerTrigger} options={ROOMS.map((r) => ({ value: r, label: r }))} /></Field>
+              </div>
+              <Field label="Alarm type">
+                <MobileSelectPicker value={alarm.alarmType} onValueChange={(v) => updateAlarm(alarm.id, 'alarmType', v)} placeholder="Alarm type" triggerClassName={pickerTrigger} options={[
+                  { value: 'optical-smoke', label: 'Optical smoke' },
+                  { value: 'heat', label: 'Heat' },
+                  { value: 'multi-sensor-smoke-heat', label: 'Multi-sensor (smoke + heat)' },
+                  { value: 'CO', label: 'CO alarm' },
+                  { value: 'multi-sensor-heat-co', label: 'Multi-sensor (heat + CO)' },
+                ]} />
+              </Field>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Manufacturer"><MobileSelectPicker value={alarm.manufacturer} onValueChange={(v) => updateAlarm(alarm.id, 'manufacturer', v)} placeholder="Manufacturer" triggerClassName={pickerTrigger} options={ALARM_MANUFACTURERS.map((m) => ({ value: m, label: m }))} /></Field>
+                <Field label="Model"><Input value={alarm.model} onChange={(e) => updateAlarm(alarm.id, 'model', e.target.value)} className={inputCn} placeholder="Model" /></Field>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Serial number"><Input value={alarm.serialNumber} onChange={(e) => updateAlarm(alarm.id, 'serialNumber', e.target.value)} className={inputCn} placeholder="Serial number" /></Field>
+                <Field label="Date of manufacture"><Input type="date" value={alarm.dateOfManufacture} onChange={(e) => updateAlarm(alarm.id, 'dateOfManufacture', e.target.value)} className={inputCn} /></Field>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Power source">
+                  <MobileSelectPicker value={alarm.powerSource} onValueChange={(v) => updateAlarm(alarm.id, 'powerSource', v)} placeholder="Power source" triggerClassName={pickerTrigger} options={[
+                    { value: 'mains-sealed-lithium', label: 'Mains + sealed lithium' },
+                    { value: 'mains-rechargeable', label: 'Mains + rechargeable' },
+                    { value: 'sealed-lithium', label: 'Sealed lithium (10yr)' },
+                    { value: 'replaceable-battery', label: 'Replaceable battery' },
+                  ]} />
+                </Field>
+                <Field label="Interconnect">
+                  <MobileSelectPicker value={alarm.interconnect} onValueChange={(v) => updateAlarm(alarm.id, 'interconnect', v)} placeholder="Interconnect" triggerClassName={pickerTrigger} options={[
+                    { value: 'hardwired', label: 'Hardwired' },
+                    { value: 'rf-wireless', label: 'RF wireless' },
+                    { value: 'standalone', label: 'Standalone' },
+                  ]} />
+                </Field>
+              </div>
+              {alarm.interconnect === 'rf-wireless' && (
+                <Field label="Wireless module"><Input value={alarm.wirelessModule} onChange={(e) => updateAlarm(alarm.id, 'wirelessModule', e.target.value)} className={inputCn} placeholder="e.g. Ei3000MRF" /></Field>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Mounting">
+                  <MobileSelectPicker value={alarm.mounting} onValueChange={(v) => updateAlarm(alarm.id, 'mounting', v)} placeholder="Mounting" triggerClassName={pickerTrigger} options={[
+                    { value: 'ceiling', label: 'Ceiling' },
+                    { value: 'wall', label: 'Wall' },
+                  ]} />
+                </Field>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Functional test"><PassFailButtons value={alarm.functionalTest} onChange={(v) => updateAlarm(alarm.id, 'functionalTest', v)} /></Field>
+                <Field label="Mains indicator"><PassFailButtons value={alarm.mainsIndicator} onChange={(v) => updateAlarm(alarm.id, 'mainsIndicator', v)} includeNA /></Field>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <SyncStatusBadge status={syncStatus} />
-              <button onClick={handleSaveDraft} disabled={isSaving} className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50">
-                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              </button>
-            </div>
+          ))}
+          <button type="button" onClick={addAlarm} className="w-full h-11 rounded-xl border-2 border-dashed border-elec-yellow/40 text-sm font-semibold text-elec-yellow touch-manipulation active:scale-[0.98] hover:border-elec-yellow/60 transition-colors">
+            Add alarm
+          </button>
+        </Section>
+
+        {/* 7. System tests */}
+        <Section title="System tests" className="lg:col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Interconnection test"><PassFailButtons value={data.interconnectionTest} onChange={(v) => update('interconnectionTest', v)} includeNA /></Field>
+            {data.interconnectionTest === 'pass' && <Field label="Triggered from"><Input value={data.interconnectionTriggerAlarm} onChange={(e) => update('interconnectionTriggerAlarm', e.target.value)} className={inputCn} placeholder="e.g. Ground floor hallway — all alarms sounded" /></Field>}
+            <Field label="Audibility test (bedrooms, doors closed)"><PassFailButtons value={data.audibilityTest} onChange={(v) => update('audibilityTest', v)} includeNA /></Field>
+            <Field label="Mains supply verified"><PassFailButtons value={data.mainsSupplyVerified} onChange={(v) => update('mainsSupplyVerified', v)} includeNA /></Field>
+            <Field label="Battery backup test"><PassFailButtons value={data.batteryBackupTest} onChange={(v) => update('batteryBackupTest', v)} includeNA /></Field>
+            <Field label="RF signal strength (if wireless)"><PassFailButtons value={data.rfSignalTest} onChange={(v) => update('rfSignalTest', v)} includeNA /></Field>
           </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+        </Section>
+      </>
+    ),
+    signoff: (
+      <>
+        {/* 8. Compliance */}
+        <Section title="Compliance declaration">
+          <div className="space-y-3">
+            {[
+              { field: 'compliesSmokeCORegs2022' as const, label: 'Complies with Smoke and Carbon Monoxide Alarm (England) Regulations 2015 (as amended 2022)' },
+              { field: 'compliesBS5839_6' as const, label: `Complies with BS 5839-6:2019+A1:2020 — Grade ${data.gradeAchieved || '?'}, Category ${data.categoryAchieved || '?'}` },
+              { field: 'compliesBSEN14604' as const, label: 'All smoke alarms comply with BS EN 14604' },
+              { field: 'compliesBSEN50291' as const, label: 'All CO alarms comply with BS EN 50291-1:2018 and carry BSI Kitemark' },
+              { field: 'compliesBS7671' as const, label: 'Electrical work complies with BS 7671:2018+A3:2024 (if hardwired)' },
+            ].map(({ field, label }) => (
+              <div key={field} className="flex items-center justify-between gap-3">
+                <Label className="flex-1 text-[13px] font-medium leading-snug text-white">{label}</Label>
+                <YesNo value={data[field]} onSelect={(v) => update(field, v)} />
+              </div>
+            ))}
+          </div>
+          <Field label="Part P notification">
+            <MobileSelectPicker value={data.partPNotification} onValueChange={(v) => update('partPNotification', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
+              { value: 'self-certified', label: 'Self-certified via competent person scheme' },
+              { value: 'building-control', label: 'Notified to building control' },
+              { value: 'not-applicable', label: 'Not applicable (battery only / existing circuit)' },
+            ]} />
+          </Field>
+        </Section>
+
+        {/* 9. Recommendations */}
+        <Section title="Recommendations & observations">
+          <div className="space-y-2">
+            {COMMON_RECOMMENDATIONS.map((rec) => (
+              <button key={rec} type="button" onClick={() => toggleRecommendation(rec)}
+                className={cn('w-full min-h-11 rounded-xl border px-3.5 py-3 text-left text-[13px] leading-snug touch-manipulation transition-colors active:scale-[0.99]',
+                  data.selectedRecommendations.includes(rec)
+                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border-white/[0.12] text-white')}>
+                {rec}
+              </button>
+            ))}
+          </div>
+          <Field label="Additional observations"><Textarea value={data.observations} onChange={(e) => update('observations', e.target.value)} className={textareaCn} placeholder="Any observations or additional recommendations..." /></Field>
+          <Field label="Next inspection recommended"><Input type="date" value={data.nextInspectionDate} onChange={(e) => update('nextInspectionDate', e.target.value)} className={inputCn} /></Field>
+        </Section>
+
+        {/* 10. Signatures */}
+        <Section title="Signatures" className="lg:col-span-2">
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+            <p className="text-[13px] leading-relaxed text-white/85">I certify that the smoke and carbon monoxide alarm system described in this certificate has been installed in accordance with the applicable standards and regulations. The system has been tested and is fully operational.</p>
+          </div>
+          <SignatureInput label="Installer signature" value={data.installerSignature} onChange={(sig) => update('installerSignature', sig || '')} />
+          <Field label="Date"><Input type="date" value={data.installerDate} onChange={(e) => update('installerDate', e.target.value)} className={inputCn} /></Field>
+          <SignatureInput label="Landlord / client signature (optional)" value={data.clientSignature} onChange={(sig) => update('clientSignature', sig || '')} />
+          {data.clientSignature && <Field label="Client date"><Input type="date" value={data.clientDate} onChange={(e) => update('clientDate', e.target.value)} className={inputCn} /></Field>}
+        </Section>
+
+        {/* 11. Notes */}
+        <Section title="Notes" className="lg:col-span-2">
+          <Textarea value={data.notes} onChange={(e) => update('notes', e.target.value)} className={textareaCn} placeholder="Additional notes..." />
+        </Section>
+      </>
+    ),
+  };
+
+  return (
+    <div className="bg-background min-h-screen">
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Smoke & CO alarm"
+        subtitle={data.referenceNumber ? `${data.referenceNumber} · BS 5839-6` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={progress}
+        steps={STEPS}
+        currentTab={currentStep}
+        onTabChange={goToStep}
+        completedTabs={completedTabs}
+      />
 
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
@@ -410,351 +881,119 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8 space-y-6">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
-        {/* Compliance warnings */}
-        {(data.tenure === 'HMO' && data.gradeAchieved && data.gradeAchieved !== 'A' && data.gradeAchieved !== 'D') && (
-          <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-2.5">
-            <p className="text-[11px] text-white">HMO: LACORS requires min Grade D (or A for large HMOs). Current: Grade {data.gradeAchieved}</p>
+          <div
+            key={currentStep}
+            className={isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'}
+          >
+            <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+              {stepContent[currentStep]}
+            </div>
           </div>
-        )}
-        {(totalStoreys > 0 && !hasSmokeEveryStorey) && (
-          <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-2.5">
-            <p className="text-[11px] text-white">Smoke alarm not on every storey ({smokeAlarmFloors.size}/{totalStoreys} covered)</p>
-          </div>
-        )}
-        {coAlarmNeeded && (
-          <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-2.5">
-            <p className="text-[11px] text-white">Combustion appliance present but no CO alarm — required by 2022 Regulations</p>
-          </div>
-        )}
-
-        {/* 1. Certificate Details */}
-        <Section title="Certificate Details">
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Reference No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
-            <Field label="Certificate Type">
-              <MobileSelectPicker value={data.certificateType} onValueChange={(v) => update('certificateType', v)} triggerClassName={pickerTrigger} options={[
-                { value: 'new-installation', label: 'New installation' }, { value: 'upgrade', label: 'Upgrade' },
-                { value: 'replacement', label: 'Replacement' }, { value: 'addition', label: 'Addition to existing' },
-              ]} />
-            </Field>
-          </div>
-          <Field label="Installation Date"><Input type="date" value={data.installationDate} onChange={(e) => update('installationDate', e.target.value)} className={inputCn} /></Field>
-        </Section>
-
-        {/* 2. Property */}
-        <Section title="Property Details">
-          <Field label="Property Address" required><Input value={data.propertyAddress} onChange={(e) => update('propertyAddress', e.target.value)} className={inputCn} /></Field>
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Type">
-              <MobileSelectPicker value={data.propertyType} onValueChange={(v) => update('propertyType', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                { value: 'House', label: 'House' }, { value: 'Flat', label: 'Flat' }, { value: 'Bungalow', label: 'Bungalow' },
-                { value: 'Maisonette', label: 'Maisonette' }, { value: 'HMO', label: 'HMO' }, { value: 'Other', label: 'Other' },
-              ]} />
-            </Field>
-            <Field label="Tenure">
-              <MobileSelectPicker value={data.tenure} onValueChange={(v) => update('tenure', v)} triggerClassName={pickerTrigger} options={[
-                { value: 'private-rental', label: 'Private rental' }, { value: 'social-housing', label: 'Social housing' },
-                { value: 'owner-occupied', label: 'Owner-occupied' }, { value: 'HMO', label: 'HMO (licensed)' },
-              ]} />
-            </Field>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Storeys"><Input type="number" value={data.numberOfStoreys} onChange={(e) => update('numberOfStoreys', e.target.value)} className={inputCn} placeholder="2" /></Field>
-            <Field label="Rooms"><Input type="number" value={data.numberOfRooms} onChange={(e) => update('numberOfRooms', e.target.value)} className={inputCn} /></Field>
-          </div>
-          {data.tenure === 'HMO' && <Field label="HMO Licence No."><Input value={data.hmoLicenceNumber} onChange={(e) => update('hmoLicenceNumber', e.target.value)} className={inputCn} /></Field>}
-          <Sub title="Combustion Appliances" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {['Gas boiler', 'Oil boiler', 'Solid fuel', 'Gas fire', 'Open fire', 'None'].map((app) => (
-              <button key={app} type="button" onClick={() => toggleCombustionAppliance(app)}
-                className={cn('h-9 rounded-lg text-[11px] font-medium touch-manipulation transition-all',
-                  data.combustionAppliances.includes(app) ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow' : 'bg-white/[0.06] border border-white/[0.08] text-white')}>
-                {app}
-              </button>
-            ))}
-          </div>
-          {data.combustionAppliances.length > 0 && !data.combustionAppliances.includes('None') && (
-            <Field label="Locations"><Input value={data.combustionApplianceLocations} onChange={(e) => update('combustionApplianceLocations', e.target.value)} className={inputCn} placeholder="Kitchen (gas boiler), Living room (gas fire)" /></Field>
-          )}
-        </Section>
-
-        {/* 3. Landlord */}
-        <Section title="Landlord / Client">
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Name"><Input value={data.landlordName} onChange={(e) => update('landlordName', e.target.value)} className={inputCn} /></Field>
-              <Field label="Phone"><Input type="tel" value={data.landlordPhone} onChange={(e) => update('landlordPhone', e.target.value)} className={inputCn} /></Field>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Email"><Input type="email" value={data.landlordEmail} onChange={(e) => update('landlordEmail', e.target.value)} className={inputCn} /></Field>
-              <Field label="Tenant"><Input value={data.tenantName} onChange={(e) => update('tenantName', e.target.value)} className={inputCn} placeholder="Optional" /></Field>
-            </div>
-            <Field label="Landlord Address"><Input value={data.landlordAddress} onChange={(e) => update('landlordAddress', e.target.value)} className={inputCn} /></Field>
-            <Sub title="Managing Agent" />
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Agent Name"><Input value={data.managingAgentName} onChange={(e) => update('managingAgentName', e.target.value)} className={inputCn} placeholder="If applicable" /></Field>
-              <Field label="Company"><Input value={data.managingAgentCompany} onChange={(e) => update('managingAgentCompany', e.target.value)} className={inputCn} /></Field>
-            </div>
-            {data.managingAgentName && (
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Phone"><Input type="tel" value={data.managingAgentPhone} onChange={(e) => update('managingAgentPhone', e.target.value)} className={inputCn} /></Field>
-                <Field label="Email"><Input type="email" value={data.managingAgentEmail} onChange={(e) => update('managingAgentEmail', e.target.value)} className={inputCn} /></Field>
-              </div>
-            )}
-          </Section>
-
-        {/* 4. Installer */}
-        <Section title="Installer">
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Name"><Input value={data.installerName} onChange={(e) => update('installerName', e.target.value)} className={inputCn} /></Field>
-              <Field label="Company"><Input value={data.installerCompany} onChange={(e) => update('installerCompany', e.target.value)} className={inputCn} /></Field>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Phone"><Input type="tel" value={data.installerPhone} onChange={(e) => update('installerPhone', e.target.value)} className={inputCn} /></Field>
-              <Field label="Email"><Input type="email" value={data.installerEmail} onChange={(e) => update('installerEmail', e.target.value)} className={inputCn} /></Field>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Scheme"><Input value={data.registrationScheme} onChange={(e) => update('registrationScheme', e.target.value)} className={inputCn} placeholder="NICEIC, NAPIT..." /></Field>
-              <Field label="Reg. No."><Input value={data.registrationNumber} onChange={(e) => update('registrationNumber', e.target.value)} className={inputCn} /></Field>
-            </div>
-            <div className="flex items-center justify-between">
-              <Label className="text-white text-xs font-medium">Competent person (Part P)</Label>
-              <div className="flex gap-1.5">
-                {[true, false].map((v) => (
-                  <button key={String(v)} type="button" onClick={() => update('competentPersonScheme', v)}
-                    className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                      data.competentPersonScheme === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
-                    {v ? 'Yes' : 'No'}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </Section>
-
-        {/* 5. System Design */}
-        <Section title="System Design (BS 5839-6)">
-            <Sub title="Classification" />
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Grade" required>
-                <MobileSelectPicker value={data.gradeAchieved} onValueChange={(v) => update('gradeAchieved', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                  { value: 'A', label: 'A — Panel system' }, { value: 'B', label: 'B — Mains, no panel' },
-                  { value: 'C', label: 'C — Dedicated supply' }, { value: 'D', label: 'D — Mains + battery' },
-                  { value: 'E', label: 'E — Mains only' }, { value: 'F', label: 'F — Battery only' },
-                ]} />
-              </Field>
-              <Field label="Category" required>
-                <MobileSelectPicker value={data.categoryAchieved} onValueChange={(v) => update('categoryAchieved', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                  { value: 'LD1', label: 'LD1 — All rooms' }, { value: 'LD2', label: 'LD2 — Circ + high-risk' },
-                  { value: 'LD3', label: 'LD3 — Circulation only' },
-                ]} />
-              </Field>
-            </div>
-            <Sub title="Interconnection & Power" />
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Interconnection">
-                <MobileSelectPicker value={data.interconnectionMethod} onValueChange={(v) => update('interconnectionMethod', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                  { value: 'hardwired', label: 'Hardwired' }, { value: 'rf-wireless', label: 'RF wireless' },
-                  { value: 'combination', label: 'Combination' }, { value: 'standalone', label: 'Standalone' },
-                ]} />
-              </Field>
-              <Field label="Power Supply">
-                <MobileSelectPicker value={data.powerSupply} onValueChange={(v) => update('powerSupply', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                  { value: 'mains-sealed-lithium', label: 'Mains + lithium' }, { value: 'mains-rechargeable', label: 'Mains + rechargeable' },
-                  { value: 'sealed-lithium', label: 'Lithium 10yr' }, { value: 'replaceable-battery', label: 'Replaceable battery' },
-                ]} />
-              </Field>
-            </div>
-            {data.interconnectionMethod === 'rf-wireless' && (
-              <Field label="RF System">
-                <MobileSelectPicker value={data.rfWirelessSystem} onValueChange={(v) => update('rfWirelessSystem', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                  { value: 'Aico RadioLINK+', label: 'Aico RadioLINK+' }, { value: 'FireAngel Wi-Safe 2', label: 'FireAngel Wi-Safe 2' }, { value: 'Other', label: 'Other' },
-                ]} />
-              </Field>
-            )}
-            {(data.interconnectionMethod === 'hardwired' || data.interconnectionMethod === 'combination') && (
-              <>
-                <Sub title="Wiring" />
-                <div className="grid grid-cols-2 gap-3">
-                  <Field label="Circuit No."><Input value={data.circuitNumber} onChange={(e) => update('circuitNumber', e.target.value)} className={inputCn} /></Field>
-                  <Field label="MCB"><Input value={data.mcbRating} onChange={(e) => update('mcbRating', e.target.value)} className={inputCn} placeholder="6A" /></Field>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <Field label="Cable"><Input value={data.cableType} onChange={(e) => update('cableType', e.target.value)} className={inputCn} placeholder="1.5mm² 3c+E" /></Field>
-                  <div className="flex items-center justify-between pt-5">
-                    <Label className="text-white text-xs font-medium">RCD Protected</Label>
-                    <div className="flex gap-1.5">
-                      {[true, false].map((v) => (
-                        <button key={String(v)} type="button" onClick={() => update('rcdProtected', v)}
-                          className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                            data.rcdProtected === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
-                          {v ? 'Yes' : 'No'}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </Section>
-
-        {/* 6. Alarm Schedule */}
-        <Section title={`Alarm Schedule (${data.alarms.length})`}>
-            {data.alarms.map((alarm, idx) => (
-              <div key={alarm.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-elec-yellow">Alarm {idx + 1}</span>
-                  <div className="flex items-center gap-2">
-                    {alarm.replacementDue && <span className="text-[10px] text-white bg-white/[0.06] px-2 py-0.5 rounded">Replace: {alarm.replacementDue}</span>}
-                    {data.alarms.length > 1 && <button onClick={() => removeAlarm(alarm.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>}
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <MobileSelectPicker value={alarm.floor} onValueChange={(v) => updateAlarm(alarm.id, 'floor', v)} placeholder="Floor" triggerClassName={pickerTrigger} options={FLOORS.map((f) => ({ value: f, label: f }))} />
-                  <MobileSelectPicker value={alarm.room} onValueChange={(v) => updateAlarm(alarm.id, 'room', v)} placeholder="Room" triggerClassName={pickerTrigger} options={ROOMS.map((r) => ({ value: r, label: r }))} />
-                </div>
-                <MobileSelectPicker value={alarm.alarmType} onValueChange={(v) => updateAlarm(alarm.id, 'alarmType', v)} placeholder="Alarm type" triggerClassName={pickerTrigger} options={[
-                  { value: 'optical-smoke', label: 'Optical smoke' },
-                  { value: 'heat', label: 'Heat' },
-                  { value: 'multi-sensor-smoke-heat', label: 'Multi-sensor (smoke + heat)' },
-                  { value: 'CO', label: 'CO alarm' },
-                  { value: 'multi-sensor-heat-co', label: 'Multi-sensor (heat + CO)' },
-                ]} />
-                <div className="grid grid-cols-2 gap-2">
-                  <MobileSelectPicker value={alarm.manufacturer} onValueChange={(v) => updateAlarm(alarm.id, 'manufacturer', v)} placeholder="Manufacturer" triggerClassName={pickerTrigger} options={ALARM_MANUFACTURERS.map((m) => ({ value: m, label: m }))} />
-                  <Input value={alarm.model} onChange={(e) => updateAlarm(alarm.id, 'model', e.target.value)} className="h-11 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white" placeholder="Model" />
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Input value={alarm.serialNumber} onChange={(e) => updateAlarm(alarm.id, 'serialNumber', e.target.value)} className="h-11 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white" placeholder="Serial number" />
-                  <Input type="date" value={alarm.dateOfManufacture} onChange={(e) => updateAlarm(alarm.id, 'dateOfManufacture', e.target.value)} className="h-11 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]" />
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <MobileSelectPicker value={alarm.powerSource} onValueChange={(v) => updateAlarm(alarm.id, 'powerSource', v)} placeholder="Power source" triggerClassName={pickerTrigger} options={[
-                    { value: 'mains-sealed-lithium', label: 'Mains + sealed lithium' },
-                    { value: 'mains-rechargeable', label: 'Mains + rechargeable' },
-                    { value: 'sealed-lithium', label: 'Sealed lithium (10yr)' },
-                    { value: 'replaceable-battery', label: 'Replaceable battery' },
-                  ]} />
-                  <MobileSelectPicker value={alarm.interconnect} onValueChange={(v) => updateAlarm(alarm.id, 'interconnect', v)} placeholder="Interconnect" triggerClassName={pickerTrigger} options={[
-                    { value: 'hardwired', label: 'Hardwired' },
-                    { value: 'rf-wireless', label: 'RF wireless' },
-                    { value: 'standalone', label: 'Standalone' },
-                  ]} />
-                </div>
-                {alarm.interconnect === 'rf-wireless' && (
-                  <Input value={alarm.wirelessModule} onChange={(e) => updateAlarm(alarm.id, 'wirelessModule', e.target.value)} className="h-11 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white" placeholder="Wireless module (e.g. Ei3000MRF)" />
-                )}
-                <div className="grid grid-cols-2 gap-2">
-                  <MobileSelectPicker value={alarm.mounting} onValueChange={(v) => updateAlarm(alarm.id, 'mounting', v)} placeholder="Mounting" triggerClassName={pickerTrigger} options={[
-                    { value: 'ceiling', label: 'Ceiling' },
-                    { value: 'wall', label: 'Wall' },
-                  ]} />
-                  <div />
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div><Label className="text-[10px] text-white mb-1 block">Functional Test</Label><PassFailButtons value={alarm.functionalTest} onChange={(v) => updateAlarm(alarm.id, 'functionalTest', v)} /></div>
-                  <div><Label className="text-[10px] text-white mb-1 block">Mains Indicator</Label><PassFailButtons value={alarm.mainsIndicator} onChange={(v) => updateAlarm(alarm.id, 'mainsIndicator', v)} includeNA /></div>
-                </div>
-              </div>
-            ))}
-            <button onClick={addAlarm} className="w-full h-11 rounded-xl border-2 border-dashed border-elec-yellow/20 flex items-center justify-center gap-2 text-sm font-medium text-elec-yellow touch-manipulation active:scale-[0.98] hover:border-elec-yellow/30 transition-all">
-              Add Alarm
-            </button>
-          </Section>
-
-        {/* 7. System Tests */}
-        <Section title="System Tests">
-            <Field label="Interconnection Test"><PassFailButtons value={data.interconnectionTest} onChange={(v) => update('interconnectionTest', v)} includeNA /></Field>
-            {data.interconnectionTest === 'pass' && <Field label="Triggered from"><Input value={data.interconnectionTriggerAlarm} onChange={(e) => update('interconnectionTriggerAlarm', e.target.value)} className={inputCn} placeholder="e.g. Ground floor hallway — all alarms sounded" /></Field>}
-            <Field label="Audibility Test (bedrooms, doors closed)"><PassFailButtons value={data.audibilityTest} onChange={(v) => update('audibilityTest', v)} includeNA /></Field>
-            <Field label="Mains Supply Verified"><PassFailButtons value={data.mainsSupplyVerified} onChange={(v) => update('mainsSupplyVerified', v)} includeNA /></Field>
-            <Field label="Battery Backup Test"><PassFailButtons value={data.batteryBackupTest} onChange={(v) => update('batteryBackupTest', v)} includeNA /></Field>
-            <Field label="RF Signal Strength (if wireless)"><PassFailButtons value={data.rfSignalTest} onChange={(v) => update('rfSignalTest', v)} includeNA /></Field>
-          </Section>
-
-        {/* 8. Compliance */}
-        <Section title="Compliance Declaration">
-            <div className="space-y-2">
-              {[
-                { field: 'compliesSmokeCORegs2022' as const, label: 'Complies with Smoke and Carbon Monoxide Alarm (England) Regulations 2015 (as amended 2022)' },
-                { field: 'compliesBS5839_6' as const, label: `Complies with BS 5839-6:2019+A1:2020 — Grade ${data.gradeAchieved || '?'}, Category ${data.categoryAchieved || '?'}` },
-                { field: 'compliesBSEN14604' as const, label: 'All smoke alarms comply with BS EN 14604' },
-                { field: 'compliesBSEN50291' as const, label: 'All CO alarms comply with BS EN 50291-1:2018 and carry BSI Kitemark' },
-                { field: 'compliesBS7671' as const, label: 'Electrical work complies with BS 7671:2018+A3:2024 (if hardwired)' },
-              ].map(({ field, label }) => (
-                <div key={field} className="flex items-center justify-between">
-                  <Label className="text-white text-xs font-medium flex-1 mr-3">{label}</Label>
-                  <div className="flex gap-1.5 shrink-0">
-                    {[true, false].map((v) => (
-                      <button key={String(v)} type="button" onClick={() => update(field, v)}
-                        className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                          data[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
-                        {v ? 'Yes' : 'No'}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Field label="Part P Notification">
-              <MobileSelectPicker value={data.partPNotification} onValueChange={(v) => update('partPNotification', v)} placeholder="Select..." triggerClassName={pickerTrigger} options={[
-                { value: 'self-certified', label: 'Self-certified via competent person scheme' },
-                { value: 'building-control', label: 'Notified to building control' },
-                { value: 'not-applicable', label: 'Not applicable (battery only / existing circuit)' },
-              ]} />
-            </Field>
-          </Section>
-
-        {/* 9. Recommendations */}
-        <Section title="Recommendations & Observations">
-            <div className="space-y-1.5 mb-3">
-              {COMMON_RECOMMENDATIONS.map((rec) => (
-                <button key={rec} onClick={() => toggleRecommendation(rec)} className={cn('w-full text-left text-xs p-2.5 rounded-lg border touch-manipulation active:scale-[0.98] transition-all', data.selectedRecommendations.includes(rec) ? 'bg-elec-yellow/10 border-elec-yellow/25 text-elec-yellow' : 'bg-white/[0.03] border-white/[0.06] text-white')}>
-                  {rec}
-                </button>
-              ))}
-            </div>
-            <Field label="Additional Observations"><Textarea value={data.observations} onChange={(e) => update('observations', e.target.value)} className={textareaCn} placeholder="Any observations or additional recommendations..." /></Field>
-            <Field label="Next Inspection Recommended"><Input type="date" value={data.nextInspectionDate} onChange={(e) => update('nextInspectionDate', e.target.value)} className={inputCn} /></Field>
-          </Section>
-
-        {/* 10. Signatures */}
-        <Section title="Signatures">
-            <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3">
-              <p className="text-xs text-white leading-relaxed">I certify that the smoke and carbon monoxide alarm system described in this certificate has been installed in accordance with the applicable standards and regulations. The system has been tested and is fully operational.</p>
-            </div>
-            <SignatureInput label="Installer Signature" value={data.installerSignature} onChange={(sig) => update('installerSignature', sig || '')} />
-            <Field label="Date"><Input type="date" value={data.installerDate} onChange={(e) => update('installerDate', e.target.value)} className={inputCn} /></Field>
-            <SignatureInput label="Landlord / Client Signature (optional)" value={data.clientSignature} onChange={(sig) => update('clientSignature', sig || '')} />
-            {data.clientSignature && <Field label="Client Date"><Input type="date" value={data.clientDate} onChange={(e) => update('clientDate', e.target.value)} className={inputCn} /></Field>}
-          </Section>
-
-        {/* 11. Notes */}
-        <Section title="Notes">
-            <Textarea value={data.notes} onChange={(e) => update('notes', e.target.value)} className={textareaCn} placeholder="Additional notes..." />
-          </Section>
-
-        {/* Actions */}
-        <div className="space-y-2 pt-4">
-          <button onClick={handleGeneratePDF} disabled={isSaving} className="w-full h-11 bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg">
-            {isSaving ? 'Generating...' : 'Generate Certificate'}
-          </button>
-          <button onClick={handleSaveDraft} className="w-full h-11 border border-white/[0.12] text-white hover:bg-white/[0.06] text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg">
-            Save Draft
-          </button>
         </div>
-      </div>
       </main>
 
+      {/* Shell footer — Back + Continue, Generate on the last step */}
+      <CertShellFooter
+        currentIndex={currentStepIndex}
+        totalSteps={STEPS.length}
+        canPrevious={currentStepIndex > 0}
+        canNext={currentStepIndex < STEPS.length - 1}
+        onPrevious={() => {
+          if (currentStepIndex > 0) goToStep(STEPS[currentStepIndex - 1].id);
+        }}
+        onNext={() => {
+          if (currentStepIndex < STEPS.length - 1) goToStep(STEPS[currentStepIndex + 1].id);
+        }}
+        nextLabels={['Continue to system design', 'Continue to alarms', 'Continue to sign off']}
+        isLastStep={currentStepIndex === STEPS.length - 1}
+        onGenerate={handleGeneratePDF}
+        canGenerate={!isSaving}
+        generateLabel={isSaving ? 'Generating...' : 'Generate certificate'}
+        lastStepActions={
+          <>
+            <button type="button" onClick={handleSaveDraft} disabled={isSaving} className={certFooterNeutralButton}>
+              Save draft
+            </button>
+            <button type="button" onClick={handleEmailCertificate} disabled={!savedReportId} className={certFooterNeutralButton}>
+              Email
+            </button>
+          </>
+        }
+      />
+
+      {/* Email dialog */}
+      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.1] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white text-base font-bold">Email certificate</DialogTitle>
+            <DialogDescription className="text-white/85 text-sm">
+              Enter the recipient's email address.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-3">
+            <div>
+              <label htmlFor="smoke-co-email" className="mb-1 block text-[12px] font-medium text-white">
+                Recipient email
+              </label>
+              <Input
+                id="smoke-co-email"
+                type="email"
+                placeholder="landlord@example.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+                disabled={isSendingEmail}
+                className="input-underline h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
+              />
+            </div>
+            {data.landlordEmail && emailRecipient !== data.landlordEmail && (
+              <button
+                onClick={() => setEmailRecipient(data.landlordEmail)}
+                className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.1] text-white text-[13px] font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Use landlord email: {data.landlordEmail}
+              </button>
+            )}
+          </div>
+          {/* Plain column footer — DialogFooter's sm:space-x-2 skews stacked
+              buttons sideways, so the two never sat level. */}
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation"
+            >
+              {isSendingEmail ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                  Sending…
+                </>
+              ) : (
+                'Send certificate'
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="h-12 w-full rounded-xl border border-white/[0.1] bg-white/[0.04] font-medium text-white transition-all hover:bg-white/[0.08] hover:text-white active:scale-[0.98] disabled:opacity-40 touch-manipulation"
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent className="bg-[#1a1a1e] border-white/[0.08] text-white">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Recover Draft?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">A previous unsaved Smoke & CO Alarm certificate was found. Would you like to recover it?</AlertDialogDescription>
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">A previous unsaved Smoke & CO alarm certificate was found. Would you like to recover it?</AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="border-white/[0.12] text-white hover:bg-white/[0.06]" onClick={() => { discardDraft(); setShowRecoveryDialog(false); }}>Discard</AlertDialogCancel>
-            <AlertDialogAction className="bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30" onClick={() => { if (recoveryDraft) { setData((prev) => ({ ...defaultData(), ...prev, ...recoveryDraft.data })); recoverDraft(); } setShowRecoveryDialog(false); }}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation" onClick={() => { if (recoveryDraft) { setData((prev) => ({ ...defaultData(), ...prev, ...recoveryDraft.data })); recoverDraft(); } setShowRecoveryDialog(false); }}>Recover draft</AlertDialogAction>
+            <AlertDialogCancel className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0" onClick={() => { discardDraft(); setShowRecoveryDialog(false); }}>Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

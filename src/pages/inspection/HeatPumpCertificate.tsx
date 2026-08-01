@@ -6,9 +6,9 @@
  * transcribed from MIS 3005 Appendix A. PDF output is a follow-up slice —
  * this slice captures + cloud-saves the commissioning record.
  */
-import { useState, useEffect, useCallback, type ReactNode } from 'react';
+import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Loader2, Save } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,6 +21,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import SignatureInput from '@/components/signature/SignatureInput';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import CertShellFooter from '@/components/inspection/shared/CertShellFooter';
+import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { reportCloud } from '@/utils/reportCloud';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
@@ -34,20 +37,28 @@ import {
 const REPORT_TYPE = 'heat-pump' as const;
 const DRAFT_KEY = 'heat-pump-draft';
 
-const inputCn =
-  '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const selectTriggerCn =
+  'h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none focus:shadow-none [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+  <div className="flex items-center gap-3 pt-2">
+    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -59,7 +70,7 @@ const Field = ({
   children: ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -75,7 +86,7 @@ const TriState = ({
   na?: boolean;
 }) => (
   <Select value={value || undefined} onValueChange={onChange}>
-    <SelectTrigger className={inputCn}>
+    <SelectTrigger className={selectTriggerCn}>
       <SelectValue placeholder="—" />
     </SelectTrigger>
     <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -86,9 +97,29 @@ const TriState = ({
   </Select>
 );
 
-const Grid = ({ children }: { children: ReactNode }) => (
-  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">{children}</div>
+/** Field-pair grid; `tight` = short numeric labels, 2-up on phones, 3-up from sm. */
+const Grid = ({ children, tight = false }: { children: ReactNode; tight?: boolean }) => (
+  <div
+    className={
+      tight
+        ? 'grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3'
+        : 'grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2'
+    }
+  >
+    {children}
+  </div>
 );
+
+const TAB_ORDER = ['details', 'design', 'electrical', 'system', 'signoff'] as const;
+type HeatPumpTab = (typeof TAB_ORDER)[number];
+
+const STEPS: { id: HeatPumpTab; label: string }[] = [
+  { id: 'details', label: 'Details' },
+  { id: 'design', label: 'Design' },
+  { id: 'electrical', label: 'Electrical' },
+  { id: 'system', label: 'System' },
+  { id: 'signoff', label: 'Sign off' },
+];
 
 export default function HeatPumpCertificate() {
   const navigate = useNavigate();
@@ -105,6 +136,9 @@ export default function HeatPumpCertificate() {
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
+  const [currentTab, setCurrentTab] = useState<HeatPumpTab>('details');
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(0);
 
   // Load existing document if editing
   useEffect(() => {
@@ -199,7 +233,7 @@ export default function HeatPumpCertificate() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-background">
-        <Loader2 className="h-6 w-6 animate-spin text-emerald-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
       </div>
     );
   }
@@ -210,37 +244,35 @@ export default function HeatPumpCertificate() {
   const isAshp = data.heatPumpType === 'ASHP' || data.heatPumpType === 'exhaust-air';
   const isGshp = data.heatPumpType === 'GSHP' || data.heatPumpType === 'WSHP';
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="flex items-center justify-between px-3 py-2.5 sm:px-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-white active:bg-white/10 touch-manipulation"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div className="flex-1 min-w-0 px-2">
-            <h1 className="text-sm font-bold text-white truncate">Heat Pump Commissioning</h1>
-            <p className="text-[10px] text-white/55">MCS MIS 3005</p>
-          </div>
-          <button
-            onClick={handleSave}
-            disabled={isSaving}
-            className="flex h-10 items-center gap-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 px-3 text-xs font-medium text-emerald-400 touch-manipulation active:scale-[0.98] disabled:opacity-50"
-          >
-            {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-            {existingReportId ? 'Update' : 'Save'}
-          </button>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-emerald-500/40 via-emerald-500/20 to-transparent" />
-      </div>
+  // Presentational step completion — header colouring + progress ring only.
+  const completedTabs: Record<string, boolean> = {
+    details: !!(data.customerName && data.installationAddress && data.commissioningDate),
+    design: !!(data.design.designHeatLossKw && data.design.designFlowTemp),
+    electrical: !!(el.supplyPhase && el.incomingVoltage),
+    system: !!(cp.runningMode && rd.flowTemp),
+    signoff: !!(data.engineerName && data.engineerSignature),
+  };
+  const progressPercent = Math.round(
+    (TAB_ORDER.filter((t) => completedTabs[t]).length / TAB_ORDER.length) * 100
+  );
 
-      <main className="px-3 py-4 pb-48 sm:px-4 sm:pb-8 space-y-5">
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const goToTab = (tab: HeatPumpTab) => {
+    setCurrentTab(tab);
+    window.scrollTo({ top: 0 });
+  };
+
+  const stepWrapCn = 'space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4';
+
+  const stepContent: Record<HeatPumpTab, ReactNode> = {
+    details: (
+      <div className={stepWrapCn}>
         {/* Customer + company */}
-        <div className="space-y-3">
-          <SectionHeader title="Customer" />
+        <div className={cardCn}>
+          <SectionTitle title="Customer" />
           <Field label="Customer name"><Input value={data.customerName} onChange={(e) => update('customerName', e.target.value)} className={inputCn} /></Field>
           <Field label="Installation address"><Input value={data.installationAddress} onChange={(e) => update('installationAddress', e.target.value)} className={inputCn} /></Field>
           <Grid>
@@ -259,12 +291,12 @@ export default function HeatPumpCertificate() {
         </div>
 
         {/* Product */}
-        <div className="space-y-3">
-          <SectionHeader title="Product information" />
+        <div className={cardCn}>
+          <SectionTitle title="Product information" />
           <Grid>
             <Field label="Heat pump type">
               <Select value={data.heatPumpType || undefined} onValueChange={(v) => update('heatPumpType', v as any)}>
-                <SelectTrigger className={inputCn}><SelectValue placeholder="Select" /></SelectTrigger>
+                <SelectTrigger className={selectTriggerCn}><SelectValue placeholder="Select" /></SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
                   <SelectItem value="ASHP">Air source (ASHP)</SelectItem>
                   <SelectItem value="GSHP">Ground source (GSHP)</SelectItem>
@@ -276,20 +308,25 @@ export default function HeatPumpCertificate() {
             </Field>
             <Field label="Manufacturer"><Input value={data.manufacturer} onChange={(e) => update('manufacturer', e.target.value)} className={inputCn} /></Field>
             <Field label="Installed per mfr instructions"><TriState na={false} value={data.installedPerManufacturer} onChange={(v) => update('installedPerManufacturer', v as any)} /></Field>
+          </Grid>
+          <Sub title="Model & serial numbers" />
+          <Grid>
             <Field label="HP model no."><Input value={data.hpModelNo} onChange={(e) => update('hpModelNo', e.target.value)} className={inputCn} /></Field>
             <Field label="HP serial no."><Input value={data.hpSerialNo} onChange={(e) => update('hpSerialNo', e.target.value)} className={inputCn} /></Field>
-            <div />
             <Field label="Indoor model no."><Input value={data.indoorModelNo} onChange={(e) => update('indoorModelNo', e.target.value)} className={inputCn} /></Field>
             <Field label="Indoor serial no."><Input value={data.indoorSerialNo} onChange={(e) => update('indoorSerialNo', e.target.value)} className={inputCn} /></Field>
-            <div />
             <Field label="Interface model no."><Input value={data.interfaceModelNo} onChange={(e) => update('interfaceModelNo', e.target.value)} className={inputCn} /></Field>
             <Field label="Interface serial no."><Input value={data.interfaceSerialNo} onChange={(e) => update('interfaceSerialNo', e.target.value)} className={inputCn} /></Field>
           </Grid>
         </div>
+      </div>
+    ),
 
+    design: (
+      <div className={stepWrapCn}>
         {/* Design & performance (MCS 031 — feeds the MCS certificate + BUS grant) */}
-        <div className="space-y-3">
-          <SectionHeader title="Design & performance (MCS 031)" />
+        <div className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionTitle title="Design & performance (MCS 031)" />
           <Grid>
             <Field label="Design heat loss (kW)"><Input value={data.design.designHeatLossKw} onChange={(e) => updateGroup('design', 'designHeatLossKw', e.target.value)} className={inputCn} /></Field>
             <Field label="Design flow temp (°C)"><Input value={data.design.designFlowTemp} onChange={(e) => updateGroup('design', 'designFlowTemp', e.target.value)} className={inputCn} /></Field>
@@ -303,14 +340,18 @@ export default function HeatPumpCertificate() {
             <Field label="MCS product ref"><Input value={data.design.mcsProductReference} onChange={(e) => updateGroup('design', 'mcsProductReference', e.target.value)} className={inputCn} /></Field>
           </Grid>
         </div>
+      </div>
+    ),
 
+    electrical: (
+      <div className={stepWrapCn}>
         {/* Pre-commissioning electrical */}
-        <div className="space-y-3">
-          <SectionHeader title="Pre-commissioning checks — electrical" />
+        <div className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionTitle title="Pre-commissioning checks — electrical" />
           <Grid>
             <Field label="Supply phase">
               <Select value={el.supplyPhase || undefined} onValueChange={(v) => updateGroup('electrical', 'supplyPhase', v)}>
-                <SelectTrigger className={inputCn}><SelectValue placeholder="—" /></SelectTrigger>
+                <SelectTrigger className={selectTriggerCn}><SelectValue placeholder="—" /></SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
                   <SelectItem value="single">Single phase</SelectItem>
                   <SelectItem value="three">Three phase</SelectItem>
@@ -324,7 +365,7 @@ export default function HeatPumpCertificate() {
             <Field label="Sensors reading correctly"><TriState na={false} value={el.sensorsChecked} onChange={(v) => updateGroup('electrical', 'sensorsChecked', v)} /></Field>
           </Grid>
           <Sub title="Line readings (V)" />
-          <Grid>
+          <Grid tight>
             <Field label="L1-N"><Input value={el.l1n} onChange={(e) => updateGroup('electrical', 'l1n', e.target.value)} className={inputCn} /></Field>
             <Field label="L1-E"><Input value={el.l1e} onChange={(e) => updateGroup('electrical', 'l1e', e.target.value)} className={inputCn} /></Field>
             <Field label="N-E"><Input value={el.ne} onChange={(e) => updateGroup('electrical', 'ne', e.target.value)} className={inputCn} /></Field>
@@ -337,14 +378,18 @@ export default function HeatPumpCertificate() {
             <Field label="L2-L3"><Input value={el.l2l3} onChange={(e) => updateGroup('electrical', 'l2l3', e.target.value)} className={inputCn} /></Field>
           </Grid>
         </div>
+      </div>
+    ),
 
+    system: (
+      <div className={stepWrapCn}>
         {/* Control parameters */}
-        <div className="space-y-3">
-          <SectionHeader title="Heat pump control parameters" />
+        <div className={cardCn}>
+          <SectionTitle title="Heat pump control parameters" />
           <Grid>
             <Field label="Running mode">
               <Select value={cp.runningMode || undefined} onValueChange={(v) => updateGroup('controlParameters', 'runningMode', v)}>
-                <SelectTrigger className={inputCn}><SelectValue placeholder="—" /></SelectTrigger>
+                <SelectTrigger className={selectTriggerCn}><SelectValue placeholder="—" /></SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
                   <SelectItem value="Auto">Auto</SelectItem>
                   <SelectItem value="Manual">Manual</SelectItem>
@@ -377,9 +422,9 @@ export default function HeatPumpCertificate() {
         </div>
 
         {/* Running data */}
-        <div className="space-y-3">
-          <SectionHeader title="Running data" />
-          <Grid>
+        <div className={cardCn}>
+          <SectionTitle title="Running data" />
+          <Grid tight>
             <Field label="Outdoor (°C)"><Input value={rd.outdoorTemp} onChange={(e) => updateGroup('runningData', 'outdoorTemp', e.target.value)} className={inputCn} /></Field>
             <Field label="Source in (°C)"><Input value={rd.sourceInTemp} onChange={(e) => updateGroup('runningData', 'sourceInTemp', e.target.value)} className={inputCn} /></Field>
             <Field label="Superheat (K)"><Input value={rd.superheat} onChange={(e) => updateGroup('runningData', 'superheat', e.target.value)} className={inputCn} /></Field>
@@ -403,8 +448,8 @@ export default function HeatPumpCertificate() {
 
         {/* ASHP-specific */}
         {isAshp && (
-          <div className="space-y-3">
-            <SectionHeader title="Absorber (ASHP)" />
+          <div className={cn(cardCn, 'lg:col-span-2')}>
+            <SectionTitle title="Absorber (ASHP)" />
             <Grid>
               <Field label="Antifreeze make & type"><Input value={data.ashp.antifreezeMakeType} onChange={(e) => updateGroup('ashp', 'antifreezeMakeType', e.target.value)} className={inputCn} /></Field>
               <Field label="Freeze protection (°C)"><Input value={data.ashp.freezeProtectionTemp} onChange={(e) => updateGroup('ashp', 'freezeProtectionTemp', e.target.value)} className={inputCn} /></Field>
@@ -422,7 +467,7 @@ export default function HeatPumpCertificate() {
               <Field label="Charge (kg)"><Input value={data.ashp.refrigerantChargeKg} onChange={(e) => updateGroup('ashp', 'refrigerantChargeKg', e.target.value)} className={inputCn} /></Field>
             </Grid>
             <Sub title="Clearances (mm)" />
-            <Grid>
+            <Grid tight>
               <Field label="Back"><Input value={data.ashp.clearanceBack} onChange={(e) => updateGroup('ashp', 'clearanceBack', e.target.value)} className={inputCn} /></Field>
               <Field label="Front"><Input value={data.ashp.clearanceFront} onChange={(e) => updateGroup('ashp', 'clearanceFront', e.target.value)} className={inputCn} /></Field>
               <Field label="Right"><Input value={data.ashp.clearanceRight} onChange={(e) => updateGroup('ashp', 'clearanceRight', e.target.value)} className={inputCn} /></Field>
@@ -434,8 +479,8 @@ export default function HeatPumpCertificate() {
 
         {/* GSHP-specific */}
         {isGshp && (
-          <div className="space-y-3">
-            <SectionHeader title="Collector (GSHP)" />
+          <div className={cn(cardCn, 'lg:col-span-2')}>
+            <SectionTitle title="Collector (GSHP)" />
             <Grid>
               <Field label="Ground collector type"><Input value={data.gshp.collectorType} onChange={(e) => updateGroup('gshp', 'collectorType', e.target.value)} className={inputCn} /></Field>
               <Field label="No. loops/boreholes"><Input value={data.gshp.totalLoopsBoreholes} onChange={(e) => updateGroup('gshp', 'totalLoopsBoreholes', e.target.value)} className={inputCn} /></Field>
@@ -457,8 +502,8 @@ export default function HeatPumpCertificate() {
         )}
 
         {/* Central heating */}
-        <div className="space-y-3">
-          <SectionHeader title="Central heating system" />
+        <div className={cardCn}>
+          <SectionTitle title="Central heating system" />
           <Grid>
             <Field label="Emitter types"><Input value={data.centralHeating.emitterTypes} onChange={(e) => updateGroup('centralHeating', 'emitterTypes', e.target.value)} className={inputCn} /></Field>
             <Field label="System pressure (bar)"><Input value={data.centralHeating.systemPressure} onChange={(e) => updateGroup('centralHeating', 'systemPressure', e.target.value)} className={inputCn} /></Field>
@@ -481,8 +526,8 @@ export default function HeatPumpCertificate() {
         </div>
 
         {/* Controls */}
-        <div className="space-y-3">
-          <SectionHeader title="Heating system controls" />
+        <div className={cardCn}>
+          <SectionTitle title="Heating system controls" />
           <Grid>
             <Field label="Type of HTG controls"><Input value={data.controls.htgControlsType} onChange={(e) => updateGroup('controls', 'htgControlsType', e.target.value)} className={inputCn} /></Field>
             <Field label="HP control (demand/deg-min)"><Input value={data.controls.hpControlType} onChange={(e) => updateGroup('controls', 'hpControlType', e.target.value)} className={inputCn} /></Field>
@@ -493,10 +538,14 @@ export default function HeatPumpCertificate() {
             <Field label="MIS 3005 docs handed over"><TriState value={data.controls.customerDocumentationProvided} onChange={(v) => updateGroup('controls', 'customerDocumentationProvided', v)} /></Field>
           </Grid>
         </div>
+      </div>
+    ),
 
+    signoff: (
+      <div className={stepWrapCn}>
         {/* MCS + linked certs + sign-off */}
-        <div className="space-y-3">
-          <SectionHeader title="MCS + sign-off" />
+        <div className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionTitle title="MCS + sign-off" />
           <Grid>
             <Field label="Installer MCS number"><Input value={data.installerMcsNumber} onChange={(e) => update('installerMcsNumber', e.target.value)} className={inputCn} /></Field>
             <Field label="Linked EIC/BS 7671 ref"><Input value={data.linkedEicRef} onChange={(e) => update('linkedEicRef', e.target.value)} className={inputCn} /></Field>
@@ -507,19 +556,70 @@ export default function HeatPumpCertificate() {
             <Field label="Date"><Input type="date" value={data.signatureDate} onChange={(e) => update('signatureDate', e.target.value)} className={inputCn} /></Field>
           </Grid>
           <Field label="Technician's comments">
-            <Textarea value={data.technicianComments} onChange={(e) => update('technicianComments', e.target.value)} className="min-h-[80px] text-xs bg-white/[0.06] border-white/[0.08] text-white touch-manipulation" />
+            <Textarea value={data.technicianComments} onChange={(e) => update('technicianComments', e.target.value)} className={textareaCn} />
           </Field>
           <SignatureInput
             label="Engineer signature"
             value={data.engineerSignature}
             onChange={(sig) => update('engineerSignature', sig || '')}
           />
-          <p className="text-[10px] text-white/50 leading-relaxed">
+          <p className="text-[12px] text-white/80 leading-relaxed">
             By signing, the engineer certifies this heat pump installation has been commissioned in
             accordance with MCS MIS 3005.
           </p>
         </div>
+      </div>
+    ),
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Heat Pump"
+        subtitle={data.jobReference ? `${data.jobReference} · MCS MIS 3005` : null}
+        isSaving={isSaving}
+        onManualSave={handleSave}
+        progressPercent={progressPercent}
+        steps={STEPS}
+        currentTab={currentTab}
+        onTabChange={(tab) => goToTab(tab as HeatPumpTab)}
+        completedTabs={completedTabs}
+      />
+
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
+        <div
+          key={currentTab}
+          className={
+            isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+          }
+        >
+          {stepContent[currentTab]}
+        </div>
       </main>
+
+      {/* Shell footer — Back + Continue, Save on the last step */}
+      <CertShellFooter
+        currentIndex={currentIndex}
+        totalSteps={TAB_ORDER.length}
+        canPrevious={currentIndex > 0}
+        canNext={currentIndex < TAB_ORDER.length - 1}
+        onPrevious={() => goToTab(TAB_ORDER[Math.max(currentIndex - 1, 0)])}
+        onNext={() => goToTab(TAB_ORDER[Math.min(currentIndex + 1, TAB_ORDER.length - 1)])}
+        nextLabels={[
+          'Continue to design',
+          'Continue to electrical',
+          'Continue to system',
+          'Continue to sign off',
+        ]}
+        isLastStep={currentIndex === TAB_ORDER.length - 1}
+        onGenerate={handleSave}
+        canGenerate={!isSaving}
+        generateLabel={
+          isSaving ? 'Saving…' : existingReportId ? 'Update record' : 'Save record'
+        }
+      />
     </div>
   );
 }

@@ -17,6 +17,7 @@ import {
 import { InstallationDesign } from '@/types/installation-design';
 import { triggerHaptic } from '@/utils/animation-helpers';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getZsCheck } from '../zs-compliance';
 
 interface MobileSystemSummaryProps {
   design: InstallationDesign;
@@ -153,11 +154,10 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
               .map((c, idx) => {
                 // Use EXACT same logic as complianceStats calculation
                 const status = (c as any).complianceStatus;
+                // ELE-1426 — an uncalculated Zs is not compliant.
                 const isCompliant =
-                  status === 'pass' ||
-                  (!status &&
-                    c.calculations?.voltageDrop?.compliant &&
-                    (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999));
+                  (status === 'pass' || (!status && c.calculations?.voltageDrop?.compliant)) &&
+                  getZsCheck(c, design.consumerUnit?.incomingSupply?.Ze).compliant;
                 const isWarning = status === 'warning' || c.warnings?.length > 0;
                 const needsReview = !isCompliant || isWarning;
 

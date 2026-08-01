@@ -78,6 +78,10 @@ export function ClientMessagesPanel({ token, jobId }: { token: string; jobId?: s
         onChange={(e) => setBody(e.target.value)}
         placeholder="Reply to your client…"
         rows={2}
+        // ELE-1419 — the OS capitalises the first letter otherwise.
+        autoCapitalize="none"
+        autoCorrect="off"
+        spellCheck={false}
         className={textareaClass}
       />
       <PrimaryButton onClick={send} disabled={!body.trim() || reply.isPending}>

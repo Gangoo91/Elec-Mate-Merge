@@ -55,7 +55,7 @@ export const useMyQsReviews = (enabled = true) => {
     queryKey: ['my-qs-reviews'],
     queryFn: async (): Promise<QsQueueItem[]> => {
       const { data, error } = await (
-        supabase.rpc as unknown as (fn: string) => Promise<{ data: unknown; error: unknown }>
+        (supabase.rpc.bind(supabase) as unknown) as (fn: string) => Promise<{ data: unknown; error: unknown }>
       )('get_my_qs_reviews');
       if (error) {
         console.error('[my QS reviews] fetch failed:', error);

@@ -196,26 +196,26 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Heating and power</strong> (final circuits not otherwise listed): 100% of
-                the total current demand up to 10 A, plus 50% of any current demand in excess of
-                10 A. Note that thermostatically controlled water heaters, floor warming and
-                thermal storage space heating each carry <strong>no diversity allowance at all</strong>
+                the total current demand up to 10 A, plus 50% of any current demand in excess of 10
+                A. Note that thermostatically controlled water heaters, floor warming and thermal
+                storage space heating each carry <strong>no diversity allowance at all</strong>
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cooking appliances:</strong> 10 A + 30% of the full load of connected
-                cooking appliances in excess of 10 A + 5 A if a socket-outlet is incorporated in
-                the control unit
+                cooking appliances in excess of 10 A + 5 A if a socket-outlet is incorporated in the
+                control unit
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket-outlets and standard final circuit arrangements:</strong> 100% of
-                the current demand of the largest circuit or point of utilization + 40% of every
-                other one. In small shops, stores, offices and business premises the second figure
-                is 70% for socket-outlets, and 50% for standard final circuit arrangements
+                <strong>Socket-outlets and standard final circuit arrangements:</strong> 100% of the
+                current demand of the largest circuit or point of utilization + 40% of every other
+                one. In small shops, stores, offices and business premises the second figure is 70%
+                for socket-outlets, and 50% for standard final circuit arrangements
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -421,11 +421,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Demand diversity in commercial premises:</strong> On-Site Guide Table A2
-                has a column for small shops, stores, offices and business premises, but nothing for
+                <strong>Demand diversity in commercial premises:</strong> On-Site Guide Table A2 has
+                a column for small shops, stores, offices and business premises, but nothing for
                 large commercial or industrial premises. Where it does apply, socket-outlets take
-                100% of the largest point of utilization plus 70% of every other — against 40% in
-                an individual household. Anything beyond &ldquo;small&rdquo; is a case-by-case
+                100% of the largest point of utilization plus 70% of every other — against 40% in an
+                individual household. Anything beyond &ldquo;small&rdquo; is a case-by-case
                 assessment on measured or benchmark data, not a table lookup.
               </span>
             </li>

@@ -158,7 +158,7 @@ const calculations = [
   {
     title: 'Diversity',
     formula: 'Assessed demand = connected load × diversity factor',
-    explanation: 'Used to calculate maximum demand. Diversity factors in On-Site Guide Table 1B.',
+    explanation: 'Used to calculate maximum demand. Diversity factors in On-Site Guide Table A2.',
   },
   {
     title: 'Power calculations',

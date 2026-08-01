@@ -778,7 +778,7 @@ const SiteVisitsHubPage = () => {
               This will permanently remove the selected visits and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleBulkDelete}
               disabled={isBulkDeleting}

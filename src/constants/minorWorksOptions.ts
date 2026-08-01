@@ -650,7 +650,8 @@ export const INSULATION_TEST_VOLTAGES: SelectOption[] = [
 ];
 
 // ============================================================================
-// Smart Defaults - Quick circuit presets
+// Smart Defaults - shape of a quick circuit preset
+// (preset data lives in MWSmartDefaults.tsx; only the type is shared)
 // ============================================================================
 
 export interface SmartDefault {
@@ -678,121 +679,6 @@ export interface SmartDefault {
     rcdBsEn?: string;
   };
 }
-
-export const SMART_DEFAULTS: SmartDefault[] = [
-  {
-    id: 'lighting',
-    label: 'Lighting',
-    emoji: '💡',
-    description: '6A MCB B, 1.5mm² T&E',
-    values: {
-      protectiveDeviceType: 'mcb-type-b',
-      protectiveDeviceRating: '6',
-      liveConductorSize: '1.5',
-      cpcSize: '1.0',
-      cableType: 'twin-earth',
-      installationMethod: 'ceiling-void',
-      referenceMethod: 'C',
-      overcurrentDeviceBsEn: 'BS EN 60898',
-      protectiveDeviceKaRating: '6',
-      numberOfConductors: '3',
-      circuitDescription: 'Lighting circuit',
-      circuitType: 'radial',
-    },
-  },
-  {
-    id: 'sockets',
-    label: 'Sockets',
-    emoji: '🔌',
-    description: '32A RCBO A, 2.5mm² T&E',
-    values: {
-      protectiveDeviceType: 'rcbo-type-a',
-      protectiveDeviceRating: '32',
-      liveConductorSize: '2.5',
-      cpcSize: '1.5',
-      cableType: 'twin-earth',
-      installationMethod: 'under-plaster',
-      referenceMethod: 'A',
-      protectionRcbo: true,
-      rcdIdn: '30',
-      rcdType: 'A',
-      overcurrentDeviceBsEn: 'BS EN 61009',
-      protectiveDeviceKaRating: '6',
-      numberOfConductors: '3',
-      circuitDescription: 'Ring final circuit',
-      circuitType: 'ring',
-      rcdBsEn: 'BS EN 61009',
-    },
-  },
-  {
-    id: 'cooker',
-    label: 'Cooker',
-    emoji: '🍳',
-    description: '32A MCB B, 6.0mm² T&E',
-    values: {
-      protectiveDeviceType: 'mcb-type-b',
-      protectiveDeviceRating: '32',
-      liveConductorSize: '6.0',
-      cpcSize: '2.5',
-      cableType: 'twin-earth',
-      installationMethod: 'under-plaster',
-      referenceMethod: 'A',
-      overcurrentDeviceBsEn: 'BS EN 60898',
-      protectiveDeviceKaRating: '6',
-      numberOfConductors: '3',
-      circuitDescription: 'Cooker circuit',
-      circuitType: 'radial',
-    },
-  },
-  {
-    id: 'shower',
-    label: 'Shower',
-    emoji: '🚿',
-    description: '40A RCBO A, 10.0mm² T&E',
-    values: {
-      protectiveDeviceType: 'rcbo-type-a',
-      protectiveDeviceRating: '40',
-      liveConductorSize: '10.0',
-      cpcSize: '4.0',
-      cableType: 'twin-earth',
-      installationMethod: 'ceiling-void',
-      referenceMethod: 'C',
-      protectionRcbo: true,
-      rcdIdn: '30',
-      rcdType: 'A',
-      overcurrentDeviceBsEn: 'BS EN 61009',
-      protectiveDeviceKaRating: '6',
-      numberOfConductors: '3',
-      circuitDescription: 'Electric shower circuit',
-      circuitType: 'radial',
-      rcdBsEn: 'BS EN 61009',
-    },
-  },
-  {
-    id: 'ev-charger',
-    label: 'EV Charger',
-    emoji: '🚗',
-    description: '32A RCBO A, 6.0mm² T&E',
-    values: {
-      protectiveDeviceType: 'rcbo-type-a',
-      protectiveDeviceRating: '32',
-      liveConductorSize: '6.0',
-      cpcSize: '2.5',
-      cableType: 'twin-earth',
-      installationMethod: 'clipped-direct',
-      referenceMethod: 'C',
-      protectionRcbo: true,
-      rcdIdn: '30',
-      rcdType: 'A',
-      overcurrentDeviceBsEn: 'BS EN 61009',
-      protectiveDeviceKaRating: '6',
-      numberOfConductors: '3',
-      circuitDescription: 'EV charger circuit',
-      circuitType: 'radial',
-      rcdBsEn: 'BS EN 61009',
-    },
-  },
-];
 
 // ============================================================================
 // Helper function to get flat options list from grouped options

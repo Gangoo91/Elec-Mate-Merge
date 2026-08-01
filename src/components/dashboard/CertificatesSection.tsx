@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useResumeDrafts } from '@/hooks/inspection/useResumeDrafts';
 
@@ -69,104 +67,99 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Certificates</h1>
-          </div>
+      {/* Header — quiet, no rules or eyebrows; the cards carry the page */}
+      <div className="px-4 lg:px-8 pt-3 pb-1">
+        <button
+          type="button"
+          onClick={onBack}
+          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+        >
+          Back
+        </button>
+        <div className="flex items-baseline gap-3">
+          <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
+            Certificates
+          </h1>
+          <span className="text-[13px] text-white/50">Choose a type to start</span>
         </div>
-        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-4 space-y-2.5"
+        className="px-4 py-4 lg:px-8"
       >
-        {/* Editorial section label — mirrors HubSection across the I&T pages */}
-        <motion.div variants={itemVariants} className="flex items-end justify-between gap-3 px-0.5">
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-            Select a type
-          </h2>
-          <span className="text-[10.5px] text-white/30 tabular-nums">{coreCerts.length}</span>
-        </motion.div>
+        {/* 2×2 card grid — equal heights, aligned action rows */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 lg:max-w-[1600px]">
+          {coreCerts.map((cert) => {
+            const draft = drafts?.[cert.id];
 
-        {/* Core cert types — framed list, hairline-separated, gold top hairline */}
-        <motion.div
-          variants={itemVariants}
-          className="relative border border-white/[0.14] rounded-2xl overflow-hidden"
-        >
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-          <div className="divide-y divide-white/[0.18]">
-            {coreCerts.map((cert) => {
-              // Solid accent dot derived from the gradient's "from-" token.
-              const dot = cert.accentColor.split(' ')[0].replace('from-', 'bg-');
-              const draft = drafts?.[cert.id];
+            return (
+              <motion.div
+                key={cert.id}
+                variants={itemVariants}
+                className={cn(
+                  'group relative flex flex-col overflow-hidden rounded-2xl p-5 sm:p-6',
+                  'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
+                  'transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]',
+                  'hover:shadow-[0_10px_32px_rgba(0,0,0,0.35)] focus-within:border-elec-yellow/50'
+                )}
+              >
+                {/* accent mark + standard badge */}
+                <div className="relative flex items-center justify-between gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/[0.06] border border-white/[0.12] shrink-0">
+                    <span className="h-3 w-3 rounded-full bg-elec-yellow" aria-hidden />
+                  </span>
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
+                    {cert.standard}
+                  </span>
+                </div>
 
-              return (
-                <div key={cert.id} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => onNavigate(cert.id)}
-                    className="group relative flex w-full flex-col text-left p-5 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
-                  >
-                    {/* accent dot + mono standard badge */}
-                    <div className="flex items-start justify-between gap-3">
-                      <span className={cn('mt-1.5 w-2 h-2 rounded-full shrink-0', dot)} aria-hidden />
-                      <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
-                        {cert.standard}
-                      </span>
-                    </div>
+                <h3 className="relative mt-4 text-[22px] sm:text-2xl font-semibold tracking-tight leading-[1.1] text-white">
+                  {cert.title}
+                </h3>
+                <p className="relative mt-1 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/50 leading-snug">
+                  {cert.subtitle}
+                </p>
+                <p className="relative mt-2.5 text-[13.5px] leading-relaxed text-white/65">
+                  {cert.description}
+                </p>
 
-                    <h3 className="mt-3 text-[20px] sm:text-[22px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
-                      {cert.title}
-                    </h3>
-                    <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/45 leading-snug">
-                      {cert.subtitle}
-                    </p>
-                    <p className="mt-2.5 text-[13px] leading-relaxed text-white/55">
-                      {cert.description}
-                    </p>
-
-                    <div className="mt-4 flex items-center justify-end">
-                      <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-elec-yellow">
-                        New
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                      </span>
-                    </div>
-                  </button>
-
-                  {/* Resume strip — only when in-progress drafts of this type exist */}
-                  {draft && (
+                {/* Action row — pinned to the card base so all four cards align */}
+                <div className="relative mt-auto pt-5 flex items-center justify-between gap-3">
+                  {draft ? (
                     <button
                       type="button"
                       onClick={() => onNavigate(cert.id, draft.latestReportId, cert.id)}
-                      className="group flex w-full items-center justify-between gap-2 border-t border-elec-yellow/15 bg-elec-yellow/[0.06] px-5 py-2.5 text-left transition-colors touch-manipulation hover:bg-elec-yellow/[0.1] active:bg-elec-yellow/[0.14] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+                      className={cn(
+                        'h-11 px-4 rounded-xl text-[13px] font-semibold text-elec-yellow',
+                        'border border-elec-yellow/40 bg-elec-yellow/[0.08]',
+                        'touch-manipulation active:scale-[0.97] transition-all hover:bg-elec-yellow/[0.14]'
+                      )}
                     >
-                      <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-elec-yellow/90">
-                        {draft.count} in progress
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-elec-yellow">
-                        Resume
-                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </span>
+                      Resume
+                      <span className="ml-1.5 text-elec-yellow/70 tabular-nums">{draft.count}</span>
                     </button>
+                  ) : (
+                    <span className="text-[11.5px] text-white/40">No drafts</span>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => onNavigate(cert.id)}
+                    className={cn(
+                      'h-11 px-7 rounded-xl text-[14px] font-bold bg-elec-yellow text-black',
+                      'touch-manipulation active:scale-[0.97] transition-transform',
+                      'shadow-[0_4px_16px_rgba(245,184,28,0.2)]'
+                    )}
+                  >
+                    New
+                  </button>
                 </div>
-              );
-            })}
-          </div>
-        </motion.div>
+              </motion.div>
+            );
+          })}
+        </div>
       </motion.main>
     </div>
   );

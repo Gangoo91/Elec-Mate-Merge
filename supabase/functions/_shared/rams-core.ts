@@ -26,6 +26,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { searchFacets, formatFacetsForPrompt, type BS7671Facet } from './bs7671-facets-rag.ts';
+import { classifyAiError, logAiCall, recordAiFailure } from './ai-log.ts';
 import { captureException } from './sentry.ts';
 import {
   searchSafetyFacets,
@@ -249,6 +250,8 @@ async function streamOpenAIChat(opts: {
 
   try {
     armIdle();
+    const aiModel = String((opts.body as { model?: unknown })?.model ?? 'unknown');
+    const aiStarted = Date.now();
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -262,11 +265,30 @@ async function streamOpenAIChat(opts: {
 
     if (!response.ok) {
       const errText = await response.text();
+      const aiEntry = {
+        fn: 'rams-generator',
+        provider: 'openai',
+        model: aiModel,
+        status: 'error' as const,
+        http_status: response.status,
+        error_class: classifyAiError(response.status, errText),
+        duration_ms: Date.now() - aiStarted,
+        detail: errText.slice(0, 500),
+      };
+      logAiCall(aiEntry);
+      await recordAiFailure(aiEntry);
       throw new Error(`OpenAI ${response.status}: ${errText.slice(0, 500)}`);
     }
     if (!response.body) {
       throw new Error('OpenAI returned an empty stream');
     }
+    logAiCall({
+      fn: 'rams-generator',
+      provider: 'openai',
+      model: aiModel,
+      status: 'ok',
+      duration_ms: Date.now() - aiStarted,
+    });
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();

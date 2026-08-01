@@ -10,7 +10,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +20,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -29,19 +28,26 @@ import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 
 import EmergencyLightingFormTabs from '@/components/inspection/emergency-lighting/EmergencyLightingFormTabs';
-import { useEmergencyLightingTabs } from '@/hooks/useEmergencyLightingTabs';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import {
+  useEmergencyLightingTabs,
+  EmergencyLightingTabValue,
+} from '@/hooks/useEmergencyLightingTabs';
 import {
   getDefaultEmergencyLightingFormData,
   EmergencyLightingFormData,
 } from '@/types/emergency-lighting';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { formatEmergencyLightingJson } from '@/utils/emergencyLightingJsonFormatter';
+import {
+  mergeEmergencyLightingBranding,
+  resolveEmergencyLightingSchemeLogo,
+} from '@/utils/emergencyLightingBranding';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
 const REPORT_TYPE = 'emergency-lighting' as const;
@@ -258,61 +264,21 @@ const {
       await syncNowImmediate();
 
       // Generate certificate number if not set
-      let dataWithCertNumber = {
+      let dataWithCertNumber: Partial<EmergencyLightingFormData> = {
         ...formData,
         certificateNumber: formData.certificateNumber || `EL-${Date.now()}`,
       };
 
       // Merge company branding from Business Settings if available
       if (hasSavedCompanyBranding) {
-        const branding = loadCompanyBranding();
-        if (branding) {
-          dataWithCertNumber = {
-            ...dataWithCertNumber,
-            companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
-            companyName:
-              branding.companyName ||
-              dataWithCertNumber.companyName ||
-              dataWithCertNumber.testerCompany,
-            companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
-            companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
-            companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
-            companyWebsite: branding.companyWebsite || dataWithCertNumber.companyWebsite,
-            accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
-            registrationSchemeLogo:
-              branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
-            registrationScheme:
-              branding.registrationScheme || dataWithCertNumber.registrationScheme,
-            registrationNumber:
-              branding.registrationNumber || dataWithCertNumber.registrationNumber,
-          };
-        }
+        dataWithCertNumber = mergeEmergencyLightingBranding(
+          dataWithCertNumber,
+          loadCompanyBranding()
+        );
       }
 
       // Auto-resolve scheme logo if scheme is set but logo is missing/placeholder
-      const schemeName = dataWithCertNumber.registrationScheme;
-      const currentLogo = dataWithCertNumber.registrationSchemeLogo || '';
-      const isPlaceholderLogo =
-        !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
-      if (schemeName && schemeName !== 'none' && schemeName !== 'other' && isPlaceholderLogo) {
-        try {
-          const { getSchemeInfo } = await import('@/constants/schemeLogos');
-          const info = getSchemeInfo(schemeName);
-          if (info) {
-            const resp = await fetch(info.logoPath);
-            const blob = await resp.blob();
-            const dataUrl = await new Promise<string>((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = () => resolve(reader.result as string);
-              reader.onerror = reject;
-              reader.readAsDataURL(blob);
-            });
-            dataWithCertNumber = { ...dataWithCertNumber, registrationSchemeLogo: dataUrl };
-          }
-        } catch (err) {
-          console.warn('[EmergencyLighting] Failed to resolve scheme logo:', err);
-        }
-      }
+      dataWithCertNumber = await resolveEmergencyLightingSchemeLogo(dataWithCertNumber);
 
       // Use the JSON formatter to prepare PDF data
       const pdfData = formatEmergencyLightingJson(dataWithCertNumber);
@@ -404,11 +370,8 @@ const {
 
   if (isLoading) {
     return (
-      <div className="bg-background min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <Skeleton className="h-12 w-48 mb-4" />
-          <Skeleton className="h-64 w-full" />
-        </div>
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
       </div>
     );
   }
@@ -417,79 +380,71 @@ const {
     <div className="bg-background min-h-screen">
       {/* Recovery Dialog */}
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent className="bg-[#1a1a1e] border-white/[0.08] text-white">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
+            <AlertDialogTitle className="text-white text-base font-bold">
+              Recover unsaved work?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
               We found an unsaved Emergency Lighting certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
               {recoveryDraft?.data?.clientName && (
-                <span className="block mt-2 font-medium">
+                <span className="block mt-2 font-medium text-elec-yellow">
                   Client: {recoveryDraft.data.clientName}
                 </span>
               )}
               {recoveryDraft?.data?.premisesAddress && (
-                <span className="block mt-1 text-sm">
+                <span className="block mt-1 text-sm text-white/80">
                   Premises: {recoveryDraft.data.premisesAddress}
                 </span>
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={handleDiscardDraft}
-              className="border-white/[0.12] text-white hover:bg-white/[0.06]"
-            >
-              Start Fresh
-            </AlertDialogCancel>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleRecoverDraft}
-              className="bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30"
+              className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
             >
-              Recover Draft
+              Recover draft
             </AlertDialogAction>
+            <AlertDialogCancel
+              onClick={handleDiscardDraft}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Start fresh
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Header — EIC pattern */}
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">Emergency Lighting</h1>
-                {formData.certificateNumber && (
-                  <p className="text-[10px] text-white font-mono mt-0.5">
-                    {formData.certificateNumber}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate('/electrician/inspection-testing?section=specialist')}
+        title="Emergency Lighting"
+        subtitle={formData.certificateNumber ? `${formData.certificateNumber} · BS 5266` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={[
+          { id: 'installation', label: 'Installation' },
+          { id: 'luminaires', label: 'Luminaires' },
+          { id: 'testing', label: 'Testing' },
+          { id: 'declarations', label: 'Sign off' },
+        ]}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as EmergencyLightingTabValue);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          installation: !!tabProps.isTabComplete('installation'),
+          luminaires: !!tabProps.isTabComplete('luminaires'),
+          testing: !!tabProps.isTabComplete('testing'),
+          declarations: !!tabProps.isTabComplete('declarations'),
+        }}
+      />
 
       {/* Main Content */}
       {/* ELE-1037 — lock / version bar */}
@@ -505,7 +460,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <EmergencyLightingFormTabs
           currentTab={tabProps.currentTab}

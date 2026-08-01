@@ -14,6 +14,7 @@ import { useSendMessage } from '@/hooks/useMessages';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 import {
   Field,
   FormCard,

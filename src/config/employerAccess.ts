@@ -13,6 +13,12 @@ export const EMPLOYER_ALLOWED_EMAILS = [
   'andrewgangoo91@gmail.com',
   'info@precisionei.co.uk',
   'jason@aeeyorkshire.co.uk',
+  // Sean Mulcahy (Mulcahy Electrical) — Employer Hub granted ahead of the
+  // £499.99 lifetime. Deliberately allowlisted rather than tier-flipped: the
+  // Stripe webhook recomputes subscription_tier from the price on every
+  // customer.subscription.updated, so a manual 'employer' tier would be
+  // silently reverted. Remove once his lifetime sets free_access_granted.
+  'sean@mulcahyelectrical.co.uk',
 ];
 
 /** Minimal shape of the fields we read from the auth profile. */

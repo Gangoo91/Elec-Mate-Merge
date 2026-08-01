@@ -177,6 +177,7 @@ export const formatFireAlarmG3Json = (formData: Record<string, any>) => {
     // Client
     client_name: get('clientName'),
     client_telephone: get('clientTelephone'),
+    client_email: get('clientEmail'),
     client_address: get('clientAddress'),
 
     // Premises

@@ -238,16 +238,43 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
 
   const totalAlarmDevices = (formData.sounderCount || 0) + (formData.visualAlarmCount || 0);
 
-  // Format zones for PDF
+  // Device arrays (G2 tab 3). VADs are entered as sounders with type
+  // 'visual-beacon', so split them out for the equipment summary counts.
+  const detectorsArr = formData.detectors || [];
+  const soundersArr = formData.sounders || [];
+  const callPointsArr = formData.callPoints || [];
+  const hasDevicesListed =
+    detectorsArr.length > 0 || soundersArr.length > 0 || callPointsArr.length > 0;
+  const vadCountFromDevices = soundersArr.filter((s) => s.type === 'visual-beacon').length;
+
+  const finalDetectorCount = detectorsArr.length || totalDetectors;
+  const finalCallPointCount = callPointsArr.length || formData.callPointCount || 0;
+  const finalSounderCount = soundersArr.length
+    ? soundersArr.length - vadCountFromDevices
+    : formData.sounderCount || 0;
+  const finalVisualAlarmCount = soundersArr.length
+    ? vadCountFromDevices
+    : formData.visualAlarmCount || 0;
+  const finalAlarmDeviceCount = soundersArr.length ? soundersArr.length : totalAlarmDevices;
+
+  // Format zones for PDF — when devices are listed, auto-count per zone from
+  // the device arrays (matches the on-screen auto-counts); the stored
+  // zone.detectorCount etc. stay 0 unless entered manually.
   const formatZones = (): Record<string, string | number>[] => {
     const zones: FireAlarmZone[] = formData.zones || [];
     return zones.map((zone) => ({
       zone_number: zone.zoneNumber,
       zone_name: zone.zoneName || '',
       location: zone.location || '',
-      detector_count: zone.detectorCount || 0,
-      call_point_count: zone.callPointCount || 0,
-      sounder_count: zone.sounderCount || 0,
+      detector_count: hasDevicesListed
+        ? detectorsArr.filter((d) => d.zoneId === zone.id).length
+        : zone.detectorCount || 0,
+      call_point_count: hasDevicesListed
+        ? callPointsArr.filter((c) => c.zoneId === zone.id).length
+        : zone.callPointCount || 0,
+      sounder_count: hasDevicesListed
+        ? soundersArr.filter((s) => s.zoneId === zone.id).length
+        : zone.sounderCount || 0,
     }));
   };
 
@@ -619,7 +646,8 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     premises_type_display: formatPremisesType(get('premisesType')),
     occupancy_type: get('occupancyType'),
     occupancy_type_display: formatOccupancyType(get('occupancyType')),
-    floors_count: getNum('floorsCount', 1) || getNum('numberOfFloors', 1),
+    // Form writes numberOfFloors; floorsCount defaults to 1 so it must lose
+    floors_count: getNum('numberOfFloors', 0) || getNum('floorsCount', 1),
     floor_area: get('floorArea'),
 
     // ============================================
@@ -636,7 +664,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     panel_model: get('systemModel'),
     panel_location: get('panelLocation'),
     panel_serial: get('panelSerialNumber'),
-    panel_serial_photo: get('panelSerialPhoto'),
+    panel_serial_photo: get('panelSerialPhoto') || get('panelPhoto'),
     panel_firmware_version: get('panelFirmwareVersion') || get('panelFirmware'),
 
     // ============================================
@@ -669,19 +697,17 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
       flame: detectorCount.flame || 0,
       co: detectorCount.co || 0,
     },
-    // Auto-count from device arrays if available, fallback to manual counts
-    total_detectors: (formData.detectors || []).length || totalDetectors,
-    call_point_count: (formData.callPoints || []).length || formData.callPointCount || 0,
-    sounder_count: (formData.sounders || []).length || formData.sounderCount || 0,
-    visual_alarm_count: formData.visualAlarmCount || 0,
-    total_alarm_devices:
-      ((formData.sounders || []).length || formData.sounderCount || 0) +
-      (formData.visualAlarmCount || 0),
+    // Auto-count from device arrays if available, fallback to manual counts.
+    // VADs entered as 'visual-beacon' sounders are reported under
+    // visual_alarm_count rather than sounder_count.
+    total_detectors: finalDetectorCount,
+    call_point_count: finalCallPointCount,
+    sounder_count: finalSounderCount,
+    visual_alarm_count: finalVisualAlarmCount,
+    total_alarm_devices: finalAlarmDeviceCount,
     total_devices:
-      ((formData.detectors || []).length || totalDetectors) +
-      ((formData.callPoints || []).length || formData.callPointCount || 0) +
-      ((formData.sounders || []).length || formData.sounderCount || 0) +
-      (formData.visualAlarmCount || 0),
+      finalDetectorCount + finalCallPointCount + finalAlarmDeviceCount ||
+      getNum('totalDevices'),
 
     // ============================================
     // ZONES
@@ -957,8 +983,8 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     // ============================================
     loop_count: getNum('loopCount'),
     devices_per_loop: get('devicesPerLoop'),
-    total_addressable_devices: getNum('totalAddressableDevices'),
-    max_loop_capacity: getNum('maxLoopCapacity'),
+    total_addressable_devices: getNum('totalAddressableDevices') || getNum('totalDevices'),
+    max_loop_capacity: getNum('maxLoopCapacity') || getNum('maxCapacity'),
 
     // ============================================
     // ASPIRATING SYSTEM

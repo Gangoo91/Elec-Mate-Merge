@@ -8,6 +8,56 @@
  */
 
 import { BESSFormData, getDefaultBESSFormData } from '@/types/bess';
+import { supabase } from '@/integrations/supabase/client';
+
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+/**
+ * Fetch this report's photo evidence and return public URLs matching
+ * BESSFormData.photos (string[]). Photos live in the inspection_photos
+ * table (written by useInspectionPhotos) — nothing ever writes
+ * formData.photos, so callers must inject this at generate/email time.
+ * URLs are resized via Supabase image transform (EICR pattern) so
+ * PDFMonkey embeds small rasters and the emailed PDF stays under the
+ * attachment limit.
+ */
+export const fetchBESSReportPhotos = async (reportId: string): Promise<string[]> => {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    // inspection_photos.report_id holds the reports table UUID, not the
+    // BESS-xxx report_id string — resolve it first (same as useInspectionPhotos).
+    const { data: report } = await supabase
+      .from('reports')
+      .select('id')
+      .eq('report_id', reportId)
+      .eq('user_id', user.id)
+      .maybeSingle();
+    const reportUuid = report?.id || (UUID_REGEX.test(reportId) ? reportId : null);
+    if (!reportUuid) return [];
+
+    const { data: photoRows } = await supabase
+      .from('inspection_photos')
+      .select('file_path')
+      .eq('report_id', reportUuid)
+      .order('uploaded_at');
+
+    return (photoRows || []).map((photo) => {
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path, {
+        transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+      });
+      return publicUrl;
+    });
+  } catch {
+    return [];
+  }
+};
 
 interface BrandingOptions {
   companyLogo?: string;
@@ -97,6 +147,10 @@ export const formatBESSJson = (
     registrationNumber: branding?.registrationNumber ?? '',
     registrationSchemeLogo: branding?.registrationSchemeLogo ?? '',
   };
+
+  // CertificateClientSection stores selectedCustomerId in formData for CRM
+  // linking — it is internal state, not certificate data; keep it out of the PDF.
+  delete (payload as Record<string, unknown>).selectedCustomerId;
 
   return payload;
 };

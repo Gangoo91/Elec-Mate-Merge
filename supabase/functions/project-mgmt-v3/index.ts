@@ -14,6 +14,8 @@ import {
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { setAiLogFn } from '../_shared/ai-log.ts';
+setAiLogFn('project-mgmt-v3');
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

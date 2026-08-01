@@ -3,6 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useWorkerSeat } from '@/hooks/useWorkerSeat';
+import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import { Loader2 } from 'lucide-react';
 import TrialExpiredPaywall from './TrialExpiredPaywall';
 
@@ -15,6 +16,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isProEntitled, isNative } = useRevenueCat(user?.id);
   // E1: a seat from an employer-tier company covers the worker's access
   const { data: hasWorkerSeat = false } = useWorkerSeat(user?.id);
+  // A co-admin works inside the owner's company and holds no subscription of
+  // their own — the owner's plan covers them, exactly as a worker seat does.
+  const { data: isEmployerCoAdmin = false } = useEmployerCoAdmin(user?.id);
   const location = useLocation();
   const isMounted = useRef(true);
   useEffect(
@@ -44,6 +48,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     hasProfileAccess ||
     isProEntitled ||
     hasWorkerSeat ||
+    isEmployerCoAdmin ||
     isSubscriptionPage ||
     isCheckoutPage ||
     isPaymentPage;

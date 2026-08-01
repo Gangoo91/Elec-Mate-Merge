@@ -40,7 +40,7 @@ function RiskPill({ level }: { level: string }) {
     <span
       className={cn(
         'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        RISK_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+        RISK_PILL[level] ?? 'bg-white/[0.05] text-white border-white/10'
       )}
     >
       {level}
@@ -70,7 +70,7 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
   return (
     <div className="space-y-5">
       <FormCard eyebrow="Hazard assessment">
-        <p className="text-[13px] text-white/70 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           Link relevant hazards from the database to your method statement. Each hazard carries its
           recommended control measures and the regulations it sits under.
         </p>

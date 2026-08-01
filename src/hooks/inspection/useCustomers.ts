@@ -334,30 +334,65 @@ export const useCustomers = (options?: UseCustomersOptions) => {
 
       if (error) throw error;
 
-      const csvContent = [
+      // Spreadsheets coerce bare digit strings to numbers, dropping the
+      // leading 0 (and any +44). Normalise to national format with a space —
+      // "07506 026934" — which every spreadsheet keeps as text.
+      const formatPhone = (phone?: string | null): string => {
+        if (!phone) return '';
+        const digits = phone.replace(/[^\d]/g, '');
+        let national = digits;
+        if (digits.startsWith('44') && digits.length >= 11) national = '0' + digits.slice(2);
+        else if (!digits.startsWith('0') && digits.length === 10) national = '0' + digits;
+        if (national.length === 11) return `${national.slice(0, 5)} ${national.slice(5)}`;
+        return phone;
+      };
+
+      const formatDate = (d?: string | null) =>
+        d ? new Date(d).toLocaleDateString('en-GB') : '';
+
+      const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+      const csvContent =
+        '\ufeff' + // UTF-8 BOM so Excel renders £ and accented names correctly
         [
-          'Name',
-          'Email',
-          'Phone',
-          'Address',
-          'Notes',
-          'Certificates',
-          'Properties',
-          'Last Activity',
-        ],
-        ...(data || []).map((c) => [
-          c.name,
-          c.email || '',
-          c.phone || '',
-          c.address || '',
-          c.notes || '',
-          (c.certificate_count || 0).toString(),
-          (c.property_count || 0).toString(),
-          c.last_activity_at ? new Date(c.last_activity_at).toLocaleDateString('en-GB') : '',
-        ]),
-      ]
-        .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-        .join('\n');
+          [
+            'Name',
+            'Company',
+            'Email',
+            'Phone',
+            'Address',
+            'Status',
+            'Tags',
+            'Notes',
+            'Certificates',
+            'Properties',
+            'Last activity',
+            'Added',
+          ],
+          ...(data || []).map((c) => {
+            const row = c as typeof c & {
+              company_name?: string;
+              status?: string;
+              tags?: string[];
+            };
+            return [
+              row.name,
+              row.company_name || '',
+              row.email || '',
+              formatPhone(row.phone),
+              row.address || '',
+              capitalise(row.status || 'active'),
+              (row.tags || []).join('; '),
+              row.notes || '',
+              (row.certificate_count || 0).toString(),
+              (row.property_count || 0).toString(),
+              formatDate(row.last_activity_at),
+              formatDate(row.created_at),
+            ];
+          }),
+        ]
+          .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+          .join('\r\n');
 
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);

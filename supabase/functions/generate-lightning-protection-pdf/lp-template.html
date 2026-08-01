@@ -228,6 +228,18 @@
         {% endfor %}
         </tbody>
     </table>
+    {% assign vi_has_photos = false %}
+    {% for item in visualInspection %}{% unless item.photo == blank %}{% assign vi_has_photos = true %}{% endunless %}{% endfor %}
+    {% if vi_has_photos %}
+    <div style="display: flex; flex-wrap: wrap; gap: 3px; padding: 3px;">
+        {% for item in visualInspection %}{% unless item.photo == blank %}
+        <div style="width: calc(33.33% - 3px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ item.photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6px; color: #64748b; text-align: center; padding: 1px;">{{ item.description }}</div>
+        </div>
+        {% endunless %}{% endfor %}
+    </div>
+    {% endif %}
 </div>
 
 <!-- Test Results & Declaration continue below -->
@@ -270,6 +282,18 @@
         {% endfor %}
         </tbody>
     </table>
+    {% assign ee_has_photos = false %}
+    {% for test in earthElectrodeTests %}{% unless test.photo == blank %}{% assign ee_has_photos = true %}{% endunless %}{% endfor %}
+    {% if ee_has_photos %}
+    <div style="display: flex; flex-wrap: wrap; gap: 3px; padding: 3px;">
+        {% for test in earthElectrodeTests %}{% unless test.photo == blank %}
+        <div style="width: calc(33.33% - 3px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ test.photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6px; color: #64748b; text-align: center; padding: 1px;">{{ test.reference }}{% unless test.location == blank %} — {{ test.location }}{% endunless %}</div>
+        </div>
+        {% endunless %}{% endfor %}
+    </div>
+    {% endif %}
     {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No earth electrode tests recorded</div>{% endif %}
 </div>
 
@@ -294,6 +318,18 @@
         {% endfor %}
         </tbody>
     </table>
+    {% assign dc_has_photos = false %}
+    {% for test in downConductorTests %}{% unless test.photo == blank %}{% assign dc_has_photos = true %}{% endunless %}{% endfor %}
+    {% if dc_has_photos %}
+    <div style="display: flex; flex-wrap: wrap; gap: 3px; padding: 3px;">
+        {% for test in downConductorTests %}{% unless test.photo == blank %}
+        <div style="width: calc(33.33% - 3px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ test.photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6px; color: #64748b; text-align: center; padding: 1px;">{{ test.reference }}{% unless test.location == blank %} — {{ test.location }}{% endunless %}</div>
+        </div>
+        {% endunless %}{% endfor %}
+    </div>
+    {% endif %}
     {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No down conductor tests recorded</div>{% endif %}
 </div>
 
@@ -325,13 +361,14 @@
     <div class="section-title cyan">Section G: SPD Checks</div>
     {% if spdChecks.size > 0 %}
     <table class="test-table">
-        <thead><tr><th>Ref</th><th>Location</th><th>Type</th><th>Status</th><th>Disconnector</th></tr></thead>
+        <thead><tr><th>Ref</th><th>Location</th><th>Type</th><th>Make / Model</th><th>Status</th><th>Disconnector</th></tr></thead>
         <tbody>
         {% for check in spdChecks %}
             <tr>
                 <td>{{ check.reference }}</td>
                 <td>{{ check.location }}</td>
                 <td>Type {{ check.spdType }}</td>
+                <td>{{ check.make }} {{ check.model }}</td>
                 <td>{% if check.statusIndicator == 'ok' %}<span class="badge pass">OK</span>{% elsif check.statusIndicator == 'fault' %}<span class="badge fail">FAULT</span>{% else %}{{ check.statusIndicator }}{% endif %}</td>
                 <td>{% if check.disconnectorCheck == 'ok' %}OK{% elsif check.disconnectorCheck == 'tripped' %}<span class="badge fail">TRIPPED</span>{% endif %}</td>
             </tr>
@@ -358,7 +395,7 @@
     <div class="section-title red">Section I: Observations &amp; Defects</div>
     {% if observations.size > 0 %}
     <table class="test-table">
-        <thead><tr><th>Ref</th><th>Severity</th><th>Location</th><th>Description</th><th>Action Required</th></tr></thead>
+        <thead><tr><th>Ref</th><th>Severity</th><th>Location</th><th>Description</th><th>Action Required</th><th>Completion</th></tr></thead>
         <tbody>
         {% for obs in observations %}
             <tr>
@@ -367,10 +404,23 @@
                 <td>{{ obs.location }}</td>
                 <td>{{ obs.description }}</td>
                 <td style="font-size: 6.5px;">{{ obs.recommendedAction }}</td>
+                <td>{{ obs.completionDate }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    {% assign obs_has_photos = false %}
+    {% for obs in observations %}{% unless obs.photo == blank %}{% assign obs_has_photos = true %}{% endunless %}{% endfor %}
+    {% if obs_has_photos %}
+    <div style="display: flex; flex-wrap: wrap; gap: 3px; padding: 3px;">
+        {% for obs in observations %}{% unless obs.photo == blank %}
+        <div style="width: calc(33.33% - 3px); border: 1px solid #e2e8f0; border-radius: 2px; overflow: hidden;">
+            <img src="{{ obs.photo }}" style="width: 100%; height: auto; display: block;" />
+            <div style="font-size: 6px; color: #64748b; text-align: center; padding: 1px;">{{ obs.reference }}{% unless obs.location == blank %} — {{ obs.location }}{% endunless %}</div>
+        </div>
+        {% endunless %}{% endfor %}
+    </div>
+    {% endif %}
     {% else %}<div style="padding: 4px 8px; font-size: 7px; color: #94a3b8; font-style: italic;">No observations or defects recorded</div>{% endif %}
 </div>
 

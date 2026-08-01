@@ -31,10 +31,10 @@ const EyebrowRow: React.FC<EyebrowRowProps> = ({ label, value }) => {
   if (!value) return null;
   return (
     <div className="py-3 flex items-baseline gap-4">
-      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-32 shrink-0">
+      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white w-32 shrink-0">
         {label}
       </span>
-      <span className="text-[13.5px] text-white/85 flex-1 leading-relaxed">{value}</span>
+      <span className="text-[13.5px] text-white flex-1 leading-relaxed">{value}</span>
     </div>
   );
 };
@@ -44,7 +44,7 @@ interface NumberedListProps {
   tone?: string;
 }
 
-const NumberedList: React.FC<NumberedListProps> = ({ items, tone = 'text-white/55' }) => {
+const NumberedList: React.FC<NumberedListProps> = ({ items, tone = 'text-white' }) => {
   if (!items || items.length === 0) return null;
   return (
     <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -58,7 +58,7 @@ const NumberedList: React.FC<NumberedListProps> = ({ items, tone = 'text-white/5
           >
             {String(idx + 1).padStart(2, '0')}
           </span>
-          <span className="text-[13.5px] text-white/85 leading-relaxed flex-1">{item}</span>
+          <span className="text-[13.5px] text-white leading-relaxed flex-1">{item}</span>
         </li>
       ))}
     </ul>
@@ -85,7 +85,7 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
       className={cn(
         'border-l-2 sm:rounded-2xl border border-white/[0.08] transition-colors overflow-hidden',
         tone.replace('text-', 'border-l-'),
-        open ? 'bg-[hsl(0_0%_10%)]' : 'bg-[hsl(0_0%_9%)] hover:bg-[hsl(0_0%_10%)]'
+        open ? 'bg-[hsl(0_0%_10%)]' : 'bg-white/[0.04] hover:bg-[hsl(0_0%_10%)]'
       )}
     >
       <button
@@ -95,7 +95,12 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
       >
         <div className="flex items-baseline justify-between w-full gap-3">
           <div className="flex items-baseline gap-3 min-w-0">
-            <span className={cn('text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0', tone)}>
+            <span
+              className={cn(
+                'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0',
+                tone
+              )}
+            >
               H{String(num).padStart(2, '0')}
             </span>
             <span
@@ -109,7 +114,7 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
           </div>
           <ChevronDown
             className={cn(
-              'h-4 w-4 text-white/55 transition-transform duration-200 shrink-0',
+              'h-4 w-4 text-white transition-transform duration-200 shrink-0',
               open && 'rotate-180'
             )}
           />
@@ -124,24 +129,24 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
           {/* Rationale */}
           {hazard.rationale && (
             <div className="pt-5">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                 Why this matters
               </div>
-              <p className="text-[13.5px] text-white/85 leading-relaxed">{hazard.rationale}</p>
+              <p className="text-[13.5px] text-white leading-relaxed">{hazard.rationale}</p>
             </div>
           )}
 
           {/* Who at risk */}
           {Array.isArray(hazard.who_at_risk) && hazard.who_at_risk.length > 0 && (
             <div>
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                 Who's at risk
               </div>
               <div className="flex flex-wrap gap-2">
                 {hazard.who_at_risk.map((p: string, i: number) => (
                   <span
                     key={i}
-                    className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-[hsl(0_0%_13%)] border border-white/[0.08] text-white/85"
+                    className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-[hsl(0_0%_13%)] border border-white/[0.08] text-white"
                   >
                     {p}
                   </span>
@@ -165,17 +170,17 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
                     <div className="flex-1 space-y-1">
                       <div className="flex flex-wrap items-baseline gap-2">
                         {c.tier && (
-                          <span className="text-[10px] uppercase tracking-[0.18em] font-medium text-white/45">
+                          <span className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
                             {c.tier}
                           </span>
                         )}
                         <p className="text-[14px] font-semibold text-white">{c.control}</p>
                       </div>
                       {c.detail && (
-                        <p className="text-[13px] text-white/75 leading-relaxed">{c.detail}</p>
+                        <p className="text-[13px] text-white leading-relaxed">{c.detail}</p>
                       )}
                       {c.responsible_role && (
-                        <p className="text-[11px] text-white/55">{c.responsible_role}</p>
+                        <p className="text-[11px] text-white">{c.responsible_role}</p>
                       )}
                     </div>
                   </li>
@@ -186,7 +191,7 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
 
           {/* Residual risk */}
           <div className="flex items-baseline justify-between gap-3 pt-3 border-t border-white/[0.06]">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Residual after controls
             </span>
             <span className="text-[16px] font-semibold tabular-nums text-emerald-400">
@@ -198,7 +203,7 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {Array.isArray(hazard.bs7671_cites) && hazard.bs7671_cites.length > 0 && (
               <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                   BS 7671
                 </div>
                 <div className="flex flex-wrap gap-1.5">
@@ -215,14 +220,14 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
             )}
             {Array.isArray(hazard.safety_cites) && hazard.safety_cites.length > 0 && (
               <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                   HSE
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {hazard.safety_cites.map((r: string, i: number) => (
                     <span
                       key={i}
-                      className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-[hsl(0_0%_13%)] border border-white/[0.10] text-white/85"
+                      className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-[hsl(0_0%_13%)] border border-white/[0.10] text-white"
                     >
                       {r}
                     </span>
@@ -232,35 +237,34 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
             )}
             {Array.isArray(hazard.ppe_required) && hazard.ppe_required.length > 0 && (
               <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                   PPE required
                 </div>
-                <ul className="space-y-1 text-[12.5px] text-white/85">
+                <ul className="space-y-1 text-[12.5px] text-white">
                   {hazard.ppe_required.map((p: string, i: number) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-white/45 shrink-0 mt-0.5">·</span>
+                      <span className="text-white shrink-0 mt-0.5">·</span>
                       <span>{p}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            {Array.isArray(hazard.competence_required) &&
-              hazard.competence_required.length > 0 && (
-                <div>
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                    Competence
-                  </div>
-                  <ul className="space-y-1 text-[12.5px] text-white/85">
-                    {hazard.competence_required.map((p: string, i: number) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-white/45 shrink-0 mt-0.5">·</span>
-                        <span>{p}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {Array.isArray(hazard.competence_required) && hazard.competence_required.length > 0 && (
+              <div>
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
+                  Competence
                 </div>
-              )}
+                <ul className="space-y-1 text-[12.5px] text-white">
+                  {hazard.competence_required.map((p: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-white shrink-0 mt-0.5">·</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Evidence / monitoring / stop-work — three columns */}
@@ -270,10 +274,10 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-3 border-t border-white/[0.06]">
               {Array.isArray(hazard.evidence_required) && hazard.evidence_required.length > 0 && (
                 <div>
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                     Evidence
                   </div>
-                  <ul className="space-y-1 text-[12px] text-white/75">
+                  <ul className="space-y-1 text-[12px] text-white">
                     {hazard.evidence_required.map((p: string, i: number) => (
                       <li key={i}>· {p}</li>
                     ))}
@@ -282,10 +286,10 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
               )}
               {Array.isArray(hazard.monitoring_checks) && hazard.monitoring_checks.length > 0 && (
                 <div>
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                     Monitoring
                   </div>
-                  <ul className="space-y-1 text-[12px] text-white/75">
+                  <ul className="space-y-1 text-[12px] text-white">
                     {hazard.monitoring_checks.map((p: string, i: number) => (
                       <li key={i}>· {p}</li>
                     ))}
@@ -297,7 +301,7 @@ const HazardCard: React.FC<HazardCardProps> = ({ hazard, index }) => {
                   <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400 mb-2">
                     Stop-work
                   </div>
-                  <ul className="space-y-1 text-[12px] text-white/85">
+                  <ul className="space-y-1 text-[12px] text-white">
                     {hazard.stop_work_triggers.map((p: string, i: number) => (
                       <li key={i}>· {p}</li>
                     ))}
@@ -332,7 +336,7 @@ const MethodStepCard: React.FC<MethodStepCardProps> = ({ step, index }) => {
       className={cn(
         'border-l-2 sm:rounded-2xl border border-white/[0.08] transition-colors overflow-hidden',
         tone.replace('text-', 'border-l-'),
-        open ? 'bg-[hsl(0_0%_10%)]' : 'bg-[hsl(0_0%_9%)] hover:bg-[hsl(0_0%_10%)]'
+        open ? 'bg-[hsl(0_0%_10%)]' : 'bg-white/[0.04] hover:bg-[hsl(0_0%_10%)]'
       )}
     >
       <button
@@ -342,23 +346,33 @@ const MethodStepCard: React.FC<MethodStepCardProps> = ({ step, index }) => {
       >
         <div className="flex items-baseline justify-between w-full gap-3">
           <div className="flex items-baseline gap-3 min-w-0">
-            <span className={cn('text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0', tone)}>
+            <span
+              className={cn(
+                'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0',
+                tone
+              )}
+            >
               {String(num).padStart(2, '0')}
             </span>
             {step.estimated_duration && (
-              <span className="text-[11px] text-white/55 tabular-nums shrink-0">
+              <span className="text-[11px] text-white tabular-nums shrink-0">
                 {step.estimated_duration}
               </span>
             )}
             {step.risk_level && (
-              <span className={cn('text-[10.5px] uppercase tracking-[0.18em] font-semibold shrink-0', tone)}>
+              <span
+                className={cn(
+                  'text-[10.5px] uppercase tracking-[0.18em] font-semibold shrink-0',
+                  tone
+                )}
+              >
                 {step.risk_level}
               </span>
             )}
           </div>
           <ChevronDown
             className={cn(
-              'h-4 w-4 text-white/55 transition-transform duration-200 shrink-0',
+              'h-4 w-4 text-white transition-transform duration-200 shrink-0',
               open && 'rotate-180'
             )}
           />
@@ -372,10 +386,10 @@ const MethodStepCard: React.FC<MethodStepCardProps> = ({ step, index }) => {
         <div className="px-4 sm:px-5 pb-5 space-y-5 border-t border-white/[0.06]">
           {step.description && (
             <div className="pt-5">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                 How
               </div>
-              <p className="text-[13.5px] text-white/85 leading-relaxed whitespace-pre-wrap">
+              <p className="text-[13.5px] text-white leading-relaxed whitespace-pre-wrap">
                 {step.description}
               </p>
             </div>
@@ -386,7 +400,7 @@ const MethodStepCard: React.FC<MethodStepCardProps> = ({ step, index }) => {
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-amber-400 mb-2">
                   Safety requirements
                 </div>
-                <ul className="space-y-1 text-[12.5px] text-white/85">
+                <ul className="space-y-1 text-[12.5px] text-white">
                   {step.safety_requirements.map((p: string, i: number) => (
                     <li key={i}>· {p}</li>
                   ))}
@@ -395,10 +409,10 @@ const MethodStepCard: React.FC<MethodStepCardProps> = ({ step, index }) => {
             )}
             {Array.isArray(step.equipment_needed) && step.equipment_needed.length > 0 && (
               <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                   Equipment
                 </div>
-                <ul className="space-y-1 text-[12.5px] text-white/85">
+                <ul className="space-y-1 text-[12.5px] text-white">
                   {step.equipment_needed.map((p: string, i: number) => (
                     <li key={i}>· {p}</li>
                   ))}
@@ -407,10 +421,10 @@ const MethodStepCard: React.FC<MethodStepCardProps> = ({ step, index }) => {
             )}
             {Array.isArray(step.qualifications) && step.qualifications.length > 0 && (
               <div>
-                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                   Qualifications
                 </div>
-                <ul className="space-y-1 text-[12.5px] text-white/85">
+                <ul className="space-y-1 text-[12.5px] text-white">
                   {step.qualifications.map((p: string, i: number) => (
                     <li key={i}>· {p}</li>
                   ))}
@@ -442,9 +456,9 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
           <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
             Executive summary
           </div>
-          <p className="text-[14px] text-white/90 leading-relaxed">{v2.executive_summary}</p>
+          <p className="text-[14px] text-white leading-relaxed">{v2.executive_summary}</p>
           {v2.rationale && (
-            <p className="text-[12.5px] text-white/65 leading-relaxed">{v2.rationale}</p>
+            <p className="text-[12.5px] text-white leading-relaxed">{v2.rationale}</p>
           )}
         </section>
       )}
@@ -452,17 +466,17 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
       {/* Scope */}
       {v2.scope && (
         <section className="space-y-2">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Scope
           </div>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">{v2.scope}</p>
+          <p className="text-[13.5px] text-white leading-relaxed">{v2.scope}</p>
         </section>
       )}
 
       {/* Preparation */}
       {v2.preparation && (
         <section className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Preparation
           </div>
           <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -475,10 +489,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
               )}
             {Array.isArray(v2.preparation.permits_required) &&
               v2.preparation.permits_required.length > 0 && (
-                <EyebrowRow
-                  label="Permits"
-                  value={v2.preparation.permits_required.join(' · ')}
-                />
+                <EyebrowRow label="Permits" value={v2.preparation.permits_required.join(' · ')} />
               )}
             {Array.isArray(v2.preparation.documentation_required) &&
               v2.preparation.documentation_required.length > 0 && (
@@ -487,10 +498,9 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
                   value={v2.preparation.documentation_required.join(' · ')}
                 />
               )}
-            {Array.isArray(v2.preparation.site_access) &&
-              v2.preparation.site_access.length > 0 && (
-                <EyebrowRow label="Site access" value={v2.preparation.site_access.join(' · ')} />
-              )}
+            {Array.isArray(v2.preparation.site_access) && v2.preparation.site_access.length > 0 && (
+              <EyebrowRow label="Site access" value={v2.preparation.site_access.join(' · ')} />
+            )}
             {Array.isArray(v2.preparation.ppe_baseline) &&
               v2.preparation.ppe_baseline.length > 0 && (
                 <EyebrowRow label="PPE baseline" value={v2.preparation.ppe_baseline.join(' · ')} />
@@ -504,7 +514,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
         <section className="space-y-4">
           <div className="flex items-baseline justify-between gap-3">
             <div className="space-y-1">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                 Hazard register
               </div>
               <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
@@ -525,7 +535,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
         <section className="space-y-4">
           <div className="flex items-baseline justify-between gap-3">
             <div className="space-y-1">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                 Method statement
               </div>
               <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
@@ -549,14 +559,14 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
         <section className="space-y-5">
           {Array.isArray(v2.tools_required) && v2.tools_required.length > 0 && (
             <div className="space-y-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                 Tools required
               </div>
               <div className="flex flex-wrap gap-2">
                 {v2.tools_required.map((t: string, i: number) => (
                   <span
                     key={i}
-                    className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white/85"
+                    className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white"
                   >
                     {t}
                   </span>
@@ -566,7 +576,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
           )}
           {Array.isArray(v2.materials_required) && v2.materials_required.length > 0 && (
             <div className="space-y-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                 Materials required
               </div>
               <NumberedList items={v2.materials_required} />
@@ -594,7 +604,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
       {/* Site logistics */}
       {v2.site_logistics && (
         <section className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Site logistics
           </div>
           <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -611,7 +621,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
       {/* PPE grid */}
       {Array.isArray(v2.ppe_grid) && v2.ppe_grid.length > 0 && (
         <section className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             PPE summary
           </div>
           <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -623,9 +633,9 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] font-medium text-white">{p.name}</p>
                   {p.specification && (
-                    <p className="mt-0.5 text-[12px] text-white/55">{p.specification}</p>
+                    <p className="mt-0.5 text-[12px] text-white">{p.specification}</p>
                   )}
-                  {p.purpose && <p className="mt-0.5 text-[12px] text-white/65">{p.purpose}</p>}
+                  {p.purpose && <p className="mt-0.5 text-[12px] text-white">{p.purpose}</p>}
                 </div>
                 {p.required && (
                   <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-elec-yellow shrink-0">
@@ -651,7 +661,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
       {/* Competence requirements */}
       {Array.isArray(v2.competence_requirements) && v2.competence_requirements.length > 0 && (
         <section className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Competence requirements
           </div>
           <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -667,14 +677,14 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
         <section className="space-y-5">
           {Array.isArray(v2.compliance_regulations) && v2.compliance_regulations.length > 0 && (
             <div className="space-y-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                 Regulations referenced
               </div>
               <div className="flex flex-wrap gap-2">
                 {v2.compliance_regulations.map((r: string, i: number) => (
                   <span
                     key={i}
-                    className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium tabular-nums bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white/85"
+                    className="inline-flex items-center h-7 px-2.5 rounded-md text-[11.5px] font-medium tabular-nums bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white"
                   >
                     {r}
                   </span>
@@ -696,12 +706,12 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
       {/* References */}
       {Array.isArray(v2.regulatory_references) && v2.regulatory_references.length > 0 && (
         <section className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Regulatory references
           </div>
           <ul className="space-y-2">
             {v2.regulatory_references.map((r: string, i: number) => (
-              <li key={i} className="text-[13px] text-white/85 leading-relaxed">
+              <li key={i} className="text-[13px] text-white leading-relaxed">
                 · {r}
               </li>
             ))}
@@ -712,7 +722,7 @@ export const SafetyTemplateV2Renderer: React.FC<SafetyTemplateV2RendererProps> =
       {/* Signature block */}
       {v2.signature_block && Array.isArray(v2.signature_block.entries) && (
         <section className="space-y-3">
-          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
             Sign-off
           </div>
           <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">

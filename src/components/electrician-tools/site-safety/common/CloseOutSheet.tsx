@@ -10,7 +10,8 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Eyebrow, Field, PrimaryButton, SecondaryButton, inputClass } from '@/components/college/primitives';
+import { Eyebrow, Field, PrimaryButton, SecondaryButton } from '@/components/college/primitives';
+import { safetyInputCn } from './SafetyDocField';
 
 interface CloseOutSheetProps {
   open: boolean;
@@ -52,7 +53,10 @@ export function CloseOutSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-auto max-h-[88vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+      <SheetContent
+        side="bottom"
+        className="h-auto max-h-[88vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+      >
         <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4 overflow-y-auto">
           <div className="flex justify-center pt-1">
             <div className="w-10 h-1 bg-white/20 rounded-full" />
@@ -60,7 +64,7 @@ export function CloseOutSheet({
           <div>
             <Eyebrow>{eyebrow}</Eyebrow>
             <h3 className="mt-1 text-[18px] font-semibold text-white">{title}</h3>
-            <p className="mt-1 text-[12.5px] text-white/60">{description}</p>
+            <p className="mt-1 text-[12.5px] text-white">{description}</p>
           </div>
           <div className="space-y-2">
             {items.map((item) => {
@@ -72,18 +76,22 @@ export function CloseOutSheet({
                   onClick={() => setChecks((c) => ({ ...c, [item]: !c[item] }))}
                   className={cn(
                     'w-full flex items-center gap-3 p-3 rounded-xl border text-left touch-manipulation transition-colors',
-                    checked ? 'bg-emerald-500/[0.06] border-emerald-500/25' : 'bg-[hsl(0_0%_10%)] border-white/[0.08]'
+                    checked
+                      ? 'bg-emerald-500/[0.06] border-emerald-500/25'
+                      : 'bg-[hsl(0_0%_10%)] border-white/[0.08]'
                   )}
                 >
                   <span
                     className={cn(
                       'h-5 w-5 rounded-full border flex items-center justify-center shrink-0 text-[11px] leading-none',
-                      checked ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-white/25 text-transparent'
+                      checked
+                        ? 'bg-emerald-500 border-emerald-500 text-black'
+                        : 'border-white/25 text-transparent'
                     )}
                   >
                     ✓
                   </span>
-                  <span className="text-[12.5px] text-white/90">{item}</span>
+                  <span className="text-[12.5px] text-white">{item}</span>
                 </button>
               );
             })}
@@ -92,12 +100,16 @@ export function CloseOutSheet({
             <input
               value={closerName}
               onChange={(e) => onCloserNameChange(e.target.value)}
-              className={inputClass}
+              className={safetyInputCn}
               placeholder="Your name"
             />
           </Field>
           <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
-            <PrimaryButton fullWidth disabled={isPending || !closerName.trim() || !allChecked} onClick={onConfirm}>
+            <PrimaryButton
+              fullWidth
+              disabled={isPending || !closerName.trim() || !allChecked}
+              onClick={onConfirm}
+            >
               {isPending ? 'Closing…' : confirmLabel}
             </PrimaryButton>
             <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>

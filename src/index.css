@@ -37,6 +37,14 @@ textarea::placeholder {
   -webkit-text-fill-color: rgba(255, 255, 255, 1) !important;
 }
 
+/* Paper-form underline fields (notices suite): the placeholder is a hint, not a
+   value — it must read dimmer than entered text or filled/empty is ambiguous. */
+input.input-underline::placeholder,
+textarea.textarea-soft::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.35) !important;
+}
+
 /* Hide browser autofill icons (location pin, contacts, etc.) in all inputs */
 input::-webkit-contacts-auto-fill-button,
 input::-webkit-credentials-auto-fill-button,
@@ -3244,4 +3252,14 @@ html.lesson-print-html body {
 .theme-v2 .price-figure {
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
+}
+
+/* ELE-1451 — an exam screen renders its own fixed bottom bar (Prev/Flag/Next)
+   at z-50. The apprentice tab bar sits on the same layer and, being later in
+   the DOM, painted over the Next button so apprentices could not advance a
+   question. ExamMobileLayout sets .exam-active on <body> for as long as an
+   exam is on screen; the tab bar stands down for the duration. Driving it from
+   the exam component rather than the URL means no exam route can be missed. */
+body.exam-active [data-apprentice-tabbar] {
+  display: none;
 }

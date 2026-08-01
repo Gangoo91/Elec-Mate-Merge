@@ -168,13 +168,20 @@ export function AdminInboxPanel() {
           </div>
         </div>
 
+        {/* ELE-1450 — ChatThread's root is `h-full`, which as a flex child here
+            claims the whole column *on top of* the header above it, pushing the
+            composer past the fold so the last message sits under it. flex-1
+            makes it take the remaining space instead. */}
         <ChatThread
+          className="flex-1 min-h-0"
           messages={open.messages.map((m) => ({
             id: m.id,
             body: m.message,
             createdAt: m.created_at,
             // Own SIDE, not "me": the inbox is shared by several admins.
             isOwn: m.sender_id !== open.partnerId,
+            readAt: m.read_at,
+            system: m.message_type === 'system_ack',
             // Attribute a colleague's reply so it does not read as yours.
             authorLabel:
               m.sender_id !== open.partnerId && m.sender_id !== user?.id

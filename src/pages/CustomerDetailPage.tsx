@@ -28,18 +28,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Loader2, Edit, Trash2, Check, X } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  Eyebrow,
-  StatStrip,
-  Pill,
-  Dot,
-  Arrow,
-  HubGrid,
-  HubCard,
-  TextAction,
-} from '@/components/college/primitives';
+import { Dot } from '@/components/college/primitives';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -130,10 +121,10 @@ function EditablePill({
           onMouseDown={(e) => e.preventDefault()}
           onClick={commit}
           disabled={saving}
-          className="flex h-5 w-5 items-center justify-center rounded-full bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 touch-manipulation"
+          className="flex h-full items-center text-[12px] font-semibold text-elec-yellow touch-manipulation"
           aria-label="Save"
         >
-          {saving ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
+          {saving ? 'Saving…' : 'Save'}
         </button>
       </div>
     );
@@ -144,12 +135,9 @@ function EditablePill({
     truncate && display.length > truncate ? `${display.slice(0, truncate)}…` : display;
 
   return (
-    <div className="group inline-flex h-9 items-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08]">
+    <div className="group inline-flex h-9 items-center rounded-lg border border-white/[0.1] bg-white/[0.04] transition-colors hover:border-white/[0.25] hover:bg-white/[0.07]">
       {value && href ? (
-        <a
-          href={href}
-          className="flex h-full items-center px-2.5 text-[12.5px] text-white"
-        >
+        <a href={href} className="flex h-full items-center px-2.5 text-[12.5px] text-white">
           {truncated}
         </a>
       ) : (
@@ -164,10 +152,10 @@ function EditablePill({
       )}
       <button
         onClick={() => setEditing(true)}
-        className="flex h-full items-center rounded-r-lg px-2 text-white/40 transition-colors hover:text-elec-yellow touch-manipulation"
+        className="flex h-full items-center rounded-r-lg px-2 text-[11.5px] font-medium text-white/45 transition-colors hover:text-elec-yellow touch-manipulation"
         aria-label={`Edit ${fieldKey}`}
       >
-        <Edit className="h-3 w-3" />
+        Edit
       </button>
     </div>
   );
@@ -323,21 +311,13 @@ export default function CustomerDetailPage() {
   if (!customer) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-          <div className="px-4 py-2">
-            <div className="flex h-11 items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={backToList}
-                className="h-9 w-9 rounded-lg text-white hover:bg-white/10 hover:text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="text-sm font-bold uppercase tracking-wide text-white">Not found</h1>
-            </div>
-          </div>
-          <div className="h-px bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
+        <div className="px-4 pt-3">
+          <button
+            onClick={backToList}
+            className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+          >
+            Back
+          </button>
         </div>
         <div className="flex flex-col items-center justify-center px-4 py-20">
           <div className="max-w-sm rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-8 text-center">
@@ -362,64 +342,52 @@ export default function CustomerDetailPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
-          <div className="flex h-11 items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={backToList}
-              className="h-9 w-9 shrink-0 rounded-lg text-white hover:bg-white/10 hover:text-white touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="min-w-0 flex-1 truncate text-sm font-bold uppercase tracking-wide text-white">
-              {customer.name}
-            </h1>
+      {/* Page header */}
+      <div className="px-4 pt-3 pb-1 lg:px-8">
+        <div className="mx-auto flex h-11 items-center gap-2 lg:max-w-[1600px]">
+          <button
+            onClick={backToList}
+            className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+          >
+            Back
+          </button>
+          <div className="ml-auto flex items-center gap-1">
             <button
               onClick={() => setShowEditDialog(true)}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.98]"
-              aria-label="Edit customer"
+              className="h-11 px-2.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
             >
-              <Edit className="h-4 w-4" />
+              Edit
             </button>
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:bg-red-500/10 hover:text-red-400 touch-manipulation active:scale-[0.98]"
-              aria-label="Delete customer"
+              className="h-11 px-2.5 text-[13px] font-semibold text-red-400/80 transition-colors hover:text-red-400 touch-manipulation"
             >
-              <Trash2 className="h-4 w-4" />
+              Delete
             </button>
           </div>
         </div>
-        <div className="h-px bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto max-w-6xl space-y-6 px-4 py-5 sm:space-y-8 sm:py-6"
+        className="mx-auto space-y-5 px-4 py-4 sm:space-y-6 sm:py-5 lg:max-w-[1600px] lg:px-8"
       >
         {/* Hero */}
         <motion.div variants={itemVariants}>
-          <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-5 sm:p-7">
-            <div
-              aria-hidden
-              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 opacity-80"
-            />
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-5 sm:p-7">
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.06] sm:h-14 sm:w-14">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.06] sm:h-14 sm:w-14">
                 <span className="text-[14px] font-semibold text-white sm:text-[15px]">
                   {getInitials(customer.name)}
                 </span>
               </div>
               <div className="min-w-0 flex-1">
-                <Eyebrow>CUSTOMER · SINCE {memberSince.toUpperCase()}</Eyebrow>
-                <h2 className="mt-1.5 text-[26px] font-semibold leading-tight tracking-tight text-white sm:text-[32px]">
+                <h2 className="text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
                   {customer.name}
                 </h2>
+                <p className="mt-1 text-[13px] text-white/50">Customer since {memberSince}</p>
               </div>
             </div>
 
@@ -429,7 +397,7 @@ export default function CustomerDetailPage() {
                 {customer.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex h-6 items-center rounded-full border border-elec-yellow/25 bg-elec-yellow/[0.08] px-2.5 text-[11px] font-medium text-elec-yellow"
+                    className="inline-flex h-6 items-center rounded-full border border-white/[0.1] bg-white/[0.06] px-2.5 text-[11px] font-medium text-white/75"
                   >
                     {tag}
                   </span>
@@ -477,37 +445,26 @@ export default function CustomerDetailPage() {
           <motion.div variants={itemVariants}>
             <div
               className={cn(
-                'relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5',
-                nextAction.tone === 'amber' &&
-                  'border-amber-500/25 bg-gradient-to-r from-amber-500/[0.08] to-transparent',
-                nextAction.tone === 'yellow' &&
-                  'border-elec-yellow/25 bg-gradient-to-r from-elec-yellow/[0.06] to-transparent',
-                nextAction.tone === 'blue' &&
-                  'border-blue-500/25 bg-gradient-to-r from-blue-500/[0.08] to-transparent'
+                'flex flex-col gap-3 rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5',
+                nextAction.tone === 'amber' ? 'border-amber-500/25' : 'border-white/[0.12]'
               )}
             >
-              <div className="flex items-start gap-3">
-                <Dot tone={nextAction.tone} className="mt-[7px] !h-2 !w-2" />
-                <div>
-                  <div
-                    className={cn(
-                      'text-[10px] font-medium uppercase tracking-[0.18em]',
-                      nextAction.tone === 'amber' && 'text-amber-400',
-                      nextAction.tone === 'yellow' && 'text-elec-yellow',
-                      nextAction.tone === 'blue' && 'text-blue-400'
-                    )}
-                  >
-                    Suggested next action
-                  </div>
-                  <div className="mt-1 text-[15px] font-semibold text-white">{nextAction.label}</div>
-                  <div className="mt-0.5 text-[12.5px] text-white/65">{nextAction.sub}</div>
+              <div>
+                <div
+                  className={cn(
+                    'text-[13px] font-semibold',
+                    nextAction.tone === 'amber' ? 'text-amber-300' : 'text-elec-yellow'
+                  )}
+                >
+                  {nextAction.label}
                 </div>
+                <div className="mt-0.5 text-[12.5px] text-white/65">{nextAction.sub}</div>
               </div>
               <div className="flex items-center gap-2 sm:shrink-0">
                 {customer.phone && (
                   <a
                     href={`tel:${customer.phone}`}
-                    className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                    className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
                   >
                     Call
                   </a>
@@ -515,16 +472,16 @@ export default function CustomerDetailPage() {
                 {customer.email && (
                   <a
                     href={`mailto:${customer.email}`}
-                    className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                    className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
                   >
                     Email
                   </a>
                 )}
                 <button
                   onClick={() => setShowStartCertificate(true)}
-                  className="flex h-9 items-center rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
+                  className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
                 >
-                  Start →
+                  Start
                 </button>
               </div>
             </div>
@@ -534,25 +491,20 @@ export default function CustomerDetailPage() {
         {/* Duplicate / merge banner */}
         {duplicateMatches.length > 0 && (
           <motion.div variants={itemVariants}>
-            <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] to-transparent p-4 sm:p-5">
-              <div className="flex items-start gap-3">
-                <Dot tone="amber" className="mt-[7px] !h-2 !w-2" />
-                <div className="min-w-0 flex-1">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
-                    Possible duplicate{duplicateMatches.length > 1 ? 's' : ''}
-                  </div>
-                  <div className="mt-1 text-[14px] font-semibold text-white">
-                    {duplicateMatches.length === 1
-                      ? `Looks like the same person as "${duplicateMatches[0].name}"`
-                      : `${duplicateMatches.length} other customers share this contact`}
-                  </div>
-                  <div className="mt-0.5 text-[12px] text-white/65">
-                    Matched on{' '}
-                    {Array.from(
-                      new Set(duplicateMatches.flatMap((m) => m.matchOn))
-                    ).join(' & ')}
-                    . Merge to combine certificates, projects, invoices and history.
-                  </div>
+            <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/25 bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:p-5">
+              <div className="min-w-0">
+                <div className="text-[13px] font-semibold text-amber-300">
+                  Possible duplicate{duplicateMatches.length > 1 ? 's' : ''}
+                </div>
+                <div className="mt-1 text-[14px] font-semibold text-white">
+                  {duplicateMatches.length === 1
+                    ? `Looks like the same person as "${duplicateMatches[0].name}"`
+                    : `${duplicateMatches.length} other customers share this contact`}
+                </div>
+                <div className="mt-0.5 text-[12px] text-white/65">
+                  Matched on{' '}
+                  {Array.from(new Set(duplicateMatches.flatMap((m) => m.matchOn))).join(' & ')}.
+                  Merge to combine certificates, projects, invoices and history.
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2">
@@ -560,13 +512,12 @@ export default function CustomerDetailPage() {
                   <button
                     key={m.id}
                     onClick={() => setMergeTargetId(m.id)}
-                    className="flex h-9 items-center gap-2 rounded-full border border-elec-yellow/30 bg-elec-yellow/[0.08] px-3.5 text-[12px] font-medium text-elec-yellow transition-colors hover:bg-elec-yellow/[0.14] touch-manipulation"
+                    className="flex h-9 items-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
                   >
                     Merge into {m.name}
                     {m.certificateCount > 0 && (
-                      <span className="text-elec-yellow/70">· {m.certificateCount} certs</span>
+                      <span className="text-black/60">· {m.certificateCount} certs</span>
                     )}
-                    <span>→</span>
                   </button>
                 ))}
                 {duplicateMatches.length > 3 && (
@@ -579,98 +530,95 @@ export default function CustomerDetailPage() {
           </motion.div>
         )}
 
-        {/* StatStrip */}
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={4}
-            stats={[
-              { label: 'Certs', value: certCount, tone: 'emerald' },
-              { label: 'Properties', value: customer.propertyCount || 0, tone: 'blue' },
-              { label: 'Quotes', value: stats.quoteCount, accent: true },
-              {
-                label: 'Lifetime',
-                value: stats.totalInvoiced > 0 ? formatGBP(stats.totalInvoiced) : '£0',
-                tone: 'amber',
-              },
-            ]}
-          />
+        {/* KPI cards */}
+        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {[
+            { label: 'Certificates', value: String(certCount), volt: false },
+            { label: 'Properties', value: String(customer.propertyCount || 0), volt: false },
+            { label: 'Quotes', value: String(stats.quoteCount), volt: false },
+            {
+              label: 'Lifetime value',
+              value: stats.totalInvoiced > 0 ? formatGBP(stats.totalInvoiced) : '£0',
+              volt: true,
+            },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4"
+            >
+              <div
+                className={cn(
+                  'text-2xl font-bold tabular-nums tracking-tight',
+                  s.volt ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {s.value}
+              </div>
+              <div className="mt-0.5 text-[12px] text-white/55">{s.label}</div>
+            </div>
+          ))}
         </motion.div>
 
         {/* Actions 2x2 */}
-        <motion.section variants={itemVariants} className="space-y-4">
-          <Eyebrow>ACTIONS</Eyebrow>
-          <HubGrid columns={2}>
-            <HubCard
-              number="01"
-              eyebrow="NEW CERTIFICATE"
-              title="Start a cert"
-              description="EICR, EIC, Minor Works, Solar PV and 14 more — pre-filled with this customer."
-              meta="BS 7671 · A4:2026"
-              tone="emerald"
-              size="md"
-              cta="Open"
-              onClick={() => setShowStartCertificate(true)}
-            />
-            <HubCard
-              number="02"
-              eyebrow="NEW QUOTE"
-              title="Quote a job"
-              description="Build a quote with live material pricing. One tap to invoice when accepted."
-              meta="Stripe payment links built in"
-              tone="yellow"
-              size="md"
-              cta="Open"
-              onClick={() => navigate('/electrician/quotes')}
-            />
-            <HubCard
-              number="03"
-              eyebrow="ADD NOTE"
-              title="Quick note"
-              description="Log a reminder, a follow-up, or what was said on the last call."
-              meta="Appears in timeline"
-              tone="blue"
-              size="md"
-              cta="Open"
-              onClick={() => setShowQuickNote(true)}
-            />
-            <HubCard
-              number="04"
-              eyebrow="PROPERTIES"
-              title="Site addresses"
-              description="Save the addresses this customer owns — landlords, agents, multi-site clients."
-              meta={`${customer.propertyCount || 0} saved`}
-              tone="amber"
-              size="md"
-              cta="Open"
-              onClick={() => setActiveSection('properties')}
-            />
-          </HubGrid>
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Actions</h3>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            {[
+              {
+                title: 'Start a certificate',
+                description:
+                  'EICR, EIC, Minor Works, Solar PV and more — pre-filled with this customer.',
+                meta: 'BS 7671',
+                onClick: () => setShowStartCertificate(true),
+              },
+              {
+                title: 'Quote a job',
+                description:
+                  'Build a quote with live material pricing. One tap to invoice when accepted.',
+                meta: 'Payment links built in',
+                onClick: () => navigate('/electrician/quotes'),
+              },
+              {
+                title: 'Quick note',
+                description: 'Log a reminder, a follow-up, or what was said on the last call.',
+                meta: 'Appears in timeline',
+                onClick: () => setShowQuickNote(true),
+              },
+              {
+                title: 'Site addresses',
+                description:
+                  'Save the addresses this customer owns — landlords, agents, multi-site clients.',
+                meta: `${customer.propertyCount || 0} saved`,
+                onClick: () => setActiveSection('properties'),
+              },
+            ].map((a) => (
+              <button
+                key={a.title}
+                onClick={a.onClick}
+                className="group flex h-full flex-col rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 text-left transition-all hover:border-white/[0.22] active:scale-[0.99] touch-manipulation sm:p-5"
+              >
+                <div className="text-[15px] font-semibold tracking-tight text-white">{a.title}</div>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">{a.description}</p>
+                <div className="mt-auto flex items-center justify-between pt-3">
+                  <span className="text-[11.5px] text-white/45">{a.meta}</span>
+                  <span className="text-[12.5px] font-semibold text-elec-yellow">Open</span>
+                </div>
+              </button>
+            ))}
+          </div>
         </motion.section>
 
         {/* Quick log strip — instant activity logging */}
         <motion.div variants={itemVariants}>
-          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-3 sm:p-4">
-            <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-1">
-              <div className="flex items-center gap-2">
-                <Dot tone="yellow" />
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  Quick log
-                </span>
-              </div>
-              <button
-                onClick={() => setShowQuickNote(true)}
-                className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.08] hover:text-elec-yellow sm:hidden touch-manipulation"
-              >
-                + Note
-              </button>
-            </div>
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-3 sm:p-4">
+            <span className="mr-1 text-[13px] font-semibold text-white">Quick log</span>
             <button
               onClick={() => {
                 logCall();
                 toast({ title: 'Call logged', description: `Logged call with ${customer.name}.` });
               }}
               disabled={isLogging}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/[0.08] hover:text-emerald-400 disabled:opacity-50 touch-manipulation"
+              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] disabled:opacity-50 touch-manipulation"
             >
               Log call
             </button>
@@ -683,7 +631,7 @@ export default function CustomerDetailPage() {
                 });
               }}
               disabled={isLogging}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-orange-500/40 hover:bg-orange-500/[0.08] hover:text-orange-400 disabled:opacity-50 touch-manipulation"
+              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] disabled:opacity-50 touch-manipulation"
             >
               Log site visit
             </button>
@@ -693,15 +641,15 @@ export default function CustomerDetailPage() {
                 toast({ title: 'Email logged', description: `Logged email to ${customer.name}.` });
               }}
               disabled={isLogging}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-blue-500/40 hover:bg-blue-500/[0.08] hover:text-blue-400 disabled:opacity-50 touch-manipulation"
+              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] disabled:opacity-50 touch-manipulation"
             >
               Log email
             </button>
             <button
               onClick={() => setShowQuickNote(true)}
-              className="ml-auto hidden h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.08] hover:text-elec-yellow sm:flex touch-manipulation"
+              className="ml-auto flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-semibold text-elec-yellow transition-colors hover:border-white/[0.25] touch-manipulation"
             >
-              + Note
+              Add note
             </button>
           </div>
         </motion.div>
@@ -710,27 +658,21 @@ export default function CustomerDetailPage() {
         <motion.div variants={itemVariants}>
           <button
             onClick={() => navigate('/electrician/business')}
-            className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-2xl border border-elec-yellow/25 bg-gradient-to-r from-elec-yellow/[0.06] via-elec-yellow/[0.02] to-transparent p-5 text-left transition-colors hover:from-elec-yellow/[0.10] touch-manipulation"
+            className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-5 text-left transition-all hover:border-white/[0.22] touch-manipulation"
           >
-            <div
-              aria-hidden
-              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/80 to-elec-yellow/0"
-            />
             <div className="min-w-0 flex-1">
-              <Eyebrow className="text-elec-yellow">AI · BUSINESS MATE</Eyebrow>
-              <div className="mt-1.5 text-[16px] font-semibold leading-tight text-white sm:text-[17px]">
-                Ask Mate to handle the admin.
+              <div className="text-[13px] font-semibold text-elec-yellow">Business Mate</div>
+              <div className="mt-1 text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
+                Ask Mate to handle the admin
               </div>
-              <div className="mt-1 text-[12.5px] text-white/65">
+              <div className="mt-1 text-[12.5px] text-white/60">
                 Draft a chase email, create a follow-up snag, schedule a re-test reminder — in plain
                 English.
               </div>
             </div>
-            <div className="shrink-0 text-right">
-              <span className="inline-flex h-9 items-center gap-1.5 rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black">
-                Open Mate <Arrow className="!text-black" />
-              </span>
-            </div>
+            <span className="inline-flex h-9 shrink-0 items-center rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black">
+              Open Mate
+            </span>
           </button>
         </motion.div>
 
@@ -747,21 +689,21 @@ export default function CustomerDetailPage() {
         {/* Linked projects */}
         {projects.length > 0 && (
           <motion.section variants={itemVariants} className="space-y-4">
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <Eyebrow>LINKED PROJECTS</Eyebrow>
-                <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
-                  {projects.length} project{projects.length === 1 ? '' : 's'} with this customer
-                </h3>
-              </div>
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                Projects
+                <span className="ml-2 text-[13px] font-medium text-white/45 tabular-nums">
+                  {projects.length}
+                </span>
+              </h3>
               <button
                 onClick={() => navigate('/electrician/projects')}
-                className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
               >
-                All projects →
+                All projects
               </button>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06]">
+            <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] divide-y divide-white/[0.06]">
               {projects.slice(0, 5).map((p) => {
                 const statusTone: 'blue' | 'green' | 'amber' | 'red' =
                   p.completedAt
@@ -799,7 +741,9 @@ export default function CustomerDetailPage() {
                         {formatGBP(p.estimatedValue)}
                       </span>
                     )}
-                    <Arrow />
+                    <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">
+                      Open
+                    </span>
                   </button>
                 );
               })}
@@ -814,14 +758,14 @@ export default function CustomerDetailPage() {
 
         {/* Tabs */}
         <motion.section variants={itemVariants} className="space-y-4">
-          <div className="flex gap-1 overflow-x-auto rounded-full border border-white/[0.06] bg-[hsl(0_0%_12%)] p-1 scrollbar-hide">
+          <div className="flex w-full gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
             {(
               [
-                { key: 'work' as const, label: 'Work history' },
+                { key: 'work' as const, label: 'Work' },
                 { key: 'financials' as const, label: 'Financials' },
                 {
                   key: 'properties' as const,
-                  label: `Properties (${customer.propertyCount || 0})`,
+                  label: `Properties${customer.propertyCount ? ` ${customer.propertyCount}` : ''}`,
                 },
                 { key: 'timeline' as const, label: 'Timeline' },
               ]
@@ -830,9 +774,9 @@ export default function CustomerDetailPage() {
                 key={tab.key}
                 onClick={() => setActiveSection(tab.key)}
                 className={cn(
-                  'h-9 shrink-0 rounded-full px-4 text-[12.5px] font-medium transition-colors touch-manipulation',
+                  'h-9 min-w-0 flex-1 truncate rounded-full px-1 text-[11.5px] font-medium transition-colors touch-manipulation sm:px-4 sm:text-[13px]',
                   activeSection === tab.key
-                    ? 'bg-elec-yellow text-black'
+                    ? 'bg-elec-yellow font-semibold text-black'
                     : 'text-white hover:bg-white/[0.04]'
                 )}
               >
@@ -891,7 +835,7 @@ export default function CustomerDetailPage() {
               . The current customer record will then be deleted. This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleMerge}
               disabled={isMerging}
@@ -916,7 +860,7 @@ export default function CustomerDetailPage() {
               This will permanently remove &ldquo;{customer.name}&rdquo; and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleDelete}
               className="h-11 w-full touch-manipulation rounded-xl border border-red-500/25 bg-red-500/15 font-medium text-red-400 transition-all hover:bg-red-500/25 active:scale-[0.98]"

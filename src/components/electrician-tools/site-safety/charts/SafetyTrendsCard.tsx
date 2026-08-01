@@ -55,9 +55,7 @@ export function SafetyTrendsCard({ trends }: SafetyTrendsCardProps) {
         {/* Chart content */}
         {activeTab === 'near-miss' && <NearMissSparkline data={trends.nearMissWeekly} />}
         {activeTab === 'inspections' && <InspectionPassRate data={trends.inspectionResults} />}
-        {activeTab === 'accidents' && (
-          <AccidentSeverityChart data={trends.accidentSeverity} />
-        )}
+        {activeTab === 'accidents' && <AccidentSeverityChart data={trends.accidentSeverity} />}
         {activeTab === 'activity' && <SafetyActivityChart data={trends.toolUsage} />}
       </div>
     </motion.div>

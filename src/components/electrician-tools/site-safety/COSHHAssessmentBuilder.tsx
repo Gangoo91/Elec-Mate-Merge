@@ -30,8 +30,6 @@ import {
   ListRow,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
-  selectTriggerClass,
   selectContentClass,
   type Tone,
 } from '@/components/college/primitives';
@@ -40,6 +38,7 @@ import { SignatureField } from './common/SignatureField';
 import { ReadinessGate } from './common/ReadinessGate';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
 import { SmartTextarea } from './common/SmartTextarea';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
@@ -52,7 +51,11 @@ import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
 import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { RemoteSignShareSheet } from './common/RemoteSignShareSheet';
-import { createSafetySignToken, buildSignUrl, useRecordSignatures } from '@/hooks/useRemoteSignToken';
+import {
+  createSafetySignToken,
+  buildSignUrl,
+  useRecordSignatures,
+} from '@/hooks/useRemoteSignToken';
 import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
 import { JobLinkField } from './common/JobLinkField';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
@@ -513,7 +516,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [showSignShare, setShowSignShare] = useState(false);
   const [signUrl, setSignUrl] = useState('');
   const [signLoading, setSignLoading] = useState(false);
-  const { data: coshhSignatures = [] } = useRecordSignatures('coshh', viewingAssessment?.id ?? null);
+  const { data: coshhSignatures = [] } = useRecordSignatures(
+    'coshh',
+    viewingAssessment?.id ?? null
+  );
   const remoteReviewer = coshhSignatures.find((s) => s.role === 'reviewer' && s.signed_signature);
   const [searchQuery, setSearchQuery] = useState('');
   const [substanceSearch, setSubstanceSearch] = useState('');
@@ -588,7 +594,8 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const { data: jobs = [] } = useSparkProjects('active');
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
+  const jobTitleFor = (id: string | null) =>
+    id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
   // Signature state
   const [assessorSigName, setAssessorSigName] = useState('');
@@ -981,9 +988,15 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const readiness = [
     { ok: substanceName.trim().length > 0, label: 'Substance named' },
     { ok: selectedGHS.length > 0, label: 'At least one GHS hazard' },
-    { ok: hierarchyActionCount > 0 || ppeRequired.length > 0, label: 'At least one control measure' },
+    {
+      ok: hierarchyActionCount > 0 || ppeRequired.length > 0,
+      label: 'At least one control measure',
+    },
     { ok: firstAid.trim().length > 0, label: 'First aid measures recorded' },
-    { ok: assessedBy.trim().length > 0 && assessorSigDataUrl.length > 0, label: 'Assessed by + signed' },
+    {
+      ok: assessedBy.trim().length > 0 && assessorSigDataUrl.length > 0,
+      label: 'Assessed by + signed',
+    },
   ];
   const formReady = readiness.every((r) => r.ok);
 
@@ -1035,7 +1048,11 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const riskFilterTabs = useMemo(
     () => [
       { value: 'all', label: 'All', count: assessments.length },
-      { value: 'low', label: 'Low', count: assessments.filter((a) => a.risk_rating === 'low').length },
+      {
+        value: 'low',
+        label: 'Low',
+        count: assessments.filter((a) => a.risk_rating === 'low').length,
+      },
       {
         value: 'medium',
         label: 'Medium',
@@ -1091,7 +1108,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={substanceName}
                 onChange={(e) => setSubstanceName(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="e.g. PVC Solvent Cement"
               />
             </Field>
@@ -1100,14 +1117,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 <input
                   value={manufacturer}
                   onChange={(e) => setManufacturer(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
               <Field label="Product code">
                 <input
                   value={productCode}
                   onChange={(e) => setProductCode(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
             </div>
@@ -1121,7 +1138,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={taskDescription}
                 onChange={setTaskDescription}
-                className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
                 placeholder="Describe how the substance is used…"
               />
             </Field>
@@ -1130,13 +1147,13 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 <input
                   value={quantityUsed}
                   onChange={(e) => setQuantityUsed(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="e.g. 500ml"
                 />
               </Field>
               <Field label="Frequency">
                 <Select value={frequencyOfUse} onValueChange={setFrequencyOfUse}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={safetySelectTriggerCn}>
                     <SelectValue placeholder="Select…" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -1156,7 +1173,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={sdsReference}
                 onChange={(e) => setSdsReference(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="e.g. SDS-2024-001 or manufacturer reference"
               />
             </Field>
@@ -1196,7 +1213,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       >
                         {hazard.label}
                       </span>
-                      <span className="text-[11px] text-white/55">{hazard.description}</span>
+                      <span className="text-[11px] text-white">{hazard.description}</span>
                     </button>
                   );
                 })}
@@ -1227,7 +1244,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={healthEffects}
                 onChange={setHealthEffects}
-                className="min-h-[100px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[100px] text-[13px] resize-none')}
                 placeholder="Describe potential health effects…"
               />
             </Field>
@@ -1236,7 +1253,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={oelValue}
                 onChange={(e) => setOelValue(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="e.g. TWA 50 ppm, STEL 100 ppm"
               />
             </Field>
@@ -1244,9 +1261,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
           {/* Hierarchy of controls */}
           <FormCard eyebrow="Hierarchy of controls">
-            <p className="text-[12px] text-white/55">
-              Work through each level — eliminate or substitute first, then engineer controls, before
-              relying on administrative measures or PPE.
+            <p className="text-[12px] text-white">
+              Work through each level — eliminate or substitute first, then engineer controls,
+              before relying on administrative measures or PPE.
             </p>
 
             {HIERARCHY_LEVELS.map((level) => {
@@ -1275,7 +1292,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       >
                         {level.label}
                       </p>
-                      <p className="text-[11px] text-white/55">{level.description}</p>
+                      <p className="text-[11px] text-white">{level.description}</p>
                     </div>
                     {h.actions.length > 0 && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border border-elec-yellow/25 text-elec-yellow tabular-nums">
@@ -1284,7 +1301,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     )}
                     <span
                       className={cn(
-                        'text-white/40 text-[13px] transition-transform duration-200',
+                        'text-white text-[13px] transition-transform duration-200',
                         h.considered && 'rotate-180'
                       )}
                       aria-hidden
@@ -1297,16 +1314,16 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       {h.actions.map((action, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-2 p-2 rounded-lg border border-white/[0.08] bg-[hsl(0_0%_9%)]"
+                          className="flex items-center gap-2 border-b border-white/[0.08] py-1 pl-1"
                         >
                           <span className="text-[13px] text-white flex-1">{action}</span>
                           <button
                             type="button"
                             onClick={() => removeHierarchyAction(level.key, i)}
-                            className="h-9 w-9 rounded-lg bg-white/[0.06] flex items-center justify-center touch-manipulation active:bg-white/[0.12] shrink-0"
+                            className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-lg bg-white/[0.06] active:bg-white/[0.12]"
                             aria-label="Remove control"
                           >
-                            <Trash2 className="h-3.5 w-3.5 text-white/60" />
+                            <Trash2 className="h-3.5 w-3.5 text-white" />
                           </button>
                         </div>
                       ))}
@@ -1320,7 +1337,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                             }))
                           }
                           onKeyDown={(e) => e.key === 'Enter' && addHierarchyAction(level.key)}
-                          className={cn(inputClass, 'flex-1')}
+                          className={cn(safetyInputCn, 'flex-1')}
                           placeholder={`Add ${level.key === 'ppe' ? 'PPE' : level.key} control…`}
                         />
                         <SecondaryButton onClick={() => addHierarchyAction(level.key)}>
@@ -1356,7 +1373,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   value={newPPE}
                   onChange={(e) => setNewPPE(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addPPE()}
-                  className={cn(inputClass, 'flex-1')}
+                  className={cn(safetyInputCn, 'flex-1')}
                   placeholder="Add PPE item…"
                 />
                 <SecondaryButton onClick={addPPE}>Add</SecondaryButton>
@@ -1399,7 +1416,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={storageRequirements}
                 onChange={setStorageRequirements}
-                className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
                 placeholder="Storage conditions and requirements…"
               />
             </Field>
@@ -1407,7 +1424,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={spillProcedure}
                 onChange={setSpillProcedure}
-                className="min-h-[80px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[80px] text-[13px] resize-none')}
                 placeholder="Steps to take in event of spillage…"
               />
             </Field>
@@ -1415,7 +1432,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={firstAid}
                 onChange={setFirstAid}
-                className="min-h-[100px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[100px] text-[13px] resize-none')}
                 placeholder="First aid measures by exposure route…"
               />
             </Field>
@@ -1423,12 +1440,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={disposalMethod}
                 onChange={(e) => setDisposalMethod(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="e.g. Dispose as hazardous waste via licensed contractor"
               />
             </Field>
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">Exposure monitoring required?</span>
+              <span className="text-[12.5px] text-white">Exposure monitoring required?</span>
               <Switch checked={monitoringRequired} onCheckedChange={setMonitoringRequired} />
             </div>
             {monitoringRequired && (
@@ -1436,7 +1453,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 <input
                   value={monitoringDetails}
                   onChange={(e) => setMonitoringDetails(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="e.g. Personal air sampling quarterly"
                 />
               </Field>
@@ -1449,7 +1466,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={assessedBy}
                 onChange={(e) => setAssessedBy(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="Your full name"
               />
             </Field>
@@ -1457,7 +1474,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={assessorSigName}
                 onChange={(e) => setAssessorSigName(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="Name on the signature"
               />
             </Field>
@@ -1470,7 +1487,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               <input
                 value={reviewerSigName}
                 onChange={(e) => setReviewerSigName(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="Reviewer name"
               />
             </Field>
@@ -1479,7 +1496,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               value={reviewerSigDataUrl}
               onChange={setReviewerSigDataUrl}
             />
-            <p className="text-[11px] text-white/45">
+            <p className="text-[11px] text-white">
               Review date is automatically set to 12 months from today on save.
             </p>
           </FormCard>
@@ -1504,7 +1521,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
             <button
               type="button"
               onClick={() => setShowSaveTemplate(true)}
-              className="w-full h-9 text-[12px] font-medium text-white/60 hover:text-white touch-manipulation"
+              className="h-11 w-full touch-manipulation text-[13px] font-medium text-white"
             >
               Save as template
             </button>
@@ -1526,7 +1543,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 <input
                   value={substanceSearch}
                   onChange={(e) => setSubstanceSearch(e.target.value)}
-                  className={cn(inputClass, 'mt-3')}
+                  className={cn(safetyInputCn, 'mt-3')}
                   placeholder="Search substances…"
                 />
               </div>
@@ -1624,7 +1641,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
           onAction={openNew}
         />
       ) : sortedAssessments.length === 0 ? (
-        <EmptyState title="No matching assessments" description="Try a different risk tab or clear your search." />
+        <EmptyState
+          title="No matching assessments"
+          description="Try a different risk tab or clear your search."
+        />
       ) : (
         <div className="space-y-2.5">
           {visibleAssessments.map((assessment) => {
@@ -1663,10 +1683,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                         <span
                           className={cn(
                             'text-[11px] tabular-nums',
-                            overdue ? 'text-red-400 font-medium' : 'text-white/45'
+                            overdue ? 'text-red-400 font-medium' : 'text-white'
                           )}
                         >
-                          {overdue ? 'Review overdue' : `Review ${fmtCardDate(assessment.review_date)}`}
+                          {overdue
+                            ? 'Review overdue'
+                            : `Review ${fmtCardDate(assessment.review_date)}`}
                         </span>
                       </div>
                     }
@@ -1696,7 +1718,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 </div>
                 <div className="flex items-center gap-2 mt-2">
                   <RiskPill rating={viewingAssessment.risk_rating} />
-                  <span className="text-[11.5px] text-white/55">
+                  <span className="text-[11.5px] text-white">
                     Assessed: {viewingAssessment.assessment_date}
                   </span>
                 </div>
@@ -1745,7 +1767,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.health_effects && (
                   <div>
                     <Eyebrow className="mb-1">Health effects</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {viewingAssessment.health_effects}
                     </p>
                   </div>
@@ -1755,7 +1777,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.oel_value && (
                   <div>
                     <Eyebrow className="mb-1">Occupational exposure limit</Eyebrow>
-                    <p className="text-[13px] text-white/85">{viewingAssessment.oel_value}</p>
+                    <p className="text-[13px] text-white">{viewingAssessment.oel_value}</p>
                   </div>
                 )}
 
@@ -1771,7 +1793,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                       return (
                         <div className="space-y-1.5">
                           {viewingAssessment.control_measures.map((c, i) => (
-                            <p key={i} className="text-[13px] text-white/85">
+                            <p key={i} className="text-[13px] text-white">
                               • {c}
                             </p>
                           ))}
@@ -1792,7 +1814,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                               </p>
                               <div className="space-y-1">
                                 {h.actions.map((action, i) => (
-                                  <p key={i} className="text-[13px] text-white/85">
+                                  <p key={i} className="text-[13px] text-white">
                                     • {action}
                                   </p>
                                 ))}
@@ -1826,7 +1848,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.first_aid && (
                   <div>
                     <Eyebrow className="mb-1">First aid</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {viewingAssessment.first_aid}
                     </p>
                   </div>
@@ -1836,7 +1858,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.storage_requirements && (
                   <div>
                     <Eyebrow className="mb-1">Storage</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {viewingAssessment.storage_requirements}
                     </p>
                   </div>
@@ -1846,7 +1868,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.spill_procedure && (
                   <div>
                     <Eyebrow className="mb-1">Spill procedure</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {viewingAssessment.spill_procedure}
                     </p>
                   </div>
@@ -1856,7 +1878,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.disposal_method && (
                   <div>
                     <Eyebrow className="mb-1">Disposal method</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {viewingAssessment.disposal_method}
                     </p>
                   </div>
@@ -1866,14 +1888,14 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.monitoring_required && (
                   <div>
                     <Eyebrow className="mb-1">Exposure monitoring</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {viewingAssessment.monitoring_details || 'Required'}
                     </p>
                   </div>
                 )}
 
                 <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
-                  <div className="flex justify-between text-[11.5px] text-white/55">
+                  <div className="flex justify-between text-[11.5px] text-white">
                     <span>Assessed by: {viewingAssessment.assessed_by}</span>
                     <span
                       className={cn(
@@ -1889,7 +1911,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 {viewingAssessment.job_id && (
                   <div>
                     <Eyebrow className="mb-1">Linked project</Eyebrow>
-                    <p className="text-[13px] text-white/85">
+                    <p className="text-[13px] text-white">
                       {jobTitleFor(viewingAssessment.job_id) || 'Linked project'}
                     </p>
                   </div>
@@ -1905,12 +1927,22 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     <div className="p-3 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06]">
                       <p className="text-[11.5px] text-emerald-400 mb-2">
                         Reviewed by {remoteReviewer.signed_name || 'reviewer'}
-                        {remoteReviewer.signed_at ? ` · ${new Date(remoteReviewer.signed_at).toLocaleDateString('en-GB')}` : ''}
+                        {remoteReviewer.signed_at
+                          ? ` · ${new Date(remoteReviewer.signed_at).toLocaleDateString('en-GB')}`
+                          : ''}
                       </p>
-                      <img src={remoteReviewer.signed_signature} alt="Reviewer signature" className="h-12 opacity-80" />
+                      <img
+                        src={remoteReviewer.signed_signature}
+                        alt="Reviewer signature"
+                        className="h-12 opacity-80"
+                      />
                     </div>
                   ) : (
-                    <SecondaryButton fullWidth disabled={signLoading} onClick={() => requestReviewerSignOff(viewingAssessment)}>
+                    <SecondaryButton
+                      fullWidth
+                      disabled={signLoading}
+                      onClick={() => requestReviewerSignOff(viewingAssessment)}
+                    >
                       {signLoading ? 'Preparing link…' : 'Request reviewer sign-off'}
                     </SecondaryButton>
                   )}
@@ -1923,7 +1955,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     <Eyebrow>Signatures</Eyebrow>
                     {(viewingAssessment as Record<string, unknown>).assessor_signature && (
                       <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
-                        <p className="text-[11.5px] text-white/55 mb-2">Assessor</p>
+                        <p className="text-[11.5px] text-white mb-2">Assessor</p>
                         <img
                           src={
                             (viewingAssessment as Record<string, unknown>)
@@ -1936,10 +1968,10 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     )}
                     {(viewingAssessment as Record<string, unknown>).reviewer_signature && (
                       <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
-                        <p className="text-[11.5px] text-white/55 mb-2">
+                        <p className="text-[11.5px] text-white mb-2">
                           Reviewer:{' '}
-                          {((viewingAssessment as Record<string, unknown>).reviewer_name as string) ||
-                            'N/A'}
+                          {((viewingAssessment as Record<string, unknown>)
+                            .reviewer_name as string) || 'N/A'}
                         </p>
                         <img
                           src={
@@ -1964,7 +1996,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                   disabled={isExporting && exportingId === viewingAssessment.id}
                   onClick={() => exportPDF('coshh', viewingAssessment.id)}
                 >
-                  {isExporting && exportingId === viewingAssessment.id ? 'Exporting…' : 'Export PDF'}
+                  {isExporting && exportingId === viewingAssessment.id
+                    ? 'Exporting…'
+                    : 'Export PDF'}
                 </PrimaryButton>
                 <SecondaryButton fullWidth onClick={() => setShowShare(true)}>
                   Share

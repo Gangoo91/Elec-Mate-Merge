@@ -136,7 +136,7 @@ const PublicSignatureView = () => {
       };
       // Cast: p_signer_name ships in a separate RPC migration and isn't in the
       // generated types yet.
-      const rpc = supabase.rpc as unknown as (
+      const rpc = (supabase.rpc.bind(supabase) as unknown) as (
         fn: string,
         args: Record<string, unknown>
       ) => Promise<{ data: unknown; error: { code?: string; message?: string } | null }>;
@@ -188,7 +188,7 @@ const PublicSignatureView = () => {
       // the token-keyed SECURITY DEFINER RPC, and only report success on a real write.
       // Cast: the RPC is added by migration 01 and isn't in the generated types yet.
       const { data: declined, error } = await (
-        supabase.rpc as unknown as (
+        (supabase.rpc.bind(supabase) as unknown) as (
           fn: string,
           args: Record<string, unknown>
         ) => Promise<{ data: { error?: string } | null; error: unknown }>

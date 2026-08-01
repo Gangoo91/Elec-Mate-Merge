@@ -40,7 +40,8 @@ export interface CertificateClientData {
     | 'EV Charging'
     | 'PAT Testing'
     | 'Fire Alarm'
-    | 'Solar PV';
+    | 'Solar PV'
+    | 'BESS';
   certificateReference?: string;
   // Certificate attachment info
   reportId?: string;

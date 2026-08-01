@@ -34,6 +34,7 @@ import {
   type JobSafetyPackPdfData,
   type PackStatusKind,
 } from '@/utils/generateJobSafetyPackPdf';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 import {
   PageFrame,
   Eyebrow,
@@ -140,7 +141,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
       const { data, error } = await supabase
         .from('competence_requirement_sets' as never)
         .select('credential_keys, horizon_days')
-        .eq('employer_id', user.id)
+        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
         .eq('name', 'Default')
         .order('updated_at', { ascending: false })
         .limit(1);

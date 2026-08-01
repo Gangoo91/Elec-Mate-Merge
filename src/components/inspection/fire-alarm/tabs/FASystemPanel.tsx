@@ -10,8 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { Scan, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FireAlarmSystemCategory } from '@/types/fire-alarm';
 import { FireAlarmPanelAutocomplete } from '../FireAlarmPanelAutocomplete';
@@ -19,34 +17,22 @@ import { SerialNumberScannerSheet } from '../SerialNumberScannerSheet';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
 const checkboxCn =
   'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
-const textareaCn =
-  'touch-manipulation text-base min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -59,7 +45,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -151,74 +137,53 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
   }, [formData.premisesType, suggestCategoryForPremises]);
 
   return (
-    <div className="space-y-5">
-      {/* System Category */}
-      <Section title="System Category" accentColor="from-red-500/40 to-orange-400/20">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* System category */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="System category" />
         <Field label="Category" required>
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {systemCategories.map((cat) => (
               <button
                 key={cat.value}
                 type="button"
                 onClick={() => onUpdate('systemCategory', cat.value)}
                 className={cn(
-                  'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+                  'w-full text-left rounded-xl border p-3.5 touch-manipulation active:scale-[0.98] transition-all',
                   formData.systemCategory === cat.value
-                    ? 'bg-red-500/10 border-red-500/30'
-                    : 'bg-white/[0.03] border-white/[0.06]'
+                    ? 'bg-elec-yellow border-elec-yellow'
+                    : 'bg-white/[0.06] border-white/[0.12]'
                 )}
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-                      formData.systemCategory === cat.value
-                        ? 'bg-red-500 border-red-500'
-                        : 'border-white/30'
-                    )}
-                  >
-                    {formData.systemCategory === cat.value && (
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={3}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                  </div>
-                  <div>
-                    <p
-                      className={cn(
-                        'text-sm font-semibold',
-                        formData.systemCategory === cat.value ? 'text-red-400' : 'text-white'
-                      )}
-                    >
-                      {cat.label}
-                    </p>
-                    <p className="text-xs text-white mt-0.5">{cat.description}</p>
-                  </div>
-                </div>
+                <p
+                  className={cn(
+                    'text-sm font-semibold',
+                    formData.systemCategory === cat.value ? 'text-black' : 'text-white'
+                  )}
+                >
+                  {cat.label}
+                </p>
+                <p
+                  className={cn(
+                    'text-[12px] mt-0.5',
+                    formData.systemCategory === cat.value ? 'text-black/75' : 'text-white/80'
+                  )}
+                >
+                  {cat.description}
+                </p>
               </button>
             ))}
           </div>
         </Field>
         {categorySuggestion && formData.systemCategory !== categorySuggestion.recommended && (
-          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
-            <div className="flex items-start gap-2">
-              <Sparkles className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-xs font-semibold text-amber-400">
-                  AI Suggestion: {categorySuggestion.recommended}
-                </p>
-                <p className="text-xs text-white mt-1">{categorySuggestion.reason}</p>
-              </div>
-            </div>
+          <div className="rounded-xl border border-amber-500/40 bg-white/[0.05] p-3">
+            <p className="text-[12px] font-semibold text-amber-400">
+              AI suggestion: {categorySuggestion.recommended}
+            </p>
+            <p className="text-[12px] text-white/85 mt-1">{categorySuggestion.reason}</p>
           </div>
         )}
-        <Field label="Category Justification">
+        <Field label="Category justification">
           <Textarea
             value={formData.categoryJustification || ''}
             onChange={(e) => onUpdate('categoryJustification', e.target.value)}
@@ -226,11 +191,12 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             placeholder="Why this category was selected (linked to FRA)..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Panel Details */}
-      <Section title="Control Panel" accentColor="from-red-500/40 to-rose-400/20">
-        <Field label="Panel Make & Model">
+      {/* Control panel */}
+      <div className={cardCn}>
+        <SectionHeader title="Control panel" />
+        <Field label="Panel make & model">
           <FireAlarmPanelAutocomplete
             value={formData.panelId || ''}
             onValueChange={(v) => onUpdate('panelId', v)}
@@ -247,7 +213,7 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             showAutoFillBadge
           />
         </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Make">
             <Input
               value={formData.systemMake || ''}
@@ -263,9 +229,9 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-end gap-3">
           <div className="flex-1">
-            <Field label="Serial Number">
+            <Field label="Serial number">
               <Input
                 value={formData.panelSerialNumber || ''}
                 onChange={(e) => onUpdate('panelSerialNumber', e.target.value)}
@@ -273,16 +239,16 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
               />
             </Field>
           </div>
-          <Button
-            variant="outline"
+          <button
+            type="button"
             onClick={() => setScannerOpen(true)}
-            className="h-12 mt-5 px-3 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+            className="h-11 shrink-0 rounded-xl bg-elec-yellow px-4 text-sm font-semibold text-black touch-manipulation active:scale-[0.98] transition-transform"
           >
-            <Scan className="h-4 w-4" />
-          </Button>
+            Scan
+          </button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Panel Location">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Panel location">
             <Input
               value={formData.panelLocation || ''}
               onChange={(e) => onUpdate('panelLocation', e.target.value)}
@@ -290,7 +256,7 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
               placeholder="e.g. Main entrance lobby"
             />
           </Field>
-          <Field label="Firmware Version">
+          <Field label="Firmware version">
             <Input
               value={formData.panelFirmware || ''}
               onChange={(e) => onUpdate('panelFirmware', e.target.value)}
@@ -298,18 +264,18 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Network Type">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Network type">
             <ComboboxCell
               value={formData.networkType || ''}
               onChange={(v) => onUpdate('networkType', v)}
               options={networkTypeOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
-          <Field label="Zones / Loops">
-            <div className="grid grid-cols-2 gap-2">
+          <Field label="Zones / loops">
+            <div className="grid grid-cols-2 gap-3">
               <Input
                 value={formData.zonesCount || ''}
                 onChange={(e) => onUpdate('zonesCount', e.target.value)}
@@ -329,12 +295,13 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             </div>
           </Field>
         </div>
-      </Section>
+      </div>
 
-      {/* Power Supply */}
-      <Section title="Power Supply" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Mains Supply">
+      {/* Power supply */}
+      <div className={cardCn}>
+        <SectionHeader title="Power supply" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Mains supply">
             <Input
               value={formData.mainsSupplyDetails || ''}
               onChange={(e) => onUpdate('mainsSupplyDetails', e.target.value)}
@@ -342,18 +309,18 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
               placeholder="e.g. 230V, 6A MCB"
             />
           </Field>
-          <Field label="Battery Type">
+          <Field label="Battery type">
             <ComboboxCell
               value={formData.batteryType || ''}
               onChange={(v) => onUpdate('batteryType', v)}
               options={batteryTypeOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Battery Capacity (Ah)">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Battery capacity (Ah)">
             <Input
               value={formData.batteryCapacity || ''}
               onChange={(e) => onUpdate('batteryCapacity', e.target.value)}
@@ -362,18 +329,18 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
               placeholder="e.g. 3.2"
             />
           </Field>
-          <Field label="Standby Duration (hrs)">
+          <Field label="Standby duration (hrs)">
             <ComboboxCell
               value={formData.standbyDuration || ''}
               onChange={(v) => onUpdate('standbyDuration', v)}
               options={standbyDurationOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Battery Install Date">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Battery install date">
             <Input
               type="date"
               value={formData.batteryInstallDate || ''}
@@ -381,7 +348,7 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Charger Type">
+          <Field label="Charger type">
             <Input
               value={formData.chargerType || ''}
               onChange={(e) => onUpdate('chargerType', e.target.value)}
@@ -390,31 +357,32 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      {/* Cable Specification */}
-      <Section title="Cable Specification" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Cable Type">
+      {/* Cable specification */}
+      <div className={cardCn}>
+        <SectionHeader title="Cable specification" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Cable type">
             <ComboboxCell
               value={formData.cableType || ''}
               onChange={(v) => onUpdate('cableType', v)}
               options={cableTypeOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
-          <Field label="Fire Rating">
+          <Field label="Fire rating">
             <ComboboxCell
               value={formData.cableFireRating || ''}
               onChange={(v) => onUpdate('cableFireRating', v)}
               options={fireRatingOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
         </div>
-        <Field label="Circuit Integrity">
+        <Field label="Circuit integrity">
           <ComboboxCell
             value={formData.circuitIntegrity || ''}
             onChange={(v) => onUpdate('circuitIntegrity', v)}
@@ -424,20 +392,20 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
               { value: 'critical-signal-path', label: 'Critical Signal Path' },
             ]}
             placeholder="Select..."
-            className="h-12 text-base"
+            className="h-11 text-base"
           />
         </Field>
-        <div className="flex items-center gap-3">
+        <label className="flex min-h-11 items-center gap-3 cursor-pointer touch-manipulation">
           <Checkbox
             checked={formData.redCableForMains || false}
             onCheckedChange={(v) => onUpdate('redCableForMains', v)}
             className={checkboxCn}
           />
-          <Label className="text-sm text-white">
+          <span className="text-sm text-white">
             Red cable used for mains power circuits (BS 5839-1:2025 requirement)
-          </Label>
-        </div>
-        <Field label="Wiring Notes">
+          </span>
+        </label>
+        <Field label="Wiring notes">
           <Textarea
             value={formData.wiringNotes || ''}
             onChange={(e) => onUpdate('wiringNotes', e.target.value)}
@@ -445,20 +413,21 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             placeholder="Cable routing, segregation, mechanical protection details..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Cause & Effect */}
-      <Section title="Cause & Effect" accentColor="from-purple-500/40 to-indigo-400/20">
-        <Field label="Evacuation Strategy">
+      {/* Cause & effect */}
+      <div className={cardCn}>
+        <SectionHeader title="Cause & effect" />
+        <Field label="Evacuation strategy">
           <ComboboxCell
             value={formData.evacuationStrategy || ''}
             onChange={(v) => onUpdate('evacuationStrategy', v)}
             options={evacuationStrategyOptions}
             placeholder="Select..."
-            className="h-12 text-base"
+            className="h-11 text-base"
           />
         </Field>
-        <Field label="Cause & Effect Matrix Reference">
+        <Field label="Cause & effect matrix reference">
           <Input
             value={formData.causeEffectReference || ''}
             onChange={(e) => onUpdate('causeEffectReference', e.target.value)}
@@ -466,7 +435,7 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             placeholder="e.g. CE-001 Rev A"
           />
         </Field>
-        <Field label="False Alarm Management Strategy">
+        <Field label="False alarm management strategy">
           <Textarea
             value={formData.falseAlarmStrategy || ''}
             onChange={(e) => onUpdate('falseAlarmStrategy', e.target.value)}
@@ -474,29 +443,30 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             placeholder="e.g. Coincidence detection, investigation delay, intelligent detectors..."
           />
         </Field>
-      </Section>
+      </div>
 
       {/* Monitoring / ARC */}
-      <Section title="Monitoring / ARC" accentColor="from-blue-500/40 to-cyan-400/20">
-        <div className="flex items-center gap-3">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Monitoring / ARC" />
+        <label className="flex min-h-11 items-center gap-3 cursor-pointer touch-manipulation">
           <Checkbox
             checked={formData.systemMonitored || false}
             onCheckedChange={(v) => onUpdate('systemMonitored', v)}
             className={checkboxCn}
           />
-          <Label className="text-sm text-white">System monitored by Alarm Receiving Centre</Label>
-        </div>
+          <span className="text-sm text-white">System monitored by Alarm Receiving Centre</span>
+        </label>
         {formData.systemMonitored && (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="ARC Name">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="ARC name">
                 <Input
                   value={formData.arcName || ''}
                   onChange={(e) => onUpdate('arcName', e.target.value)}
                   className={inputCn}
                 />
               </Field>
-              <Field label="Account Number">
+              <Field label="Account number">
                 <Input
                   value={formData.arcAccountNumber || ''}
                   onChange={(e) => onUpdate('arcAccountNumber', e.target.value)}
@@ -504,17 +474,17 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
                 />
               </Field>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Signalling Route">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Signalling route">
                 <ComboboxCell
                   value={formData.signallingRoute || ''}
                   onChange={(v) => onUpdate('signallingRoute', v)}
                   options={signallingRouteOptions}
                   placeholder="Select..."
-                  className="h-12 text-base"
+                  className="h-11 text-base"
                 />
               </Field>
-              <Field label="ARC Phone">
+              <Field label="ARC phone">
                 <Input
                   type="tel"
                   value={formData.arcPhone || ''}
@@ -525,9 +495,9 @@ export default function FASystemPanel({ formData, onUpdate }: Props) {
             </div>
           </>
         )}
-      </Section>
+      </div>
 
-      {/* Serial Number Scanner */}
+      {/* Serial number scanner */}
       <SerialNumberScannerSheet
         open={scannerOpen}
         onOpenChange={setScannerOpen}

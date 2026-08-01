@@ -5,6 +5,7 @@
  */
 
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
+import { aiFetch } from '../_shared/ai-log.ts';
 import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import {
   checkInstallationMethodCache,
@@ -1303,7 +1304,7 @@ ${ragContext.regulations
     `🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ~3-4 minutes for complex queries)...`
   );
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  const response = await aiFetch('process-installation-method-job', 'https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${OPENAI_API_KEY}`,

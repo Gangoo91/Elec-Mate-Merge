@@ -1,13 +1,5 @@
 import { useState } from 'react';
 import {
-  MoreVertical,
-  Copy,
-  Check,
-  ArrowUpRight,
-  FileText,
-  Undo2,
-} from 'lucide-react';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -30,6 +22,7 @@ import { openExternalUrl } from '@/utils/open-external-url';
 
 interface NotificationCardProps {
   notification: Notification;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (id: string, updates: any) => void;
   onDelete: (id: string) => void;
   onViewDetails: (notification: Notification) => void;
@@ -48,32 +41,10 @@ const formatWorkType = (workType: string): string => {
     .join(' ');
 };
 
-const REPORT_TYPE_CONFIG: Record<string, { label: string; accent: string; iconColor: string; iconBg: string }> = {
-  'minor-works': {
-    label: 'Minor Works',
-    accent: 'from-purple-500 via-violet-400 to-indigo-400',
-    iconColor: 'text-purple-400',
-    iconBg: 'bg-purple-500/10 border border-purple-500/20',
-  },
-  eic: {
-    label: 'EIC',
-    accent: 'from-blue-500 via-blue-400 to-cyan-400',
-    iconColor: 'text-blue-400',
-    iconBg: 'bg-blue-500/10 border border-blue-500/20',
-  },
-  eicr: {
-    label: 'EICR',
-    accent: 'from-emerald-500 via-green-400 to-teal-400',
-    iconColor: 'text-emerald-400',
-    iconBg: 'bg-emerald-500/10 border border-emerald-500/20',
-  },
-};
-
-const DEFAULT_CONFIG = {
-  label: 'Certificate',
-  accent: 'from-elec-yellow via-amber-400 to-orange-400',
-  iconColor: 'text-elec-yellow',
-  iconBg: 'bg-elec-yellow/10 border border-elec-yellow/20',
+const REPORT_TYPE_LABELS: Record<string, string> = {
+  'minor-works': 'Minor Works',
+  eic: 'EIC',
+  eicr: 'EICR',
 };
 
 export const NotificationCard = ({
@@ -103,7 +74,7 @@ export const NotificationCard = ({
   const clientEmail = notification.reports?.data?.clientEmail;
 
   const reportType = notification.reports?.report_type || '';
-  const config = REPORT_TYPE_CONFIG[reportType] || DEFAULT_CONFIG;
+  const typeLabel = REPORT_TYPE_LABELS[reportType] || 'Certificate';
   // A single flat urgency edge — shown only when there's something to chase,
   // not a decorative rainbow bar on every card.
   const urgencyBar =
@@ -164,7 +135,6 @@ export const NotificationCard = ({
           ? `${daysRemaining} ${daysRemaining === 1 ? 'day' : 'days'} left to notify`
           : null;
 
-  const deadlineHighlight = isOverdue ? 'border-red-500/40 bg-red-500/10' : isUrgent ? 'border-orange-500/40 bg-orange-500/10' : 'border-emerald-500/40 bg-emerald-500/10';
   const deadlineValueColor = isOverdue ? 'text-red-300' : isUrgent ? 'text-orange-300' : 'text-emerald-300';
 
   // Effortless #1 — copy the job details so they paste (not retype) into the
@@ -205,7 +175,7 @@ export const NotificationCard = ({
 
   return (
     <>
-      <div className="group relative overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-b from-white/[0.05] to-white/[0.015]">
+      <div className="group relative overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03]">
         {/* Flat urgency edge — only when overdue or due soon */}
         {urgencyBar && <div className={cn('absolute left-0 inset-y-0 w-[3px]', urgencyBar)} />}
 
@@ -214,7 +184,7 @@ export const NotificationCard = ({
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5 mb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded bg-white/[0.08] text-white">{config.label}</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/[0.08] text-white/75">{typeLabel}</span>
                 <StatusBadge status={notification.notification_status} />
               </div>
               {clientName && <h3 className="text-[16px] font-semibold tracking-tight text-white leading-tight">{clientName}</h3>}
@@ -234,8 +204,8 @@ export const NotificationCard = ({
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-9 h-9 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
-                  <MoreVertical className="w-4 h-4" />
+                <button className="flex h-9 shrink-0 items-center rounded-lg px-2.5 text-[12.5px] font-semibold text-white/60 transition-colors hover:text-white touch-manipulation">
+                  More
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52 bg-[hsl(240_5.9%_12%)] border-white/10">
@@ -263,11 +233,8 @@ export const NotificationCard = ({
             /* Submitted — done state, one tap to undo if wrong */
             <div className="flex items-center justify-between gap-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-3">
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
-                  <Check className="h-3.5 w-3.5" />
-                </span>
                 <div className="min-w-0">
-                  <p className="text-[13.5px] font-semibold text-white leading-tight">Submitted</p>
+                  <p className="text-[13.5px] font-semibold leading-tight text-emerald-400">Submitted</p>
                   <p className="text-[12px] text-white/70 leading-tight">
                     {isSchemeMember ? `Notified via ${schemes.map((s) => s.name).join(' / ')}` : 'Notified to Building Control'}
                   </p>
@@ -275,58 +242,40 @@ export const NotificationCard = ({
               </div>
               <button
                 onClick={handleUndoSubmitted}
-                className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-white/[0.06] text-[12px] font-medium text-white/90 hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] shrink-0"
+                className="inline-flex h-9 shrink-0 items-center rounded-lg bg-white/[0.06] px-3.5 text-[12.5px] font-medium text-white/90 hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
               >
-                <Undo2 className="h-3.5 w-3.5" /> Undo
+                Undo
               </button>
             </div>
           ) : (
             <>
-              {/* Deadline — number chip + plain-English label */}
+              {/* Deadline — one clean line, colour carries the urgency */}
               {deadlineText && (
-                <div className={cn('flex items-center gap-3 rounded-xl border px-3 py-2.5', deadlineHighlight)}>
-                  <div
-                    className={cn(
-                      'flex flex-col items-center justify-center h-12 w-12 shrink-0 rounded-xl',
-                      isOverdue ? 'bg-red-500/15' : isUrgent ? 'bg-orange-500/15' : 'bg-emerald-500/15'
-                    )}
-                  >
-                    <span className={cn('text-[20px] font-bold tabular-nums leading-none', deadlineValueColor)}>
-                      {Math.abs(daysRemaining!)}
-                    </span>
-                    <span className={cn('text-[8px] font-bold uppercase tracking-wider mt-0.5', deadlineValueColor)}>
-                      {isOverdue ? 'over' : daysRemaining === 0 ? 'today' : 'days'}
-                    </span>
-                  </div>
-                  <div className="min-w-0">
-                    <p className={cn('text-[14px] font-semibold leading-tight', deadlineValueColor)}>{deadlineText}</p>
-                    <p className="text-[11.5px] text-white/70 leading-tight mt-0.5">30-day Building Regs deadline</p>
-                  </div>
+                <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.07] pt-3">
+                  <p className={cn('text-[14px] font-semibold leading-tight', deadlineValueColor)}>
+                    {deadlineText}
+                  </p>
+                  <p className="shrink-0 text-[11.5px] text-white/45">30-day Building Regs</p>
                 </div>
               )}
 
               {/* Effortless submit — portal + copy, then one-tap done */}
-              <div className="space-y-2 pt-1 border-t border-white/[0.07]">
-                <p className="pt-2 text-[12.5px] font-medium text-white">
-                  {isSchemeMember ? 'Submit through your scheme — it notifies Building Control for you' : 'Notify your local Building Control'}
-                </p>
-
+              <div className="space-y-2">
                 <div className="flex flex-wrap gap-2">
                   {isSchemeMember ? (
                     schemes.map((s) => (
                       <button
                         key={s.name}
                         onClick={() => openExternalUrl(s.url)}
-                        className="group inline-flex items-center gap-1.5 h-10 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.06] active:scale-[0.98]"
+                        className="inline-flex h-11 flex-1 items-center justify-center whitespace-nowrap rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] active:scale-[0.98]"
                       >
                         Open {s.name} portal
-                        <ArrowUpRight className="h-3.5 w-3.5 text-elec-yellow transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </button>
                     ))
                   ) : (
                     <button
                       onClick={() => setShowBuildingControlFinder(true)}
-                      className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.06] active:scale-[0.98]"
+                      className="inline-flex h-11 flex-1 items-center justify-center whitespace-nowrap rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-semibold text-white touch-manipulation transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] active:scale-[0.98]"
                     >
                       Find your council
                     </button>
@@ -334,25 +283,24 @@ export const NotificationCard = ({
 
                   <button
                     onClick={handleCopyDetails}
-                    className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.08] active:scale-[0.98]"
+                    className="inline-flex h-11 flex-1 items-center justify-center whitespace-nowrap rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.08] active:scale-[0.98]"
                   >
-                    <Copy className="h-3.5 w-3.5 text-white/80" /> Copy details
+                    Copy details
                   </button>
                 </div>
 
                 <button
                   onClick={handleMarkSubmitted}
-                  className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation transition-transform active:scale-[0.99]"
+                  className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation transition-transform hover:bg-elec-yellow/90 active:scale-[0.99]"
                 >
-                  <Check className="h-4 w-4" /> Mark as submitted
+                  Mark as submitted
                 </button>
 
-                <button
-                  onClick={() => setShowPdfViewer(true)}
-                  className="w-full inline-flex items-center justify-center gap-1.5 h-9 text-[12.5px] font-medium text-white/80 touch-manipulation hover:text-white"
-                >
-                  <FileText className="h-3.5 w-3.5" /> View certificate
-                </button>
+                <p className="text-center text-[11.5px] leading-relaxed text-white/40">
+                  {isSchemeMember
+                    ? 'Your scheme notifies Building Control for you.'
+                    : 'Submit directly to your local Building Control.'}
+                </p>
               </div>
             </>
           )}

@@ -134,10 +134,10 @@ export const EarthFaultLoopSummary = () => {
             <div>
               <p className="font-medium mb-2">Testing Requirements:</p>
               <ul className="space-y-1">
-                <li>• Regulation 411.4.9: Maximum Zs values</li>
+                <li>• Regulation 411.4.4: Zs × Ia ≤ U₀ × Cmin (the Zs requirement)</li>
                 <li>• Regulation 643.10: Verification testing</li>
                 <li>• Table 41.5: Maximum disconnection times</li>
-                <li>• Appendix 2: Maximum Zs values for protective devices</li>
+                <li>• Appendix 3: Device time/current curves and maximum Zs</li>
               </ul>
             </div>
             <div>

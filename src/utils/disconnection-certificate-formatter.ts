@@ -20,6 +20,7 @@ const TYPE_LABELS: Record<string, string> = {
   both: 'Appliance & circuit',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- pre-existing loose form-data shape
 export function formatDisconnectionCertificatePayload(data: Record<string, any>, company: Record<string, any> = {}): Record<string, unknown> {
   return {
     referenceNumber: data.referenceNumber,

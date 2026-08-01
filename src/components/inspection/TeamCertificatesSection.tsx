@@ -3,15 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import {
-  Check,
-  ChevronRight,
-  Clock,
-  CornerUpLeft,
-  FileText,
-  Loader2,
-  PenLine,
-  Search,
-  UserRound,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -351,7 +342,7 @@ const TeamCertificatesSection: React.FC = () => {
     return (
       <div
         key={r.id}
-        className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3.5 transition-all hover:bg-white/[0.05]"
+        className="flex flex-col rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]"
       >
         {/* Row is a keyboard-accessible div (not a <button>) so the version
             controls below can be real nested buttons — button-in-button is
@@ -392,9 +383,7 @@ const TeamCertificatesSection: React.FC = () => {
               {r.installation_address?.split('\n')[0] || r.client_name || 'Unnamed job'}
             </p>
             <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-white/55">
-              <span className="inline-flex items-center gap-1">
-                <UserRound className="h-3 w-3" /> {ownerName}
-              </span>
+              <span>{ownerName}</span>
               <span className="text-white/25">·</span>
               <span>{ago(r.updated_at)}</span>
               {lastEdit && (
@@ -410,7 +399,7 @@ const TeamCertificatesSection: React.FC = () => {
                     }}
                     className="-my-1 inline-flex items-center gap-1 py-1 text-amber-300 touch-manipulation active:opacity-70"
                   >
-                    <PenLine className="h-3 w-3" /> edited by{' '}
+                    edited by{' '}
                     {lastEdit.editor_id === user?.id
                       ? 'you'
                       : (data?.names.get(lastEdit.editor_id) ?? 'QS')}
@@ -419,7 +408,7 @@ const TeamCertificatesSection: React.FC = () => {
               )}
             </div>
           </div>
-          <ChevronRight className="mt-2 h-4 w-4 flex-shrink-0 text-white/30" />
+          <span className="mt-1 flex-shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
         </div>
 
         {opts?.quickActions && review && (
@@ -428,10 +417,9 @@ const TeamCertificatesSection: React.FC = () => {
               type="button"
               disabled={!!acting}
               onClick={() => handleApprove(r)}
-              className="flex h-10 items-center justify-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-[12px] font-semibold text-emerald-300 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="flex h-11 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-[12.5px] font-semibold text-emerald-300 touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
-              {acting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
-              Approve
+              {acting ? 'Approving…' : 'Approve'}
             </button>
             <button
               type="button"
@@ -442,9 +430,8 @@ const TeamCertificatesSection: React.FC = () => {
                   label: r.certificate_number || r.report_id,
                 })
               }
-              className="flex h-10 items-center justify-center gap-1.5 rounded-lg border border-white/[0.1] bg-white/[0.05] text-[12px] font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="flex h-11 items-center justify-center rounded-lg border border-white/[0.14] bg-white/[0.07] text-[12.5px] font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
-              <CornerUpLeft className="h-4 w-4" />
               Return
             </button>
           </div>
@@ -453,13 +440,10 @@ const TeamCertificatesSection: React.FC = () => {
     );
   };
 
-  const bucketHeader = (label: string, count: number, icon?: React.ReactNode) => (
-    <div className="flex items-center gap-2 pt-2">
-      {icon}
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-white/60">{label}</p>
-      <span className="rounded-md bg-white/[0.07] px-1.5 py-0.5 text-[10px] font-semibold text-white/70">
-        {count}
-      </span>
+  const bucketHeader = (label: string, count: number) => (
+    <div className="flex items-baseline gap-2.5 pt-3">
+      <p className="text-[15px] font-semibold tracking-tight text-white">{label}</p>
+      <span className="text-[12px] text-white/40 tabular-nums">{count}</span>
     </div>
   );
 
@@ -484,10 +468,10 @@ const TeamCertificatesSection: React.FC = () => {
             type="button"
             onClick={() => setView(key)}
             className={cn(
-              'flex h-10 items-center justify-center gap-1.5 rounded-xl px-2 text-[12.5px] font-semibold leading-tight touch-manipulation active:scale-[0.98] transition-all',
+              'flex h-11 items-center justify-center gap-1.5 rounded-xl px-2 text-[12.5px] font-semibold leading-tight touch-manipulation active:scale-[0.98] transition-all',
               view === key
-                ? 'bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow'
-                : 'bg-white/[0.04] border border-white/[0.08] text-white'
+                ? 'bg-elec-yellow border border-elec-yellow text-black'
+                : 'bg-white/[0.07] border border-white/[0.14] text-white'
             )}
           >
             <span className="truncate">{label}</span>
@@ -495,7 +479,7 @@ const TeamCertificatesSection: React.FC = () => {
               <span
                 className={cn(
                   'flex-shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-bold',
-                  view === key ? 'bg-elec-yellow/25 text-elec-yellow' : 'bg-white/[0.08] text-white/80'
+                  view === key ? 'bg-black/[0.15] text-black' : 'bg-white/[0.08] text-white/80'
                 )}
               >
                 {count}
@@ -514,10 +498,10 @@ const TeamCertificatesSection: React.FC = () => {
               type="button"
               onClick={() => setOwnerFilter(ownerFilter === e.id ? null : e.id)}
               className={cn(
-                'flex h-8 flex-shrink-0 items-center gap-1.5 rounded-lg px-2.5 text-[11px] font-medium touch-manipulation active:scale-[0.98] transition-all',
+                'flex h-11 flex-shrink-0 items-center gap-1.5 rounded-lg px-3 text-[12px] font-semibold touch-manipulation active:scale-[0.98] transition-all',
                 ownerFilter === e.id
-                  ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                  : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                  ? 'bg-elec-yellow text-black border border-elec-yellow'
+                  : 'bg-white/[0.07] text-white border border-white/[0.14]'
               )}
             >
               {e.name}
@@ -532,15 +516,12 @@ const TeamCertificatesSection: React.FC = () => {
       )}
 
       {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-        <Input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search client, address, cert no, engineer…"
-          className="h-11 pl-9 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white"
-        />
-      </div>
+      <Input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search client, address, cert no, engineer…"
+        className="h-11 text-base touch-manipulation bg-white/[0.08] border-white/[0.14] text-white placeholder:text-white/40"
+      />
 
       {isLoading && (
         <p className="py-10 text-center text-[13px] text-white/50">Loading team certificates…</p>
@@ -549,21 +530,26 @@ const TeamCertificatesSection: React.FC = () => {
       {!isLoading && view === 'attention' && (
         <div className="space-y-2.5">
           {buckets.awaiting.length > 0 &&
-            bucketHeader('Awaiting your sign-off', buckets.awaiting.length, <Check className="h-3.5 w-3.5 text-elec-yellow" />)}
-          {buckets.awaiting.map((r) => renderRow(r, { quickActions: true }))}
+            bucketHeader('Awaiting your sign-off', buckets.awaiting.length)}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {buckets.awaiting.map((r) => renderRow(r, { quickActions: true }))}
+          </div>
 
           {buckets.stale.length > 0 &&
-            bucketHeader(`In progress ${STALE_DAYS}+ days`, buckets.stale.length, <Clock className="h-3.5 w-3.5 text-amber-400" />)}
-          {buckets.stale.map((r) => renderRow(r))}
+            bucketHeader(`In progress ${STALE_DAYS}+ days`, buckets.stale.length)}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {buckets.stale.map((r) => renderRow(r))}
+          </div>
 
           {buckets.unreviewed.length > 0 &&
-            bucketHeader('Completed — not reviewed', buckets.unreviewed.length, <FileText className="h-3.5 w-3.5 text-white/50" />)}
-          {buckets.unreviewed.map((r) => renderRow(r))}
+            bucketHeader('Completed — not reviewed', buckets.unreviewed.length)}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {buckets.unreviewed.map((r) => renderRow(r))}
+          </div>
 
           {buckets.awaiting.length + buckets.stale.length + buckets.unreviewed.length === 0 && (
             <div className="py-12 text-center">
-              <Check className="mx-auto h-8 w-8 text-emerald-400/60" />
-              <p className="mt-3 text-[14px] font-medium text-white">All caught up</p>
+              <p className="text-[14px] font-semibold text-emerald-300">All caught up</p>
               <p className="mt-1 text-[12px] text-white/50">
                 Nothing needs your attention right now.
               </p>
@@ -573,12 +559,11 @@ const TeamCertificatesSection: React.FC = () => {
       )}
 
       {!isLoading && view === 'all' && (
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {buckets.all.map((r) => renderRow(r, { quickActions: true }))}
           {buckets.all.length === 0 && (
-            <div className="py-12 text-center">
-              <FileText className="mx-auto h-8 w-8 text-white/25" />
-              <p className="mt-3 text-[14px] font-medium text-white">No certificates found</p>
+            <div className="py-12 text-center md:col-span-2">
+              <p className="text-[14px] font-medium text-white">No certificates found</p>
             </div>
           )}
         </div>
@@ -597,8 +582,7 @@ const TeamCertificatesSection: React.FC = () => {
               {diffEdits.map((e, i) => (
                 <div key={i} className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
                   <div className="flex items-center gap-2 text-[12px] text-white">
-                    <PenLine className="h-3.5 w-3.5 text-amber-300" />
-                    <span className="font-semibold">
+                    <span className="font-semibold text-amber-300">
                       {e.editor_id === user?.id ? 'You' : (data?.names.get(e.editor_id) ?? 'QS')}
                     </span>
                     <span className="text-white/45">{ago(e.created_at)}</span>
@@ -617,7 +601,6 @@ const TeamCertificatesSection: React.FC = () => {
               ))}
               <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3">
                 <div className="flex items-center gap-2 text-[12px] text-white">
-                  <UserRound className="h-3.5 w-3.5 text-white/60" />
                   <span className="font-semibold">
                     {diffReport && diffReport.user_id === user?.id
                       ? 'You'
@@ -652,8 +635,7 @@ const TeamCertificatesSection: React.FC = () => {
               onClick={handleReturn}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
-              {actingReviewId ? <Loader2 className="h-4 w-4 animate-spin" /> : <CornerUpLeft className="h-4 w-4" />}
-              Return with comments
+              {actingReviewId ? 'Returning…' : 'Return with comments'}
             </button>
           </div>
         </SheetContent>

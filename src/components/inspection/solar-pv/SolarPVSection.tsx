@@ -1,114 +1,59 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Solar PV Certificate — Shared Design Primitives
- * Matches fire alarm cert best-in-class mobile patterns
+ * Paper-form card recipe shared across all Solar PV tabs.
  */
 
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import {
-  FileText,
-  User,
-  MapPin,
-  Sun,
-  LayoutGrid,
-  Cpu,
-  Battery,
-  Zap,
-  Gauge,
-  FlaskConical,
-  ShieldCheck,
-  Activity,
-  ClipboardCheck,
-  AlertTriangle,
-  FileCheck,
-  PackageCheck,
-  FileSignature,
-  BadgeCheck,
-  type LucideIcon,
-} from 'lucide-react';
-
-// Section title → accent icon (keyed by the exact titles used across the Solar
-// PV tabs). Falls back to FileCheck for any unmapped title.
-const SECTION_ICONS: Record<string, LucideIcon> = {
-  'Certificate Details': FileText,
-  'Client Details': User,
-  'Installation Details': MapPin,
-  'System Overview': Sun,
-  'System Design': Sun,
-  'PV Arrays': LayoutGrid,
-  'PV Array Schedule': LayoutGrid,
-  Arrays: LayoutGrid,
-  Inverters: Cpu,
-  'Inverter(s)': Cpu,
-  'Battery Storage': Battery,
-  'Grid Connection': Zap,
-  Metering: Gauge,
-  'DC Array Tests': FlaskConical,
-  'Inverter Protection': ShieldCheck,
-  'AC Tests': Activity,
-  Commissioning: ClipboardCheck,
-  'Defects & Observations': AlertTriangle,
-  'Verification References': FileCheck,
-  'Handover Documentation': PackageCheck,
-  'Installer Declaration': FileSignature,
-  'Electrician Declaration': BadgeCheck,
-};
 
 // ============================================================================
 // CSS Constants
 // ============================================================================
 
-export const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+export const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-export const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+export const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+export const inputSmCn = inputCn;
 
 export const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+export const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+export const pickerTriggerCn =
+  'h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:bg-transparent hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none active:scale-100 touch-manipulation';
 
 // ============================================================================
-// Section Component — gradient accent line + title + optional count
+// Section Component — full-bleed card on phones, rounded from sm
 // ============================================================================
 
 export const Section = ({
   title,
-  accentColor,
   count,
+  className,
   children,
 }: {
   title: string;
   accentColor?: string;
   count?: number;
+  className?: string;
   children: React.ReactNode;
-}) => {
-  const Icon = SECTION_ICONS[title] ?? FileCheck;
-  return (
-    <div className="space-y-4 sm:rounded-2xl sm:border sm:border-white/[0.07] sm:bg-white/[0.03] sm:p-5">
-      <div className="border-b border-white/[0.06] pb-1 mb-3">
-        <div
-          className={cn(
-            'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-            accentColor || 'from-amber-500/40 to-yellow-400/20'
-          )}
-        />
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-amber-500/10 text-amber-400 flex-shrink-0">
-            <Icon className="h-3.5 w-3.5" />
-          </span>
-          {title}
-          {count !== undefined && (
-            <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-              {count}
-            </span>
-          )}
-        </h2>
-      </div>
-      {children}
-    </div>
-  );
-};
+}) => (
+  <div className={cn(cardCn, className)}>
+    <h2 className="mb-3 flex items-baseline gap-2 text-[15px] font-semibold tracking-tight text-white">
+      {title}
+      {count !== undefined && (
+        <span className="rounded bg-white/[0.1] px-2 py-0.5 text-[11px] font-semibold text-white">
+          {count}
+        </span>
+      )}
+    </h2>
+    {children}
+  </div>
+);
 
 // ============================================================================
 // Field Component — label + children
@@ -116,7 +61,7 @@ export const Section = ({
 
 export const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -134,23 +79,21 @@ export const TestResultRow = ({
   value: string;
   onChange: (v: string) => void;
 }) => (
-  <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-    <span className="text-sm text-white font-medium flex-1">{label}</span>
+  <div className="flex items-center justify-between gap-3 rounded-xl bg-white/[0.05] p-3">
+    <span className="flex-1 text-sm font-medium text-white">{label}</span>
     <div className="flex gap-1.5">
       {[
-        { val: 'pass', label: 'Pass', active: 'bg-green-500 border-green-500 text-white' },
+        { val: 'pass', label: 'Pass', active: 'bg-green-500 border-green-500 text-black' },
         { val: 'fail', label: 'Fail', active: 'bg-red-500 border-red-500 text-white' },
-        { val: 'na', label: 'N/A', active: 'bg-gray-500 border-gray-500 text-white' },
+        { val: 'na', label: 'N/A', active: 'bg-white/[0.25] border-white/[0.25] text-white' },
       ].map((btn) => (
         <button
           key={btn.val}
           type="button"
           onClick={() => onChange(btn.val)}
           className={cn(
-            'px-3 py-2 rounded-lg border text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
-            value === btn.val
-              ? btn.active
-              : 'bg-white/[0.03] border-white/[0.1] text-white/50'
+            'h-11 rounded-xl border px-3 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+            value === btn.val ? btn.active : 'bg-white/[0.06] border-white/[0.12] text-white'
           )}
         >
           {btn.label}
@@ -168,7 +111,7 @@ export const AllPassButton = ({ onClick }: { onClick: () => void }) => (
   <button
     type="button"
     onClick={onClick}
-    className="px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-xs font-semibold text-green-400 touch-manipulation active:scale-[0.98]"
+    className="h-11 rounded-xl bg-green-500 px-4 text-sm font-semibold text-black touch-manipulation active:scale-[0.98]"
   >
     Mark All Pass
   </button>
@@ -192,11 +135,11 @@ export const CheckboxCard = ({
   accentColor?: 'amber' | 'green' | 'blue' | 'red' | 'purple';
 }) => {
   const colorMap = {
-    amber: { bg: 'bg-amber-500/10 border-amber-500/30', text: 'text-amber-400', check: 'bg-amber-500 border-amber-500' },
-    green: { bg: 'bg-green-500/10 border-green-500/30', text: 'text-green-400', check: 'bg-green-500 border-green-500' },
-    blue: { bg: 'bg-blue-500/10 border-blue-500/30', text: 'text-blue-400', check: 'bg-blue-500 border-blue-500' },
-    red: { bg: 'bg-red-500/10 border-red-500/30', text: 'text-red-400', check: 'bg-red-500 border-red-500' },
-    purple: { bg: 'bg-purple-500/10 border-purple-500/30', text: 'text-purple-400', check: 'bg-purple-500 border-purple-500' },
+    amber: { border: 'border-elec-yellow/60', check: 'bg-elec-yellow border-elec-yellow', tick: 'text-black' },
+    green: { border: 'border-green-500/60', check: 'bg-green-500 border-green-500', tick: 'text-black' },
+    blue: { border: 'border-blue-500/60', check: 'bg-blue-500 border-blue-500', tick: 'text-white' },
+    red: { border: 'border-red-500/60', check: 'bg-red-500 border-red-500', tick: 'text-white' },
+    purple: { border: 'border-purple-500/60', check: 'bg-purple-500 border-purple-500', tick: 'text-white' },
   };
   const colors = colorMap[accentColor];
 
@@ -205,20 +148,20 @@ export const CheckboxCard = ({
       type="button"
       onClick={() => onChange(!checked)}
       className={cn(
-        'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
-        checked ? colors.bg : 'bg-white/[0.03] border-white/[0.06]'
+        'w-full rounded-xl border bg-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.98] transition-all',
+        checked ? colors.border : 'border-white/[0.12]'
       )}
     >
       <div className="flex items-center gap-3">
         <div
           className={cn(
-            'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-            checked ? colors.check : 'border-white/30'
+            'flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border-2 transition-all',
+            checked ? colors.check : 'border-white/40'
           )}
         >
           {checked && (
             <svg
-              className="w-3 h-3 text-white"
+              className={cn('h-3 w-3', colors.tick)}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -229,12 +172,8 @@ export const CheckboxCard = ({
           )}
         </div>
         <div>
-          <p className={cn('text-sm font-semibold', checked ? colors.text : 'text-white')}>
-            {label}
-          </p>
-          {description && (
-            <p className="text-xs text-white mt-0.5">{description}</p>
-          )}
+          <p className="text-sm font-semibold text-white">{label}</p>
+          {description && <p className="mt-0.5 text-xs text-white/80">{description}</p>}
         </div>
       </div>
     </button>
@@ -248,13 +187,18 @@ export const CheckboxCard = ({
 export const ResultPill = ({ result }: { result: 'pass' | 'fail' | 'na' | '' }) => {
   if (!result) return null;
   const styles = {
-    pass: 'bg-green-500/20 text-green-400 border-green-500/30',
-    fail: 'bg-red-500/20 text-red-400 border-red-500/30',
-    na: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+    pass: 'border-green-500/40 text-green-400',
+    fail: 'border-red-500/40 text-red-400',
+    na: 'border-white/[0.15] text-white/80',
   };
   const labels = { pass: 'Pass', fail: 'Fail', na: 'N/A' };
   return (
-    <span className={cn('px-2 py-1 rounded-lg border text-xs font-semibold', styles[result])}>
+    <span
+      className={cn(
+        'rounded-lg border bg-white/[0.06] px-2 py-1 text-xs font-semibold',
+        styles[result]
+      )}
+    >
       {labels[result]}
     </span>
   );
@@ -277,21 +221,22 @@ export const DesignWarningBanner = ({
   return (
     <div className="space-y-2">
       {errors.map((w, i) => (
-        <div
-          key={`err-${i}`}
-          className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-2"
-        >
-          <span className="text-red-400 text-xs mt-0.5 flex-shrink-0">⚠</span>
-          <p className="text-xs text-red-300">{w.message}</p>
+        <div key={`err-${i}`} className="rounded-xl border border-red-500/40 bg-white/[0.05] p-3">
+          <p className="text-sm text-white">
+            <span className="font-semibold text-red-400">Error: </span>
+            {w.message}
+          </p>
         </div>
       ))}
       {warns.map((w, i) => (
         <div
           key={`warn-${i}`}
-          className="p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/15 flex items-start gap-2"
+          className="rounded-xl border border-elec-yellow/40 bg-white/[0.05] p-3"
         >
-          <span className="text-yellow-400 text-xs mt-0.5 flex-shrink-0">⚡</span>
-          <p className="text-xs text-yellow-200/80">{w.message}</p>
+          <p className="text-sm text-white">
+            <span className="font-semibold text-elec-yellow">Check: </span>
+            {w.message}
+          </p>
         </div>
       ))}
     </div>

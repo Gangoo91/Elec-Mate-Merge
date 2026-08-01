@@ -57,8 +57,11 @@ const getFailureReasons = (app: Appliance): string => {
   return reasons.join(', ');
 };
 
-/** Transform a single appliance for the register table */
-const formatAppliance = (app: Appliance) => ({
+/** Transform a single appliance for the register table.
+ *  `defaultTestedBy` fills the register's tested-by column when the appliance
+ *  has no per-item tester recorded (the sheet has no tested-by input, so it
+ *  falls back to the certificate's tester name). */
+const formatAppliance = (app: Appliance, defaultTestedBy = '') => ({
   asset_number: app.assetNumber || '',
   description: app.description || '',
   make: app.make || '',
@@ -100,7 +103,7 @@ const formatAppliance = (app: Appliance) => ({
   next_test_due: app.nextTestDue || '',
   notes: app.notes || '',
   test_date: app.testDate || '',
-  tested_by: app.testedBy || '',
+  tested_by: app.testedBy || defaultTestedBy,
   has_photos: (app.photos || []).length > 0,
   photo_count: (app.photos || []).length,
   first_photo: (app.photos || [])[0] || '',
@@ -213,7 +216,7 @@ export const formatPATTestingJson = (
     },
 
     // Formatted appliances (for register table)
-    appliances: appliances.map(formatAppliance),
+    appliances: appliances.map((app) => formatAppliance(app, formData.testerName || '')),
 
     // Summary statistics
     summary: {

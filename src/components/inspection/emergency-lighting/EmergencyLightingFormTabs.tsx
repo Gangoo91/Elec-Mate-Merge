@@ -1,5 +1,4 @@
-import React from 'react';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import React, { useRef } from 'react';
 import { EmergencyLightingTabValue } from '@/hooks/useEmergencyLightingTabs';
 import EmergencyLightingInstallationDetails from './EmergencyLightingInstallationDetails';
 import EmergencyLightingLuminaireSchedule from './EmergencyLightingLuminaireSchedule';
@@ -44,73 +43,55 @@ interface EmergencyLightingFormTabsProps {
   canGenerateCertificate?: boolean;
 }
 
+const TAB_ORDER: EmergencyLightingTabValue[] = [
+  'installation',
+  'luminaires',
+  'testing',
+  'declarations',
+];
+
 const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
   currentTab,
-  onTabChange,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
   canGenerateCertificate = true,
 }) => {
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'installation',
-      label: 'Installation',
-      shortLabel: 'Install',
-      content: (
-        <div className="space-y-6">
-          <EmergencyLightingInstallationDetails formData={formData} onUpdate={onUpdate} />
-          <EmergencyLightingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'luminaires',
-      label: 'Luminaires',
-      shortLabel: 'Lights',
-      content: (
-        <div className="space-y-6">
-          <EmergencyLightingLuminaireSchedule formData={formData} onUpdate={onUpdate} />
-          <EmergencyLightingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'testing',
-      label: 'Testing',
-      shortLabel: 'Test',
-      content: (
-        <div className="space-y-6">
-          <EmergencyLightingTestResults formData={formData} onUpdate={onUpdate} />
-          <EmergencyLightingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'declarations',
-      label: 'Declarations',
-      shortLabel: 'Sign',
-      content: (
-        <div className="space-y-6">
-          <EmergencyLightingDeclarations formData={formData} onUpdate={onUpdate} />
-          <EmergencyLightingTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            canGenerateCertificate={canGenerateCertificate}
-          />
-        </div>
-      ),
-    },
-  ];
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<EmergencyLightingTabValue, React.ReactNode> = {
+    installation: <EmergencyLightingInstallationDetails formData={formData} onUpdate={onUpdate} />,
+    luminaires: <EmergencyLightingLuminaireSchedule formData={formData} onUpdate={onUpdate} />,
+    testing: <EmergencyLightingTestResults formData={formData} onUpdate={onUpdate} />,
+    declarations: <EmergencyLightingDeclarations formData={formData} onUpdate={onUpdate} />,
+  };
+
+  const isLast = currentTab === 'declarations';
 
   return (
-    <SmartTabs
-      tabs={smartTabs}
-      value={currentTab}
-      onValueChange={onTabChange}
-      className="space-y-4"
-    />
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <EmergencyLightingTabNavigation
+        {...tabNavigationProps}
+        onUpdate={onUpdate}
+        onGenerateCertificate={
+          isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate
+        }
+        canGenerateCertificate={canGenerateCertificate}
+      />
+    </>
   );
 };
 

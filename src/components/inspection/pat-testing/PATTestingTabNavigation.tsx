@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import CertShellFooter, {
+  certFooterNeutralButton,
+} from '@/components/inspection/shared/CertShellFooter';
+import { useWhatsAppShare, type ShareableDocumentType } from '@/hooks/useWhatsAppShare';
 
 interface PATTestingTabNavigationProps {
   currentTab: string;
@@ -14,7 +17,17 @@ interface PATTestingTabNavigationProps {
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
   onCreateInvoice?: () => void;
+  onOpenEmailDialog?: () => void;
+  whatsApp?: {
+    type: string;
+    id: string;
+    recipientPhone: string;
+    recipientName: string;
+    documentLabel: string;
+  };
 }
+
+const NEXT_LABELS = ['Continue to Items', 'Continue to Sign off'];
 
 const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
   currentTabIndex,
@@ -23,82 +36,69 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
   canNavigatePrevious,
   navigateNext,
   navigatePrevious,
-  getProgressPercentage,
   onGenerateCertificate,
   canGenerateCertificate = true,
   onCreateInvoice,
+  onOpenEmailDialog,
+  whatsApp,
 }) => {
-  const progress = getProgressPercentage();
   const isLastTab = currentTabIndex === totalTabs - 1;
+  const { shareViaWhatsApp, isGeneratingLink } = useWhatsAppShare();
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const canShareWhatsApp = !!whatsApp && whatsApp.id !== 'new';
+
+  const handleWhatsAppShare = () => {
+    if (!whatsApp) return;
+    shareViaWhatsApp({
+      type: whatsApp.type as ShareableDocumentType,
+      id: whatsApp.id,
+      recipientPhone: whatsApp.recipientPhone || undefined,
+      recipientName: whatsApp.recipientName || undefined,
+      documentLabel: whatsApp.documentLabel,
+    });
+  };
+
+  const hasLastStepActions = !!(onOpenEmailDialog || onCreateInvoice || whatsApp);
 
   return (
-    <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
-      {/* Progress bar */}
-      <div className="mb-3">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[10px] text-white">
-            {currentTabIndex + 1}/{totalTabs}
-          </span>
-          <span className="text-[10px] font-medium text-white">{progress}%</span>
-        </div>
-        <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
-          <div
-            className="h-full bg-elec-yellow transition-all duration-300 rounded-full"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
-
-      {isLastTab ? (
-        <div className="space-y-2">
-          <Button
-            onClick={onGenerateCertificate}
-            disabled={!canGenerateCertificate}
-            className="w-full h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
-          >
-            Generate Certificate
-          </Button>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => { navigatePrevious(); scrollToTop(); }}
-              disabled={!canNavigatePrevious}
-              className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
-            >
-              Previous
-            </Button>
-            {onCreateInvoice && (
+    <CertShellFooter
+      currentIndex={currentTabIndex}
+      totalSteps={totalTabs}
+      canPrevious={canNavigatePrevious}
+      canNext={canNavigateNext}
+      onPrevious={navigatePrevious}
+      onNext={navigateNext}
+      nextLabels={NEXT_LABELS}
+      isLastStep={isLastTab}
+      onGenerate={onGenerateCertificate}
+      canGenerate={canGenerateCertificate}
+      generateLabel="Generate certificate"
+      lastStepActions={
+        hasLastStepActions ? (
+          <>
+            {onOpenEmailDialog && (
+              <button onClick={onOpenEmailDialog} className={certFooterNeutralButton}>
+                Email
+              </button>
+            )}
+            {whatsApp && (
               <button
-                onClick={onCreateInvoice}
-                className="flex-1 h-11 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+                onClick={handleWhatsAppShare}
+                disabled={!canShareWhatsApp || isGeneratingLink}
+                className={certFooterNeutralButton}
               >
+                WhatsApp
+              </button>
+            )}
+            {onCreateInvoice && (
+              <button onClick={onCreateInvoice} className={certFooterNeutralButton}>
                 Invoice
               </button>
             )}
-          </div>
-        </div>
-      ) : (
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => { navigatePrevious(); scrollToTop(); }}
-            disabled={!canNavigatePrevious}
-            className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
-          >
-            Previous
-          </Button>
-          <Button
-            onClick={() => { navigateNext(); scrollToTop(); }}
-            disabled={!canNavigateNext}
-            className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
-          >
-            Next
-          </Button>
-        </div>
-      )}
-    </div>
+          </>
+        ) : undefined
+      }
+    />
   );
 };
 

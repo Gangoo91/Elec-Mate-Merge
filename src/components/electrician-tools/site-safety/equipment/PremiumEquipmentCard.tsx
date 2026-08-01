@@ -204,7 +204,9 @@ export function PremiumEquipmentCard({
       )}
     >
       {/* Status accent line */}
-      <div className={cn('h-0.5 rounded-t-2xl bg-gradient-to-r', statusGradientMap[equipment.status])} />
+      <div
+        className={cn('h-0.5 rounded-t-2xl bg-gradient-to-r', statusGradientMap[equipment.status])}
+      />
 
       {/* Main Content - Clickable */}
       <button
@@ -216,13 +218,19 @@ export function PremiumEquipmentCard({
         {/* Header */}
         <div className="flex items-start gap-2.5">
           {/* Category Icon */}
-          <div className={cn('p-2 rounded-xl bg-gradient-to-br border flex-shrink-0',
-            equipment.status === 'good' ? 'from-emerald-500/25 to-emerald-500/5' :
-            equipment.status === 'needs_attention' ? 'from-amber-500/25 to-amber-500/5' :
-            equipment.status === 'overdue' ? 'from-red-500/25 to-red-500/5' :
-            'from-gray-500/25 to-gray-500/5',
-            status.border
-          )}>
+          <div
+            className={cn(
+              'p-2 rounded-xl bg-gradient-to-br border flex-shrink-0',
+              equipment.status === 'good'
+                ? 'from-emerald-500/25 to-emerald-500/5'
+                : equipment.status === 'needs_attention'
+                  ? 'from-amber-500/25 to-amber-500/5'
+                  : equipment.status === 'overdue'
+                    ? 'from-red-500/25 to-red-500/5'
+                    : 'from-gray-500/25 to-gray-500/5',
+              status.border
+            )}
+          >
             <CategoryIcon className={cn('h-4 w-4', status.text)} />
           </div>
 

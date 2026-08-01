@@ -10,6 +10,7 @@ import {
   formatForAIContext,
 } from '../_shared/rag-practical-work.ts';
 import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
+import { aiFetch } from '../_shared/ai-log.ts';
 
 // UK Electrical Qualifications - Proper Industry Standards
 const UK_ELECTRICAL_QUALIFICATIONS = {
@@ -326,7 +327,7 @@ export async function generateMaintenanceMethod(
 
     let aiResponse;
     try {
-      aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      aiResponse = await aiFetch('process-maintenance-method-job', 'https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${openAiKey}`,

@@ -1,8 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Camera, X, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -14,22 +20,24 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import CertShellFooter, {
+  certFooterNeutralButton,
+} from '@/components/inspection/shared/CertShellFooter';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
 import { formatDisconnectionCertificatePayload } from '@/utils/disconnection-certificate-formatter';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
-};
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.04] border-white/[0.08] text-white rounded-lg focus:border-elec-yellow/60 focus:ring-elec-yellow/20 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.04] border-white/[0.08] text-white rounded-lg focus:border-elec-yellow/60 focus:ring-elec-yellow/20';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 const DEFAULT_METHOD =
   'Isolated at the consumer unit, circuit locked off and proved dead with a GS38-approved voltage indicator.';
@@ -123,19 +131,26 @@ const defaultData = (): DisconnectionData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-disconnection-certificate';
 
-// ── Editorial primitives ──────────────────────────────────────────
-const SectionHeader = ({ title, hint }: { title: string; hint?: string }) => (
-  <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] pb-1.5 mb-3.5">
-    <h2 className="text-[11px] font-semibold text-white/90 uppercase tracking-[0.18em]">{title}</h2>
-    {hint && <span className="text-[10px] text-white/35">{hint}</span>}
+type StepId = 'details' | 'disconnection' | 'safety' | 'signoff';
+
+const STEPS: { id: StepId; label: string }[] = [
+  { id: 'details', label: 'Details' },
+  { id: 'disconnection', label: 'Disconnection' },
+  { id: 'safety', label: 'Safe isolation' },
+  { id: 'signoff', label: 'Sign off' },
+];
+
+// ── Section primitives ────────────────────────────────────────────
+const SectionHeading = ({ title, hint }: { title: string; hint?: string }) => (
+  <div className="mb-3 flex items-baseline justify-between gap-3">
+    <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+    {hint && <span className="text-[11px] text-white/80">{hint}</span>}
   </div>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white/55 text-[11px] font-medium mb-1.5 block tracking-wide">
-      {label}
-    </Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -153,10 +168,10 @@ const Chip = ({
     type="button"
     onClick={onClick}
     className={cn(
-      'h-10 px-4 rounded-full text-[13px] font-medium whitespace-nowrap touch-manipulation transition-colors active:scale-[0.97]',
+      'h-11 px-4 rounded-xl text-[13px] whitespace-nowrap touch-manipulation transition-colors active:scale-[0.97]',
       active
-        ? 'bg-elec-yellow/15 border border-elec-yellow/50 text-elec-yellow'
-        : 'bg-white/[0.04] border border-white/[0.1] text-white/70'
+        ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+        : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
     )}
   >
     {label}
@@ -172,17 +187,17 @@ const Segment = ({
   options: { value: string; label: string }[];
   onChange: (v: string) => void;
 }) => (
-  <div className="flex gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+  <div className="flex gap-2">
     {options.map((o) => (
       <button
         key={o.value}
         type="button"
         onClick={() => onChange(o.value)}
         className={cn(
-          'flex-1 h-10 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors active:scale-[0.98]',
+          'flex-1 h-11 rounded-xl px-3 text-sm touch-manipulation transition-all active:scale-[0.98]',
           value === o.value
-            ? 'bg-elec-yellow/15 border border-elec-yellow/45 text-elec-yellow'
-            : 'text-white/60'
+            ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+            : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
         )}
       >
         {o.label}
@@ -204,19 +219,15 @@ const ConfirmRow = ({
     type="button"
     onClick={onToggle}
     className={cn(
-      'w-full flex items-center justify-between gap-3 h-12 px-3.5 rounded-lg border text-left touch-manipulation transition-colors active:scale-[0.99]',
-      checked
-        ? 'bg-elec-yellow/[0.08] border-elec-yellow/35'
-        : 'bg-white/[0.03] border-white/[0.08]'
+      'w-full flex items-center justify-between gap-3 min-h-11 px-3.5 py-2.5 rounded-xl border text-left touch-manipulation transition-colors active:scale-[0.99] bg-white/[0.06]',
+      checked ? 'border-green-500/60' : 'border-white/[0.12]'
     )}
   >
-    <span className={cn('text-[13px] leading-tight', checked ? 'text-white' : 'text-white/70')}>
-      {label}
-    </span>
+    <span className="text-[13px] leading-tight text-white">{label}</span>
     <span
       className={cn(
-        'text-[10px] font-semibold uppercase tracking-[0.12em] shrink-0',
-        checked ? 'text-elec-yellow' : 'text-white/30'
+        'text-[12px] shrink-0',
+        checked ? 'font-semibold text-green-400' : 'font-medium text-white/80'
       )}
     >
       {checked ? 'Confirmed' : 'Tap'}
@@ -230,6 +241,12 @@ export default function DisconnectionCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isProcessingPhoto, setIsProcessingPhoto] = useState(false);
   const [existingReportId, setExistingReportId] = useState<string | null>(null);
+  const [currentStep, setCurrentStep] = useState<StepId>('details');
+
+  // Email dialog state
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailRecipient, setEmailRecipient] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   // Lock + versioning (ELE-1037). Disconnection saves manually (no autosave),
   // so handleSave is guarded below when locked.
@@ -254,6 +271,12 @@ export default function DisconnectionCertificate() {
     const saved = storageGetJSONSync<Partial<DisconnectionData>>(DRAFT_KEY, null);
     return saved ? { ...defaultData(), ...saved } : defaultData();
   });
+
+  // Track direction so the step slide matches travel (forward vs back).
+  const currentIndex = STEPS.findIndex((s) => s.id === currentStep);
+  const prevIndexRef = useRef(currentIndex);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
 
   useEffect(() => {
     if (!editId) return;
@@ -394,6 +417,94 @@ export default function DisconnectionCertificate() {
     }
   };
 
+  const handleSaveDraft = () => {
+    storageSetJSONSync(DRAFT_KEY, data);
+    toast.success('Draft saved');
+  };
+
+  const handleEmailCertificate = () => {
+    if (!existingReportId) {
+      toast.error('Generate the certificate first, then email it.');
+      return;
+    }
+    if (data.clientEmail) setEmailRecipient(data.clientEmail);
+    setShowEmailDialog(true);
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailRecipient || !emailRecipient.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    if (!existingReportId) {
+      toast.error('Generate the certificate first, then email it.');
+      return;
+    }
+    setIsSendingEmail(true);
+    try {
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the stored pdf_payload is missing or stale.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        let company: Record<string, unknown> = {};
+        try {
+          const { data: cpData } = await supabase.rpc('get_my_company_profile');
+          const cp = Array.isArray(cpData) ? cpData[0] : cpData;
+          if (cp) company = cp;
+        } catch {
+          /* proceed without branding */
+        }
+        formattedData = formatDisconnectionCertificatePayload(
+          {
+            ...data,
+            referenceNumber:
+              data.referenceNumber || `DISC-${Date.now().toString(36).toUpperCase()}`,
+          },
+          company
+        );
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+      const { data: result, error: fnError } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        { body: { reportId: existingReportId, recipientEmail: emailRecipient, formattedData } }
+      );
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try {
+          const parsed = JSON.parse(fnError.message);
+          errorMessage = parsed.error || parsed.message || fnError.message;
+        } catch {
+          /* keep original message */
+        }
+        const context = (fnError as { context?: { body?: unknown } }).context;
+        if (context?.body) {
+          try {
+            const bodyError =
+              typeof context.body === 'string' ? JSON.parse(context.body) : context.body;
+            const errText = (bodyError as { error?: string }).error;
+            if (errText) errorMessage = errText;
+          } catch {
+            /* keep original message */
+          }
+        }
+        throw new Error(errorMessage);
+      }
+      if (!result?.success) throw new Error(result?.error || 'Failed to send');
+      toast.success(
+        result?.pdfAttached
+          ? `Certificate emailed to ${emailRecipient} with the PDF attached`
+          : `Certificate emailed to ${emailRecipient}`
+      );
+      setShowEmailDialog(false);
+      setEmailRecipient('');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send certificate email.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
   const handleSave = async () => {
     if (isLocked) {
       toast.error('This certificate is locked. Create a new version to make changes.');
@@ -419,6 +530,11 @@ export default function DisconnectionCertificate() {
       }
 
       const customerId = data.selectedCustomerId || undefined;
+      // Track the database report_id locally — setExistingReportId won't be
+      // visible in this closure, and data.referenceNumber ('DISC-...') never
+      // matches reports.report_id ('DISCONNECTION-...'), so relying on state
+      // here silently updated 0 rows on every first-time generation.
+      let reportIdForSave = existingReportId;
       if (existingReportId) {
         await reportCloud.updateReport(
           existingReportId,
@@ -438,11 +554,14 @@ export default function DisconnectionCertificate() {
           setIsSaving(false);
           return;
         }
-        if (result.reportId) setExistingReportId(result.reportId);
+        if (result.reportId) {
+          reportIdForSave = result.reportId;
+          setExistingReportId(result.reportId);
+        }
       }
 
       toast.success('Saved — generating PDF...');
-      const savedReportId = existingReportId || data.referenceNumber;
+      const savedReportId = reportIdForSave || data.referenceNumber;
       try {
         let company: Record<string, unknown> = {};
         try {
@@ -454,6 +573,17 @@ export default function DisconnectionCertificate() {
         }
 
         const payload = formatDisconnectionCertificatePayload(data, company);
+
+        // Store the formatted payload so server-side email regeneration can
+        // rebuild the PDF without the client (EV pattern) — reportCloud
+        // clears pdf_payload on every save, so re-write it at generate time.
+        if (reportIdForSave) {
+          await supabase
+            .from('reports')
+            .update({ pdf_payload: payload })
+            .eq('report_id', reportIdForSave);
+        }
+
         const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
           'generate-disconnection-certificate-pdf',
           { body: { formData: payload } }
@@ -521,8 +651,8 @@ export default function DisconnectionCertificate() {
     data.remainderSafe &&
     data.reconnectionAdvised;
 
-  // Live completion — drives the sticky progress bar.
-  const steps = [
+  // Live completion — drives the header progress ring.
+  const completionChecks = [
     !!(data.clientName.trim() || data.installationAddress.trim()),
     !!(data.applianceDisconnected.trim() || data.circuitDisconnected.trim()),
     !!data.reasonForDisconnection.trim(),
@@ -530,83 +660,43 @@ export default function DisconnectionCertificate() {
     allConfirmed,
     !!data.inspectorSignature,
   ];
-  const progress = Math.round((steps.filter(Boolean).length / steps.length) * 100);
+  const progress = Math.round(
+    (completionChecks.filter(Boolean).length / completionChecks.length) * 100
+  );
 
-  return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-        <div className="px-4 sm:px-6 py-2 mx-auto w-full max-w-5xl">
-          <div className="flex items-center justify-between gap-3 h-11">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate(-1)}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-10 w-10 shrink-0 touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="text-[15px] font-semibold text-white truncate">
-                Disconnection Certificate
-              </h1>
-            </div>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
-              BS 7671
-            </span>
-          </div>
-        </div>
-      </div>
+  const completedTabs: Record<string, boolean> = {
+    details: completionChecks[0],
+    disconnection: completionChecks[1] && completionChecks[2] && completionChecks[3],
+    safety: allConfirmed,
+    signoff: !!data.inspectorSignature,
+  };
 
-      {/* ELE-1037 — lock / version bar */}
-      <div className="mx-auto w-full max-w-5xl">
-        <CertLockBar
-          isLocked={isLocked}
-          lockedAt={lockedAt}
-          editVersion={editVersion}
-          canIssue={!isLocked && !!(existingReportId || editId) && !!data.inspectorSignature}
-          onLock={lockReport}
-          onAmend={amendReport}
-          databaseId={databaseId}
-          hasVersions={hasVersions}
-          onOpenVersion={openReport}
-        />
-      </div>
+  const goToStep = (step: string) => {
+    setCurrentStep(step as StepId);
+    window.scrollTo({ top: 0 });
+  };
 
-      <motion.main
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className={cn(
-          'px-4 sm:px-6 pt-5 pb-28 mx-auto w-full max-w-5xl space-y-7',
-          isLocked && 'pointer-events-none select-none opacity-95'
-        )}
-        aria-disabled={isLocked || undefined}
-      >
-        {/* Intro */}
-        <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-elec-yellow/90">
-            Electrical Disconnection
-          </p>
-          <p className="text-[12.5px] text-white/55 mt-1.5 leading-relaxed">
-            A record confirming a circuit or appliance has been safely disconnected and made dead.
-            For disconnections only — no live testing is carried out, so this is not a Minor Works
-            certificate.
-          </p>
-        </motion.div>
+  const stepContent: Record<StepId, React.ReactNode> = {
+    details: (
+      <>
+        <p className="text-[13px] leading-relaxed text-white/80 lg:col-span-2">
+          A record confirming a circuit or appliance has been safely disconnected and made dead.
+          For disconnections only — no live testing is carried out, so this is not a Minor Works
+          certificate.
+        </p>
 
         {/* Reference */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="Reference" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Field label="Record No.">
+        <section className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionHeading title="Reference" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Record no.">
               <Input
                 value={data.referenceNumber}
                 onChange={(e) => update('referenceNumber', e.target.value)}
-                className={cn(inputCn, 'font-mono')}
+                className={inputCn}
               />
             </Field>
-            <Field label="Date of Work">
+            <Field label="Date of work">
               <Input
                 type="date"
                 value={data.workDate}
@@ -615,126 +705,118 @@ export default function DisconnectionCertificate() {
               />
             </Field>
           </div>
-        </motion.section>
+        </section>
 
         {/* Contractor — autofilled from your company profile */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="Contractor" hint="from your profile" />
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Name">
-                <Input
-                  value={data.contractorName}
-                  onChange={(e) => update('contractorName', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-              <Field label="Company">
-                <Input
-                  value={data.contractorCompany}
-                  onChange={(e) => update('contractorCompany', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Phone">
-                <Input
-                  type="tel"
-                  inputMode="tel"
-                  value={data.contractorPhone}
-                  onChange={(e) => update('contractorPhone', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-              <Field label="Email">
-                <Input
-                  type="email"
-                  inputMode="email"
-                  autoCapitalize="none"
-                  value={data.contractorEmail}
-                  onChange={(e) => update('contractorEmail', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Scheme">
-                <Input
-                  value={data.registrationScheme}
-                  onChange={(e) => update('registrationScheme', e.target.value)}
-                  className={inputCn}
-                  placeholder="NICEIC, NAPIT..."
-                />
-              </Field>
-              <Field label="Reg. No.">
-                <Input
-                  value={data.registrationNumber}
-                  onChange={(e) => update('registrationNumber', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Client — pick a saved customer to autofill */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="Client" hint="pick to autofill" />
-          <div className="mb-3">
-            <ClientSelector
-              onSelectCustomer={handleSelectCustomer}
-              selectedCustomerId={data.selectedCustomerId || undefined}
-            />
-          </div>
-          <div className="space-y-3">
+        <section className={cardCn}>
+          <SectionHeading title="Contractor" hint="from your profile" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Name">
               <Input
-                value={data.clientName}
-                onChange={(e) => update('clientName', e.target.value)}
+                value={data.contractorName}
+                onChange={(e) => update('contractorName', e.target.value)}
                 className={inputCn}
-                placeholder="Client name"
               />
             </Field>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Field label="Phone">
-                <Input
-                  type="tel"
-                  inputMode="tel"
-                  value={data.clientPhone}
-                  onChange={(e) => update('clientPhone', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-              <Field label="Email">
-                <Input
-                  type="email"
-                  inputMode="email"
-                  autoCapitalize="none"
-                  value={data.clientEmail}
-                  onChange={(e) => update('clientEmail', e.target.value)}
-                  className={inputCn}
-                />
-              </Field>
-            </div>
-            <Field label="Installation Address">
+            <Field label="Company">
               <Input
-                value={data.installationAddress}
-                onChange={(e) => update('installationAddress', e.target.value)}
+                value={data.contractorCompany}
+                onChange={(e) => update('contractorCompany', e.target.value)}
                 className={inputCn}
-                placeholder="Where the work was carried out"
+              />
+            </Field>
+            <Field label="Phone">
+              <Input
+                type="tel"
+                inputMode="tel"
+                value={data.contractorPhone}
+                onChange={(e) => update('contractorPhone', e.target.value)}
+                className={inputCn}
+              />
+            </Field>
+            <Field label="Email">
+              <Input
+                type="email"
+                inputMode="email"
+                autoCapitalize="none"
+                value={data.contractorEmail}
+                onChange={(e) => update('contractorEmail', e.target.value)}
+                className={inputCn}
+              />
+            </Field>
+            <Field label="Scheme">
+              <Input
+                value={data.registrationScheme}
+                onChange={(e) => update('registrationScheme', e.target.value)}
+                className={inputCn}
+                placeholder="NICEIC, NAPIT..."
+              />
+            </Field>
+            <Field label="Reg. no.">
+              <Input
+                value={data.registrationNumber}
+                onChange={(e) => update('registrationNumber', e.target.value)}
+                className={inputCn}
               />
             </Field>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Disconnection Details */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="What was disconnected" />
+        {/* Client — pick a saved customer to autofill */}
+        <section className={cardCn}>
+          <SectionHeading title="Client" hint="pick to autofill" />
+          <ClientSelector
+            onSelectCustomer={handleSelectCustomer}
+            selectedCustomerId={data.selectedCustomerId || undefined}
+          />
+          <Field label="Name">
+            <Input
+              value={data.clientName}
+              onChange={(e) => update('clientName', e.target.value)}
+              className={inputCn}
+              placeholder="Client name"
+            />
+          </Field>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <Field label="Phone">
+              <Input
+                type="tel"
+                inputMode="tel"
+                value={data.clientPhone}
+                onChange={(e) => update('clientPhone', e.target.value)}
+                className={inputCn}
+              />
+            </Field>
+            <Field label="Email">
+              <Input
+                type="email"
+                inputMode="email"
+                autoCapitalize="none"
+                value={data.clientEmail}
+                onChange={(e) => update('clientEmail', e.target.value)}
+                className={inputCn}
+              />
+            </Field>
+          </div>
+          <Field label="Installation address">
+            <Input
+              value={data.installationAddress}
+              onChange={(e) => update('installationAddress', e.target.value)}
+              className={inputCn}
+              placeholder="Where the work was carried out"
+            />
+          </Field>
+        </section>
+      </>
+    ),
+    disconnection: (
+      <section className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeading title="What was disconnected" />
 
-          {/* Quick presets — one tap fills the common job */}
-          <p className="text-[11px] font-medium text-white/45 mb-2 tracking-wide">Quick pick</p>
-          <div className="flex flex-wrap gap-2 mb-4">
+        {/* Quick presets — one tap fills the common job */}
+        <div>
+          <p className={labelCn}>Quick pick</p>
+          <div className="flex flex-wrap gap-2">
             {APPLIANCE_PRESETS.map((p) => (
               <Chip
                 key={p.label}
@@ -744,87 +826,93 @@ export default function DisconnectionCertificate() {
               />
             ))}
           </div>
+        </div>
 
-          <div className="space-y-3.5">
-            <Field label="Type">
-              <Segment
-                value={data.disconnectionType}
-                onChange={(v) => update('disconnectionType', v)}
-                options={[
-                  { value: 'appliance', label: 'Appliance' },
-                  { value: 'circuit', label: 'Circuit' },
-                  { value: 'both', label: 'Both' },
-                ]}
-              />
-            </Field>
-            <Field label="Appliance Disconnected">
-              <Input
-                value={data.applianceDisconnected}
-                onChange={(e) => update('applianceDisconnected', e.target.value)}
-                className={inputCn}
-                placeholder="e.g. Electric cooker / 9.5kW shower"
-              />
-            </Field>
-            <Field label="Circuit Disconnected">
-              <Input
-                value={data.circuitDisconnected}
-                onChange={(e) => update('circuitDisconnected', e.target.value)}
-                className={inputCn}
-                placeholder="e.g. Cooker circuit, 32A from way 6"
-              />
-            </Field>
+        <Field label="Type">
+          <Segment
+            value={data.disconnectionType}
+            onChange={(v) => update('disconnectionType', v)}
+            options={[
+              { value: 'appliance', label: 'Appliance' },
+              { value: 'circuit', label: 'Circuit' },
+              { value: 'both', label: 'Both' },
+            ]}
+          />
+        </Field>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Appliance disconnected">
+            <Input
+              value={data.applianceDisconnected}
+              onChange={(e) => update('applianceDisconnected', e.target.value)}
+              className={inputCn}
+              placeholder="e.g. Electric cooker / 9.5kW shower"
+            />
+          </Field>
+          <Field label="Circuit disconnected">
+            <Input
+              value={data.circuitDisconnected}
+              onChange={(e) => update('circuitDisconnected', e.target.value)}
+              className={inputCn}
+              placeholder="e.g. Cooker circuit, 32A from way 6"
+            />
+          </Field>
+        </div>
 
-            <Field label="Reason for Disconnection">
-              <div className="flex flex-wrap gap-2 mb-2">
-                {REASON_PRESETS.map((r) => (
-                  <Chip
-                    key={r}
-                    label={r}
-                    active={data.reasonForDisconnection === r}
-                    onClick={() => update('reasonForDisconnection', r)}
-                  />
-                ))}
-              </div>
-              <Textarea
-                value={data.reasonForDisconnection}
-                onChange={(e) => update('reasonForDisconnection', e.target.value)}
-                className={textareaCn}
-                placeholder="Tap a reason above or type your own"
+        <Field label="Reason for disconnection">
+          <div className="flex flex-wrap gap-2 mb-2">
+            {REASON_PRESETS.map((r) => (
+              <Chip
+                key={r}
+                label={r}
+                active={data.reasonForDisconnection === r}
+                onClick={() => update('reasonForDisconnection', r)}
               />
-            </Field>
-
-            <Field label="Method of Isolation / Making Dead">
-              <Textarea
-                value={data.isolationMethod}
-                onChange={(e) => update('isolationMethod', e.target.value)}
-                className={textareaCn}
-                placeholder="How the circuit was isolated and proved dead"
-              />
-              {data.isolationMethod !== DEFAULT_METHOD && (
-                <button
-                  type="button"
-                  onClick={() => update('isolationMethod', DEFAULT_METHOD)}
-                  className="mt-2 text-[11.5px] font-medium text-elec-yellow/90 touch-manipulation"
-                >
-                  Use standard GS38 wording
-                </button>
-              )}
-            </Field>
+            ))}
           </div>
-        </motion.section>
+          <Textarea
+            value={data.reasonForDisconnection}
+            onChange={(e) => update('reasonForDisconnection', e.target.value)}
+            className={textareaCn}
+            placeholder="Tap a reason above or type your own"
+          />
+        </Field>
 
+        <Field label="Method of isolation / making dead">
+          <Textarea
+            value={data.isolationMethod}
+            onChange={(e) => update('isolationMethod', e.target.value)}
+            className={textareaCn}
+            placeholder="How the circuit was isolated and proved dead"
+          />
+          {data.isolationMethod !== DEFAULT_METHOD && (
+            <button
+              type="button"
+              onClick={() => update('isolationMethod', DEFAULT_METHOD)}
+              className="mt-1 h-11 px-1 text-[13px] font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+            >
+              Use standard GS38 wording
+            </button>
+          )}
+        </Field>
+      </section>
+    ),
+    safety: (
+      <>
         {/* Confirmation */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="Safe isolation" hint={allConfirmed ? 'all confirmed' : undefined} />
+        <section className={cardCn}>
+          <SectionHeading
+            title="Safe isolation"
+            hint={allConfirmed ? 'all confirmed' : undefined}
+          />
           <button
             type="button"
             onClick={confirmAll}
             disabled={allConfirmed}
             className={cn(
-              'w-full h-11 mb-2.5 rounded-lg text-[12.5px] font-semibold uppercase tracking-[0.1em] touch-manipulation transition-colors active:scale-[0.99]',
+              'w-full h-11 rounded-xl text-[13px] touch-manipulation transition-colors active:scale-[0.99]',
               allConfirmed
-                ? 'bg-white/[0.03] border border-white/[0.06] text-white/30'
-                : 'bg-elec-yellow/15 border border-elec-yellow/45 text-elec-yellow'
+                ? 'bg-white/[0.06] border border-white/[0.12] text-white/60 font-medium'
+                : 'bg-elec-yellow font-semibold text-black'
             )}
           >
             {allConfirmed ? 'All checks confirmed' : 'Confirm all'}
@@ -861,11 +949,11 @@ export default function DisconnectionCertificate() {
               onToggle={() => update('reconnectionAdvised', !data.reconnectionAdvised)}
             />
           </div>
-        </motion.section>
+        </section>
 
         {/* Photos */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader
+        <section className={cardCn}>
+          <SectionHeading
             title="Photos"
             hint={data.photos.length > 0 ? `${data.photos.length} added` : 'optional'}
           />
@@ -892,28 +980,24 @@ export default function DisconnectionCertificate() {
               type="button"
               disabled={isProcessingPhoto}
               onClick={() => cameraInputRef.current?.click()}
-              className="h-12 rounded-lg border border-white/[0.12] bg-white/[0.04] flex items-center justify-center gap-2 text-[13px] font-medium text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] flex items-center justify-center gap-2 text-[13px] font-medium text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
-              {isProcessingPhoto ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Camera className="h-4 w-4" />
-              )}{' '}
-              Take Photo
+              {isProcessingPhoto && <Loader2 className="h-4 w-4 animate-spin" />}
+              Take photo
             </button>
             <button
               type="button"
               disabled={isProcessingPhoto}
               onClick={() => photoInputRef.current?.click()}
-              className="h-12 rounded-lg border border-dashed border-white/[0.15] flex items-center justify-center gap-2 text-[13px] font-medium text-white/70 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="h-11 rounded-xl border border-dashed border-white/[0.2] flex items-center justify-center text-[13px] font-medium text-white/85 touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
-              Upload
+              Add photos
             </button>
           </div>
           {data.photos.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 mt-3">
+            <div className="grid grid-cols-3 gap-2">
               {data.photos.map((photo, i) => (
-                <div key={i} className="relative rounded-lg overflow-hidden aspect-square">
+                <div key={i} className="relative rounded-xl overflow-hidden aspect-square">
                   <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
                   <button
                     onClick={() =>
@@ -922,29 +1006,32 @@ export default function DisconnectionCertificate() {
                         photos: prev.photos.filter((_, j) => j !== i),
                       }))
                     }
-                    className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center touch-manipulation"
+                    className="absolute top-1.5 right-1.5 h-8 rounded-full bg-black/70 px-3 text-[11px] font-medium text-white touch-manipulation active:scale-[0.97]"
                   >
-                    <X className="h-3.5 w-3.5 text-white" />
+                    Remove
                   </button>
                 </div>
               ))}
             </div>
           )}
-        </motion.section>
-
+        </section>
+      </>
+    ),
+    signoff: (
+      <>
         {/* Declaration & Signatures */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="Declaration" />
-          <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3.5">
-            <p className="text-[12px] text-white/65 leading-relaxed">
+        <section className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionHeading title="Declaration" />
+          <div className="rounded-xl bg-white/[0.05] p-3.5">
+            <p className="text-[12.5px] text-white/80 leading-relaxed">
               I confirm that the circuit / appliance described above has been safely disconnected
               and made dead in accordance with safe isolation practice (GS38). No live testing has
               been carried out as part of this disconnection.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-start">
             <SignatureInput
-              label="Contractor Signature"
+              label="Contractor signature"
               value={data.inspectorSignature}
               onChange={(sig) => update('inspectorSignature', sig || '')}
             />
@@ -956,72 +1043,181 @@ export default function DisconnectionCertificate() {
               />
               {!data.clientRefusedToSign && (
                 <SignatureInput
-                  label="Client Signature"
+                  label="Client signature"
                   value={data.clientSignature}
                   onChange={(sig) => update('clientSignature', sig || '')}
                 />
               )}
             </div>
           </div>
-        </motion.section>
+        </section>
 
         {/* Notes */}
-        <motion.section variants={itemVariants}>
-          <SectionHeader title="Notes" hint="optional" />
+        <section className={cn(cardCn, 'lg:col-span-2')}>
+          <SectionHeading title="Notes" hint="optional" />
           <Textarea
             value={data.notes}
             onChange={(e) => update('notes', e.target.value)}
             className={textareaCn}
             placeholder="Additional notes..."
           />
-        </motion.section>
-      </motion.main>
+        </section>
+      </>
+    ),
+  };
 
-      {/* Sticky action bar — always thumb-reachable, with live completion */}
-      <div className="sticky bottom-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-md border-t border-white/[0.08] px-4 sm:px-6 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]">
-        <div className="mx-auto w-full max-w-5xl">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
-              {progress === 100 ? 'Ready to issue' : `${progress}% complete`}
-            </span>
-            <span className="text-[10px] font-medium text-white/70 tabular-nums">{progress}%</span>
-          </div>
-          <div className="h-1 bg-white/[0.1] rounded-full overflow-hidden mb-2.5">
-            <div
-              className="h-full bg-elec-yellow rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="flex gap-2.5">
-            <Button
-              variant="outline"
-              className="h-12 px-4 text-[13px] font-medium touch-manipulation active:scale-[0.98] border-white/[0.12] text-white hover:bg-white/[0.06]"
-              onClick={() => {
-                storageSetJSONSync(DRAFT_KEY, data);
-                toast.success('Draft saved');
-              }}
-            >
-              Draft
-            </Button>
-            <Button
-              className="flex-1 h-12 text-[13.5px] font-semibold touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              onClick={handleSave}
-              disabled={isSaving}
-            >
-              {isSaving ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  Saving...
-                </>
-              ) : existingReportId ? (
-                'Update Certificate'
-              ) : (
-                'Generate PDF'
-              )}
-            </Button>
+  return (
+    <div className="bg-background min-h-screen">
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Disconnection"
+        subtitle={data.referenceNumber ? `${data.referenceNumber} · BS 7671` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        progressPercent={progress}
+        steps={STEPS}
+        currentTab={currentStep}
+        onTabChange={goToStep}
+        completedTabs={completedTabs}
+      />
+
+      {/* ELE-1037 — lock / version bar */}
+      <CertLockBar
+        isLocked={isLocked}
+        lockedAt={lockedAt}
+        editVersion={editVersion}
+        canIssue={!isLocked && !!(existingReportId || editId) && !!data.inspectorSignature}
+        onLock={lockReport}
+        onAmend={amendReport}
+        databaseId={databaseId}
+        hasVersions={hasVersions}
+        onOpenVersion={openReport}
+      />
+
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
+          <div
+            key={currentStep}
+            className={
+              isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+            }
+          >
+            <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+              {stepContent[currentStep]}
+            </div>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Shell footer — Back + Continue, Generate on the last step */}
+      <CertShellFooter
+        currentIndex={currentIndex}
+        totalSteps={STEPS.length}
+        canPrevious={currentIndex > 0}
+        canNext={currentIndex < STEPS.length - 1}
+        onPrevious={() => {
+          if (currentIndex > 0) setCurrentStep(STEPS[currentIndex - 1].id);
+        }}
+        onNext={() => {
+          if (currentIndex < STEPS.length - 1) setCurrentStep(STEPS[currentIndex + 1].id);
+        }}
+        nextLabels={[
+          'Continue to disconnection',
+          'Continue to safe isolation',
+          'Continue to sign off',
+        ]}
+        isLastStep={currentIndex === STEPS.length - 1}
+        onGenerate={handleSave}
+        canGenerate={!isSaving}
+        generateLabel={
+          isSaving ? 'Saving...' : existingReportId ? 'Update certificate' : 'Generate PDF'
+        }
+        lastStepActions={
+          <>
+            <button type="button" onClick={handleSaveDraft} className={certFooterNeutralButton}>
+              Save draft
+            </button>
+            <button
+              type="button"
+              onClick={handleEmailCertificate}
+              disabled={!existingReportId}
+              className={certFooterNeutralButton}
+            >
+              Email
+            </button>
+          </>
+        }
+      />
+
+      {/* Email dialog */}
+      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.1] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white text-base font-bold">Email certificate</DialogTitle>
+            <DialogDescription className="text-white/85 text-sm">
+              Enter the recipient's email address.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-3">
+            <div>
+              <label
+                htmlFor="disconnection-email"
+                className="mb-1 block text-[12px] font-medium text-white"
+              >
+                Recipient email
+              </label>
+              <Input
+                id="disconnection-email"
+                type="email"
+                placeholder="client@example.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+                disabled={isSendingEmail}
+                className="input-underline h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
+              />
+            </div>
+            {data.clientEmail && emailRecipient !== data.clientEmail && (
+              <button
+                type="button"
+                onClick={() => setEmailRecipient(data.clientEmail)}
+                className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.1] text-white text-[13px] font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Use client email: {data.clientEmail}
+              </button>
+            )}
+          </div>
+          {/* Plain column footer — DialogFooter's sm:space-x-2 skews stacked
+              buttons sideways, so the two never sat level. */}
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation"
+            >
+              {isSendingEmail ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                  Sending…
+                </>
+              ) : (
+                'Send certificate'
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="h-12 w-full rounded-xl border border-white/[0.1] bg-white/[0.04] font-medium text-white transition-all hover:bg-white/[0.08] hover:text-white active:scale-[0.98] disabled:opacity-40 touch-manipulation"
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

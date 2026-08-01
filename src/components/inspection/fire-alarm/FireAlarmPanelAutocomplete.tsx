@@ -6,18 +6,18 @@
  * - Search across make/model/protocol
  * - Auto-fill badge showing populated fields
  * - Callback for applying panel defaults
+ *
+ * Bottom sheet on mobile, popover on desktop — no icons, matching the
+ * EV charging autocomplete pattern.
  */
 
 import * as React from 'react';
-import { Check, ChevronsUpDown, Zap, Sparkles, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -31,6 +31,9 @@ import {
   getPanelDefaults,
   type FireAlarmPanel,
 } from '@/data/fireAlarmEquipmentDatabase';
+
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 interface FireAlarmPanelAutocompleteProps {
   value?: string;
@@ -111,32 +114,34 @@ export function FireAlarmPanelAutocomplete({
     return defaults !== null;
   }, [value]);
 
-  // Trigger button shared between mobile and desktop
+  // Trigger button shared between mobile and desktop — clean, no icons
   const triggerButton = (
-    <Button
-      variant="outline"
+    <button
+      type="button"
       role="combobox"
       aria-expanded={open}
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full justify-between h-12 touch-manipulation text-base',
-        'bg-white/[0.06] border-white/[0.08] text-white',
-        'hover:bg-white/[0.08] hover:border-white/[0.12]',
-        'focus:border-yellow-500 focus:ring-yellow-500',
-        'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
+        'w-full h-11 px-3.5 flex items-center justify-between rounded-xl text-left touch-manipulation active:scale-[0.98] transition-all',
+        'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !selectedPanel && 'text-white')}>
+      <span
+        className={cn(
+          'truncate text-sm',
+          selectedPanel ? 'font-medium text-white' : 'text-white/80'
+        )}
+      >
         {displayValue}
       </span>
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-40" />
-    </Button>
+    </button>
   );
 
-  // Render panel item (shared renderer for mobile and desktop)
+  // Render panel item (shared renderer for mobile and desktop) — neutral
+  // surface, solid volt when selected
   const renderPanelItem = (panel: FireAlarmPanel, showManufacturer = false, forMobile = false) => {
     const isSelected = value === panel.id;
     return (
@@ -144,46 +149,80 @@ export function FireAlarmPanelAutocomplete({
         key={panel.id}
         onClick={() => handleSelect(panel.id)}
         className={cn(
-          'rounded-xl cursor-pointer transition-all flex items-center gap-3 border',
-          forMobile ? 'px-4 py-3.5 min-h-[60px]' : 'px-3 py-2.5',
-          'active:scale-[0.98] touch-manipulation',
+          'rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
+          forMobile ? 'p-3.5' : 'p-2.5 mx-1',
           isSelected
-            ? 'bg-elec-yellow/10 border-elec-yellow/30'
-            : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
+            ? 'bg-elec-yellow border border-elec-yellow'
+            : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]'
         )}
       >
-        <div className={cn(
-          'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-          isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'
-        )}>
-          {isSelected && <Check className="h-3 w-3 text-black" />}
-        </div>
-        <div className="flex flex-col flex-1 min-w-0 gap-1">
-          <span className={cn('font-semibold truncate text-white', forMobile ? 'text-base' : 'text-sm')}>
+        {/* Make + model */}
+        <div className="flex items-center gap-2 mb-1.5">
+          <span
+            className={cn(
+              'font-semibold truncate',
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
+            )}
+          >
             {showManufacturer ? `${panel.manufacturer} ${panel.model}` : panel.model}
           </span>
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded bg-white/[0.08] text-white">
-              {panel.type || 'Conventional'}
+          {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
+            <span
+              className={cn(
+                'font-bold px-1.5 py-0.5 rounded flex-shrink-0',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-green-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              New
             </span>
-            {panel.protocol && (
-              <span className="text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded bg-red-500/10 text-red-400">
-                {panel.protocol}
-              </span>
-            )}
-            {panel.loops && (
-              <span className="text-[10px] text-white">{panel.loops} loops</span>
-            )}
-            {panel.zones && (
-              <span className="text-[10px] text-white">{panel.zones} zones</span>
-            )}
-          </div>
+          )}
         </div>
-        {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-          <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide bg-green-500/20 text-green-400 rounded-full flex-shrink-0">
-            New
+
+        {/* Spec badges — no icons, coloured text on neutral surfaces */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span
+            className={cn(
+              'font-bold px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-elec-yellow',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {panel.type || 'Conventional'}
           </span>
-        )}
+          {panel.protocol && (
+            <span
+              className={cn(
+                'font-medium px-1.5 py-0.5 rounded',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-red-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              {panel.protocol}
+            </span>
+          )}
+          {panel.loops && (
+            <span
+              className={cn(
+                forMobile ? 'text-[11px]' : 'text-[10px]',
+                isSelected ? 'text-black/70' : 'text-white/85'
+              )}
+            >
+              {panel.loops} loops
+            </span>
+          )}
+          {panel.zones && (
+            <span
+              className={cn(
+                forMobile ? 'text-[11px]' : 'text-[10px]',
+                isSelected ? 'text-black/70' : 'text-white/85'
+              )}
+            >
+              {panel.zones} zones
+            </span>
+          )}
+        </div>
       </div>
     );
   };
@@ -197,55 +236,46 @@ export function FireAlarmPanelAutocomplete({
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
-          title="Select Fire Alarm Panel"
+          title="Select fire alarm panel"
           contentClassName="p-0"
         >
           <div className="flex flex-col max-h-[70vh]">
             {/* Search input */}
-            <div className="px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0 z-10">
-              <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
-                <Search className="h-4 w-4 text-white flex-shrink-0" />
-                <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by make, model, or protocol..."
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
-                />
-                {search && (
-                  <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                )}
-              </div>
-              <p className="text-[10px] text-white mt-2 text-center uppercase tracking-wider">
-                <Sparkles className="h-3 w-3 inline mr-1 text-elec-yellow" />
-                Select a panel to auto-fill make, model, network type & zones
+            <div className="px-4 pt-1 pb-3 sticky top-0 z-10 bg-background">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by make, model or protocol"
+                className={searchInputCn}
+              />
+              <p className="text-[11px] text-white/80 mt-2 text-center">
+                Select a panel to auto-fill make, model, network type and zones
               </p>
             </div>
 
             {/* Panel list */}
-            <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-3">
+            <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-2">
               {filteredPanels && filteredPanels.length > 0 ? (
                 <div className="space-y-2">
-                  <p className="text-[10px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-                    Search Results ({filteredPanels.length})
+                  <p className="text-[11px] font-semibold text-white/80 px-1 mb-2">
+                    Search results ({filteredPanels.length})
                   </p>
                   {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
                 </div>
               ) : search.trim() ? (
                 <div className="py-12 text-center">
-                  <Zap className="h-10 w-10 mx-auto mb-3 text-white/20" />
-                  <p className="text-sm font-medium text-white">No panels found</p>
-                  <p className="text-xs text-white mt-1">Try a different search term</p>
+                  <p className="text-sm font-semibold text-white">No panels found</p>
+                  <p className="text-xs text-white/85 mt-1">Try a different search term</p>
                 </div>
               ) : (
                 <div className="space-y-5">
                   {Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
                     <div key={manufacturer}>
                       <div className="flex items-center gap-2 mb-2 px-1">
-                        <div className="h-[2px] w-4 rounded-full bg-red-500/40" />
-                        <p className="text-[10px] font-bold text-white uppercase tracking-wider">{manufacturer}</p>
-                        <span className="text-[10px] text-white bg-white/[0.08] px-1.5 py-0.5 rounded">{panels.length}</span>
+                        <p className="text-[11px] font-semibold text-white/80">{manufacturer}</p>
+                        <span className="text-[10px] text-white/85 bg-white/[0.08] px-1.5 py-0.5 rounded">
+                          {panels.length}
+                        </span>
                       </div>
                       <div className="space-y-2">
                         {panels.map((panel) => renderPanelItem(panel, false, true))}
@@ -260,8 +290,7 @@ export function FireAlarmPanelAutocomplete({
 
         {/* Auto-fill badge */}
         {showAutoFillBadge && hasAutoFill && (
-          <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
-            <Sparkles className="h-3 w-3" />
+          <div className="absolute -top-3 right-2 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
             Auto-filled
           </div>
         )}
@@ -275,83 +304,50 @@ export function FireAlarmPanelAutocomplete({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
+          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border-white/[0.08] shadow-xl z-[100]"
           align="start"
           sideOffset={4}
         >
-          <Command className="bg-elec-gray" shouldFilter={false}>
-            <CommandInput
-              placeholder="Search panels..."
-              value={search}
-              onValueChange={setSearch}
-              className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
-            />
-            <CommandList className="bg-elec-gray max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-white">No panels found.</CommandEmpty>
+          <Command className="bg-background" shouldFilter={false}>
+            <div className="px-3 pt-1 pb-2.5">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by make, model or protocol"
+                className={searchInputCn}
+              />
+            </div>
+            <CommandList className="max-h-[300px]">
+              <CommandEmpty className="py-6 text-center">
+                <p className="text-white text-sm">No panels found.</p>
+              </CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredPanels && filteredPanels.length > 0 ? (
-                <CommandGroup heading="Search Results" className="bg-elec-gray">
+                <CommandGroup heading="Search results" className="py-2">
                   {filteredPanels.map((panel) => (
                     <CommandItem
                       key={panel.id}
                       value={panel.id}
                       onSelect={handleSelect}
-                      className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                      className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
                     >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4 shrink-0',
-                          value === panel.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-                        )}
-                      />
-                      <div className="flex flex-col flex-1 min-w-0">
-                        <span className="font-medium truncate">
-                          {panel.manufacturer} {panel.model}
-                        </span>
-                        <span className="text-xs text-white truncate">
-                          {panel.type} • {panel.protocol || 'Conventional'}
-                          {panel.loops && ` • ${panel.loops} loops`}
-                        </span>
-                      </div>
-                      {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-                        <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded">
-                          NEW
-                        </span>
-                      )}
+                      {renderPanelItem(panel, true, false)}
                     </CommandItem>
                   ))}
                 </CommandGroup>
               ) : (
                 /* Show grouped by manufacturer when not searching */
                 Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
-                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-elec-gray">
+                  <CommandGroup key={manufacturer} heading={manufacturer} className="py-2">
                     {panels.map((panel) => (
                       <CommandItem
                         key={panel.id}
                         value={panel.id}
                         onSelect={handleSelect}
-                        className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                        className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
                       >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4 shrink-0',
-                            value === panel.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-                          )}
-                        />
-                        <div className="flex flex-col flex-1 min-w-0">
-                          <span className="font-medium truncate">{panel.model}</span>
-                          <span className="text-xs text-white truncate">
-                            {panel.type}
-                            {panel.zones && ` • ${panel.zones} zones`}
-                            {panel.loops && ` • ${panel.loops} loops`}
-                          </span>
-                        </div>
-                        {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-                          <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded">
-                            NEW
-                          </span>
-                        )}
+                        {renderPanelItem(panel, false, false)}
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -364,8 +360,7 @@ export function FireAlarmPanelAutocomplete({
 
       {/* Auto-fill badge - positioned above and to the right */}
       {showAutoFillBadge && hasAutoFill && (
-        <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
-          <Sparkles className="h-3 w-3" />
+        <div className="absolute -top-3 right-2 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
           Auto-filled
         </div>
       )}
@@ -401,16 +396,12 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
 
   return (
     <div className={cn('space-y-1.5', className)}>
-      <p className="font-semibold text-foreground text-base">
+      <p className="font-semibold text-white text-base">
         {panel.manufacturer} {panel.model}
       </p>
-      <p className="text-sm text-white">
-        {specs.join(' · ')}
-      </p>
+      <p className="text-sm text-white/80">{specs.join(' · ')}</p>
       {panel.features && panel.features.length > 0 && (
-        <p className="text-xs text-white">
-          {panel.features.join(' · ')}
-        </p>
+        <p className="text-xs text-white/80">{panel.features.join(' · ')}</p>
       )}
     </div>
   );

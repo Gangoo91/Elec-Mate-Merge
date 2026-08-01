@@ -203,8 +203,12 @@ export function useEVChargingSmartForm() {
   // ---------------------------------------------------------------------------
   const calculateZs = useCallback(
     (ze: number, r1r2: number, applyTempCorrection: boolean = true): ZsCalculation => {
-      // Temperature correction factor: 1.2 for 70°C operating temperature
-      // Per BS 7671 Appendix 14
+      // Temperature correction factor: 1.2 for 70°C operating temperature.
+      // ELE-1422 — previously cited "BS 7671 Appendix 14", stale by two
+      // amendments: A3 moved the earth-fault-loop content to Appendix 3, and in
+      // A4:2026 Appendix 14 is "Determination of prospective fault current".
+      // The basis is NOTE 2 to Tables 41.2-41.4 — the tabulated Zs applies with
+      // conductors at the operating temperature of Table 52.2.
       const tempFactor = applyTempCorrection ? 1.2 : 1.0;
       const calculatedZs = ze + r1r2 * tempFactor;
 

@@ -21,7 +21,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
 import { useRAMSNotifications } from '@/hooks/useRAMSNotifications';
 import { toast } from '@/hooks/use-toast';
-import { storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
+import {
+  storageGetSync,
+  storageSetSync,
+  storageRemoveSync,
+  storageGetJSONSync,
+} from '@/utils/storage';
 
 const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
 const RAMS_LOCAL_DRAFT_KEY = 'rams-local-draft';
@@ -182,7 +187,11 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   // freshly-typed draft.
   useEffect(() => {
     if (status === 'complete' && currentJobId) {
-      try { localStorage.removeItem(RAMS_INPUT_DRAFT_KEY); } catch { /* ignore */ }
+      try {
+        localStorage.removeItem(RAMS_INPUT_DRAFT_KEY);
+      } catch {
+        /* ignore */
+      }
     }
   }, [status, currentJobId]);
 
@@ -676,9 +685,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
 
   const headerProjectName =
     ramsData?.projectName || currentJobDescription
-      ? (ramsData?.projectName ||
-          currentJobDescription.slice(0, 60) +
-            (currentJobDescription.length > 60 ? '…' : ''))
+      ? ramsData?.projectName ||
+        currentJobDescription.slice(0, 60) + (currentJobDescription.length > 60 ? '…' : '')
       : null;
 
   return (
@@ -721,9 +729,7 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
               </span>
               <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
               <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-                {showResults && headerProjectName
-                  ? headerProjectName
-                  : 'RAMS Generator'}
+                {showResults && headerProjectName ? headerProjectName : 'RAMS Generator'}
               </h1>
             </div>
             {showResults && status === 'complete' && (
@@ -750,13 +756,11 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
                 Draft
               </span>
               <div className="flex-1 min-w-0">
-                <div className="text-[14.5px] font-semibold text-white">
-                  Unsaved RAMS found
-                </div>
+                <div className="text-[14.5px] font-semibold text-white">Unsaved RAMS found</div>
                 <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
-                  <span className="text-white">{recoveredDraft.projectName}</span> was saved
-                  locally {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))}{' '}
-                  minutes ago. Restore to pick up where you left off.
+                  <span className="text-white">{recoveredDraft.projectName}</span> was saved locally{' '}
+                  {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))} minutes ago.
+                  Restore to pick up where you left off.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
@@ -807,65 +811,69 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
             )}
 
             {(status === 'pending' || status === 'processing') && (
-            <AgentProcessingView
-              jobId={currentJobId}
-              overallProgress={progress}
-              currentStep={currentStep}
-              elapsedTime={
-                generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0
-              }
-              estimatedTimeRemaining={Math.max(
-                0,
-                Math.floor((EXPECTED_TOTAL_SECONDS * (100 - progress)) / 100)
-              )}
-              onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
-              isCancelling={isCancelling}
-              jobDescription={currentJobDescription}
-              hsAgentProgress={hsAgentProgress}
-              installerAgentProgress={installerAgentProgress}
-              hsAgentStatus={hsAgentStatus}
-              installerAgentStatus={installerAgentStatus}
-              agentSteps={[
-                {
-                  name: 'health-safety',
-                  status: hsAgentStatus as 'pending' | 'processing' | 'complete',
-                  progress: hsAgentProgress,
-                  currentStep:
-                    hsAgentStatus === 'complete'
-                      ? 'Risk assessment complete'
-                      : currentStep.includes('Health & Safety')
-                        ? currentStep
-                        : 'Analysing hazards...',
-                  reasoning:
-                    hsAgentStatus === 'complete'
-                      ? '✅ Risk assessment complete'
-                      : currentStep.includes('Health & Safety')
-                        ? currentStep
-                        : 'Analysing hazards...',
-                },
-                {
-                  name: 'installer',
-                  status: installerAgentStatus as 'pending' | 'processing' | 'complete',
-                  progress: installerAgentProgress,
-                  currentStep:
-                    installerAgentStatus === 'complete'
-                      ? 'Method statement complete'
-                      : currentStep.includes('Installer')
-                        ? currentStep
-                        : installerAgentStatus === 'pending'
-                          ? 'Waiting...'
-                          : 'Generating steps...',
-                  reasoning:
-                    installerAgentStatus === 'complete'
-                      ? '✅ Method statement complete'
-                      : currentStep.includes('Installer')
-                        ? currentStep
-                        : installerAgentStatus === 'pending'
-                          ? 'Waiting for health & safety analysis...'
-                          : 'Generating steps...',
-                },
-              ]}
-            />
+              <AgentProcessingView
+                jobId={currentJobId}
+                overallProgress={progress}
+                currentStep={currentStep}
+                elapsedTime={
+                  generationStartTime > 0
+                    ? Math.floor((Date.now() - generationStartTime) / 1000)
+                    : 0
+                }
+                estimatedTimeRemaining={Math.max(
+                  0,
+                  Math.floor((EXPECTED_TOTAL_SECONDS * (100 - progress)) / 100)
+                )}
+                onCancel={
+                  status === 'processing' || status === 'pending' ? handleCancel : undefined
+                }
+                isCancelling={isCancelling}
+                jobDescription={currentJobDescription}
+                hsAgentProgress={hsAgentProgress}
+                installerAgentProgress={installerAgentProgress}
+                hsAgentStatus={hsAgentStatus}
+                installerAgentStatus={installerAgentStatus}
+                agentSteps={[
+                  {
+                    name: 'health-safety',
+                    status: hsAgentStatus as 'pending' | 'processing' | 'complete',
+                    progress: hsAgentProgress,
+                    currentStep:
+                      hsAgentStatus === 'complete'
+                        ? 'Risk assessment complete'
+                        : currentStep.includes('Health & Safety')
+                          ? currentStep
+                          : 'Analysing hazards...',
+                    reasoning:
+                      hsAgentStatus === 'complete'
+                        ? '✅ Risk assessment complete'
+                        : currentStep.includes('Health & Safety')
+                          ? currentStep
+                          : 'Analysing hazards...',
+                  },
+                  {
+                    name: 'installer',
+                    status: installerAgentStatus as 'pending' | 'processing' | 'complete',
+                    progress: installerAgentProgress,
+                    currentStep:
+                      installerAgentStatus === 'complete'
+                        ? 'Method statement complete'
+                        : currentStep.includes('Installer')
+                          ? currentStep
+                          : installerAgentStatus === 'pending'
+                            ? 'Waiting...'
+                            : 'Generating steps...',
+                    reasoning:
+                      installerAgentStatus === 'complete'
+                        ? '✅ Method statement complete'
+                        : currentStep.includes('Installer')
+                          ? currentStep
+                          : installerAgentStatus === 'pending'
+                            ? 'Waiting for health & safety analysis...'
+                            : 'Generating steps...',
+                  },
+                ]}
+              />
             )}
 
             {(error || status === 'cancelled') && (
@@ -903,8 +911,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
                           Method statement didn't generate
                         </p>
                         <p className="text-xs text-orange-400/70 mt-1">
-                          Your risk assessment is complete. Retry just the method statement to
-                          patch this RAMS without regenerating the hazards.
+                          Your risk assessment is complete. Retry just the method statement to patch
+                          this RAMS without regenerating the hazards.
                         </p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           <Button

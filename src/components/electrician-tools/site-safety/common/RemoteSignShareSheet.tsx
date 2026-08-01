@@ -42,7 +42,10 @@ export function RemoteSignShareSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+      <SheetContent
+        side="bottom"
+        className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+      >
         <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
           <div className="flex justify-center pt-1">
             <div className="w-10 h-1 bg-white/20 rounded-full" />
@@ -50,11 +53,12 @@ export function RemoteSignShareSheet({
           <div>
             <Eyebrow>Remote sign-off</Eyebrow>
             <h3 className="mt-1 text-[18px] font-semibold text-white">Send for {roleLabel}</h3>
-            <p className="mt-1 text-[12.5px] text-white/60">
-              They open this on their phone, review the document and sign. The link expires in {expiryDays} days.
+            <p className="mt-1 text-[12.5px] text-white">
+              They open this on their phone, review the document and sign. The link expires in{' '}
+              {expiryDays} days.
             </p>
           </div>
-          <div className="px-3 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08] text-[12px] text-white/70 break-all">
+          <div className="px-3 py-3 rounded-xl border-b border-white/[0.15] text-[12px] text-white break-all">
             {url}
           </div>
           <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">

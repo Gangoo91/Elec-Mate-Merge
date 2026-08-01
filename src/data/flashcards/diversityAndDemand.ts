@@ -70,14 +70,14 @@ export const diversityAndDemand: FlashcardData[] = [
     id: 'dd8',
     question: 'Where can the diversity allowances for domestic installations be found?',
     answer:
-      'Diversity allowances for domestic installations are published in Table 1B of IET Guidance Note 1: Selection and Erection of Equipment. BS 7671 itself does not include specific diversity tables but references the IET Guidance Notes. It is important to note that Guidance Note 1 provides guidance rather than a mandatory requirement, and the designer must use professional judgement.',
+      'Diversity allowances for domestic installations are published in Table A2 of the IET On-Site Guide: Selection and Erection of Equipment. BS 7671 itself does not include specific diversity tables but references the IET Guidance Notes. It is important to note that Guidance Note 1 provides guidance rather than a mandatory requirement, and the designer must use professional judgement.',
     category: 'Diversity Factors',
     difficulty: 'medium',
   },
   {
     id: 'dd9',
     question:
-      'What diversity factor is typically applied to lighting circuits in a domestic installation according to IET Guidance Note 1, Table 1B?',
+      'What diversity factor is typically applied to lighting circuits in a domestic installation according to IET On-Site Guide Table A2?',
     answer:
       'For domestic lighting circuits, a diversity factor of 66% of the total connected lighting load is typically applied. This means if the total lighting load is 3,000W, the assessed demand for lighting would be 2,000W (3,000 x 0.66). This recognises that not every light in the property will be switched on simultaneously during normal use.',
     category: 'Diversity Factors',
@@ -86,7 +86,7 @@ export const diversityAndDemand: FlashcardData[] = [
   {
     id: 'dd10',
     question:
-      'Explain the diversity allowance for cooking appliances in a domestic installation as per IET Guidance Note 1, Table 1B.',
+      'Explain the diversity allowance for cooking appliances in a domestic installation as per IET On-Site Guide Table A2.',
     answer:
       'For a single cooking appliance, the first 10A of the rated current is taken at 100%, and the remaining current is taken at 30%, plus 5A if the appliance has a socket outlet. For example, a 12 kW cooker at 230V draws 52.2A: the first 10A at 100% = 10A, the remaining 42.2A at 30% = 12.7A, giving an assessed demand of 22.7A (or 27.7A if a socket outlet is fitted on the cooker control unit).',
     category: 'Diversity Factors',
@@ -96,7 +96,7 @@ export const diversityAndDemand: FlashcardData[] = [
     id: 'dd11',
     question: 'How is diversity applied to socket outlet circuits in a domestic installation?',
     answer:
-      'According to IET Guidance Note 1, Table 1B, the first socket outlet ring circuit (or equivalent radial) is taken at 100% of its rated capacity. Each additional ring or radial circuit is assessed at 40% of its rated capacity. In practice, the first ring circuit is assumed at the full 32A rating, and any subsequent ring circuits are assessed at approximately 13A each (32A x 0.40 = 12.8A).',
+      'According to IET On-Site Guide Table A2, the first socket outlet ring circuit (or equivalent radial) is taken at 100% of its rated capacity. Each additional ring or radial circuit is assessed at 40% of its rated capacity. In practice, the first ring circuit is assumed at the full 32A rating, and any subsequent ring circuits are assessed at approximately 13A each (32A x 0.40 = 12.8A).',
     category: 'Diversity Factors',
     difficulty: 'medium',
   },
@@ -105,7 +105,7 @@ export const diversityAndDemand: FlashcardData[] = [
     question:
       'Which types of domestic load are typically given NO diversity allowance and must be included at their full rated current?',
     answer:
-      'Electric showers and immersion heaters are typically given no diversity allowance in domestic installations as per IET Guidance Note 1, Table 1B. They are included at 100% of their rated current. This is because an electric shower draws its full load whenever it is in use, and an immersion heater similarly draws its full rated current during its heating cycle.',
+      'Electric showers and immersion heaters are typically given no diversity allowance in domestic installations as per IET On-Site Guide Table A2. They are included at 100% of their rated current. This is because an electric shower draws its full load whenever it is in use, and an immersion heater similarly draws its full rated current during its heating cycle.',
     category: 'Diversity Factors',
     difficulty: 'medium',
   },
@@ -113,7 +113,7 @@ export const diversityAndDemand: FlashcardData[] = [
     id: 'dd13',
     question: 'What diversity factor is applied to domestic space heating circuits?',
     answer:
-      'According to IET Guidance Note 1, Table 1B, for thermostatically controlled fixed space heating, the diversity allowance is the full load of the largest circuit plus 40% of the remaining heating circuits. For non-thermostatically controlled heating (such as panel heaters without a room thermostat), no diversity may be applied, and the full load should be used.',
+      'According to IET On-Site Guide Table A2, for thermostatically controlled fixed space heating, the diversity allowance is the full load of the largest circuit plus 40% of the remaining heating circuits. For non-thermostatically controlled heating (such as panel heaters without a room thermostat), no diversity may be applied, and the full load should be used.',
     category: 'Diversity Factors',
     difficulty: 'hard',
   },
@@ -122,7 +122,7 @@ export const diversityAndDemand: FlashcardData[] = [
     question:
       'Can diversity factors from IET Guidance Note 1 be applied to commercial or industrial installations?',
     answer:
-      "No. The diversity factors in Table 1B of IET Guidance Note 1 are intended for domestic (household) installations only. Commercial and industrial installations require a bespoke assessment based on the specific load profile, usage patterns, and operational requirements of the premises. The designer must assess the likely demand using their professional knowledge and the client's operational data.",
+      "No. The diversity factors in Table A2 of the IET On-Site Guide are intended for domestic (household) installations only. Commercial and industrial installations require a bespoke assessment based on the specific load profile, usage patterns, and operational requirements of the premises. The designer must assess the likely demand using their professional knowledge and the client's operational data.",
     category: 'Diversity Factors',
     difficulty: 'hard',
   },
@@ -215,7 +215,7 @@ export const diversityAndDemand: FlashcardData[] = [
     question:
       'What diversity factor is applied to water heating circuits (such as an immersion heater or instantaneous water heater) in a domestic installation?',
     answer:
-      'According to IET Guidance Note 1, Table 1B, no diversity is applied to instantaneous water heaters (including electric showers) or storage water heaters (immersion heaters). They are assessed at 100% of their full rated current. This is because when these appliances are in use, they draw their full rated load and there is no partial loading to account for.',
+      'According to IET On-Site Guide Table A2, no diversity is applied to instantaneous water heaters (including electric showers) or storage water heaters (immersion heaters). They are assessed at 100% of their full rated current. This is because when these appliances are in use, they draw their full rated load and there is no partial loading to account for.',
     category: 'Diversity Factors',
     difficulty: 'easy',
   },

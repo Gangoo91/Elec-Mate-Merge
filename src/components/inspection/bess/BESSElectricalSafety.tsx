@@ -1,23 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo } from 'react';
 import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { AlertTriangle } from 'lucide-react';
 import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 import { cn } from '@/lib/utils';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const pickerTrigger = 'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+const cardWideCn = cardCn + ' lg:col-span-2';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+const pickerTrigger =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
+  <div><Label className="text-[12px] font-medium text-white mb-1 block">{label}{required && ' *'}</Label>{children}</div>
 );
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -30,12 +35,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
   const chemGuidance = useMemo(() => getChemistryGuidance(formData.batteryChemistry), [formData.batteryChemistry, getChemistryGuidance]);
 
   return (
-    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* DC Circuit */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="DC Circuit Details" />
         <Sub title="Cable" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
           <Field label="Type">
             <MobileSelectPicker value={formData.dcCableType} onValueChange={(v) => onUpdate('dcCableType', v)}
               options={[
@@ -59,7 +64,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           <Field label="Length (m)"><Input type="number" value={formData.dcCableLength} onChange={(e) => onUpdate('dcCableLength', e.target.value)} className={inputCn} /></Field>
         </div>
         <Sub title="Protection" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Type">
             <MobileSelectPicker value={formData.dcProtectionType} onValueChange={(v) => onUpdate('dcProtectionType', v)}
               options={[
@@ -80,7 +85,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               placeholder="A" triggerClassName={pickerTrigger} />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Isolator Location">
             <MobileSelectPicker value={formData.dcIsolatorLocation} onValueChange={(v) => onUpdate('dcIsolatorLocation', v)}
               options={[
@@ -102,7 +107,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           </Field>
         </div>
         <Sub title="SPD & Earth Fault" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="SPD Type">
             <MobileSelectPicker value={formData.dcSPDType} onValueChange={(v) => onUpdate('dcSPDType', v)}
               options={[
@@ -152,9 +157,9 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
       </div>
 
       {/* Earthing Assessment */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Earthing Assessment" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Earthing" required>
             <MobileSelectPicker value={formData.earthingArrangement} onValueChange={(v) => onUpdate('earthingArrangement', v)}
               options={[{ value: 'TN-S', label: 'TN-S' }, { value: 'TN-C-S', label: 'TN-C-S (PME)' }, { value: 'TT', label: 'TT' }]}
@@ -168,30 +173,25 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
         </div>
 
         {pmeGuidance.requiresAction && (
-          <div className="rounded-xl overflow-hidden border border-red-500/30">
-            <div className="px-3 py-2 bg-red-500/15 flex items-center gap-2">
-              <AlertTriangle className="h-3.5 w-3.5 text-red-400 flex-shrink-0" />
-              <p className="text-xs font-bold text-red-400">PME Earthing — Action Required</p>
-            </div>
-            <div className="px-3 py-2.5 bg-white/[0.02] space-y-2">
-              <p className="text-[11px] text-white leading-relaxed">{pmeGuidance.recommendation}</p>
-              <p className="text-[10px] text-white">Ref: {pmeGuidance.regulation}</p>
-              <ul className="space-y-1">
-                {pmeGuidance.options.map((opt, i) => (
-                  <li key={i} className="text-[11px] text-white flex items-start gap-1.5"><span className="text-red-400 font-bold">{i + 1}.</span> {opt}</li>
-                ))}
-              </ul>
-            </div>
+          <div className="rounded-xl border border-red-500/30 bg-white/[0.05] px-3.5 py-3 space-y-2">
+            <p className="text-[13px] font-semibold text-red-400">PME earthing — action required</p>
+            <p className="text-[12px] text-white/90 leading-relaxed">{pmeGuidance.recommendation}</p>
+            <p className="text-[11px] text-white/80">Ref: {pmeGuidance.regulation}</p>
+            <ul className="space-y-1">
+              {pmeGuidance.options.map((opt, i) => (
+                <li key={i} className="text-[12px] text-white/90 flex items-start gap-1.5"><span className="text-red-400 font-bold">{i + 1}.</span> {opt}</li>
+              ))}
+            </ul>
           </div>
         )}
 
         <div className="flex items-center justify-between">
-          <Label className="text-white text-xs font-medium">PME risk assessment (Reg 411.4.2)</Label>
+          <Label className="text-[12px] font-medium text-white">PME risk assessment (Reg 411.4.2)</Label>
           <div className="flex gap-1.5">
             {[true, false].map((v) => (
               <button key={String(v)} type="button" onClick={() => onUpdate('pmeRiskAssessment', v)}
-                className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                  formData.pmeRiskAssessment === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                  formData.pmeRiskAssessment === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-white/20 border border-white/20 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                 {v ? 'Yes' : 'No'}
               </button>
             ))}
@@ -203,10 +203,10 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
       </div>
 
       {/* AC Circuit */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="AC Circuit Details" />
         <Sub title="Cable" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
           <Field label="Type" required>
             <MobileSelectPicker value={formData.acCableType} onValueChange={(v) => onUpdate('acCableType', v)}
               options={[
@@ -230,7 +230,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           <Field label="Length (m)"><Input type="number" value={formData.acCableLength} onChange={(e) => onUpdate('acCableLength', e.target.value)} className={inputCn} /></Field>
         </div>
         <Sub title="Protection" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
           <Field label="Device">
             <MobileSelectPicker value={formData.acProtectionType} onValueChange={(v) => onUpdate('acProtectionType', v)}
               options={[{ value: 'MCB', label: 'MCB' }, { value: 'RCBO', label: 'RCBO' }, { value: 'MCCB', label: 'MCCB' }, { value: 'fuse', label: 'Fuse' }]}
@@ -243,7 +243,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               placeholder="Select..." triggerClassName={pickerTrigger} />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="RCD Type">
             <MobileSelectPicker value={formData.rcdType} onValueChange={(v) => onUpdate('rcdType', v)}
               options={[{ value: 'Type A', label: 'Type A' }, { value: 'Type B', label: 'Type B' }, { value: 'Type F', label: 'Type F' }]}
@@ -269,7 +269,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
             placeholder="Select..." triggerClassName={pickerTrigger} />
         </Field>
         <Sub title="SPD" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Type">
             <MobileSelectPicker value={formData.acSPDType} onValueChange={(v) => onUpdate('acSPDType', v)}
               options={[
@@ -306,16 +306,16 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
         <Sub title="AFDD" />
         <div className="flex items-center justify-between">
           <div>
-            <Label className="text-white text-xs font-medium">AFDD Installed</Label>
+            <Label className="text-[12px] font-medium text-white">AFDD Installed</Label>
             {formData.installationType === 'domestic' && (
-              <p className="text-[10px] text-elec-yellow mt-0.5">Recommended for sleeping accommodation</p>
+              <p className="text-[11px] text-elec-yellow mt-0.5">Recommended for sleeping accommodation</p>
             )}
           </div>
           <div className="flex gap-1.5">
             {[true, false].map((v) => (
               <button key={String(v)} type="button" onClick={() => onUpdate('afddInstalled', v)}
-                className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                  formData.afddInstalled === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                  formData.afddInstalled === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-red-500 border border-red-500 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                 {v ? 'Yes' : 'No'}
               </button>
             ))}
@@ -324,33 +324,29 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
       </div>
 
       {/* Battery Safety */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Battery Safety Assessment" />
         {formData.batteryChemistry && (
-          <div className={`rounded-xl overflow-hidden border ${chemGuidance.thermalRunawayRisk === 'high' ? 'border-red-500/30' : 'border-green-500/30'}`}>
-            <div className={`px-3 py-2 ${chemGuidance.thermalRunawayRisk === 'high' ? 'bg-red-500/15' : 'bg-green-500/15'}`}>
-              <p className="text-xs font-bold text-white">Safety Notes — {formData.batteryChemistry}</p>
-            </div>
-            <div className="px-3 py-2.5 bg-white/[0.02]">
-              <p className="text-[11px] text-white leading-relaxed">{chemGuidance.safetyNotes}</p>
-            </div>
+          <div className={`rounded-xl border bg-white/[0.05] px-3.5 py-3 space-y-1.5 ${chemGuidance.thermalRunawayRisk === 'high' ? 'border-red-500/30' : 'border-green-500/30'}`}>
+            <p className={`text-[13px] font-semibold ${chemGuidance.thermalRunawayRisk === 'high' ? 'text-red-400' : 'text-green-400'}`}>Safety Notes — {formData.batteryChemistry}</p>
+            <p className="text-[12px] text-white/90 leading-relaxed">{chemGuidance.safetyNotes}</p>
           </div>
         )}
         <Sub title="Location & Environment" />
         <div className="flex items-center justify-between">
-          <Label className="text-white text-xs font-medium">Location suitability confirmed</Label>
+          <Label className="text-[12px] font-medium text-white">Location suitability confirmed</Label>
           <div className="flex gap-1.5">
             {[true, false].map((v) => (
               <button key={String(v)} type="button" onClick={() => onUpdate('locationSuitable', v)}
-                className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                  formData.locationSuitable === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                  formData.locationSuitable === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-red-500 border border-red-500 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                 {v ? 'Yes' : 'No'}
               </button>
             ))}
           </div>
         </div>
         <Field label="Distance from Combustibles (mm)"><Input type="number" value={formData.distanceFromCombustibles} onChange={(e) => onUpdate('distanceFromCombustibles', e.target.value)} className={inputCn} placeholder="e.g. 500" /></Field>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
           <Field label="Ventilation">
             <MobileSelectPicker value={formData.ventilation} onValueChange={(v) => onUpdate('ventilation', v)}
               options={[{ value: 'natural', label: 'Natural' }, { value: 'mechanical', label: 'Mechanical' }, { value: 'none', label: 'None' }]}
@@ -376,12 +372,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           ] as const).map(([field, label]) => (
             <div key={field}>
               <div className="flex items-center justify-between">
-                <Label className="text-white text-xs font-medium">{label}</Label>
+                <Label className="text-[12px] font-medium text-white">{label}</Label>
                 <div className="flex gap-1.5">
                   {[true, false].map((v) => (
                     <button key={String(v)} type="button" onClick={() => onUpdate(field, v)}
-                      className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                        formData[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                      className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                        formData[field] === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-white/20 border border-white/20 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                       {v ? 'Yes' : 'No'}
                     </button>
                   ))}
@@ -397,7 +393,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
 
       {/* PAS 63100 — Domestic Fire Safety */}
       {formData.installationType === 'domestic' && (
-        <div className="space-y-4">
+        <div className={cardWideCn}>
           <SectionHeader title="PAS 63100 — Domestic Fire Safety" />
 
           <Sub title="Location Prohibition" />
@@ -409,12 +405,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               ['notInBasementNoAccess', 'Not in basement without exit'],
             ] as const).map(([field, label]) => (
               <div key={field} className="flex items-center justify-between">
-                <Label className="text-white text-xs font-medium">{label}</Label>
+                <Label className="text-[12px] font-medium text-white">{label}</Label>
                 <div className="flex gap-1.5">
                   {[true, false].map((v) => (
                     <button key={String(v)} type="button" onClick={() => onUpdate(field, v)}
-                      className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                        formData[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                      className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                        formData[field] === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-red-500 border border-red-500 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                       {v ? 'Yes' : 'No'}
                     </button>
                   ))}
@@ -424,13 +420,13 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           </div>
 
           <Sub title="Energy Limits" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Per Enclosure (kWh)"><Input type="number" step="0.1" value={formData.energyPerEnclosure} onChange={(e) => onUpdate('energyPerEnclosure', e.target.value)} className={inputCn} placeholder="Max 20 kWh" /></Field>
             <Field label="Total at Premises (kWh)"><Input type="number" step="0.1" value={formData.totalEnergyAtPremises} onChange={(e) => onUpdate('totalEnergyAtPremises', e.target.value)} className={inputCn} placeholder="Max 80 kWh garage / 40 kWh other" /></Field>
           </div>
 
           <Sub title="Distances" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="From Openings (m)"><Input type="number" step="0.1" value={formData.distanceFromOpenings} onChange={(e) => onUpdate('distanceFromOpenings', e.target.value)} className={inputCn} placeholder="Min 1m (outdoor)" /></Field>
             <Field label="From Flammables (m)"><Input type="number" step="0.1" value={formData.distanceFromFlammables} onChange={(e) => onUpdate('distanceFromFlammables', e.target.value)} className={inputCn} placeholder="Min 2m" /></Field>
           </div>
@@ -444,12 +440,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               ['ik10Protection', 'IK10 protection (garage/vehicle area)'],
             ] as const).map(([field, label]) => (
               <div key={field} className="flex items-center justify-between">
-                <Label className="text-white text-xs font-medium">{label}</Label>
+                <Label className="text-[12px] font-medium text-white">{label}</Label>
                 <div className="flex gap-1.5">
                   {[true, false].map((v) => (
                     <button key={String(v)} type="button" onClick={() => onUpdate(field, v)}
-                      className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                        formData[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                      className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                        formData[field] === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-red-500 border border-red-500 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                       {v ? 'Yes' : 'No'}
                     </button>
                   ))}
@@ -459,7 +455,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           </div>
 
           <Sub title="Detection & Ventilation" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Fire Detection Grade">
               <MobileSelectPicker value={formData.fireDetectionGrade} onValueChange={(v) => onUpdate('fireDetectionGrade', v)}
                 options={[{ value: 'D1', label: 'Grade D1' }, { value: 'D2', label: 'Grade D2 (PAS 63100)' }, { value: 'A', label: 'Grade A' }, { value: 'other', label: 'Other' }]}
@@ -478,12 +474,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               ['ventPortMinDistance', 'Vent port ≥1m from openings'],
             ] as const).map(([field, label]) => (
               <div key={field} className="flex items-center justify-between">
-                <Label className="text-white text-xs font-medium">{label}</Label>
+                <Label className="text-[12px] font-medium text-white">{label}</Label>
                 <div className="flex gap-1.5">
                   {[true, false].map((v) => (
                     <button key={String(v)} type="button" onClick={() => onUpdate(field, v)}
-                      className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                        formData[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                      className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                        formData[field] === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-red-500 border border-red-500 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                       {v ? 'Yes' : 'No'}
                     </button>
                   ))}
@@ -495,12 +491,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
       )}
 
       {/* Labelling (Reg 514.15) */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Labelling (Reg 514.15)" />
         <div className="flex items-start justify-between gap-3">
-          <Label className="text-white text-xs font-medium">
+          <Label className="text-[12px] font-medium text-white">
             All required labels fitted &amp; durable
-            <span className="block text-[10px] text-white/50 font-normal mt-0.5">
+            <span className="block text-[11px] text-white/80 font-normal mt-0.5">
               Origin, metering point, main CU, isolation points, battery enclosure, DC isolation &amp;
               emergency procedure
             </span>
@@ -512,7 +508,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
                 type="button"
                 onClick={() => onUpdate('allLabelsFitted', v)}
                 className={cn(
-                  'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+                  'h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
                   formData.allLabelsFitted === v
                     ? v
                       ? 'bg-green-500 text-white'
@@ -527,7 +523,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
         </div>
         {formData.allLabelsFitted === false && (
           <div>
-            <Label className="text-white text-xs mb-1.5 block">Labels not fitted / exceptions</Label>
+            <Label className="text-[12px] font-medium text-white mb-1 block">Labels not fitted / exceptions</Label>
             <Input
               value={formData.labelExceptions}
               onChange={(e) => onUpdate('labelExceptions', e.target.value)}

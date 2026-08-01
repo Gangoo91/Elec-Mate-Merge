@@ -7,44 +7,31 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import { useParams } from 'react-router-dom';
-import { Trash2 as TrashPhoto } from 'lucide-react';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -59,36 +46,21 @@ const TestResultRow = ({
   value: string;
   onChange: (v: string) => void;
 }) => (
-  <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-    <span className="text-sm text-white font-medium flex-1">{label}</span>
+  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 py-3">
+    <span className="text-sm text-white font-medium flex-1 min-w-[140px]">{label}</span>
     <div className="flex gap-1.5">
       {[
-        {
-          val: 'pass',
-          label: 'Pass',
-          active: 'bg-green-500 border-green-500 text-white',
-          inactive: 'border-green-500/30 text-green-400',
-        },
-        {
-          val: 'fail',
-          label: 'Fail',
-          active: 'bg-red-500 border-red-500 text-white',
-          inactive: 'border-red-500/30 text-red-400',
-        },
-        {
-          val: 'na',
-          label: 'N/A',
-          active: 'bg-white/20 border-white/30 text-white',
-          inactive: 'border-white/20 text-white',
-        },
+        { val: 'pass', label: 'Pass', active: 'bg-green-500 border-green-500 text-black' },
+        { val: 'fail', label: 'Fail', active: 'bg-red-500 border-red-500 text-white' },
+        { val: 'na', label: 'N/A', active: 'bg-white/[0.2] border-white/[0.3] text-white' },
       ].map((opt) => (
         <button
           key={opt.val}
           type="button"
           onClick={() => onChange(opt.val)}
           className={cn(
-            'px-3 py-1.5 rounded-lg text-xs font-bold border touch-manipulation active:scale-95 transition-all min-w-[44px]',
-            value === opt.val ? opt.active : opt.inactive + ' bg-transparent'
+            'h-11 min-w-[52px] rounded-lg border px-3 text-xs font-semibold touch-manipulation active:scale-95 transition-all',
+            value === opt.val ? opt.active : 'bg-white/[0.06] border-white/[0.12] text-white'
           )}
         >
           {opt.label}
@@ -101,15 +73,15 @@ const TestResultRow = ({
 interface Props {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  /** Saved report id from the page — useParams stays 'new' after the first
+   *  save (history.replaceState doesn't re-run routing), which broke uploads. */
+  reportId?: string;
 }
 
-const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
-
-export default function FAG7Testing({ formData, onUpdate }: Props) {
+export default function FAG7Testing({ formData, onUpdate, reportId }: Props) {
   const { id } = useParams<{ id: string }>();
   const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
-    reportId: id || 'new', reportType: 'fire-alarm-modification', itemId: 'general-photos',
+    reportId: reportId || id || 'new', reportType: 'fire-alarm-modification', itemId: 'general-photos',
   });
   const haptic = useHaptic();
   const defects: any[] = formData.modificationDefects || [];
@@ -136,60 +108,64 @@ export default function FAG7Testing({ formData, onUpdate }: Props) {
 
 
   return (
-    <div className="space-y-5">
-      {/* Test completion summary */}
-      {(() => {
-        const tests = [
-          formData.modifiedDevicesTested,
-          formData.modifiedWiringTested,
-          formData.interfaceEquipmentVerified,
-          formData.soundLevelsChecked,
-          formData.existingZonesSampled,
-          formData.panelIntegrationVerified,
-          formData.causeEffectVerified,
-          formData.systemIntegrationTest,
-        ];
-        const done = tests.filter((t) => t === 'pass' || t === 'fail' || t === 'na').length;
-        const total = tests.length;
-        if (done === 0)
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Test progress */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Test progress" />
+        {(() => {
+          const tests = [
+            formData.modifiedDevicesTested,
+            formData.modifiedWiringTested,
+            formData.interfaceEquipmentVerified,
+            formData.soundLevelsChecked,
+            formData.existingZonesSampled,
+            formData.panelIntegrationVerified,
+            formData.causeEffectVerified,
+            formData.systemIntegrationTest,
+          ];
+          const done = tests.filter((t) => t === 'pass' || t === 'fail' || t === 'na').length;
+          const total = tests.length;
+          if (done === 0)
+            return (
+              <div className="text-center py-2">
+                <p className="text-sm font-medium text-white">
+                  Complete all modified section tests before signing
+                </p>
+                <p className="text-xs text-white/80 mt-1">
+                  Test the modified parts first, then verify the existing system still works
+                </p>
+              </div>
+            );
+          const pct = Math.round((done / total) * 100);
           return (
-            <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 text-center">
-              <p className="text-sm font-medium text-white">
-                Complete all modified section tests before signing
+            <div className="text-center">
+              <p
+                className={cn(
+                  'text-2xl font-bold',
+                  pct >= 100 ? 'text-green-400' : 'text-elec-yellow'
+                )}
+              >
+                {done} of {total}
               </p>
-              <p className="text-xs text-white mt-1">
-                Test the modified parts first, then verify the existing system still works
-              </p>
+              <p className="text-[12px] text-white/80 mt-0.5">Tests complete ({pct}%)</p>
+              <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden mt-2">
+                <div
+                  className={cn(
+                    'h-full rounded-full transition-all',
+                    pct >= 100 ? 'bg-green-500' : 'bg-elec-yellow'
+                  )}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
             </div>
           );
-        const pct = Math.round((done / total) * 100);
-        return (
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
-            <p
-              className={cn(
-                'text-2xl font-bold',
-                pct >= 100 ? 'text-green-400' : 'text-elec-yellow'
-              )}
-            >
-              {done} of {total}
-            </p>
-            <p className="text-[10px] text-white uppercase">Tests Complete ({pct}%)</p>
-            <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden mt-2">
-              <div
-                className={cn(
-                  'h-full rounded-full transition-all',
-                  pct >= 100 ? 'bg-green-500' : 'bg-elec-yellow'
-                )}
-                style={{ width: `${pct}%` }}
-              />
-            </div>
-          </div>
-        );
-      })()}
+        })()}
+      </div>
 
-      {/* Modified Section Tests */}
-      <Section title="Modified Section Testing" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="space-y-2">
+      {/* Modified section testing */}
+      <div className={cardCn}>
+        <SectionHeader title="Modified section testing" />
+        <div className="divide-y divide-white/[0.08]">
           <TestResultRow
             label="Modified devices functional test"
             value={formData.modifiedDevicesTested || ''}
@@ -211,17 +187,18 @@ export default function FAG7Testing({ formData, onUpdate }: Props) {
             onChange={(v) => onUpdate('soundLevelsChecked', v)}
           />
         </div>
-      </Section>
+      </div>
 
-      {/* Existing System Verification */}
-      <Section title="Existing System Verification" accentColor="from-blue-500/40 to-cyan-400/20">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3">
-          <p className="text-xs text-white leading-relaxed">
+      {/* Existing system verification */}
+      <div className={cardCn}>
+        <SectionHeader title="Existing system verification" />
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-xs text-white/85 leading-relaxed">
             Verify that unmodified parts of the system continue to function correctly after the
             modification.
           </p>
         </div>
-        <div className="space-y-2">
+        <div className="divide-y divide-white/[0.08]">
           <TestResultRow
             label="Unmodified zones sample test"
             value={formData.existingZonesSampled || ''}
@@ -243,62 +220,95 @@ export default function FAG7Testing({ formData, onUpdate }: Props) {
             onChange={(v) => onUpdate('systemIntegrationTest', v)}
           />
         </div>
-      </Section>
+      </div>
 
-      {/* Defects Found */}
-      <Section title="Defects Found" accentColor="from-red-500/40 to-rose-400/20">
+      {/* Defects found */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Defects found" />
         {defects.length === 0 && (
-          <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-4 text-center">
+          <div className="rounded-xl bg-white/[0.05] p-4 text-center">
             <p className="text-sm font-medium text-green-400">No defects found</p>
           </div>
         )}
         {defects.map((d: any, idx: number) => (
-          <div key={d.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-red-400">Defect {idx + 1}</span>
+          <div key={d.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-[13px] font-semibold text-white">Defect {idx + 1}</p>
               <button
+                type="button"
                 onClick={() => removeDefect(d.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="h-11 px-2 text-sm font-medium text-red-400 touch-manipulation active:scale-95"
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <Field label="Description">
-                <Input
-                  value={d.description || ''}
-                  onChange={(e) => updateDefect(d.id, 'description', e.target.value)}
-                  className={inputSmCn}
-                />
-              </Field>
-              <Field label="Severity">
-                <ComboboxCell
-                  value={d.severity || 'non-critical'}
-                  onChange={(v) => updateDefect(d.id, 'severity', v)}
-                  options={[
-                    { value: 'critical', label: 'Critical' },
-                    { value: 'non-critical', label: 'Non-critical' },
-                    { value: 'recommendation', label: 'Recommendation' },
-                  ]}
-                  placeholder="Select..."
-                  className="h-10 text-sm"
-                  allowCustom={false}
-                />
-              </Field>
+            <Field label="Description">
+              <Input
+                value={d.description || ''}
+                onChange={(e) => updateDefect(d.id, 'description', e.target.value)}
+                className={inputCn}
+              />
+            </Field>
+            <Field label="Severity">
+              <ComboboxCell
+                value={d.severity || 'non-critical'}
+                onChange={(v) => updateDefect(d.id, 'severity', v)}
+                options={[
+                  { value: 'critical', label: 'Critical' },
+                  { value: 'non-critical', label: 'Non-critical' },
+                  { value: 'recommendation', label: 'Recommendation' },
+                ]}
+                placeholder="Select..."
+                className="h-11 text-base"
+                allowCustom={false}
+              />
+            </Field>
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+              <span className="text-sm text-white font-medium flex-1 min-w-[140px]">
+                Rectified on site
+              </span>
+              <div className="flex gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => updateDefect(d.id, 'rectified', true)}
+                  className={cn(
+                    'h-11 min-w-[52px] rounded-lg border px-3 text-xs font-semibold touch-manipulation active:scale-95 transition-all',
+                    d.rectified === true
+                      ? 'bg-green-500 border-green-500 text-black'
+                      : 'bg-white/[0.06] border-white/[0.12] text-white'
+                  )}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateDefect(d.id, 'rectified', false)}
+                  className={cn(
+                    'h-11 min-w-[52px] rounded-lg border px-3 text-xs font-semibold touch-manipulation active:scale-95 transition-all',
+                    d.rectified === true
+                      ? 'bg-white/[0.06] border-white/[0.12] text-white'
+                      : 'bg-white/[0.2] border-white/[0.3] text-white'
+                  )}
+                >
+                  No
+                </button>
+              </div>
             </div>
           </div>
         ))}
         <button
+          type="button"
           onClick={addDefect}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-red-500/20 flex items-center justify-center gap-2 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.98]"
+          className="w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] text-sm font-medium text-white touch-manipulation active:scale-[0.98] transition-transform"
         >
-          <Plus className="h-4 w-4" /> Add Defect
+          Add defect
         </button>
-      </Section>
+      </div>
 
-      {/* Test Notes */}
-      <Section title="Test Notes" accentColor="from-amber-500/40 to-yellow-400/20">
-        <Field label="Testing Notes">
+      {/* Test notes */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Test notes" />
+        <Field label="Testing notes">
           <Textarea
             value={formData.testingNotes || ''}
             onChange={(e) => onUpdate('testingNotes', e.target.value)}
@@ -306,24 +316,37 @@ export default function FAG7Testing({ formData, onUpdate }: Props) {
             placeholder="Any observations or issues found during testing..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Photos */}
-      <Section title="Modification Photos" accentColor="from-cyan-500/40 to-blue-400/20">
+      {/* Modification photos */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Modification photos" />
         <InspectionPhotoUpload onPhotoCapture={async (file) => { await uploadPhoto(file); }} isUploading={isUploading} />
         {uploadedPhotos.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {uploadedPhotos.map((p) => (
               <div key={p.id} className="relative rounded-xl overflow-hidden aspect-square">
                 <img src={p.url || p.thumbnailUrl} alt="" className="w-full h-full object-cover" />
-                <button type="button" onClick={() => deletePhoto(p.id)} className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90">
-                  <TrashPhoto className="h-3.5 w-3.5 text-white" />
+                <button
+                  type="button"
+                  onClick={() => deletePhoto(p.id)}
+                  className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90"
+                >
+                  <svg
+                    className="h-3.5 w-3.5 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                  >
+                    <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+                  </svg>
                 </button>
               </div>
             ))}
           </div>
         )}
-      </Section>
+      </div>
     </div>
   );
 }

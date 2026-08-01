@@ -71,9 +71,9 @@ const statusConfig: Record<
     label: 'In Progress',
   },
   completed: {
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    border: 'border-emerald-400/20',
+    bg: 'bg-elec-yellow/10',
+    text: 'text-elec-yellow',
+    border: 'border-elec-yellow/25',
     label: 'Completed',
   },
   cancelled: {
@@ -221,7 +221,7 @@ export function HistoryCard({
       className={cn(
         'relative overflow-hidden rounded-2xl',
         'bg-[#1e1e1e] border',
-        isComplete ? 'border-emerald-500/20' : 'border-white/10',
+        isComplete ? 'border-elec-yellow/25' : 'border-white/10',
         'hover:border-elec-yellow/30 transition-all duration-300',
         'touch-manipulation active:scale-[0.995] transition-transform duration-150'
       )}
@@ -232,11 +232,11 @@ export function HistoryCard({
           <div
             className={cn(
               'p-2.5 rounded-xl border flex-shrink-0',
-              isComplete ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-white/5 border-white/10'
+              isComplete ? 'bg-elec-yellow/10 border-elec-yellow/25' : 'bg-white/5 border-white/10'
             )}
           >
             {isComplete ? (
-              <Check className="h-5 w-5 text-emerald-400" />
+              <Check className="h-5 w-5 text-elec-yellow" />
             ) : (
               <FileText className="h-5 w-5 text-white" />
             )}
@@ -293,7 +293,7 @@ export function HistoryCard({
                 className={cn(
                   'h-full rounded-full',
                   briefing.signedCount === briefing.attendeeCount
-                    ? 'bg-emerald-400'
+                    ? 'bg-elec-yellow'
                     : 'bg-amber-400'
                 )}
               />
@@ -323,7 +323,7 @@ export function HistoryCard({
                 e.stopPropagation();
                 onShare();
               }}
-              className="flex-1 h-11 text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-400/10 border border-emerald-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
+              className="flex-1 h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Share2 className="h-4 w-4 mr-1.5" />
               Share
@@ -412,7 +412,7 @@ export function PendingCard({ briefing, onContinue, index = 0 }: PendingCardProp
         {onContinue && (
           <Button
             onClick={onContinue}
-            className="w-full h-11 bg-emerald-500 text-black hover:bg-emerald-400 touch-manipulation active:scale-[0.97] transition-all duration-150"
+            className="w-full h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.97] transition-all duration-150"
           >
             <Play className="h-4 w-4 mr-1.5" />
             Continue Briefing

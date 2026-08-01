@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { Zap, CheckCircle2 } from 'lucide-react';
+import { getZsCheck } from './zs-compliance';
 
 interface AtAGlanceSummaryProps {
   summary: {
@@ -77,21 +78,13 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
     ? `${(circuit.calculations?.voltageDrop?.percent ?? 0).toFixed(2)}% ${circuit.calculations?.voltageDrop?.compliant ? '✓' : '✗'} (Limit: ${circuit.calculations?.voltageDrop?.limit ?? 5}%)`
     : summary?.voltageDrop || 'N/A';
 
-  const safeZs = circuit
-    ? (() => {
-        const zsValue = circuit.expectedTests?.zs?.expected ?? circuit.calculations.zs;
-        const maxZs = circuit.expectedTests?.zs?.maxPermitted ?? circuit.calculations.maxZs;
-        const compliant = circuit.expectedTests?.zs?.compliant ?? zsValue <= maxZs;
-        return `${zsValue.toFixed(3)}Ω ${compliant ? '✓' : '✗'} (Max: ${maxZs.toFixed(3)}Ω)`;
-      })()
-    : summary?.zs || 'N/A';
+  const zsCheck = getZsCheck(circuit);
+  const safeZs = circuit ? zsCheck.label : summary?.zs || 'N/A';
 
-  // Safety-critical: always check Zs vs maxZs directly — if Zs > maxZs,
-  // the circuit cannot achieve 0.4 s disconnection regardless of other flags
+  // ELE-1426 — a derived or stored Zs compared against a real limit. An
+  // uncalculated value never satisfies this.
   const zsDirectCheck = circuit
-    ? (circuit.calculations?.maxZs ?? 0) > 0
-      ? (circuit.calculations?.zs ?? 0) <= circuit.calculations.maxZs
-      : true
+    ? zsCheck.state !== 'fail' && zsCheck.state !== 'not-calculated'
     : true;
   const safeComplianceTick = circuit
     ? (circuit.calculations?.voltageDrop?.compliant ?? true) &&

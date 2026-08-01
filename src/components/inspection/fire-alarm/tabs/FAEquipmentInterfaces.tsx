@@ -9,53 +9,37 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { InterfaceEquipment, AspiratingUnit } from '@/types/fire-alarm';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
 const checkboxCn =
   'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
 
-const Section = ({
-  title,
-  accentColor,
-  count,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  count?: number;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-        {title}
-        {count !== undefined && (
-          <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-            {count}
-          </span>
-        )}
-      </h2>
-    </div>
-    {children}
-  </div>
+const addButtonCn =
+  'w-full h-11 rounded-xl border border-dashed border-white/[0.25] text-sm font-medium text-elec-yellow touch-manipulation active:scale-[0.98] transition-transform';
+
+const SectionHeader = ({ title, count }: { title: string; count?: number }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+    {title}
+    {count !== undefined && <span className="ml-2 font-normal text-white/80">({count})</span>}
+  </h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -168,225 +152,205 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
     );
 
   return (
-    <div className="space-y-5">
-      {/* Interface Equipment */}
-      <Section
-        title="Interface Equipment"
-        accentColor="from-purple-500/40 to-indigo-400/20"
-        count={interfaces.length}
-      >
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Interface equipment */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Interface equipment" count={interfaces.length} />
         {interfaces.map((iface, idx) => (
-          <div key={iface.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-purple-400">
+          <div key={iface.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-white">
                 Interface {idx + 1} of {interfaces.length}
-              </span>
+              </p>
               <button
+                type="button"
                 onClick={() => removeInterface(iface.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="h-11 px-2 -mr-2 text-sm font-medium text-red-400 touch-manipulation active:opacity-70"
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <Field label="Type">
-                <ComboboxCell
-                  value={iface.type}
-                  onChange={(v) => updateInterface(iface.id, 'type', v)}
-                  options={interfaceTypeOptions}
-                  placeholder="Select interface type..."
-                  className="h-12 text-base"
-                />
-              </Field>
-              <Field label="Location">
-                <Input
-                  value={iface.location}
-                  onChange={(e) => updateInterface(iface.id, 'location', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="e.g. Main entrance"
-                />
-              </Field>
-              <Field label="Interface Method">
-                <ComboboxCell
-                  value={iface.interfaceMethod}
-                  onChange={(v) => updateInterface(iface.id, 'interfaceMethod', v)}
-                  options={interfaceMethodOptions}
-                  placeholder="Select method..."
-                  className="h-12 text-base"
-                />
-              </Field>
-              <Field label="Details">
-                <Input
-                  value={iface.details || ''}
-                  onChange={(e) => updateInterface(iface.id, 'details', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="Additional notes..."
-                />
-              </Field>
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  checked={iface.tested || false}
-                  onCheckedChange={(v) => updateInterface(iface.id, 'tested', v)}
-                  className={checkboxCn}
-                />
-                <Label className="text-sm text-white">Tested and verified</Label>
-              </div>
-            </div>
+            <Field label="Type">
+              <ComboboxCell
+                value={iface.type}
+                onChange={(v) => updateInterface(iface.id, 'type', v)}
+                options={interfaceTypeOptions}
+                placeholder="Select interface type..."
+                className="h-11 text-base"
+              />
+            </Field>
+            <Field label="Location">
+              <Input
+                value={iface.location}
+                onChange={(e) => updateInterface(iface.id, 'location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Main entrance"
+              />
+            </Field>
+            <Field label="Interface method">
+              <ComboboxCell
+                value={iface.interfaceMethod}
+                onChange={(v) => updateInterface(iface.id, 'interfaceMethod', v)}
+                options={interfaceMethodOptions}
+                placeholder="Select method..."
+                className="h-11 text-base"
+              />
+            </Field>
+            <Field label="Details">
+              <Input
+                value={iface.details || ''}
+                onChange={(e) => updateInterface(iface.id, 'details', e.target.value)}
+                className={inputCn}
+                placeholder="Additional notes..."
+              />
+            </Field>
+            <label className="flex min-h-11 items-center gap-3 cursor-pointer touch-manipulation">
+              <Checkbox
+                checked={iface.tested || false}
+                onCheckedChange={(v) => updateInterface(iface.id, 'tested', v)}
+                className={checkboxCn}
+              />
+              <span className="text-sm text-white">Tested and verified</span>
+            </label>
           </div>
         ))}
-        <button
-          onClick={addInterface}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-purple-500/20 flex items-center justify-center gap-2 text-sm font-medium text-purple-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Interface
+        <button type="button" onClick={addInterface} className={addButtonCn}>
+          Add interface
         </button>
-      </Section>
+      </div>
 
-      {/* Repeater Panels */}
-      <Section
-        title="Repeater Panels"
-        accentColor="from-cyan-500/40 to-blue-400/20"
-        count={repeaters.length}
-      >
+      {/* Repeater panels */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Repeater panels" count={repeaters.length} />
         {repeaters.map((rep: any, idx: number) => (
-          <div key={rep.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-cyan-400">
+          <div key={rep.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-white">
                 Repeater {idx + 1} of {repeaters.length}
-              </span>
+              </p>
               <button
+                type="button"
                 onClick={() => removeRepeater(rep.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="h-11 px-2 -mr-2 text-sm font-medium text-red-400 touch-manipulation active:opacity-70"
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <Field label="Location">
+            <Field label="Location">
+              <Input
+                value={rep.location}
+                onChange={(e) => updateRepeater(rep.id, 'location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Reception area"
+              />
+            </Field>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Make">
                 <Input
-                  value={rep.location}
-                  onChange={(e) => updateRepeater(rep.id, 'location', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="e.g. Reception area"
+                  value={rep.make}
+                  onChange={(e) => updateRepeater(rep.id, 'make', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Advanced"
                 />
               </Field>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Make">
-                  <Input
-                    value={rep.make}
-                    onChange={(e) => updateRepeater(rep.id, 'make', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Advanced"
-                  />
-                </Field>
-                <Field label="Model">
-                  <Input
-                    value={rep.model}
-                    onChange={(e) => updateRepeater(rep.id, 'model', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Ax-Rep"
-                  />
-                </Field>
-              </div>
+              <Field label="Model">
+                <Input
+                  value={rep.model}
+                  onChange={(e) => updateRepeater(rep.id, 'model', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Ax-Rep"
+                />
+              </Field>
             </div>
           </div>
         ))}
-        <button
-          onClick={addRepeater}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-cyan-500/20 flex items-center justify-center gap-2 text-sm font-medium text-cyan-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Repeater Panel
+        <button type="button" onClick={addRepeater} className={addButtonCn}>
+          Add repeater panel
         </button>
-      </Section>
+      </div>
 
-      {/* Aspirating System Details */}
-      <Section
-        title="Aspirating System Details"
-        accentColor="from-rose-500/40 to-pink-400/20"
-        count={aspirating.length}
-      >
+      {/* Aspirating system details */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Aspirating system details" count={aspirating.length} />
         {aspirating.map((unit, idx) => (
-          <div key={unit.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-rose-400">
+          <div key={unit.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-white">
                 Unit {idx + 1} of {aspirating.length}
-              </span>
+              </p>
               <button
+                type="button"
                 onClick={() => removeAspirating(unit.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="h-11 px-2 -mr-2 text-sm font-medium text-red-400 touch-manipulation active:opacity-70"
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Make">
-                  <Input
-                    value={unit.make}
-                    onChange={(e) => updateAspirating(unit.id, 'make', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Xtralis"
-                  />
-                </Field>
-                <Field label="Model">
-                  <Input
-                    value={unit.model}
-                    onChange={(e) => updateAspirating(unit.id, 'model', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. VESDA-E VEA"
-                  />
-                </Field>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                <Field label="Sample Pts">
-                  <Input
-                    type="number"
-                    inputMode="numeric"
-                    value={unit.samplingPoints || ''}
-                    onChange={(e) =>
-                      updateAspirating(unit.id, 'samplingPoints', parseInt(e.target.value) || 0)
-                    }
-                    className={inputSmCn}
-                  />
-                </Field>
-                <Field label="Pipe (m)">
-                  <Input
-                    value={unit.pipeLength}
-                    onChange={(e) => updateAspirating(unit.id, 'pipeLength', e.target.value)}
-                    className={inputSmCn}
-                  />
-                </Field>
-                <Field label="Transport (s)">
-                  <Input
-                    value={unit.transportTime}
-                    onChange={(e) => updateAspirating(unit.id, 'transportTime', e.target.value)}
-                    className={inputSmCn}
-                  />
-                </Field>
-              </div>
-              <Field label="Sensitivity Class">
-                <ComboboxCell
-                  value={unit.sensitivityLevel}
-                  onChange={(v) => updateAspirating(unit.id, 'sensitivityLevel', v)}
-                  options={sensitivityOptions}
-                  placeholder="Select class..."
-                  className="h-12 text-base"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Make">
+                <Input
+                  value={unit.make}
+                  onChange={(e) => updateAspirating(unit.id, 'make', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Xtralis"
+                />
+              </Field>
+              <Field label="Model">
+                <Input
+                  value={unit.model}
+                  onChange={(e) => updateAspirating(unit.id, 'model', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. VESDA-E VEA"
                 />
               </Field>
             </div>
+            <div className="grid grid-cols-3 gap-x-3 gap-y-4">
+              <Field label="Sample pts">
+                <Input
+                  type="number"
+                  inputMode="numeric"
+                  value={unit.samplingPoints || ''}
+                  onChange={(e) =>
+                    updateAspirating(unit.id, 'samplingPoints', parseInt(e.target.value) || 0)
+                  }
+                  className={inputCn}
+                />
+              </Field>
+              <Field label="Pipe (m)">
+                <Input
+                  value={unit.pipeLength}
+                  onChange={(e) => updateAspirating(unit.id, 'pipeLength', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+              <Field label="Transport (s)">
+                <Input
+                  value={unit.transportTime}
+                  onChange={(e) => updateAspirating(unit.id, 'transportTime', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+            </div>
+            <Field label="Sensitivity class">
+              <ComboboxCell
+                value={unit.sensitivityLevel}
+                onChange={(v) => updateAspirating(unit.id, 'sensitivityLevel', v)}
+                options={sensitivityOptions}
+                placeholder="Select class..."
+                className="h-11 text-base"
+              />
+            </Field>
           </div>
         ))}
-        <button
-          onClick={addAspirating}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-rose-500/20 flex items-center justify-center gap-2 text-sm font-medium text-rose-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Aspirating Unit
+        <button type="button" onClick={addAspirating} className={addButtonCn}>
+          Add aspirating unit
         </button>
-      </Section>
+      </div>
 
-      {/* Loop Details */}
-      <Section title="Loop / Addressable Details" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {/* Loop details */}
+      <div className={cardCn}>
+        <SectionHeader title="Loop / addressable details" />
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Loops">
             <Input
               type="number"
@@ -396,7 +360,7 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Devices/Loop">
+          <Field label="Devices/loop">
             <Input
               type="number"
               inputMode="numeric"
@@ -405,7 +369,7 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Total Devices">
+          <Field label="Total devices">
             <Input
               type="number"
               inputMode="numeric"
@@ -414,7 +378,7 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Max Capacity">
+          <Field label="Max capacity">
             <Input
               type="number"
               inputMode="numeric"
@@ -424,10 +388,11 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
       {/* Documentation */}
-      <Section title="Documentation" accentColor="from-white/20 to-white/5">
+      <div className={cardCn}>
+        <SectionHeader title="Documentation" />
         <div className="space-y-2">
           {[
             { field: 'asFittedDrawingsProvided', label: 'As-fitted drawings produced' },
@@ -438,61 +403,37 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
               type="button"
               onClick={() => onUpdate(field, !formData[field])}
               className={cn(
-                'w-full text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all flex items-center gap-3',
+                'w-full min-h-11 rounded-xl border px-4 py-3 text-left text-sm touch-manipulation active:scale-[0.98] transition-all',
                 formData[field]
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-white/[0.03] border-white/[0.06]'
+                  ? 'bg-green-500 border-green-500 text-black font-semibold'
+                  : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
               )}
             >
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                  formData[field] ? 'bg-green-500 border-green-500' : 'border-white/30'
-                )}
-              >
-                {formData[field] && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <span
-                className={cn(
-                  'text-sm font-medium',
-                  formData[field] ? 'text-green-400' : 'text-white'
-                )}
-              >
-                {label}
-              </span>
+              {label}
             </button>
           ))}
         </div>
-        <Field label="Variations from Design">
+        <Field label="Variations from design">
           <Textarea
             value={formData.variationsFromDesign || ''}
             onChange={(e) => onUpdate('variationsFromDesign', e.target.value)}
-            className="touch-manipulation text-base min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500"
+            className={textareaCn}
             placeholder="Any deviations from the G1 design specification..."
           />
         </Field>
-        <Field label="Design Document Reference">
+        <Field label="Design document reference">
           <Input
             value={formData.designDocReference || ''}
             onChange={(e) => onUpdate('designDocReference', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Handover Checklist */}
-      <Section title="Handover Checklist" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="space-y-2">
+      {/* Handover checklist */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Handover checklist" />
+        <div className="space-y-2 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-2">
           {[
             { field: 'handoverAsBuiltDrawings', label: 'As-built drawings provided' },
             { field: 'handoverOperatingInstructions', label: 'Operating instructions provided' },
@@ -505,42 +446,17 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
               type="button"
               onClick={() => onUpdate(field, !formData[field])}
               className={cn(
-                'w-full text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all flex items-center gap-3',
+                'w-full min-h-11 rounded-xl border px-4 py-3 text-left text-sm touch-manipulation active:scale-[0.98] transition-all',
                 formData[field]
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-white/[0.03] border-white/[0.06]'
+                  ? 'bg-green-500 border-green-500 text-black font-semibold'
+                  : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
               )}
             >
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                  formData[field] ? 'bg-green-500 border-green-500' : 'border-white/30'
-                )}
-              >
-                {formData[field] && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <span
-                className={cn(
-                  'text-sm font-medium',
-                  formData[field] ? 'text-green-400' : 'text-white'
-                )}
-              >
-                {label}
-              </span>
+              {label}
             </button>
           ))}
         </div>
-      </Section>
+      </div>
     </div>
   );
 }

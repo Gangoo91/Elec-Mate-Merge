@@ -428,7 +428,7 @@ export default function AllPhotosTab() {
                 onClick={() => setGridSize(s)}
                 aria-label={`${s === 'S' ? 'Small' : s === 'M' ? 'Medium' : 'Large'} thumbnails`}
                 className={`h-10 w-8 rounded-lg text-xs font-semibold touch-manipulation transition-colors ${
-                  gridSize === s ? 'bg-elec-yellow text-black' : 'text-white/70 active:bg-white/10'
+                  gridSize === s ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/10'
                 }`}
               >
                 {s}

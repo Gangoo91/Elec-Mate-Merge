@@ -16,17 +16,7 @@ import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Search,
-  Plus,
-  Upload,
-  Download,
-  ArrowLeft,
-  Loader2,
-  X,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,7 +28,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { cn } from '@/lib/utils';
-import { Eyebrow, StatStrip, Pill, Dot } from '@/components/college/primitives';
 import { CustomerMap } from '@/components/customers/CustomerMap';
 import { useUpcomingReminders } from '@/hooks/useUpcomingReminders';
 
@@ -305,7 +294,7 @@ export default function CustomersPage() {
     return Array.from(map.entries()).sort((a, b) => b[1] - a[1]);
   }, [customers]);
 
-  // KPI data for the StatStrip.
+  // KPI data for the stat cards.
   const kpis = useMemo(() => {
     const withCerts = customers.filter((c) => (c.certificateCount || 0) > 0).length;
     const now = new Date();
@@ -449,75 +438,59 @@ export default function CustomersPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
+      {/* Page header */}
+      <div className="px-4 pt-3 pb-1 lg:px-8">
+        <div className="mx-auto lg:max-w-[1600px]">
           {showSearch ? (
             <div className="flex h-11 items-center gap-2">
-              <div className="relative flex-1">
-                {!searchTerm && (
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
-                )}
-                <Input
-                  placeholder="Search customers…"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn(
-                    'h-11 touch-manipulation rounded-xl border-white/[0.08] bg-white/[0.06] pr-9 text-base text-white placeholder:text-white/30',
-                    !searchTerm && 'pl-9'
-                  )}
-                  autoFocus
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm('')}
-                    className="absolute right-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full bg-white/[0.1] touch-manipulation"
-                  >
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                )}
-              </div>
+              <Input
+                placeholder="Search customers…"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.08] bg-white/[0.06] px-4 text-base text-white placeholder:text-white/30"
+                autoFocus
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="h-11 shrink-0 px-2 text-[13px] font-medium text-white/70 transition-colors hover:text-white touch-manipulation"
+                >
+                  Clear
+                </button>
+              )}
               <button
                 onClick={() => {
                   setShowSearch(false);
                   setSearchTerm('');
                 }}
-                className="px-2 text-xs font-medium text-elec-yellow touch-manipulation"
+                className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow touch-manipulation"
               >
                 Cancel
               </button>
             </div>
           ) : (
             <div className="flex h-11 items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate(-1)}
-                className="h-9 w-9 shrink-0 rounded-lg text-white hover:bg-white/10 hover:text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="min-w-0 flex-1 truncate text-sm font-bold uppercase tracking-wide text-white">
-                Customers
-                <span className="ml-1.5 text-xs font-normal normal-case tracking-normal text-white/30">
-                  {totalCount || customers.length}
-                </span>
-              </h1>
               <button
-                onClick={() => setShowSearch(true)}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/10 hover:text-white touch-manipulation active:scale-[0.98]"
+                onClick={() => navigate(-1)}
+                className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
               >
-                <Search className="h-4 w-4" />
+                Back
               </button>
-              {/* Quick-create dropdown */}
-              <div ref={quickCreateRef} className="relative">
+              <div className="ml-auto flex items-center gap-2">
                 <button
-                  onClick={() => setShowQuickCreateMenu((v) => !v)}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-elec-yellow touch-manipulation active:scale-[0.98]"
-                  aria-label="Add customer"
+                  onClick={() => setShowSearch(true)}
+                  className="h-11 px-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
                 >
-                  <Plus className="h-4 w-4 text-black" />
+                  Search
                 </button>
+                {/* Quick-create dropdown */}
+                <div ref={quickCreateRef} className="relative">
+                  <button
+                    onClick={() => setShowQuickCreateMenu((v) => !v)}
+                    className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                  >
+                    New
+                  </button>
                 <AnimatePresence>
                   {showQuickCreateMenu && (
                     <motion.div
@@ -556,11 +529,11 @@ export default function CustomersPage() {
                     </motion.div>
                   )}
                 </AnimatePresence>
+                </div>
               </div>
             </div>
           )}
         </div>
-        <div className="h-px bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <PullToRefresh onRefresh={refreshCustomers} isRefreshing={isLoading}>
@@ -568,33 +541,45 @@ export default function CustomersPage() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="mx-auto max-w-6xl space-y-6 px-4 py-5 sm:space-y-8 sm:py-6"
+          className="mx-auto space-y-5 px-4 py-4 sm:space-y-6 sm:py-5 lg:max-w-[1600px] lg:px-8"
         >
-          {/* Editorial hero strip */}
-          {customers.length > 0 && (
-            <motion.div variants={itemVariants}>
-              <Eyebrow>BUSINESS HUB · CUSTOMERS</Eyebrow>
-              <h2 className="mt-1.5 text-[28px] font-semibold leading-tight tracking-tight text-white sm:text-[34px]">
-                Every customer. Every job.
-              </h2>
-              <p className="mt-2 max-w-[42rem] text-[13px] leading-relaxed text-white/65 sm:text-[14px]">
-                Tap to call, email or open the full file. Filter by who needs a follow-up.
-              </p>
-            </motion.div>
-          )}
+          {/* Title */}
+          <motion.div variants={itemVariants}>
+            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">
+              Customers
+              <span className="ml-2 align-baseline text-[15px] font-semibold tabular-nums text-white/40">
+                {totalCount || customers.length}
+              </span>
+            </h1>
+            <p className="mt-1 text-[13px] text-white/50">
+              Every customer, every job — call, email or open the full file.
+            </p>
+          </motion.div>
 
-          {/* StatStrip */}
+          {/* KPI cards */}
           {customers.length > 0 && (
-            <motion.div variants={itemVariants}>
-              <StatStrip
-                columns={4}
-                stats={[
-                  { label: 'Total', value: totalCount || customers.length, accent: true },
-                  { label: 'With certs', value: kpis.withCerts, tone: 'emerald' },
-                  { label: 'This month', value: kpis.thisMonth, tone: 'blue' },
-                  { label: 'Reliable', value: kpis.reliable, tone: 'purple' },
-                ]}
-              />
+            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+              {[
+                { label: 'Total customers', value: totalCount || customers.length, volt: true },
+                { label: 'With certificates', value: kpis.withCerts, volt: false },
+                { label: 'Added this month', value: kpis.thisMonth, volt: false },
+                { label: 'Reliable payers', value: kpis.reliable, volt: false },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4"
+                >
+                  <div
+                    className={cn(
+                      'text-2xl font-bold tabular-nums tracking-tight',
+                      s.volt ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {s.value}
+                  </div>
+                  <div className="mt-0.5 text-[12px] text-white/55">{s.label}</div>
+                </div>
+              ))}
             </motion.div>
           )}
 
@@ -602,15 +587,15 @@ export default function CustomersPage() {
           {!showSearch && customers.length > 0 && (
             <motion.div variants={itemVariants} className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center gap-1 rounded-full border border-white/[0.06] bg-[hsl(0_0%_12%)] p-1">
+                <div className="flex h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
                   {sortTabs.map((tab) => (
                     <button
                       key={tab.value}
                       onClick={() => handleSortChange(tab.value)}
                       className={cn(
-                        'h-8 whitespace-nowrap rounded-full px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
+                        'h-9 whitespace-nowrap rounded-full px-4 text-[13px] font-medium transition-colors touch-manipulation',
                         sortField === tab.value
-                          ? 'bg-elec-yellow text-black'
+                          ? 'bg-elec-yellow font-semibold text-black'
                           : 'text-white hover:bg-white/[0.04]'
                       )}
                     >
@@ -624,7 +609,7 @@ export default function CustomersPage() {
                   ))}
                 </div>
                 {/* Status filter */}
-                <div className="flex h-9 items-center gap-0.5 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-0.5">
+                <div className="flex h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
                   {(
                     [
                       { value: null, label: 'All' },
@@ -637,9 +622,9 @@ export default function CustomersPage() {
                       key={opt.label}
                       onClick={() => setStatusFilter(opt.value)}
                       className={cn(
-                        'h-8 rounded-full px-3 text-[12px] font-medium transition-colors touch-manipulation',
+                        'h-9 rounded-full px-3.5 text-[13px] font-medium transition-colors touch-manipulation',
                         statusFilter === opt.value
-                          ? 'bg-elec-yellow text-black'
+                          ? 'bg-elec-yellow font-semibold text-black'
                           : 'text-white/65 hover:text-white'
                       )}
                     >
@@ -650,19 +635,18 @@ export default function CustomersPage() {
                 <button
                   onClick={() => setShowFollowUpOnly((v) => !v)}
                   className={cn(
-                    'inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[12px] font-medium transition-colors touch-manipulation',
+                    'inline-flex h-11 items-center gap-1.5 rounded-full border px-4 text-[13px] font-medium transition-colors touch-manipulation',
                     showFollowUpOnly
-                      ? 'border-amber-500/40 bg-amber-500/[0.12] text-amber-400'
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
                       : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.07]'
                   )}
                 >
-                  <Dot tone={showFollowUpOnly ? 'amber' : 'yellow'} />
                   Needs follow-up
                   {followUpCount > 0 && (
                     <span
                       className={cn(
                         'ml-1 tabular-nums',
-                        showFollowUpOnly ? 'text-amber-400/80' : 'text-white/55'
+                        showFollowUpOnly ? 'text-black/70' : 'text-white/55'
                       )}
                     >
                       {followUpCount}
@@ -671,13 +655,13 @@ export default function CustomersPage() {
                 </button>
                 <div className="ml-auto flex items-center gap-2">
                   {/* View toggle */}
-                  <div className="flex h-9 items-center gap-0.5 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-0.5">
+                  <div className="flex h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
                     <button
                       onClick={() => setViewMode('grid')}
                       className={cn(
-                        'h-8 rounded-full px-3 text-[12px] font-medium transition-colors touch-manipulation',
+                        'h-9 rounded-full px-3.5 text-[13px] font-medium transition-colors touch-manipulation',
                         viewMode === 'grid'
-                          ? 'bg-elec-yellow text-black'
+                          ? 'bg-elec-yellow font-semibold text-black'
                           : 'text-white/65 hover:text-white'
                       )}
                     >
@@ -686,9 +670,9 @@ export default function CustomersPage() {
                     <button
                       onClick={() => setViewMode('map')}
                       className={cn(
-                        'h-8 rounded-full px-3 text-[12px] font-medium transition-colors touch-manipulation',
+                        'h-9 rounded-full px-3.5 text-[13px] font-medium transition-colors touch-manipulation',
                         viewMode === 'map'
-                          ? 'bg-elec-yellow text-black'
+                          ? 'bg-elec-yellow font-semibold text-black'
                           : 'text-white/65 hover:text-white'
                       )}
                     >
@@ -698,18 +682,16 @@ export default function CustomersPage() {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={openContactsImport}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.06] touch-manipulation active:scale-[0.97]"
-                      aria-label="Import customers"
+                      className="h-11 px-2.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
                     >
-                      <Upload className="h-4 w-4" />
+                      Import
                     </button>
                     <button
                       onClick={exportCustomers}
                       disabled={customers.length === 0}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.06] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
-                      aria-label="Export customers"
+                      className="h-11 px-2.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white disabled:opacity-40 touch-manipulation"
                     >
-                      <Download className="h-4 w-4" />
+                      Export
                     </button>
                   </div>
                 </div>
@@ -717,9 +699,7 @@ export default function CustomersPage() {
               {/* Tag filter chips */}
               {tagCounts.length > 0 && (
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45">
-                    Tags
-                  </span>
+                  <span className="mr-0.5 text-[12px] font-medium text-white/45">Tags</span>
                   {tagCounts.slice(0, 10).map(([tag, count]) => {
                     const active = activeTagFilter === tag;
                     return (
@@ -727,18 +707,15 @@ export default function CustomersPage() {
                         key={tag}
                         onClick={() => setActiveTagFilter(active ? null : tag)}
                         className={cn(
-                          'inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-[11.5px] font-medium transition-colors touch-manipulation',
+                          'inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-[12.5px] font-medium transition-colors touch-manipulation',
                           active
-                            ? 'border-elec-yellow/40 bg-elec-yellow/[0.12] text-elec-yellow'
-                            : 'border-white/[0.08] bg-white/[0.04] text-white/75 hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow'
+                            ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                            : 'border-white/[0.08] bg-white/[0.04] text-white/75 hover:border-white/[0.2] hover:text-white'
                         )}
                       >
                         {tag}
                         <span
-                          className={cn(
-                            'tabular-nums',
-                            active ? 'text-elec-yellow/70' : 'text-white/45'
-                          )}
+                          className={cn('tabular-nums', active ? 'text-black/70' : 'text-white/45')}
                         >
                           {count}
                         </span>
@@ -748,9 +725,9 @@ export default function CustomersPage() {
                   {activeTagFilter && (
                     <button
                       onClick={() => setActiveTagFilter(null)}
-                      className="text-[11.5px] font-medium text-white/55 transition-colors hover:text-white touch-manipulation"
+                      className="h-9 px-2 text-[12.5px] font-medium text-white/55 transition-colors hover:text-white touch-manipulation"
                     >
-                      Clear ✕
+                      Clear
                     </button>
                   )}
                 </div>
@@ -762,26 +739,26 @@ export default function CustomersPage() {
                 </p>
               )}
               {/* Secondary action row */}
-              <div className="flex flex-wrap items-center gap-2 text-[12px]">
+              <div className="flex flex-wrap items-center gap-2">
                 {!selectionMode ? (
                   <button
                     onClick={() => enterSelectionMode()}
-                    className="text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                    className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
                   >
-                    Select multiple →
+                    Select multiple
                   </button>
                 ) : (
                   <>
                     <button
                       onClick={selectAllVisible}
-                      className="text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                      className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
                     >
                       Select all ({filteredCustomers.length})
                     </button>
                     <span className="text-white/30">·</span>
                     <button
                       onClick={exitSelectionMode}
-                      className="text-white/65 hover:text-white transition-colors touch-manipulation"
+                      className="flex h-11 items-center text-[13px] font-medium text-white/65 transition-colors hover:text-white touch-manipulation"
                     >
                       Cancel
                     </button>
@@ -794,13 +771,10 @@ export default function CustomersPage() {
           {/* Upcoming reminders banner */}
           {!selectionMode && !remindersDismissed && upcomingReminders.length > 0 && (
             <motion.div variants={itemVariants}>
-              <div className="flex flex-col items-start gap-3 rounded-2xl border border-elec-yellow/25 bg-gradient-to-r from-elec-yellow/[0.06] to-transparent p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col items-start gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-3">
-                  <Dot tone="yellow" className="mt-[7px] !h-2 !w-2" />
                   <div>
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                      Follow-ups due
-                    </div>
+                    <div className="text-[13px] font-semibold text-elec-yellow">Follow-ups due</div>
                     <div className="mt-1 text-[14px] font-semibold text-white">
                       {upcomingReminders.filter((r) => r.isOverdue).length > 0 && (
                         <>
@@ -832,13 +806,13 @@ export default function CustomersPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => navigate(`/customers/${upcomingReminders[0].customerId}`)}
-                    className="flex h-9 items-center rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
+                    className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
                   >
-                    Open first →
+                    Open first
                   </button>
                   <button
                     onClick={() => setRemindersDismissed(true)}
-                    className="flex h-8 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                    className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
                   >
                     Dismiss
                   </button>
@@ -850,11 +824,10 @@ export default function CustomersPage() {
           {/* Duplicate detection banner */}
           {!selectionMode && !duplicatesDismissed && duplicateIds.size > 1 && (
             <motion.div variants={itemVariants}>
-              <div className="flex flex-col items-start gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] to-transparent p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col items-start gap-3 rounded-2xl border border-amber-500/25 bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-3">
-                  <Dot tone="amber" className="mt-[7px] !h-2 !w-2" />
                   <div>
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
+                    <div className="text-[13px] font-semibold text-amber-300">
                       Possible duplicates
                     </div>
                     <div className="mt-1 text-[14px] font-semibold text-white">
@@ -868,13 +841,13 @@ export default function CustomersPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowMergeSheet(true)}
-                    className="flex h-8 items-center rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
+                    className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[12.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
                   >
                     Review &amp; merge
                   </button>
                   <button
                     onClick={() => setDuplicatesDismissed(true)}
-                    className="flex h-8 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                    className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
                   >
                     Dismiss
                   </button>
@@ -909,7 +882,6 @@ export default function CustomersPage() {
                         onClick={() => setShowAddDialog(true)}
                         className="h-12 w-full rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
                       >
-                        <Plus className="mr-2 h-4 w-4" />
                         Add first customer
                       </Button>
                       <Button
@@ -917,7 +889,6 @@ export default function CustomersPage() {
                         variant="outline"
                         className="h-12 w-full rounded-xl border-white/[0.08] bg-white/[0.04] font-medium text-white touch-manipulation active:scale-[0.98]"
                       >
-                        <Upload className="mr-2 h-4 w-4" />
                         Import from contacts
                       </Button>
                     </div>
@@ -946,7 +917,7 @@ export default function CustomersPage() {
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4">
+                <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4 xl:grid-cols-3">
                   <AnimatePresence mode="popLayout">
                     {filteredCustomers.map((customer) => (
                       <motion.div
@@ -988,19 +959,19 @@ export default function CustomersPage() {
                     <button
                       onClick={prevPage}
                       disabled={!hasPrevPage}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-colors hover:bg-white/[0.07] disabled:opacity-30 touch-manipulation"
+                      className="flex h-11 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.07] disabled:opacity-30 touch-manipulation"
                     >
-                      <ChevronLeft className="h-4 w-4 text-white" />
+                      Prev
                     </button>
-                    <span className="min-w-[60px] text-center text-sm font-medium text-white">
+                    <span className="min-w-[60px] text-center text-sm font-medium tabular-nums text-white">
                       {currentPage} / {totalPages}
                     </span>
                     <button
                       onClick={nextPage}
                       disabled={!hasNextPage}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-colors hover:bg-white/[0.07] disabled:opacity-30 touch-manipulation"
+                      className="flex h-11 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.07] disabled:opacity-30 touch-manipulation"
                     >
-                      <ChevronRight className="h-4 w-4 text-white" />
+                      Next
                     </button>
                   </div>
                 </div>
@@ -1066,10 +1037,9 @@ export default function CustomersPage() {
           >
             <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] px-3 py-2.5 shadow-2xl backdrop-blur-xl sm:px-4 sm:py-3">
               <div className="flex items-center gap-2">
-                <Pill tone="yellow">
-                  <Dot tone="yellow" className="mr-1.5" />
+                <span className="text-[13px] font-semibold tabular-nums text-white">
                   {selectedIds.size} selected
-                </Pill>
+                </span>
               </div>
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <button
@@ -1139,9 +1109,7 @@ export default function CustomersPage() {
               className="h-11 w-full rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-4 text-[14px] text-white placeholder:text-white/35 focus:border-elec-yellow/40 focus:outline-none"
             />
             <div className="flex flex-wrap gap-1.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45">
-                Quick pick
-              </span>
+              <span className="text-[12px] font-medium text-white/45">Quick pick</span>
               {['Residential', 'Commercial', 'Landlord', 'Letting Agent', 'Repeat'].map((t) => (
                 <button
                   key={t}
@@ -1153,7 +1121,7 @@ export default function CustomersPage() {
               ))}
             </div>
           </div>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleBulkTag}
               disabled={isBulkTagging || !bulkTagDraft.trim()}
@@ -1183,7 +1151,7 @@ export default function CustomersPage() {
               This will permanently remove the selected customers and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleBulkDelete}
               disabled={isBulkDeleting}
@@ -1212,7 +1180,7 @@ export default function CustomersPage() {
               This will permanently remove this customer and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleDelete}
               className="h-11 w-full touch-manipulation rounded-xl border border-red-500/25 bg-red-500/15 font-medium text-red-400 transition-all hover:bg-red-500/25 active:scale-[0.98]"

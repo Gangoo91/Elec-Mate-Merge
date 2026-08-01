@@ -159,7 +159,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
           <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.05] text-white">
             Skip the writing.
           </h1>
-          <p className="text-[13.5px] text-white/65 leading-relaxed max-w-xl">
+          <p className="text-[13.5px] text-white leading-relaxed max-w-xl">
             UK electrical safety documents grounded in BS 7671 + HSE guidance. Adopt, fill your
             company details, and you've got an inspector-ready document — no writing from scratch.
           </p>
@@ -168,7 +168,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
         {/* 3-stat value strip */}
         <div className="-mx-4 sm:mx-0 grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
           <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Available
             </div>
             <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-elec-yellow">
@@ -176,7 +176,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             </div>
           </div>
           <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Adopted
             </div>
             <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-emerald-400">
@@ -184,7 +184,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             </div>
           </div>
           <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
               Time saved
             </div>
             <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-white">
@@ -201,7 +201,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             className={`h-12 border-b-2 transition-colors touch-manipulation text-[12px] font-semibold uppercase tracking-[0.18em] ${
               tab === 'browse'
                 ? 'border-elec-yellow text-elec-yellow'
-                : 'border-transparent text-white/55 hover:text-white'
+                : 'border-transparent text-white hover:text-white'
             }`}
           >
             Browse
@@ -212,12 +212,12 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
             className={`h-12 border-b-2 transition-colors touch-manipulation text-[12px] font-semibold uppercase tracking-[0.18em] inline-flex items-center justify-center gap-2 ${
               tab === 'my-docs'
                 ? 'border-elec-yellow text-elec-yellow'
-                : 'border-transparent text-white/55 hover:text-white'
+                : 'border-transparent text-white hover:text-white'
             }`}
           >
             Your adopted
             {(userDocs ?? []).length > 0 && (
-              <span className="text-[11px] font-medium tabular-nums text-white/55">
+              <span className="text-[11px] font-medium tabular-nums text-white">
                 {(userDocs ?? []).length}
               </span>
             )}
@@ -303,7 +303,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                       <div className="p-4 sm:p-5 space-y-3">
                         {/* Pills row */}
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-white/[0.05] text-white/85">
+                          <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-white/[0.05] text-white">
                             {template.category}
                           </span>
                           {hasV2 && (
@@ -317,7 +317,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                             </span>
                           )}
                           {template.work_type && (
-                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] text-white/45">
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] text-white">
                               {template.work_type}
                             </span>
                           )}
@@ -330,14 +330,14 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
 
                         {/* Summary */}
                         {template.summary && (
-                          <p className="text-[13px] text-white/65 leading-relaxed line-clamp-2">
+                          <p className="text-[13px] text-white leading-relaxed line-clamp-2">
                             {template.summary}
                           </p>
                         )}
 
                         {/* Stats row (editorial, monochrome) */}
                         {(hazardCount > 0 || stepCount > 0) && (
-                          <div className="flex items-baseline gap-4 text-[11.5px] text-white/55 tabular-nums">
+                          <div className="flex items-baseline gap-4 text-[11.5px] text-white tabular-nums">
                             {hazardCount > 0 && (
                               <span>
                                 <span className="text-white">{hazardCount}</span> hazards
@@ -362,13 +362,13 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                             {template.regulatory_references.slice(0, 4).map((ref) => (
                               <span
                                 key={ref}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium tabular-nums bg-[hsl(0_0%_13%)] border border-white/[0.10] text-white/85"
+                                className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium tabular-nums bg-[hsl(0_0%_13%)] border border-white/[0.10] text-white"
                               >
                                 {ref}
                               </span>
                             ))}
                             {template.regulatory_references.length > 4 && (
-                              <span className="text-[10.5px] text-white/45 tabular-nums">
+                              <span className="text-[10.5px] text-white tabular-nums">
                                 +{template.regulatory_references.length - 4}
                               </span>
                             )}
@@ -404,8 +404,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                   const stats = getTemplateStats(doc.structured_content);
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   const v2: any = (doc as any).structured_content_v2;
-                  const isV2Doc =
-                    !!v2 && (doc.version === 2 || Array.isArray(v2.hazards));
+                  const isV2Doc = !!v2 && (doc.version === 2 || Array.isArray(v2.hazards));
                   const v2H = isV2Doc && Array.isArray(v2.hazards) ? v2.hazards.length : 0;
                   const v2S =
                     isV2Doc && Array.isArray(v2.method_steps) ? v2.method_steps.length : 0;
@@ -455,12 +454,10 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                         </h3>
 
                         {/* Meta row: company + last edited */}
-                        <div className="flex items-baseline gap-2 text-[11.5px] text-white/55 tabular-nums">
-                          {doc.company_name && (
-                            <span className="truncate">{doc.company_name}</span>
-                          )}
+                        <div className="flex items-baseline gap-2 text-[11.5px] text-white tabular-nums">
+                          {doc.company_name && <span className="truncate">{doc.company_name}</span>}
                           {doc.company_name && doc.updated_at && (
-                            <span className="text-white/30">·</span>
+                            <span className="text-white">·</span>
                           )}
                           {doc.updated_at && (
                             <span className="shrink-0">{relativeDate(doc.updated_at)}</span>
@@ -469,7 +466,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
 
                         {/* Stats row */}
                         {(hazardCount > 0 || stepCount > 0 || stats.checkItems > 0) && (
-                          <div className="flex items-baseline gap-4 pt-2 border-t border-white/[0.06] text-[11.5px] text-white/55 tabular-nums">
+                          <div className="flex items-baseline gap-4 pt-2 border-t border-white/[0.06] text-[11.5px] text-white tabular-nums">
                             {hazardCount > 0 && (
                               <span>
                                 <span className="text-white">{hazardCount}</span> hazards
@@ -505,7 +502,7 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                               e.stopPropagation();
                               setSharingDocument(doc);
                             }}
-                            className="text-[12px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
+                            className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                           >
                             Share
                           </button>

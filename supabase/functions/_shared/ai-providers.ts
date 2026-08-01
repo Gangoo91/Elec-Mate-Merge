@@ -3,6 +3,12 @@
  * Routes to Gemini 3.5 Flash (stable GA) or OpenAI
  * Replaces Lovable AI Gateway
  */
+import { withAiLog } from './ai-log.ts';
+
+// ELE-1155: every call through this module emits a structured ai_call log line
+// (and persists failures to ai_error_log) via withAiLog.
+const aiProviderHttpStatus = (error: unknown): number | undefined =>
+  error instanceof AIProviderError ? error.statusCode : undefined;
 
 export class AIProviderError extends Error {
   constructor(
@@ -36,6 +42,10 @@ export interface AIResponse {
  * Cost: $0.00002 per 1K tokens (very cheap)
  */
 export async function generateEmbedding(text: string, openAiKey: string): Promise<number[]> {
+  return withAiLog('openai', 'text-embedding-3-small', () => generateEmbeddingRaw(text, openAiKey), aiProviderHttpStatus);
+}
+
+async function generateEmbeddingRaw(text: string, openAiKey: string): Promise<number[]> {
   console.log('🔢 Generating embedding with OpenAI text-embedding-3-small');
 
   const response = await fetch('https://api.openai.com/v1/embeddings', {
@@ -74,6 +84,10 @@ export async function generateLargeEmbedding(
   text: string,
   openAiKey: string
 ): Promise<number[]> {
+  return withAiLog('openai', 'text-embedding-3-large', () => generateLargeEmbeddingRaw(text, openAiKey), aiProviderHttpStatus);
+}
+
+async function generateLargeEmbeddingRaw(text: string, openAiKey: string): Promise<number[]> {
   const response = await fetch('https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
@@ -106,6 +120,11 @@ export async function generateLargeEmbedding(
  * Default model, excellent for vision/OCR tasks
  */
 export async function callGemini(options: AICallOptions, geminiKey: string): Promise<AIResponse> {
+  const model = options.model ?? 'gemini-3.5-flash';
+  return withAiLog('gemini', model, () => callGeminiRaw(options, geminiKey), aiProviderHttpStatus);
+}
+
+async function callGeminiRaw(options: AICallOptions, geminiKey: string): Promise<AIResponse> {
   const {
     messages,
     model = 'gemini-3.5-flash',
@@ -253,6 +272,15 @@ export async function callOpenAI(
   options: AICallOptions,
   openAiKey: string,
   timeoutMs: number = 300000 // 300s (5 min) timeout - increased for complex batch processing
+): Promise<AIResponse> {
+  const model = options.model ?? 'gpt-5.4-mini-2026-03-17';
+  return withAiLog('openai', model, () => callOpenAIRaw(options, openAiKey, timeoutMs), aiProviderHttpStatus);
+}
+
+async function callOpenAIRaw(
+  options: AICallOptions,
+  openAiKey: string,
+  timeoutMs: number
 ): Promise<AIResponse> {
   const {
     messages,

@@ -59,10 +59,7 @@ export const SummaryStatsCard: React.FC<SummaryStatsCardProps> = ({ risks }) => 
                 : 'text-white';
 
         return (
-          <div
-            key={idx}
-            className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6"
-          >
+          <div key={idx} className="bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-6 sm:py-6">
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
               {stat.eyebrow}
             </div>

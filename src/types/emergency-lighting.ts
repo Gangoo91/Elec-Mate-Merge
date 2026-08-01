@@ -162,6 +162,21 @@ export interface EmergencyLightingFormData {
   // Additional notes
   additionalNotes: string;
 
+  // Company branding (merged from Business Settings at Generate/Email time,
+  // never entered on the form itself)
+  companyName?: string;
+  companyAddress?: string;
+  companyPhone?: string;
+  companyEmail?: string;
+  companyWebsite?: string;
+  companyLogo?: string;
+  companyTagline?: string;
+  accentColor?: string;
+  companyAccentColor?: string;
+  registrationSchemeLogo?: string;
+  registrationScheme?: string;
+  registrationNumber?: string;
+
   // Form state
   completedSections: { [key: string]: boolean };
   status: 'draft' | 'in-progress' | 'completed';

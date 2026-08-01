@@ -12,6 +12,8 @@ import {
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { setAiLogFn } from '../_shared/ai-log.ts';
+setAiLogFn('inspector-v3');
 
 // Inspector response schema (similar to commissioning but focused on inspection)
 const INSPECTOR_RESPONSE_SCHEMA = {

@@ -105,12 +105,16 @@ const DEVICE_CONFIG: Record<
   },
 };
 
-const EARTHING_OPTIONS = [
-  { value: 'tnc', label: 'TN-C' },
-  { value: 'tncs', label: 'TN-C-S (PME)' },
-  { value: 'tns', label: 'TN-S' },
-  { value: 'tt', label: 'TT' },
-  { value: 'it', label: 'IT' },
+// BS 7671:2018+A4:2026 — TN-C-S splits into PME / PNB. `value` stays as the
+// legacy code (templates/normaliser compare these); the TN-C-S options carry a
+// `variant` tracked in `tncsVariant` (legacy 'tncs' with no variant = PME).
+const EARTHING_OPTIONS: { key: string; value: string; variant?: 'pme' | 'pnb'; label: string }[] = [
+  { key: 'tnc', value: 'tnc', label: 'TN-C' },
+  { key: 'tncs-pme', value: 'tncs', variant: 'pme', label: 'TN-C-S (PME)' },
+  { key: 'tncs-pnb', value: 'tncs', variant: 'pnb', label: 'TN-C-S (PNB)' },
+  { key: 'tns', value: 'tns', label: 'TN-S' },
+  { key: 'tt', value: 'tt', label: 'TT' },
+  { key: 'it', value: 'it', label: 'IT' },
 ];
 
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({
@@ -160,13 +164,26 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     }
   };
 
-  const handleEarthingArrangementChange = (value: string) => {
-    onUpdate('earthingArrangement', value);
+  // A TN-C-S option matches when the arrangement is 'tncs' AND the variant
+  // lines up (legacy 'tncs' with no variant is treated as PME). Other types
+  // match by value.
+  const isEarthingActive = (option: (typeof EARTHING_OPTIONS)[number]) => {
+    if (option.value !== 'tncs') return formData.earthingArrangement === option.value;
+    if (formData.earthingArrangement !== 'tncs') return false;
+    return (formData.tncsVariant || 'pme') === (option.variant || 'pme');
+  };
 
-    // Auto-set PME status based on earthing arrangement
-    if (value === 'tncs' && formData.supplyPME !== 'yes') {
-      onUpdate('supplyPME', 'yes');
-    } else if (['tnc', 'tns', 'tt', 'it'].includes(value) && formData.supplyPME !== 'no') {
+  const handleEarthingArrangementChange = (option: (typeof EARTHING_OPTIONS)[number]) => {
+    onUpdate('earthingArrangement', option.value);
+    onUpdate('tncsVariant', option.variant || '');
+
+    // Auto-set PME status — PNB is a distinct TN-C-S variant, not PME.
+    if (option.value === 'tncs') {
+      const pmeValue = option.variant === 'pnb' ? 'no' : 'yes';
+      if (formData.supplyPME !== pmeValue) {
+        onUpdate('supplyPME', pmeValue);
+      }
+    } else if (['tnc', 'tns', 'tt', 'it'].includes(option.value) && formData.supplyPME !== 'no') {
       onUpdate('supplyPME', 'no');
     }
   };
@@ -197,6 +214,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                 supplyVoltage: '230V',
                 phases: 'single',
                 earthingArrangement: 'tncs',
+                tncsVariant: 'pme',
                 supplyPME: 'yes',
                 liveCondutorType: 'ac-1ph-2w',
               },
@@ -209,6 +227,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                 supplyVoltage: '400V',
                 phases: 'three',
                 earthingArrangement: 'tncs',
+                tncsVariant: 'pme',
                 supplyPME: 'yes',
                 liveCondutorType: 'ac-3ph-4w',
               },
@@ -221,6 +240,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                 supplyVoltage: '230V',
                 phases: 'single',
                 earthingArrangement: 'tt',
+                tncsVariant: '',
                 supplyPME: 'no',
                 liveCondutorType: 'ac-1ph-2w',
               },
@@ -307,15 +327,15 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
       {/* Earthing Arrangement */}
       <SectionTitle title="Earthing Arrangement" />
       <div className="space-y-3">
-        <div className="grid grid-cols-5 gap-1">
+        <div className="grid grid-cols-3 gap-1">
           {EARTHING_OPTIONS.map((opt) => (
             <button
-              key={opt.value}
+              key={opt.key}
               type="button"
-              onClick={() => handleEarthingArrangementChange(opt.value)}
+              onClick={() => handleEarthingArrangementChange(opt)}
               className={cn(
                 'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98]',
-                formData.earthingArrangement === opt.value
+                isEarthingActive(opt)
                   ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                   : 'bg-white/[0.05] border border-white/[0.08] text-white'
               )}
@@ -347,9 +367,11 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </button>
             ))}
           </div>
-          {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
-            <span className="text-[10px] text-elec-yellow/80 block mt-1">TN-C-S systems typically have PME</span>
-          )}
+          {formData.earthingArrangement === 'tncs' &&
+            (formData.tncsVariant || 'pme') !== 'pnb' &&
+            formData.supplyPME !== 'yes' && (
+              <span className="text-[10px] text-elec-yellow/80 block mt-1">TN-C-S systems typically have PME</span>
+            )}
         </FormField>
       </div>
 

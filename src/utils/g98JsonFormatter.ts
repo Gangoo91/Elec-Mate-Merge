@@ -6,6 +6,8 @@
  * EREC G98 Issue 5 — Generators ≤16A per phase
  */
 
+import { supabase } from '@/integrations/supabase/client';
+
 interface BrandingOptions {
   companyLogo?: string;
   companyName?: string;
@@ -13,6 +15,53 @@ interface BrandingOptions {
   companyPhone?: string;
   companyEmail?: string;
 }
+
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+/**
+ * Fetch this report's photo evidence and return public URLs (photos: string[]).
+ * Photos live in the inspection_photos table (written by useInspectionPhotos) —
+ * nothing ever writes formData.photos, so callers must inject this at
+ * generate/email time. URLs are resized via Supabase image transform so the
+ * PDF embeds small rasters and the emailed PDF stays under the attachment limit.
+ */
+export const fetchG98ReportPhotos = async (reportId: string): Promise<string[]> => {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    // inspection_photos.report_id holds the reports table UUID, not the
+    // G98-xxx report_id string — resolve it first (same as useInspectionPhotos).
+    const { data: report } = await supabase
+      .from('reports')
+      .select('id')
+      .eq('report_id', reportId)
+      .eq('user_id', user.id)
+      .maybeSingle();
+    const reportUuid = report?.id || (UUID_REGEX.test(reportId) ? reportId : null);
+    if (!reportUuid) return [];
+
+    const { data: photoRows } = await supabase
+      .from('inspection_photos')
+      .select('file_path')
+      .eq('report_id', reportUuid)
+      .order('uploaded_at');
+
+    return (photoRows || []).map((photo) => {
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path, {
+        transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+      });
+      return publicUrl;
+    });
+  } catch {
+    return [];
+  }
+};
 
 /** G98 default protection settings (EREC G98 Issue 5) */
 const G98_DEFAULTS: Record<string, string> = {
@@ -37,6 +86,7 @@ const G98_DEFAULTS: Record<string, string> = {
   reconnectionDelay: '60',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDefaultG98Data = (): Record<string, any> => ({
   referenceNumber: '',
   commissioningDate: '',
@@ -55,6 +105,11 @@ const getDefaultG98Data = (): Record<string, any> => ({
   mpan: '',
   supplyType: 'single-phase',
   earthingArrangement: '',
+  // Client
+  clientName: '',
+  clientEmail: '',
+  clientPhone: '',
+  clientAddress: '',
   // Equipment
   equipmentType: '',
   equipmentManufacturer: '',
@@ -103,6 +158,7 @@ const getDefaultG98Data = (): Record<string, any> => ({
  * Call this before sending to the generate-g98-commissioning-pdf edge function.
  */
 export const formatG98Json = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: Record<string, any>,
   branding?: BrandingOptions,
 ) => {
@@ -110,6 +166,7 @@ export const formatG98Json = (
   const defaults = getDefaultG98Data();
 
   // Merge: defaults < formData < branding overrides
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const payload: Record<string, any> = {
     ...defaults,
     ...formData,
@@ -123,6 +180,10 @@ export const formatG98Json = (
     systemOperating: formData.systemOperating ?? false,
     labelsApplied: formData.labelsApplied ?? false,
     customerInformed: formData.customerInformed ?? false,
+
+    // Photo evidence (additive — safe for Liquid; template needs a photos
+    // section added before these render on the PDF)
+    photos: formData.photos ?? [],
 
     // Branding overrides
     ...(branding?.companyLogo && { companyLogo: branding.companyLogo }),

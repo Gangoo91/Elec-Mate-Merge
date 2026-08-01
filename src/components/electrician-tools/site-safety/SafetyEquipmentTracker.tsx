@@ -388,14 +388,24 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
           <StatStrip
             stats={[
               { value: stats.total, label: 'Total', onClick: () => setActiveFilter('all') },
-              { value: stats.good, label: 'Good', tone: 'green', onClick: () => setActiveFilter('good') },
+              {
+                value: stats.good,
+                label: 'Good',
+                tone: 'green',
+                onClick: () => setActiveFilter('good'),
+              },
               {
                 value: stats.needsAttention,
                 label: 'Attention',
                 tone: 'amber',
                 onClick: () => setActiveFilter('attention'),
               },
-              { value: stats.overdue, label: 'Overdue', tone: 'red', onClick: () => setActiveFilter('overdue') },
+              {
+                value: stats.overdue,
+                label: 'Overdue',
+                tone: 'red',
+                onClick: () => setActiveFilter('overdue'),
+              },
             ]}
           />
         ) : undefined
@@ -426,7 +436,9 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
         <EmptyState
           title={emptyTitle}
           description={emptyDescription}
-          {...(activeFilter === 'all' ? { action: 'Add equipment', onAction: () => setShowForm(true) } : {})}
+          {...(activeFilter === 'all'
+            ? { action: 'Add equipment', onAction: () => setShowForm(true) }
+            : {})}
         />
       ) : (
         <div className="space-y-2.5">
@@ -452,8 +464,10 @@ export const SafetyEquipmentTracker: React.FC<SafetyEquipmentTrackerProps> = ({ 
                   trailing={
                     <div className="flex flex-col items-end gap-1">
                       <StatusPill status={item.status} />
-                      <span className="text-[11px] text-white/45 tabular-nums">
-                        {item.next_inspection ? `Due ${fmtCardDate(item.next_inspection)}` : 'No date'}
+                      <span className="text-[11px] text-white tabular-nums">
+                        {item.next_inspection
+                          ? `Due ${fmtCardDate(item.next_inspection)}`
+                          : 'No date'}
                       </span>
                     </div>
                   }

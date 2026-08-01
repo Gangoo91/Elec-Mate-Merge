@@ -23,10 +23,10 @@ import {
   PrimaryButton,
   SecondaryButton,
   TextAction,
-  selectTriggerClass,
   selectContentClass,
   type Tone,
 } from '@/components/college/primitives';
+import { safetySelectTriggerCn } from '../../common/SafetyDocField';
 
 interface TemplateSelectionStepProps {
   onTemplateSelect: (template: MethodTemplate) => void;
@@ -51,7 +51,7 @@ function DifficultyPill({ level }: { level: string }) {
     <span
       className={cn(
         'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        DIFFICULTY_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+        DIFFICULTY_PILL[level] ?? 'bg-white/[0.05] text-white border-white/10'
       )}
     >
       {level}
@@ -153,7 +153,7 @@ const TemplateSelectionStep = ({
     <div className="space-y-5">
       {/* Intro + skip */}
       <FormCard eyebrow="Choose a template">
-        <p className="text-[13px] text-white/70 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           Start with a proven template or build from scratch. Templates include BS 7671-compliant
           safety requirements and detailed step-by-step procedures.
         </p>
@@ -195,7 +195,7 @@ const TemplateSelectionStep = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Difficulty level">
               <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
-                <SelectTrigger className={selectTriggerClass}>
+                <SelectTrigger className={safetySelectTriggerCn}>
                   <SelectValue placeholder="Any difficulty" />
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
@@ -208,7 +208,7 @@ const TemplateSelectionStep = ({
             </Field>
             <Field label="Project duration">
               <Select value={selectedDuration} onValueChange={setSelectedDuration}>
-                <SelectTrigger className={selectTriggerClass}>
+                <SelectTrigger className={safetySelectTriggerCn}>
                   <SelectValue placeholder="Any duration" />
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
@@ -228,7 +228,7 @@ const TemplateSelectionStep = ({
 
       {/* Results summary */}
       {searchTerm && !isSearching && (
-        <div className="flex items-center justify-between text-[12px] text-white/55">
+        <div className="flex items-center justify-between text-[12px] text-white">
           <span>
             {filteredTemplates.length} template{filteredTemplates.length !== 1 ? 's' : ''} found
             {searchTerm && ` for "${searchTerm}"`}
@@ -287,7 +287,7 @@ const TemplateSelectionStep = ({
                             e.stopPropagation();
                             handlePreviewTemplate(template);
                           }}
-                          className="text-white/55 hover:text-white touch-manipulation"
+                          className="text-white hover:text-white touch-manipulation"
                         >
                           Preview
                         </button>
@@ -299,7 +299,7 @@ const TemplateSelectionStep = ({
                           }}
                           className={cn(
                             'touch-manipulation',
-                            isFavorite ? 'text-elec-yellow' : 'text-white/55 hover:text-white'
+                            isFavorite ? 'text-elec-yellow' : 'text-white hover:text-white'
                           )}
                         >
                           {isFavorite ? 'Saved' : 'Save'}
@@ -313,7 +313,7 @@ const TemplateSelectionStep = ({
                           }}
                           className={cn(
                             'touch-manipulation disabled:opacity-40',
-                            inComparison ? 'text-elec-yellow' : 'text-white/55 hover:text-white'
+                            inComparison ? 'text-elec-yellow' : 'text-white hover:text-white'
                           )}
                         >
                           {inComparison ? 'Comparing' : 'Compare'}
@@ -336,7 +336,7 @@ const TemplateSelectionStep = ({
               <div className="text-[15px] font-medium text-white truncate">
                 {selectedTemplate.name}
               </div>
-              <p className="text-[12px] text-white/55 mt-0.5">
+              <p className="text-[12px] text-white mt-0.5">
                 Includes {selectedTemplate.steps.length} pre-configured steps
               </p>
             </div>

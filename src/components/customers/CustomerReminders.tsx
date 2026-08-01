@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useCustomerReminders } from '@/hooks/useCustomerReminders';
-import { Eyebrow, Dot } from '@/components/college/primitives';
-import { Check, Trash2, Plus, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -62,19 +60,18 @@ export const CustomerReminders: React.FC<Props> = ({ customerId }) => {
     <div className="space-y-3">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <Eyebrow>REMINDERS</Eyebrow>
-          <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Reminders</h3>
+          <p className="mt-0.5 text-[12.5px] text-white/55">
             {open.length === 0
               ? 'No follow-ups set'
               : `${open.length} follow-up${open.length === 1 ? '' : 's'}`}
-          </h3>
+          </p>
         </div>
         {!addOpen && (
           <button
             onClick={() => setAddOpen(true)}
             className="flex h-9 items-center gap-1.5 rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
           >
-            <Plus className="h-3.5 w-3.5" />
             Add reminder
           </button>
         )}
@@ -82,7 +79,7 @@ export const CustomerReminders: React.FC<Props> = ({ customerId }) => {
 
       {/* Add form */}
       {addOpen && (
-        <div className="space-y-3 rounded-2xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4">
+        <div className="space-y-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4">
           <div className="flex items-start justify-between gap-2">
             <input
               autoFocus
@@ -103,16 +100,14 @@ export const CustomerReminders: React.FC<Props> = ({ customerId }) => {
                 setAddOpen(false);
                 setDraftTitle('');
               }}
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-white/55 transition-colors hover:bg-white/[0.04] hover:text-white touch-manipulation"
+              className="flex h-10 items-center px-2 text-[12.5px] font-medium text-white/55 transition-colors hover:text-white touch-manipulation"
               aria-label="Cancel"
             >
-              <X className="h-4 w-4" />
+              Cancel
             </button>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45">
-              Due
-            </span>
+            <span className="text-[12px] font-medium text-white/55">Due</span>
             {PRESETS.map((p) => (
               <button
                 key={p.label}
@@ -178,17 +173,17 @@ export const CustomerReminders: React.FC<Props> = ({ customerId }) => {
                 <div className="flex shrink-0 items-center gap-1">
                   <button
                     onClick={() => completeReminder(r.id)}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/55 transition-colors hover:bg-emerald-500/15 hover:text-emerald-400 touch-manipulation"
+                    className="flex h-8 items-center px-2 text-[12px] font-semibold text-emerald-400 transition-colors hover:text-emerald-300 touch-manipulation"
                     aria-label="Mark complete"
                   >
-                    <Check className="h-4 w-4" />
+                    Done
                   </button>
                   <button
                     onClick={() => deleteReminder(r.id)}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/55 transition-colors hover:bg-red-500/15 hover:text-red-400 touch-manipulation"
+                    className="flex h-8 items-center px-2 text-[12px] font-medium text-white/55 transition-colors hover:text-red-400 touch-manipulation"
                     aria-label="Delete reminder"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    Remove
                   </button>
                 </div>
               </div>

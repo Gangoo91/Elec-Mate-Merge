@@ -35,8 +35,8 @@ const calculatorList = [
   'RCD Testing Thresholds Calculator',
   'Conduit Fill Calculator',
   'Trunking Fill Calculator',
-  'Maximum Demand Calculator (Table 1A)',
-  'Maximum Demand Calculator (Table 1B)',
+  'Maximum Demand Calculator (Table A2 — household)',
+  'Maximum Demand Calculator (Table A2 — shops, offices and hotels)',
   'Power Factor Calculator',
   'Cable Volt Drop Calculator',
   'Lighting Lux Level Calculator',
@@ -161,7 +161,7 @@ const features = [
     icon: Gauge,
     title: 'Maximum Demand',
     description:
-      'Table 1A (domestic) and Table 1B (commercial) max demand with diversity factors. Calculates total load for supply applications.',
+      'Maximum demand with On-Site Guide Table A2 diversity allowances — household and non-domestic premises columns. Calculates total load for supply applications.',
   },
   {
     icon: Lightbulb,
@@ -444,15 +444,17 @@ export default function ElectricalTestingCalculatorsPage() {
             </p>
             <p>
               The maximum demand calculator is essential when you are designing a new installation
-              or assessing whether an existing supply is adequate. For domestic premises, Table 1A
+              or assessing whether an existing supply is adequate. For domestic premises, Table A2
               in the IET On-Site Guide provides diversity allowances for different types of load.
               For example, cooking appliances have a diversity of 10A plus 30% of the remainder,
               while socket outlets use 100% of the largest circuit plus 40% of the remaining
-              circuits. For commercial and industrial premises, Table 1B provides different
-              diversity factors. Our calculator walks you through both tables, letting you add each
-              load type and automatically calculating the diversified maximum demand. This is the
-              figure you put on an application for a new or upgraded supply from the Distribution
-              Network Operator (DNO).
+              circuits. Table A2 carries separate columns for small shops, stores, offices and
+              business premises, and for small hotels and guest houses — no guidance is given for
+              blocks of dwellings, large hotels or industrial premises, which are assessed case by
+              case. Our calculator walks you through the columns, letting you add each load type and
+              automatically calculating the diversified maximum demand. This is the figure you put
+              on an application for a new or upgraded supply from the Distribution Network Operator
+              (DNO).
             </p>
           </div>
         </div>

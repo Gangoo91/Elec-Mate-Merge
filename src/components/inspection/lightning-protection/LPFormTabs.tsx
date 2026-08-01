@@ -1,4 +1,4 @@
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import { useRef } from 'react';
 import { LPTabValue } from '@/hooks/useLightningProtectionTabs';
 import LPCertificateDetails from './LPCertificateDetails';
 import LPInstallationDetails from './LPInstallationDetails';
@@ -6,6 +6,8 @@ import LPVisualInspection from './LPVisualInspection';
 import LPTestSchedule from './LPTestSchedule';
 import LPObservations from './LPObservations';
 import LPTabNavigation from './LPTabNavigation';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface Props {
   formData: any;
@@ -22,30 +24,52 @@ interface Props {
   progress: number;
   onGenerate?: () => void;
   isGenerating?: boolean;
+  reportId?: string | null;
 }
 
+const TAB_ORDER: LPTabValue[] = ['certificate', 'installation', 'visual', 'testing', 'observations'];
+
 export default function LPFormTabs({
-  formData, onUpdate, currentTab, onTabChange,
+  formData, onUpdate, currentTab,
   currentTabIndex, totalTabs, canNavigateNext, canNavigatePrevious,
-  onNext, onPrevious, isCurrentTabComplete, progress,
-  onGenerate, isGenerating,
+  onNext, onPrevious,
+  onGenerate, isGenerating, reportId,
 }: Props) {
-  const tabNavigationProps = {
-    currentTabIndex, totalTabs, canNavigateNext, canNavigatePrevious,
-    onNext, onPrevious, isCurrentTabComplete, progress,
-    isLastTab: currentTabIndex === totalTabs - 1,
-    onGenerate, isGenerating,
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<LPTabValue, React.ReactNode> = {
+    certificate: <LPCertificateDetails formData={formData} onUpdate={onUpdate} />,
+    installation: <LPInstallationDetails formData={formData} onUpdate={onUpdate} />,
+    visual: <LPVisualInspection formData={formData} onUpdate={onUpdate} />,
+    testing: <LPTestSchedule formData={formData} onUpdate={onUpdate} />,
+    observations: <LPObservations formData={formData} onUpdate={onUpdate} />,
   };
 
-  const smartTabs: SmartTab[] = [
-    { value: 'certificate', label: 'Certificate', shortLabel: 'Cert', content: (<div className="space-y-6"><LPCertificateDetails formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'installation', label: 'Installation', shortLabel: 'Install', content: (<div className="space-y-6"><LPInstallationDetails formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'visual', label: 'Visual', shortLabel: 'Visual', content: (<div className="space-y-6"><LPVisualInspection formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'testing', label: 'Testing', shortLabel: 'Tests', content: (<div className="space-y-6"><LPTestSchedule formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'observations', label: 'Sign-off', shortLabel: 'Sign', content: (<div className="space-y-6"><LPObservations formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-  ];
-
   return (
-    <SmartTabs tabs={smartTabs} value={currentTab} onValueChange={(v) => onTabChange(v as LPTabValue)} className="space-y-4" />
+    <>
+      <div
+        key={currentTab}
+        className={isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'}
+      >
+        {content[currentTab]}
+      </div>
+      <LPTabNavigation
+        currentTabIndex={currentTabIndex}
+        totalTabs={totalTabs}
+        canNavigateNext={canNavigateNext}
+        canNavigatePrevious={canNavigatePrevious}
+        onNext={onNext}
+        onPrevious={onPrevious}
+        isLastTab={currentTabIndex === totalTabs - 1}
+        onGenerate={onGenerate}
+        isGenerating={isGenerating}
+        reportId={reportId}
+        formData={formData}
+      />
+    </>
   );
 }

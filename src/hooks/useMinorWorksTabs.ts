@@ -37,11 +37,16 @@ const tabConfigs: TabConfig[] = [
     id: 'declaration',
     label: 'Declaration',
     shortLabel: 'Declare',
-    requiredFields: ['electricianName', 'position', 'signature', 'bs7671Compliance'],
+    requiredFields: ['electricianName', 'position', 'signature', 'ietDeclaration'],
   },
 ];
 
-export const useMinorWorksTabs = (formData: any) => {
+interface MWFormData {
+  completedSections?: Record<string, boolean>;
+  [field: string]: unknown;
+}
+
+export const useMinorWorksTabs = (formData: MWFormData) => {
   const [currentTab, setCurrentTab] = useState<MWTabValue>('details');
 
   const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
@@ -54,7 +59,7 @@ export const useMinorWorksTabs = (formData: any) => {
     return tab.requiredFields.every((field) => {
       const value = formData[field];
       if (typeof value === 'boolean') return value === true;
-      return value && value.toString().trim() !== '';
+      return Boolean(value) && String(value).trim() !== '';
     });
   };
 
@@ -67,29 +72,30 @@ export const useMinorWorksTabs = (formData: any) => {
 
     switch (tabId) {
       case 'details':
-        return (
+        return Boolean(
           completedSections[tabId] ||
-          (formData.clientName &&
-            formData.propertyAddress &&
-            formData.workDescription &&
-            formData.earthingArrangement)
+            (formData.clientName &&
+              formData.propertyAddress &&
+              formData.workDescription &&
+              formData.earthingArrangement)
         );
       case 'circuit':
-        return (
+        return Boolean(
           completedSections[tabId] ||
-          (formData.circuitDesignation &&
-            formData.protectiveDeviceType &&
-            formData.protectiveDeviceRating)
+            (formData.circuitDesignation &&
+              formData.protectiveDeviceType &&
+              formData.protectiveDeviceRating &&
+              formData.liveConductorSize)
         );
       case 'testing':
-        return (
+        return Boolean(
           completedSections[tabId] ||
-          (formData.continuityR1R2 && formData.earthFaultLoopImpedance && formData.polarity)
+            (formData.continuityR1R2 && formData.earthFaultLoopImpedance && formData.polarity)
         );
       case 'declaration':
-        return (
+        return Boolean(
           completedSections[tabId] ||
-          (formData.electricianName && formData.signature && formData.bs7671Compliance)
+            (formData.electricianName && formData.signature && formData.ietDeclaration)
         );
       default:
         return completedSections[tabId] === true;
@@ -98,7 +104,7 @@ export const useMinorWorksTabs = (formData: any) => {
 
   const toggleTabComplete = (
     tabId: MWTabValue,
-    onUpdate: (field: string, value: any) => void
+    onUpdate: (field: string, value: unknown) => void
   ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {

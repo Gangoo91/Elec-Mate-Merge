@@ -49,10 +49,12 @@ Deno.serve(async (req: Request) => {
     if (!PDFMONKEY_API_KEY) throw new Error('PDFMONKEY_API_KEY not set');
     const { formData, templateId } = await req.json();
     if (!formData) throw new Error('No form data');
-    console.log('[generate-disconnection-certificate-pdf] Ref:', formData.reference_number);
+    console.log('[generate-disconnection-certificate-pdf] Ref:', formData.referenceNumber);
     const doc = await createPDFMonkeyDocument(formData, templateId);
     const completed = await waitForPDF(doc.id);
-    return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    // pdfUrl duplicates download_url for parity with sibling generate fns —
+    // send-certificate-resend's regeneration branch reads pdfData.pdfUrl.
+    return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, pdfUrl: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
     await captureException(error, { functionName: 'generate-disconnection-certificate-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-disconnection-certificate-pdf] Error:', error);

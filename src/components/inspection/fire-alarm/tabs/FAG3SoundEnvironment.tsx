@@ -6,52 +6,42 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 
-const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const Section = ({
-  title,
-  accentColor,
-  count,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  count?: number;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-        {title}
-        {count !== undefined && (
-          <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-            {count}
-          </span>
-        )}
-      </h2>
-    </div>
-    {children}
-  </div>
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const comboTriggerCn =
+  'h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:bg-transparent hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const addButtonCn =
+  'w-full h-11 rounded-xl border border-dashed border-white/[0.25] text-sm font-medium text-white touch-manipulation active:scale-[0.98] transition-transform';
+
+const removeButtonCn =
+  'h-11 px-2 text-sm font-medium text-red-400 touch-manipulation active:scale-95 transition-transform shrink-0';
+
+const SectionHeader = ({ title, count }: { title: string; count?: number }) => (
+  <h2 className="mb-3 flex items-center gap-2 text-[15px] font-semibold tracking-tight text-white">
+    {title}
+    {count !== undefined && (
+      <span className="rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] font-medium text-white/80">
+        {count}
+      </span>
+    )}
+  </h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -167,114 +157,104 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
     );
 
   return (
-    <div className="space-y-5">
-      {/* Sound Level Readings */}
-      <Section
-        title="Sound Level Readings"
-        accentColor="from-blue-500/40 to-cyan-400/20"
-        count={readings.length}
-      >
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Sound level readings */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Sound level readings" count={readings.length} />
         {readings.length === 0 && (
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 text-center">
+          <div className="rounded-xl bg-white/[0.05] p-4 text-center">
             <p className="text-sm font-medium text-white">Add sound level readings per zone</p>
-            <p className="text-xs text-white mt-1">
+            <p className="text-[12px] text-white/80 mt-1">
               BS 5839-1:2025 requires 65 dB general, 75 dB sleeping areas
             </p>
           </div>
         )}
         {readings.map((r: any, idx: number) => (
-          <div key={r.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-blue-400">
+          <div key={r.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold text-white">
                 Reading {idx + 1} of {readings.length}
               </span>
-              <button
-                onClick={() => removeReading(r.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
-              >
-                <Trash2 className="h-4 w-4" />
+              <button type="button" onClick={() => removeReading(r.id)} className={removeButtonCn}>
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Zone">
-                  <Input
-                    value={r.zone || ''}
-                    onChange={(e) => updateReading(r.id, 'zone', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Zone 1"
-                  />
-                </Field>
-                <Field label="Area Type">
-                  <ComboboxCell
-                    value={r.areaType || 'general'}
-                    onChange={(v) => updateReading(r.id, 'areaType', v)}
-                    options={areaTypeOptions}
-                    placeholder="Select..."
-                    className="h-10 text-sm"
-                    allowCustom={false}
-                  />
-                </Field>
-              </div>
-              <Field label="Location">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Zone">
                 <Input
-                  value={r.location || ''}
-                  onChange={(e) => updateReading(r.id, 'location', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="e.g. First floor corridor"
+                  value={r.zone || ''}
+                  onChange={(e) => updateReading(r.id, 'zone', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Zone 1"
                 />
               </Field>
-              <div className="grid grid-cols-3 gap-2">
-                <Field label="Measured (dB)">
-                  <Input
-                    value={r.dBReading || ''}
-                    onChange={(e) => updateReading(r.id, 'dBReading', e.target.value)}
-                    inputMode="decimal"
-                    className={cn(
-                      inputSmCn,
-                      r.result === 'pass'
-                        ? 'border-green-500/50'
-                        : r.result === 'fail'
-                          ? 'border-red-500/50'
-                          : ''
-                    )}
-                    placeholder="e.g. 85"
-                  />
-                </Field>
-                <Field label="Min Required">
-                  <div className="h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center px-3 text-sm text-white">
-                    {r.minRequired || '65'} dB
-                  </div>
-                </Field>
-                <Field label="Result">
-                  <div
-                    className={cn(
-                      'h-10 rounded-xl flex items-center justify-center text-sm font-bold',
-                      r.result === 'pass'
-                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                        : r.result === 'fail'
-                          ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                          : 'bg-white/[0.06] border border-white/[0.08] text-white'
-                    )}
-                  >
-                    {r.result === 'pass' ? 'PASS' : r.result === 'fail' ? 'FAIL' : '—'}
-                  </div>
-                </Field>
-              </div>
+              <Field label="Area type">
+                <ComboboxCell
+                  value={r.areaType || 'general'}
+                  onChange={(v) => updateReading(r.id, 'areaType', v)}
+                  options={areaTypeOptions}
+                  placeholder="Select..."
+                  className={comboTriggerCn}
+                  allowCustom={false}
+                />
+              </Field>
+            </div>
+            <Field label="Location">
+              <Input
+                value={r.location || ''}
+                onChange={(e) => updateReading(r.id, 'location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. First floor corridor"
+              />
+            </Field>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
+              <Field label="Measured (dB)">
+                <Input
+                  value={r.dBReading || ''}
+                  onChange={(e) => updateReading(r.id, 'dBReading', e.target.value)}
+                  inputMode="decimal"
+                  className={cn(
+                    inputCn,
+                    r.result === 'pass'
+                      ? 'border-green-500/70'
+                      : r.result === 'fail'
+                        ? 'border-red-500/70'
+                        : ''
+                  )}
+                  placeholder="e.g. 85"
+                />
+              </Field>
+              <Field label="Min required">
+                <div className="flex h-11 items-center rounded-xl bg-white/[0.05] px-3.5 text-sm font-medium text-white">
+                  {r.minRequired || '65'} dB
+                </div>
+              </Field>
+              <Field label="Result">
+                <div
+                  className={cn(
+                    'flex h-11 items-center justify-center rounded-xl text-sm font-semibold',
+                    r.result === 'pass'
+                      ? 'bg-green-500 text-black'
+                      : r.result === 'fail'
+                        ? 'bg-red-500 text-white'
+                        : 'bg-white/[0.05] text-white/80'
+                  )}
+                >
+                  {r.result === 'pass' ? 'Pass' : r.result === 'fail' ? 'Fail' : '—'}
+                </div>
+              </Field>
             </div>
           </div>
         ))}
-        <button
-          onClick={addReading}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-blue-500/20 flex items-center justify-center gap-2 text-sm font-medium text-blue-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Sound Reading
+        <button type="button" onClick={addReading} className={addButtonCn}>
+          Add sound reading
         </button>
-      </Section>
+      </div>
 
-      {/* Environmental Conditions */}
-      <Section title="Environmental Conditions" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* Environmental conditions */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Environmental conditions" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
           <Field label="Temperature (C)">
             <Input
               value={formData.ambientTemperature || ''}
@@ -284,7 +264,7 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
               placeholder="e.g. 20"
             />
           </Field>
-          <Field label="Ambient Noise (dB)">
+          <Field label="Ambient noise (dB)">
             <Input
               value={formData.ambientNoiseLevel || ''}
               onChange={(e) => onUpdate('ambientNoiseLevel', e.target.value)}
@@ -299,85 +279,85 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
               onChange={(v) => onUpdate('weatherConditions', v)}
               options={weatherOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className={comboTriggerCn}
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      {/* Test Equipment */}
-      <Section
-        title="Test Equipment Used"
-        accentColor="from-amber-500/40 to-yellow-400/20"
-        count={equipment.length}
-      >
+      {/* Test equipment */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Test equipment used" count={equipment.length} />
         {equipment.map((eq: any, idx: number) => (
-          <div key={eq.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-amber-400">
+          <div key={eq.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold text-white">
                 Equipment {idx + 1} of {equipment.length}
               </span>
               <button
+                type="button"
                 onClick={() => removeEquipment(eq.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className={removeButtonCn}
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              <Field label="Type">
-                <ComboboxCell
-                  value={eq.type || ''}
-                  onChange={(v) => updateEquipment(eq.id, 'type', v)}
-                  options={equipmentTypeOptions}
-                  placeholder="Select type..."
-                  className="h-12 text-base"
+            <Field label="Type">
+              <ComboboxCell
+                value={eq.type || ''}
+                onChange={(v) => updateEquipment(eq.id, 'type', v)}
+                options={equipmentTypeOptions}
+                placeholder="Select type..."
+                className={comboTriggerCn}
+              />
+            </Field>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Make">
+                <Input
+                  value={eq.make || ''}
+                  onChange={(e) => updateEquipment(eq.id, 'make', e.target.value)}
+                  className={inputCn}
                 />
               </Field>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Make / Model">
-                  <Input
-                    value={`${eq.make || ''} ${eq.model || ''}`.trim()}
-                    onChange={(e) => updateEquipment(eq.id, 'make', e.target.value)}
-                    className={inputSmCn}
-                  />
-                </Field>
-                <Field label="Serial No.">
-                  <Input
-                    value={eq.serialNumber || ''}
-                    onChange={(e) => updateEquipment(eq.id, 'serialNumber', e.target.value)}
-                    className={inputSmCn}
-                  />
-                </Field>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Calibration Date">
-                  <Input
-                    type="date"
-                    value={eq.calibrationDate || ''}
-                    onChange={(e) => updateEquipment(eq.id, 'calibrationDate', e.target.value)}
-                    className={cn(inputSmCn, '[color-scheme:dark]')}
-                  />
-                </Field>
-                <Field label="Calibration Due">
-                  <Input
-                    type="date"
-                    value={eq.calibrationDue || ''}
-                    onChange={(e) => updateEquipment(eq.id, 'calibrationDue', e.target.value)}
-                    className={cn(inputSmCn, '[color-scheme:dark]')}
-                  />
-                </Field>
-              </div>
+              <Field label="Model">
+                <Input
+                  value={eq.model || ''}
+                  onChange={(e) => updateEquipment(eq.id, 'model', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+              <Field label="Serial no.">
+                <Input
+                  value={eq.serialNumber || ''}
+                  onChange={(e) => updateEquipment(eq.id, 'serialNumber', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Calibration date">
+                <Input
+                  type="date"
+                  value={eq.calibrationDate || ''}
+                  onChange={(e) => updateEquipment(eq.id, 'calibrationDate', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+              <Field label="Calibration due">
+                <Input
+                  type="date"
+                  value={eq.calibrationDue || ''}
+                  onChange={(e) => updateEquipment(eq.id, 'calibrationDue', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
             </div>
           </div>
         ))}
-        <button
-          onClick={addEquipment}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-amber-500/20 flex items-center justify-center gap-2 text-sm font-medium text-amber-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Test Equipment
+        <button type="button" onClick={addEquipment} className={addButtonCn}>
+          Add test equipment
         </button>
-      </Section>
+      </div>
     </div>
   );
 }

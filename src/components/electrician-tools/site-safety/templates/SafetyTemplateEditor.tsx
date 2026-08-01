@@ -361,7 +361,7 @@ export function SafetyTemplateEditor({
                 <button
                   type="button"
                   onClick={() => setShowShare(true)}
-                  className="h-9 px-3 rounded-lg text-[12.5px] font-medium text-white/65 hover:text-white touch-manipulation"
+                  className="h-9 px-3 rounded-lg text-[12.5px] font-medium text-white hover:text-white touch-manipulation"
                 >
                   <Share2 className="h-3.5 w-3.5 inline mr-1" />
                   Share
@@ -387,7 +387,7 @@ export function SafetyTemplateEditor({
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="h-9 w-9 rounded-lg text-white/65 hover:text-white touch-manipulation flex items-center justify-center"
+                  className="h-9 w-9 rounded-lg text-white hover:text-white touch-manipulation flex items-center justify-center"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -399,7 +399,7 @@ export function SafetyTemplateEditor({
               {/* Field values — editable */}
               {fields.length > 0 && (
                 <section className="space-y-3">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                     Document details
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -407,7 +407,7 @@ export function SafetyTemplateEditor({
                       const k = fieldKey(f);
                       return (
                         <div key={k}>
-                          <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 block mb-1">
+                          <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white block mb-1">
                             {f.label}
                             {f.required && <span className="text-red-400 ml-1">*</span>}
                           </label>
@@ -432,10 +432,10 @@ export function SafetyTemplateEditor({
               <SafetyTemplateV2Renderer v2={docV2} />
 
               {/* Soft footer note about advanced editing */}
-              <p className="text-[11.5px] text-white/45 leading-relaxed">
+              <p className="text-[11.5px] text-white leading-relaxed">
                 Deep editing of hazards and steps is coming soon. Today you can update document
-                details + status, share, and export to PDF — the full document content travels
-                with you.
+                details + status, share, and export to PDF — the full document content travels with
+                you.
               </p>
             </div>
           </div>

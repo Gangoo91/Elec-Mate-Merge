@@ -1,11 +1,12 @@
-import React from 'react';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import React, { useRef } from 'react';
 import { EVChargingTabValue } from '@/hooks/useEVChargingTabs';
 import EVChargingInstallationDetails from './EVChargingInstallationDetails';
 import EVChargingSupplyDetails from './EVChargingSupplyDetails';
 import EVChargingTestSchedule from './EVChargingTestSchedule';
 import EVChargingDeclarations from './EVChargingDeclarations';
 import EVChargingTabNavigation from './EVChargingTabNavigation';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface EVChargingFormTabsProps {
   currentTab: EVChargingTabValue;
@@ -42,10 +43,10 @@ interface EVChargingFormTabsProps {
   reportId?: string | null;
 }
 
+const TAB_ORDER: EVChargingTabValue[] = ['installation', 'supply', 'testing', 'declarations'];
+
 const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
   currentTab,
-  onTabChange,
-  canAccessTab,
   completedTabs,
   formData,
   onUpdate,
@@ -53,72 +54,51 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
   onCustomerIdChange,
   tabNavigationProps,
   onGenerateCertificate,
-  onSaveDraft,
   canGenerateCertificate = true,
   reportId,
 }) => {
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'installation',
-      label: 'Install',
-      shortLabel: 'Install',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4 mx-auto w-full lg:max-w-6xl xl:max-w-7xl">
-          <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
-          <EVChargingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'supply',
-      label: 'Supply',
-      shortLabel: 'Supply',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4 mx-auto w-full lg:max-w-6xl xl:max-w-7xl">
-          <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
-          <EVChargingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'testing',
-      label: 'Test',
-      shortLabel: 'Test',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4">
-          <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
-          <EVChargingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'declarations',
-      label: 'Declare',
-      shortLabel: 'Sign',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4 mx-auto w-full lg:max-w-6xl xl:max-w-7xl">
-          <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
-          <EVChargingTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            canGenerateCertificate={canGenerateCertificate}
-            whatsApp={tabNavigationProps.whatsApp}
-            reportId={reportId}
-            formData={formData}
-          />
-        </div>
-      ),
-    },
-  ];
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<EVChargingTabValue, React.ReactNode> = {
+    installation: (
+      <EVChargingInstallationDetails
+        formData={formData}
+        onUpdate={onUpdate}
+        customerId={customerId}
+        onCustomerIdChange={onCustomerIdChange}
+      />
+    ),
+    supply: <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />,
+    testing: <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />,
+    declarations: <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />,
+  };
+
+  const isLast = currentTab === 'declarations';
 
   return (
-    <SmartTabs
-      tabs={smartTabs}
-      value={currentTab}
-      onValueChange={onTabChange}
-      completedTabs={completedTabs}
-      showProgress
-    />
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack
+            ? 'motion-safe:animate-mw-step-back'
+            : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <EVChargingTabNavigation
+        {...tabNavigationProps}
+        onGenerateCertificate={isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate}
+        canGenerateCertificate={canGenerateCertificate}
+        reportId={reportId}
+        formData={formData}
+      />
+    </>
   );
 };
 

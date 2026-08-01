@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { MethodStatementData, WizardStep } from '@/types/method-statement';
-import { PageHero, StatStrip } from '@/components/college/primitives';
-import { SafetyModuleShell } from '../common/SafetyModuleShell';
+import SafetyDocShell, {
+  computeSafetyDocProgress,
+  type SafetyDocStepConfig,
+} from '../common/SafetyDocShell';
 import TemplateSelectionStep from './steps/TemplateSelectionStep';
 import DetailsStep from './steps/DetailsStep';
 import StepsManagementStep from './steps/StepsManagementStep';
@@ -21,8 +22,31 @@ const STEPS: { id: WizardStep; title: string; description: string }[] = [
   { id: 'review', title: 'Review', description: 'Generate document' },
 ];
 
+/**
+ * Short labels for the step tabs, plus the fields each step needs before it can
+ * honestly call itself done.
+ *
+ * The old progress bar was `(currentStepIndex + 1) / stepCount` — it measured
+ * how far you had *clicked*, not how much of the document existed. Landing on
+ * step 3 of 5 with every field empty displayed 60%. Template and hazards carry
+ * no required fields because both are genuinely optional: you may start from
+ * scratch, and a job may have no hazards to link.
+ */
+const STEP_CONFIGS: SafetyDocStepConfig<WizardStep>[] = [
+  { id: 'template', label: 'Template', requiredFields: [] },
+  {
+    id: 'details',
+    label: 'Details',
+    requiredFields: ['jobTitle', 'location', 'contractor', 'supervisor', 'workType'],
+  },
+  { id: 'steps', label: 'Method', requiredFields: ['steps'] },
+  { id: 'hazards', label: 'Hazards', requiredFields: [] },
+  { id: 'review', label: 'Review', requiredFields: ['reviewDate'] },
+];
+
 const MethodStatementWizard = ({ onBack }: MethodStatementWizardProps) => {
   const [currentStep, setCurrentStep] = useState<WizardStep>('template');
+  const [goingBack, setGoingBack] = useState(false);
   const [linkedHazards, setLinkedHazards] = useState<string[]>([]);
   const [methodStatementData, setMethodStatementData] = useState<MethodStatementData>({
     jobTitle: '',
@@ -40,6 +64,9 @@ const MethodStatementWizard = ({ onBack }: MethodStatementWizardProps) => {
 
   const currentStepIndex = STEPS.findIndex((step) => step.id === currentStep);
 
+  // Progress from what is filled in, not from how far the user has clicked.
+  const progress = computeSafetyDocProgress(STEP_CONFIGS, methodStatementData);
+
   // Scroll to top when the step changes.
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -48,6 +75,7 @@ const MethodStatementWizard = ({ onBack }: MethodStatementWizardProps) => {
   const handleNext = () => {
     const nextIndex = currentStepIndex + 1;
     if (nextIndex < STEPS.length) {
+      setGoingBack(false);
       setCurrentStep(STEPS[nextIndex].id);
     }
   };
@@ -55,6 +83,7 @@ const MethodStatementWizard = ({ onBack }: MethodStatementWizardProps) => {
   const handlePrevious = () => {
     const prevIndex = currentStepIndex - 1;
     if (prevIndex >= 0) {
+      setGoingBack(true);
       setCurrentStep(STEPS[prevIndex].id);
     }
   };
@@ -147,55 +176,44 @@ const MethodStatementWizard = ({ onBack }: MethodStatementWizardProps) => {
   const stepCount = STEPS.length;
 
   return (
-    <SafetyModuleShell
-      onBack={onBack ?? (() => {})}
-      moduleName="Method Statement"
-      hero={
-        <PageHero
-          eyebrow="Method Statement"
-          title="Build a safe system of work"
-          description="Start from a proven template or from scratch, set out the job, sequence the method steps, link the hazards and controls, then generate a BS 7671-compliant document."
-          tone="amber"
-        />
-      }
-      stats={
-        <StatStrip
-          stats={STEPS.map((step, i) => ({
-            value: `0${i + 1}`,
-            label: step.title,
-            sub: step.description,
-            accent: step.id === currentStep,
-          }))}
-          columns={5}
-        />
-      }
-    >
-      {/* Step progress bar */}
-      <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
-        <motion.div
-          className="h-full bg-elec-yellow"
-          initial={{ width: 0 }}
-          animate={{ width: `${((currentStepIndex + 1) / stepCount) * 100}%` }}
-          transition={{ duration: 0.3 }}
-        />
-      </div>
-      <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Step {currentStepIndex + 1} of {stepCount}
-        </span>
-        <span className="text-[11.5px] text-white/55">{current?.description}</span>
-      </div>
+    <>
+      <SafetyDocShell
+        onBack={onBack ?? (() => {})}
+        title="Method Statement"
+        subtitle={
+          methodStatementData.jobTitle
+            ? `${methodStatementData.jobTitle} · HSG150`
+            : 'Safe system of work · HSG150'
+        }
+        progressPercent={progress.progressPercent}
+        steps={progress.steps}
+        currentStep={currentStep}
+        onStepChange={(id) => {
+          const target = STEPS.findIndex((s) => s.id === id);
+          setGoingBack(target < currentStepIndex);
+          setCurrentStep(id as WizardStep);
+          window.scrollTo({ top: 0 });
+        }}
+        completedSteps={progress.completedSteps}
+      />
 
-      {/* Step content */}
-      <motion.div
-        key={currentStep}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
-      >
-        {renderStepContent()}
-      </motion.div>
-    </SafetyModuleShell>
+      <div className="mx-auto max-w-5xl px-4 lg:px-8 space-y-4 pb-24">
+        <div className="flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            Step {currentStepIndex + 1} of {stepCount}
+          </span>
+          <span className="text-[11.5px] text-white">{current?.description}</span>
+        </div>
+
+        {/* Direction-aware step transition per the design system. */}
+        <div
+          key={currentStep}
+          className={goingBack ? 'animate-mw-step-back' : 'animate-mw-step-in'}
+        >
+          {renderStepContent()}
+        </div>
+      </div>
+    </>
   );
 };
 

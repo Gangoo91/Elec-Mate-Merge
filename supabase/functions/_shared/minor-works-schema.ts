@@ -189,6 +189,7 @@ export const minorWorksSchema = z.object({
       ir_neutral_earth: z.string().default('N/A'),
       // General tests
       polarity: z.string().default('N/A'),
+      ze: z.string().default('N/A'),
       zs: z.string().default('N/A'),
       max_zs: z.string().default('N/A'),
       pfc: z.string().default('N/A'),
@@ -200,6 +201,7 @@ export const minorWorksSchema = z.object({
       rcd_rating: z.string().default('N/A'),
       // Functional
       functional_test: z.string().default('N/A'),
+      functional_test_notes: z.string().default(''),
       // AFDD
       afdd_test_button: z.string().default('N/A'),
       afdd_trip_time: z.string().default('N/A'),

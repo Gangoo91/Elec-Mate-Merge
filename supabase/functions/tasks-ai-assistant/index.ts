@@ -18,6 +18,8 @@ import {
 } from '../_shared/mate-business-brain.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { BUSINESS_HUB_SOUL } from '../_shared/business-hub-soul.ts';
+import { setAiLogFn } from '../_shared/ai-log.ts';
+setAiLogFn('tasks-ai-assistant');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',

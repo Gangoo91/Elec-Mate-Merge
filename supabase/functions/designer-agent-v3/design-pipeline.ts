@@ -6,7 +6,7 @@
  * Apply only narrow, UK-specific safety tripwires after — no heavy auto-correction.
  */
 
-import { validateCableCapacity } from './cable-capacity-validator.ts';
+import { applyCableCapacityTripwire } from './cable-capacity-validator.ts';
 import { applyZsTripwire } from './zs-table-validator.ts';
 import { applyCableTypeTripwire } from './cable-type-validator.ts';
 import { applyRingVdTripwire } from './vd-ring-validator.ts';
@@ -119,6 +119,21 @@ export class DesignPipeline {
       (design as any).cableTypeCorrections = cableTypeResult.corrections;
     }
 
+    // Tripwire 1e: Cable capacity (ELE-1425). Runs AFTER the cable-type tripwire
+    // — the type decides which BS 7671 table applies — and BEFORE expected test
+    // values, because correcting a size changes R1+R2, Zs and Vd downstream.
+    // Previously this was flag-only and ran last, so a 1.5mm² cable proposed for
+    // a 330A circuit stayed in the design and the warning was dropped by the UI.
+    const capacityResult = applyCableCapacityTripwire(design.circuits, this.logger);
+    design.circuits = capacityResult.circuits;
+    if (capacityResult.corrections.length > 0) {
+      (design as any).cableCapacityCorrections = capacityResult.corrections;
+    }
+    if (capacityResult.uncorrectable.length > 0) {
+      // No tabulated size fixes these — the design needs a human decision.
+      (design as any).cableCapacityIssues = capacityResult.uncorrectable;
+    }
+
     // Tripwire 1d: Ring final voltage-drop. AI sometimes calcs ring as radial —
     // override with ring formula (parallel paths, worst case at mid-point = Vd/4).
     const ringVdResult = applyRingVdTripwire(design.circuits, this.logger);
@@ -133,27 +148,26 @@ export class DesignPipeline {
       ensureExpectedTestValues(circuit, ze, this.logger)
     );
 
-    // Tripwire 2: Cable capacity sanity check (Iz ≥ Ib after derating). Flag-only, no auto-correct.
-    const cableCapacityIssues: any[] = [];
-    design.circuits.forEach((circuit, index) => {
-      const validation = validateCableCapacity(circuit, this.logger);
-      if (!validation.valid) {
-        cableCapacityIssues.push({
-          circuitNumber: circuit.circuitNumber || index + 1,
-          circuitName: circuit.name,
-          error: validation.error,
-          recommendation: validation.recommendation,
-        });
-      }
-    });
-
-    if (cableCapacityIssues.length > 0) {
-      this.logger.warn('Cable capacity tripwire flagged issues', {
-        count: cableCapacityIssues.length,
-        issues: cableCapacityIssues,
+    // ELE-1426 — ensureExpectedTestValues writes the deterministic Zs into
+    // `expectedTests` only. `calculations.zs` is what most result surfaces read,
+    // and it kept whatever the model returned — frequently 0, which then
+    // rendered as "0.00 / 2.73" with a green tick because 0 <= 2.73. The correct
+    // value was being computed all along and written to the wrong field.
+    design.circuits = design.circuits.map((circuit) => {
+      const derived = Number((circuit as any).expectedTests?.zs?.expected);
+      if (!Number.isFinite(derived) || derived <= 0) return circuit;
+      const current = Number(circuit.calculations?.zs);
+      if (Number.isFinite(current) && Math.abs(current - derived) < 0.001) return circuit;
+      this.logger.info('Zs synced from deterministic calculation', {
+        circuit: circuit.name,
+        was: circuit.calculations?.zs ?? null,
+        now: derived,
       });
-      (design as any).cableCapacityIssues = cableCapacityIssues;
-    }
+      return {
+        ...circuit,
+        calculations: { ...circuit.calculations, zs: derived },
+      };
+    });
 
     // Phase 7: Multi-pass critique loop. AI reviews the whole design as a system,
     // catches concerns per-circuit checks miss (discrimination, phase imbalance,

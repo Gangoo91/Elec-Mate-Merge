@@ -159,7 +159,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
           tone="amber"
           actions={
             bookmarks.size > 0 ? undefined : (
-              <span className="text-[12px] text-white/55 self-end">
+              <span className="text-[12px] text-white self-end">
                 Tap any hazard for full controls
               </span>
             )
@@ -226,7 +226,7 @@ export const HazardDatabaseV2 = ({ onBack }: HazardDatabaseV2Props) => {
                   trailing={
                     <div className="flex flex-col items-end gap-1">
                       <RiskPill riskRating={hazard.riskRating} />
-                      <span className="text-[11px] text-white/45 tabular-nums">
+                      <span className="text-[11px] text-white tabular-nums">
                         {controls} control{controls !== 1 ? 's' : ''}
                       </span>
                     </div>

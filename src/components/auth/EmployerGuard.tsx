@@ -4,6 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Building2, ArrowLeft, Users, FileText, HardHat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { isEmployerUser } from '@/config/employerAccess';
+import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
+import { Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface EmployerGuardProps {
@@ -19,8 +21,23 @@ interface EmployerGuardProps {
 export default function EmployerGuard({ children }: EmployerGuardProps) {
   const { profile, user } = useAuth();
   const navigate = useNavigate();
+  // Owners pass synchronously; co-admins need a round trip (and possibly a
+  // membership claim), so hold the gate until that resolves rather than
+  // flashing "no access" at someone who has it.
+  const owns = isEmployerUser(profile, user?.email);
+  const { data: isCoAdmin = false, isLoading: coAdminLoading } = useEmployerCoAdmin(
+    owns ? undefined : user?.id
+  );
 
-  if (!isEmployerUser(profile, user?.email)) {
+  if (!owns && coAdminLoading) {
+    return (
+      <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center">
+        <Loader2 className="h-10 w-10 text-yellow-400 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!owns && !isCoAdmin) {
     return (
       <div className="min-h-screen bg-[#0a0f1a] flex flex-col items-center justify-center p-4">
         {/* Decorative background glow */}

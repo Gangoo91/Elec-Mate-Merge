@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CheckCircle2, Circle, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 /* ==========================================================================
    FirstRunChecklist — walks a new employer to their first wow in minutes:
@@ -30,11 +31,11 @@ export function FirstRunChecklist({ onNavigate }: Props) {
         supabase
           .from('employer_employees')
           .select('id', { count: 'exact', head: true })
-          .eq('employer_id', user.id),
+          .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id),
         supabase
           .from('employer_employees')
           .select('id', { count: 'exact', head: true })
-          .eq('employer_id', user.id)
+          .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
           .not('user_id', 'is', null),
         // Scope to jobs/tasks this employer OWNS — worker-side RLS policies
         // also grant reads on jobs the user is merely assigned to, which
@@ -43,11 +44,11 @@ export function FirstRunChecklist({ onNavigate }: Props) {
         supabase
           .from('employer_jobs')
           .select('id', { count: 'exact', head: true })
-          .eq('user_id', user.id),
+          .eq('user_id', (await getActingEmployerId(user.id)) ?? user.id),
         supabase
           .from('employer_job_tasks')
           .select('id', { count: 'exact', head: true })
-          .eq('employer_id', user.id),
+          .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id),
       ]);
 
       return {

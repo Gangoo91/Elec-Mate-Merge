@@ -325,7 +325,7 @@ export const reportCloud = {
     const status = options?.status && options.status !== 'all' ? options.status : null;
 
     // Called loosely — the RPC isn't in the generated Supabase types yet.
-    const rpc = supabase.rpc as unknown as (
+    const rpc = (supabase.rpc.bind(supabase) as unknown) as (
       fn: string,
       args: Record<string, unknown>
     ) => Promise<{ data: unknown; error: { message?: string } | null }>;
@@ -401,7 +401,7 @@ export const reportCloud = {
     const empty = { total: 0, mine: 0, team: 0, scopedTotal: 0, byType: {}, byStatus: {} };
     try {
       // Called loosely — the RPC isn't in the generated Supabase types yet.
-      const rpc = supabase.rpc as unknown as (
+      const rpc = (supabase.rpc.bind(supabase) as unknown) as (
         fn: string,
         args: Record<string, unknown>
       ) => Promise<{ data: unknown; error: { message?: string } | null }>;
@@ -766,7 +766,7 @@ export const reportCloud = {
       if (!qsEditNotified.has(reportId)) {
         qsEditNotified.add(reportId);
         (
-          supabase.rpc as unknown as (
+          (supabase.rpc.bind(supabase) as unknown) as (
             fn: string,
             args: Record<string, unknown>
           ) => Promise<{ error: unknown }>

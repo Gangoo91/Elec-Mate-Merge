@@ -12,9 +12,10 @@ import {
   FormCard,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
   type Tone,
 } from '@/components/college/primitives';
+
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from '../common/SafetyDocField';
 import { SafetyMasthead } from '../common/SafetyModuleShell';
 import { ReadinessGate } from '../common/ReadinessGate';
 import { EquipmentBarcodeScanner } from './EquipmentBarcodeScanner';
@@ -301,17 +302,19 @@ export function EquipmentFormWizard({
                   <Field label="Equipment name" required>
                     <input
                       placeholder="e.g. Megger PAT420"
-                      className={cn(inputClass, errors.name && 'border-red-500/60')}
+                      className={cn(safetyInputCn, errors.name && 'border-red-500/60')}
                       {...register('name')}
                     />
-                    {errors.name && <p className="text-[11px] text-red-400 mt-1">{errors.name.message}</p>}
+                    {errors.name && (
+                      <p className="text-[11px] text-red-400 mt-1">{errors.name.message}</p>
+                    )}
                   </Field>
 
                   <Field label="Serial number">
                     <div className="flex items-center gap-2">
                       <input
                         placeholder="e.g. PAT-2024-001"
-                        className={cn(inputClass, 'flex-1', errors.serial_number && 'border-red-500/60')}
+                        className={cn('flex-1', errors.serial_number && 'border-red-500/60')}
                         {...register('serial_number')}
                       />
                       <button
@@ -351,7 +354,10 @@ export function EquipmentFormWizard({
                   <Field label="Last test date">
                     <input
                       type="date"
-                      className={cn(inputClass, '[color-scheme:dark]', errors.last_inspection && 'border-red-500/60')}
+                      className={cn(
+                        '[color-scheme:dark]',
+                        errors.last_inspection && 'border-red-500/60'
+                      )}
                       {...register('last_inspection')}
                     />
                   </Field>
@@ -363,7 +369,7 @@ export function EquipmentFormWizard({
                   />
 
                   {nextInspection && (
-                    <div className="p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+                    <div className="border-y border-white/[0.1] bg-white/[0.04] p-3">
                       <Eyebrow>Next test due</Eyebrow>
                       <p className="mt-1 text-[15px] font-semibold text-white">{nextInspection}</p>
                     </div>
@@ -372,18 +378,39 @@ export function EquipmentFormWizard({
 
                 <FormCard eyebrow="Warranty (optional)">
                   <Field label="Warranty expiry date">
-                    <input type="date" className={cn(inputClass, '[color-scheme:dark]')} {...register('warranty_expiry')} />
+                    <input
+                      type="date"
+                      className={cn(safetyInputCn, '[color-scheme:dark]')}
+                      {...register('warranty_expiry')}
+                    />
                   </Field>
                   <Field label="Warranty provider">
-                    <input placeholder="e.g. Megger, Fluke, Kewtech" className={inputClass} {...register('warranty_provider')} />
+                    <input
+                      placeholder="e.g. Megger, Fluke, Kewtech"
+                      className={safetyInputCn}
+                      {...register('warranty_provider')}
+                    />
                   </Field>
                   <Field label="Claim contact">
-                    <input placeholder="e.g. 0800 123 456 or support@megger.com" className={inputClass} {...register('warranty_claim_contact')} />
+                    <input
+                      placeholder="e.g. 0800 123 456 or support@megger.com"
+                      className={safetyInputCn}
+                      {...register('warranty_claim_contact')}
+                    />
                   </Field>
 
                   {warrantyPreview && (
-                    <div className={cn('p-3 rounded-xl border', warrantyToneClass[warrantyTone[warrantyPreview.status]])}>
-                      <Eyebrow className={warrantyToneClass[warrantyTone[warrantyPreview.status]].split(' ').pop()}>
+                    <div
+                      className={cn(
+                        'p-3 rounded-xl border',
+                        warrantyToneClass[warrantyTone[warrantyPreview.status]]
+                      )}
+                    >
+                      <Eyebrow
+                        className={warrantyToneClass[warrantyTone[warrantyPreview.status]]
+                          .split(' ')
+                          .pop()}
+                      >
                         Warranty status
                       </Eyebrow>
                       <p className="mt-1 text-[15px] font-semibold">
@@ -415,19 +442,23 @@ export function EquipmentFormWizard({
                 <FormCard eyebrow="Equipment info">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-[12px] text-white/55">Category</span>
+                      <span className="text-[12px] text-white">Category</span>
                       <span className="text-[12.5px] font-medium text-white">
                         {selectedCategory?.label || 'Equipment'}
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-[12px] text-white/55">Name</span>
-                      <span className="text-[12.5px] font-medium text-white">{watchedValues.name || 'Unnamed'}</span>
+                      <span className="text-[12px] text-white">Name</span>
+                      <span className="text-[12.5px] font-medium text-white">
+                        {watchedValues.name || 'Unnamed'}
+                      </span>
                     </div>
                     {watchedValues.serial_number && (
                       <div className="flex items-center justify-between gap-3">
-                        <span className="text-[12px] text-white/55">Serial</span>
-                        <span className="text-[12.5px] font-medium text-white">{watchedValues.serial_number}</span>
+                        <span className="text-[12px] text-white">Serial</span>
+                        <span className="text-[12.5px] font-medium text-white">
+                          {watchedValues.serial_number}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -436,11 +467,13 @@ export function EquipmentFormWizard({
                 <FormCard eyebrow="Testing schedule">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-[12px] text-white/55">Location</span>
-                      <span className="text-[12.5px] font-medium text-white">{watchedValues.location || 'Not set'}</span>
+                      <span className="text-[12px] text-white">Location</span>
+                      <span className="text-[12.5px] font-medium text-white">
+                        {watchedValues.location || 'Not set'}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-[12px] text-white/55">Last test</span>
+                      <span className="text-[12px] text-white">Last test</span>
                       <span className="text-[12.5px] font-medium text-white">
                         {watchedValues.last_inspection
                           ? new Date(watchedValues.last_inspection).toLocaleDateString('en-GB')
@@ -449,12 +482,14 @@ export function EquipmentFormWizard({
                     </div>
                     {nextInspection && (
                       <div className="flex items-center justify-between gap-3">
-                        <span className="text-[12px] text-white/55">Next test</span>
-                        <span className="text-[12.5px] font-medium text-emerald-400">{nextInspection}</span>
+                        <span className="text-[12px] text-white">Next test</span>
+                        <span className="text-[12.5px] font-medium text-emerald-400">
+                          {nextInspection}
+                        </span>
                       </div>
                     )}
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-[12px] text-white/55">Frequency</span>
+                      <span className="text-[12px] text-white">Frequency</span>
                       <span className="text-[12.5px] font-medium text-white">
                         {formatFrequency(watchedValues.inspection_interval_days)}
                       </span>
@@ -466,21 +501,25 @@ export function EquipmentFormWizard({
                   <FormCard eyebrow="Warranty">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between gap-3">
-                        <span className="text-[12px] text-white/55">Expiry</span>
+                        <span className="text-[12px] text-white">Expiry</span>
                         <span className="text-[12.5px] font-medium text-white">
                           {new Date(watchedValues.warranty_expiry).toLocaleDateString('en-GB')}
                         </span>
                       </div>
                       {watchedValues.warranty_provider && (
                         <div className="flex items-center justify-between gap-3">
-                          <span className="text-[12px] text-white/55">Provider</span>
-                          <span className="text-[12.5px] font-medium text-white">{watchedValues.warranty_provider}</span>
+                          <span className="text-[12px] text-white">Provider</span>
+                          <span className="text-[12.5px] font-medium text-white">
+                            {watchedValues.warranty_provider}
+                          </span>
                         </div>
                       )}
                       {watchedValues.warranty_claim_contact && (
                         <div className="flex items-center justify-between gap-3">
-                          <span className="text-[12px] text-white/55">Claim contact</span>
-                          <span className="text-[12.5px] font-medium text-white">{watchedValues.warranty_claim_contact}</span>
+                          <span className="text-[12px] text-white">Claim contact</span>
+                          <span className="text-[12.5px] font-medium text-white">
+                            {watchedValues.warranty_claim_contact}
+                          </span>
                         </div>
                       )}
                     </div>
@@ -491,9 +530,7 @@ export function EquipmentFormWizard({
                   <Field label="Notes (optional)">
                     <textarea
                       placeholder="Add any notes about this equipment…"
-                      className={cn(
-                        'w-full min-h-[80px] px-4 py-3 rounded-xl text-[13px] bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 resize-none touch-manipulation'
-                      )}
+                      className={cn(cn(safetyTextareaCn, 'min-h-[80px]'))}
                       {...register('condition_notes')}
                     />
                   </Field>
@@ -503,7 +540,7 @@ export function EquipmentFormWizard({
                     maxPhotos={5}
                     label="Equipment photos"
                   />
-                  <p className="text-[11px] text-white/45">
+                  <p className="text-[11px] text-white">
                     Tip: include warranty receipts or proof of purchase.
                   </p>
                 </FormCard>

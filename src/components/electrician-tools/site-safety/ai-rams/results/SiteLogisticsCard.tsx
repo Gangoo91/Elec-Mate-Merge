@@ -22,9 +22,7 @@ const LogisticsRow: React.FC<LogisticsRowProps> = ({ label, value, tone = 'defau
       >
         {label}
       </span>
-      <span className="text-[13.5px] text-white/85 leading-relaxed flex-1 min-w-0">
-        {value}
-      </span>
+      <span className="text-[13.5px] text-white/85 leading-relaxed flex-1 min-w-0">{value}</span>
     </div>
   );
 };

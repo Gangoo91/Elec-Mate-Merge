@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -24,7 +24,13 @@ import { useRAMSDocuments } from '@/hooks/useRAMSDocuments';
 import type { Json } from '@/integrations/supabase/types';
 
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 
 import {
@@ -43,13 +49,12 @@ import {
   PrimaryButton,
   SecondaryButton,
   DestructiveButton,
-  inputClass,
-  selectTriggerClass,
   selectContentClass,
   toneAccent,
   type Tone,
 } from '@/components/college/primitives';
 
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
 import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { SignatureField } from './common/SignatureField';
 import { LocationAutoFill } from './common/LocationAutoFill';
@@ -73,11 +78,7 @@ import { useSparkProjects } from '@/hooks/useSparkProjects';
 // ─── Types ───
 
 type PermitType =
-  | 'hot-work'
-  | 'confined-space'
-  | 'electrical-isolation'
-  | 'working-at-height'
-  | 'excavation';
+  'hot-work' | 'confined-space' | 'electrical-isolation' | 'working-at-height' | 'excavation';
 type PermitStatus = 'active' | 'expired' | 'cancelled' | 'closed';
 
 interface PermitHazard {
@@ -137,8 +138,18 @@ const PERMIT_TYPES: {
     id: 'hot-work',
     label: 'Hot Work',
     description: 'Welding, cutting, brazing, soldering or any work producing sparks or flame',
-    defaultHazards: ['Fire risk from sparks and hot metal', 'Fume inhalation', 'Burns from hot surfaces', 'Ignition of nearby combustibles'],
-    defaultPPE: ['Welding helmet/goggles', 'Heat-resistant gloves', 'Fire-retardant overalls', 'Steel toe-cap boots'],
+    defaultHazards: [
+      'Fire risk from sparks and hot metal',
+      'Fume inhalation',
+      'Burns from hot surfaces',
+      'Ignition of nearby combustibles',
+    ],
+    defaultPPE: [
+      'Welding helmet/goggles',
+      'Heat-resistant gloves',
+      'Fire-retardant overalls',
+      'Steel toe-cap boots',
+    ],
     defaultPrecautions: [
       'Remove combustible materials within 10m radius — BS 9999',
       'Fire extinguisher (CO₂ or dry powder) within 2m — RRO 2005',
@@ -152,7 +163,12 @@ const PERMIT_TYPES: {
     label: 'Confined Space',
     description: 'Entry into enclosed spaces with limited access/egress or poor ventilation',
     defaultHazards: ['Oxygen depletion', 'Toxic atmosphere', 'Engulfment', 'Limited access/egress'],
-    defaultPPE: ['Gas monitor (4-head)', 'Safety harness & lanyard', 'Breathing apparatus', 'Communication equipment'],
+    defaultPPE: [
+      'Gas monitor (4-head)',
+      'Safety harness & lanyard',
+      'Breathing apparatus',
+      'Communication equipment',
+    ],
     defaultPrecautions: [
       'Continuous atmospheric monitoring (O₂, LEL, CO, H₂S) — Confined Spaces Regs 1997',
       'Written rescue plan in place before entry — ACOP L101',
@@ -165,8 +181,18 @@ const PERMIT_TYPES: {
     id: 'electrical-isolation',
     label: 'Electrical Isolation',
     description: 'Isolation of electrical systems for safe working — lock-off/tag-out',
-    defaultHazards: ['Electric shock', 'Arc flash', 'Residual stored energy', 'Incorrect identification of circuits'],
-    defaultPPE: ['Insulated gloves (Class 0 min.)', 'Safety glasses/face shield', 'Arc-flash rated clothing', 'Insulated tools'],
+    defaultHazards: [
+      'Electric shock',
+      'Arc flash',
+      'Residual stored energy',
+      'Incorrect identification of circuits',
+    ],
+    defaultPPE: [
+      'Insulated gloves (Class 0 min.)',
+      'Safety glasses/face shield',
+      'Arc-flash rated clothing',
+      'Insulated tools',
+    ],
     defaultPrecautions: [
       'Prove dead at point of work using 3-point test — GS38',
       'Lock-off with personal padlock and unique key — BS 7671 Reg 537.2',
@@ -179,8 +205,18 @@ const PERMIT_TYPES: {
     id: 'working-at-height',
     label: 'Working at Height',
     description: 'Work where a person could fall a distance liable to cause personal injury',
-    defaultHazards: ['Falls from height', 'Falling objects', 'Scaffold/platform collapse', 'Adverse weather conditions'],
-    defaultPPE: ['Safety harness & lanyard', 'Hard hat with chin strap', 'Non-slip footwear', 'Tool tethers'],
+    defaultHazards: [
+      'Falls from height',
+      'Falling objects',
+      'Scaffold/platform collapse',
+      'Adverse weather conditions',
+    ],
+    defaultPPE: [
+      'Safety harness & lanyard',
+      'Hard hat with chin strap',
+      'Non-slip footwear',
+      'Tool tethers',
+    ],
     defaultPrecautions: [
       'Guard rails (min 950mm), mid-rails, and toe boards in place — WAH Regs 2005 Sch 2',
       'Check weather conditions — cease work in winds >40 mph or heavy rain',
@@ -193,7 +229,12 @@ const PERMIT_TYPES: {
     id: 'excavation',
     label: 'Excavation',
     description: 'Digging, trenching or ground disturbance work',
-    defaultHazards: ['Trench collapse', 'Underground services strike', 'Falling into excavation', 'Flooding'],
+    defaultHazards: [
+      'Trench collapse',
+      'Underground services strike',
+      'Falling into excavation',
+      'Flooding',
+    ],
     defaultPPE: ['Hard hat', 'Hi-vis vest', 'Steel toe-cap boots', 'Gloves'],
     defaultPrecautions: [
       'CAT & Genny scan completed and results recorded — HSG47',
@@ -215,7 +256,9 @@ const STATUS_LABEL: Record<PermitStatus, string> = {
 // ─── Small presentational helpers (monochrome, no icons) ───
 
 const fmtDate = (d?: string | null) =>
-  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
 
 // Colour follows one meaningful dimension: status + expiry urgency.
 function statusTone(status: PermitStatus, expiring?: boolean): Tone | undefined {
@@ -231,7 +274,7 @@ const STATUS_PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string
   green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
 function StatusPill({ status, expiring }: { status: PermitStatus; expiring?: boolean }) {
@@ -254,12 +297,12 @@ function remainingClasses(endTime: string, now: Date): string {
   const diff = new Date(endTime).getTime() - now.getTime();
   if (diff <= 0) return 'text-red-400';
   if (diff < 3600000) return 'text-amber-400';
-  return 'text-white/45';
+  return 'text-white';
 }
 
-function Chip({ children }: { children: React.ReactNode }) {
+function Chip({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center px-2 py-1 rounded-lg text-[11.5px] text-white/75 bg-white/[0.05] border border-white/10">
+    <span className="inline-flex items-center px-2 py-1 rounded-lg text-[11.5px] text-white bg-white/[0.05] border border-white/10">
       {children}
     </span>
   );
@@ -274,7 +317,9 @@ function closeOutItems(type: PermitType): string[] {
   ];
   const extra: Record<PermitType, string[]> = {
     'hot-work': ['Fire watch completed (min. 60 min) and area checked for smouldering'],
-    'electrical-isolation': ['Locks-off and danger tags removed; system safely re-energised or handed over'],
+    'electrical-isolation': [
+      'Locks-off and danger tags removed; system safely re-energised or handed over',
+    ],
     'working-at-height': ['Access equipment removed or made safe; exclusion zone cleared'],
     'confined-space': ['All personnel accounted for and signed out of the space'],
     excavation: ['Excavation made safe — barriers, covers and edge protection in place'],
@@ -392,7 +437,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const { data: jobs = [] } = useSparkProjects('active');
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
+  const jobTitleFor = (id: string | null) =>
+    id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
   // Remote receiver sign-off
   const [receiverRemote, setReceiverRemote] = useState(false);
   const [showShareLink, setShowShareLink] = useState(false);
@@ -405,11 +451,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const { data: revisions = [] } = usePermitRevisions(viewingPermit?.id ?? null);
 
   const relatedFireWatches = useMemo(
-    () => (viewingPermit ? allFireWatchRecords.filter((fw) => fw.permit_id === viewingPermit.id) : []),
+    () =>
+      viewingPermit ? allFireWatchRecords.filter((fw) => fw.permit_id === viewingPermit.id) : [],
     [allFireWatchRecords, viewingPermit]
   );
   const relatedIsolations = useMemo(
-    () => (viewingPermit ? allIsolationRecords.filter((ir) => ir.permit_id === viewingPermit.id) : []),
+    () =>
+      viewingPermit ? allIsolationRecords.filter((ir) => ir.permit_id === viewingPermit.id) : [],
     [allIsolationRecords, viewingPermit]
   );
 
@@ -431,7 +479,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       ...prev,
       ...(data.title ? { title: data.title as string } : {}),
       ...(data.description ? { description: data.description as string } : {}),
-      ...(data.emergency_procedures ? { emergency_procedures: data.emergency_procedures as string } : {}),
+      ...(data.emergency_procedures
+        ? { emergency_procedures: data.emergency_procedures as string }
+        : {}),
       ...(data.duration_hours ? { duration_hours: data.duration_hours as number } : {}),
     }));
     if (data.hazards) setHazards(data.hazards as PermitHazard[]);
@@ -442,8 +492,28 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
   // ─── Draft persistence (create only) ───
   const permitDraftData = useMemo(
-    () => ({ formData, selectedType, hazards, precautions, ppeRequired, autoFireWatch, linkedRamsId, linkedRamsTitle, wizardStep }),
-    [formData, selectedType, hazards, precautions, ppeRequired, autoFireWatch, linkedRamsId, linkedRamsTitle, wizardStep]
+    () => ({
+      formData,
+      selectedType,
+      hazards,
+      precautions,
+      ppeRequired,
+      autoFireWatch,
+      linkedRamsId,
+      linkedRamsTitle,
+      wizardStep,
+    }),
+    [
+      formData,
+      selectedType,
+      hazards,
+      precautions,
+      ppeRequired,
+      autoFireWatch,
+      linkedRamsId,
+      linkedRamsTitle,
+      wizardStep,
+    ]
   );
 
   const {
@@ -451,7 +521,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     recoveredData: recoveredDraft,
     clearDraft,
     dismissRecovery: dismissDraft,
-  } = useLocalDraft({ key: 'permit-to-work', data: permitDraftData, enabled: showWizard && wizardMode === 'create' && wizardStep > 0 });
+  } = useLocalDraft({
+    key: 'permit-to-work',
+    data: permitDraftData,
+    enabled: showWizard && wizardMode === 'create' && wizardStep > 0,
+  });
 
   const restoreDraft = () => {
     if (!recoveredDraft) return;
@@ -460,9 +534,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     if (recoveredDraft.hazards) setHazards(recoveredDraft.hazards);
     if (recoveredDraft.precautions) setPrecautions(recoveredDraft.precautions);
     if (recoveredDraft.ppeRequired) setPpeRequired(recoveredDraft.ppeRequired);
-    if (typeof recoveredDraft.autoFireWatch === 'boolean') setAutoFireWatch(recoveredDraft.autoFireWatch);
+    if (typeof recoveredDraft.autoFireWatch === 'boolean')
+      setAutoFireWatch(recoveredDraft.autoFireWatch);
     if (recoveredDraft.linkedRamsId !== undefined) setLinkedRamsId(recoveredDraft.linkedRamsId);
-    if (recoveredDraft.linkedRamsTitle !== undefined) setLinkedRamsTitle(recoveredDraft.linkedRamsTitle);
+    if (recoveredDraft.linkedRamsTitle !== undefined)
+      setLinkedRamsTitle(recoveredDraft.linkedRamsTitle);
     if (recoveredDraft.wizardStep !== undefined) setWizardStep(recoveredDraft.wizardStep);
     dismissDraft();
   };
@@ -502,8 +578,14 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const selectPermitType = (type: PermitType) => {
     const config = PERMIT_TYPES.find((t) => t.id === type)!;
     setSelectedType(type);
-    setFormData((prev) => ({ ...prev, title: `${config.label} Permit`, description: config.description }));
-    setHazards(config.defaultHazards.map((h, i) => ({ id: `h-${i}`, description: h, controls: '' })));
+    setFormData((prev) => ({
+      ...prev,
+      title: `${config.label} Permit`,
+      description: config.description,
+    }));
+    setHazards(
+      config.defaultHazards.map((h, i) => ({ id: `h-${i}`, description: h, controls: '' }))
+    );
     setPrecautions([...config.defaultPrecautions]);
     setPpeRequired([...config.defaultPPE]);
     setAutoFireWatch(type === 'hot-work');
@@ -619,7 +701,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     if (navigator.share) {
       try {
         await navigator.share({ title: 'Permit to Work — sign-off', url: signLink });
-      } catch { /* cancelled */ }
+      } catch {
+        /* cancelled */
+      }
     } else {
       copySignLink();
     }
@@ -661,7 +745,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       resetWizard();
       // Remote receiver → immediately surface the signing link to share.
       if (remote && created?.id) await openSignLink(created.id);
-    } catch { /* toast handled by hook */ }
+    } catch {
+      /* toast handled by hook */
+    }
   };
 
   const submitAmendment = async () => {
@@ -692,7 +778,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       });
       setShowWizard(false);
       resetWizard();
-    } catch { /* toast handled by hook */ }
+    } catch {
+      /* toast handled by hook */
+    }
   };
 
   const closePermit = async (id: string, closedBy?: string) => {
@@ -700,20 +788,26 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       await closePermitMutation.mutateAsync({ id, closedBy });
       setShowCloseOut(false);
       setViewingPermit(null);
-    } catch { /* handled */ }
+    } catch {
+      /* handled */
+    }
   };
   const cancelPermit = async (id: string) => {
     try {
       await cancelPermitMutation.mutateAsync(id);
       setViewingPermit(null);
-    } catch { /* handled */ }
+    } catch {
+      /* handled */
+    }
   };
   const extendPermit = async (id: string) => {
     try {
       await extendPermitMutation.mutateAsync({ id, additionalHours: extensionHours });
       setShowExtendSheet(false);
       setExtensionHours(2);
-    } catch { /* handled */ }
+    } catch {
+      /* handled */
+    }
   };
 
   // ─── Derived ───
@@ -754,7 +848,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   };
 
   // ─── Pre-issue readiness (Delta 1) ───
-  const hazardsHaveControls = hazards.length > 0 && hazards.every((h) => h.controls.trim().length > 0);
+  const hazardsHaveControls =
+    hazards.length > 0 && hazards.every((h) => h.controls.trim().length > 0);
   const differentPeople =
     !!formData.issuer_name &&
     !!formData.receiver_name &&
@@ -763,7 +858,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const receiverReadiness: { ok: boolean; label: string }[] = receiverRemote
     ? [{ ok: true, label: 'Receiver will sign on their own device' }]
     : [
-        { ok: !!formData.receiver_name && !!formData.receiver_signature, label: 'Receiver name and signature' },
+        {
+          ok: !!formData.receiver_name && !!formData.receiver_signature,
+          label: 'Receiver name and signature',
+        },
         { ok: differentPeople, label: 'Issuer and receiver are different people' },
       ];
 
@@ -773,7 +871,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
     { ok: hazardsHaveControls, label: 'Every hazard has a control measure' },
     { ok: precautions.length > 0, label: 'Required precautions listed' },
     { ok: !!formData.emergency_procedures.trim(), label: 'Emergency procedures recorded' },
-    { ok: !!formData.issuer_name && !!formData.issuer_signature, label: 'Issuer name and signature' },
+    {
+      ok: !!formData.issuer_name && !!formData.issuer_signature,
+      label: 'Issuer name and signature',
+    },
     ...receiverReadiness,
   ];
   const allReady = readiness.every((r) => r.ok);
@@ -784,7 +885,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       case 1:
         return !!formData.title && !!formData.location;
       case 2:
-        return hazardsHaveControls && precautions.length > 0 && !!formData.emergency_procedures.trim();
+        return (
+          hazardsHaveControls && precautions.length > 0 && !!formData.emergency_procedures.trim()
+        );
       case 3:
         return amendReady;
       default:
@@ -800,7 +903,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       case 0:
         return (
           <div className="space-y-4">
-            <TextAction onClick={() => setShowLoadTemplate(true)}>Load from a saved template →</TextAction>
+            <TextAction onClick={() => setShowLoadTemplate(true)}>
+              Load from a saved template →
+            </TextAction>
             <ListCard>
               {PERMIT_TYPES.map((type, i) => (
                 <ListRow
@@ -813,7 +918,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   }
                   title={type.label}
                   subtitle={type.description}
-                  trailing={<span aria-hidden className="text-elec-yellow/80">→</span>}
+                  trailing={
+                    <span aria-hidden className="text-elec-yellow/80">
+                      →
+                    </span>
+                  }
                 />
               ))}
             </ListCard>
@@ -827,7 +936,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               <input
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="e.g. Hot Work — DB Board Replacement"
               />
             </Field>
@@ -841,7 +950,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={formData.description}
                 onChange={(val) => setFormData({ ...formData, description: val })}
-                className="touch-manipulation text-[13px] min-h-[100px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[100px]')}
                 placeholder="Describe the work to be carried out…"
               />
             </Field>
@@ -850,7 +959,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 value={String(formData.duration_hours)}
                 onValueChange={(v) => setFormData({ ...formData, duration_hours: Number(v) })}
               >
-                <SelectTrigger className={selectTriggerClass}>
+                <SelectTrigger className={safetySelectTriggerCn}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className={selectContentClass}>
@@ -862,9 +971,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 </SelectContent>
               </Select>
             </Field>
-            <Field label="Controlling RAMS / risk assessment" hint="The assessment this permit sits on top of.">
+            <Field
+              label="Controlling RAMS / risk assessment"
+              hint="The assessment this permit sits on top of."
+            >
               {linkedRamsId ? (
-                <div className="flex items-center justify-between gap-2 px-3 h-11 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]">
+                <div className="flex h-11 items-center justify-between gap-2 border-b border-white/[0.15] px-1">
                   <span className="text-[13px] text-white truncate">{linkedRamsTitle}</span>
                   <button
                     type="button"
@@ -872,7 +984,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       setLinkedRamsId(null);
                       setLinkedRamsTitle(null);
                     }}
-                    className="text-[11.5px] text-white/50 hover:text-white shrink-0 touch-manipulation"
+                    className="text-[11.5px] text-white hover:text-white shrink-0 touch-manipulation"
                   >
                     Remove
                   </button>
@@ -881,14 +993,15 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 <button
                   type="button"
                   onClick={() => setShowRamsPicker(true)}
-                  className={cn(inputClass, 'flex items-center text-white/45')}
+                  className={cn(safetyInputCn, 'flex items-center text-white')}
                 >
                   Link a RAMS…
                 </button>
               )}
               {!linkedRamsId && ramsDocs.length > 0 && (
                 <p className="text-[11px] text-amber-400/90 mt-1.5">
-                  Recommended — a permit should sit on top of a risk assessment. You have {ramsDocs.length} saved RAMS to link.
+                  Recommended — a permit should sit on top of a risk assessment. You have{' '}
+                  {ramsDocs.length} saved RAMS to link.
                 </p>
               )}
             </Field>
@@ -909,7 +1022,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             <div className="space-y-2.5">
               <Eyebrow>Hazards &amp; controls</Eyebrow>
               {hazards.map((hazard, index) => (
-                <div key={hazard.id} className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] space-y-2">
+                <div
+                  key={hazard.id}
+                  className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] space-y-2"
+                >
                   <p className="text-[13px] text-white font-medium">{hazard.description}</p>
                   <input
                     value={hazard.controls}
@@ -918,13 +1034,15 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       updated[index] = { ...hazard, controls: e.target.value };
                       setHazards(updated);
                     }}
-                    className={inputClass}
+                    className={safetyInputCn}
                     placeholder="Control measures (required)…"
                   />
                 </div>
               ))}
               {!hazardsHaveControls && (
-                <p className="text-[11px] text-amber-400/90">Add a control measure to every hazard before issuing.</p>
+                <p className="text-[11px] text-amber-400/90">
+                  Add a control measure to every hazard before issuing.
+                </p>
               )}
             </div>
 
@@ -932,7 +1050,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               <Eyebrow>Required precautions</Eyebrow>
               <ListCard>
                 {precautions.map((p, i) => (
-                  <div key={i} className="px-5 py-3 text-[12.5px] text-white/90 leading-relaxed">
+                  <div key={i} className="px-5 py-3 text-[12.5px] text-white leading-relaxed">
                     {p}
                   </div>
                 ))}
@@ -952,7 +1070,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={formData.emergency_procedures}
                 onChange={(val) => setFormData({ ...formData, emergency_procedures: val })}
-                className="touch-manipulation text-[13px] min-h-[80px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
                 placeholder="Emergency procedures specific to this permit…"
               />
             </Field>
@@ -963,9 +1081,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   <span className="text-[13px] font-medium text-white">Schedule fire watch</span>
                   <Switch checked={autoFireWatch} onCheckedChange={setAutoFireWatch} />
                 </div>
-                <p className="text-[11.5px] text-white/55">
-                  Minimum 60 minutes after completion — HSG168. We'll flag this permit so you can log the fire
-                  watch when work finishes.
+                <p className="text-[11.5px] text-white">
+                  Minimum 60 minutes after completion — HSG168. We'll flag this permit so you can
+                  log the fire watch when work finishes.
                 </p>
               </FormCard>
             )}
@@ -985,12 +1103,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 <input
                   value={amendReason}
                   onChange={(e) => setAmendReason(e.target.value)}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="e.g. Extended scope to second board"
                 />
-                <p className="text-[11.5px] text-white/55">
-                  Signatures have been cleared and must be re-captured. Saving creates a new version; any
-                  required approval resets to pending.
+                <p className="text-[11.5px] text-white">
+                  Signatures have been cleared and must be re-captured. Saving creates a new
+                  version; any required approval resets to pending.
                 </p>
               </FormCard>
             )}
@@ -1002,7 +1120,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 <input
                   value={formData.issuer_name}
                   onChange={(e) => setFormData({ ...formData, issuer_name: e.target.value })}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="Issuer's full name"
                 />
               </Field>
@@ -1015,7 +1133,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
             <FormCard eyebrow="Permit receiver">
               {/* In-person vs remote sign-off */}
-              <div className="grid grid-cols-2 gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl">
+              {/* Chips rather than a segmented control in a filled box. The
+                  buttons were h-9 — under the 44px minimum the design system
+                  requires, on a control an electrician taps wearing gloves. */}
+              <div className="grid grid-cols-2 gap-2">
                 {[
                   { v: false, label: 'Signs now' },
                   { v: true, label: 'Signs on their device' },
@@ -1025,8 +1146,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     type="button"
                     onClick={() => setReceiverRemote(opt.v)}
                     className={cn(
-                      'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
-                      receiverRemote === opt.v ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                      'h-11 touch-manipulation rounded-full border text-[13px] transition-colors',
+                      receiverRemote === opt.v
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
                     )}
                   >
                     {opt.label}
@@ -1034,22 +1157,30 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 ))}
               </div>
 
-              <Field label={receiverRemote ? 'Full name (optional)' : 'Full name'} required={!receiverRemote}>
+              <Field
+                label={receiverRemote ? 'Full name (optional)' : 'Full name'}
+                required={!receiverRemote}
+              >
                 <input
                   value={formData.receiver_name}
                   onChange={(e) => setFormData({ ...formData, receiver_name: e.target.value })}
-                  className={inputClass}
+                  className={safetyInputCn}
                   placeholder="Receiver's full name"
                 />
-                {!receiverRemote && formData.issuer_name && formData.receiver_name && !differentPeople && (
-                  <p className="text-[11px] text-red-400 mt-1.5">Issuer and receiver must be different people.</p>
-                )}
+                {!receiverRemote &&
+                  formData.issuer_name &&
+                  formData.receiver_name &&
+                  !differentPeople && (
+                    <p className="text-[11px] text-red-400 mt-1.5">
+                      Issuer and receiver must be different people.
+                    </p>
+                  )}
               </Field>
 
               {receiverRemote ? (
-                <p className="text-[11.5px] text-white/55">
-                  A secure signing link is created when you issue the permit. The receiver reviews it and signs on
-                  their own phone — you'll see "Awaiting receiver" until they do.
+                <p className="text-[11.5px] text-white">
+                  A secure signing link is created when you issue the permit. The receiver reviews
+                  it and signs on their own phone — you'll see "Awaiting receiver" until they do.
                 </p>
               ) : (
                 <SignatureField
@@ -1064,7 +1195,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               <SmartTextarea
                 value={formData.additional_notes}
                 onChange={(val) => setFormData({ ...formData, additional_notes: val })}
-                className="touch-manipulation text-[13px] min-h-[80px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                className={cn(safetyTextareaCn, 'min-h-[80px]')}
                 placeholder="Any additional notes or conditions…"
               />
             </Field>
@@ -1104,8 +1235,18 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         permits.length > 0 ? (
           <StatStrip
             stats={[
-              { value: activeCount, label: 'Active', accent: true, onClick: () => setFilterStatus('active') },
-              { value: expiringCount, label: 'Expiring', sub: 'within 1 hour', onClick: () => setFilterStatus('active') },
+              {
+                value: activeCount,
+                label: 'Active',
+                accent: true,
+                onClick: () => setFilterStatus('active'),
+              },
+              {
+                value: expiringCount,
+                label: 'Expiring',
+                sub: 'within 1 hour',
+                onClick: () => setFilterStatus('active'),
+              },
               { value: pendingApprovalCount, label: 'Approvals', sub: 'awaiting' },
               { value: permits.length, label: 'Total', onClick: () => setFilterStatus('all') },
             ]}
@@ -1144,14 +1285,19 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           }}
         />
       ) : filteredPermits.length === 0 ? (
-        <EmptyState title="No permits match your filter" description="Try a different status tab or clear your search." />
+        <EmptyState
+          title="No permits match your filter"
+          description="Try a different status tab or clear your search."
+        />
       ) : (
         <div className="space-y-3">
           <ListCard>
             {visiblePermits.map((permit) => {
-              const typeLabel = PERMIT_TYPES.find((t) => t.id === permit.type)?.label || permit.type;
+              const typeLabel =
+                PERMIT_TYPES.find((t) => t.id === permit.type)?.label || permit.type;
               const isActive = permit.status === 'active';
-              const expiring = isActive && new Date(permit.end_time).getTime() - now.getTime() < 3600000;
+              const expiring =
+                isActive && new Date(permit.end_time).getTime() - now.getTime() < 3600000;
               return (
                 <ListRow
                   key={permit.id}
@@ -1165,8 +1311,15 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       {isActive && permit.acceptance_status === 'awaiting_receiver' ? (
                         <span className="text-[11px] text-amber-400">Awaiting receiver</span>
                       ) : (
-                        <span className={cn('text-[11px] tabular-nums', isActive ? remainingClasses(permit.end_time, now) : 'text-white/45')}>
-                          {isActive ? remainingLabel(permit.end_time, now) : fmtDate(permit.start_time || permit.created_at)}
+                        <span
+                          className={cn(
+                            'text-[11px] tabular-nums',
+                            isActive ? remainingClasses(permit.end_time, now) : 'text-white'
+                          )}
+                        >
+                          {isActive
+                            ? remainingLabel(permit.end_time, now)
+                            : fmtDate(permit.start_time || permit.created_at)}
                         </span>
                       )}
                     </div>
@@ -1181,7 +1334,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
       {/* ─── Create / amend wizard ─── */}
       <Sheet open={showWizard} onOpenChange={setShowWizard}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <SheetShell
             eyebrow={
               wizardStep === 0
@@ -1199,13 +1355,19 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     ? 'Hazards & controls'
                     : 'Authorisation & sign-off'
             }
-            description={wizardMode === 'create' ? <DraftSaveIndicator status={draftStatus} /> : undefined}
+            description={
+              wizardMode === 'create' ? <DraftSaveIndicator status={draftStatus} /> : undefined
+            }
             footer={
               wizardStep > 0 ? (
                 <>
-                  <SecondaryButton onClick={() => setWizardStep((s) => s - 1)}>Back</SecondaryButton>
+                  <SecondaryButton onClick={() => setWizardStep((s) => s - 1)}>
+                    Back
+                  </SecondaryButton>
                   {wizardStep === 3 && wizardMode === 'create' && (
-                    <SecondaryButton onClick={() => setShowSaveTemplate(true)}>Save template</SecondaryButton>
+                    <SecondaryButton onClick={() => setShowSaveTemplate(true)}>
+                      Save template
+                    </SecondaryButton>
                   )}
                   <PrimaryButton
                     fullWidth
@@ -1250,17 +1412,23 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
       {/* ─── Detail ─── */}
       <Sheet open={!!viewingPermit} onOpenChange={() => setViewingPermit(null)}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           {viewingPermit &&
             (() => {
               const typeConf = PERMIT_TYPES.find((t) => t.id === viewingPermit.type)!;
-              const isLive = viewingPermit.status === 'active' || viewingPermit.status === 'expired';
+              const isLive =
+                viewingPermit.status === 'active' || viewingPermit.status === 'expired';
               const detailExpiring =
                 viewingPermit.status === 'active' &&
                 new Date(viewingPermit.end_time).getTime() - now.getTime() < 3600000;
               const detailTone = statusTone(viewingPermit.status, detailExpiring) ?? 'blue';
               const needsFireWatchPrompt =
-                viewingPermit.type === 'hot-work' && viewingPermit.auto_fire_watch && relatedFireWatches.length === 0;
+                viewingPermit.type === 'hot-work' &&
+                viewingPermit.auto_fire_watch &&
+                relatedFireWatches.length === 0;
               return (
                 <SheetShell
                   eyebrow={`${typeConf.label}${viewingPermit.version > 1 ? ` · Version ${viewingPermit.version}` : ''}`}
@@ -1269,7 +1437,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     <span className="inline-flex items-center gap-2">
                       <StatusPill status={viewingPermit.status} expiring={detailExpiring} />
                       {viewingPermit.status === 'active' && (
-                        <span className={cn('text-[12px] tabular-nums', remainingClasses(viewingPermit.end_time, now))}>
+                        <span
+                          className={cn(
+                            'text-[12px] tabular-nums',
+                            remainingClasses(viewingPermit.end_time, now)
+                          )}
+                        >
                           {remainingLabel(viewingPermit.end_time, now)}
                         </span>
                       )}
@@ -1282,20 +1455,27 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         disabled={isExporting && exportingId === viewingPermit.id}
                         onClick={() => exportPDF('permit', viewingPermit.id)}
                       >
-                        {isExporting && exportingId === viewingPermit.id ? 'Exporting…' : 'Export PDF'}
+                        {isExporting && exportingId === viewingPermit.id
+                          ? 'Exporting…'
+                          : 'Export PDF'}
                       </PrimaryButton>
                       <SecondaryButton onClick={() => setShowShare(true)}>Share</SecondaryButton>
                     </>
                   }
                 >
                   {/* Status accent line — bleeds to the sheet edges */}
-                  <div className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[detailTone])} />
+                  <div
+                    className={cn(
+                      '-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r',
+                      toneAccent[detailTone]
+                    )}
+                  />
 
                   {needsFireWatchPrompt && (
                     <div className="p-3 rounded-xl bg-orange-500/[0.08] border border-orange-500/20">
-                      <p className="text-[12px] text-white/85">
-                        Fire watch required — minimum 60 minutes after completion (HSG168). Log it in the Fire
-                        Watch tool when work finishes.
+                      <p className="text-[12px] text-white">
+                        Fire watch required — minimum 60 minutes after completion (HSG168). Log it
+                        in the Fire Watch tool when work finishes.
                       </p>
                     </div>
                   )}
@@ -1303,9 +1483,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {/* Awaiting remote receiver acceptance */}
                   {viewingPermit.acceptance_status === 'awaiting_receiver' && (
                     <div className="p-3 rounded-xl bg-amber-500/[0.08] border border-amber-500/20 space-y-2.5">
-                      <p className="text-[12px] text-white/85">
-                        Awaiting receiver acceptance — the receiver hasn't signed yet. Work shouldn't start until
-                        they accept.
+                      <p className="text-[12px] text-white">
+                        Awaiting receiver acceptance — the receiver hasn't signed yet. Work
+                        shouldn't start until they accept.
                       </p>
                       <SecondaryButton
                         fullWidth
@@ -1338,20 +1518,22 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         >
                           Close permit
                         </PrimaryButton>
-                        <DestructiveButton onClick={() => cancelPermit(viewingPermit.id)}>Cancel</DestructiveButton>
+                        <DestructiveButton onClick={() => cancelPermit(viewingPermit.id)}>
+                          Cancel
+                        </DestructiveButton>
                       </div>
                     </div>
                   )}
 
                   {/* Details */}
                   <div className="space-y-1.5 text-[13px]">
-                    <div className="text-white/90">{viewingPermit.location}</div>
-                    <div className="text-white/65">
+                    <div className="text-white">{viewingPermit.location}</div>
+                    <div className="text-white">
                       {new Date(viewingPermit.start_time).toLocaleString('en-GB')} —{' '}
                       {new Date(viewingPermit.end_time).toLocaleString('en-GB')}
                     </div>
                     {viewingPermit.description && (
-                      <p className="text-white/80 leading-relaxed pt-1">{viewingPermit.description}</p>
+                      <p className="text-white leading-relaxed pt-1">{viewingPermit.description}</p>
                     )}
                   </div>
 
@@ -1382,7 +1564,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       {viewingPermit.hazards.map((h) => (
                         <div key={h.id} className="px-5 py-3">
                           <p className="text-[13px] text-white font-medium">{h.description}</p>
-                          {h.controls && <p className="text-[12px] text-white/60 mt-0.5">{h.controls}</p>}
+                          {h.controls && (
+                            <p className="text-[12px] text-white mt-0.5">{h.controls}</p>
+                          )}
                         </div>
                       ))}
                     </ListCard>
@@ -1403,7 +1587,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     <Eyebrow className="mb-2">Precautions</Eyebrow>
                     <ListCard>
                       {viewingPermit.precautions.map((p, i) => (
-                        <div key={i} className="px-5 py-3 text-[12.5px] text-white/90 leading-relaxed">
+                        <div key={i} className="px-5 py-3 text-[12.5px] text-white leading-relaxed">
                           {p}
                         </div>
                       ))}
@@ -1413,13 +1597,28 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   {/* Signatures */}
                   <div className="grid grid-cols-2 gap-3">
                     {(['issuer', 'receiver'] as const).map((role) => {
-                      const name = role === 'issuer' ? viewingPermit.issuer_name : viewingPermit.receiver_name;
-                      const sig = role === 'issuer' ? viewingPermit.issuer_signature : viewingPermit.receiver_signature;
+                      const name =
+                        role === 'issuer' ? viewingPermit.issuer_name : viewingPermit.receiver_name;
+                      const sig =
+                        role === 'issuer'
+                          ? viewingPermit.issuer_signature
+                          : viewingPermit.receiver_signature;
                       return (
-                        <div key={role} className="p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
-                          <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 mb-1">{role}</p>
+                        <div
+                          key={role}
+                          className="p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+                        >
+                          <p className="text-[10px] uppercase tracking-[0.18em] text-white mb-1">
+                            {role}
+                          </p>
                           <p className="text-[13px] text-white font-medium">{name}</p>
-                          {sig && <img src={sig} alt={`${role} signature`} className="h-12 mt-1 opacity-80" />}
+                          {sig && (
+                            <img
+                              src={sig}
+                              alt={`${role} signature`}
+                              className="h-12 mt-1 opacity-80"
+                            />
+                          )}
                         </div>
                       );
                     })}
@@ -1440,7 +1639,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                             key={rev.id}
                             title={`Version ${rev.version}`}
                             subtitle={rev.change_reason || 'Superseded'}
-                            trailing={<span className="text-[11px] text-white/45 tabular-nums">{fmtDate(rev.created_at)}</span>}
+                            trailing={
+                              <span className="text-[11px] text-white tabular-nums">
+                                {fmtDate(rev.created_at)}
+                              </span>
+                            }
                           />
                         ))}
                       </ListCard>
@@ -1460,7 +1663,11 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                             key={fw.id}
                             title="Fire Watch"
                             subtitle={`${fw.duration_minutes} min${fw.location ? ` · ${fw.location}` : ''} · ${new Date(fw.start_time).toLocaleDateString('en-GB')}`}
-                            trailing={<StatusPill status={fw.status === 'completed' ? 'closed' : 'active'} />}
+                            trailing={
+                              <StatusPill
+                                status={fw.status === 'completed' ? 'closed' : 'active'}
+                              />
+                            }
                           />
                         ))}
                         {relatedIsolations.map((ir) => (
@@ -1469,7 +1676,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                             title="Safe Isolation"
                             subtitle={`${ir.circuit_description}${ir.distribution_board ? ` · ${ir.distribution_board}` : ''} · ${new Date(ir.created_at).toLocaleDateString('en-GB')}`}
                             trailing={
-                              <span className="text-[11px] text-white/55 capitalize">{String(ir.status).replace('_', ' ')}</span>
+                              <span className="text-[11px] text-white capitalize">
+                                {String(ir.status).replace('_', ' ')}
+                              </span>
                             }
                           />
                         ))}
@@ -1490,15 +1699,21 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       approvalSignature={viewingPermit.approval_signature}
                     />
                   )}
-                  {viewingPermit.status === 'active' && viewingPermit.approval_status === 'not_required' && (
-                    <SecondaryButton
-                      fullWidth
-                      disabled={requestApproval.isPending}
-                      onClick={() => requestApproval.mutate({ table: 'permits_to_work', recordId: viewingPermit.id })}
-                    >
-                      Request supervisor approval
-                    </SecondaryButton>
-                  )}
+                  {viewingPermit.status === 'active' &&
+                    viewingPermit.approval_status === 'not_required' && (
+                      <SecondaryButton
+                        fullWidth
+                        disabled={requestApproval.isPending}
+                        onClick={() =>
+                          requestApproval.mutate({
+                            table: 'permits_to_work',
+                            recordId: viewingPermit.id,
+                          })
+                        }
+                      >
+                        Request supervisor approval
+                      </SecondaryButton>
+                    )}
                   {viewingPermit.approval_status === 'pending' && (
                     <SecondaryButton fullWidth onClick={() => setShowApprovalSheet(true)}>
                       Review and approve
@@ -1512,7 +1727,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
       {/* ─── RAMS picker ─── */}
       <Sheet open={showRamsPicker} onOpenChange={setShowRamsPicker}>
-        <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[70vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <SheetShell eyebrow="Controlling document" title="Link a RAMS / risk assessment">
             {ramsDocs.length === 0 ? (
               <EmptyState
@@ -1535,7 +1753,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                       linkedRamsId === r.id ? (
                         <span className="text-[11px] text-elec-yellow">Linked</span>
                       ) : (
-                        <span aria-hidden className="text-elec-yellow/70">→</span>
+                        <span aria-hidden className="text-elec-yellow/70">
+                          →
+                        </span>
                       )
                     }
                   />
@@ -1548,7 +1768,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
       {/* ─── Extend ─── */}
       <Sheet open={showExtendSheet} onOpenChange={setShowExtendSheet}>
-        <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
             <div className="flex justify-center pt-1">
               <div className="w-10 h-1 bg-white/20 rounded-full" />
@@ -1556,7 +1779,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             <div>
               <Eyebrow>Extend permit</Eyebrow>
               <h3 className="mt-1 text-[18px] font-semibold text-white">Add more time</h3>
-              <p className="mt-1 text-[12.5px] text-white/60">Conditions must remain safe before extending.</p>
+              <p className="mt-1 text-[12.5px] text-white">
+                Conditions must remain safe before extending.
+              </p>
             </div>
             <div className="grid grid-cols-4 gap-2">
               {[1, 2, 4, 8].map((hours) => (
@@ -1575,8 +1800,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               ))}
             </div>
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-              <p className="text-[11.5px] text-white/75">
-                Confirm that site conditions remain safe and all controls are still in place before extending.
+              <p className="text-[11.5px] text-white">
+                Confirm that site conditions remain safe and all controls are still in place before
+                extending.
               </p>
             </div>
             <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
@@ -1595,7 +1821,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
       {/* ─── Receiver signing link ─── */}
       <Sheet open={showShareLink} onOpenChange={setShowShareLink}>
-        <SheetContent side="bottom" className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <div className="bg-[hsl(0_0%_8%)] p-5 space-y-4">
             <div className="flex justify-center pt-1">
               <div className="w-10 h-1 bg-white/20 rounded-full" />
@@ -1603,11 +1832,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
             <div>
               <Eyebrow>Receiver sign-off</Eyebrow>
               <h3 className="mt-1 text-[18px] font-semibold text-white">Send for signing</h3>
-              <p className="mt-1 text-[12.5px] text-white/60">
-                The receiver opens this on their phone, reviews the permit and signs. The link expires in 7 days.
+              <p className="mt-1 text-[12.5px] text-white">
+                The receiver opens this on their phone, reviews the permit and signs. The link
+                expires in 7 days.
               </p>
             </div>
-            <div className="px-3 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08] text-[12px] text-white/70 break-all">
+            <div className="break-all border-y border-white/[0.14] bg-white/[0.04] px-3 py-3 text-[12px] text-white">
               {signLink}
             </div>
             <div className="flex gap-2 pb-[env(safe-area-inset-bottom)]">
@@ -1652,7 +1882,12 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         moduleType="permit"
         getTemplateData={getTemplateData}
       />
-      <LoadTemplateSheet open={showLoadTemplate} onOpenChange={setShowLoadTemplate} moduleType="permit" onLoad={handleLoadTemplate} />
+      <LoadTemplateSheet
+        open={showLoadTemplate}
+        onOpenChange={setShowLoadTemplate}
+        moduleType="permit"
+        onLoad={handleLoadTemplate}
+      />
 
       {/* Share */}
       {viewingPermit && (

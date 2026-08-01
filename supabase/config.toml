@@ -380,3 +380,9 @@ verify_jwt = false
 
 [functions.generate-hs-specialist-pdf]
 verify_jwt = false
+
+# revenuecat-webhook — RevenueCat server-to-server webhook (no Supabase JWT;
+# auth is the REVENUECAT_WEBHOOK_SECRET header checked in-function).
+# verify_jwt=true here silently 401'd ALL RC deliveries (2026-08-01 incident).
+[functions.revenuecat-webhook]
+verify_jwt = false

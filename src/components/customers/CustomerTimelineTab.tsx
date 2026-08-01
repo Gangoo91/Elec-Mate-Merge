@@ -5,42 +5,13 @@ import {
   ActivityType,
   activityTypeConfig,
 } from '@/hooks/inspection/useCustomerActivity';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  StickyNote,
-  Phone,
-  Mail,
-  FileText,
-  MapPin,
-  Home,
-  MoreVertical,
-  Loader2,
-  Clock,
-  Trash2,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CustomerTimelineTabProps {
   customerId: string;
 }
-
-const activityIcons: Record<ActivityType, React.ReactNode> = {
-  note: <StickyNote className="h-4 w-4" />,
-  call: <Phone className="h-4 w-4" />,
-  email: <Mail className="h-4 w-4" />,
-  certificate: <FileText className="h-4 w-4" />,
-  visit: <MapPin className="h-4 w-4" />,
-  property_added: <Home className="h-4 w-4" />,
-};
 
 export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) => {
   const navigate = useNavigate();
@@ -110,124 +81,108 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
 
       {/* Timeline */}
       {activities.length === 0 ? (
-        <Card>
-          <CardContent className="py-12 text-center">
-            <Clock className="h-12 w-12 mx-auto text-white mb-4" />
-            <p className="text-lg font-medium mb-2">No activity yet</p>
-            <p className="text-sm text-white">
-              {filterType === 'all'
-                ? 'Activities will appear here as you interact with this customer'
-                : `No ${activityTypeConfig[filterType as ActivityType]?.label.toLowerCase()} activities`}
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] px-6 py-10 text-center">
+          <p className="text-[15px] font-semibold text-white">No activity yet</p>
+          <p className="mt-1 text-[12.5px] text-white/55">
+            {filterType === 'all'
+              ? 'Activities appear here as you work with this customer.'
+              : `No ${activityTypeConfig[filterType as ActivityType]?.label.toLowerCase()} activities.`}
+          </p>
+        </div>
       ) : (
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-5 top-0 bottom-0 w-px bg-border" />
+          {/* Timeline rail */}
+          <div className="absolute left-[5px] top-2 bottom-2 w-px bg-white/[0.1]" />
 
           {/* Timeline items */}
-          <div className="space-y-4">
-            {activities.map((activity, index) => {
+          <div className="space-y-3">
+            {activities.map((activity) => {
               const config = activityTypeConfig[activity.activityType];
-              const isFirst = index === 0;
-              const isLast = index === activities.length - 1;
+              const openable =
+                activity.activityType === 'certificate' && activity.metadata?.reportId;
 
               return (
                 <div key={activity.id} className="relative flex gap-4">
-                  {/* Icon */}
-                  <div
-                    className={cn(
-                      'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 z-10',
-                      'bg-card border-2 border-border',
-                      config?.color
-                    )}
-                  >
-                    {activityIcons[activity.activityType]}
-                  </div>
+                  {/* Node */}
+                  <span className="z-10 mt-4 h-[11px] w-[11px] shrink-0 rounded-full border-2 border-[hsl(0_0%_10%)] bg-elec-yellow" />
 
                   {/* Content */}
-                  <Card
-                    className={cn('flex-1', activity.activityType === 'certificate' && activity.metadata?.reportId && 'cursor-pointer hover:bg-white/5 active:scale-[0.99] transition-all touch-manipulation')}
+                  <div
+                    className={cn(
+                      'flex-1 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-3 sm:p-4',
+                      openable &&
+                        'cursor-pointer transition-all hover:border-white/[0.22] active:scale-[0.99] touch-manipulation'
+                    )}
                     onClick={() => {
-                      if (activity.activityType === 'certificate' && activity.metadata?.reportId) {
+                      if (openable) {
                         const reportType = activity.metadata.reportType || 'eicr';
-                        navigate(`/electrician/inspection-testing/${reportType}/${activity.metadata.reportId}`);
+                        navigate(
+                          `/electrician/inspection-testing/${reportType}/${activity.metadata.reportId}`
+                        );
                       }
                     }}
                   >
-                    <CardContent className="p-3 sm:p-4">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <Badge variant="outline" className="text-[10px]">
-                              {config?.label}
-                            </Badge>
-                            <span className="text-xs text-white">
-                              {formatDateTime(activity.createdAt)}
-                            </span>
-                            <span className="text-xs text-white hidden sm:inline">
-                              at {formatTime(activity.createdAt)}
-                            </span>
-                          </div>
-                          <p className="font-medium text-sm">{activity.title}</p>
-                          {activity.description && (
-                            <p className="text-sm text-white mt-1 whitespace-pre-wrap">
-                              {activity.description}
-                            </p>
-                          )}
-                          {/* Certificate metadata */}
-                          {activity.activityType === 'certificate' && activity.metadata && (
-                            <div className="flex items-center gap-2 mt-2 text-xs text-white">
-                              {activity.metadata.certificateNumber && (
-                                <span>#{activity.metadata.certificateNumber}</span>
-                              )}
-                              {activity.metadata.status && (
-                                <Badge
-                                  variant={
-                                    activity.metadata.status === 'completed'
-                                      ? 'default'
-                                      : 'secondary'
-                                  }
-                                  className="text-[10px]"
-                                >
-                                  {activity.metadata.status}
-                                </Badge>
-                              )}
-                              {activity.metadata.reportId && (
-                                <span className="text-elec-yellow text-[10px] font-medium ml-auto">Open →</span>
-                              )}
-                            </div>
-                          )}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <div className="mb-1 flex flex-wrap items-center gap-2">
+                          <span className="rounded bg-white/[0.08] px-2 py-0.5 text-[10px] font-bold text-white/75">
+                            {config?.label}
+                          </span>
+                          <span className="text-[11.5px] text-white/55">
+                            {formatDateTime(activity.createdAt)}
+                          </span>
+                          <span className="hidden text-[11.5px] text-white/45 sm:inline">
+                            at {formatTime(activity.createdAt)}
+                          </span>
                         </div>
-
-                        {/* Delete action for manual activities */}
-                        {['note', 'call', 'email', 'visit'].includes(activity.activityType) && (
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 flex-shrink-0"
-                                disabled={isDeleting}
+                        <p className="text-sm font-medium text-white">{activity.title}</p>
+                        {activity.description && (
+                          <p className="mt-1 whitespace-pre-wrap text-[12.5px] text-white/70">
+                            {activity.description}
+                          </p>
+                        )}
+                        {/* Certificate metadata */}
+                        {activity.activityType === 'certificate' && activity.metadata && (
+                          <div className="mt-2 flex items-center gap-2 text-[11.5px] text-white/60">
+                            {activity.metadata.certificateNumber && (
+                              <span>#{activity.metadata.certificateNumber}</span>
+                            )}
+                            {activity.metadata.status && (
+                              <span
+                                className={cn(
+                                  'rounded px-1.5 py-0.5 text-[10px] font-semibold',
+                                  activity.metadata.status === 'completed'
+                                    ? 'bg-green-500/15 text-green-400'
+                                    : 'bg-white/[0.08] text-white/60'
+                                )}
                               >
-                                <MoreVertical className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem
-                                onClick={() => deleteActivity(activity.id)}
-                                className="text-red-500 focus:text-red-500"
-                              >
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                Delete
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
+                                {activity.metadata.status}
+                              </span>
+                            )}
+                            {activity.metadata.reportId && (
+                              <span className="ml-auto text-[12px] font-semibold text-elec-yellow">
+                                Open
+                              </span>
+                            )}
+                          </div>
                         )}
                       </div>
-                    </CardContent>
-                  </Card>
+
+                      {/* Delete action for manual activities */}
+                      {['note', 'call', 'email', 'visit'].includes(activity.activityType) && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteActivity(activity.id);
+                          }}
+                          disabled={isDeleting}
+                          className="flex h-8 shrink-0 items-center px-1.5 text-[11.5px] font-medium text-white/40 transition-colors hover:text-red-400 disabled:opacity-40 touch-manipulation"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               );
             })}

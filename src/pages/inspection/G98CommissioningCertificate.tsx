@@ -4,26 +4,37 @@
  * Notify DNO within 28 days of commissioning
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Loader2, Save } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import SignatureInput from '@/components/signature/SignatureInput';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import CertShellFooter, {
+  certFooterNeutralButton,
+} from '@/components/inspection/shared/CertShellFooter';
+import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
+import InspectionPhotoGallery from '@/components/inspection/InspectionPhotoGallery';
+import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { draftStorage } from '@/utils/draftStorage';
+import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { formatG98Json, fetchG98ReportPhotos } from '@/utils/g98JsonFormatter';
 import { useG98CommissioningTabs, G98TabValue } from '@/hooks/useG98CommissioningTabs';
+import { UK_DNOS } from '@/types/g99-commissioning';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,23 +45,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
-const pickerTrigger =
-  'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-const UK_DNOS = [
-  'UK Power Networks',
-  'Western Power Distribution',
-  'Northern Powergrid',
-  'SP Energy Networks',
-  'SSE Networks',
-  'Electricity North West',
-  'National Grid Electricity Distribution',
-];
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const pickerTrigger =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+// UK_DNOS imported from types/g99-commissioning — single shared list for
+// both G98 and G99 (was duplicated locally).
 
 // G98 default protection settings (EREC G98 Issue 5)
 const G98_DEFAULTS = {
@@ -192,19 +212,16 @@ const defaultData = (): G98Data => ({
 
 const DRAFT_KEY = 'elec-mate-draft-g98';
 
+const TAB_ORDER: G98TabValue[] = ['details', 'equipment', 'signoff'];
+
 const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
-      {title}
-    </p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+    <p className="text-[12px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -218,7 +235,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -235,21 +252,21 @@ const Toggle = ({
   value: boolean | undefined;
   onChange: (v: boolean) => void;
 }) => (
-  <div className="flex items-center justify-between">
-    <Label className="text-white text-xs font-medium">{label}</Label>
-    <div className="flex gap-1.5">
+  <div className="flex min-h-11 items-center justify-between gap-3">
+    <Label className="text-[13px] font-medium text-white">{label}</Label>
+    <div className="flex gap-2 shrink-0">
       {[true, false].map((v) => (
         <button
           key={String(v)}
           type="button"
           onClick={() => onChange(v)}
           className={cn(
-            'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+            'h-11 w-16 rounded-xl text-[13px] touch-manipulation transition-all active:scale-[0.98]',
             value === v
               ? v
-                ? 'bg-green-500 text-white'
-                : 'bg-white/20 text-white'
-              : 'bg-white/[0.06] text-white border border-white/[0.08]'
+                ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                : 'bg-white/[0.18] border border-white/[0.18] text-white font-semibold'
+              : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
           )}
         >
           {v ? 'Yes' : 'No'}
@@ -272,6 +289,11 @@ export default function G98CommissioningCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     editId !== 'new' ? editId || null : null
   );
+  // Email dialog state
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailRecipient, setEmailRecipient] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
     null
@@ -400,8 +422,15 @@ const {
     navigateNext,
     navigatePrevious,
     isCurrentTabComplete,
+    isTabComplete,
     getProgressPercentage,
   } = useG98CommissioningTabs(data);
+
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const stepIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = stepIndex < prevIndexRef.current;
+  prevIndexRef.current = stepIndex;
 
   const handleSaveDraft = async () => {
     setIsSaving(true);
@@ -412,6 +441,56 @@ const {
       toast.error('Failed to save');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailRecipient || !emailRecipient.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    const reportId = savedReportId;
+    if (!reportId) {
+      toast.error('Save the certificate first before emailing.');
+      return;
+    }
+    setIsSendingEmail(true);
+    try {
+      await syncNowImmediate();
+      // Formatted payload so the server can generate + attach even pre-Generate.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        formattedData = formatG98Json({
+          ...data,
+          referenceNumber: data.referenceNumber || `G98-${Date.now()}`,
+        });
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+      const { data: result, error: fnError } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        { body: { reportId, recipientEmail: emailRecipient, formattedData } }
+      );
+      if (fnError) {
+        let msg = fnError.message;
+        try {
+          const body = typeof fnError.context?.body === 'string' ? JSON.parse(fnError.context.body) : fnError.context?.body;
+          if (body?.error) msg = body.error;
+        } catch { /* keep */ }
+        throw new Error(msg);
+      }
+      if (!result?.success) throw new Error(result?.error || 'Failed to send');
+      toast.success(
+        result?.pdfAttached
+          ? `Certificate emailed to ${emailRecipient} with the PDF attached`
+          : `Certificate emailed to ${emailRecipient}`
+      );
+      setShowEmailDialog(false);
+      setEmailRecipient('');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send certificate email.');
+    } finally {
+      setIsSendingEmail(false);
     }
   };
 
@@ -440,7 +519,9 @@ const {
         const { data: cpData } = await supabase.rpc('get_my_company_profile');
         const cp = Array.isArray(cpData) ? cpData[0] : cpData;
         if (cp) company = cp;
-      } catch {}
+      } catch {
+        /* branding is optional — fall back to form data */
+      }
 
       const branding = {
         companyName: company.company_name || data.installerCompany,
@@ -479,13 +560,14 @@ const {
             storage_path: storagePath,
             pdf_url: url,
             pdf_generated_at: new Date().toISOString(),
+            pdf_payload: payload,
             status: 'completed',
           })
           .eq('report_id', reportId);
       } catch {
         await supabase
           .from('reports')
-          .update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' })
+          .update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), pdf_payload: payload, status: 'completed' })
           .eq('report_id', reportId);
       }
 
@@ -501,13 +583,11 @@ const {
     }
   };
 
-  const progress = getProgressPercentage();
-
   // Tab content renderers
   const renderDetailsTab = () => (
-    <div className="space-y-6">
-      <SectionHeader title="Notification Details" />
-      <div className="space-y-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      <div className={cardCn}>
+        <SectionHeader title="Notification Details" />
         <Field label="Reference No.">
           <Input
             value={data.referenceNumber}
@@ -515,7 +595,7 @@ const {
             className={inputCn}
           />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Commissioning Date">
             <Input
               type="date"
@@ -544,9 +624,9 @@ const {
         </Field>
       </div>
 
-      <SectionHeader title="Installer Details" />
-      <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
+      <div className={cardCn}>
+        <SectionHeader title="Installer Details" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Name">
             <Input
               value={data.installerName}
@@ -561,8 +641,6 @@ const {
               className={inputCn}
             />
           </Field>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
           <Field label="Phone">
             <Input
               type="tel"
@@ -580,7 +658,7 @@ const {
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
           <Field label="MCS No." required>
             <Input
               value={data.mcsNumber}
@@ -606,8 +684,8 @@ const {
         </div>
       </div>
 
-      <SectionHeader title="Site Details" />
-      <div className="space-y-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Site Details" />
         <Field label="Installation Address" required>
           <Input
             value={data.installationAddress}
@@ -623,7 +701,7 @@ const {
             placeholder="e.g. 1200023305967..."
           />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Supply Type">
             <MobileSelectPicker
               value={data.supplyType}
@@ -654,9 +732,9 @@ const {
   );
 
   const renderEquipmentTab = () => (
-    <div className="space-y-6">
-      <SectionHeader title="Generating Equipment" />
-      <div className="space-y-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      <div className={cardCn}>
+        <SectionHeader title="Generating Equipment" />
         <Field label="Equipment Type" required>
           <MobileSelectPicker
             value={data.equipmentType}
@@ -672,7 +750,7 @@ const {
             triggerClassName={pickerTrigger}
           />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Manufacturer">
             <Input
               value={data.equipmentManufacturer}
@@ -688,7 +766,7 @@ const {
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
           <Field label="Serial Number">
             <Input
               value={data.equipmentSerial}
@@ -726,7 +804,7 @@ const {
             placeholder="Manufacturer's G98 type test certificate"
           />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Inverter Manufacturer">
             <Input
               value={data.inverterManufacturer}
@@ -753,8 +831,8 @@ const {
         </Field>
       </div>
 
-      <SectionHeader title="Export Details" />
-      <div className="space-y-4">
+      <div className={cardCn}>
+        <SectionHeader title="Export Details" />
         <div className="space-y-3">
           <Toggle
             label="Export capable"
@@ -802,16 +880,16 @@ const {
         </Field>
       </div>
 
-      <SectionHeader title="Grid Protection Settings" />
-      <div className="space-y-4">
-        <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
-          <p className="text-[11px] text-white">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Grid Protection Settings" />
+        <div className="rounded-xl bg-white/[0.05] border border-amber-500/30 p-3">
+          <p className="text-[12px] text-white/85">
             Pre-filled with EREC G98 Issue 5 default settings. Verify against inverter display.
           </p>
         </div>
 
         <Sub title="Over-voltage" />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-4">
           <Field label="OV1 (V)">
             <Input
               value={data.ovStage1Voltage}
@@ -843,7 +921,7 @@ const {
         </div>
 
         <Sub title="Under-voltage" />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-4">
           <Field label="UV1 (V)">
             <Input
               value={data.uvStage1Voltage}
@@ -875,7 +953,7 @@ const {
         </div>
 
         <Sub title="Over-frequency" />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-4">
           <Field label="OF1 (Hz)">
             <Input
               value={data.ofStage1Freq}
@@ -907,7 +985,7 @@ const {
         </div>
 
         <Sub title="Under-frequency" />
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-4">
           <Field label="UF1 (Hz)">
             <Input
               value={data.ufStage1Freq}
@@ -939,7 +1017,7 @@ const {
         </div>
 
         <Sub title="ROCOF & Reconnection" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
           <Field label="ROCOF (Hz/s)">
             <Input
               value={data.rocoFRate}
@@ -967,40 +1045,42 @@ const {
   );
 
   const renderSignoffTab = () => (
-    <div className="space-y-6">
-      <SectionHeader title="Commissioning Confirmation" />
-      <div className="space-y-3">
-        <Toggle
-          label="Anti-islanding protection confirmed"
-          value={data.antiIslandingConfirmed}
-          onChange={(v) => update('antiIslandingConfirmed', v)}
-        />
-        <Toggle
-          label="Protection settings verified"
-          value={data.protectionSettingsVerified}
-          onChange={(v) => update('protectionSettingsVerified', v)}
-        />
-        <Toggle
-          label="System energised and operating correctly"
-          value={data.systemOperating}
-          onChange={(v) => update('systemOperating', v)}
-        />
-        <Toggle
-          label="All labels and warning notices fitted"
-          value={data.labelsApplied}
-          onChange={(v) => update('labelsApplied', v)}
-        />
-        <Toggle
-          label="Customer informed of system operation"
-          value={data.customerInformed}
-          onChange={(v) => update('customerInformed', v)}
-        />
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Commissioning Confirmation" />
+        <div className="space-y-3">
+          <Toggle
+            label="Anti-islanding protection confirmed"
+            value={data.antiIslandingConfirmed}
+            onChange={(v) => update('antiIslandingConfirmed', v)}
+          />
+          <Toggle
+            label="Protection settings verified"
+            value={data.protectionSettingsVerified}
+            onChange={(v) => update('protectionSettingsVerified', v)}
+          />
+          <Toggle
+            label="System energised and operating correctly"
+            value={data.systemOperating}
+            onChange={(v) => update('systemOperating', v)}
+          />
+          <Toggle
+            label="All labels and warning notices fitted"
+            value={data.labelsApplied}
+            onChange={(v) => update('labelsApplied', v)}
+          />
+          <Toggle
+            label="Customer informed of system operation"
+            value={data.customerInformed}
+            onChange={(v) => update('customerInformed', v)}
+          />
+        </div>
       </div>
 
-      <SectionHeader title="Declaration & Signatures" />
-      <div className="space-y-4">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5">
-          <p className="text-xs text-white leading-relaxed">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Declaration & Signatures" />
+        <div className="rounded-xl bg-white/[0.05] p-3.5">
+          <p className="text-[13px] text-white/85 leading-relaxed">
             I confirm that the generating equipment described above has been installed and
             commissioned in accordance with EREC G98 and is connected to the distribution network.
             The protection settings have been verified and the system is operating correctly.
@@ -1036,59 +1116,51 @@ const {
         )}
       </div>
 
-      <SectionHeader title="Notes" />
-      <Textarea
-        value={data.notes}
-        onChange={(e) => update('notes', e.target.value)}
-        className={textareaCn}
-        placeholder="Additional notes..."
-      />
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Notes" />
+        <Textarea
+          value={data.notes}
+          onChange={(e) => update('notes', e.target.value)}
+          className={textareaCn}
+          placeholder="Additional notes..."
+        />
+      </div>
     </div>
   );
 
-  const smartTabs: SmartTab[] = [
-    { value: 'details', label: 'Details', shortLabel: 'Details', content: renderDetailsTab() },
-    { value: 'equipment', label: 'Equipment', shortLabel: 'Equip', content: renderEquipmentTab() },
-    { value: 'signoff', label: 'Sign-off', shortLabel: 'Sign', content: renderSignoffTab() },
-  ];
+  const tabContent: Record<G98TabValue, React.ReactNode> = {
+    details: renderDetailsTab(),
+    equipment: renderEquipmentTab(),
+    signoff: renderSignoffTab(),
+  };
 
   return (
     <div className="bg-background min-h-screen">
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">G98 Commissioning</h1>
-                {data.referenceNumber && (
-                  <p className="text-[10px] text-white font-mono mt-0.5">{data.referenceNumber}</p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="G98 Commissioning"
+        subtitle={data.referenceNumber ? `${data.referenceNumber} · EREC G98` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={getProgressPercentage()}
+        steps={[
+          { id: 'details', label: 'Details' },
+          { id: 'equipment', label: 'Equipment' },
+          { id: 'signoff', label: 'Sign off' },
+        ]}
+        currentTab={currentTab}
+        onTabChange={(tab) => {
+          setCurrentTab(tab as G98TabValue);
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          details: !!isTabComplete('details'),
+          equipment: !!isTabComplete('equipment'),
+          signoff: !!isTabComplete('signoff'),
+        }}
+      />
 
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
@@ -1103,94 +1175,109 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
-        <SmartTabs
-          tabs={smartTabs}
-          value={currentTab}
-          onValueChange={(v) => setCurrentTab(v as G98TabValue)}
-        />
-      </div>
-      </main>
-
-      <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
-        <div className="mb-3">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[10px] text-white">
-              Section {currentTabIndex + 1} of {totalTabs}
-            </span>
-            <span className="text-[10px] font-medium text-white">{progress}%</span>
-          </div>
-          <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
+          <div
+            key={currentTab}
+            className={
+              isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+            }
+          >
+            {tabContent[currentTab]}
           </div>
         </div>
-        {currentTabIndex === totalTabs - 1 ? (
+      </main>
+
+      <CertShellFooter
+        currentIndex={currentTabIndex}
+        totalSteps={totalTabs}
+        canPrevious={canNavigatePrevious}
+        canNext={canNavigateNext}
+        onPrevious={navigatePrevious}
+        onNext={navigateNext}
+        nextLabels={['Continue to Equipment', 'Continue to Sign off']}
+        isLastStep={currentTabIndex === totalTabs - 1}
+        onGenerate={handleGeneratePDF}
+        canGenerate={!isSaving}
+        lastStepActions={
+          <button
+            onClick={() => {
+              if (!savedReportId) {
+                toast.error('Save the certificate first before emailing.');
+                return;
+              }
+              setEmailRecipient(String((data as any).clientEmail || (data as any).customerEmail || ''));
+              setShowEmailDialog(true);
+            }}
+            className={certFooterNeutralButton}
+          >
+            Email
+          </button>
+        }
+        generateLabel="Download PDF"
+      />
+
+
+      {/* Email dialog — EV reference pattern */}
+      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.1] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white text-base font-bold">Email certificate</DialogTitle>
+            <DialogDescription className="text-white/85 text-sm">
+              Enter the recipient's email address.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-3">
+            <div>
+              <label htmlFor="g98-email" className="mb-1 block text-[12px] font-medium text-white">
+                Recipient email
+              </label>
+              <Input
+                id="g98-email"
+                type="email"
+                placeholder="client@example.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+                disabled={isSendingEmail}
+                className="input-underline h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
+              />
+            </div>
+          </div>
           <div className="flex flex-col gap-2">
             <button
-              onClick={handleGeneratePDF}
-              disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation"
             >
-              {isSaving ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Generating...
-                </>
+              {isSendingEmail ? (
+                <span className="inline-flex items-center justify-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                  Sending…
+                </span>
               ) : (
-                'Download PDF'
+                'Send certificate'
               )}
             </button>
-            {canNavigatePrevious && (
-              <button
-                onClick={navigatePrevious}
-                className="w-full h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
-              >
-                Previous
-              </button>
-            )}
-          </div>
-        ) : (
-          <div className="flex gap-3">
             <button
-              onClick={navigatePrevious}
-              disabled={!canNavigatePrevious}
-              className="flex-1 h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-30"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="h-12 w-full rounded-xl border border-white/[0.1] bg-white/[0.04] font-medium text-white transition-all hover:bg-white/[0.08] active:scale-[0.98] disabled:opacity-40 touch-manipulation"
             >
-              Previous
-            </button>
-            <button
-              onClick={navigateNext}
-              disabled={!canNavigateNext}
-              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-30"
-            >
-              Next
+              Cancel
             </button>
           </div>
-        )}
-      </div>
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent className="bg-background border-white/[0.08]">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Recover Draft?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
               A previous unsaved G98 form was found. Would you like to recover it?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={() => {
-                discardDraft();
-                setShowRecoveryDialog(false);
-              }}
-              className="text-white"
-            >
-              Discard
-            </AlertDialogCancel>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={() => {
                 if (recoveryDraft) {
@@ -1199,9 +1286,19 @@ const {
                 }
                 setShowRecoveryDialog(false);
               }}
+              className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
             >
-              Recover Draft
+              Recover draft
             </AlertDialogAction>
+            <AlertDialogCancel
+              onClick={() => {
+                discardDraft();
+                setShowRecoveryDialog(false);
+              }}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Discard
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

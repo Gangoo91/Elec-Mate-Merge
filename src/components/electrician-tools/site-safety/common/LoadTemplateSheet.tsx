@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Loader2, FileText, Trash2, BookOpen, FolderOpen } from "lucide-react";
+import { useState } from 'react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, FileText, Trash2, BookOpen, FolderOpen } from 'lucide-react';
 import {
   useSafetyFormTemplates,
   useDeleteTemplate,
   useIncrementTemplateUsage,
   ModuleType,
   SafetyFormTemplate,
-} from "@/hooks/useSafetyFormTemplates";
-import type { StandardTemplate } from "@/data/site-safety/near-miss-templates";
+} from '@/hooks/useSafetyFormTemplates';
+import type { StandardTemplate } from '@/data/site-safety/near-miss-templates';
 
-type TabKey = "standard" | "mine";
+type TabKey = 'standard' | 'mine';
 
 interface LoadTemplateSheetProps {
   open: boolean;
@@ -23,10 +23,10 @@ interface LoadTemplateSheetProps {
 }
 
 const MODULE_LABELS: Record<ModuleType, string> = {
-  coshh: "COSHH",
-  "near-miss": "Near Miss",
-  observation: "Observation",
-  permit: "Permit",
+  coshh: 'COSHH',
+  'near-miss': 'Near Miss',
+  observation: 'Observation',
+  permit: 'Permit',
 };
 
 export function LoadTemplateSheet({
@@ -37,9 +37,7 @@ export function LoadTemplateSheet({
   standardTemplates,
 }: LoadTemplateSheetProps) {
   const hasStandard = standardTemplates && standardTemplates.length > 0;
-  const [activeTab, setActiveTab] = useState<TabKey>(
-    hasStandard ? "standard" : "mine",
-  );
+  const [activeTab, setActiveTab] = useState<TabKey>(hasStandard ? 'standard' : 'mine');
   const { templates, isLoading } = useSafetyFormTemplates(moduleType);
   const deleteTemplate = useDeleteTemplate();
   const incrementUsage = useIncrementTemplateUsage();
@@ -59,20 +57,17 @@ export function LoadTemplateSheet({
     onOpenChange(false);
   };
 
-  const handleDelete = (
-    e: React.MouseEvent,
-    template: SafetyFormTemplate,
-  ) => {
+  const handleDelete = (e: React.MouseEvent, template: SafetyFormTemplate) => {
     e.stopPropagation();
     deleteTemplate.mutate({ id: template.id, moduleType });
   };
 
   const tabs: { key: TabKey; label: string; icon: React.ElementType }[] = hasStandard
     ? [
-        { key: "standard", label: "Standard", icon: BookOpen },
-        { key: "mine", label: "My Templates", icon: FolderOpen },
+        { key: 'standard', label: 'Standard', icon: BookOpen },
+        { key: 'mine', label: 'My Templates', icon: FolderOpen },
       ]
-    : [{ key: "mine", label: "My Templates", icon: FolderOpen }];
+    : [{ key: 'mine', label: 'My Templates', icon: FolderOpen }];
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -81,9 +76,7 @@ export function LoadTemplateSheet({
           <h3 className="text-base font-semibold text-white">
             Load {MODULE_LABELS[moduleType]} Template
           </h3>
-          <p className="text-xs text-white mt-1">
-            Select a template to pre-fill the form fields.
-          </p>
+          <p className="text-xs text-white mt-1">Select a template to pre-fill the form fields.</p>
         </div>
 
         {/* Tab bar */}
@@ -97,8 +90,8 @@ export function LoadTemplateSheet({
                   onClick={() => setActiveTab(tab.key)}
                   className={`h-9 flex-1 flex items-center justify-center gap-1.5 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.97] transition-all ${
                     activeTab === tab.key
-                      ? "bg-elec-yellow text-black"
-                      : "bg-white/5 text-white border border-white/10"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/5 text-white border border-white/10'
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
@@ -111,7 +104,7 @@ export function LoadTemplateSheet({
 
         <div className="overflow-y-auto px-5 pb-5 space-y-2 max-h-[calc(70vh-140px)]">
           {/* ─── Standard Templates ─── */}
-          {activeTab === "standard" &&
+          {activeTab === 'standard' &&
             hasStandard &&
             standardTemplates.map((template) => (
               <button
@@ -123,9 +116,7 @@ export function LoadTemplateSheet({
                 <div className="flex items-start gap-2">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium text-white">
-                        {template.name}
-                      </span>
+                      <span className="text-sm font-medium text-white">{template.name}</span>
                       <Badge
                         variant="outline"
                         className="text-[9px] border-elec-yellow/30 text-elec-yellow"
@@ -133,9 +124,7 @@ export function LoadTemplateSheet({
                         Standard
                       </Badge>
                     </div>
-                    <p className="text-xs text-white mt-0.5 line-clamp-2">
-                      {template.description}
-                    </p>
+                    <p className="text-xs text-white mt-0.5 line-clamp-2">{template.description}</p>
                     {template.regulation_refs.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-1.5">
                         {template.regulation_refs.map((ref) => (
@@ -154,7 +143,7 @@ export function LoadTemplateSheet({
             ))}
 
           {/* ─── My Templates ─── */}
-          {activeTab === "mine" && (
+          {activeTab === 'mine' && (
             <>
               {isLoading && (
                 <div className="flex items-center justify-center py-8">
@@ -201,7 +190,7 @@ export function LoadTemplateSheet({
                       )}
                       <p className="text-[10px] text-white mt-1">
                         Used {template.usage_count} time
-                        {template.usage_count !== 1 ? "s" : ""}
+                        {template.usage_count !== 1 ? 's' : ''}
                       </p>
                     </div>
                     <Button

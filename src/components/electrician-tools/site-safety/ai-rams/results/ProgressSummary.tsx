@@ -10,10 +10,7 @@ interface ProgressSummaryProps {
  * Installation summary — editorial 3-stat strip.
  * Steps · Completed · Estimated time.
  */
-export const ProgressSummary: React.FC<ProgressSummaryProps> = ({
-  steps,
-  totalEstimatedTime,
-}) => {
+export const ProgressSummary: React.FC<ProgressSummaryProps> = ({ steps, totalEstimatedTime }) => {
   const totalSteps = steps.length;
   const completedSteps = steps.filter((s) => s.isCompleted).length;
   const progressPercent = totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;

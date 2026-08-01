@@ -66,6 +66,7 @@ export function ApprenticeTabBar() {
   // Role gate — apprentices only. Hooks above run unconditionally.
   if (profile?.role !== 'apprentice') return null;
 
+
   const renderTab = ({ label, icon: Icon, to }: TabItem) => {
     const active = pathname.startsWith(to);
     return (
@@ -91,10 +92,15 @@ export function ApprenticeTabBar() {
       {/* In-flow spacer — keeps the last of the page content clear of the
           fixed bar (h-14 + safe-area inset on notched phones). Lives inside
           the component so it's role-gated with it. */}
-      <div className="h-24" aria-hidden />
+      <div className="h-24" aria-hidden data-apprentice-tabbar />
 
+      {/* ELE-1451 — data-apprentice-tabbar lets an exam screen stand this bar
+          down. Exams render their own fixed bottom bar at z-50, the same layer
+          as this one; being later in the DOM this one won and covered their
+          Next button. See ExamMobileLayout + `body.exam-active` in index.css. */}
       <nav
         aria-label="Apprentice navigation"
+        data-apprentice-tabbar
         className="fixed bottom-0 inset-x-0 z-50 bg-[hsl(0_0%_6%)]/95 backdrop-blur-md border-t border-white/[0.08] pb-[env(safe-area-inset-bottom)]"
       >
         <div className="grid grid-cols-5 items-center max-w-2xl mx-auto">

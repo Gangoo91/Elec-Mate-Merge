@@ -653,7 +653,9 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
       requestMethod: req.method,
     });
 
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(
+      JSON.stringify({ error: 'Something went wrong completing that — please try again.' }),
+      {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

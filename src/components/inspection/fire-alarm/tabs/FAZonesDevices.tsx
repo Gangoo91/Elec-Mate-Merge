@@ -8,7 +8,6 @@
 import { useRef, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Trash2, Camera, X, Copy, AlertTriangle } from 'lucide-react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 import {
@@ -21,75 +20,31 @@ import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import { getCompatibleDetectors } from '@/data/fireAlarmEquipmentDatabase';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 
-const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const Section = ({
-  title,
-  accentColor,
-  count,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  count?: number;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-        {title}
-        {count !== undefined && (
-          <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-            {count}
-          </span>
-        )}
-      </h2>
-    </div>
-    {children}
-  </div>
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const addButtonCn =
+  'w-full h-11 rounded-xl border border-dashed border-white/[0.25] text-sm font-medium text-elec-yellow touch-manipulation active:scale-[0.98] transition-transform';
+
+const entryActionCn = 'h-11 px-2 text-sm font-medium touch-manipulation active:opacity-70';
+
+const SectionHeader = ({ title, count }: { title: string; count?: number }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+    {title}
+    {count !== undefined && <span className="ml-2 font-normal text-white/80">({count})</span>}
+  </h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-[10px] uppercase tracking-wider mb-1 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
-);
-
-/* ── Icon button ── */
-const IconBtn = ({
-  onClick,
-  colour,
-  icon: Icon,
-  label,
-}: {
-  onClick: () => void;
-  colour: string;
-  icon: any;
-  label: string;
-}) => (
-  <button
-    onClick={onClick}
-    title={label}
-    className={cn(
-      'w-9 h-9 rounded-xl flex items-center justify-center touch-manipulation active:scale-90 transition-all border',
-      colour === 'yellow' &&
-        'border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow hover:bg-elec-yellow/20',
-      colour === 'red' && 'border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-500/20',
-      colour === 'blue' && 'border-blue-500/20 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20'
-    )}
-  >
-    <Icon className="h-4 w-4" />
-  </button>
 );
 
 /* ── Option lists ── */
@@ -349,49 +304,44 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Getting started hint */}
       {zones.length === 0 && detectors.length === 0 && (
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 text-center">
+        <div className="lg:col-span-2 rounded-xl bg-white/[0.05] p-4 text-center">
           <p className="text-sm font-medium text-white">Start by adding your zones</p>
-          <p className="text-xs text-white mt-1">
+          <p className="text-[12px] text-white/80 mt-1">
             Then add detectors, sounders, and call points and assign them to zones
           </p>
         </div>
       )}
 
-      {/* Zone Schedule */}
-      <Section
-        title="Zone Schedule"
-        accentColor="from-red-500/40 to-orange-400/20"
-        count={zones.length}
-      >
+      {/* Zone schedule */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Zone schedule" count={zones.length} />
         {zones.map((zone) => {
           const autoDetCount = zoneDetCount(zone.id);
           const autoSndCount = zoneSndCount(zone.id);
           const autoCpCount = zoneCpCount(zone.id);
           return (
-            <div
-              key={zone.id}
-              className="p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-3"
-            >
+            <div key={zone.id} className="border-t border-white/[0.08] pt-4 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-elec-yellow">Zone {zone.zoneNumber}</span>
+                <p className="text-sm font-semibold text-white">Zone {zone.zoneNumber}</p>
                 {zones.length > 1 && (
-                  <IconBtn
+                  <button
+                    type="button"
                     onClick={() => removeZone(zone.id)}
-                    colour="red"
-                    icon={Trash2}
-                    label="Remove zone"
-                  />
+                    className={cn(entryActionCn, '-mr-2 text-red-400')}
+                  >
+                    Remove
+                  </button>
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Field label="Name">
                   <Input
                     value={zone.zoneName}
                     onChange={(e) => updateZone(zone.id, 'zoneName', e.target.value)}
-                    className={inputSmCn}
+                    className={inputCn}
                     placeholder="e.g. Ground Floor"
                   />
                 </Field>
@@ -399,7 +349,7 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                   <Input
                     value={zone.location}
                     onChange={(e) => updateZone(zone.id, 'location', e.target.value)}
-                    className={inputSmCn}
+                    className={inputCn}
                     placeholder="e.g. Main building"
                   />
                 </Field>
@@ -407,22 +357,22 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
               {hasDevicesListed ? (
                 /* Auto-counted from device lists */
                 <div className="grid grid-cols-3 gap-2">
-                  <div className="text-center p-2 rounded-lg bg-white/[0.04]">
-                    <p className="text-base font-bold text-amber-400">{autoDetCount}</p>
-                    <p className="text-[9px] text-white uppercase">Detectors</p>
+                  <div className="rounded-xl bg-white/[0.05] p-2 text-center">
+                    <p className="text-base font-bold text-elec-yellow">{autoDetCount}</p>
+                    <p className="text-[11px] text-white/80">Detectors</p>
                   </div>
-                  <div className="text-center p-2 rounded-lg bg-white/[0.04]">
+                  <div className="rounded-xl bg-white/[0.05] p-2 text-center">
                     <p className="text-base font-bold text-green-400">{autoCpCount}</p>
-                    <p className="text-[9px] text-white uppercase">CPs</p>
+                    <p className="text-[11px] text-white/80">Call points</p>
                   </div>
-                  <div className="text-center p-2 rounded-lg bg-white/[0.04]">
+                  <div className="rounded-xl bg-white/[0.05] p-2 text-center">
                     <p className="text-base font-bold text-blue-400">{autoSndCount}</p>
-                    <p className="text-[9px] text-white uppercase">Sounders</p>
+                    <p className="text-[11px] text-white/80">Sounders</p>
                   </div>
                 </div>
               ) : (
                 /* Manual entry when no devices listed */
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-x-3 gap-y-4">
                   <Field label="Detectors">
                     <Input
                       type="number"
@@ -431,10 +381,10 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                       onChange={(e) =>
                         updateZone(zone.id, 'detectorCount', parseInt(e.target.value) || 0)
                       }
-                      className={inputSmCn}
+                      className={inputCn}
                     />
                   </Field>
-                  <Field label="CPs">
+                  <Field label="Call points">
                     <Input
                       type="number"
                       inputMode="numeric"
@@ -442,7 +392,7 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                       onChange={(e) =>
                         updateZone(zone.id, 'callPointCount', parseInt(e.target.value) || 0)
                       }
-                      className={inputSmCn}
+                      className={inputCn}
                     />
                   </Field>
                   <Field label="Sounders">
@@ -453,7 +403,7 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                       onChange={(e) =>
                         updateZone(zone.id, 'sounderCount', parseInt(e.target.value) || 0)
                       }
-                      className={inputSmCn}
+                      className={inputCn}
                     />
                   </Field>
                 </div>
@@ -461,28 +411,22 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
             </div>
           );
         })}
-        <button
-          onClick={addZone}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-red-500/20 flex items-center justify-center gap-2 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Zone
+        <button type="button" onClick={addZone} className={addButtonCn}>
+          Add zone
         </button>
-      </Section>
+      </div>
 
       {/* Detectors */}
-      <Section
-        title="Detectors"
-        accentColor="from-amber-500/40 to-yellow-400/20"
-        count={detectors.length}
-      >
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Detectors" count={detectors.length} />
         {detectors.map((det, idx) => (
-          <div key={det.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            {/* Card header — number + actions */}
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-amber-400">
+          <div key={det.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            {/* Entry heading + actions */}
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-white">
                 Detector {idx + 1} of {detectors.length}
-              </span>
-              <div className="flex items-center gap-1.5">
+              </p>
+              <div className="flex items-center">
                 <input
                   ref={(el) => {
                     detPhotoRefs.current[det.id] = el;
@@ -492,137 +436,135 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                   className="hidden"
                   onChange={(e) => handlePhoto(e, 'detectors', detectors, det.id)}
                 />
-                <IconBtn
+                <button
+                  type="button"
                   onClick={() => duplicateDetector(det)}
-                  colour="blue"
-                  icon={Copy}
-                  label="Duplicate"
-                />
-                <IconBtn
+                  className={cn(entryActionCn, 'text-white/85')}
+                >
+                  Duplicate
+                </button>
+                <button
+                  type="button"
                   onClick={() => detPhotoRefs.current[det.id]?.click()}
-                  colour="yellow"
-                  icon={Camera}
-                  label="Photo"
-                />
-                <IconBtn
+                  className={cn(entryActionCn, 'text-white/85')}
+                >
+                  Photo
+                </button>
+                <button
+                  type="button"
                   onClick={() => removeDetector(det.id)}
-                  colour="red"
-                  icon={Trash2}
-                  label="Remove"
-                />
+                  className={cn(entryActionCn, '-mr-2 text-red-400')}
+                >
+                  Remove
+                </button>
               </div>
             </div>
-            {/* Card body */}
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              {/* Compatibility warning */}
-              {det.make && !isDetectorCompatible(det.make) && (
-                <div className="flex items-center gap-2 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                  <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-                  <p className="text-[11px] text-amber-400">
-                    This detector may not be compatible with the selected panel
-                  </p>
-                </div>
-              )}
-              {det.photo && (
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/[0.1]">
-                  <img src={det.photo} alt="Device" className="w-full h-full object-cover" />
-                  <button
-                    onClick={() => removePhoto('detectors', detectors, det.id)}
-                    className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center touch-manipulation"
-                  >
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                </div>
-              )}
-              <Field label="Type">
-                <ComboboxCell
-                  value={det.type}
-                  onChange={(v) => updateDetector(det.id, 'type', v)}
-                  options={detectorTypeOptions}
-                  placeholder="Select detector type..."
-                  className="h-12 text-base"
+            {/* Compatibility warning */}
+            {det.make && !isDetectorCompatible(det.make) && (
+              <div className="rounded-xl border border-amber-500/40 bg-white/[0.05] px-3 py-2">
+                <p className="text-[12px] text-amber-400">
+                  This detector may not be compatible with the selected panel
+                </p>
+              </div>
+            )}
+            {det.photo && (
+              <div className="flex items-center gap-3">
+                <img
+                  src={det.photo}
+                  alt="Device"
+                  className="w-20 h-20 rounded-lg border border-white/[0.12] object-cover"
                 />
-              </Field>
-              <Field label="Location">
+                <button
+                  type="button"
+                  onClick={() => removePhoto('detectors', detectors, det.id)}
+                  className={cn(entryActionCn, 'text-red-400')}
+                >
+                  Remove photo
+                </button>
+              </div>
+            )}
+            <Field label="Type">
+              <ComboboxCell
+                value={det.type}
+                onChange={(v) => updateDetector(det.id, 'type', v)}
+                options={detectorTypeOptions}
+                placeholder="Select detector type..."
+                className="h-11 text-base"
+              />
+            </Field>
+            <Field label="Location">
+              <Input
+                value={det.location}
+                onChange={(e) => updateDetector(det.id, 'location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. First floor corridor"
+              />
+            </Field>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Make">
                 <Input
-                  value={det.location}
-                  onChange={(e) => updateDetector(det.id, 'location', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="e.g. First floor corridor"
+                  value={det.make}
+                  onChange={(e) => updateDetector(det.id, 'make', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Apollo"
                 />
               </Field>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Make">
-                  <Input
-                    value={det.make}
-                    onChange={(e) => updateDetector(det.id, 'make', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Apollo"
-                  />
-                </Field>
-                <Field label="Model">
-                  <Input
-                    value={det.model}
-                    onChange={(e) => updateDetector(det.id, 'model', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Discovery"
-                  />
-                </Field>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Serial No.">
-                  <Input
-                    value={det.serialNumber}
-                    onChange={(e) => updateDetector(det.id, 'serialNumber', e.target.value)}
-                    className={inputSmCn}
-                  />
-                </Field>
-                <Field label="Install Date">
-                  <Input
-                    type="date"
-                    value={det.installDate || ''}
-                    onChange={(e) => updateDetector(det.id, 'installDate', e.target.value)}
-                    className={cn(inputSmCn, '[color-scheme:dark]')}
-                  />
-                </Field>
-              </div>
-              <Field label="Zone">
-                <ComboboxCell
-                  value={det.zoneId}
-                  onChange={(v) => updateDetector(det.id, 'zoneId', v)}
-                  options={zoneOptions}
-                  placeholder="Assign zone"
-                  className="h-10 text-sm"
-                  allowCustom={false}
+              <Field label="Model">
+                <Input
+                  value={det.model}
+                  onChange={(e) => updateDetector(det.id, 'model', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Discovery"
                 />
               </Field>
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Serial no.">
+                <Input
+                  value={det.serialNumber}
+                  onChange={(e) => updateDetector(det.id, 'serialNumber', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+              <Field label="Install date">
+                <Input
+                  type="date"
+                  value={det.installDate || ''}
+                  onChange={(e) => updateDetector(det.id, 'installDate', e.target.value)}
+                  className={inputCn}
+                />
+              </Field>
+            </div>
+            <Field label="Zone">
+              <ComboboxCell
+                value={det.zoneId}
+                onChange={(v) => updateDetector(det.id, 'zoneId', v)}
+                options={zoneOptions}
+                placeholder="Assign zone"
+                className="h-11 text-base"
+                allowCustom={false}
+              />
+            </Field>
           </div>
         ))}
-        <button
-          onClick={addDetector}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-amber-500/20 flex items-center justify-center gap-2 text-sm font-medium text-amber-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Detector
+        <button type="button" onClick={addDetector} className={addButtonCn}>
+          Add detector
         </button>
-      </Section>
+      </div>
 
       {/* Sounders */}
-      <Section
-        title="Sounders & VADs"
-        accentColor="from-blue-500/40 to-cyan-400/20"
-        count={sounders.length}
-      >
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Sounders & VADs" count={sounders.length} />
         {sounders.map((snd, idx) => {
           const dbVal = getDbValidation(snd.dBReading);
           return (
-            <div key={snd.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-              {/* Card header */}
-              <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-                <span className="text-xs font-bold text-blue-400">
+            <div key={snd.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+              {/* Entry heading + actions */}
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-semibold text-white">
                   Sounder {idx + 1} of {sounders.length}
-                </span>
-                <div className="flex items-center gap-1.5">
+                </p>
+                <div className="flex items-center">
                   <input
                     ref={(el) => {
                       sndPhotoRefs.current[snd.id] = el;
@@ -632,149 +574,148 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                     className="hidden"
                     onChange={(e) => handlePhoto(e, 'sounders', sounders, snd.id)}
                   />
-                  <IconBtn
+                  <button
+                    type="button"
                     onClick={() => duplicateSounder(snd)}
-                    colour="blue"
-                    icon={Copy}
-                    label="Duplicate"
-                  />
-                  <IconBtn
+                    className={cn(entryActionCn, 'text-white/85')}
+                  >
+                    Duplicate
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => sndPhotoRefs.current[snd.id]?.click()}
-                    colour="yellow"
-                    icon={Camera}
-                    label="Photo"
-                  />
-                  <IconBtn
+                    className={cn(entryActionCn, 'text-white/85')}
+                  >
+                    Photo
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => removeSounder(snd.id)}
-                    colour="red"
-                    icon={Trash2}
-                    label="Remove"
-                  />
+                    className={cn(entryActionCn, '-mr-2 text-red-400')}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
-              {/* Card body */}
-              <div className="p-3.5 space-y-3 bg-white/[0.02]">
-                {snd.photo && (
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/[0.1]">
-                    <img src={snd.photo} alt="Device" className="w-full h-full object-cover" />
-                    <button
-                      onClick={() => removePhoto('sounders', sounders, snd.id)}
-                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center touch-manipulation"
-                    >
-                      <X className="h-3 w-3 text-white" />
-                    </button>
-                  </div>
-                )}
-                <Field label="Type">
-                  <ComboboxCell
-                    value={snd.type}
-                    onChange={(v) => updateSounder(snd.id, 'type', v)}
-                    options={sounderTypeOptions}
-                    placeholder="Select sounder type..."
-                    className="h-12 text-base"
+              {snd.photo && (
+                <div className="flex items-center gap-3">
+                  <img
+                    src={snd.photo}
+                    alt="Device"
+                    className="w-20 h-20 rounded-lg border border-white/[0.12] object-cover"
                   />
-                </Field>
-                <Field label="Location">
+                  <button
+                    type="button"
+                    onClick={() => removePhoto('sounders', sounders, snd.id)}
+                    className={cn(entryActionCn, 'text-red-400')}
+                  >
+                    Remove photo
+                  </button>
+                </div>
+              )}
+              <Field label="Type">
+                <ComboboxCell
+                  value={snd.type}
+                  onChange={(v) => updateSounder(snd.id, 'type', v)}
+                  options={sounderTypeOptions}
+                  placeholder="Select sounder type..."
+                  className="h-11 text-base"
+                />
+              </Field>
+              <Field label="Location">
+                <Input
+                  value={snd.location}
+                  onChange={(e) => updateSounder(snd.id, 'location', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Main stairwell"
+                />
+              </Field>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="Make">
                   <Input
-                    value={snd.location}
-                    onChange={(e) => updateSounder(snd.id, 'location', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. Main stairwell"
+                    value={snd.make}
+                    onChange={(e) => updateSounder(snd.id, 'make', e.target.value)}
+                    className={inputCn}
+                    placeholder="e.g. Hochiki"
                   />
                 </Field>
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="Make">
+                <Field label="Model">
+                  <Input
+                    value={snd.model}
+                    onChange={(e) => updateSounder(snd.id, 'model', e.target.value)}
+                    className={inputCn}
+                    placeholder="e.g. CHQ-WB"
+                  />
+                </Field>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Field label="dB reading">
+                  <div>
                     <Input
-                      value={snd.make}
-                      onChange={(e) => updateSounder(snd.id, 'make', e.target.value)}
-                      className={inputSmCn}
-                      placeholder="e.g. Hochiki"
-                    />
-                  </Field>
-                  <Field label="Model">
-                    <Input
-                      value={snd.model}
-                      onChange={(e) => updateSounder(snd.id, 'model', e.target.value)}
-                      className={inputSmCn}
-                      placeholder="e.g. CHQ-WB"
-                    />
-                  </Field>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="dB Reading">
-                    <div>
-                      <Input
-                        value={snd.dBReading || ''}
-                        onChange={(e) => updateSounder(snd.id, 'dBReading', e.target.value)}
-                        inputMode="decimal"
-                        className={cn(
-                          inputSmCn,
-                          dbVal &&
-                            (dbVal.status === 'pass'
-                              ? 'border-green-500/50'
-                              : dbVal.status === 'fail'
-                                ? 'border-red-500/50'
-                                : '')
-                        )}
-                        placeholder="e.g. 85"
-                      />
-                      {dbVal && (
-                        <p
-                          className={cn(
-                            'text-[10px] mt-1',
-                            dbVal.status === 'pass'
-                              ? 'text-green-400'
-                              : dbVal.status === 'fail'
-                                ? 'text-red-400'
-                                : 'text-amber-400'
-                          )}
-                        >
-                          {dbVal.status === 'pass'
-                            ? 'Pass'
+                      value={snd.dBReading || ''}
+                      onChange={(e) => updateSounder(snd.id, 'dBReading', e.target.value)}
+                      inputMode="decimal"
+                      className={cn(
+                        inputCn,
+                        dbVal &&
+                          (dbVal.status === 'pass'
+                            ? 'border-green-500/60'
                             : dbVal.status === 'fail'
-                              ? `Fail — min ${dbVal.minRequired} dB`
-                              : dbVal.message}
-                        </p>
+                              ? 'border-red-500/60'
+                              : '')
                       )}
-                    </div>
-                  </Field>
-                  <Field label="Zone">
-                    <ComboboxCell
-                      value={snd.zoneId || ''}
-                      onChange={(v) => updateSounder(snd.id, 'zoneId', v)}
-                      options={zoneOptions}
-                      placeholder="Assign zone"
-                      className="h-10 text-sm"
-                      allowCustom={false}
+                      placeholder="e.g. 85"
                     />
-                  </Field>
-                </div>
+                    {dbVal && (
+                      <p
+                        className={cn(
+                          'text-[11px] mt-1',
+                          dbVal.status === 'pass'
+                            ? 'text-green-400'
+                            : dbVal.status === 'fail'
+                              ? 'text-red-400'
+                              : 'text-amber-400'
+                        )}
+                      >
+                        {dbVal.status === 'pass'
+                          ? 'Pass'
+                          : dbVal.status === 'fail'
+                            ? `Fail — min ${dbVal.minRequired} dB`
+                            : dbVal.message}
+                      </p>
+                    )}
+                  </div>
+                </Field>
+                <Field label="Zone">
+                  <ComboboxCell
+                    value={snd.zoneId || ''}
+                    onChange={(v) => updateSounder(snd.id, 'zoneId', v)}
+                    options={zoneOptions}
+                    placeholder="Assign zone"
+                    className="h-11 text-base"
+                    allowCustom={false}
+                  />
+                </Field>
               </div>
             </div>
           );
         })}
-        <button
-          onClick={addSounder}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-blue-500/20 flex items-center justify-center gap-2 text-sm font-medium text-blue-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Sounder / VAD
+        <button type="button" onClick={addSounder} className={addButtonCn}>
+          Add sounder / VAD
         </button>
-      </Section>
+      </div>
 
-      {/* Call Points */}
-      <Section
-        title="Manual Call Points"
-        accentColor="from-green-500/40 to-emerald-400/20"
-        count={callPoints.length}
-      >
+      {/* Call points */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Manual call points" count={callPoints.length} />
         {callPoints.map((cp, idx) => (
-          <div key={cp.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            {/* Card header */}
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-green-400">
-                Call Point {idx + 1} of {callPoints.length}
-              </span>
-              <div className="flex items-center gap-1.5">
+          <div key={cp.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+            {/* Entry heading + actions */}
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-white">
+                Call point {idx + 1} of {callPoints.length}
+              </p>
+              <div className="flex items-center">
                 <input
                   ref={(el) => {
                     cpPhotoRefs.current[cp.id] = el;
@@ -784,116 +725,119 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                   className="hidden"
                   onChange={(e) => handlePhoto(e, 'callPoints', callPoints, cp.id)}
                 />
-                <IconBtn
+                <button
+                  type="button"
                   onClick={() => duplicateCallPoint(cp)}
-                  colour="blue"
-                  icon={Copy}
-                  label="Duplicate"
-                />
-                <IconBtn
+                  className={cn(entryActionCn, 'text-white/85')}
+                >
+                  Duplicate
+                </button>
+                <button
+                  type="button"
                   onClick={() => cpPhotoRefs.current[cp.id]?.click()}
-                  colour="yellow"
-                  icon={Camera}
-                  label="Photo"
-                />
-                <IconBtn
+                  className={cn(entryActionCn, 'text-white/85')}
+                >
+                  Photo
+                </button>
+                <button
+                  type="button"
                   onClick={() => removeCallPoint(cp.id)}
-                  colour="red"
-                  icon={Trash2}
-                  label="Remove"
-                />
+                  className={cn(entryActionCn, '-mr-2 text-red-400')}
+                >
+                  Remove
+                </button>
               </div>
             </div>
-            {/* Card body */}
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
-              {cp.photo && (
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/[0.1]">
-                  <img src={cp.photo} alt="Device" className="w-full h-full object-cover" />
-                  <button
-                    onClick={() => removePhoto('callPoints', callPoints, cp.id)}
-                    className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center touch-manipulation"
-                  >
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                </div>
-              )}
-              <Field label="Type">
-                <ComboboxCell
-                  value={cp.type}
-                  onChange={(v) => updateCallPoint(cp.id, 'type', v)}
-                  options={callPointTypeOptions}
-                  placeholder="Select call point type..."
-                  className="h-12 text-base"
+            {cp.photo && (
+              <div className="flex items-center gap-3">
+                <img
+                  src={cp.photo}
+                  alt="Device"
+                  className="w-20 h-20 rounded-lg border border-white/[0.12] object-cover"
                 />
-              </Field>
-              <Field label="Location">
+                <button
+                  type="button"
+                  onClick={() => removePhoto('callPoints', callPoints, cp.id)}
+                  className={cn(entryActionCn, 'text-red-400')}
+                >
+                  Remove photo
+                </button>
+              </div>
+            )}
+            <Field label="Type">
+              <ComboboxCell
+                value={cp.type}
+                onChange={(v) => updateCallPoint(cp.id, 'type', v)}
+                options={callPointTypeOptions}
+                placeholder="Select call point type..."
+                className="h-11 text-base"
+              />
+            </Field>
+            <Field label="Location">
+              <Input
+                value={cp.location}
+                onChange={(e) => updateCallPoint(cp.id, 'location', e.target.value)}
+                className={inputCn}
+                placeholder="e.g. Ground floor entrance"
+              />
+            </Field>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <Field label="Make">
                 <Input
-                  value={cp.location}
-                  onChange={(e) => updateCallPoint(cp.id, 'location', e.target.value)}
-                  className={inputSmCn}
-                  placeholder="e.g. Ground floor entrance"
+                  value={cp.make}
+                  onChange={(e) => updateCallPoint(cp.id, 'make', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. KAC"
                 />
               </Field>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Make">
-                  <Input
-                    value={cp.make}
-                    onChange={(e) => updateCallPoint(cp.id, 'make', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. KAC"
-                  />
-                </Field>
-                <Field label="Model">
-                  <Input
-                    value={cp.model}
-                    onChange={(e) => updateCallPoint(cp.id, 'model', e.target.value)}
-                    className={inputSmCn}
-                    placeholder="e.g. PS200"
-                  />
-                </Field>
-              </div>
-              <Field label="Zone">
-                <ComboboxCell
-                  value={cp.zoneId || ''}
-                  onChange={(v) => updateCallPoint(cp.id, 'zoneId', v)}
-                  options={zoneOptions}
-                  placeholder="Assign zone"
-                  className="h-10 text-sm"
-                  allowCustom={false}
+              <Field label="Model">
+                <Input
+                  value={cp.model}
+                  onChange={(e) => updateCallPoint(cp.id, 'model', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. PS200"
                 />
               </Field>
             </div>
+            <Field label="Zone">
+              <ComboboxCell
+                value={cp.zoneId || ''}
+                onChange={(v) => updateCallPoint(cp.id, 'zoneId', v)}
+                options={zoneOptions}
+                placeholder="Assign zone"
+                className="h-11 text-base"
+                allowCustom={false}
+              />
+            </Field>
           </div>
         ))}
-        <button
-          onClick={addCallPoint}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-green-500/20 flex items-center justify-center gap-2 text-sm font-medium text-green-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Call Point
+        <button type="button" onClick={addCallPoint} className={addButtonCn}>
+          Add call point
         </button>
-      </Section>
+      </div>
 
-      {/* Equipment Summary */}
-      <Section title="Equipment Summary" accentColor="from-white/20 to-white/5">
+      {/* Equipment summary */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Equipment summary" />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
             <p className="text-2xl font-bold text-elec-yellow">{zones.length}</p>
-            <p className="text-[10px] text-white uppercase">Zones</p>
+            <p className="text-[11px] text-white/80">Zones</p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
             <p className="text-2xl font-bold text-red-400">{detectors.length}</p>
-            <p className="text-[10px] text-white uppercase">Detectors</p>
+            <p className="text-[11px] text-white/80">Detectors</p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
             <p className="text-2xl font-bold text-blue-400">{sounders.length}</p>
-            <p className="text-[10px] text-white uppercase">Sounders</p>
+            <p className="text-[11px] text-white/80">Sounders</p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-center">
+          <div className="rounded-xl bg-white/[0.05] p-3 text-center">
             <p className="text-2xl font-bold text-green-400">{callPoints.length}</p>
-            <p className="text-[10px] text-white uppercase">Call Points</p>
+            <p className="text-[11px] text-white/80">Call points</p>
           </div>
         </div>
-      </Section>
+      </div>
     </div>
   );
 }

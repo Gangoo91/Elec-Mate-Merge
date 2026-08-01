@@ -17,6 +17,8 @@ import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { EICR_CODE_DEFINITIONS, BS7671_DEFECT_EXAMPLES } from '../_shared/eicr-coding-constants.ts';
+import { setAiLogFn } from '../_shared/ai-log.ts';
+setAiLogFn('commissioning-v3');
 
 // Safe JSON stringification to prevent circular reference errors
 function safeStringify(obj: any): string {

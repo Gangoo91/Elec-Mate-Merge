@@ -11,6 +11,7 @@
 // JWT. Not called from the app — invoked manually by us / a scheduled cron.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { aiFetch } from '../_shared/ai-log.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -51,7 +52,7 @@ async function embedBatch(
   inputs: string[],
   apiKey: string
 ): Promise<number[][] | null> {
-  const res = await fetch('https://api.openai.com/v1/embeddings', {
+  const res = await aiFetch('embed-qualification-requirements', 'https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

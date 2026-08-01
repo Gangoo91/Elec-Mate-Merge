@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useCustomerProperties, CustomerProperty } from '@/hooks/inspection/useCustomerProperties';
 import { PropertyForm } from './PropertyForm';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,34 +11,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Plus,
-  Home,
-  Building2,
-  Factory,
-  MoreVertical,
-  Star,
-  FileText,
-  Loader2,
-  MapPin,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CustomerPropertiesTabProps {
   customerId: string;
   onRefresh: () => void;
 }
-
-const propertyTypeIcons: Record<string, React.ReactNode> = {
-  residential: <Home className="h-5 w-5 text-blue-400" />,
-  commercial: <Building2 className="h-5 w-5 text-green-400" />,
-  industrial: <Factory className="h-5 w-5 text-orange-400" />,
-};
 
 const propertyTypeLabels: Record<string, string> = {
   residential: 'Residential',
@@ -64,6 +40,7 @@ export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropert
   const [editingProperty, setEditingProperty] = useState<CustomerProperty | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSave = (data: any) => {
     if (editingProperty) {
       updateProperty({ propertyId: editingProperty.id, updates: data });
@@ -98,111 +75,83 @@ export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropert
 
   return (
     <div className="space-y-4">
-      {/* Add Property Button */}
-      <Button
-        variant="accent"
+      {/* Add property */}
+      <button
         onClick={() => {
           setEditingProperty(null);
           setShowAddDialog(true);
         }}
-        className="w-full h-12 touch-manipulation"
+        className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
         disabled={isAdding}
       >
-        <Plus className="h-4 w-4 mr-2" />
-        Add Property
-      </Button>
+        Add property
+      </button>
 
       {/* Properties List */}
       {properties.length === 0 ? (
-        <Card>
-          <CardContent className="py-12 text-center">
-            <MapPin className="h-12 w-12 mx-auto text-white mb-4" />
-            <p className="text-lg font-medium mb-2">No properties yet</p>
-            <p className="text-sm text-white mb-4">
-              Add properties to track certificates for each location
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] px-6 py-10 text-center">
+          <p className="text-[15px] font-semibold text-white">No properties yet</p>
+          <p className="mt-1 text-[12.5px] text-white/55">
+            Add properties to track certificates for each location.
+          </p>
+        </div>
       ) : (
         <div className="space-y-3">
           {properties.map((property) => (
-            <Card key={property.id} className={property.isPrimary ? 'border-elec-yellow/50' : ''}>
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  {/* Icon */}
-                  <div className="flex-shrink-0 mt-1">
-                    {propertyTypeIcons[property.propertyType] || propertyTypeIcons.residential}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      {property.isPrimary && (
-                        <Badge variant="default" className="text-[10px] bg-elec-yellow text-black">
-                          <Star className="h-3 w-3 mr-0.5" />
-                          Primary
-                        </Badge>
-                      )}
-                      <Badge variant="outline" className="text-[10px]">
-                        {propertyTypeLabels[property.propertyType]}
-                      </Badge>
-                    </div>
-                    <p className="font-medium text-sm break-words">{property.address}</p>
-                    {property.notes && (
-                      <p className="text-xs text-white mt-1 line-clamp-2">
-                        {property.notes}
-                      </p>
-                    )}
-                    {(property.certificateCount || 0) > 0 && (
-                      <div className="flex items-center gap-1 mt-2 text-xs text-white">
-                        <FileText className="h-3 w-3" />
-                        {property.certificateCount} certificate
-                        {property.certificateCount !== 1 ? 's' : ''}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Actions */}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-10 w-10 flex-shrink-0 touch-manipulation"
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
-                      {!property.isPrimary && (
-                        <DropdownMenuItem
-                          onClick={() => handleSetPrimary(property.id)}
-                          className="min-h-[44px]"
-                        >
-                          <Star className="h-4 w-4 mr-2" />
-                          Set as Primary
-                        </DropdownMenuItem>
-                      )}
-                      <DropdownMenuItem
-                        onClick={() => {
-                          setEditingProperty(property);
-                          setShowAddDialog(true);
-                        }}
-                        className="min-h-[44px]"
-                      >
-                        Edit Property
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => setDeleteConfirmId(property.id)}
-                        className="min-h-[44px] text-red-500 focus:text-red-500"
-                      >
-                        Delete Property
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            <div
+              key={property.id}
+              className={cn(
+                'rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4',
+                property.isPrimary ? 'border-elec-yellow/60' : 'border-white/[0.12]'
+              )}
+            >
+              <div className="mb-1 flex items-center gap-1.5">
+                {property.isPrimary && (
+                  <span className="rounded bg-elec-yellow px-2 py-0.5 text-[10px] font-bold text-black">
+                    Primary
+                  </span>
+                )}
+                <span className="rounded bg-white/[0.08] px-2 py-0.5 text-[10px] font-bold text-white/75">
+                  {propertyTypeLabels[property.propertyType] || 'Residential'}
+                </span>
+              </div>
+              <p className="break-words text-sm font-medium text-white">{property.address}</p>
+              {property.notes && (
+                <p className="mt-1 line-clamp-2 text-[12px] text-white/60">{property.notes}</p>
+              )}
+              <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-2.5">
+                <span className="text-[11.5px] text-white/50 tabular-nums">
+                  {(property.certificateCount || 0) > 0
+                    ? `${property.certificateCount} certificate${property.certificateCount !== 1 ? 's' : ''}`
+                    : 'No certificates yet'}
+                </span>
+                <div className="flex items-center gap-1">
+                  {!property.isPrimary && (
+                    <button
+                      onClick={() => handleSetPrimary(property.id)}
+                      className="flex h-9 items-center px-2 text-[12px] font-medium text-white/60 transition-colors hover:text-white touch-manipulation"
+                    >
+                      Make primary
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      setEditingProperty(property);
+                      setShowAddDialog(true);
+                    }}
+                    className="flex h-9 items-center px-2 text-[12px] font-medium text-white/60 transition-colors hover:text-white touch-manipulation"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => setDeleteConfirmId(property.id)}
+                    className="flex h-9 items-center px-2 text-[12px] font-medium text-white/40 transition-colors hover:text-red-400 touch-manipulation"
+                  >
+                    Delete
+                  </button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}

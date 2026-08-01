@@ -38,7 +38,7 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-smoke-co-alarm-pdf] Ref:', formData.referenceNumber, 'Grade:', formData.gradeAchieved, 'Cat:', formData.categoryAchieved, 'Alarms:', formData.alarms?.length);
     const doc = await createDoc(formData, templateId);
     const completed = await waitForPDF(doc.id);
-    return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ success: true, document_id: completed.id, pdfUrl: completed.download_url, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
     await captureException(error, { functionName: 'generate-smoke-co-alarm-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-smoke-co-alarm-pdf] Error:', error);

@@ -91,7 +91,7 @@ export const MergeDuplicatesSheet = ({
                   className="rounded-2xl border border-white/[0.08] bg-white/[0.02] overflow-hidden"
                 >
                   <div className="px-4 py-2.5 border-b border-white/[0.06]">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-400">
+                    <span className="text-[12px] font-semibold text-amber-300">
                       Share {group.matchedOn}
                     </span>
                   </div>

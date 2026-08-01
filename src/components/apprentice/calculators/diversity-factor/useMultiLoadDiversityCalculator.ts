@@ -21,32 +21,32 @@ interface ValidationErrors {
   [key: string]: string;
 }
 
-// IET On-Site Guide Table 1B / Table H2 Compliant Load Types
+// IET On-Site Guide Table A2 / Table H2 Compliant Load Types
 const LOAD_TYPES: Record<string, string> = {
-  // Lighting Categories — Table 1B item 1
-  'led-lighting': 'LED Lighting — 66% domestic, 90% commercial (Table 1B item 1)',
-  'fluorescent-lighting': 'Fluorescent Lighting — 66% domestic, 90% commercial (Table 1B item 1)',
-  'general-lighting': 'General Lighting — 66% domestic, 90% commercial (Table 1B item 1)',
-  'emergency-lighting': 'Emergency Lighting — 100%, no reduction (Table 1B item 1)',
+  // Lighting Categories — Table A2 item 1
+  'led-lighting': 'LED Lighting — 66% domestic, 90% commercial (Table A2 item 1)',
+  'fluorescent-lighting': 'Fluorescent Lighting — 66% domestic, 90% commercial (Table A2 item 1)',
+  'general-lighting': 'General Lighting — 66% domestic, 90% commercial (Table A2 item 1)',
+  'emergency-lighting': 'Emergency Lighting — 100%, no reduction (Table A2 item 1)',
 
-  // Socket Outlet Categories — Table 1B item 2
+  // Socket Outlet Categories — Table A2 item 2
   'ring-main-sockets':
-    'Ring Final Circuits — 32A assumed per ring, 100% + 40% additional (Table 1B item 2)',
-  'radial-sockets': 'Radial Socket Outlets — 100% up to 10A + 40% remainder (Table 1B item 2)',
+    'Ring Final Circuits — 32A assumed per ring, 100% + 40% additional (Table A2 item 2)',
+  'radial-sockets': 'Radial Socket Outlets — 100% up to 10A + 40% remainder (Table A2 item 2)',
   'dedicated-sockets': 'Dedicated Socket Outlets — 100%, no reduction',
 
-  // Cooking & Water Heating — Table 1B items 3, 5, 7
-  'electric-cooker': 'Electric Cooker — 10A + 30% of remainder + 5A if socket (Table 1B item 3)',
-  'electric-shower': 'Electric Shower — 100% largest + 100% 2nd + 25% remainder (Table 1B item 5)',
+  // Cooking & Water Heating — Table A2 items 3, 5, 7
+  'electric-cooker': 'Electric Cooker — 10A + 30% of remainder + 5A if socket (Table A2 item 3)',
+  'electric-shower': 'Electric Shower — 100% largest + 100% 2nd + 25% remainder (Table A2 item 5)',
   'commercial-catering': 'Commercial Catering — 80% diversity (Table H2 item 3)',
-  'immersion-heater': 'Immersion Heater — 100%, no diversity (Table 1B item 7)',
-  'instantaneous-water': 'Instantaneous Water Heater — 100%, no diversity (Table 1B item 7)',
+  'immersion-heater': 'Immersion Heater — 100%, no diversity (Table A2 item 7)',
+  'instantaneous-water': 'Instantaneous Water Heater — 100%, no diversity (Table A2 item 7)',
 
-  // Space Heating — Table 1B item 4
+  // Space Heating — Table A2 item 4
   'electric-heating':
-    'Electric Space Heating — 100% thermostatic / Largest+75% non-thermostatic (Table 1B item 4)',
-  'heat-pumps': 'Heat Pump Systems — 100% thermostatic (Table 1B item 4)',
-  'underfloor-heating': 'Underfloor Heating — 100%, no diversity (Table 1B item 8)',
+    'Electric Space Heating — 100% thermostatic / Largest+75% non-thermostatic (Table A2 item 4)',
+  'heat-pumps': 'Heat Pump Systems — 100% thermostatic (Table A2 item 4)',
+  'underfloor-heating': 'Underfloor Heating — 100%, no diversity (Table A2 item 8)',
 
   // Motors & Equipment — Table H2
   'single-motor': 'Single Phase Motor — 100% domestic, largest+40% commercial (Table H2)',
@@ -55,7 +55,7 @@ const LOAD_TYPES: Record<string, string> = {
   'air-conditioning': 'Air Conditioning — Largest 100% + 40% remaining (Table H2)',
 
   // Specialist Equipment
-  'small-power': 'Small Power — 100% up to 10A + 40% remainder (Table 1B item 2)',
+  'small-power': 'Small Power — 100% up to 10A + 40% remainder (Table A2 item 2)',
   'ev-charging': 'EV Charging — 100%, no diversity (BS 7671 Section 722.311)',
   'welding-equipment': 'Welding Equipment — 100%, no reduction',
   'server-equipment': 'Server/IT Equipment — 100%, no reduction',
@@ -206,30 +206,30 @@ export function useMultiLoadDiversityCalculator() {
   // Map UI load types to diversity engine types — IET On-Site Guide compliant
   const mapLoadTypeToEngineType = (uiType: string): CircuitLoad['type'] => {
     const typeMapping: Record<string, CircuitLoad['type']> = {
-      // Lighting → 'lighting' (Table 1B item 1: 66% domestic)
+      // Lighting → 'lighting' (Table A2 item 1: 66% domestic)
       'led-lighting': 'lighting',
       'fluorescent-lighting': 'lighting',
       'general-lighting': 'lighting',
       'emergency-lighting': 'lighting',
 
       // Socket types
-      'ring-main-sockets': 'ring-final', // Table 1B item 2: 32A assumed, 100% + 40%
-      'radial-sockets': 'radial-socket', // Table 1B item 2: 100% up to 10A + 40%
+      'ring-main-sockets': 'ring-final', // Table A2 item 2: 32A assumed, 100% + 40%
+      'radial-sockets': 'radial-socket', // Table A2 item 2: 100% up to 10A + 40%
       'dedicated-sockets': 'dedicated-outlet', // 100% no diversity
 
-      // Cooking — Table 1B item 3
+      // Cooking — Table A2 item 3
       'electric-cooker': 'cooker',
       'commercial-catering': 'cooker',
 
-      // Water heating — Table 1B item 7
+      // Water heating — Table A2 item 7
       'immersion-heater': 'water-heating',
-      'electric-shower': 'shower', // Table 1B item 5
+      'electric-shower': 'shower', // Table A2 item 5
       'instantaneous-water': 'water-heating',
 
-      // Space heating — Table 1B item 4
+      // Space heating — Table A2 item 4
       'electric-heating': 'space-heating',
       'heat-pumps': 'space-heating',
-      'underfloor-heating': 'floor-warming', // Table 1B item 8: 100%
+      'underfloor-heating': 'floor-warming', // Table A2 item 8: 100%
 
       // Motors — Table H2
       'single-motor': 'motor',

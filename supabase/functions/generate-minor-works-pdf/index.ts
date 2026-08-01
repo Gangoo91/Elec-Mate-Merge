@@ -217,16 +217,17 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
     supply: {
       voltage: formData.supplyVoltage || '230',
       frequency: formData.frequency || '50',
-      phases: formData.supplyPhases || '1',
+      phases: normalisePhases(formData.supplyPhases),
     },
 
-    // Company details (for header)
+    // Company details (for header) — prefer the Business Settings branding
+    // fields the client merges in (companyName etc.), then form fallbacks
     company: {
-      name: formData.forAndOnBehalfOf || formData.contractorName || '',
+      name: formData.companyName || formData.forAndOnBehalfOf || formData.contractorName || '',
       logo_url: formData.companyLogo || '',
-      phone: formData.electricianPhone || '',
-      email: formData.electricianEmail || '',
-      address: formData.contractorAddress || '',
+      phone: formData.companyPhone || formData.electricianPhone || '',
+      email: formData.companyEmail || formData.electricianEmail || '',
+      address: formData.companyAddress || formData.contractorAddress || '',
       registration_no: formData.registrationNumber
         ? `${formData.schemeProvider || ''}/${formData.registrationNumber}`
         : '',
@@ -278,9 +279,9 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
       gas: formData.bondingGas || false,
       gas_size: formData.bondingGasSize || formData.mainBondingConductorSize || '',
       oil: formData.bondingOil || false,
-      oil_size: formData.bondingOilSize || '',
+      oil_size: formData.bondingOilSize || formData.mainBondingConductorSize || '',
       structural: formData.bondingStructural || false,
-      structural_size: formData.bondingStructuralSize || '',
+      structural_size: formData.bondingStructuralSize || formData.mainBondingConductorSize || '',
       other: formData.bondingOther || false,
       other_specify: formData.bondingOtherSpecify || '',
     },
@@ -351,6 +352,7 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
       ir_live_earth: formData.insulationLiveEarth || 'N/A',
       ir_neutral_earth: formData.insulationNeutralEarth || 'N/A',
       polarity: formData.polarity || 'N/A',
+      ze: formData.externalImpedance || 'N/A',
       zs: formData.earthFaultLoopImpedance || 'N/A',
       max_zs: formData.maxPermittedZs || 'N/A',
       pfc: formData.prospectiveFaultCurrent || 'N/A',
@@ -360,6 +362,7 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
       rcd_test_button: formData.rcdTestButton || 'N/A',
       rcd_rating: formData.rcdRating || 'N/A',
       functional_test: formData.functionalTesting || 'N/A',
+      functional_test_notes: formData.functionalTestingNotes || '',
       afdd_test_button: formData.afddTestButton || 'N/A',
       afdd_trip_time: formData.afddTripTime || 'N/A',
       rcbo_trip_time: formData.rcboTripTime || 'N/A',
@@ -421,6 +424,18 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
     _generated_at: new Date().toISOString(),
     _cache_bust: Date.now(),
   };
+}
+
+/**
+ * Normalise supply phases to the tokens the live UI writes ('Single'/'Three').
+ * Older drafts and the form's init default store '1'/'3' — map those across so
+ * the PDF always prints one consistent token set.
+ */
+function normalisePhases(value: string | undefined): string {
+  const s = String(value ?? '').trim();
+  if (s === '1') return 'Single';
+  if (s === '3') return 'Three';
+  return s || 'Single';
 }
 
 /**

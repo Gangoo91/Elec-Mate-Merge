@@ -1,11 +1,15 @@
-import { EMPLOYER_ALLOWED_EMAILS } from '@/config/employerAccess';
-
 export type NavItem = {
   name: string;
   path: string;
   roles: string[];
   adminOnly?: boolean;
   allowedEmails?: string[];
+  /** When true, show only if isEmployerUser() passes — the same check
+      EmployerGuard uses. Previously this item carried allowedEmails, which
+      gated the link on email ALONE while the guard also accepted employer
+      tier/role: 93 paying employer-tier users could enter /employer by URL
+      but had no link to it. Sharing one predicate is what stops that drift. */
+  requireEmployerAccess?: boolean;
   /** When true, only show this item if the user has a row in college_staff
       or college_students. Auto-includes anyone provisioned as a tutor or
       apprentice without needing an email allowlist edit. */
@@ -40,7 +44,7 @@ export const mainNavItems: NavItem[] = [
     name: 'Employer Hub',
     path: '/employer',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-    allowedEmails: EMPLOYER_ALLOWED_EMAILS,
+    requireEmployerAccess: true,
   },
   {
     name: 'College Hub',

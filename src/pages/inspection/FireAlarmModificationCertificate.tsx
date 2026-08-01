@@ -16,11 +16,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
 import FireAlarmG7FormTabs from '@/components/inspection/fire-alarm/FireAlarmG7FormTabs';
 import { useFireAlarmG7Tabs } from '@/hooks/useFireAlarmG7Tabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
@@ -30,8 +40,9 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
+import { formatFireAlarmG7Json } from '@/utils/fireAlarmG7JsonFormatter';
+import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 
 const REPORT_TYPE = 'fire-alarm-modification' as const;
 
@@ -54,6 +65,9 @@ export default function FireAlarmModificationCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailRecipient, setEmailRecipient] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{
     data: Record<string, any>;
@@ -178,6 +192,54 @@ const {
     }
   };
 
+  // Photos live in the inspection_photos table (keyed by the report row's
+  // UUID), not in formData — fetch and inject at format time so the
+  // formatter's photos/has_photos/photo_count keys are populated.
+  const fetchReportPhotos = useCallback(async (): Promise<{ url: string; caption: string }[]> => {
+    if (!savedReportId) return [];
+    try {
+      // report_id in inspection_photos is a UUID — look it up from the text report_id
+      const { data: report } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('report_id', savedReportId)
+        .maybeSingle();
+      if (!report?.id) return [];
+      const { data: photoRows } = await supabase
+        .from('inspection_photos')
+        .select('file_path, fault_description')
+        .eq('report_id', report.id)
+        .order('uploaded_at');
+      return (photoRows || []).map((p) => {
+        // Resized via Supabase image transform so PDFMonkey downloads
+        // thumbnails, not multi-MB phone originals (same as the EIC formatter).
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('inspection-photos').getPublicUrl(p.file_path, {
+          transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
+        });
+        return { url: publicUrl, caption: p.fault_description || '' };
+      });
+    } catch {
+      return [];
+    }
+  }, [savedReportId]);
+
+  // Merge branding + cert number fallback, fetch photos, then run the G7
+  // formatter — the PDF template expects the formatter's snake_case keys.
+  const buildFormattedPayload = useCallback(async () => {
+    let data = {
+      ...formData,
+      certificateNumber: formData.certificateNumber || `FA/G7-${Date.now()}`,
+    };
+    if (hasSavedCompanyBranding) {
+      const b = loadCompanyBranding();
+      if (b) data = { ...data, ...b };
+    }
+    const photos = await fetchReportPhotos();
+    return formatFireAlarmG7Json({ ...data, photos });
+  }, [formData, hasSavedCompanyBranding, loadCompanyBranding, fetchReportPhotos]);
+
   const handleGenerateCertificate = async () => {
     const missing: string[] = [];
     if (!formData.clientName) missing.push('Client Name');
@@ -197,20 +259,16 @@ const {
     setShowGenerationDialog(true);
     try {
       await syncNowImmediate();
-      let data = {
-        ...formData,
-        certificateNumber: formData.certificateNumber || `FA/G7-${Date.now()}`,
-      };
-      if (hasSavedCompanyBranding) {
-        const b = loadCompanyBranding();
-        if (b) data = { ...data, ...b };
-      }
+      const payload = await buildFormattedPayload();
 
       if (savedReportId)
-        await supabase.from('reports').update({ pdf_payload: data }).eq('report_id', savedReportId);
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: payload })
+          .eq('report_id', savedReportId);
       const { data: fn, error: fnErr } = await supabase.functions.invoke(
         'generate-fire-alarm-pdf',
-        { body: { formData: data, templateId: '5ECD2939-5CE2-4E98-8E47-32F25975C352' } }
+        { body: { formData: payload, templateId: '5ECD2939-5CE2-4E98-8E47-32F25975C352' } }
       );
       if (fnErr) throw new Error(fnErr.message);
       if (!fn?.success || !fn?.pdfUrl) throw new Error(fn?.error || 'No PDF URL');
@@ -225,6 +283,85 @@ const {
     }
   };
 
+  const handleOpenEmailDialog = () => {
+    if (!savedReportId) {
+      toast.error('Please save the certificate first before emailing.');
+      return;
+    }
+    if (formData.clientEmail) setEmailRecipient(formData.clientEmail);
+    setShowEmailDialog(true);
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailRecipient || !emailRecipient.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    setIsSendingEmail(true);
+    try {
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the user emails before ever tapping Generate.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        formattedData = await buildFormattedPayload();
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+      const { data: result, error: fnError } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        { body: { reportId: savedReportId, recipientEmail: emailRecipient, formattedData } }
+      );
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try {
+          const parsed = JSON.parse(fnError.message);
+          errorMessage = parsed.error || parsed.message || fnError.message;
+        } catch {
+          /* keep */
+        }
+        if (fnError.context?.body) {
+          try {
+            const bodyError =
+              typeof fnError.context.body === 'string'
+                ? JSON.parse(fnError.context.body)
+                : fnError.context.body;
+            if (bodyError.error) errorMessage = bodyError.error;
+          } catch {
+            /* keep */
+          }
+        }
+        throw new Error(errorMessage);
+      }
+      if (!result?.success) throw new Error(result?.error || 'Failed to send');
+      toast.success(
+        result?.pdfAttached
+          ? `Certificate emailed to ${emailRecipient} with the PDF attached`
+          : `Certificate emailed to ${emailRecipient}`
+      );
+      setShowEmailDialog(false);
+      setEmailRecipient('');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send certificate email.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  const handleCreateInvoice = () => {
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientTelephone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.premisesAddress || '',
+      certificateType: 'Fire Alarm Modification',
+      certificateReference: formData.certificateNumber || '',
+      reportId: savedReportId || undefined,
+      pdfUrl: generatedPdfUrl || formData.pdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
   if (isLoading)
     return (
       <div className="bg-background min-h-screen p-4">
@@ -236,60 +373,55 @@ const {
   return (
     <div className="bg-background min-h-screen">
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
-              We found an unsaved G7 Modification Certificate.
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
+              We found an unsaved fire alarm modification certificate.
+              {recoveryDraft?.data?.clientName && (
+                <span className="block mt-2 font-medium text-elec-yellow">
+                  Client: {recoveryDraft.data.clientName}
+                </span>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      <div className="bg-background">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg font-bold text-white">Fire Alarm</h1>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">
-                    G7
-                  </span>
-                </div>
-                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">
-                  Modification Certificate
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95 disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Fire Alarm Modification"
+        subtitle={
+          formData.certificateNumber ? `${formData.certificateNumber} · BS 5839-1` : null
+        }
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={[
+          { id: 'project', label: 'Project' },
+          { id: 'modification', label: 'Changes' },
+          { id: 'testing', label: 'Testing' },
+          { id: 'declaration', label: 'Sign off' },
+        ]}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as any);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          project: !!tabProps.isTabComplete('project'),
+          modification: !!tabProps.isTabComplete('modification'),
+          testing: !!tabProps.isTabComplete('testing'),
+          declaration: !!tabProps.isTabComplete('declaration'),
+        }}
+      />
 
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
@@ -304,7 +436,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <FireAlarmG7FormTabs
           currentTab={tabProps.currentTab}
@@ -326,9 +458,12 @@ const {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
           }}
           onGenerateCertificate={handleGenerateCertificate}
-          onCreateInvoice={() => toast('Invoice creation coming soon')}
+          onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
+          onOpenEmailDialog={handleOpenEmailDialog}
+          canEmail={!!savedReportId}
+          reportId={savedReportId || undefined}
         />
       </div>
       </main>
@@ -342,6 +477,68 @@ const {
         error={generationError}
         documentLabel="Certificate"
       />
+
+      {/* Email dialog */}
+      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.1] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white text-base font-bold">Email certificate</DialogTitle>
+            <DialogDescription className="text-white/85 text-sm">
+              Enter the recipient's email address.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-3">
+            <div>
+              <label htmlFor="g7-email" className="mb-1 block text-[12px] font-medium text-white">
+                Recipient email
+              </label>
+              <Input
+                id="g7-email"
+                type="email"
+                placeholder="client@example.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+                disabled={isSendingEmail}
+                className="input-underline h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
+              />
+            </div>
+            {formData.clientEmail && emailRecipient !== formData.clientEmail && (
+              <button
+                onClick={() => setEmailRecipient(formData.clientEmail)}
+                className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.1] text-white text-[13px] font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Use client email: {formData.clientEmail}
+              </button>
+            )}
+          </div>
+          {/* Plain column footer — DialogFooter's sm:space-x-2 skews stacked
+              buttons sideways, so the two never sat level. */}
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation"
+            >
+              {isSendingEmail ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                  Sending…
+                </>
+              ) : (
+                'Send certificate'
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="h-12 w-full rounded-xl border border-white/[0.1] bg-white/[0.04] font-medium text-white transition-all hover:bg-white/[0.08] hover:text-white active:scale-[0.98] disabled:opacity-40 touch-manipulation"
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

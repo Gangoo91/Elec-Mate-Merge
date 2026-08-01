@@ -7,34 +7,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import SignatureInput from '@/components/signature/SignatureInput';
+import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -47,7 +36,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -61,19 +50,46 @@ interface Props {
 }
 
 export default function FAG7Declaration({ formData, onUpdate }: Props) {
+  const { loadInstallerDetails, hasDefaultProfile } = useFireAlarmSmartForm();
+
+  const handleUseMyDetails = () => {
+    const details = loadInstallerDetails();
+    if (!details) {
+      toast('No saved profile found');
+      return;
+    }
+    if (details.name) onUpdate('modifierName', details.name);
+    if (details.company) onUpdate('modifierCompany', details.company);
+    if (details.qualifications) onUpdate('modifierQualifications', details.qualifications);
+    if (details.signature && !formData.modifierSignature)
+      onUpdate('modifierSignature', details.signature);
+    if (!formData.modifierDate && details.date) onUpdate('modifierDate', details.date);
+    toast.success('Your saved details have been applied');
+  };
+
   return (
-    <div className="space-y-5">
-      {/* Declaration */}
-      <Section title="Modifier Declaration" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3">
-          <p className="text-xs text-white leading-relaxed">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Modifier declaration */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Modifier declaration" />
+        {hasDefaultProfile && (
+          <button
+            type="button"
+            onClick={handleUseMyDetails}
+            className="w-full h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+          >
+            Use my saved details
+          </button>
+        )}
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-[12px] text-white/85 leading-relaxed">
             I hereby certify that the modification to the fire detection and fire alarm system
             described in this certificate has been carried out in accordance with BS 5839-1:2025.
             The modified sections have been tested and the entire system remains compliant and
             functional.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Name" required>
             <Input
               value={formData.modifierName || ''}
@@ -110,14 +126,12 @@ export default function FAG7Declaration({ formData, onUpdate }: Props) {
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Responsible Person */}
-      <Section
-        title="Responsible Person Notification"
-        accentColor="from-blue-500/40 to-cyan-400/20"
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Responsible person notification */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Responsible person notification" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Name">
             <Input
               value={formData.responsiblePersonName || ''}
@@ -147,105 +161,49 @@ export default function FAG7Declaration({ formData, onUpdate }: Props) {
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Overall Result */}
-      <Section title="Overall Result" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="space-y-2">
+      {/* Overall result */}
+      <div className={cardCn}>
+        <SectionHeader title="Overall result" />
+        <div className="flex gap-2">
           <button
             type="button"
             onClick={() => onUpdate('overallResult', 'satisfactory')}
             className={cn(
-              'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+              'flex-1 h-12 rounded-xl border text-sm touch-manipulation active:scale-[0.98] transition-all',
               formData.overallResult === 'satisfactory'
-                ? 'bg-green-500/10 border-green-500/30'
-                : 'bg-white/[0.03] border-white/[0.06]'
+                ? 'bg-green-500 border-green-500 text-black font-semibold'
+                : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
             )}
           >
-            <div className="flex items-center gap-3">
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-                  formData.overallResult === 'satisfactory'
-                    ? 'bg-green-500 border-green-500'
-                    : 'border-white/30'
-                )}
-              >
-                {formData.overallResult === 'satisfactory' && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <p
-                className={cn(
-                  'text-sm font-semibold',
-                  formData.overallResult === 'satisfactory' ? 'text-green-400' : 'text-white'
-                )}
-              >
-                Satisfactory
-              </p>
-            </div>
+            Satisfactory
           </button>
           <button
             type="button"
             onClick={() => onUpdate('overallResult', 'unsatisfactory')}
             className={cn(
-              'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+              'flex-1 h-12 rounded-xl border text-sm touch-manipulation active:scale-[0.98] transition-all',
               formData.overallResult === 'unsatisfactory'
-                ? 'bg-red-500/10 border-red-500/30'
-                : 'bg-white/[0.03] border-white/[0.06]'
+                ? 'bg-red-500 border-red-500 text-white font-semibold'
+                : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
             )}
           >
-            <div className="flex items-center gap-3">
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-                  formData.overallResult === 'unsatisfactory'
-                    ? 'bg-red-500 border-red-500'
-                    : 'border-white/30'
-                )}
-              >
-                {formData.overallResult === 'unsatisfactory' && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <p
-                className={cn(
-                  'text-sm font-semibold',
-                  formData.overallResult === 'unsatisfactory' ? 'text-red-400' : 'text-white'
-                )}
-              >
-                Unsatisfactory
-              </p>
-            </div>
+            Unsatisfactory
           </button>
         </div>
-      </Section>
+      </div>
 
       {/* Notes */}
-      <Section title="Notes" accentColor="from-white/20 to-white/5">
+      <div className={cardCn}>
+        <SectionHeader title="Notes" />
         <Textarea
           value={formData.additionalNotes || ''}
           onChange={(e) => onUpdate('additionalNotes', e.target.value)}
           className={textareaCn}
           placeholder="Additional modification notes..."
         />
-      </Section>
+      </div>
     </div>
   );
 }

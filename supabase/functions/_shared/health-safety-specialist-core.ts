@@ -27,6 +27,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { searchFacets, formatFacetsForPrompt, type BS7671Facet } from './bs7671-facets-rag.ts';
+import { aiFetch } from './ai-log.ts';
 import {
   searchPracticalWorkV2,
   formatPracticalWorkForPrompt,
@@ -329,7 +330,7 @@ Hard rules:
     .filter(Boolean)
     .join('\n\n');
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  const response = await aiFetch('health-safety-specialist', 'https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -508,7 +509,7 @@ Hard rules:
 
   let response: Response;
   try {
-    response = await fetch('https://api.openai.com/v1/chat/completions', {
+    response = await aiFetch('health-safety-specialist', 'https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({

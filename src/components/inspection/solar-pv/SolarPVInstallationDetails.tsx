@@ -18,7 +18,15 @@ import {
 } from '@/types/solar-pv';
 import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
-import { Section, Field, inputCn, textareaCn, CheckboxCard, DesignWarningBanner } from './SolarPVSection';
+import {
+  Section,
+  Field,
+  inputCn,
+  textareaCn,
+  pickerTriggerCn,
+  CheckboxCard,
+  DesignWarningBanner,
+} from './SolarPVSection';
 
 interface Props {
   formData: SolarPVFormData;
@@ -73,25 +81,29 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
     formData.propertyAge === '1981-2000';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Design Warnings */}
-      <DesignWarningBanner warnings={warnings} />
+      {warnings.length > 0 && (
+        <div className="lg:col-span-2">
+          <DesignWarningBanner warnings={warnings} />
+        </div>
+      )}
 
       {/* Certificate Details */}
-      <Section title="Certificate Details" accentColor="from-amber-500/40 to-yellow-400/20">
+      <Section title="Certificate Details">
         {/* System Type — tappable buttons */}
         <Field label="System Type *">
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="grid grid-cols-3 gap-2">
             {SYSTEM_TYPE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 type="button"
                 onClick={() => onUpdate('systemType', opt.value)}
                 className={cn(
-                  'h-11 rounded-xl border text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex flex-col items-center justify-center',
+                  'h-11 rounded-xl border text-sm touch-manipulation active:scale-[0.98] transition-all flex flex-col items-center justify-center',
                   formData.systemType === opt.value
-                    ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
-                    : 'bg-white/[0.03] border-white/[0.06] text-white/50'
+                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
                 )}
               >
                 {opt.label}
@@ -107,13 +119,13 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
             onChange={(v) => onUpdate('workType', v)}
             options={WORK_TYPE_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
             placeholder="Select work type..."
-            className="h-12 text-base"
+            className={pickerTriggerCn}
             allowCustom
           />
         </Field>
 
         {/* Dates — side by side */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Installation Date *">
             <Input
               type="date"
@@ -133,7 +145,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
         </div>
 
         {/* Cert number & reference — side by side */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Certificate Number">
             <Input
               value={formData.certificateNumber || ''}
@@ -163,77 +175,75 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
           </Field>
         )}
 
-        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-[10px] text-white">
-            <strong className="text-white">MCS:</strong> Certificate must be issued within 10 working days of commissioning.
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-[12px] text-white/85">
+            <strong className="font-semibold text-white">MCS:</strong> Certificate must be issued within 10 working days of commissioning.
           </p>
         </div>
       </Section>
 
       {/* Client Details */}
-      <Section title="Client Details" accentColor="from-blue-500/40 to-cyan-400/20">
-        <div className="space-y-3">
-          <Field label="Client Name *">
+      <Section title="Client Details">
+        <Field label="Client Name *">
+          <Input
+            value={formData.clientName || ''}
+            onChange={(e) => onUpdate('clientName', e.target.value)}
+            placeholder="Enter client name"
+            className={inputCn}
+          />
+        </Field>
+
+        <Field label="Address *">
+          <Input
+            value={formData.clientAddress || ''}
+            onChange={(e) => onUpdate('clientAddress', e.target.value)}
+            placeholder="Street address"
+            className={inputCn}
+          />
+        </Field>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Postcode *">
             <Input
-              value={formData.clientName || ''}
-              onChange={(e) => onUpdate('clientName', e.target.value)}
-              placeholder="Enter client name"
-              className={inputCn}
+              value={formData.clientPostcode || ''}
+              onChange={(e) => onUpdate('clientPostcode', e.target.value.toUpperCase())}
+              placeholder="e.g., SW1A 1AA"
+              className={cn(inputCn, 'uppercase')}
             />
           </Field>
 
-          <Field label="Address *">
+          <Field label="Phone">
             <Input
-              value={formData.clientAddress || ''}
-              onChange={(e) => onUpdate('clientAddress', e.target.value)}
-              placeholder="Street address"
-              className={inputCn}
-            />
-          </Field>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Field label="Postcode *">
-              <Input
-                value={formData.clientPostcode || ''}
-                onChange={(e) => onUpdate('clientPostcode', e.target.value.toUpperCase())}
-                placeholder="e.g., SW1A 1AA"
-                className={cn(inputCn, 'uppercase')}
-              />
-            </Field>
-
-            <Field label="Phone">
-              <Input
-                type="tel"
-                value={formData.clientPhone || ''}
-                onChange={(e) => onUpdate('clientPhone', e.target.value)}
-                placeholder="e.g., 07123 456789"
-                className={inputCn}
-              />
-            </Field>
-          </div>
-
-          <Field label="Email">
-            <Input
-              type="email"
-              value={formData.clientEmail || ''}
-              onChange={(e) => onUpdate('clientEmail', e.target.value)}
-              placeholder="client@example.com"
+              type="tel"
+              value={formData.clientPhone || ''}
+              onChange={(e) => onUpdate('clientPhone', e.target.value)}
+              placeholder="e.g., 07123 456789"
               className={inputCn}
             />
           </Field>
         </div>
+
+        <Field label="Email">
+          <Input
+            type="email"
+            value={formData.clientEmail || ''}
+            onChange={(e) => onUpdate('clientEmail', e.target.value)}
+            placeholder="client@example.com"
+            className={inputCn}
+          />
+        </Field>
       </Section>
 
       {/* Property & Ownership */}
-      <Section title="Property & Ownership" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+      <Section title="Property & Ownership">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Property Type *">
             <ComboboxCell
               value={formData.propertyType || 'domestic'}
               onChange={(v) => onUpdate('propertyType', v)}
               options={PROPERTY_TYPE_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
               placeholder="Select property type..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>
@@ -244,7 +254,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
               onChange={(v) => onUpdate('ownershipType', v)}
               options={OWNERSHIP_TYPE_OPTIONS.map((o) => ({ value: o.value, label: o.label }))}
               placeholder="Select ownership..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>
@@ -268,7 +278,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
               onChange={(v) => onUpdate('propertyAge', v)}
               options={propertyAgeOptions}
               placeholder="Select approximate age..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>
@@ -279,7 +289,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
               onChange={(v) => onUpdate('roofAge', v)}
               options={roofConditionOptions}
               placeholder="Select roof condition..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>
@@ -287,7 +297,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
       </Section>
 
       {/* Site Access & Safety */}
-      <Section title="Site Access & Safety" accentColor="from-orange-500/40 to-red-400/20">
+      <Section title="Site Access & Safety">
         <Field label="Site Access Notes">
           <Textarea
             value={formData.siteAccessNotes || ''}
@@ -346,7 +356,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
       </Section>
 
       {/* Installation Address */}
-      <Section title="Installation Address" accentColor="from-cyan-500/40 to-blue-400/20">
+      <Section title="Installation Address">
         <CheckboxCard
           label="Same as Client Address"
           checked={!!formData.installationSameAsClient}
@@ -361,7 +371,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
         />
 
         {!formData.installationSameAsClient && (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <Field label="Installation Address *">
               <Input
                 value={formData.installationAddress || ''}
@@ -383,14 +393,14 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
       </Section>
 
       {/* MCS Compliance */}
-      <Section title="MCS Compliance" accentColor="from-purple-500/40 to-violet-400/20">
-        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-xs text-white">
+      <Section title="MCS Compliance">
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-[12px] text-white/85">
             MCS certification is required for Smart Export Guarantee (SEG) eligibility and most grant schemes.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="MCS Installer Number *">
             <Input
               value={formData.mcsDetails?.installerNumber || ''}
@@ -421,7 +431,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
               }
               options={CONSUMER_CODE_OPTIONS.map((o) => ({ value: o.value, label: `${o.label} — ${o.description}` }))}
               placeholder="Select consumer code..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>

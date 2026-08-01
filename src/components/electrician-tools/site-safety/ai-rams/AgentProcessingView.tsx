@@ -188,8 +188,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   // the bar walks 0→95% smoothly even while both OpenAI calls are mid-flight.
   // The exponential curve asymptotes at 95% with the half-life tuned so the
   // bar passes 50% around 35s, 80% around 80s, and reaches 90% by 120s.
-  const calculatedProgress =
-    (hsAgentProgress / 100) * 50 + (installerAgentProgress / 100) * 50;
+  const calculatedProgress = (hsAgentProgress / 100) * 50 + (installerAgentProgress / 100) * 50;
   const serverProgress = Math.max(calculatedProgress, overallProgress);
   const timeCreep = 95 * (1 - Math.exp(-liveElapsed / 50));
   const displayProgress = bothComplete
@@ -305,10 +304,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               });
               const isDone = isFinishedPartial;
               const isLive =
-                !isDone &&
-                !isFailed &&
-                (isStreaming || idx === firstUnfinishedIdx) &&
-                !isComplete;
+                !isDone && !isFailed && (isStreaming || idx === firstUnfinishedIdx) && !isComplete;
               const payload = partial ?? {};
               let detail: string | null = null;
               if (row.key === 'sources') {
@@ -317,18 +313,12 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   (payload.safetyFacetCount ?? 0) +
                   (payload.practicalCount ?? 0);
                 if (n > 0) {
-                  detail = payload.visionFindings
-                    ? `${n} sources · site photos`
-                    : `${n} sources`;
+                  detail = payload.visionFindings ? `${n} sources · site photos` : `${n} sources`;
                 }
               } else if (row.key === 'hazards' && payload.count) {
-                detail = isStreaming
-                  ? `${payload.count} so far…`
-                  : `${payload.count} hazards`;
+                detail = isStreaming ? `${payload.count} so far…` : `${payload.count} hazards`;
               } else if (row.key === 'method' && payload.count) {
-                detail = isStreaming
-                  ? `${payload.count} so far…`
-                  : `${payload.count} steps`;
+                detail = isStreaming ? `${payload.count} so far…` : `${payload.count} steps`;
               } else if (row.key === 'finalise' && (payload.elapsedSeconds ?? 0) > 0) {
                 detail = `${payload.elapsedSeconds}s total`;
               }

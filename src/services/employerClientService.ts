@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 // employer_clients + get_employer_client_summaries were added by the Phase 1
 // CRM migration and aren't in the generated types yet. Cast once here so the
@@ -102,7 +103,7 @@ export const createClient = async (input: EmployerClientInput): Promise<Employer
   const { data, error } = await db
     .from('employer_clients')
     .insert({
-      employer_id: user.id,
+      employer_id: (await getActingEmployerId(user.id)) ?? user.id,
       name: input.name,
       contact_name: input.contact_name || null,
       email: input.email ? input.email.toLowerCase() : null,

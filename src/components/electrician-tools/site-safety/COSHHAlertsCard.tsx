@@ -1,6 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { FlaskConical, AlertTriangle, Clock, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
+import {
+  FlaskConical,
+  AlertTriangle,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+  RefreshCw,
+} from 'lucide-react';
 import type { COSHHAssessment } from '@/hooks/useCOSHH';
 
 interface COSHHAlertsCardProps {

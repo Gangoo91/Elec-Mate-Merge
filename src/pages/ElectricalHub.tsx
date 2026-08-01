@@ -32,6 +32,7 @@ import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useWorkerSeat } from '@/hooks/useWorkerSeat';
 
 // ────────────────────────────────────────────────────────────────────────
 // EditorialToolGrid — same hairline-grid DNA as EditorialHubGrid, smaller.
@@ -254,6 +255,8 @@ const ElectricalHubInner = () => {
   const [showSetupWizard, setShowSetupWizard] = useState(false);
   const { profile } = useAuth();
   const data = useSharedDashboardData();
+  // Drives the Worker Tools card — an active employer seat is what grants it.
+  const { data: hasWorkerSeat = false } = useWorkerSeat(profile?.id);
 
   const firstName = profile?.full_name?.split(' ')[0] || 'Electrician';
 
@@ -361,21 +364,27 @@ const ElectricalHubInner = () => {
     }
   }, [onboardingProfile, profileData?.hasCompanyProfile]);
 
-  // Renewables is in private preview — only visible to Andrew Moore and Alex Gibbons.
+  // Renewables is in private preview — named accounts only, not a launch. The
+  // Heat Pump certificate and Solar Design Suite are still outstanding, so the
+  // hub stays gated for everyone else until both land.
   const RENEWABLES_ALLOWLIST = [
     'b0113c59-8611-4c5e-8503-1797a75bb64f', // Andrew Moore
     '6f8bf099-f81b-446d-aa99-ed48f23f8329', // Alex Gibbons
+    'fbda6c7c-0d26-41a3-b49c-f37e2e7d9c07', // Sean Mulcahy — 70% EV, 25% solar/battery
   ];
   const canSeeRenewables = RENEWABLES_ALLOWLIST.includes(profile?.id ?? '');
 
-  // Worker Tools — controlled rollout of the employer↔worker beta. Only the test
-  // accounts see it for now (mirrors the Employer Hub allowlist).
+  // Worker Tools — visible to anyone holding an active employer seat, plus the
+  // original beta accounts. Seat-based rather than a UUID list because a list
+  // cannot pre-authorise a worker who has not signed up yet: an invited team
+  // member would accept, land on Worker Tools, and have no way back to it.
   const WORKER_TOOLS_ALLOWLIST = [
     'b0113c59-8611-4c5e-8503-1797a75bb64f', // Andrew Gangoo
     'aa69361d-dad9-4841-84e4-25ee41568594', // founder
     'e2945660-a8e0-4099-8e50-a70d71d3dca4', // Craig Soper
   ];
-  const canSeeWorkerTools = WORKER_TOOLS_ALLOWLIST.includes(profile?.id ?? '');
+  const canSeeWorkerTools =
+    hasWorkerSeat || WORKER_TOOLS_ALLOWLIST.includes(profile?.id ?? '');
 
   const coreTools: ToolCard[] = [
     {

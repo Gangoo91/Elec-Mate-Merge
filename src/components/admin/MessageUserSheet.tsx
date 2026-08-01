@@ -220,6 +220,11 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     placeholder="Enter message subject..."
+                    // ELE-1419 — the OS capitalises the first letter otherwise,
+                    // which is wrong for names and lowercase technical terms.
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="h-12 bg-white/[0.03] border-white/[0.06] text-white placeholder:text-white"
                   />
                 </div>
@@ -232,6 +237,9 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Type your message here..."
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="min-h-[200px] bg-white/[0.03] border-white/[0.06] text-white placeholder:text-white resize-none"
                   />
                 </div>

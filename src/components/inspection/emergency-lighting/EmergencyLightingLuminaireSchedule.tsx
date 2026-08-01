@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { Plus, Trash2, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import LuminaireAutocomplete from './LuminaireAutocomplete';
@@ -20,37 +18,22 @@ interface Props {
   ) => void;
 }
 
+// Section card — the only box on the page
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+// Paper-form underline input
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
 const pickerTrigger =
-  'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
-
-const SectionHeader = ({ title, badge }: { title: string; badge?: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-      {title}
-      {badge && (
-        <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 px-2 py-0.5 rounded">
-          {badge}
-        </span>
-      )}
-    </h2>
-  </div>
-);
-
-const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
-      {title}
-    </p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
-  </div>
-);
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -185,219 +168,221 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
   const luminaires = formData.luminaires || [];
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <SectionHeader title="Luminaire Schedule" badge={`${luminaires.length}`} />
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            Luminaire Schedule
+          </h2>
+          <span className="text-[13px] font-semibold text-elec-yellow">{luminaires.length}</span>
+        </div>
 
         {luminaires.length === 0 ? (
           <div className="text-center py-8">
             <p className="text-sm font-medium text-white">No luminaires added yet</p>
-            <p className="text-[11px] text-white mt-1">
+            <p className="text-xs text-white/80 mt-1">
               0 / {formData.luminaireCount || '?'} expected
             </p>
-            <p className="text-[10px] text-white mt-2">
+            <p className="text-xs text-white/80 mt-2">
               Search the database to auto-fill specs, or add manually
             </p>
             <button
               onClick={addLuminaire}
-              className="mt-4 h-11 px-6 rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.98]"
+              className="mt-4 h-11 px-6 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98]"
             >
               Add First Luminaire
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {luminaires.map((luminaire: Luminaire, index: number) => (
-              <div
-                key={luminaire.id}
-                className="rounded-xl bg-white/[0.02] border border-white/[0.06] overflow-hidden"
-              >
-                {/* Luminaire header */}
-                <div className="flex items-center justify-between px-3 py-2 bg-white/[0.02]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-bold text-elec-yellow">#{index + 1}</span>
-                    <span className="text-xs text-white truncate">
+              <div key={luminaire.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+                {/* Luminaire heading row */}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-[13px] font-semibold text-elec-yellow">
+                      #{index + 1}
+                    </span>
+                    <span className="text-[13px] font-medium text-white truncate">
                       {luminaire.location || 'No location'}
                     </span>
                     {luminaire.autoFilled && <AutoFilledBadge />}
                   </div>
                   <button
                     onClick={() => removeLuminaire(luminaire.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-500/10 touch-manipulation"
+                    className="h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                   >
-                    <X className="h-3.5 w-3.5" />
+                    Remove
                   </button>
                 </div>
 
-                <div className="p-3 space-y-3">
-                  {/* Database search */}
-                  <LuminaireAutocomplete
-                    value={
-                      luminaire.manufacturer && luminaire.model
-                        ? { make: luminaire.manufacturer, model: luminaire.model }
-                        : null
-                    }
-                    onSelect={(dbLuminaire) => applyDatabaseLuminaire(luminaire.id, dbLuminaire)}
-                    placeholder="Search Ansell, Thorn, Eaton..."
-                  />
+                {/* Database search */}
+                <LuminaireAutocomplete
+                  value={
+                    luminaire.manufacturer && luminaire.model
+                      ? { make: luminaire.manufacturer, model: luminaire.model }
+                      : null
+                  }
+                  onSelect={(dbLuminaire) => applyDatabaseLuminaire(luminaire.id, dbLuminaire)}
+                  placeholder="Search Ansell, Thorn, Eaton..."
+                />
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field label="Location *">
-                      <Input
-                        value={luminaire.location || ''}
-                        onChange={(e) => updateLuminaire(luminaire.id, 'location', e.target.value)}
-                        className={inputCn}
-                        placeholder="Ground floor corridor"
-                      />
-                    </Field>
-                    <Field label="Type">
-                      <MobileSelectPicker
-                        value={luminaire.luminaireType || ''}
-                        onValueChange={(v) =>
-                          updateLuminaireFields(luminaire.id, {
-                            luminaireType: v,
-                            autoFilled: false,
-                          })
-                        }
-                        options={[
-                          { value: 'bulkhead', label: 'Bulkhead' },
-                          { value: 'twin-spot', label: 'Twin Spot' },
-                          { value: 'recessed', label: 'Recessed' },
-                          { value: 'surface', label: 'Surface Mount' },
-                          { value: 'downlight', label: 'Downlight' },
-                          { value: 'exit-sign', label: 'Exit Sign' },
-                          { value: 'exit-box', label: 'Exit Box' },
-                          { value: 'strip', label: 'Strip Light' },
-                        ]}
-                        placeholder="Select..."
-                        triggerClassName={pickerTrigger}
-                      />
-                    </Field>
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Location *">
+                    <Input
+                      value={luminaire.location || ''}
+                      onChange={(e) => updateLuminaire(luminaire.id, 'location', e.target.value)}
+                      className={inputCn}
+                      placeholder="Ground floor corridor"
+                    />
+                  </Field>
+                  <Field label="Type">
+                    <MobileSelectPicker
+                      value={luminaire.luminaireType || ''}
+                      onValueChange={(v) =>
+                        updateLuminaireFields(luminaire.id, {
+                          luminaireType: v,
+                          autoFilled: false,
+                        })
+                      }
+                      options={[
+                        { value: 'bulkhead', label: 'Bulkhead' },
+                        { value: 'twin-spot', label: 'Twin Spot' },
+                        { value: 'recessed', label: 'Recessed' },
+                        { value: 'surface', label: 'Surface Mount' },
+                        { value: 'downlight', label: 'Downlight' },
+                        { value: 'exit-sign', label: 'Exit Sign' },
+                        { value: 'exit-box', label: 'Exit Box' },
+                        { value: 'strip', label: 'Strip Light' },
+                      ]}
+                      placeholder="Select..."
+                      triggerClassName={pickerTrigger}
+                    />
+                  </Field>
+                </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field label="Manufacturer">
-                      <Input
-                        value={luminaire.manufacturer || ''}
-                        onChange={(e) =>
-                          updateLuminaireFields(luminaire.id, {
-                            manufacturer: e.target.value,
-                            autoFilled: false,
-                          })
-                        }
-                        className={inputCn}
-                        placeholder="Ansell, Thorn"
-                      />
-                    </Field>
-                    <Field label="Model">
-                      <Input
-                        value={luminaire.model || ''}
-                        onChange={(e) =>
-                          updateLuminaireFields(luminaire.id, {
-                            model: e.target.value,
-                            autoFilled: false,
-                          })
-                        }
-                        className={inputCn}
-                      />
-                    </Field>
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Manufacturer">
+                    <Input
+                      value={luminaire.manufacturer || ''}
+                      onChange={(e) =>
+                        updateLuminaireFields(luminaire.id, {
+                          manufacturer: e.target.value,
+                          autoFilled: false,
+                        })
+                      }
+                      className={inputCn}
+                      placeholder="Ansell, Thorn"
+                    />
+                  </Field>
+                  <Field label="Model">
+                    <Input
+                      value={luminaire.model || ''}
+                      onChange={(e) =>
+                        updateLuminaireFields(luminaire.id, {
+                          model: e.target.value,
+                          autoFilled: false,
+                        })
+                      }
+                      className={inputCn}
+                    />
+                  </Field>
+                </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field label="Category">
-                      <MobileSelectPicker
-                        value={luminaire.category || 'escape-route'}
-                        onValueChange={(v) =>
-                          updateLuminaireFields(luminaire.id, {
-                            category: v,
-                            autoFilled: false,
-                          })
-                        }
-                        options={[
-                          { value: 'escape-route', label: 'Escape Route' },
-                          { value: 'open-area', label: 'Open Area' },
-                          { value: 'high-risk', label: 'High Risk' },
-                          { value: 'standby', label: 'Standby' },
-                        ]}
-                        placeholder="Select..."
-                        triggerClassName={pickerTrigger}
-                      />
-                    </Field>
-                    <Field label="Wattage (W)">
-                      <Input
-                        type="number"
-                        min="0"
-                        step="0.1"
-                        value={luminaire.wattage || ''}
-                        onChange={(e) =>
-                          updateLuminaireFields(luminaire.id, {
-                            wattage: parseFloat(e.target.value) || 0,
-                            autoFilled: false,
-                          })
-                        }
-                        className={inputCn}
-                      />
-                    </Field>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field label="Duration">
-                      <MobileSelectPicker
-                        value={luminaire.ratedDuration?.toString() || '180'}
-                        onValueChange={(v) =>
-                          updateLuminaireFields(luminaire.id, {
-                            ratedDuration: parseInt(v),
-                            autoFilled: false,
-                          })
-                        }
-                        options={[
-                          { value: '60', label: '1 Hour (60 min)' },
-                          { value: '180', label: '3 Hours (180 min)' },
-                        ]}
-                        placeholder="Select..."
-                        triggerClassName={pickerTrigger}
-                      />
-                    </Field>
-                    <Field label="Battery">
-                      <MobileSelectPicker
-                        value={luminaire.batteryType || ''}
-                        onValueChange={(v) =>
-                          updateLuminaireFields(luminaire.id, {
-                            batteryType: v,
-                            autoFilled: false,
-                          })
-                        }
-                        options={[
-                          { value: 'NiCd', label: 'NiCd' },
-                          { value: 'NiMH', label: 'NiMH' },
-                          { value: 'LiFePO4', label: 'LiFePO4' },
-                          { value: 'Li-ion', label: 'Li-ion' },
-                          { value: 'central', label: 'Central' },
-                        ]}
-                        placeholder="Select..."
-                        triggerClassName={pickerTrigger}
-                      />
-                    </Field>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field label="Install Date">
-                      <Input
-                        type="date"
-                        value={luminaire.installDate || ''}
-                        onChange={(e) =>
-                          updateLuminaire(luminaire.id, 'installDate', e.target.value)
-                        }
-                        className={inputCn}
-                      />
-                    </Field>
-                    <Field label="Notes">
-                      <Input
-                        value={luminaire.notes || ''}
-                        onChange={(e) => updateLuminaire(luminaire.id, 'notes', e.target.value)}
-                        className={inputCn}
-                        placeholder="Any notes"
-                      />
-                    </Field>
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Category">
+                    <MobileSelectPicker
+                      value={luminaire.category || 'escape-route'}
+                      onValueChange={(v) =>
+                        updateLuminaireFields(luminaire.id, {
+                          category: v,
+                          autoFilled: false,
+                        })
+                      }
+                      options={[
+                        { value: 'escape-route', label: 'Escape Route' },
+                        { value: 'open-area', label: 'Open Area' },
+                        { value: 'high-risk', label: 'High Risk' },
+                        { value: 'standby', label: 'Standby' },
+                      ]}
+                      placeholder="Select..."
+                      triggerClassName={pickerTrigger}
+                    />
+                  </Field>
+                  <Field label="Wattage (W)">
+                    <Input
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      value={luminaire.wattage || ''}
+                      onChange={(e) =>
+                        updateLuminaireFields(luminaire.id, {
+                          wattage: parseFloat(e.target.value) || 0,
+                          autoFilled: false,
+                        })
+                      }
+                      className={inputCn}
+                    />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Duration">
+                    <MobileSelectPicker
+                      value={luminaire.ratedDuration?.toString() || '180'}
+                      onValueChange={(v) =>
+                        updateLuminaireFields(luminaire.id, {
+                          ratedDuration: parseInt(v),
+                          autoFilled: false,
+                        })
+                      }
+                      options={[
+                        { value: '60', label: '1 Hour (60 min)' },
+                        { value: '180', label: '3 Hours (180 min)' },
+                      ]}
+                      placeholder="Select..."
+                      triggerClassName={pickerTrigger}
+                    />
+                  </Field>
+                  <Field label="Battery">
+                    <MobileSelectPicker
+                      value={luminaire.batteryType || ''}
+                      onValueChange={(v) =>
+                        updateLuminaireFields(luminaire.id, {
+                          batteryType: v,
+                          autoFilled: false,
+                        })
+                      }
+                      options={[
+                        { value: 'NiCd', label: 'NiCd' },
+                        { value: 'NiMH', label: 'NiMH' },
+                        { value: 'LiFePO4', label: 'LiFePO4' },
+                        { value: 'Li-ion', label: 'Li-ion' },
+                        { value: 'central', label: 'Central' },
+                      ]}
+                      placeholder="Select..."
+                      triggerClassName={pickerTrigger}
+                    />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Install Date">
+                    <Input
+                      type="date"
+                      value={luminaire.installDate || ''}
+                      onChange={(e) =>
+                        updateLuminaire(luminaire.id, 'installDate', e.target.value)
+                      }
+                      className={inputCn}
+                    />
+                  </Field>
+                  <Field label="Notes">
+                    <Input
+                      value={luminaire.notes || ''}
+                      onChange={(e) => updateLuminaire(luminaire.id, 'notes', e.target.value)}
+                      className={inputCn}
+                      placeholder="Any notes"
+                    />
+                  </Field>
                 </div>
               </div>
             ))}
@@ -407,7 +392,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
         {/* Add buttons */}
         <button
           onClick={addLuminaire}
-          className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center text-sm text-white touch-manipulation active:scale-[0.98]"
+          className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
         >
           Add Luminaire
         </button>

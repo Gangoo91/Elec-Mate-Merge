@@ -23,7 +23,8 @@ export interface AdminInboxMessage {
   recipient_id: string;
   subject: string;
   message: string;
-  message_type: 'email' | 'in_app' | 'both';
+  /** 'system_ack' is the automatic "we've got your message" note. */
+  message_type: 'email' | 'in_app' | 'both' | 'system_ack';
   read_at: string | null;
   created_at: string;
   archived_at: string | null;
@@ -147,14 +148,20 @@ export function useAdminInbox(enabled = true, view: 'inbox' | 'archived' = 'inbo
           conv.hasInboundToAdmin = true;
           if (!msg.read_at) conv.unreadCount++;
         }
-        if (senderIsAdmin) conv.hasAdminReply = true;
+        // The automatic acknowledgement is admin-sent but nobody has actually
+        // answered. Counting it as a reply would drop the conversation out of
+        // "needs answering" and hide a real person waiting on us.
+        if (senderIsAdmin && msg.message_type !== 'system_ack') conv.hasAdminReply = true;
       });
 
       conversationMap.forEach((conv) => {
         conv.messages.sort(
           (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
         );
-        const last = conv.messages[conv.messages.length - 1];
+        // Acks are excluded from "who spoke last" for the same reason, and from
+        // the list preview — the preview should show what the person said.
+        const answerable = conv.messages.filter((m) => m.message_type !== 'system_ack');
+        const last = answerable[answerable.length - 1];
         conv.awaitingReply = !!last && !(last.sender?.admin_role || last.sender_id === user.id);
         if (last) conv.lastMessage = last;
       });

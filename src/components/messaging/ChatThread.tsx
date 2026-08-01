@@ -31,6 +31,17 @@ export interface ChatMessage {
   /** Optimistic rows render dimmed until the insert confirms. */
   pending?: boolean;
   failed?: boolean;
+  /**
+   * When the other side opened the thread. Drives "Seen" on the newest message
+   * we sent — the single strongest signal that a message did not vanish.
+   */
+  readAt?: string | null;
+  /**
+   * Rendered as a centred note rather than a bubble. Used for the automatic
+   * "we've got your message" acknowledgement, which must never look like a
+   * person typed it.
+   */
+  system?: boolean;
 }
 
 interface ChatThreadProps {
@@ -99,6 +110,15 @@ export function ChatThread({
   }, [realCount]);
 
   const rendered = optimistic.length ? [...messages, ...optimistic] : messages;
+
+  // Status belongs on the newest message we sent only — repeating "Seen" down
+  // the whole thread is noise, and iMessage/WhatsApp both read this way.
+  const lastOwnIndex = (() => {
+    for (let i = rendered.length - 1; i >= 0; i--) {
+      if (rendered[i].isOwn && !rendered[i].system) return i;
+    }
+    return -1;
+  })();
 
   // Pin to the newest message. useLayoutEffect so it happens before paint —
   // with useEffect you see the thread jump after it has rendered. The very
@@ -182,6 +202,32 @@ export function ChatThread({
                 new Date(next.createdAt).getTime() - created.getTime() >= 5 * 60_000 ||
                 new Date(next.createdAt).toDateString() !== created.toDateString();
 
+              // The acknowledgement is deliberately not a bubble: it is the
+              // system speaking, and dressing it as a reply would imply someone
+              // has actually read the message when nobody has yet.
+              if (msg.system) {
+                return (
+                  <div key={msg.id}>
+                    {/* Still draw the divider — a day boundary landing on an
+                        ack would otherwise swallow it. */}
+                    {newDay && (
+                      <div className="flex items-center gap-3 py-4">
+                        <div className="h-px flex-1 bg-white/[0.10]" />
+                        <span className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white/60">
+                          {dayLabel(created)}
+                        </span>
+                        <div className="h-px flex-1 bg-white/[0.10]" />
+                      </div>
+                    )}
+                    <div className="flex justify-center py-3">
+                      <p className="max-w-[80%] text-center text-[12px] leading-[1.5] text-white/70">
+                        {msg.body}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <div key={msg.id}>
                   {newDay && (
@@ -243,6 +289,12 @@ export function ChatThread({
                           {msg.failed && (
                             <span className="text-[10.5px] font-semibold text-red-400">
                               Not sent
+                            </span>
+                          )}
+                          {/* Delivery state, newest sent message only. */}
+                          {i === lastOwnIndex && !msg.pending && !msg.failed && (
+                            <span className="text-[10.5px] text-white/60">
+                              {msg.readAt ? 'Seen' : 'Sent'}
                             </span>
                           )}
                         </div>

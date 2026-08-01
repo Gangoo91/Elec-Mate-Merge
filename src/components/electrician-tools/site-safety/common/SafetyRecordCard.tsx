@@ -20,37 +20,195 @@ import {
 import { cn } from '@/lib/utils';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 
-export type CardStatus = 'pass' | 'fail' | 'active' | 'expired' | 'closed' | 'isolated' | 're_energised' | 'in_progress' | 'cancelled' | 'pending' | 'completed' | 'positive' | 'improvement' | 'recorded' | 'good' | 'attention' | 'overdue' | 'low' | 'medium' | 'high' | 'critical' | 'minor' | 'moderate' | 'major' | 'fatal';
+export type CardStatus =
+  | 'pass'
+  | 'fail'
+  | 'active'
+  | 'expired'
+  | 'closed'
+  | 'isolated'
+  | 're_energised'
+  | 'in_progress'
+  | 'cancelled'
+  | 'pending'
+  | 'completed'
+  | 'positive'
+  | 'improvement'
+  | 'recorded'
+  | 'good'
+  | 'attention'
+  | 'overdue'
+  | 'low'
+  | 'medium'
+  | 'high'
+  | 'critical'
+  | 'minor'
+  | 'moderate'
+  | 'major'
+  | 'fatal';
 
-const STATUS_CONFIG: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
-  pass: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-500 via-emerald-400 to-emerald-500' },
-  good: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-500 via-emerald-400 to-emerald-500' },
-  completed: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-500 via-emerald-400 to-emerald-500' },
-  positive: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-500 via-emerald-400 to-emerald-500' },
-  re_energised: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-500 via-emerald-400 to-emerald-500' },
-  closed: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', gradient: 'from-blue-500 via-blue-400 to-blue-500' },
-  recorded: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', gradient: 'from-blue-500 via-blue-400 to-blue-500' },
-  low: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', gradient: 'from-blue-500 via-blue-400 to-blue-500' },
-  active: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  in_progress: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  pending: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  attention: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  improvement: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  medium: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  moderate: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-500 via-amber-400 to-amber-500' },
-  fail: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  expired: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  isolated: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  overdue: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  high: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  critical: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  major: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  fatal: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20', gradient: 'from-red-500 via-red-400 to-red-500' },
-  cancelled: { bg: 'bg-white/5', text: 'text-white', border: 'border-white/10', gradient: 'from-gray-500 via-gray-400 to-gray-500' },
-  minor: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-500 via-emerald-400 to-emerald-500' },
+const STATUS_CONFIG: Record<
+  string,
+  { bg: string; text: string; border: string; gradient: string }
+> = {
+  pass: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    gradient: 'from-emerald-500 via-emerald-400 to-emerald-500',
+  },
+  good: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    gradient: 'from-emerald-500 via-emerald-400 to-emerald-500',
+  },
+  completed: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    gradient: 'from-emerald-500 via-emerald-400 to-emerald-500',
+  },
+  positive: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    gradient: 'from-emerald-500 via-emerald-400 to-emerald-500',
+  },
+  re_energised: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    gradient: 'from-emerald-500 via-emerald-400 to-emerald-500',
+  },
+  closed: {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/20',
+    gradient: 'from-blue-500 via-blue-400 to-blue-500',
+  },
+  recorded: {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/20',
+    gradient: 'from-blue-500 via-blue-400 to-blue-500',
+  },
+  low: {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/20',
+    gradient: 'from-blue-500 via-blue-400 to-blue-500',
+  },
+  active: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  in_progress: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  pending: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  attention: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  improvement: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  medium: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  moderate: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    border: 'border-amber-500/20',
+    gradient: 'from-amber-500 via-amber-400 to-amber-500',
+  },
+  fail: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  expired: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  isolated: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  overdue: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  high: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  critical: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  major: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  fatal: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    border: 'border-red-500/20',
+    gradient: 'from-red-500 via-red-400 to-red-500',
+  },
+  cancelled: {
+    bg: 'bg-white/5',
+    text: 'text-white',
+    border: 'border-white/10',
+    gradient: 'from-gray-500 via-gray-400 to-gray-500',
+  },
+  minor: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    border: 'border-emerald-500/20',
+    gradient: 'from-emerald-500 via-emerald-400 to-emerald-500',
+  },
 };
 
-const DEFAULT_STATUS = { bg: 'bg-white/5', text: 'text-white', border: 'border-white/10', gradient: 'from-gray-500 via-gray-400 to-gray-500' };
+const DEFAULT_STATUS = {
+  bg: 'bg-white/5',
+  text: 'text-white',
+  border: 'border-white/10',
+  gradient: 'from-gray-500 via-gray-400 to-gray-500',
+};
 
 interface MetaItem {
   icon?: LucideIcon;
@@ -134,7 +292,7 @@ export function SafetyRecordCard({
         'bg-gradient-to-br from-white/[0.04] to-white/[0.01]',
         'border transition-all duration-200',
         sc.border,
-        'hover:border-white/[0.15]',
+        'hover:border-white/[0.15]'
       )}
     >
       {/* Status accent line */}
@@ -147,10 +305,7 @@ export function SafetyRecordCard({
       >
         <div className="flex items-start gap-3">
           {/* Icon */}
-          <div className={cn(
-            'p-2.5 rounded-xl border flex-shrink-0',
-            sc.bg, sc.border,
-          )}>
+          <div className={cn('p-2.5 rounded-xl border flex-shrink-0', sc.bg, sc.border)}>
             <Icon className={cn('h-5 w-5', iconColour || sc.text)} />
           </div>
 
@@ -160,10 +315,13 @@ export function SafetyRecordCard({
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="text-sm font-semibold text-white truncate">{title}</h3>
               {/* Status badge */}
-              <span className={cn(
-                'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide',
-                sc.bg, sc.text,
-              )}>
+              <span
+                className={cn(
+                  'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide',
+                  sc.bg,
+                  sc.text
+                )}
+              >
                 {statusLabel}
               </span>
             </div>
@@ -171,9 +329,7 @@ export function SafetyRecordCard({
             {/* Subtitle + regulation */}
             {(subtitle || regulation) && (
               <div className="flex items-center gap-2 mt-1 flex-wrap">
-                {subtitle && (
-                  <span className="text-xs text-white truncate">{subtitle}</span>
-                )}
+                {subtitle && <span className="text-xs text-white truncate">{subtitle}</span>}
                 {regulation && (
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     {regulation}
@@ -219,14 +375,17 @@ export function SafetyRecordCard({
             return (
               <button
                 key={i}
-                onClick={(e) => { e.stopPropagation(); action.onClick(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  action.onClick();
+                }}
                 className={cn(
                   'flex-1 h-10 flex items-center justify-center gap-1.5 rounded-xl text-xs font-medium touch-manipulation active:scale-[0.97] transition-all',
                   action.variant === 'primary'
                     ? 'bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow'
                     : action.variant === 'danger'
                       ? 'bg-red-500/10 border border-red-500/20 text-red-400'
-                      : 'bg-white/[0.04] border border-white/[0.08] text-white',
+                      : 'bg-white/[0.04] border border-white/[0.08] text-white'
                 )}
               >
                 {ActionIcon && <ActionIcon className="h-3.5 w-3.5" />}
@@ -236,7 +395,10 @@ export function SafetyRecordCard({
           })}
           {pdfType && (
             <button
-              onClick={(e) => { e.stopPropagation(); exportPDF(pdfType as Parameters<typeof exportPDF>[0], id); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                exportPDF(pdfType as Parameters<typeof exportPDF>[0], id);
+              }}
               disabled={isExporting && exportingId === id}
               className="h-10 w-10 flex items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-white touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
               aria-label="Export PDF"
@@ -275,5 +437,9 @@ export function SafetyRecordCard({
 /** Convenience: format date for meta items */
 export function fmtCardDate(d: string | null | undefined): string {
   if (!d) return 'N/A';
-  return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(d).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }

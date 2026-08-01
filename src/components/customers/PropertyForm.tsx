@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Home, Building2, Factory, MapPin, StickyNote, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { CustomerProperty } from '@/hooks/inspection/useCustomerProperties';
 import { cn } from '@/lib/utils';
 
@@ -33,30 +33,9 @@ interface PropertyFormProps {
 }
 
 const propertyTypes = [
-  {
-    value: 'residential' as const,
-    label: 'Residential',
-    icon: Home,
-    description: 'House, flat, domestic',
-    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    iconBg: 'bg-blue-500/20',
-  },
-  {
-    value: 'commercial' as const,
-    label: 'Commercial',
-    icon: Building2,
-    description: 'Office, shop, business',
-    color: 'bg-green-500/20 text-green-400 border-green-500/30',
-    iconBg: 'bg-green-500/20',
-  },
-  {
-    value: 'industrial' as const,
-    label: 'Industrial',
-    icon: Factory,
-    description: 'Factory, warehouse',
-    color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    iconBg: 'bg-orange-500/20',
-  },
+  { value: 'residential' as const, label: 'Residential', description: 'House, flat, domestic' },
+  { value: 'commercial' as const, label: 'Commercial', description: 'Office, shop, business' },
+  { value: 'industrial' as const, label: 'Industrial', description: 'Factory, warehouse' },
 ];
 
 export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyFormProps) => {
@@ -113,7 +92,7 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
         <form onSubmit={handleSubmit(onSubmit)} className="px-5 pb-5 space-y-5 mt-3">
           {/* Property Type — tappable cards */}
           <div className="space-y-2.5">
-            <Label className="text-xs text-white uppercase tracking-wider">
+            <Label className="text-[13px] font-medium text-white">
               Property Type
             </Label>
             <div className="grid grid-cols-3 gap-2">
@@ -125,23 +104,24 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
                     type="button"
                     onClick={() => setValue('propertyType', type.value)}
                     className={cn(
-                      'flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all touch-manipulation',
-                      isSelected ? type.color : 'bg-background border-border hover:border-border/80'
+                      'flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-xl border p-3 transition-all touch-manipulation',
+                      isSelected
+                        ? 'border-elec-yellow bg-elec-yellow'
+                        : 'border-white/[0.1] bg-white/[0.04] hover:border-white/[0.25]'
                     )}
                   >
-                    <div
-                      className={cn(
-                        'w-10 h-10 rounded-xl flex items-center justify-center',
-                        isSelected ? 'bg-white/10' : 'bg-muted'
-                      )}
-                    >
-                      <type.icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-xs font-semibold">{type.label}</span>
                     <span
                       className={cn(
-                        'text-[10px] leading-tight text-center',
-                        isSelected ? 'opacity-80' : 'text-white'
+                        'text-[12.5px] font-semibold',
+                        isSelected ? 'text-black' : 'text-white'
+                      )}
+                    >
+                      {type.label}
+                    </span>
+                    <span
+                      className={cn(
+                        'text-center text-[10px] leading-tight',
+                        isSelected ? 'text-black/70' : 'text-white/55'
                       )}
                     >
                       {type.description}
@@ -156,15 +136,14 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
           <div className="space-y-2.5">
             <Label
               htmlFor="address"
-              className="text-xs text-white uppercase tracking-wider flex items-center gap-1.5"
+              className="text-[13px] font-medium text-white flex items-center gap-1.5"
             >
-              <MapPin className="h-3 w-3" />
               Address
             </Label>
             <Textarea
               id="address"
               {...register('address')}
-              className="bg-background border-border text-foreground text-base resize-none min-h-[100px] rounded-xl touch-manipulation focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+              className="bg-background border-border text-foreground text-base resize-none min-h-[100px] rounded-xl touch-manipulation focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
               placeholder="Enter full property address"
               rows={4}
             />
@@ -175,9 +154,8 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
           <div className="space-y-2.5">
             <Label
               htmlFor="notes"
-              className="text-xs text-white uppercase tracking-wider flex items-center gap-1.5"
+              className="text-[13px] font-medium text-white flex items-center gap-1.5"
             >
-              <StickyNote className="h-3 w-3" />
               Notes{' '}
               <span className="normal-case tracking-normal text-white">
                 (optional)
@@ -186,7 +164,7 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
             <Textarea
               id="notes"
               {...register('notes')}
-              className="bg-background border-border text-foreground text-base resize-none rounded-xl touch-manipulation focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+              className="bg-background border-border text-foreground text-base resize-none rounded-xl touch-manipulation focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
               placeholder="Access instructions, key safe codes, etc."
               rows={3}
             />

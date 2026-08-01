@@ -1,4 +1,3 @@
-import { ChevronRight } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 
 interface NonRegisteredUserGuideProps {
@@ -16,9 +15,6 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
     <div className="space-y-3">
       {/* Main card */}
       <div className="relative overflow-hidden card-surface-interactive rounded-2xl">
-        {/* Top accent line */}
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-red-400 opacity-40" />
-
         <div className="p-4 sm:p-5">
           {/* Header */}
           <div className="mb-4">
@@ -55,10 +51,9 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
           {/* CTA */}
           <button
             onClick={openCouncilFinder}
-            className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-amber-500/12 border border-amber-500/25 text-sm font-semibold text-white hover:bg-amber-500/18 transition-all touch-manipulation active:scale-[0.98]"
+            className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            Find Your Local Council
-            <ChevronRight className="w-4 h-4" />
+            Find your local council
           </button>
           <p className="text-[11px] text-white text-center mt-2">Opens Planning Portal</p>
         </div>
@@ -76,7 +71,7 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
             <p className="text-sm font-medium text-white">Gov.uk Council Finder</p>
             <p className="text-[12px] text-white">Find by postcode</p>
           </div>
-          <ChevronRight className="w-4 h-4 text-white/30 flex-shrink-0" />
+          <span className="flex-shrink-0 text-[12.5px] font-semibold text-elec-yellow">Open</span>
         </a>
         <a
           href="https://www.gov.uk/building-regulations-approval"
@@ -88,13 +83,12 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
             <p className="text-sm font-medium text-white">Building Regs Guide</p>
             <p className="text-[12px] text-white">Official Gov.uk guidance</p>
           </div>
-          <ChevronRight className="w-4 h-4 text-white/30 flex-shrink-0" />
+          <span className="flex-shrink-0 text-[12.5px] font-semibold text-elec-yellow">Open</span>
         </a>
       </div>
 
       {/* Tip card */}
       <div className="relative overflow-hidden card-surface-interactive rounded-2xl">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-indigo-400 to-violet-400 opacity-30" />
         <div className="relative z-10 p-4">
           <p className="text-sm font-bold text-white mb-1">Save Money on Future Jobs</p>
           <p className="text-[12px] text-white leading-relaxed">

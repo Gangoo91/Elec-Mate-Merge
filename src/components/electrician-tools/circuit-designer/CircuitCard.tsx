@@ -11,6 +11,7 @@ import {
 import { MobileTestResultsCompact } from './mobile/MobileTestResultsCompact';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator } from 'lucide-react';
+import { getCircuitCompliance } from './zs-compliance';
 
 interface CircuitCardProps {
   circuit: CircuitDesign;
@@ -33,6 +34,12 @@ export const CircuitCard = ({
 
   // Use backend complianceStatus when available (same as desktop)
   // Fall back to simple calculation check for legacy data
+  // ELE-1425/1426 — run the BS 7671 chain here rather than trusting whatever
+  // the design proposed: Ib ≤ In ≤ Iz (derated), Zs ≤ Zs(max), Vd ≤ limit.
+  const compliance = getCircuitCompliance(circuit);
+  const zsCheck = compliance.zs;
+  const cable = compliance.cable;
+
   let status: 'pass' | 'warning' | 'fail' = 'pass';
 
   if ((circuit as any).complianceStatus) {
@@ -41,7 +48,10 @@ export const CircuitCard = ({
   } else {
     // Fallback for legacy data without complianceStatus
     const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
-    const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
+    // ELE-1426 — a missing Zs used to read as 0, and 0 <= maxZs passes.
+    // The engine derives Zs from the conductor sizes and length, so this is a
+    // real comparison rather than 0 <= max.
+    const zsCompliant = zsCheck.compliant;
     const hasWarnings = circuit.warnings && circuit.warnings.length > 0;
     const isCompliant = vdCompliant && zsCompliant;
     status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
@@ -50,11 +60,23 @@ export const CircuitCard = ({
   // Safety-critical override: if Zs exceeds maxZs the circuit MUST NOT show
   // PASS regardless of what the backend complianceStatus says — a real
   // installation with these values would not achieve 0.4 s disconnection.
-  const zsValue = circuit.calculations?.zs ?? 0;
-  const maxZsValue = circuit.calculations?.maxZs ?? 0;
-  const zsFailure = maxZsValue > 0 && zsValue > maxZsValue;
-  if (zsFailure && status === 'pass') {
+  if (zsCheck.state === 'fail' && status === 'pass') {
     status = 'fail';
+  }
+
+  // ELE-1426 — only when there is genuinely nothing to calculate from (no
+  // conductor sizes or length either) does this stay unknown. That is a gap to
+  // show, not a pass to grant.
+  if (zsCheck.state === 'not-calculated' && status === 'pass') {
+    status = 'warning';
+  }
+
+  // Any hard BS 7671 failure overrides whatever the design claimed — an
+  // undersized cable or a Zs that will not disconnect must never read as Pass.
+  if (compliance.verdict === 'fail') {
+    status = 'fail';
+  } else if (compliance.verdict === 'warning' && status === 'pass') {
+    status = 'warning';
   }
 
   return (
@@ -96,7 +118,7 @@ export const CircuitCard = ({
             {status === 'fail' && <AlertCircle className="h-3 w-3 mr-1" />}
             {status === 'pass' ? 'Pass' : status === 'warning' ? 'Warning' : 'Review'}
           </Badge>
-          {zsFailure && (
+          {zsCheck.state === 'fail' && (
             <Badge
               variant="destructive"
               className="bg-red-600/30 text-red-300 border-red-500/40 h-7 shrink-0"
@@ -107,12 +129,26 @@ export const CircuitCard = ({
           )}
         </div>
 
-        {/* Zs non-compliance warning */}
-        {zsFailure && (
+        {/* ELE-1425/1426 — every BS 7671 failure the chain found, in plain
+            English with its regulation. One list, so a new check added to the
+            engine shows up here without another bespoke block. */}
+        {compliance.failures.length > 0 && (
           <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
-            <p className="text-[10px] text-red-300">
-              • Zs {zsValue.toFixed(2)} Ω exceeds max {maxZsValue.toFixed(2)} Ω — earth fault disconnection will not meet 0.4 s (Reg 411.3.2)
-            </p>
+            {compliance.failures.map((f, idx) => (
+              <p key={idx} className="text-[10px] text-red-300 mb-1 last:mb-0">
+                • {f}
+              </p>
+            ))}
+          </div>
+        )}
+
+        {compliance.warnings.length > 0 && (
+          <div className="mt-2 bg-orange-500/10 border border-orange-500/20 rounded-lg p-2">
+            {compliance.warnings.map((w, idx) => (
+              <p key={idx} className="text-[10px] text-orange-300 mb-1 last:mb-0">
+                • {w}
+              </p>
+            ))}
           </div>
         )}
 

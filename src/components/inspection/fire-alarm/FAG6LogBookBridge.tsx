@@ -156,11 +156,9 @@ export default function FAG6LogBookBridge({ formData, onUpdate }: Props) {
   if (books.length === 0) return null;
 
   return (
-    <div className="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden">
+    <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
       <div className="px-4 pt-3.5 pb-3">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
-          Fire alarm log book
-        </p>
+        <p className="text-[13px] font-semibold text-white">Fire alarm log book</p>
         <p className="mt-1 text-[12.5px] text-white/80 leading-relaxed">
           This building keeps its log in Elec-Mate? Pull the false alarm and service history
           straight into the certificate.
@@ -174,7 +172,7 @@ export default function FAG6LogBookBridge({ formData, onUpdate }: Props) {
             setSelectedId(e.target.value);
             setInserted(false);
           }}
-          className="w-full h-12 px-3 rounded-lg text-base touch-manipulation bg-[hsl(0_0%_16%)] border border-white/[0.12] text-white focus:border-yellow-500 focus:ring-yellow-500"
+          className="w-full h-12 px-3 rounded-lg text-base touch-manipulation bg-[hsl(0_0%_16%)] border border-white/[0.12] text-white focus:border-elec-yellow focus:outline-none [color-scheme:dark]"
         >
           <option value="">Select a log book…</option>
           {books.map((b) => (
@@ -189,7 +187,7 @@ export default function FAG6LogBookBridge({ formData, onUpdate }: Props) {
           <button
             type="button"
             onClick={() => setSelectedId(suggestedId)}
-            className="w-full text-left px-3.5 py-2.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 touch-manipulation"
+            className="w-full min-h-11 text-left px-3.5 py-2.5 rounded-lg bg-white/[0.06] border border-elec-yellow/40 touch-manipulation active:scale-[0.98] transition-all"
           >
             <span className="text-[12px] text-elec-yellow font-medium">
               Looks like {books.find((b) => b.id === suggestedId)?.building_name} — tap to link
@@ -201,8 +199,8 @@ export default function FAG6LogBookBridge({ formData, onUpdate }: Props) {
 
         {summary && !loading && (
           <>
-            <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] divide-y divide-white/[0.06]">
-              <div className="px-3.5 py-2 text-[11px] text-white/70">
+            <div className="rounded-lg bg-white/[0.05] border border-white/[0.08] divide-y divide-white/[0.06]">
+              <div className="px-3.5 py-2 text-[11px] text-white/80">
                 Logged since {fmt(summary.since)}
                 {formData.previousInspectionDate ? ' (last inspection)' : ' (12 months)'}
               </div>
@@ -216,7 +214,7 @@ export default function FAG6LogBookBridge({ formData, onUpdate }: Props) {
                 ] as [string, number][]
               ).map(([label, n]) => (
                 <div key={label} className="flex items-center justify-between px-3.5 py-2">
-                  <span className="text-[12.5px] text-white/70">{label}</span>
+                  <span className="text-[12.5px] text-white/80">{label}</span>
                   <span
                     className={cn(
                       'text-[13px] font-bold tabular-nums',
@@ -242,15 +240,15 @@ export default function FAG6LogBookBridge({ formData, onUpdate }: Props) {
               onClick={insert}
               disabled={inserted}
               className={cn(
-                'w-full h-12 rounded-xl font-semibold text-[13.5px] touch-manipulation transition-colors',
+                'w-full h-12 rounded-xl font-semibold text-[13.5px] touch-manipulation transition-colors active:scale-[0.98]',
                 inserted
-                  ? 'bg-green-500/15 text-green-400 border border-green-500/30'
-                  : 'bg-elec-yellow text-black hover:bg-yellow-400'
+                  ? 'bg-white/[0.06] text-green-400 border border-green-500/40'
+                  : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
               )}
             >
-              {inserted ? 'Inserted into certificate ✓' : 'Insert history into certificate'}
+              {inserted ? 'Inserted into certificate' : 'Insert history into certificate'}
             </button>
-            <p className="text-[11px] text-white/65">
+            <p className="text-[11px] text-white/80">
               Fills the false alarm records and service history below — you can edit them after.
             </p>
           </>

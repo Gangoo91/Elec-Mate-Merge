@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { NotificationCard } from './NotificationCard';
 import { NotificationFilters } from './NotificationFilters';
 import { Notification, NotificationStatus } from '@/hooks/useNotifications';
@@ -8,6 +7,7 @@ import { getDaysUntilDeadline } from '@/utils/notificationHelper';
 
 interface NotificationsListProps {
   notifications: Notification[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (id: string, updates: any) => void;
   onDelete: (id: string) => void;
   onViewDetails: (notification: Notification) => void;
@@ -112,7 +112,6 @@ export const NotificationsList = ({
             className="mt-4 inline-flex items-center gap-1.5 h-10 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-transform active:scale-[0.98]"
           >
             Create a notifiable cert
-            <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
@@ -146,7 +145,9 @@ export const NotificationsList = ({
           {title}
           <span className="text-[11.5px] font-normal tabular-nums text-white/75">{items.length}</span>
         </h3>
-        <div className="space-y-3">
+        <div
+          className={`grid grid-cols-1 gap-3 lg:gap-4 ${items.length > 1 ? 'lg:grid-cols-2' : 'lg:max-w-[720px]'}`}
+        >
           {items.map((notification) => (
             <NotificationCard
               key={notification.id}

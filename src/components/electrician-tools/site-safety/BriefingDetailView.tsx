@@ -1,94 +1,111 @@
-import { useState } from 'react';
+/**
+ * BriefingDetailView — the completed briefing, read back.
+ *
+ * This screen had an icon on every heading, every heading in ALL CAPS with
+ * `tracking-wider`, four grey icon tiles restating their own labels, twelve
+ * different hazard colours, a blue status pill, a red risk pill with a warning
+ * triangle, and five nested bordered cards. Set beside an EV charging
+ * certificate it read as a different product.
+ *
+ * It now uses the certificate language: typographic headings in sentence case,
+ * a definition list for the facts, edge-to-edge cards on mobile, and hairline
+ * rules instead of boxes.
+ *
+ * On colour, the line drawn is **colour that carries meaning stays; colour that
+ * decorates goes.** Risk level keeps its amber/red because a high-risk briefing
+ * genuinely must not look like a low-risk one, and an electrician scanning the
+ * screen is entitled to that signal. The twelve hazard colours and the blue
+ * "Scheduled" pill were decoration — asbestos being rose and noise being orange
+ * encodes nothing, it just made the screen loud — so those are now one uniform
+ * treatment and plain type respectively.
+ *
+ * Also fixed: `briefing_time` was printed raw, so a 9am briefing displayed as
+ * "09:00:00". Nobody writes seconds on a briefing sheet.
+ */
+
+import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ArrowLeft,
-  FileText,
-  MapPin,
-  Calendar,
-  Clock,
-  Users,
-  Camera,
-  ShieldAlert,
-  AlertTriangle,
-  CheckCircle,
-  Share2,
-  Download,
-  Edit,
-  X,
-  User,
-  Eye,
-} from 'lucide-react';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useStorageUrls } from '@/utils/storageUrls';
 import { BriefingShareSheet } from './briefings';
 import { BriefingPDFActions } from './BriefingPDFActions';
 import { SignaturePad } from './common/SignaturePad';
-import {
-  useBriefingAttendees,
-  useSignOffAttendee,
-} from '@/hooks/useBriefingSignatures';
+import { useBriefingAttendees, useSignOffAttendee } from '@/hooks/useBriefingSignatures';
 
 const HAZARD_LABELS: Record<string, string> = {
   electrical: 'Electrical',
   fire: 'Fire',
   heights: 'Heights',
-  'falling-objects': 'Falling Objects',
-  'confined-space': 'Confined Space',
-  'manual-handling': 'Manual Handling',
-  'hazardous-substances': 'Hazardous Substances',
+  'falling-objects': 'Falling objects',
+  'confined-space': 'Confined space',
+  'manual-handling': 'Manual handling',
+  'hazardous-substances': 'Hazardous substances',
   noise: 'Noise',
-  'wet-slippery': 'Wet/Slippery',
+  'wet-slippery': 'Wet / slippery',
   vehicles: 'Vehicles',
   machinery: 'Machinery',
   asbestos: 'Asbestos',
 };
 
-const HAZARD_COLOURS: Record<string, string> = {
-  electrical: 'bg-yellow-500/15 text-yellow-400',
-  fire: 'bg-red-500/15 text-red-400',
-  heights: 'bg-purple-500/15 text-purple-400',
-  'falling-objects': 'bg-amber-500/15 text-amber-400',
-  'confined-space': 'bg-blue-500/15 text-blue-400',
-  'manual-handling': 'bg-emerald-500/15 text-emerald-400',
-  'hazardous-substances': 'bg-pink-500/15 text-pink-400',
-  noise: 'bg-orange-500/15 text-orange-400',
-  'wet-slippery': 'bg-cyan-500/15 text-cyan-400',
-  vehicles: 'bg-gray-500/15 text-white',
-  machinery: 'bg-slate-500/15 text-white',
-  asbestos: 'bg-rose-500/15 text-rose-400',
+/**
+ * Risk keeps colour — it is the one value on this screen where the colour is
+ * the information. Text only: the bordered, filled pill it used to sit in was
+ * doing the shouting rather than the word.
+ */
+const RISK_TEXT: Record<string, string> = {
+  low: 'text-white',
+  medium: 'text-amber-400',
+  high: 'text-red-400',
 };
 
-const RISK_STYLES: Record<string, { bg: string; text: string; border: string }> = {
-  low: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', border: 'border-emerald-500/30' },
-  medium: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
-  high: { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/30' },
-};
-
-const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  scheduled: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'Scheduled' },
-  in_progress: { bg: 'bg-amber-500/15', text: 'text-amber-400', label: 'In Progress' },
-  completed: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Completed' },
-  cancelled: { bg: 'bg-red-500/15', text: 'text-red-400', label: 'Cancelled' },
-  draft: { bg: 'bg-white/10', text: 'text-white', label: 'Draft' },
+const STATUS_LABELS: Record<string, string> = {
+  scheduled: 'Scheduled',
+  in_progress: 'In progress',
+  completed: 'Completed',
+  cancelled: 'Cancelled',
+  draft: 'Draft',
 };
 
 const BRIEFING_TYPE_LABELS: Record<string, string> = {
-  'site-work': 'Site Work',
-  lfe: 'LFE Report',
-  'hse-update': 'HSE Update',
-  'business-update': 'Business Update',
-  'safety-alert': 'Safety Alert',
+  'site-work': 'Site work',
+  lfe: 'LFE report',
+  'hse-update': 'HSE update',
+  'business-update': 'Business update',
+  'safety-alert': 'Safety alert',
   regulatory: 'Regulatory',
   general: 'General',
-  'site-induction': 'Site Induction',
-  'toolbox-talk': 'Toolbox Talk',
-  'electrical-safety': 'Electrical Safety',
-  'hot-works': 'Hot Works',
-  'near-miss-review': 'Near Miss Review',
+  'site-induction': 'Site induction',
+  'toolbox-talk': 'Toolbox talk',
+  'electrical-safety': 'Electrical safety',
+  'hot-works': 'Hot works',
+  'near-miss-review': 'Near miss review',
 };
+
+/** `09:00:00` → `09:00`. Stored as a Postgres `time`, shown as people write it. */
+const formatTime = (t?: string | null): string | null => {
+  if (!t) return null;
+  const m = /^(\d{2}):(\d{2})/.exec(t);
+  return m ? `${m[1]}:${m[2]}` : t;
+};
+
+const formatDate = (d?: string | null): string | null => {
+  if (!d) return null;
+  const parsed = new Date(`${d}T00:00:00`);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+};
+
+/** Edge-to-edge on mobile, inset from `sm:` — the certificate card. */
+const cardCn =
+  '-mx-4 border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] ' +
+  'p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5';
+
+const SectionHeading = ({ children }: { children: ReactNode }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{children}</h2>
+);
 
 interface BriefingDetailViewProps {
   briefing: any;
@@ -113,27 +130,30 @@ export function BriefingDetailView({
   const [signOffDate, setSignOffDate] = useState('');
   const [signOffDataUrl, setSignOffDataUrl] = useState('');
 
-  // Attendee hooks
   const { data: dbAttendees } = useBriefingAttendees(briefing.id);
   const signOffMutation = useSignOffAttendee();
 
   // Merge: prefer DB attendees when available, fall back to briefing.attendees
   const embeddedAttendees = Array.isArray(briefing.attendees) ? briefing.attendees : [];
-  const attendees = dbAttendees && dbAttendees.length > 0
-    ? dbAttendees.map((a: any) => ({
-        ...a,
-        name: a.employee?.name || a.guest_name || 'Unknown',
-        role: a.guest_company || '',
-        signature: a.signature_url || a.acknowledged,
-        _dbId: a.id,
-      }))
-    : embeddedAttendees;
-  const signedCount = attendees.filter((a: any) => !!a.signature || !!a.signature_url || !!a.acknowledged).length;
+  const attendees =
+    dbAttendees && dbAttendees.length > 0
+      ? dbAttendees.map((a: any) => ({
+          ...a,
+          name: a.employee?.name || a.guest_name || 'Unknown',
+          role: a.guest_company || '',
+          signature: a.signature_url || a.acknowledged,
+          _dbId: a.id,
+        }))
+      : embeddedAttendees;
+  const signedCount = attendees.filter(
+    (a: any) => !!a.signature || !!a.signature_url || !!a.acknowledged
+  ).length;
   const totalAttendees = attendees.length;
   const progressPercent = totalAttendees > 0 ? (signedCount / totalAttendees) * 100 : 0;
+  const allSigned = totalAttendees > 0 && signedCount === totalAttendees;
 
-  const riskStyle = RISK_STYLES[briefing.risk_level || 'medium'] || RISK_STYLES.medium;
-  const statusStyle = STATUS_STYLES[briefing.status || 'scheduled'] || STATUS_STYLES.scheduled;
+  const riskLevel: string | undefined = briefing.risk_level;
+  const statusLabel = STATUS_LABELS[briefing.status || 'scheduled'] || 'Scheduled';
   const hazards: string[] = briefing.identified_hazards || [];
   const photos: any[] = briefing.photos || [];
   // Resolve stored photo references — new uploads store bare storage paths
@@ -147,211 +167,157 @@ export function BriefingDetailView({
     BRIEFING_TYPE_LABELS[briefing.briefing_type] ||
     briefing.briefing_type?.replace(/-/g, ' ') ||
     'General';
+  const title = briefing.briefing_name || briefing.job_name;
+  const conductor = briefing.created_by_name || briefing.conductor_name;
+
+  const facts: { term: string; value: string | null; className?: string }[] = [
+    { term: 'Type', value: typeLabel },
+    { term: 'Site', value: briefing.location || null },
+    {
+      term: 'Date',
+      value: (() => {
+        const d = formatDate(briefing.briefing_date);
+        const t = formatTime(briefing.briefing_time);
+        if (!d) return null;
+        return t ? `${d} at ${t}` : d;
+      })(),
+    },
+    {
+      term: 'Risk level',
+      value: riskLevel ? riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1) : null,
+      className: riskLevel ? RISK_TEXT[riskLevel] : undefined,
+    },
+    { term: 'Briefed by', value: conductor || null },
+  ];
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur border-b border-white/10">
-        <div className="flex items-center justify-between px-4 py-3">
+      {/* Header — "Back" as a word rather than a bare arrow, and the status as
+          type rather than a coloured pill. The certificates read the same way. */}
+      <div className="sticky top-0 z-50 border-b border-white/10 bg-elec-dark/95 backdrop-blur">
+        <div className="flex items-center justify-between gap-3 px-4 py-3">
           <button
+            type="button"
             onClick={onClose}
-            className="p-2.5 -ml-2 text-white hover:text-white touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="-ml-1 flex h-11 shrink-0 touch-manipulation items-center text-[15px] font-medium text-white"
           >
-            <ArrowLeft className="h-5 w-5" />
+            Back
           </button>
-          <div className="text-center flex-1 min-w-0 px-2">
-            <p className="text-sm font-medium text-white truncate">
-              {briefing.briefing_name || briefing.job_name}
-            </p>
-          </div>
-          <Badge className={cn('shrink-0', statusStyle.bg, statusStyle.text, 'border-0 text-xs')}>
-            {statusStyle.label}
-          </Badge>
+          <p className="min-w-0 flex-1 truncate text-center text-[15px] font-semibold text-white">
+            {title}
+          </p>
+          <span className="shrink-0 text-[13px] font-medium text-white">{statusLabel}</span>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-4 pb-28 space-y-4">
-        {/* Info Card */}
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
-          <div className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1 min-w-0">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-elec-yellow/80 mb-1.5">
-                  <FileText className="h-3 w-3" />
-                  {typeLabel} Briefing
-                </span>
-                <h2 className="text-lg font-bold text-white leading-tight">
-                  {briefing.briefing_name || briefing.job_name}
-                </h2>
-              </div>
-              {briefing.risk_level && (
-                <div
-                  className={cn(
-                    'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0 border',
-                    riskStyle.bg,
-                    riskStyle.text,
-                    riskStyle.border
-                  )}
-                >
-                  <AlertTriangle className="h-3 w-3" />
-                  {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="px-4 py-3 space-y-2.5">
-            <div className="flex items-center gap-3 text-sm">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                <MapPin className="h-3.5 w-3.5 text-white" />
-              </div>
-              <span className="text-white truncate">{briefing.location}</span>
-            </div>
-            <div className="flex items-center gap-3 text-sm flex-wrap">
-              <div className="flex items-center gap-3 shrink-0">
-                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                  <Calendar className="h-3.5 w-3.5 text-white" />
-                </div>
-                <span className="text-white whitespace-nowrap">
-                  {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </span>
-              </div>
-              <span className="text-white hidden sm:inline">|</span>
-              <div className="flex items-center gap-3 shrink-0">
-                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                  <Clock className="h-3.5 w-3.5 text-white" />
-                </div>
-                <span className="text-white whitespace-nowrap">{briefing.briefing_time}</span>
-              </div>
-            </div>
-            {(briefing.created_by_name || briefing.conductor_name) && (
-              <div className="flex items-center gap-3 text-sm">
-                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.06]">
-                  <User className="h-3.5 w-3.5 text-white" />
-                </div>
-                <span className="text-white truncate">
-                  {briefing.created_by_name || briefing.conductor_name}
-                </span>
-              </div>
-            )}
-          </div>
+      <div className="space-y-6 px-4 pb-32 pt-5">
+        {/* Title block — the document announces itself in type, not in a badge. */}
+        <div>
+          <h1 className="text-[22px] font-bold leading-tight tracking-tight text-white">{title}</h1>
+          <p className="mt-1 text-[13px] text-white">{typeLabel} briefing · HSG250</p>
         </div>
 
-        {/* Content/Description */}
+        {/* Facts */}
+        <div className={cardCn}>
+          <dl className="divide-y divide-white/[0.08]">
+            {facts.map(({ term, value, className }) => (
+              <div key={term} className="flex items-baseline gap-4 py-2.5 first:pt-0 last:pb-0">
+                <dt className="w-24 shrink-0 text-[13px] text-white">{term}</dt>
+                <dd className={cn('min-w-0 flex-1 text-[14px] font-medium text-white', className)}>
+                  {value ?? <span className="font-normal text-white">Not recorded</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* What was briefed */}
         {description && (
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <FileText className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                Briefing Content
-              </span>
-            </div>
-            <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">{description}</p>
-          </div>
+          <section>
+            <SectionHeading>What was briefed</SectionHeading>
+            <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-white">
+              {description}
+            </p>
+          </section>
         )}
 
-        {/* Hazards */}
+        {/* Hazards — one treatment for all twelve. The rainbow encoded nothing. */}
         {hazards.length > 0 && (
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <ShieldAlert className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                Identified Hazards
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
+          <section>
+            <SectionHeading>Hazards identified</SectionHeading>
+            <div className="flex flex-wrap gap-2">
               {hazards.map((h: string) => (
                 <span
                   key={h}
-                  className={cn(
-                    'px-2.5 py-1 rounded-full text-xs font-medium',
-                    HAZARD_COLOURS[h] || 'bg-gray-500/15 text-white'
-                  )}
+                  className="rounded-full border border-white/[0.14] bg-white/[0.06] px-3 py-1.5 text-[13px] font-medium text-white"
                 >
                   {HAZARD_LABELS[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')}
                 </span>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
         {/* Photos */}
         {photos.length > 0 && (
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Camera className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                Site Photos ({photos.length})
-              </span>
-            </div>
+          <section>
+            <SectionHeading>
+              Site photos <span className="font-normal tabular-nums">({photos.length})</span>
+            </SectionHeading>
             <div className="grid grid-cols-3 gap-2">
               {photos.map((photo: any, idx: number) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setPreviewPhoto(photo.url)}
-                  className="aspect-square rounded-xl overflow-hidden border border-white/10 touch-manipulation"
+                  className="aspect-square touch-manipulation overflow-hidden rounded-xl border border-white/10"
                 >
                   <img
                     src={photoSrcs[photo.url] ?? photo.url}
-                    alt={`Photo ${idx + 1}`}
-                    className="w-full h-full object-cover"
+                    alt={`Site photo ${idx + 1}`}
+                    className="h-full w-full object-cover"
                     loading="lazy"
                   />
                 </button>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Sign-Off Register */}
-        <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Users className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                Sign-Off Register
-              </span>
-            </div>
+        {/* Sign-off register — a ruled signing sheet. Each attendee used to sit
+            in their own bordered pill with a numbered tile inside it; a register
+            is a list, so it is ruled like one. */}
+        <section>
+          <div className="mb-3 flex items-baseline justify-between gap-3">
+            <h2 className="text-[15px] font-semibold tracking-tight text-white">
+              Sign-off register
+            </h2>
             <span
               className={cn(
-                'text-xs font-semibold px-2.5 py-1 rounded-full',
-                totalAttendees > 0 && signedCount === totalAttendees
-                  ? 'bg-emerald-500/20 text-emerald-400'
-                  : totalAttendees > 0
-                    ? 'bg-amber-500/20 text-amber-400'
-                    : 'bg-white/10 text-white'
+                'shrink-0 text-[13px] font-semibold tabular-nums',
+                allSigned ? 'text-elec-yellow' : 'text-white'
               )}
             >
               {signedCount} of {totalAttendees} signed
             </span>
           </div>
 
-          {/* Progress bar */}
           {totalAttendees > 0 && (
-            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div className="mb-1 h-0.5 overflow-hidden bg-white/10">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progressPercent}%` }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className={cn(
-                  'h-full rounded-full',
-                  signedCount === totalAttendees ? 'bg-emerald-400' : 'bg-amber-400'
-                )}
+                transition={{ delay: 0.15, duration: 0.4 }}
+                className="h-full bg-elec-yellow"
               />
             </div>
           )}
 
-          {/* Attendee rows */}
           {attendees.length > 0 ? (
-            <div className="space-y-1.5">
+            <div className="divide-y divide-white/[0.08] border-b border-white/[0.08]">
               {attendees.map((attendee: any, idx: number) => {
-                const isSigned = !!attendee.signature || !!attendee.signature_url || !!attendee.acknowledged;
+                const isSigned =
+                  !!attendee.signature || !!attendee.signature_url || !!attendee.acknowledged;
                 const canSign = !isSigned && !!attendee._dbId;
                 return (
                   <button
@@ -367,112 +333,88 @@ export function BriefingDetailView({
                       }
                     }}
                     className={cn(
-                      'w-full flex items-center gap-3 p-2.5 rounded-xl border text-left touch-manipulation transition-all',
-                      isSigned
-                        ? 'bg-emerald-500/5 border-emerald-500/10'
-                        : canSign
-                          ? 'bg-white/[0.02] border-white/[0.06] active:bg-white/[0.06]'
-                          : 'bg-white/[0.02] border-white/[0.06]'
+                      'flex w-full touch-manipulation items-center gap-3 py-3 text-left transition-colors',
+                      canSign && 'active:bg-white/[0.04]'
                     )}
                   >
-                    <div
-                      className={cn(
-                        'flex items-center justify-center w-6 h-6 rounded-md shrink-0 text-xs font-bold',
-                        isSigned
-                          ? 'bg-emerald-500/15 text-emerald-400'
-                          : 'bg-white/[0.06] text-white'
-                      )}
-                    >
-                      {isSigned ? <CheckCircle className="h-3.5 w-3.5" /> : idx + 1}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p
-                        className={cn(
-                          'text-sm font-medium truncate',
-                          isSigned ? 'text-emerald-300/80' : 'text-white'
-                        )}
-                      >
-                        {attendee.name}
-                      </p>
+                    <span className="w-5 shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                      {idx + 1}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[15px] font-medium text-white">{attendee.name}</p>
                       {attendee.role && (
-                        <p className="text-xs text-white truncate">{attendee.role}</p>
+                        <p className="truncate text-[12px] text-white">{attendee.role}</p>
                       )}
                     </div>
                     <span
                       className={cn(
-                        'text-xs shrink-0',
-                        isSigned ? 'text-emerald-400/50' : canSign ? 'text-elec-yellow' : 'text-white'
+                        'shrink-0 text-[13px] font-medium',
+                        canSign ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
-                      {isSigned ? 'Signed' : canSign ? 'Tap to Sign' : 'Pending'}
+                      {isSigned ? 'Signed' : canSign ? 'Tap to sign' : 'Pending'}
                     </span>
                   </button>
                 );
               })}
             </div>
           ) : (
-            <div className="text-center py-4">
-              <Users className="h-6 w-6 text-white mx-auto mb-2" />
-              <p className="text-xs text-white">No attendees added</p>
-            </div>
+            <p className="py-6 text-center text-[13px] text-white">
+              No one on the register. Nobody has been recorded as attending this briefing.
+            </p>
           )}
 
-          {/* Share for signing button */}
           {signedCount < totalAttendees && totalAttendees > 0 && (
             <Button
               type="button"
-              onClick={() => setShowShare(true)}
-              className="w-full h-11 bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 hover:bg-elec-yellow/20 touch-manipulation"
               variant="ghost"
+              onClick={() => setShowShare(true)}
+              className="mt-4 h-11 w-full touch-manipulation border border-elec-yellow/25 bg-elec-yellow/10 font-semibold text-elec-yellow hover:bg-elec-yellow/20"
             >
-              <Share2 className="h-4 w-4 mr-2" />
-              Share for Signing
+              Share for signing
             </Button>
           )}
-        </div>
+        </section>
       </div>
 
-      {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur border-t border-white/10 safe-area-pb">
-        <div className="flex gap-3">
+      {/* Sticky bottom bar — three equal actions, labelled. */}
+      <div className="safe-area-pb fixed bottom-0 left-0 right-0 border-t border-white/10 bg-elec-dark/95 p-4 backdrop-blur">
+        <div className="flex gap-2">
           <Button
             type="button"
             variant="outline"
             onClick={onEdit}
-            className="flex-1 h-14 border-white/20 text-white touch-manipulation"
+            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white"
           >
-            <Edit className="h-4 w-4 mr-2" />
             Edit
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => setShowShare(true)}
-            className="flex-1 h-14 border-white/20 text-white touch-manipulation"
+            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white"
           >
-            <Share2 className="h-4 w-4 mr-2" />
             Share
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => setShowPDF(!showPDF)}
-            className="flex-1 h-14 border-white/20 text-white touch-manipulation"
+            className="h-12 flex-1 touch-manipulation border-white/20 font-medium text-white"
           >
-            <Download className="h-4 w-4 mr-2" />
             PDF
           </Button>
         </div>
       </div>
 
-      {/* PDF Actions (inline below bottom bar) */}
+      {/* PDF Actions (inline above bottom bar) */}
       <AnimatePresence>
         {showPDF && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-20 left-4 right-4 z-40 p-4 rounded-2xl bg-[#1e1e1e] border border-white/10 shadow-xl"
+            className="fixed bottom-20 left-4 right-4 z-40 rounded-2xl border border-white/10 bg-[#1e1e1e] p-4 shadow-xl"
           >
             <BriefingPDFActions briefing={briefing} companyProfile={companyProfile} />
           </motion.div>
@@ -484,27 +426,32 @@ export function BriefingDetailView({
         {showShare && (
           <BriefingShareSheet
             briefingId={briefing.id}
-            briefingName={briefing.briefing_name || briefing.job_name}
+            briefingName={title}
             onClose={() => setShowShare(false)}
           />
         )}
       </AnimatePresence>
 
       {/* Sign-off Sheet */}
-      <Sheet open={!!signingAttendee} onOpenChange={(open) => { if (!open) setSigningAttendee(null); }}>
-        <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <div className="px-4 py-3 border-b border-white/10">
-              <h2 className="text-base font-bold text-white">
-                Sign Off: {signingAttendee?.name}
+      <Sheet
+        open={!!signingAttendee}
+        onOpenChange={(open) => {
+          if (!open) setSigningAttendee(null);
+        }}
+      >
+        <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
+          <div className="flex h-full flex-col bg-background">
+            <div className="border-b border-white/10 px-4 py-3">
+              <h2 className="text-[17px] font-semibold tracking-tight text-white">
+                Sign off: {signingAttendee?.name}
               </h2>
-              <p className="text-sm text-white mt-0.5">
-                Capture signature to confirm attendance
+              <p className="mt-0.5 text-[13px] text-white">
+                Capture a signature to confirm attendance
               </p>
             </div>
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
               <SignaturePad
-                label="Attendee Signature"
+                label="Attendee signature"
                 name={signOffName}
                 date={signOffDate}
                 signatureDataUrl={signOffDataUrl}
@@ -513,7 +460,7 @@ export function BriefingDetailView({
                 onDateChange={setSignOffDate}
               />
             </div>
-            <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <div className="border-t border-white/10 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
               <Button
                 onClick={async () => {
                   if (!signingAttendee?._dbId || !signOffDataUrl) return;
@@ -526,9 +473,9 @@ export function BriefingDetailView({
                   setSignOffDataUrl('');
                 }}
                 disabled={!signOffDataUrl || signOffMutation.isPending}
-                className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow font-bold text-black active:scale-[0.98] disabled:opacity-50"
               >
-                {signOffMutation.isPending ? 'Saving...' : 'Confirm Sign-Off'}
+                {signOffMutation.isPending ? 'Saving…' : 'Confirm sign-off'}
               </Button>
             </div>
           </div>
@@ -542,13 +489,14 @@ export function BriefingDetailView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md"
             onClick={() => setPreviewPhoto(null)}
           >
             <button
               type="button"
               onClick={() => setPreviewPhoto(null)}
-              className="absolute top-4 right-4 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-white/10 text-white hover:bg-white/20 touch-manipulation"
+              aria-label="Close photo"
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 touch-manipulation items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
             >
               <X className="h-5 w-5" />
             </button>
@@ -557,8 +505,8 @@ export function BriefingDetailView({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               src={photoSrcs[previewPhoto] ?? previewPhoto}
-              alt="Preview"
-              className="max-w-full max-h-[85vh] object-contain rounded-xl"
+              alt="Site photo"
+              className="max-h-[85vh] max-w-full rounded-xl object-contain"
               onClick={(e) => e.stopPropagation()}
             />
           </motion.div>

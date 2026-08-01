@@ -59,30 +59,28 @@ const itemVariants = {
   },
 };
 
-function calculateSafetyScore(stats: DashboardStats): {
+/**
+ * ELE-555 — this used to compute a score from invented weightings (−10 per
+ * overdue equipment capped at 30, −3 per due, +5 for active RAMS, +3 for
+ * photos…). None of those numbers came from anywhere, and it started at 100, so
+ * an account with nothing set up read "Excellent".
+ *
+ * The app has one sourced safety score: the `weekly-safety-summary` edge
+ * function, built on HSE HSG65 leading/lagging indicators, Heinrich near-miss
+ * culture, British Safety Council thresholds and the Hudson ladder, with a hard
+ * cap for unreported RIDDOR. It is reached via `useWeeklySafetySummary` and
+ * passed in here as `overrideScore`.
+ *
+ * With no `overrideScore` this returns null: unknown, not excellent. This
+ * component is currently unreferenced — if it is revived, wire the real score.
+ */
+function bandForScore(score: number): {
   score: number;
   label: string;
   colour: string;
   strokeColour: string;
   glowColour: string;
 } {
-  let score = 100;
-
-  if (stats.equipmentOverdue > 0) score -= Math.min(stats.equipmentOverdue * 10, 30);
-  if (stats.equipmentDue > 0) score -= Math.min(stats.equipmentDue * 3, 10);
-  if (stats.completedBriefingsThisMonth === 0 && stats.upcomingBriefings === 0) score -= 10;
-  if (stats.daysSinceLastNearMiss !== null && stats.daysSinceLastNearMiss < 7) score -= 10;
-  if (stats.coshhOverdueReviews > 0) score -= Math.min(stats.coshhOverdueReviews * 5, 15);
-  if (stats.accidentCount30Days > 0) score -= Math.min(stats.accidentCount30Days * 8, 20);
-  if (stats.recentInspectionsFailed > 0) score -= Math.min(stats.recentInspectionsFailed * 5, 15);
-
-  if (stats.activeRams > 0) score = Math.min(score + 5, 100);
-  if (stats.totalPhotosThisWeek > 0) score = Math.min(score + 3, 100);
-  if (stats.recentInspectionsPassed > 0) score = Math.min(score + 3, 100);
-  if (stats.activePermits > 0) score = Math.min(score + 2, 100);
-
-  score = Math.max(0, Math.min(100, score));
-
   if (score >= 90) {
     return {
       score,
@@ -178,24 +176,13 @@ export function SafetyDashboard({
   onCardTap,
   overrideScore,
 }: SafetyDashboardProps) {
-  const safetyInfo = useMemo(() => {
-    const info = calculateSafetyScore(stats);
-    if (overrideScore !== undefined) {
-      const score = Math.max(0, Math.min(100, overrideScore));
-      const label =
-        score >= 90 ? 'Excellent' : score >= 70 ? 'Good' : score >= 50 ? 'Needs Attention' : 'Action Required';
-      const colours =
-        score >= 90
-          ? { colour: 'text-green-400', strokeColour: '#4ade80', glowColour: 'rgba(74,222,128,0.15)' }
-          : score >= 70
-            ? { colour: 'text-emerald-400', strokeColour: '#34d399', glowColour: 'rgba(52,211,153,0.15)' }
-            : score >= 50
-              ? { colour: 'text-amber-400', strokeColour: '#fbbf24', glowColour: 'rgba(251,191,36,0.15)' }
-              : { colour: 'text-red-400', strokeColour: '#f87171', glowColour: 'rgba(248,113,113,0.15)' };
-      return { score, label, ...colours };
-    }
-    return info;
-  }, [stats, overrideScore]);
+  // ELE-555 — the score comes from `overrideScore` (the sourced
+  // weekly-safety-summary figure) or it is unknown. No score is invented here.
+  const safetyInfo = useMemo(
+    () =>
+      overrideScore !== undefined ? bandForScore(Math.max(0, Math.min(100, overrideScore))) : null,
+    [overrideScore]
+  );
 
   if (isLoading) {
     return (
@@ -350,26 +337,35 @@ export function SafetyDashboard({
         {/* Decorative glow */}
         <div
           className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl opacity-30 pointer-events-none"
-          style={{ background: safetyInfo.glowColour }}
+          style={{ background: safetyInfo?.glowColour ?? 'transparent' }}
         />
 
         <div className="relative p-4">
           <div className="flex items-center gap-4">
-            <ScoreRing
-              score={safetyInfo.score}
-              strokeColour={safetyInfo.strokeColour}
-              glowColour={safetyInfo.glowColour}
-            />
+            {safetyInfo ? (
+              <ScoreRing
+                score={safetyInfo.score}
+                strokeColour={safetyInfo.strokeColour}
+                glowColour={safetyInfo.glowColour}
+              />
+            ) : (
+              <div
+                className="h-[76px] w-[76px] shrink-0 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center text-white text-lg"
+                aria-label="Safety score not available"
+              >
+                —
+              </div>
+            )}
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1.5">
-                <Activity className={`h-4 w-4 ${safetyInfo.colour}`} />
+                <Activity className={`h-4 w-4 ${safetyInfo?.colour ?? 'text-white'}`} />
                 <h3 className="text-sm font-bold text-white">Safety Score</h3>
               </div>
               <Badge
-                className={`${safetyInfo.colour} bg-white/[0.06] border-none text-xs font-bold`}
+                className={`${safetyInfo?.colour ?? 'text-white'} bg-white/[0.06] border-none text-xs font-bold`}
               >
-                {safetyInfo.label}
+                {safetyInfo?.label ?? 'Not enough data'}
               </Badge>
 
               {/* Status pills */}
@@ -410,9 +406,7 @@ export function SafetyDashboard({
               {stats.riddorPendingCount} RIDDOR Report{stats.riddorPendingCount > 1 ? 's' : ''}{' '}
               Pending
             </p>
-            <p className="text-[10px] text-white mt-0.5">
-              Tap to review and report to HSE
-            </p>
+            <p className="text-[10px] text-white mt-0.5">Tap to review and report to HSE</p>
           </div>
           <ChevronRight className="h-4 w-4 text-red-400 flex-shrink-0" />
         </motion.button>
@@ -441,7 +435,6 @@ export function SafetyDashboard({
           );
         })}
       </motion.div>
-
     </motion.div>
   );
 }

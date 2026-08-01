@@ -14,6 +14,19 @@ const RESISTANCE_BY_CSA: Record<string, number> = {
   '10': 1.83,
   '16': 1.15,
   '25': 0.727,
+  // Extended to the limit of the source. GN3 Table B1 tabulates (R1+R2) per
+  // metre "up to and including 50 mm² cross-sectional area… Values for
+  // conductors larger than 50 mm² are not covered by this table" — so the table
+  // stops here deliberately rather than being padded from elsewhere.
+  //
+  // Corroborated against the RAG: the facet for 50 mm² gives 0.774 mΩ/m as the
+  // (R1+R2) PAIR value, and 0.387 × 2 = 0.774 — these are single-conductor
+  // figures, consistent with that.
+  //
+  // Above 50 mm², Zs is reported as not calculated rather than guessed. That is
+  // the honest outcome: the cited table does not go there.
+  '35': 0.524,
+  '50': 0.387,
 };
 
 // Resistance (mΩ/m at 20°C) for a stored size string, or null if unknown.

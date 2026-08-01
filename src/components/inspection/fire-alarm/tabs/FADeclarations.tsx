@@ -9,51 +9,39 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { FileSearch } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { PreviousCertPreFillSheet } from '../PreviousCertPreFillSheet';
-import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import { useParams } from 'react-router-dom';
-import { Trash2 as TrashPhoto } from 'lucide-react';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
 const checkboxCn =
   'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
-const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const voltButtonCn =
+  'w-full h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:bg-elec-yellow disabled:text-black disabled:opacity-100';
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -61,12 +49,15 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 interface Props {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  /** Database report id once autosave has created the report — the route param
+   * stays 'new' after history.replaceState, so prefer this when provided. */
+  savedReportId?: string | null;
 }
 
-export default function FADeclarations({ formData, onUpdate }: Props) {
+export default function FADeclarations({ formData, onUpdate, savedReportId }: Props) {
   const { id } = useParams<{ id: string }>();
   const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
-    reportId: id || 'new',
+    reportId: savedReportId || id || 'new',
     reportType: 'fire-alarm',
     itemId: 'general-photos',
   });
@@ -193,57 +184,62 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
 
 
   return (
-    <div className="space-y-5">
-      {/* Third-Party Certification */}
-      <Section title="Third-Party Certification" accentColor="from-elec-yellow/40 to-amber-400/20">
-        <div className="space-y-3">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Third-party certification */}
+      <div className={cardCn}>
+        <SectionHeader title="Third-party certification" />
+        <div className="space-y-2">
           {[
             { field: 'bafeRegistered', label: 'BAFE SP203-1 registered' },
             { field: 'fiaRegistered', label: 'FIA member' },
             { field: 'nsiRegistered', label: 'NSI / SSAIB approved' },
           ].map(({ field, label }) => (
-            <div key={field} className="flex items-center gap-3">
+            <label
+              key={field}
+              className="flex min-h-11 items-center gap-3 cursor-pointer touch-manipulation"
+            >
               <Checkbox
                 checked={formData[field] || false}
                 onCheckedChange={(v) => onUpdate(field, v)}
                 className={checkboxCn}
               />
-              <Label className="text-sm text-white">{label}</Label>
-            </div>
+              <span className="text-sm text-white">{label}</span>
+            </label>
           ))}
-          <Field label="Registration Number">
-            <Input
-              value={formData.thirdPartyCertNumber || ''}
-              onChange={(e) => onUpdate('thirdPartyCertNumber', e.target.value)}
-              className={inputCn}
-            />
-          </Field>
         </div>
-      </Section>
+        <Field label="Registration number">
+          <Input
+            value={formData.thirdPartyCertNumber || ''}
+            onChange={(e) => onUpdate('thirdPartyCertNumber', e.target.value)}
+            className={inputCn}
+          />
+        </Field>
+      </div>
 
-      {/* Pre-fill from Previous */}
-      <Section title="Pre-fill" accentColor="from-elec-yellow/40 to-amber-400/20">
-        <Button
-          variant="outline"
+      {/* Pre-fill from previous */}
+      <div className={cardCn}>
+        <SectionHeader title="Pre-fill" />
+        <button
+          type="button"
           onClick={handlePreFillOpen}
           disabled={loadingPrevious}
-          className="w-full h-12 text-sm border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98] rounded-xl"
+          className={voltButtonCn}
         >
-          <FileSearch className="h-4 w-4 mr-2" />
-          {loadingPrevious ? 'Searching...' : 'Pre-fill from Previous Certificate'}
-        </Button>
+          {loadingPrevious ? 'Searching...' : 'Pre-fill from previous certificate'}
+        </button>
         <PreviousCertPreFillSheet
           open={preFillOpen}
           onOpenChange={setPreFillOpen}
           previousData={previousCertData}
           onConfirm={handlePreFillConfirm}
         />
-      </Section>
+      </div>
 
-      {/* Installer Declaration */}
-      <Section title="Installer Declaration" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3">
-          <p className="text-xs text-white leading-relaxed">
+      {/* Installer declaration */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Installer declaration" />
+        <div className="rounded-xl bg-white/[0.05] p-4">
+          <p className="text-[12px] leading-relaxed text-white/85">
             I hereby certify that the fire detection and fire alarm system installation described in
             this certificate has been carried out in accordance with BS 5839-1:2025 and the design
             specification referenced above, except for any variations stated. The installation is
@@ -251,16 +247,14 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
           </p>
         </div>
         {(formData.installerName || formData.installerCompany) && (
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+          <div className="rounded-xl bg-white/[0.05] p-3">
             <p className="text-sm font-semibold text-white">
               {formData.installerName || 'Unnamed'}
             </p>
             {formData.installerCompany && (
-              <p className="text-xs text-white mt-0.5">{formData.installerCompany}</p>
+              <p className="text-[12px] text-white/80 mt-0.5">{formData.installerCompany}</p>
             )}
-            <p className="text-[10px] text-white mt-1 uppercase tracking-wider">
-              From Tab 1 — Installer Details
-            </p>
+            <p className="text-[11px] text-white/80 mt-1">From tab 1 — Installer details</p>
           </div>
         )}
         <Field label="Qualifications">
@@ -272,12 +266,12 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
           />
         </Field>
         <SignatureInput
-          label="Installer Signature *"
+          label="Installer signature *"
           value={formData.installerSignature || ''}
           onChange={(sig) => onUpdate('installerSignature', sig || '')}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Signature Date">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Signature date">
             <Input
               type="date"
               value={formData.installerSignatureDate || ''}
@@ -285,7 +279,7 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Installation Completion Date">
+          <Field label="Installation completion date">
             <Input
               type="date"
               value={formData.commissioningDate || ''}
@@ -294,14 +288,12 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      {/* Responsible Person */}
-      <Section
-        title="Responsible Person Acknowledgement"
-        accentColor="from-blue-500/40 to-cyan-400/20"
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Responsible person */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Responsible person acknowledgement" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Name">
             <Input
               value={formData.responsiblePersonName || ''}
@@ -319,7 +311,7 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
           </Field>
         </div>
         <SignatureInput
-          label="Responsible Person Signature"
+          label="Responsible person signature"
           value={formData.responsiblePersonSignature || ''}
           onChange={(sig) => onUpdate('responsiblePersonSignature', sig || '')}
         />
@@ -331,117 +323,66 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
       {/* Photos */}
-      <Section title="Photos" accentColor="from-cyan-500/40 to-blue-400/20">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Photos" />
         <InspectionPhotoUpload onPhotoCapture={async (file) => { await uploadPhoto(file); }} isUploading={isUploading} />
         {uploadedPhotos.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {uploadedPhotos.map((p) => (
               <div key={p.id} className="relative rounded-xl overflow-hidden aspect-square">
                 <img src={p.url || p.thumbnailUrl} alt="" className="w-full h-full object-cover" />
-                <button type="button" onClick={() => deletePhoto(p.id)} className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90">
-                  <TrashPhoto className="h-3.5 w-3.5 text-white" />
+                <button
+                  type="button"
+                  onClick={() => deletePhoto(p.id)}
+                  className="absolute inset-x-1.5 bottom-1.5 rounded-lg bg-black/70 py-1.5 text-center text-[11px] font-medium text-red-400 touch-manipulation active:opacity-70"
+                >
+                  Remove
                 </button>
               </div>
             ))}
           </div>
         )}
-      </Section>
+      </div>
 
-      {/* Overall Result */}
-      <Section title="Overall Result" accentColor="from-green-500/40 to-emerald-400/20">
+      {/* Overall result */}
+      <div className={cardCn}>
+        <SectionHeader title="Overall result" />
         <div className="space-y-2">
           <button
             type="button"
             onClick={() => onUpdate('overallResult', 'satisfactory')}
             className={cn(
-              'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+              'w-full h-12 rounded-xl border px-4 text-left text-sm touch-manipulation active:scale-[0.98] transition-all',
               formData.overallResult === 'satisfactory'
-                ? 'bg-green-500/10 border-green-500/30'
-                : 'bg-white/[0.03] border-white/[0.06]'
+                ? 'bg-green-500 border-green-500 text-black font-semibold'
+                : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
             )}
           >
-            <div className="flex items-center gap-3">
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-                  formData.overallResult === 'satisfactory'
-                    ? 'bg-green-500 border-green-500'
-                    : 'border-white/30'
-                )}
-              >
-                {formData.overallResult === 'satisfactory' && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <p
-                className={cn(
-                  'text-sm font-semibold',
-                  formData.overallResult === 'satisfactory' ? 'text-green-400' : 'text-white'
-                )}
-              >
-                Satisfactory
-              </p>
-            </div>
+            Satisfactory
           </button>
           <button
             type="button"
             onClick={() => onUpdate('overallResult', 'unsatisfactory')}
             className={cn(
-              'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+              'w-full h-12 rounded-xl border px-4 text-left text-sm touch-manipulation active:scale-[0.98] transition-all',
               formData.overallResult === 'unsatisfactory'
-                ? 'bg-red-500/10 border-red-500/30'
-                : 'bg-white/[0.03] border-white/[0.06]'
+                ? 'bg-red-500 border-red-500 text-white font-semibold'
+                : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
             )}
           >
-            <div className="flex items-center gap-3">
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-                  formData.overallResult === 'unsatisfactory'
-                    ? 'bg-red-500 border-red-500'
-                    : 'border-white/30'
-                )}
-              >
-                {formData.overallResult === 'unsatisfactory' && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <p
-                className={cn(
-                  'text-sm font-semibold',
-                  formData.overallResult === 'unsatisfactory' ? 'text-red-400' : 'text-white'
-                )}
-              >
-                Unsatisfactory
-              </p>
-            </div>
+            Unsatisfactory
           </button>
         </div>
-      </Section>
+      </div>
 
-      {/* Next Service / Inspection */}
-      <Section title="Service Schedule" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Next Service Due">
+      {/* Next service / inspection */}
+      <div className={cardCn}>
+        <SectionHeader title="Service schedule" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Next service due">
             <Input
               type="date"
               value={formData.nextServiceDue || ''}
@@ -449,7 +390,7 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-          <Field label="Next Inspection Due">
+          <Field label="Next inspection due">
             <Input
               type="date"
               value={formData.nextInspectionDue || ''}
@@ -458,17 +399,18 @@ export default function FADeclarations({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
       {/* Notes */}
-      <Section title="Notes" accentColor="from-white/20 to-white/5">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Notes" />
         <Textarea
           value={formData.additionalNotes || ''}
           onChange={(e) => onUpdate('additionalNotes', e.target.value)}
           className={textareaCn}
           placeholder="Additional notes..."
         />
-      </Section>
+      </div>
     </div>
   );
 }

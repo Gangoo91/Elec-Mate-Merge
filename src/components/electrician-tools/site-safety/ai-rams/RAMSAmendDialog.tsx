@@ -120,7 +120,8 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
       duration: methodRow?.duration || undefined,
       teamSize: methodRow?.team_size || undefined,
       description: methodRow?.description || undefined,
-      overallRiskLevel: (methodRow?.overall_risk_level as MethodStatementData['overallRiskLevel']) || 'medium',
+      overallRiskLevel:
+        (methodRow?.overall_risk_level as MethodStatementData['overallRiskLevel']) || 'medium',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       steps: ((methodRow?.steps as any[]) || []) as MethodStatementData['steps'],
       toolsRequired: (methodRow?.tools_required as string[]) || [],

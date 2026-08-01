@@ -19,7 +19,7 @@ import { useFinanceAlerts } from '@/hooks/useFinanceAlerts';
 import { useTaskAlerts } from '@/hooks/useTaskAlerts';
 import { useSafetyEquipmentAlerts } from '@/hooks/useSafetyEquipmentAlerts';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ChevronDown } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
@@ -51,65 +51,64 @@ interface ComplianceStatusProps {
 function ComplianceStatus({ pending, overdue, submitted, nextDays, isLoading }: ComplianceStatusProps) {
   if (isLoading) {
     return (
-      <div className="rounded-2xl border border-white/[0.09] bg-white/[0.02] p-5">
-        <Skeleton className="h-3 w-24 mb-3" />
-        <Skeleton className="h-7 w-40 mb-2.5" />
-        <Skeleton className="h-4 w-56" />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-[84px] rounded-2xl bg-white/[0.05]" />
+        ))}
       </div>
     );
   }
 
-  const state =
-    overdue > 0
-      ? {
-          dot: 'bg-red-400',
-          border: 'border-red-400/25',
-          tint: 'bg-red-400/[0.05]',
-          word: 'Action needed',
-          wordColor: 'text-red-300',
-          headline: `${overdue} overdue`,
-          sub: 'Past the 30-day Building Regs deadline — submit to your scheme or Building Control now.',
-        }
-      : pending > 0
-        ? {
-            dot: 'bg-amber-400',
-            border: 'border-amber-400/25',
-            tint: 'bg-amber-400/[0.04]',
-            word: 'To submit',
-            wordColor: 'text-amber-300',
-            headline: `${pending} to notify`,
-            sub:
-              nextDays === null
-                ? 'Submit to your scheme or Building Control within 30 days of completion.'
-                : nextDays <= 0
-                  ? 'The next one is due today.'
-                  : `Next deadline in ${nextDays} day${nextDays === 1 ? '' : 's'}.`,
-          }
-        : {
-            dot: 'bg-emerald-400',
-            border: 'border-emerald-400/25',
-            tint: 'bg-emerald-400/[0.04]',
-            word: 'Up to date',
-            wordColor: 'text-emerald-300',
-            headline: 'All clear',
-            sub: 'No notifiable work waiting to be submitted.',
-          };
+  const stats = [
+    {
+      label: 'Overdue',
+      value: String(overdue),
+      valueCls: overdue > 0 ? 'text-red-400' : 'text-white',
+      border: overdue > 0 ? 'border-red-500/30' : 'border-white/[0.12]',
+      sub: overdue > 0 ? 'Submit now' : null,
+    },
+    {
+      label: 'To submit',
+      value: String(pending),
+      valueCls: 'text-white',
+      border: 'border-white/[0.12]',
+      sub: null,
+    },
+    {
+      label: 'Submitted',
+      value: String(submitted),
+      valueCls: 'text-white',
+      border: 'border-white/[0.12]',
+      sub: null,
+    },
+    {
+      label: 'Next deadline',
+      value: nextDays === null ? '—' : nextDays <= 0 ? 'Today' : `${nextDays}d`,
+      valueCls: nextDays !== null && nextDays <= 7 ? 'text-elec-yellow' : 'text-white',
+      border: 'border-white/[0.12]',
+      sub: null,
+    },
+  ];
 
   return (
-    <div className={cn('rounded-2xl border p-5', state.border, state.tint)}>
-      <div className="flex items-center gap-2">
-        <span className={cn('w-2 h-2 rounded-full shrink-0', state.dot)} aria-hidden />
-        <span className={cn('text-[12px] font-semibold tracking-tight', state.wordColor)}>{state.word}</span>
-        {submitted > 0 && (
-          <span className="ml-auto text-[11.5px] tabular-nums text-white/60">
-            {submitted} submitted
-          </span>
-        )}
-      </div>
-      <p className="mt-2.5 text-[23px] sm:text-[25px] font-semibold tracking-tight leading-none text-white">
-        {state.headline}
-      </p>
-      <p className="mt-2.5 text-[13px] leading-relaxed text-white/80">{state.sub}</p>
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {stats.map((s) => (
+        <div
+          key={s.label}
+          className={cn(
+            'rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4',
+            s.border
+          )}
+        >
+          <div className={cn('text-2xl font-bold tabular-nums tracking-tight', s.valueCls)}>
+            {s.value}
+          </div>
+          <div className="mt-0.5 flex items-baseline gap-1.5 text-[12px] text-white/55">
+            {s.label}
+            {s.sub && <span className="font-semibold text-red-400">· {s.sub}</span>}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -235,7 +234,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         {/* Compliance status — the one thing that matters, in plain English */}
         <motion.div variants={iv}>
           <ComplianceStatus
-            pending={pendingCount}
+            pending={Math.max(0, pendingCount - overdueCount)}
             overdue={overdueCount}
             submitted={submittedCount}
             nextDays={nextDeadlineDays}
@@ -277,9 +276,9 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
                     <p className="text-[14px] font-semibold tracking-tight text-white">Building Control guide</p>
                     <p className="text-[12px] text-white/75">What to submit, and how</p>
                   </div>
-                  <ChevronDown
-                    className={cn('h-5 w-5 text-white/60 transition-transform', isFormGuideOpen && 'rotate-180')}
-                  />
+                  <span className="text-[12.5px] font-semibold text-elec-yellow">
+                    {isFormGuideOpen ? 'Hide' : 'Show'}
+                  </span>
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-3">
@@ -398,9 +397,9 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
                 <p className="text-[15px] font-semibold tracking-tight text-white">Building Control Guide</p>
                 <p className="text-[12px] text-white/80">What to submit</p>
               </div>
-              <ChevronDown
-                className={cn('h-5 w-5 text-white/60 transition-transform', isFormGuideOpen && 'rotate-180')}
-              />
+              <span className="text-[12.5px] font-semibold text-elec-yellow">
+                {isFormGuideOpen ? 'Hide' : 'Show'}
+              </span>
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3">

@@ -812,7 +812,6 @@ const RAMSGenerator: React.FC = () => {
             </div>
           </AccordionContent>
         </AccordionItem>
-
       </Accordion>
 
       {/* Action Bar */}

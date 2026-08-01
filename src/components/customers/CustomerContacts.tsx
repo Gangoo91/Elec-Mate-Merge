@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useCustomerContacts, ContactInput } from '@/hooks/useCustomerContacts';
-import { Eyebrow, Pill } from '@/components/college/primitives';
-import { Plus, Trash2 } from 'lucide-react';
+import { Pill } from '@/components/college/primitives';
 
 interface Props {
   customerId: string;
@@ -40,19 +39,18 @@ export const CustomerContacts: React.FC<Props> = ({ customerId }) => {
     <div className="space-y-3">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <Eyebrow>CONTACTS</Eyebrow>
-          <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Contacts</h3>
+          <p className="mt-0.5 text-[12.5px] text-white/55">
             {contacts.length === 0
               ? 'No additional contacts'
               : `${contacts.length} contact${contacts.length === 1 ? '' : 's'}`}
-          </h3>
+          </p>
         </div>
         {!addOpen && (
           <button
             onClick={() => setAddOpen(true)}
             className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.06] hover:text-elec-yellow touch-manipulation"
           >
-            <Plus className="h-3.5 w-3.5" />
             Add contact
           </button>
         )}
@@ -90,7 +88,7 @@ export const CustomerContacts: React.FC<Props> = ({ customerId }) => {
             />
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45">
+            <span className="text-[15px] font-semibold tracking-tight text-white">
               Quick role
             </span>
             {ROLE_SUGGESTIONS.map((r) => (
@@ -166,10 +164,10 @@ export const CustomerContacts: React.FC<Props> = ({ customerId }) => {
               </div>
               <button
                 onClick={() => deleteContact(c.id)}
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white/55 transition-colors hover:bg-red-500/15 hover:text-red-400 touch-manipulation"
+                className="flex h-8 shrink-0 items-center px-2 text-[12px] font-medium text-white/55 transition-colors hover:text-red-400 touch-manipulation"
                 aria-label={`Delete ${c.name}`}
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
           ))}

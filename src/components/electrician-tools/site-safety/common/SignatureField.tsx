@@ -113,7 +113,7 @@ export function SignatureField({ label, value, onChange, className }: SignatureF
       <label className="text-[11.5px] text-white block">{label}</label>
       <div
         ref={containerRef}
-        className="relative border border-white/[0.12] rounded-xl overflow-hidden bg-[hsl(0_0%_9%)]"
+        className="relative border border-white/[0.12] rounded-xl overflow-hidden bg-white/[0.04]"
       >
         <canvas
           ref={canvasRef}
@@ -128,7 +128,7 @@ export function SignatureField({ label, value, onChange, className }: SignatureF
         />
         {!hasContent && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="text-white/40 text-[13px]">Sign here</span>
+            <span className="text-white text-[13px]">Sign here</span>
           </div>
         )}
       </div>
@@ -136,7 +136,7 @@ export function SignatureField({ label, value, onChange, className }: SignatureF
         <button
           type="button"
           onClick={clear}
-          className="text-[11.5px] font-medium text-white/60 hover:text-white transition-colors h-9 touch-manipulation"
+          className="text-[11.5px] font-medium text-white hover:text-white transition-colors h-9 touch-manipulation"
         >
           Clear signature
         </button>

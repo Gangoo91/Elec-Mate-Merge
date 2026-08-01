@@ -9,9 +9,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
@@ -44,11 +41,13 @@ export const SOLAR_PV_CLIENT_FIELDS: ClientFieldMapping = {
 };
 
 interface CertificateClientSectionProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   /** Map Customer fields to cert-specific formData fields */
   fieldMapping?: ClientFieldMapping;
-  /** Accent colour class for the active toggle (default: 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow') */
+  /** Deprecated — the toggle always uses the solid volt selected state now. */
   accentColor?: string;
 }
 
@@ -93,30 +92,28 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
   return (
     <div className="space-y-3">
       {/* Toggle: New Client / Existing Client */}
-      <div className="flex gap-2 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+      <div className="flex gap-1 rounded-xl border border-white/[0.1] bg-white/[0.04] p-1">
         <button
           type="button"
           onClick={handleSwitchToNew}
           className={cn(
-            'flex-1 flex items-center justify-center h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
-            mode === 'new'
-              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-              : 'text-white'
+            'flex h-11 flex-1 items-center justify-center rounded-lg text-sm transition-all touch-manipulation active:scale-[0.98]',
+            mode === 'new' ? 'bg-elec-yellow font-semibold text-black' : 'font-medium text-white'
           )}
         >
-          New Client
+          New client
         </button>
         <button
           type="button"
           onClick={handleSwitchToExisting}
           className={cn(
-            'flex-1 flex items-center justify-center h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
+            'flex h-11 flex-1 items-center justify-center rounded-lg text-sm transition-all touch-manipulation active:scale-[0.98]',
             mode === 'existing'
-              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-              : 'text-white'
+              ? 'bg-elec-yellow font-semibold text-black'
+              : 'font-medium text-white'
           )}
         >
-          Existing Client
+          Existing client
         </button>
       </div>
 
@@ -130,17 +127,15 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
 
       {/* Show linked customer badge when in "new" mode but we have a linked ID (from nav state) */}
       {mode === 'new' && formData.selectedCustomerId && (
-        <div className="flex items-center gap-2 p-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm">
-          <span className="text-white flex-1 text-xs">Linked to CRM customer</span>
-          <Button
+        <div className="flex items-center gap-2 rounded-lg border border-white/[0.1] bg-white/[0.04] px-3 py-2 text-sm">
+          <span className="flex-1 text-[12.5px] text-white">Linked to CRM customer</span>
+          <button
             type="button"
-            variant="ghost"
-            size="icon"
             onClick={() => onUpdate('selectedCustomerId', '')}
-            className="h-7 w-7 text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10"
+            className="flex h-8 items-center px-2 text-[12.5px] font-medium text-white/85 transition-colors hover:text-white touch-manipulation"
           >
-            <X className="h-3.5 w-3.5" />
-          </Button>
+            Unlink
+          </button>
         </div>
       )}
     </div>

@@ -467,6 +467,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       notes: na(result.notes),
       source_circuit_id: na(result.sourceCircuitId),
       auto_filled: result.autoFilled || false,
+      // Board-scan metadata (previously dropped): way number, spare flag and
+      // per-row phase assignment (was only recoverable from designation text)
+      way_number: result.wayNumber != null ? String(result.wayNumber) : '',
+      is_spare: result.isSpare === true,
+      phase_assignment: result.phaseAssignment || '',
       phase_type: na(result.phaseType),
       phase_rotation: na(result.phaseRotation),
       phase_balance_l1: na(result.phaseBalanceL1),
@@ -592,6 +597,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       notes: na(result.notes),
       source_circuit_id: na(result.sourceCircuitId),
       auto_filled: result.autoFilled || false,
+      // Board-scan metadata (previously dropped): way number, spare flag and
+      // per-row phase assignment (was only recoverable from designation text)
+      way_number: result.wayNumber != null ? String(result.wayNumber) : '',
+      is_spare: result.isSpare === true,
+      phase_assignment: result.phaseAssignment || '',
       phase_type: na(result.phaseType),
       phase_rotation: na(result.phaseRotation),
       phase_balance_l1: na(result.phaseBalanceL1),
@@ -616,7 +626,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           {
             db_reference: formData['cuReference'] || 'Main DB',
             db_location: formData['cuLocation'] || '',
-            db_manufacturer: formData['cuMake'] || '',
+            db_manufacturer:
+              formData['cuMake'] ||
+              (formData['boardBrand'] !== 'Unknown' && formData['boardBrand']) ||
+              '',
             db_type: formData['cuType'] || '',
             db_ways: '',
             db_zdb: formData['zdb'] || '',
@@ -630,7 +643,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
             polarity_confirmed: formData['confirmedCorrectPolarity'] ?? false,
             phase_sequence_confirmed: formData['confirmedPhaseSequence'] ?? false,
             ring_final_circuit_confirmed: formData['ringFinalCircuitConfirmed'] ?? false,
-            spd_operational: formData['spdOperationalStatus'] ?? false,
+            spd_operational: formData['spdOperationalStatus'] ?? formData['spdStatus'] === 'OK',
             spd_na: formData['spdNA'] ?? false,
             spd_type: formData['spdType'] || '',
             spd_t1: formData['spdT1'] ?? false,
@@ -683,7 +696,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         // Board metadata
         db_reference: board.reference || board.name || 'Main DB',
         db_location: board.location || '',
-        db_manufacturer: board.make || '',
+        // Main board: fall back to the scanner's flat boardBrand key
+        db_manufacturer: board.make || (isMainBoard ? scanVal('boardBrand') : ''),
         db_type: board.type || '',
         db_ways: boardWays?.toString() || '',
         db_zdb: fb(board.zdb, 'zdb'),
@@ -708,7 +722,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           (isMainBoard ? !!formData['ringFinalCircuitConfirmed'] : false),
         // SPD details per board — fall back to top-level for main board
         spd_operational:
-          board.spdOperationalStatus ?? (isMainBoard ? !!formData['spdOperationalStatus'] : false),
+          board.spdOperationalStatus ??
+          (isMainBoard
+            ? !!formData['spdOperationalStatus'] || formData['spdStatus'] === 'OK'
+            : false),
         spd_na: board.spdNA ?? (isMainBoard ? !!formData['spdNA'] : false),
         spd_type: fb(board.spdType, 'spdType'),
         spd_t1: board.spdT1 ?? (isMainBoard ? !!formData['spdT1'] : false),
@@ -904,6 +921,27 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     const raw = formData[key];
     if (isMarker(raw)) return String(raw);
     return getBool(key, defaultValue);
+  };
+
+  /**
+   * For the 3-state Yes / No / N/A compliance selectors (EICRSummary writes
+   * 'yes' | 'no' | 'na'). A user-selected N/A must NOT collapse to false —
+   * that printed identically to "No" on the certificate. Emits the literal
+   * 'na' so the template can branch on it (same idea as the marker pattern).
+   */
+  const getTriState = (key: string): boolean | 'na' => {
+    if (formData[key] === 'na') return 'na';
+    return getBool(key);
+  };
+
+  /**
+   * Board-scanner values land on flat keys (boardBrand / boardModel /
+   * spdStatus — see EICRForm handleBoardScanComplete). The scanner uses the
+   * literal 'Unknown' as its null — treat that as empty so it never prints.
+   */
+  const scanVal = (key: string): string => {
+    const v = get(key);
+    return v === 'Unknown' ? '' : v;
   };
 
   // NESTED, GROUPED structure for improved organization
@@ -1155,7 +1193,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         board_size: boardSize,
         board_type: mainBoard?.type || get('cuType'),
         board_location: mainBoard?.location || get('cuLocation'),
-        board_manufacturer: mainBoard?.make || get('cuManufacturer'),
+        // Board scanner writes flat boardBrand/boardModel (EICRForm) — read
+        // them as last-resort fallbacks so scanned details reach the PDF.
+        board_manufacturer: mainBoard?.make || get('cuManufacturer') || scanVal('boardBrand'),
+        board_model: mainBoard?.model || get('cuModel') || scanVal('boardModel'),
         board_ways: mainBoardWays?.toString() || get('cuNumberOfWays') || '',
       };
     })(),
@@ -1307,7 +1348,12 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           mainBoard?.confirmedCorrectPolarity ?? getBool('confirmedCorrectPolarity'),
         confirmed_phase_sequence:
           mainBoard?.confirmedPhaseSequence ?? getBool('confirmedPhaseSequence'),
-        spd_operational_status: mainBoard?.spdOperationalStatus ?? getBool('spdOperationalStatus'),
+        // Scanner writes flat spdStatus ('OK'/'Replace'/'Check') — 'OK' means
+        // the SPD indicator showed operational, so use it as a fallback.
+        spd_operational_status:
+          mainBoard?.spdOperationalStatus ??
+          (getBool('spdOperationalStatus') || formData['spdStatus'] === 'OK'),
+        spd_status: scanVal('spdStatus'),
         spd_na: mainBoard?.spdNA ?? getBool('spdNA'),
         spd_type: mainBoard?.spdType || get('spdType') || '',
         spd_t1: mainBoard?.spdT1 ?? getBool('spdT1'),
@@ -1379,8 +1425,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         address: get('reportAuthorisedByAddress'),
         membership_no: get('reportAuthorisedByMembershipNo'),
       },
-      bs7671_compliance: getBool('bs7671Compliance'),
-      building_regs_compliance: getBool('buildingRegsCompliance'),
+      // 3-state — 'na' passes through so N/A doesn't print as "No"
+      bs7671_compliance: getTriState('bs7671Compliance'),
+      building_regs_compliance: getTriState('buildingRegsCompliance'),
       competent_person_scheme: getBool('competentPersonScheme'),
       overall_assessment: get('overallAssessment'),
       satisfactory_for_continued_use: get('satisfactoryForContinuedUse'),
@@ -1513,7 +1560,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
 
     // Distribution Board (flat)
     db_location: formData.distributionBoards?.[0]?.location || get('cuLocation'),
-    db_manufacturer: formData.distributionBoards?.[0]?.make || get('cuManufacturer'),
+    db_manufacturer:
+      formData.distributionBoards?.[0]?.make || get('cuManufacturer') || scanVal('boardBrand'),
+    db_model: formData.distributionBoards?.[0]?.model || get('cuModel') || scanVal('boardModel'),
     db_type: formData.distributionBoards?.[0]?.type || get('cuType'),
     db_ways: getBoardWays(formData.distributionBoards?.[0])?.toString() || '',
     db_reference:
@@ -1689,11 +1738,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     other_sources_of_supply_present: getBool('otherSourcesOfSupplyPresent'),
     dc_conductor_config: get('dcConductorConfig'),
 
-    // Section J - Particulars
-    means_of_earthing_distributor: getBool('meansOfEarthingDistributor'),
-    means_of_earthing_electrode: getBool('meansOfEarthingElectrode'),
-    earthing_conductor_continuity_verified: getBool('earthingConductorContinuityVerified'),
-    bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
+    // Section J - Particulars — keep marker passthrough (LIM/N/V/N/A) in step
+    // with the nested earthing_bonding copies, so a limitation marker prints
+    // whichever copy the template reads (was getBool, which flattened markers
+    // to false on the flat copies only).
+    means_of_earthing_distributor: getBoolOrMarker('meansOfEarthingDistributor'),
+    means_of_earthing_electrode: getBoolOrMarker('meansOfEarthingElectrode'),
+    earthing_conductor_continuity_verified: getBoolOrMarker('earthingConductorContinuityVerified'),
+    bonding_conductor_continuity_verified: getBoolOrMarker('bondingConductorContinuityVerified'),
 
     // RCD details (flat)
     rcd_time_delay: normaliseRcdTimeDelay(get('rcdTimeDelay')),
@@ -1730,16 +1782,23 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     continuation_sheets_count: (() => {
       const explicit = parseInt(get('continuationSheetsCount'), 10);
       if (!isNaN(explicit) && explicit >= 0) return explicit;
-      // Auto-derive: 1 sheet per non-empty observations array overflow + extent overflow
-      const obs = formData['observations'] || formData['defectObservations'] || [];
-      return Array.isArray(obs) && obs.length > 4 ? Math.ceil(obs.length / 4) - 1 : 0;
+      // Auto-derive: 1 sheet per observations array overflow. The form writes
+      // defectObservations; 'observations' is a provider-seeded legacy [] that
+      // is truthy but always empty, so check lengths — never bare `||`.
+      const obs = [formData['defectObservations'], formData['observations']].find(
+        (a) => Array.isArray(a) && a.length > 0
+      );
+      return obs && obs.length > 4 ? Math.ceil(obs.length / 4) - 1 : 0;
     })(),
 
     // Conditional rendering flags for PDF template (hide blank sections)
-    has_observations: (() => {
-      const obs = formData['observations'] || formData['defects'] || [];
-      return Array.isArray(obs) && obs.length > 0;
-    })(),
+    // NB: defectObservations is what the inspection checklist actually writes;
+    // 'observations' ([] seeded by the provider) and 'defects' are legacy.
+    has_observations: [
+      formData['defectObservations'],
+      formData['observations'],
+      formData['defects'],
+    ].some((a) => Array.isArray(a) && a.length > 0),
     has_departures: !!(get('designerDepartures') || '').trim(),
     has_permitted_exceptions: !!(get('permittedExceptions') || '').trim(),
     has_earth_electrode: !!(
@@ -1751,7 +1810,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const boards = formData['distributionBoards'] || [];
       return Array.isArray(boards) && boards.length > 1;
     })(),
-    has_limitations: !!(get('limitations') || '').trim(),
+    // The form writes limitationsOfInspection + operationalLimitations
+    // (InspectionDetailsSection); bare 'limitations' is legacy only.
+    has_limitations: [
+      get('limitationsOfInspection'),
+      get('operationalLimitations'),
+      get('limitations'),
+    ].some((v) => !!v.trim()),
   };
 
   if (qsReview) {

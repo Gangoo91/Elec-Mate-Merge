@@ -69,10 +69,10 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
         onClick={handleLoadDetails}
         disabled={loading || isLoading}
         className={cn(
-          'h-9 w-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-[0.98]',
+          'h-11 w-11 rounded-xl flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50',
           justLoaded
-            ? 'bg-emerald-500/15 border border-emerald-500/25 text-emerald-400'
-            : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]',
+            ? 'bg-emerald-500 border border-emerald-500 text-white'
+            : 'bg-elec-yellow border border-elec-yellow text-black',
           className
         )}
         title="Load saved details"
@@ -89,10 +89,10 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
         onClick={handleLoadDetails}
         disabled={loading || isLoading}
         className={cn(
-          'h-9 px-3 rounded-lg text-xs font-medium touch-manipulation active:scale-[0.98] transition-all',
+          'h-11 px-4 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all inline-flex items-center justify-center disabled:opacity-50',
           justLoaded
-            ? 'bg-emerald-500/15 border border-emerald-500/25 text-emerald-400'
-            : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]',
+            ? 'bg-emerald-500 border border-emerald-500 text-white'
+            : 'bg-elec-yellow border border-elec-yellow text-black',
           className
         )}
       >
@@ -108,10 +108,10 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
       onClick={handleLoadDetails}
       disabled={loading || isLoading}
       className={cn(
-        'w-full h-11 rounded-xl text-sm font-medium touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2',
+        'w-full h-11 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50',
         justLoaded
-          ? 'bg-emerald-500/15 border border-emerald-500/25 text-emerald-400'
-          : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]',
+          ? 'bg-emerald-500 border border-emerald-500 text-white'
+          : 'bg-elec-yellow border border-elec-yellow text-black',
         className
       )}
     >

@@ -5,7 +5,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronRight, Trash2, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
@@ -33,8 +32,9 @@ interface RecoverUnsavedWorkProps {
 const getTypeLabel = (type: string) => {
   const labels: Record<string, string> = {
     eicr: 'EICR', eic: 'EIC', 'minor-works': 'MW',
-    'fire-alarm': 'FA G1', 'fire-alarm-commissioning': 'FA G2',
-    'fire-alarm-inspection': 'FA G7', 'fire-alarm-modification': 'FA G4',
+    'fire-alarm-design': 'FA G1', 'fire-alarm': 'FA G2',
+    'fire-alarm-commissioning': 'FA G3',
+    'fire-alarm-inspection': 'FA G6', 'fire-alarm-modification': 'FA G7',
     'ev-charging': 'EV', 'emergency-lighting': 'EM LTG',
     'solar-pv': 'SOLAR PV', 'pat-testing': 'PAT',
     'smoke-co-alarm': 'SMOKE/CO', bess: 'BESS',
@@ -42,27 +42,10 @@ const getTypeLabel = (type: string) => {
   return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 6);
 };
 
-const getTypeBadgeStyle = (type: string) => {
-  if (type.startsWith('fire-alarm')) return 'bg-red-500/15 text-red-400';
-  if (type === 'eicr') return 'bg-blue-500/15 text-blue-400';
-  if (type === 'eic') return 'bg-emerald-500/15 text-emerald-400';
-  if (type === 'minor-works') return 'bg-orange-500/15 text-orange-400';
-  if (type === 'ev-charging') return 'bg-cyan-500/15 text-cyan-400';
-  if (type === 'emergency-lighting') return 'bg-violet-500/15 text-violet-400';
-  if (type === 'pat-testing') return 'bg-amber-500/15 text-amber-400';
-  if (type === 'solar-pv') return 'bg-yellow-500/15 text-yellow-400';
-  return 'bg-elec-yellow/15 text-elec-yellow';
-};
-
-const getTypeAccent = (type: string) => {
-  if (type.startsWith('fire-alarm')) return 'from-red-500 via-rose-400 to-pink-400';
-  if (type === 'eicr') return 'from-blue-500 via-blue-400 to-cyan-400';
-  if (type === 'eic') return 'from-emerald-500 via-emerald-400 to-green-400';
-  if (type === 'minor-works') return 'from-orange-500 via-amber-400 to-yellow-400';
-  if (type === 'ev-charging') return 'from-cyan-500 via-cyan-400 to-blue-400';
-  if (type === 'emergency-lighting') return 'from-violet-500 via-purple-400 to-indigo-400';
-  return 'from-amber-500 via-amber-400 to-yellow-400';
-};
+// One quiet badge for every type — the graphite-and-volt system doesn't do
+// per-type rainbow colours (Andrew, 2026-08-01).
+const getTypeBadgeStyle = (_type: string) =>
+  'bg-white/[0.08] text-white/70 border border-white/[0.14]';
 
 const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, className }) => {
   const { toast } = useToast();
@@ -191,9 +174,8 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
 
         <motion.div
           variants={itemVariants}
-          className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
+          className="relative bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12] rounded-2xl overflow-hidden"
         >
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
 
           <button
             type="button"
@@ -218,10 +200,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
               <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
                 See all and choose
               </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
+              <span className="text-[12px] font-semibold text-elec-yellow">Open</span>
             </div>
           </button>
 
@@ -230,18 +209,16 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
             <button
               type="button"
               onClick={() => setDeleteAll(true)}
-              className="h-10 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-medium text-white/55 hover:text-red-300 transition-colors touch-manipulation"
+              className="h-11 flex items-center text-[11px] uppercase tracking-[0.14em] font-medium text-white/60 hover:text-red-300 transition-colors touch-manipulation"
             >
-              <Trash2 className="h-3 w-3" />
               Delete all
             </button>
             <button
               type="button"
               onClick={() => setIsDismissed(true)}
-              className="h-10 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-medium text-white/55 ml-auto hover:text-white transition-colors touch-manipulation"
+              className="h-11 flex items-center text-[11px] uppercase tracking-[0.14em] font-medium text-white/60 ml-auto hover:text-white transition-colors touch-manipulation"
             >
               Dismiss
-              <X className="h-3 w-3" />
             </button>
           </div>
         </motion.div>
@@ -262,66 +239,67 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
                 {autoDrafts.length}
               </span>
             </div>
-            <p className="text-xs text-white text-left">Tap a draft to continue editing</p>
+            <p className="text-xs text-white/60 text-left">Tap a draft to continue editing</p>
           </SheetHeader>
 
-          {/* Draft list */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-            {autoDrafts.map((draft) => {
-              const updatedAgo = draft.updated_at
-                ? formatDistanceToNow(new Date(draft.updated_at), { addSuffix: true })
-                : 'Unknown';
+          {/* Draft cards — same recipe as the cert pickers: gradient surface,
+              per-type accent wash, action row pinned to the base */}
+          <div className="flex-1 overflow-y-auto px-4 py-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {autoDrafts.map((draft) => {
+                const updatedAgo = draft.updated_at
+                  ? formatDistanceToNow(new Date(draft.updated_at), { addSuffix: true })
+                  : 'Unknown';
 
-              return (
-                <div
-                  key={draft.report_id}
-                  className="group relative overflow-hidden card-surface-interactive rounded-xl"
-                >
-                  <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity', getTypeAccent(draft.report_type))} />
+                return (
+                  <div
+                    key={draft.report_id}
+                    className={cn(
+                      'group relative flex flex-col overflow-hidden rounded-2xl p-4',
+                      'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
+                      'transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]'
+                    )}
+                  >
+                    <div className="relative flex items-center gap-2">
+                      <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', getTypeBadgeStyle(draft.report_type))}>
+                        {getTypeLabel(draft.report_type)}
+                      </span>
+                      <span className="text-[11px] text-white/50 ml-auto tabular-nums">{updatedAgo}</span>
+                    </div>
 
-                  <div className="relative z-10 flex items-center gap-2">
-                    {/* Draft info — tappable */}
-                    <button
-                      onClick={() => handleRecover(draft)}
-                      className="flex-1 text-left active:bg-white/[0.06] transition-colors min-w-0 p-3.5"
-                    >
-                      <div className="flex items-center gap-1.5 mb-1.5">
-                        <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', getTypeBadgeStyle(draft.report_type))}>
-                          {getTypeLabel(draft.report_type)}
-                        </span>
-                        <span className="text-[11px] text-white ml-auto">{updatedAgo}</span>
-                      </div>
-                      <h4 className="text-[13px] font-semibold text-white truncate group-hover:text-elec-yellow transition-colors">
-                        {draft.client_name || 'Untitled'}
-                      </h4>
-                      {draft.installation_address && (
-                        <p className="text-[12px] text-white truncate mt-0.5">{draft.installation_address}</p>
-                      )}
-                    </button>
+                    <h4 className="relative mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate">
+                      {draft.client_name || 'Untitled'}
+                    </h4>
+                    <p className="relative text-[12px] text-white/60 truncate mt-0.5 min-h-[18px]">
+                      {draft.installation_address || 'No address yet'}
+                    </p>
 
-                    {/* Delete + chevron */}
-                    <div className="flex items-center gap-0.5 pr-2 flex-shrink-0">
+                    <div className="relative mt-3 pt-3 flex items-center justify-between gap-2 border-t border-white/[0.07]">
                       <button
                         onClick={() => confirmFromSheet(() => setDeleteTarget(draft))}
-                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                        className="h-11 px-2 -ml-2 text-[12px] font-semibold text-white/50 hover:text-red-400 transition-colors touch-manipulation"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        Delete
                       </button>
-                      <ChevronRight className="h-4 w-4 text-white/20" />
+                      <button
+                        onClick={() => handleRecover(draft)}
+                        className="h-11 px-5 rounded-xl text-[13px] font-bold bg-elec-yellow text-black touch-manipulation active:scale-[0.97] transition-transform"
+                      >
+                        Open
+                      </button>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
           {/* Sheet footer */}
           <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.06]">
             <button
               onClick={() => confirmFromSheet(() => setDeleteAll(true))}
-              className="w-full h-11 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center justify-center gap-2 active:scale-[0.98] transition-all touch-manipulation"
+              className="w-full h-11 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-semibold active:scale-[0.98] transition-all touch-manipulation"
             >
-              <Trash2 className="h-4 w-4" />
               Delete all drafts
             </button>
           </div>
@@ -347,7 +325,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
                 : `This will permanently delete "${deleteTarget?.client_name || 'Untitled'}".`}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}

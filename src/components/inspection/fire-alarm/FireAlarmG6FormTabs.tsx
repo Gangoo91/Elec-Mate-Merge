@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
-import { Building2, Search, ClipboardCheck, AlertTriangle, PenTool } from 'lucide-react';
+import React, { useRef } from 'react';
 import FAG6ProjectPrevious from './tabs/FAG6ProjectPrevious';
 import FAG6InspectionScope from './tabs/FAG6InspectionScope';
 import FAG6TestsSampling from './tabs/FAG6TestsSampling';
@@ -18,103 +17,68 @@ interface Props {
   onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  onOpenEmailDialog?: () => void;
+  canEmail?: boolean;
+  /** Real report id from page state — useParams stays 'new' after replaceState. */
+  reportId?: string | null;
 }
+
+const TAB_ORDER = ['project', 'scope', 'tests', 'defects', 'declaration'];
 
 const FireAlarmG6FormTabs: React.FC<Props> = ({
   currentTab,
-  onTabChange,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
   onCreateInvoice,
   canGenerateCertificate = true,
+  onOpenEmailDialog,
+  canEmail = false,
+  reportId,
 }) => {
-  const pt = formData.panelTests || {};
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'project',
-      label: 'Project',
-      shortLabel: 'Project',
-      icon: <Building2 className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG6ProjectPrevious formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'scope',
-      label: 'Scope',
-      shortLabel: 'Scope',
-      icon: <Search className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG6InspectionScope formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'tests',
-      label: 'Tests',
-      shortLabel: 'Tests',
-      icon: <ClipboardCheck className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG6TestsSampling formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'defects',
-      label: 'Defects',
-      shortLabel: 'Defects',
-      icon: <AlertTriangle className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG6DefectsObservations formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'declaration',
-      label: 'Declaration',
-      shortLabel: 'Sign',
-      icon: <PenTool className="h-4 w-4" />,
-      content: (
-        <div className="space-y-4">
-          <FAG6Declaration formData={formData} onUpdate={onUpdate} />
-          <FireAlarmTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            onCreateInvoice={onCreateInvoice}
-            canGenerateCertificate={canGenerateCertificate}
-          />
-        </div>
-      ),
-    },
-  ];
+  // Track direction so the step slide matches travel (forward vs back).
+  const NEXT_LABELS = ['Continue to Scope', 'Continue to Tests', 'Continue to Defects', 'Continue to Sign off'];
 
-  const completedTabs: Record<string, boolean> = {
-    project: !!(formData.clientName && formData.premisesAddress),
-    scope: !!formData.extentOfInspection,
-    tests: !!(pt.powerOnTest && pt.zoneIndicators),
-    defects: true,
-    declaration: !!(formData.inspectorSignature && formData.overallResult),
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<string, React.ReactNode> = {
+    project: <FAG6ProjectPrevious formData={formData} onUpdate={onUpdate} />,
+    scope: <FAG6InspectionScope formData={formData} onUpdate={onUpdate} />,
+    tests: <FAG6TestsSampling formData={formData} onUpdate={onUpdate} />,
+    defects: <FAG6DefectsObservations formData={formData} onUpdate={onUpdate} reportId={reportId} />,
+    declaration: <FAG6Declaration formData={formData} onUpdate={onUpdate} />,
   };
 
+  const isLast = currentTab === 'declaration';
+
   return (
-    <SmartTabs
-      tabs={smartTabs}
-      value={currentTab}
-      onValueChange={onTabChange}
-      className="space-y-4"
-      completedTabs={completedTabs}
-    />
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack
+            ? 'motion-safe:animate-mw-step-back'
+            : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <FireAlarmTabNavigation
+        nextLabels={NEXT_LABELS}
+        {...tabNavigationProps}
+        onGenerateCertificate={
+          isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate
+        }
+        onCreateInvoice={onCreateInvoice}
+        canGenerateCertificate={canGenerateCertificate}
+        onOpenEmailDialog={onOpenEmailDialog}
+        canEmail={canEmail}
+      />
+    </>
   );
 };
 

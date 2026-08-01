@@ -26,9 +26,9 @@ import {
   ListCard,
   ListRow,
   PrimaryButton,
-  inputClass,
   type Tone,
 } from '@/components/college/primitives';
+import { safetyInputCn } from '../common/SafetyDocField';
 
 import { SafetyModuleShell, SafetyMasthead } from '../common/SafetyModuleShell';
 import { SignatureField } from '../common/SignatureField';
@@ -64,7 +64,7 @@ const STATUS_PILL: Record<'amber' | 'red' | 'blue' | 'neutral', string> = {
   amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
 function StatusPill({ status }: { status: IsoStatus }) {
@@ -82,7 +82,9 @@ function StatusPill({ status }: { status: IsoStatus }) {
 }
 
 const fmtDate = (d?: string | null) =>
-  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
 
 // ─── New record form (rendered inside a SheetShell) ───
 
@@ -137,18 +139,25 @@ function NewRecordForm({
       circuit_description: validation.fields.circuit_description?.value ?? '',
       distribution_board: validation.fields.distribution_board?.value ?? '',
       voltage_detector_serial: validation.fields.voltage_detector_serial?.value ?? '',
-      voltage_detector_calibration_date: validation.fields.voltage_detector_calibration_date?.value ?? '',
+      voltage_detector_calibration_date:
+        validation.fields.voltage_detector_calibration_date?.value ?? '',
     },
     enabled: true,
   });
 
   const restoreDraft = () => {
     if (!recoveredDraft) return;
-    (['site_address', 'circuit_description', 'distribution_board', 'voltage_detector_serial', 'voltage_detector_calibration_date'] as const).forEach(
-      (k) => {
-        if (recoveredDraft[k]) validation.setValue(k, recoveredDraft[k]);
-      }
-    );
+    (
+      [
+        'site_address',
+        'circuit_description',
+        'distribution_board',
+        'voltage_detector_serial',
+        'voltage_detector_calibration_date',
+      ] as const
+    ).forEach((k) => {
+      if (recoveredDraft[k]) validation.setValue(k, recoveredDraft[k]);
+    });
     dismissDraft();
   };
 
@@ -158,9 +167,15 @@ function NewRecordForm({
     const payload: NewRecordPayload = {
       site_address: f.site_address.value.trim(),
       circuit_description: f.circuit_description.value.trim(),
-      ...(f.distribution_board.value.trim() ? { distribution_board: f.distribution_board.value.trim() } : {}),
-      ...(f.voltage_detector_serial.value.trim() ? { voltage_detector_serial: f.voltage_detector_serial.value.trim() } : {}),
-      ...(f.voltage_detector_calibration_date.value ? { voltage_detector_calibration_date: f.voltage_detector_calibration_date.value } : {}),
+      ...(f.distribution_board.value.trim()
+        ? { distribution_board: f.distribution_board.value.trim() }
+        : {}),
+      ...(f.voltage_detector_serial.value.trim()
+        ? { voltage_detector_serial: f.voltage_detector_serial.value.trim() }
+        : {}),
+      ...(f.voltage_detector_calibration_date.value
+        ? { voltage_detector_calibration_date: f.voltage_detector_calibration_date.value }
+        : {}),
       ...(photoUrls.length > 0 ? { photos: photoUrls } : {}),
       ...(isolatorName.trim() ? { isolator_name: isolatorName.trim() } : {}),
       ...(isolatorSig ? { isolator_signature: isolatorSig } : {}),
@@ -185,7 +200,9 @@ function NewRecordForm({
       }
     >
       <AnimatePresence>
-        {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+        {recoveredDraft && (
+          <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+        )}
       </AnimatePresence>
 
       <PermitSelector
@@ -193,7 +210,8 @@ function NewRecordForm({
         selectedPermitId={selectedPermitId}
         onSelect={(id, permit) => {
           setSelectedPermitId(id);
-          if (permit?.location && !f.site_address?.value) validation.setValue('site_address', permit.location);
+          if (permit?.location && !f.site_address?.value)
+            validation.setValue('site_address', permit.location);
         }}
         label="Link to isolation permit (optional)"
       />
@@ -227,7 +245,7 @@ function NewRecordForm({
           value={f.circuit_description?.value ?? ''}
           onChange={(e) => validation.setValue('circuit_description', e.target.value)}
           onBlur={() => validation.setTouched('circuit_description')}
-          className={inputClass}
+          className={safetyInputCn}
           placeholder="e.g. Ring final circuit — kitchen"
         />
         {f.circuit_description?.touched && f.circuit_description?.error && (
@@ -239,16 +257,19 @@ function NewRecordForm({
         <input
           value={f.distribution_board?.value ?? ''}
           onChange={(e) => validation.setValue('distribution_board', e.target.value)}
-          className={inputClass}
+          className={safetyInputCn}
           placeholder="e.g. DB1 — Main Board"
         />
       </Field>
 
-      <Field label="Voltage detector serial no." hint="GS38 — proving instrument must be in calibration.">
+      <Field
+        label="Voltage detector serial no."
+        hint="GS38 — proving instrument must be in calibration."
+      >
         <input
           value={f.voltage_detector_serial?.value ?? ''}
           onChange={(e) => validation.setValue('voltage_detector_serial', e.target.value)}
-          className={inputClass}
+          className={safetyInputCn}
           placeholder="e.g. FLK-T150 / SN: 12345"
         />
       </Field>
@@ -258,7 +279,7 @@ function NewRecordForm({
           type="date"
           value={f.voltage_detector_calibration_date?.value ?? ''}
           onChange={(e) => validation.setValue('voltage_detector_calibration_date', e.target.value)}
-          className={cn(inputClass, '[color-scheme:dark]')}
+          className={cn(safetyInputCn, '[color-scheme:dark]')}
         />
       </Field>
 
@@ -269,12 +290,22 @@ function NewRecordForm({
 
       <SignatureField label="Isolator signature" value={isolatorSig} onChange={setIsolatorSig} />
       <Field label="Isolator name">
-        <input value={isolatorName} onChange={(e) => setIsolatorName(e.target.value)} className={inputClass} placeholder="Person carrying out isolation" />
+        <input
+          value={isolatorName}
+          onChange={(e) => setIsolatorName(e.target.value)}
+          className={safetyInputCn}
+          placeholder="Person carrying out isolation"
+        />
       </Field>
 
       <SignatureField label="Verifier signature" value={verifierSig} onChange={setVerifierSig} />
       <Field label="Verifier name">
-        <input value={verifierName} onChange={(e) => setVerifierName(e.target.value)} className={inputClass} placeholder="Second competent person (optional)" />
+        <input
+          value={verifierName}
+          onChange={(e) => setVerifierName(e.target.value)}
+          className={safetyInputCn}
+          placeholder="Second competent person (optional)"
+        />
       </Field>
     </SheetShell>
   );
@@ -319,7 +350,9 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
       id: record.id,
       steps: updatedSteps,
       ...topLevelUpdates,
-      ...(allDone ? { status: 'isolated' as const, isolation_completed_at: new Date().toISOString() } : {}),
+      ...(allDone
+        ? { status: 'isolated' as const, isolation_completed_at: new Date().toISOString() }
+        : {}),
     });
   };
 
@@ -333,7 +366,12 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
   return (
     <div className="bg-elec-dark min-h-screen pb-24">
       <SafetyMasthead onBack={onBack} backLabel="Records" moduleName={record.circuit_description} />
-      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mx-auto max-w-5xl px-4 py-5 space-y-4">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto max-w-5xl px-4 py-5 space-y-4"
+      >
         <div>
           <Eyebrow>GS38 procedure · {record.site_address}</Eyebrow>
           <div className="mt-3 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
@@ -344,7 +382,7 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
               transition={{ duration: 0.4, ease: 'easeOut' }}
             />
           </div>
-          <p className="mt-2 text-[12px] text-white/55 tabular-nums">
+          <p className="mt-2 text-[12px] text-white tabular-nums">
             Step {done} of {record.steps.length} completed
           </p>
         </div>
@@ -379,7 +417,9 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const all = records ?? [];
-  const activeRecord = selectedRecord ? (all.find((r) => r.id === selectedRecord.id) ?? selectedRecord) : null;
+  const activeRecord = selectedRecord
+    ? (all.find((r) => r.id === selectedRecord.id) ?? selectedRecord)
+    : null;
 
   const handleCreate = async (data: NewRecordPayload) => {
     const result = await createMutation.mutateAsync(data);
@@ -439,9 +479,23 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
         all.length > 0 ? (
           <StatStrip
             stats={[
-              { value: liveCount, label: 'Live', sub: 'isolated / in progress', accent: true, onClick: () => setFilterStatus('isolated') },
-              { value: counts.in_progress, label: 'In progress', onClick: () => setFilterStatus('in_progress') },
-              { value: counts.re_energised, label: 'Re-energised', onClick: () => setFilterStatus('re_energised') },
+              {
+                value: liveCount,
+                label: 'Live',
+                sub: 'isolated / in progress',
+                accent: true,
+                onClick: () => setFilterStatus('isolated'),
+              },
+              {
+                value: counts.in_progress,
+                label: 'In progress',
+                onClick: () => setFilterStatus('in_progress'),
+              },
+              {
+                value: counts.re_energised,
+                label: 'Re-energised',
+                onClick: () => setFilterStatus('re_energised'),
+              },
               { value: all.length, label: 'Total', onClick: () => setFilterStatus('all') },
             ]}
           />
@@ -475,7 +529,10 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
           onAction={() => setShowForm(true)}
         />
       ) : filtered.length === 0 ? (
-        <EmptyState title="No isolations match your filter" description="Try a different status tab or clear your search." />
+        <EmptyState
+          title="No isolations match your filter"
+          description="Try a different status tab or clear your search."
+        />
       ) : (
         <div className="space-y-3">
           <ListCard>
@@ -492,7 +549,7 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
                   trailing={
                     <div className="flex flex-col items-end gap-1">
                       <StatusPill status={record.status} />
-                      <span className="text-[11px] text-white/45 tabular-nums">
+                      <span className="text-[11px] text-white tabular-nums">
                         {record.status === 'isolated' && dur.label
                           ? dur.label
                           : `${completed}/${record.steps.length} steps`}
@@ -509,7 +566,10 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
 
       {/* New record sheet */}
       <Sheet open={showForm} onOpenChange={setShowForm}>
-        <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <NewRecordForm onSubmit={handleCreate} isSubmitting={createMutation.isPending} />
         </SheetContent>
       </Sheet>

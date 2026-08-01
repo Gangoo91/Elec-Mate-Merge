@@ -1,25 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo, useCallback } from 'react';
 import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { AlertTriangle, Info } from 'lucide-react';
 import { BATTERY_MANUFACTURERS, INVERTER_MANUFACTURERS } from '@/types/bess';
 import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const selectTriggerCn = 'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+const cardWideCn = cardCn + ' lg:col-span-2';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+const selectTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 const checkboxCn = 'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
+  <div><Label className="text-[12px] font-medium text-white mb-1 block">{label}{required && ' *'}</Label>{children}</div>
 );
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -150,9 +155,9 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
   const isPresetActive = (p: BatteryPreset) => formData.batteryManufacturer === p.manufacturer && formData.batteryModel === p.model;
 
   return (
-    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Quick-fill presets */}
-      <div className="space-y-3">
+      <div className={cardWideCn}>
         <SectionHeader title="Quick Fill — Popular Systems" />
         <div className="grid grid-cols-2 gap-2">
           {visiblePresets.map((preset) => (
@@ -162,15 +167,15 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
               onClick={() => applyPreset(preset)}
               className={`rounded-xl p-2.5 text-left touch-manipulation active:scale-[0.98] transition-all ${
                 isPresetActive(preset)
-                  ? 'bg-elec-yellow/15 border border-elec-yellow/40 ring-1 ring-elec-yellow/20'
-                  : 'bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06]'
+                  ? 'bg-elec-yellow border border-elec-yellow'
+                  : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.08]'
               }`}
             >
-              <p className={`text-[11px] font-bold leading-tight ${isPresetActive(preset) ? 'text-elec-yellow' : 'text-white'}`}>{preset.manufacturer}</p>
-              <p className="text-[10px] text-white leading-tight mt-0.5 truncate">{preset.model}</p>
+              <p className={`text-[11px] font-bold leading-tight ${isPresetActive(preset) ? 'text-black' : 'text-white'}`}>{preset.manufacturer}</p>
+              <p className={`text-[10px] leading-tight mt-0.5 truncate ${isPresetActive(preset) ? 'text-black/80' : 'text-white/85'}`}>{preset.model}</p>
               <div className="flex items-center gap-1.5 mt-1.5">
-                <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/10 px-1.5 py-0.5 rounded">{preset.capacity} kWh</span>
-                <span className="text-[9px] text-white/50">{preset.chemistry}</span>
+                <span className={`text-[10px] font-bold ${isPresetActive(preset) ? 'text-black' : 'text-elec-yellow'}`}>{preset.capacity} kWh</span>
+                <span className={`text-[9px] ${isPresetActive(preset) ? 'text-black/70' : 'text-white/80'}`}>{preset.chemistry}</span>
               </div>
             </button>
           ))}
@@ -179,7 +184,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
           <button
             type="button"
             onClick={() => setShowAllPresets(!showAllPresets)}
-            className="w-full h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[11px] text-white font-medium touch-manipulation active:scale-[0.98]"
+            className="w-full h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[13px] text-white font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
           >
             {showAllPresets ? `Show less` : `Show all ${BATTERY_PRESETS.length} systems`}
           </button>
@@ -187,13 +192,13 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
       </div>
 
       {/* Battery System */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Battery System" />
 
         {/* Identification */}
         <div className="space-y-3">
           <Sub title="Identification" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Manufacturer" required>
               <MobileSelectPicker
                 value={formData.batteryManufacturer}
@@ -206,7 +211,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
             <Field label="Model" required><Input value={formData.batteryModel} onChange={(e) => onUpdate('batteryModel', e.target.value)} className={inputCn} placeholder="e.g. LUNA2000-5-S0" /></Field>
           </div>
           <Field label="Serial Number(s)" required><Input value={formData.batterySerials} onChange={(e) => onUpdate('batterySerials', e.target.value)} className={inputCn} placeholder="Comma-separated if multiple modules" /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Chemistry" required>
               <MobileSelectPicker
                 value={formData.batteryChemistry}
@@ -229,17 +234,12 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
 
         {/* Chemistry guidance */}
         {formData.batteryChemistry && (
-          <div className={`rounded-xl overflow-hidden border ${chemistryGuidance.thermalRunawayRisk === 'high' ? 'border-red-500/30' : chemistryGuidance.thermalRunawayRisk === 'low' ? 'border-green-500/30' : 'border-amber-500/30'}`}>
-            <div className={`px-3 py-2 flex items-center gap-2 ${chemistryGuidance.thermalRunawayRisk === 'high' ? 'bg-red-500/15' : chemistryGuidance.thermalRunawayRisk === 'low' ? 'bg-green-500/15' : 'bg-amber-500/15'}`}>
-              {chemistryGuidance.thermalRunawayRisk === 'high' ? <AlertTriangle className="h-3.5 w-3.5 text-red-400 flex-shrink-0" /> : <Info className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />}
-              <p className="text-xs font-bold text-white">{formData.batteryChemistry} Chemistry — {chemistryGuidance.thermalRunawayRisk} thermal runaway risk</p>
-            </div>
-            <div className="px-3 py-2.5 bg-white/[0.02] space-y-1.5">
-              <p className="text-[11px] text-white leading-relaxed">{chemistryGuidance.ventilationAdvice}</p>
-              <div className="flex gap-3">
-                <span className="text-[10px] text-white">Test at <span className="font-bold text-elec-yellow">{chemistryGuidance.dcTestVoltage}V</span></span>
-                <span className="text-[10px] text-white">Min IR <span className="font-bold text-elec-yellow">{chemistryGuidance.minResistance} MΩ</span></span>
-              </div>
+          <div className={`rounded-xl border bg-white/[0.05] px-3.5 py-3 space-y-1.5 ${chemistryGuidance.thermalRunawayRisk === 'high' ? 'border-red-500/30' : chemistryGuidance.thermalRunawayRisk === 'low' ? 'border-green-500/30' : 'border-amber-500/30'}`}>
+            <p className={`text-[13px] font-semibold ${chemistryGuidance.thermalRunawayRisk === 'high' ? 'text-red-400' : chemistryGuidance.thermalRunawayRisk === 'low' ? 'text-green-400' : 'text-amber-400'}`}>{formData.batteryChemistry} Chemistry — {chemistryGuidance.thermalRunawayRisk} thermal runaway risk</p>
+            <p className="text-[12px] text-white/90 leading-relaxed">{chemistryGuidance.ventilationAdvice}</p>
+            <div className="flex gap-3">
+              <span className="text-[12px] text-white/90">Test at <span className="font-bold text-elec-yellow">{chemistryGuidance.dcTestVoltage}V</span></span>
+              <span className="text-[12px] text-white/90">Min IR <span className="font-bold text-elec-yellow">{chemistryGuidance.minResistance} MΩ</span></span>
             </div>
           </div>
         )}
@@ -247,7 +247,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* System Specs */}
         <div className="space-y-3">
           <Sub title="System Specs" />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-4">
             <Field label="Voltage (V)"><Input type="number" value={formData.nominalVoltage} onChange={(e) => onUpdate('nominalVoltage', e.target.value)} className={inputCn} placeholder="e.g. 51.2" /></Field>
             <Field label="Modules"><Input type="number" value={formData.numberOfModules} onChange={(e) => onUpdate('numberOfModules', e.target.value)} className={inputCn} placeholder="1" /></Field>
             <Field label="Max Charge (kW)"><Input type="number" step="0.1" value={formData.maxChargeRate} onChange={(e) => onUpdate('maxChargeRate', e.target.value)} className={inputCn} /></Field>
@@ -256,8 +256,8 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
 
           {/* Total capacity badge when multiple modules */}
           {totalCapacity > 0 && (
-            <div className="rounded-lg p-2 bg-elec-yellow/8 border border-elec-yellow/20">
-              <p className="text-[11px] text-white text-center">Total capacity: <span className="font-bold text-elec-yellow">{totalCapacity} kWh</span> <span className="text-white/50">({formData.numberOfModules} × {formData.usableCapacity})</span></p>
+            <div className="rounded-xl p-2.5 bg-white/[0.05]">
+              <p className="text-[12px] text-white text-center">Total capacity: <span className="font-bold text-elec-yellow">{totalCapacity} kWh</span> <span className="text-white/80">({formData.numberOfModules} × {formData.usableCapacity})</span></p>
             </div>
           )}
         </div>
@@ -265,7 +265,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* Performance */}
         <div className="space-y-3">
           <Sub title="Performance" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
             <Field label="Configuration">
               <MobileSelectPicker
                 value={formData.configuration || autoConfig}
@@ -287,7 +287,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* Compliance */}
         <div className="space-y-3">
           <Sub title="Compliance" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="MCS Product Cert"><Input value={formData.mcsBatteryProductCert} onChange={(e) => onUpdate('mcsBatteryProductCert', e.target.value)} className={inputCn} /></Field>
           </div>
           <div className="flex items-center gap-3">
@@ -298,13 +298,13 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
       </div>
 
       {/* Inverter / Charger */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Inverter / Charger" />
 
         {/* Inverter Identification */}
         <div className="space-y-3">
           <Sub title="Identification" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Manufacturer" required>
               <MobileSelectPicker
                 value={formData.inverterManufacturer}
@@ -316,7 +316,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
             </Field>
             <Field label="Model" required><Input value={formData.inverterModel} onChange={(e) => onUpdate('inverterModel', e.target.value)} className={inputCn} placeholder="e.g. SUN2000-5KTL-L1" /></Field>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Serial Number" required><Input value={formData.inverterSerial} onChange={(e) => onUpdate('inverterSerial', e.target.value)} className={inputCn} /></Field>
             <Field label="Rated Power (kW)" required><Input type="number" step="0.1" value={formData.inverterRatedPower} onChange={(e) => onUpdate('inverterRatedPower', e.target.value)} className={inputCn} placeholder="e.g. 5.0" /></Field>
           </div>
@@ -325,7 +325,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* Inverter Config */}
         <div className="space-y-3">
           <Sub title="Configuration" />
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
             <Field label="Type" required>
               <MobileSelectPicker
                 value={formData.inverterType}
@@ -357,13 +357,13 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
       </div>
 
       {/* System Configuration */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="System Configuration" />
 
         {/* Mode & Coupling */}
         <div className="space-y-3">
           <Sub title="Mode & Coupling" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Coupling Type" required>
               <MobileSelectPicker
                 value={formData.couplingType}
@@ -398,7 +398,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
         {/* Power Limits */}
         <div className="space-y-3">
           <Sub title="Power Limits" />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-4">
             <Field label="Charge (kW)"><Input type="number" step="0.1" value={formData.chargeRateLimit} onChange={(e) => onUpdate('chargeRateLimit', e.target.value)} className={inputCn} /></Field>
             <Field label="Discharge (kW)"><Input type="number" step="0.1" value={formData.dischargeRateLimit} onChange={(e) => onUpdate('dischargeRateLimit', e.target.value)} className={inputCn} /></Field>
             <Field label="DoD Limit (%)"><Input type="number" value={formData.dodLimit} onChange={(e) => onUpdate('dodLimit', e.target.value)} className={inputCn} /></Field>
@@ -427,9 +427,9 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
           <Sub title="Grid Connection" />
           <Field label="Total Site Generation (kW)"><Input type="number" step="0.01" value={formData.totalSiteGeneration || totalGeneration || ''} onChange={(e) => onUpdate('totalSiteGeneration', e.target.value)} className={inputCn} placeholder={totalGeneration > 0 ? `Auto: ${totalGeneration}kW` : 'Enter total capacity'} /></Field>
           {(parseFloat(formData.totalSiteGeneration) > 0 || totalGeneration > 0) && (
-            <div className={`rounded-lg p-2.5 border ${gridReq.warning ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20'}`}>
-              <p className={`text-xs font-semibold ${gridReq.warning ? 'text-amber-400' : 'text-green-400'}`}>{gridReq.message}</p>
-              <p className="text-[11px] text-white mt-1">{gridReq.details}</p>
+            <div className={`rounded-xl p-3 border bg-white/[0.05] ${gridReq.warning ? 'border-amber-500/30' : 'border-green-500/30'}`}>
+              <p className={`text-[13px] font-semibold ${gridReq.warning ? 'text-amber-400' : 'text-green-400'}`}>{gridReq.message}</p>
+              <p className="text-[12px] text-white/90 mt-1">{gridReq.details}</p>
             </div>
           )}
         </div>

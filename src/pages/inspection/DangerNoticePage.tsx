@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { ArrowLeft, Save, Loader2, Trash2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -15,8 +15,8 @@ import { DangerNoticeSignoffCard } from '@/components/certificates/DangerNoticeS
 
 // --- Constants ---
 
-const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const textareaCn = 'touch-manipulation text-xs min-h-[70px] bg-white/[0.06] border-white/[0.08] text-white';
+const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
 const dangerTypes = [
   { key: 'riskOfFire' as const, label: 'Fire' },
@@ -128,42 +128,46 @@ const defaultData = (): DangerNoticeData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-danger-notice';
 
-// --- Helper components (RED themed) ---
+// --- Helper components ---
 
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-red-500/40 to-red-500/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+const Section = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  <div className={cn('-mx-4 rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] sm:mx-0 sm:rounded-2xl sm:border-x p-4 sm:p-5 space-y-4', className)}>
+    {children}
   </div>
+);
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
-  </div>
+  <p className="text-[13px] font-semibold text-white">{title}</p>
 );
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>{children}</div>
+  <div><Label className="text-[12px] font-medium text-white mb-1 block">{label}{required && ' *'}</Label>{children}</div>
 );
 
-const YesNoToggle = ({ value, onChange, yesLabel = 'Yes', noLabel = 'No' }: { value: boolean; onChange: (v: boolean) => void; yesLabel?: string; noLabel?: string }) => (
+const YesNoToggle = ({ value, onChange, yesLabel = 'Yes', noLabel = 'No', yesDanger }: { value: boolean; onChange: (v: boolean) => void; yesLabel?: string; noLabel?: string; yesDanger?: boolean }) => (
   <div className="flex gap-2">
     <button
       type="button"
       onClick={() => onChange(true)}
       className={cn(
-        'flex-1 h-10 rounded-lg text-xs font-medium touch-manipulation transition-all',
-        value ? 'bg-red-500/20 border border-red-500/40 text-red-400' : 'bg-white/[0.06] border border-white/[0.08] text-white'
+        'flex-1 h-11 rounded-lg text-[13px] touch-manipulation transition-all',
+        value
+          ? yesDanger
+            ? 'bg-red-500 border border-red-500 text-white font-semibold'
+            : 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+          : 'bg-white/[0.06] border border-white/[0.1] text-white font-medium'
       )}
     >{yesLabel}</button>
     <button
       type="button"
       onClick={() => onChange(false)}
       className={cn(
-        'flex-1 h-10 rounded-lg text-xs font-medium touch-manipulation transition-all',
-        !value ? 'bg-white/[0.06] border border-white/[0.08] text-white' : 'bg-white/[0.04] border border-white/[0.06] text-white/50'
+        'flex-1 h-11 rounded-lg text-[13px] touch-manipulation transition-all',
+        !value ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold' : 'bg-white/[0.06] border border-white/[0.1] text-white font-medium'
       )}
     >{noLabel}</button>
   </div>
@@ -171,8 +175,8 @@ const YesNoToggle = ({ value, onChange, yesLabel = 'Yes', noLabel = 'No' }: { va
 
 const DangerTickButton = ({ checked, label, onChange }: { checked: boolean; label: string; onChange: () => void }) => (
   <button type="button" onClick={onChange}
-    className={cn('h-9 rounded-lg text-[11px] font-medium touch-manipulation transition-all w-full',
-      checked ? 'bg-red-500/20 border border-red-500/40 text-red-400' : 'bg-white/[0.04] border border-white/[0.08] text-white')}>
+    className={cn('h-11 rounded-lg text-[13px] touch-manipulation transition-all w-full',
+      checked ? 'bg-red-500 border border-red-500 text-white font-semibold' : 'bg-white/[0.06] border border-white/[0.1] text-white font-medium')}>
     {label}
   </button>
 );
@@ -280,6 +284,7 @@ export default function DangerNoticePage() {
       if (!user) return;
       const result = await reportCloud.getReportData(editId, user.id);
       if (result) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setData((prev) => ({ ...prev, ...(result as any) }));
         setExistingReportId(editId);
       }
@@ -315,10 +320,12 @@ export default function DangerNoticePage() {
     });
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const update = useCallback((field: keyof DangerNoticeData, value: any) => {
     setData((prev) => ({ ...prev, [field]: value }));
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateDanger = useCallback((id: string, field: keyof DangerEntry, value: any) => {
     setData((prev) => ({
       ...prev,
@@ -380,8 +387,10 @@ export default function DangerNoticePage() {
 
       // Save to Supabase
       if (existingReportId) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await reportCloud.updateReport(existingReportId, user.id, data as any);
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result = await reportCloud.createReport(user.id, 'danger-notice', data as any);
         if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       }
@@ -445,101 +454,85 @@ export default function DangerNoticePage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Header */}
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.96]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">Danger Notice</h1>
-                {data.referenceNumber && <p className="text-[10px] text-white font-mono mt-0.5">{data.referenceNumber}</p>}
-              </div>
+      <div className="px-4 pt-3 pb-1 lg:px-8">
+        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
+          <button
+            onClick={() => navigate(-1)}
+            className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
+          >
+            Back
+          </button>
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Danger Notice</h1>
+              <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-red-400">C1 — Danger present.</span> Advises the responsible person of dangerous condition(s) requiring urgent remedial action.</p>
+              {data.referenceNumber && <p className="mt-1 font-mono text-[12px] text-white/50">{data.referenceNumber}</p>}
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.96]"
-              >
-                <Save className="h-4 w-4" />
-              </button>
-            </div>
+            <button
+              onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}
+              className="h-11 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
+            >
+              Save draft
+            </button>
           </div>
         </div>
-        <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
       </div>
 
-      <main className="px-3 py-4 pb-48 sm:px-4 sm:pb-8 space-y-5">
-
-        {/* Warning banner */}
-        <div className="relative rounded-lg border border-red-500/20 overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-red-500 via-rose-400 to-red-500/20" />
-          <div className="p-3">
-            <p className="text-xs font-bold text-red-400">ELECTRICAL DANGER NOTIFICATION</p>
-            <p className="text-[10px] text-white mt-1 leading-relaxed">C1 — Danger Present. This notice advises the responsible person of dangerous condition(s) requiring urgent remedial action.</p>
-          </div>
-        </div>
+      <main className="mx-auto max-w-3xl lg:max-w-[1600px] px-4 lg:px-8 py-4 pb-48 sm:pb-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
 
         {/* Linked EICR */}
         {data.linkedEicrCertNumber && (
-          <div className="rounded-lg bg-blue-500/[0.08] border border-blue-500/20 px-3 py-2.5 flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] text-white">Linked to EICR</p>
-              <p className="text-xs font-semibold text-blue-400">{data.linkedEicrCertNumber}</p>
-            </div>
+          <div className="-mx-4 rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-3 lg:col-span-2">
+            <p className="text-[12.5px] text-white/90">Linked to EICR</p>
+            <p className="font-mono text-[13px] font-semibold text-white">{data.linkedEicrCertNumber}</p>
           </div>
         )}
 
         {/* Reference */}
-        <div className="space-y-3">
-          <SectionHeader title="Reference" />
+        <Section>
+          <SectionHeading title="Reference" />
           <Field label="Record No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={inputCn} /></Field>
             <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={inputCn} /></Field>
           </div>
-        </div>
+        </Section>
 
-        {/* Contractor / Installer */}
-        <div className="space-y-3">
-          <SectionHeader title="Contractor / Installer" />
-          <div className="grid grid-cols-2 gap-3">
+        {/* Contractor / installer */}
+        <Section>
+          <SectionHeading title="Contractor / installer" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Name"><Input value={data.contractorName} onChange={(e) => update('contractorName', e.target.value)} className={inputCn} /></Field>
             <Field label="Company"><Input value={data.contractorCompany} onChange={(e) => update('contractorCompany', e.target.value)} className={inputCn} /></Field>
           </div>
           <Field label="Address"><Input value={data.contractorAddress} onChange={(e) => update('contractorAddress', e.target.value)} className={inputCn} /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Phone"><Input type="tel" value={data.contractorPhone} onChange={(e) => update('contractorPhone', e.target.value)} className={inputCn} /></Field>
             <Field label="Email"><Input type="email" value={data.contractorEmail} onChange={(e) => update('contractorEmail', e.target.value)} className={inputCn} /></Field>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Scheme"><Input value={data.registrationScheme} onChange={(e) => update('registrationScheme', e.target.value)} className={inputCn} placeholder="NICEIC, NAPIT..." /></Field>
             <Field label="Reg. No."><Input value={data.registrationNumber} onChange={(e) => update('registrationNumber', e.target.value)} className={inputCn} /></Field>
           </div>
-        </div>
+        </Section>
 
-        {/* Client / Responsible Person */}
-        <div className="space-y-3">
-          <SectionHeader title="Client / Responsible Person" />
-          <div className="grid grid-cols-2 gap-3">
+        {/* Client / responsible person */}
+        <Section>
+          <SectionHeading title="Client / responsible person" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Name" required><Input value={data.clientName} onChange={(e) => update('clientName', e.target.value)} className={inputCn} /></Field>
             <Field label="Position"><Input value={data.clientPosition} onChange={(e) => update('clientPosition', e.target.value)} className={inputCn} placeholder="Homeowner, Landlord..." /></Field>
           </div>
           <Field label="Address"><Input value={data.clientAddress} onChange={(e) => update('clientAddress', e.target.value)} className={inputCn} /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Phone"><Input type="tel" value={data.clientPhone} onChange={(e) => update('clientPhone', e.target.value)} className={inputCn} /></Field>
             <Field label="Email"><Input type="email" value={data.clientEmail} onChange={(e) => update('clientEmail', e.target.value)} className={inputCn} /></Field>
           </div>
-        </div>
+        </Section>
 
-        {/* Installation Address */}
-        <div className="space-y-3">
-          <SectionHeader title="Installation Address" />
+        {/* Installation address */}
+        <Section>
+          <SectionHeading title="Installation address" />
           <Field label="Different from client address">
             <YesNoToggle value={data.installationAddressDifferent} onChange={(v) => update('installationAddressDifferent', v)} />
           </Field>
@@ -549,38 +542,32 @@ export default function DangerNoticePage() {
               <Field label="Postcode"><Input value={data.installationPostcode} onChange={(e) => update('installationPostcode', e.target.value)} className={inputCn} /></Field>
             </>
           ) : (
-            <p className="text-[10px] text-white">Same as client address</p>
+            <p className="text-[12.5px] text-white/90">Same as client address</p>
           )}
-        </div>
+        </Section>
 
-        {/* Dangerous Conditions — repeatable */}
-        {data.dangers.map((danger, idx) => (
-          <div key={danger.id} className="space-y-3">
-            <div className="border-b border-white/[0.06] pb-1 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-red-500/60 to-red-500/10" />
-                <div className="w-6 h-6 rounded-md bg-red-500/20 border border-red-500/30 flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-red-400">{idx + 1}</span>
-                </div>
-                <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-                  Dangerous Condition{data.dangers.length > 1 ? ` #${idx + 1}` : ''}
-                </h2>
-              </div>
-              {data.dangers.length > 1 && (
+        {/* Dangerous conditions — repeatable */}
+        <Section className="lg:col-span-2">
+          <SectionHeading title="Dangerous conditions" />
+          {data.dangers.map((danger, idx) => (
+          <div key={danger.id} className={cn('space-y-4', idx > 0 && 'border-t border-white/[0.08] pt-4')}>
+            {data.dangers.length > 1 && (
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[13px] font-semibold text-white">{`Dangerous condition ${idx + 1}`}</p>
                 <button
                   onClick={() => removeDanger(danger.id)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                  className="h-11 px-2 text-[13px] font-semibold text-red-400 transition-colors hover:text-red-300 touch-manipulation"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  Remove
                 </button>
-              )}
-            </div>
+              </div>
+            )}
 
             <Field label="Description" required>
               <Textarea value={danger.descriptionOfDanger} onChange={(e) => updateDanger(danger.id, 'descriptionOfDanger', e.target.value)} className={textareaCn} placeholder="Describe the dangerous condition..." />
             </Field>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Field label="Location">
                 <Input value={danger.locationWithinInstallation} onChange={(e) => updateDanger(danger.id, 'locationWithinInstallation', e.target.value)} className={inputCn} placeholder="Consumer unit" />
               </Field>
@@ -589,18 +576,16 @@ export default function DangerNoticePage() {
               </Field>
             </div>
 
-            {/* Type of Danger */}
+            {/* Type of danger */}
             <div className="space-y-2">
-              <Sub title="Type of Danger" />
-              <div className="grid grid-cols-3 gap-1.5">
+              <Sub title="Type of danger" />
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                 {dangerTypes.map((dt) => (
                   <DangerTickButton key={dt.key} checked={danger[dt.key] as boolean} label={dt.label} onChange={() => updateDanger(danger.id, dt.key, !danger[dt.key])} />
                 ))}
               </div>
               {danger.riskOther && (
-                <div className="pl-1">
-                  <Input value={danger.riskOtherDescription} onChange={(e) => updateDanger(danger.id, 'riskOtherDescription', e.target.value)} className={inputCn} placeholder="Describe other danger..." />
-                </div>
+                <Input value={danger.riskOtherDescription} onChange={(e) => updateDanger(danger.id, 'riskOtherDescription', e.target.value)} className={inputCn} placeholder="Describe other danger..." />
               )}
             </div>
 
@@ -609,13 +594,13 @@ export default function DangerNoticePage() {
               <Textarea value={danger.immediateActionTaken} onChange={(e) => updateDanger(danger.id, 'immediateActionTaken', e.target.value)} className={textareaCn} placeholder="Circuit isolated, warning posted..." />
             </Field>
 
-            <div className="flex items-center justify-between">
-              <Label className="text-white text-xs font-medium">Circuit isolated</Label>
-              <div className="flex gap-1.5">
+            <div className="flex items-center justify-between gap-3">
+              <Label className="text-[13px] font-medium text-white">Circuit isolated</Label>
+              <div className="flex gap-2">
                 {[true, false].map((v) => (
                   <button key={String(v)} type="button" onClick={() => updateDanger(danger.id, 'circuitIsolated', v)}
-                    className={cn('w-11 h-7 rounded text-[10px] font-semibold touch-manipulation transition-all',
-                      danger.circuitIsolated === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                    className={cn('h-11 px-5 rounded-lg text-[13px] touch-manipulation transition-all',
+                      danger.circuitIsolated === v ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold' : 'bg-white/[0.06] border border-white/[0.1] text-white font-medium')}>
                     {v ? 'Yes' : 'No'}
                   </button>
                 ))}
@@ -633,7 +618,7 @@ export default function DangerNoticePage() {
 
             {/* Photos */}
             <div className="space-y-2">
-              <Sub title="Photo Evidence" />
+              <Sub title="Photo evidence" />
               <input
                 ref={(el) => { photoInputRefs.current[danger.id] = el; }}
                 type="file" accept="image/*" multiple className="hidden"
@@ -642,21 +627,21 @@ export default function DangerNoticePage() {
               <button
                 type="button"
                 onClick={() => photoInputRefs.current[danger.id]?.click()}
-                className="w-full h-10 rounded-lg border-2 border-dashed border-white/[0.12] text-xs text-white touch-manipulation active:scale-[0.98] hover:border-white/[0.20] transition-colors"
+                className="h-11 w-full rounded-xl border border-dashed border-white/[0.2] text-[13px] font-semibold text-white hover:border-white/[0.35] touch-manipulation active:scale-[0.99] transition-colors"
               >
-                Add Photo
+                Add photo
               </button>
               {danger.photos.length > 0 && (
-                <div className="grid grid-cols-4 gap-1.5">
+                <div className="grid grid-cols-4 gap-2">
                   {danger.photos.map((photo, i) => (
                     <div key={i} className="relative rounded-lg overflow-hidden aspect-square">
                       <img src={photo} alt={`Evidence ${i + 1}`} className="w-full h-full object-cover" />
                       <button
                         type="button"
                         onClick={() => removePhoto(danger.id, i)}
-                        className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center touch-manipulation"
+                        className="absolute top-1 right-1 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 touch-manipulation"
                       >
-                        <span className="text-white text-[10px] font-bold leading-none">x</span>
+                        <span className="text-[13px] font-semibold leading-none text-white">×</span>
                       </button>
                     </div>
                   ))}
@@ -664,71 +649,70 @@ export default function DangerNoticePage() {
               )}
             </div>
           </div>
-        ))}
+          ))}
 
-        {/* Add another danger */}
-        <button
-          type="button"
-          onClick={addDanger}
-          className="w-full h-10 rounded-lg border-2 border-dashed border-red-500/20 text-xs text-red-400 touch-manipulation active:scale-[0.98] hover:border-red-500/30 hover:bg-red-500/5 transition-all"
-        >
-          Add Danger
-        </button>
+          {/* Add another danger */}
+          <button
+            type="button"
+            onClick={addDanger}
+            className="h-11 w-full rounded-xl border border-dashed border-white/[0.2] text-[13px] font-semibold text-white hover:border-white/[0.35] touch-manipulation active:scale-[0.99] transition-colors"
+          >
+            Add another danger
+          </button>
+        </Section>
 
-        {/* Contractor Declaration */}
-        <div className="space-y-3">
-          <SectionHeader title="Contractor Declaration" />
-          <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
-            <p className="text-[10px] text-white leading-relaxed">{data.declarationText}</p>
-          </div>
+        {/* Contractor declaration */}
+        <Section className="lg:col-span-2">
+          <SectionHeading title="Contractor declaration" />
+          <p className="text-[12.5px] leading-relaxed text-white/90">{data.declarationText}</p>
           <SignatureInput label="Contractor Signature *" value={data.contractorSignature} onChange={(sig) => update('contractorSignature', sig || '')} />
-        </div>
+        </Section>
 
-        {/* Client Acknowledgement */}
-        <div className="space-y-3">
-          <SectionHeader title="Client Acknowledgement" />
-          <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
-            <p className="text-[10px] text-white leading-relaxed">{data.acknowledgementText}</p>
-          </div>
+        {/* Client acknowledgement */}
+        <Section className="lg:col-span-2">
+          <SectionHeading title="Client acknowledgement" />
+          <p className="text-[12.5px] leading-relaxed text-white/90">{data.acknowledgementText}</p>
           <Field label="Client refused to sign">
-            <YesNoToggle value={data.clientRefusedToSign} onChange={(v) => update('clientRefusedToSign', v)} yesLabel="Refused" noLabel="Will Sign" />
+            <YesNoToggle value={data.clientRefusedToSign} onChange={(v) => update('clientRefusedToSign', v)} yesLabel="Refused" noLabel="Will Sign" yesDanger />
           </Field>
           {!data.clientRefusedToSign && (
             <SignatureInput label="Client / Responsible Person Signature" value={data.clientSignature} onChange={(sig) => update('clientSignature', sig || '')} />
           )}
           {data.clientRefusedToSign && (
-            <div className="rounded-lg bg-red-500/[0.08] border border-red-500/20 p-3 space-y-3">
-              <p className="text-[10px] text-red-400 font-semibold">Witness required when client refuses to sign</p>
+            <div className="border-t border-white/[0.06] pt-3 space-y-3">
+              <p className="text-[12.5px] font-semibold text-red-400">Witness required when client refuses to sign</p>
               <Field label="Witness Name"><Input value={data.witnessName} onChange={(e) => update('witnessName', e.target.value)} className={inputCn} /></Field>
               <SignatureInput label="Witness Signature" value={data.witnessSignature} onChange={(sig) => update('witnessSignature', sig || '')} />
             </div>
           )}
-        </div>
+        </Section>
 
         {/* Remote sign-off — email the dutyholder a signing link with read
             receipts and a 12h auto-refusal (ELE-1288/1289). Saved notices only. */}
         {existingReportId && (
-          <DangerNoticeSignoffCard
-            reportRef={existingReportId}
-            defaultEmail={data.clientEmail}
-            defaultName={data.clientName}
-          />
+          <div className="lg:col-span-2">
+            <DangerNoticeSignoffCard
+              reportRef={existingReportId}
+              defaultEmail={data.clientEmail}
+              defaultName={data.clientName}
+            />
+          </div>
         )}
 
         {/* Bottom actions */}
-        <div className="space-y-2 pt-2">
+        <div className="flex flex-col gap-2 pt-2 lg:col-span-2 lg:flex-row-reverse lg:items-center lg:justify-start lg:gap-3">
           <button
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="w-full h-11 rounded-lg bg-red-500/20 border border-red-500/40 text-red-400 text-xs font-medium touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation transition-all disabled:opacity-50 flex items-center justify-center gap-2 lg:w-auto lg:px-10"
           >
             {isSaving ? <><Loader2 className="h-4 w-4 animate-spin" />Saving...</> : existingReportId ? 'Update & Generate' : 'Generate & Save'}
           </button>
           <button
             type="button"
             onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}
-            className="w-full h-11 rounded-lg border border-white/[0.12] text-white text-xs font-medium touch-manipulation active:scale-[0.98] transition-all"
+            className="h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white hover:bg-white/[0.08] active:scale-[0.99] touch-manipulation transition-all lg:w-auto lg:px-8"
           >
             Save Draft
           </button>

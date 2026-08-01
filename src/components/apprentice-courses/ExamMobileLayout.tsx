@@ -8,7 +8,7 @@
  * - All 4 options visible without scrolling
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Flag, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -50,6 +50,17 @@ export const ExamMobileLayout = ({
   children,
 }: ExamMobileLayoutProps) => {
   const [showQuestionGrid, setShowQuestionGrid] = useState(false);
+
+  // ELE-1451 — this layout owns a fixed bottom bar at z-50. The apprentice tab
+  // bar sits on the same layer and, rendering later in the DOM, painted over
+  // our Next/Submit button. Flagging the exam on <body> rather than matching
+  // route strings means every exam screen is covered, including ones whose
+  // path has no "mock-exam" in it (e.g. study-centre/apprentice/am2/module8).
+  useEffect(() => {
+    document.body.classList.add('exam-active');
+    return () => document.body.classList.remove('exam-active');
+  }, []);
+
   const progressPercentage = (answeredQuestions / totalQuestions) * 100;
   const isLastQuestion = currentQuestion === totalQuestions - 1;
   const isFlagged = flaggedQuestions.has(currentQuestion);

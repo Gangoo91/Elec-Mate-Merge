@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -9,19 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import {
-  CheckCircle,
-  Download,
-  AlertTriangle,
-  Clock,
-  Bell,
-  Mail,
-  Loader2,
-  Save,
-  FileText,
-  Receipt,
-  MessageCircle,
-} from 'lucide-react';
+import { Bell, Mail, Loader2, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -47,20 +34,29 @@ const USE_GOTENBERG_PDF = false;
 interface MinorWorksPdfGeneratorProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
-  isFormValid: boolean;
-  onSuccess?: () => void;
-  onSaveDraft?: () => void;
+  /** Called after a successful generate with the report_id the PDF was saved under. */
+  onSuccess?: (savedReportId?: string) => void;
+  onSaveDraft?: () => void | Promise<void>;
   onDuplicateForNextCircuit?: () => void;
+  /** Fired when this component creates the report itself (generate/email before first save). */
+  onReportIdChange?: (reportId: string) => void;
+  /** Mutable ref the shell footer calls into — always holds the current handlers. */
+  actionsRef?: React.MutableRefObject<{
+    generate: () => void;
+    email: () => void;
+    invoice: () => void;
+  } | null>;
   reportId?: string;
   userId?: string;
 }
 
 const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   formData,
-  isFormValid,
   onSuccess,
   onSaveDraft,
   onDuplicateForNextCircuit,
+  onReportIdChange,
+  actionsRef,
   reportId,
   userId,
 }) => {
@@ -89,32 +85,15 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   // Get company branding for PDF
   const { loadCompanyBranding, hasSavedCompanyBranding } = useMinorWorksSmartForm();
 
-  // Check if PDF Monkey is configured
-  const [hasCustomTemplate, setHasCustomTemplate] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const { offlineStorage } = await import('@/utils/offlineStorage');
-      const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
-      setHasCustomTemplate(!!(credentials.apiKey && credentials.templateId));
-    })();
-  }, []);
-
   // --- Validation checks (matching EIC pattern) ---
   const hasClientAndDetails = !!(
     formData.clientName &&
     formData.propertyAddress &&
     formData.workDate
   );
-  const hasCircuitDetails = !!(formData.distributionBoard && formData.circuitDesignation);
-  const hasTestResults = !!(
-    (formData.continuityR1R2 || formData.r2Continuity) &&
-    formData.polarity
-  );
   const hasDeclaration = !!(formData.electricianName && formData.signature);
 
   const canGenerateCertificate = hasClientAndDetails && hasDeclaration;
-  const isFullyComplete = canGenerateCertificate && hasCircuitDetails && hasTestResults;
 
   // Build missing fields list
   const missingFields: string[] = [];
@@ -123,13 +102,6 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   if (!formData.workDate) missingFields.push('Work date');
   if (!formData.electricianName) missingFields.push('Electrician name');
   if (!formData.signature) missingFields.push('Signature');
-
-  const completionSections = [
-    { label: 'Client & Details', done: hasClientAndDetails },
-    { label: 'Circuit Details', done: hasCircuitDetails },
-    { label: 'Test Results', done: hasTestResults },
-    { label: 'Declaration', done: hasDeclaration },
-  ];
 
   // ELE-1377 — only offer WhatsApp where the device can attach the PDF file
   // (native app / mobile web). Desktop hides it — no raw-link fallback.
@@ -194,6 +166,89 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         variant: 'destructive',
       });
     }
+  };
+
+  // Build the exact payload Generate sends to the edge function — branding
+  // merge, PDF-safe logos, per-field formatting and the QS countersignature —
+  // shared by Generate and Email so the email path can attach a PDF built
+  // from the same data even before the user ever taps Generate.
+  const buildFormattedPayload = async (savedReportId?: string) => {
+    // Merge company branding into form data
+    let dataWithBranding = { ...formData };
+    if (hasSavedCompanyBranding) {
+      const branding = loadCompanyBranding();
+      if (branding) {
+        dataWithBranding = {
+          ...dataWithBranding,
+          companyLogo: branding.companyLogo || dataWithBranding.companyLogo || '',
+          companyName:
+            branding.companyName ||
+            dataWithBranding.companyName ||
+            dataWithBranding.contractorName ||
+            '',
+          companyAddress:
+            branding.companyAddress ||
+            dataWithBranding.companyAddress ||
+            dataWithBranding.contractorAddress ||
+            '',
+          companyPhone: branding.companyPhone || dataWithBranding.companyPhone || '',
+          companyEmail: branding.companyEmail || dataWithBranding.companyEmail || '',
+          brandingTagline: branding.companyTagline || dataWithBranding.brandingTagline || '',
+          brandingAccentColor:
+            branding.companyAccentColor || dataWithBranding.brandingAccentColor || '#d69e2e',
+          brandingWebsite: branding.companyWebsite || dataWithBranding.brandingWebsite || '',
+          schemeLogo: branding.registrationSchemeLogo || dataWithBranding.schemeLogo || '',
+        };
+      }
+    }
+
+    // ELE-876 — resolve scheme + company logos to PDF-safe data URLs before
+    // the edge function receives them. Relative paths like
+    // `/logos/schemes/niceic.png` would otherwise render as broken images
+    // in PDFMonkey because it can't fetch our static asset paths.
+    const { resolveSchemeLogo, resolveCompanyLogo } = await import(
+      '@/utils/resolveSchemeLogo'
+    );
+    const resolvedSchemeLogo = await resolveSchemeLogo(
+      dataWithBranding.schemeLogoDataUrl ||
+        dataWithBranding.registrationSchemeLogo ||
+        dataWithBranding.schemeLogo,
+      dataWithBranding.registrationScheme || dataWithBranding.schemeProvider
+    );
+    const resolvedCompanyLogo = await resolveCompanyLogo(
+      dataWithBranding.companyLogo
+    );
+    dataWithBranding = {
+      ...dataWithBranding,
+      schemeLogo: resolvedSchemeLogo,
+      schemeLogoDataUrl: resolvedSchemeLogo,
+      registrationSchemeLogo: resolvedSchemeLogo,
+      companyLogo: resolvedCompanyLogo,
+    };
+
+    // Format form data for better PDF presentation
+    const formattedFormData = { ...dataWithBranding };
+    Object.keys(formattedFormData).forEach((key) => {
+      if (formattedFormData[key]) {
+        formattedFormData[key] = formatFieldForPdf(key, formattedFormData[key]);
+      }
+    });
+
+    // Qualifying Supervisor countersignature — included in the payload when
+    // the latest QS review is approved (rendered once the template has a QS
+    // block; unknown keys are ignored by PDFMonkey until then).
+    const { getLatestApprovedQsReview, formatQsReviewDate } = await import(
+      '@/utils/qsReviewPdf'
+    );
+    const qsReview = savedReportId ? await getLatestApprovedQsReview(savedReportId) : null;
+    if (qsReview) {
+      formattedFormData.qsName = qsReview.reviewer_name;
+      formattedFormData.qsSignature = qsReview.qs_signature;
+      formattedFormData.qsPosition = qsReview.qs_position;
+      formattedFormData.qsDate = formatQsReviewDate(qsReview.reviewed_at);
+    }
+
+    return formattedFormData;
   };
 
   // --- PDF generation ---
@@ -273,6 +328,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           throw new Error('Failed to save report before generating PDF');
         }
         savedReportId = createResult.reportId;
+        onReportIdChange?.(savedReportId);
       } else {
         if (savedReportId) {
           await reportCloud.updateReport(savedReportId, user.id, formData);
@@ -289,80 +345,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       setExportProgress(30);
       setExportStatus('generating');
 
-      // Merge company branding into form data
-      let dataWithBranding = { ...formData };
-      if (hasSavedCompanyBranding) {
-        const branding = loadCompanyBranding();
-        if (branding) {
-          dataWithBranding = {
-            ...dataWithBranding,
-            companyLogo: branding.companyLogo || dataWithBranding.companyLogo || '',
-            companyName:
-              branding.companyName ||
-              dataWithBranding.companyName ||
-              dataWithBranding.contractorName ||
-              '',
-            companyAddress:
-              branding.companyAddress ||
-              dataWithBranding.companyAddress ||
-              dataWithBranding.contractorAddress ||
-              '',
-            companyPhone: branding.companyPhone || dataWithBranding.companyPhone || '',
-            companyEmail: branding.companyEmail || dataWithBranding.companyEmail || '',
-            brandingTagline: branding.companyTagline || dataWithBranding.brandingTagline || '',
-            brandingAccentColor:
-              branding.companyAccentColor || dataWithBranding.brandingAccentColor || '#d69e2e',
-            brandingWebsite: branding.companyWebsite || dataWithBranding.brandingWebsite || '',
-            schemeLogo: branding.registrationSchemeLogo || dataWithBranding.schemeLogo || '',
-          };
-        }
-      }
-
-      // ELE-876 — resolve scheme + company logos to PDF-safe data URLs before
-      // the edge function receives them. Relative paths like
-      // `/logos/schemes/niceic.png` would otherwise render as broken images
-      // in PDFMonkey because it can't fetch our static asset paths.
-      const { resolveSchemeLogo, resolveCompanyLogo } = await import(
-        '@/utils/resolveSchemeLogo'
-      );
-      const resolvedSchemeLogo = await resolveSchemeLogo(
-        dataWithBranding.schemeLogoDataUrl ||
-          dataWithBranding.registrationSchemeLogo ||
-          dataWithBranding.schemeLogo,
-        dataWithBranding.registrationScheme || dataWithBranding.schemeProvider
-      );
-      const resolvedCompanyLogo = await resolveCompanyLogo(
-        dataWithBranding.companyLogo
-      );
-      dataWithBranding = {
-        ...dataWithBranding,
-        schemeLogo: resolvedSchemeLogo,
-        schemeLogoDataUrl: resolvedSchemeLogo,
-        registrationSchemeLogo: resolvedSchemeLogo,
-        companyLogo: resolvedCompanyLogo,
-      };
-
-      // Format form data for better PDF presentation
-      const formattedFormData = { ...dataWithBranding };
-      Object.keys(formattedFormData).forEach((key) => {
-        if (formattedFormData[key]) {
-          formattedFormData[key] = formatFieldForPdf(key, formattedFormData[key]);
-        }
-      });
-
-      // Qualifying Supervisor countersignature — included in the payload when
-      // the latest QS review is approved (rendered once the template has a QS
-      // block; unknown keys are ignored by PDFMonkey until then).
-      const { getLatestApprovedQsReview, formatQsReviewDate } = await import(
-        '@/utils/qsReviewPdf'
-      );
-      const qsReview = savedReportId ? await getLatestApprovedQsReview(savedReportId) : null;
-      if (qsReview) {
-        formattedFormData.qsName = qsReview.reviewer_name;
-        formattedFormData.qsSignature = qsReview.qs_signature;
-        formattedFormData.qsPosition = qsReview.qs_position;
-        formattedFormData.qsDate = formatQsReviewDate(qsReview.reviewed_at);
-      }
+      // Branding merge + logo resolution + field formatting + QS block
+      const formattedFormData = await buildFormattedPayload(savedReportId);
 
       // Save formatted payload for email/reports page reuse
       if (savedReportId) {
@@ -469,7 +453,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           : 'Your certificate has been generated and downloaded.',
       });
 
-      onSuccess?.();
+      onSuccess?.(savedReportId ?? undefined);
       await handleNotificationCreation(savedReportId ?? undefined);
 
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
@@ -530,26 +514,62 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       return;
     }
 
-    const currentReportId = reportId || formData.certificateNumber;
-    if (!reportId) {
-      toast({
-        title: 'Save Required',
-        description:
-          "Please save the certificate first before emailing. Click 'Save Draft' then try again.",
-        variant: 'destructive',
-      });
-      return;
-    }
-
     setIsSendingEmail(true);
 
     try {
+      // Flush the latest form data to the report BEFORE the edge function
+      // compares updated_at vs pdf_generated_at — otherwise edits made after
+      // Generate but before the 30s cloud sync would silently attach a stale
+      // cached PDF. Creates the report first if it has never been saved
+      // (mirrors the Generate path).
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('You must be signed in to email certificates.');
+      }
+
+      const { reportCloud } = await import('@/utils/reportCloud');
+      let savedReportId = reportId;
+      const existingReport = reportId
+        ? await reportCloud.getReportByReportId(reportId, user.id)
+        : null;
+      if (existingReport && savedReportId) {
+        await reportCloud.updateReport(savedReportId, user.id, formData);
+      } else {
+        const createResult = await reportCloud.createReport(user.id, 'minor-works', formData);
+        if (!createResult.success || !createResult.reportId) {
+          throw new Error('Failed to save the certificate before emailing.');
+        }
+        savedReportId = createResult.reportId;
+        onReportIdChange?.(savedReportId);
+      }
+
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the user emails before ever tapping Generate.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        formattedData = await buildFormattedPayload(savedReportId);
+        if (!formattedData.certificateNumber) {
+          formattedData.certificateNumber = `MW-${Date.now()}`;
+        }
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+
+      // Custom PDFMonkey template — same lookup the Generate path uses, so
+      // emailing doesn't silently fall back to the default template.
+      const { offlineStorage } = await import('@/utils/offlineStorage');
+      const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
+
       const { data: result, error: fnError } = await supabase.functions.invoke(
         'send-certificate-resend',
         {
           body: {
-            reportId: currentReportId,
+            reportId: savedReportId,
             recipientEmail: emailRecipient,
+            formattedData,
+            templateId: credentials.templateId || undefined,
           },
         }
       );
@@ -571,7 +591,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
       toast({
         title: 'Certificate Sent',
-        description: `Minor Works certificate sent successfully to ${emailRecipient}`,
+        description: result?.pdfAttached
+          ? `Minor Works certificate sent to ${emailRecipient} with the PDF attached`
+          : `Minor Works certificate sent successfully to ${emailRecipient}`,
       });
 
       setShowEmailDialog(false);
@@ -677,9 +699,22 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       certificateType: 'Minor Works',
       certificateReference: formData.certificateNumber || '',
       reportId: reportId || undefined,
+      pdfUrl: generatedPdfUrl || formData.pdfUrl || undefined,
     });
     navigate(url);
   };
+
+  // Keep the footer's handle current every render — closures capture live state,
+  // and the isExporting guard covers double-taps from the thumb-zone button.
+  if (actionsRef) {
+    actionsRef.current = {
+      generate: () => {
+        if (!isExporting) handleGeneratePDF();
+      },
+      email: handleEmailCertificate,
+      invoice: handleCreateInvoice,
+    };
+  }
 
   return (
     <>
@@ -689,32 +724,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           isMobile ? '' : 'rounded-xl border border-white/10 bg-white/[0.02] p-5'
         )}
       >
-        {/* Section completion — compact row */}
-        <div className="grid grid-cols-4 gap-1">
-          {completionSections.map((section) => (
-            <div
-              key={section.label}
-              className={cn(
-                'h-9 rounded-lg flex items-center justify-center text-[9px] font-semibold',
-                section.done
-                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              {section.done ? '✓' : '○'} {section.label.split(' ')[0]}
-            </div>
-          ))}
-        </div>
-
-        {/* Validation — inline */}
-        {!canGenerateCertificate && (
-          <p className="text-[10px] text-elec-yellow">
-            {!hasClientAndDetails && 'Complete client details. '}
-            {!hasDeclaration && 'Complete declaration with signature.'}
-          </p>
-        )}
-
-        {/* Generate button */}
+        {/* Generate button — completion state lives in the shell header ring/step ticks */}
         <button
           type="button"
           onClick={handleGeneratePDF}
@@ -729,7 +739,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           <button
             type="button"
             onClick={handleSaveDraft}
-            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] flex items-center justify-center text-[10px] font-semibold"
+            className="h-12 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] flex items-center justify-center text-[10px] font-semibold"
           >
             Save
           </button>
@@ -737,7 +747,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
             type="button"
             onClick={handleEmailCertificate}
             disabled={!canGenerateCertificate}
-            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
+            className="h-12 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
           >
             Email
           </button>
@@ -746,7 +756,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               type="button"
               onClick={handleWhatsApp}
               disabled={!canGenerateCertificate || isSendingWhatsApp}
-              className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1 text-[10px] font-semibold"
+              className="h-12 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1 text-[10px] font-semibold"
             >
               {isSendingWhatsApp ? (
                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -760,7 +770,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
             type="button"
             onClick={handleCreateInvoice}
             disabled={!canGenerateCertificate}
-            className="h-10 touch-manipulation bg-white/[0.05] border border-elec-yellow/30 text-elec-yellow rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
+            className="h-12 touch-manipulation bg-white/[0.05] border border-elec-yellow/30 text-elec-yellow rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
           >
             Invoice
           </button>
@@ -774,7 +784,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           <button
             type="button"
             onClick={onDuplicateForNextCircuit}
-            className="w-full h-10 rounded-lg font-semibold text-xs bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+            className="w-full h-12 rounded-lg font-semibold text-xs bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
           >
             New Cert for Another Circuit (Same Job)
           </button>

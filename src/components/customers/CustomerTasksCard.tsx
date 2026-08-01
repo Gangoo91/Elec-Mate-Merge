@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, ChevronRight } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface CustomerTasksCardProps {
@@ -153,7 +153,7 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
                   >
                     {task.status === 'done' ? 'Done' : task.priority}
                   </span>
-                  <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                  <span className="flex-shrink-0 text-[12px] font-semibold text-elec-yellow">Open</span>
                 </div>
               );
             })}

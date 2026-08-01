@@ -84,9 +84,7 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
             Emergency
           </span>
           <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
-            <span className="text-[14px] font-medium text-white">
-              Police / fire / ambulance
-            </span>
+            <span className="text-[14px] font-medium text-white">Police / fire / ambulance</span>
             <a
               href="tel:999"
               className="text-[14px] font-bold tabular-nums text-red-400 hover:text-red-300 transition-colors touch-manipulation"

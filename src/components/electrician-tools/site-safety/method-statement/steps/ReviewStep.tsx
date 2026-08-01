@@ -14,8 +14,8 @@ import {
   ListCard,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
 } from '@/components/college/primitives';
+import { safetyInputCn } from '../../common/SafetyDocField';
 
 interface ReviewStepProps {
   data: MethodStatementData;
@@ -34,7 +34,7 @@ function RiskPill({ level }: { level: string }) {
     <span
       className={cn(
         'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
-        RISK_PILL[level] ?? 'bg-white/[0.05] text-white/55 border-white/10'
+        RISK_PILL[level] ?? 'bg-white/[0.05] text-white border-white/10'
       )}
     >
       {level}
@@ -143,7 +143,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       {/* High-risk notice */}
       {highRiskSteps > 0 && (
         <div className="p-3 rounded-xl bg-red-500/[0.08] border border-red-500/20">
-          <p className="text-[12px] text-white/85">
+          <p className="text-[12px] text-white">
             This method statement contains {highRiskSteps} high-risk step
             {highRiskSteps !== 1 ? 's' : ''}. Ensure additional supervision and safety measures are
             in place.
@@ -156,7 +156,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
         <div className="space-y-2.5">
           {detailRows.map((row) => (
             <div key={row.label} className="flex items-baseline justify-between gap-4">
-              <span className="text-[11.5px] uppercase tracking-[0.12em] text-white/45">
+              <span className="text-[11.5px] uppercase tracking-[0.12em] text-white">
                 {row.label}
               </span>
               <span className="text-[13px] text-white text-right min-w-0 truncate">
@@ -165,7 +165,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
             </div>
           ))}
           <div className="flex items-baseline justify-between gap-4">
-            <span className="text-[11.5px] uppercase tracking-[0.12em] text-white/45">
+            <span className="text-[11.5px] uppercase tracking-[0.12em] text-white">
               Overall risk
             </span>
             <RiskPill level={data.overallRiskLevel} />
@@ -174,7 +174,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
         {data.description && (
           <div className="pt-1">
             <Eyebrow className="mb-1.5">Description</Eyebrow>
-            <p className="text-[12.5px] text-white/75 leading-relaxed">{data.description}</p>
+            <p className="text-[12.5px] text-white leading-relaxed">{data.description}</p>
           </div>
         )}
         <SecondaryButton size="sm" onClick={onBack}>
@@ -196,15 +196,15 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-[14px] font-medium text-white">{step.title}</span>
                   {step.estimatedDuration && (
-                    <span className="text-[11px] text-white/45 tabular-nums">
+                    <span className="text-[11px] text-white tabular-nums">
                       {step.estimatedDuration}
                     </span>
                   )}
                 </div>
                 {step.description && (
-                  <p className="text-[12.5px] text-white/70 leading-relaxed">{step.description}</p>
+                  <p className="text-[12.5px] text-white leading-relaxed">{step.description}</p>
                 )}
-                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white/45">
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white">
                   <span>{step.safetyRequirements.length} safety</span>
                   <span>{step.equipmentNeeded.length} equipment</span>
                   <span>{step.qualifications.length} qualifications</span>
@@ -221,11 +221,11 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
           <input
             value={data.approvedBy || ''}
             onChange={(e) => onDataChange({ approvedBy: e.target.value })}
-            className={inputClass}
+            className={safetyInputCn}
             placeholder="Name of approving authority"
           />
         </Field>
-        <p className="text-[11.5px] text-white/55">
+        <p className="text-[11.5px] text-white">
           Ready for approval and distribution to the site team.
         </p>
       </FormCard>

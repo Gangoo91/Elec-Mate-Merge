@@ -13,7 +13,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppReview } from '@/hooks/useAppReview';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +23,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -38,12 +46,12 @@ import { formatSolarPVJson } from '@/utils/solarPVJsonFormatter';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 
 import SolarPVFormTabs from '@/components/inspection/solar-pv/SolarPVFormTabs';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
 import { useSolarPVTabs, SolarPVTabValue } from '@/hooks/useSolarPVTabs';
 import { getDefaultSolarPVFormData, SolarPVFormData } from '@/types/solar-pv';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { useReportSync } from '@/hooks/useReportSync';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
@@ -72,6 +80,11 @@ export default function SolarPVCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+
+  // Email dialog state
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailRecipient, setEmailRecipient] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave;
   // lockReport is wrapped after useReportSync to flush pending edits first.
@@ -300,6 +313,114 @@ export default function SolarPVCertificate() {
     }
   };
 
+  // Fetch this report's uploaded photos (inspection_photos table) so they
+  // reach the formatter — the Sign off tab uploads via useInspectionPhotos,
+  // which stores rows against the report's database uuid, not formData.photos.
+  const fetchReportPhotos = async (): Promise<
+    { id: string; url: string; caption: string; category: string }[]
+  > => {
+    if (!savedReportId) return [];
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
+      // Resolve the database uuid the same way useInspectionPhotos does
+      const { data: reportRow } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('report_id', savedReportId)
+        .eq('user_id', user.id)
+        .maybeSingle();
+      const dbId = reportRow?.id || savedReportId;
+      const { data: photoRows } = await supabase
+        .from('inspection_photos')
+        .select('id, photo_url, caption')
+        .eq('report_id', dbId)
+        .order('created_at');
+      return (photoRows || []).map((p: any) => ({
+        id: p.id,
+        url: p.photo_url,
+        caption: p.caption || '',
+        category: 'general',
+      }));
+    } catch (err) {
+      console.warn('[SolarPV] Failed to fetch report photos:', err);
+      return [];
+    }
+  };
+
+  // Open the email dialog (prefill from client email)
+  const handleEmailCertificate = () => {
+    if (!savedReportId) {
+      toast.error('Please save the certificate first before emailing.');
+      return;
+    }
+    if (formData.clientEmail) setEmailRecipient(formData.clientEmail);
+    setShowEmailDialog(true);
+  };
+
+  // Send the certificate by email via send-certificate-resend
+  const handleSendEmail = async () => {
+    if (!emailRecipient || !emailRecipient.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+    setIsSendingEmail(true);
+    try {
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the user emails before ever tapping Generate.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        const photos = await fetchReportPhotos();
+        formattedData = formatSolarPVJson({
+          ...formData,
+          certificateNumber: formData.certificateNumber || `SPV-${Date.now()}`,
+          photos,
+        } as any);
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+      const { data: result, error: fnError } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        { body: { reportId: savedReportId, recipientEmail: emailRecipient, formattedData } }
+      );
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try {
+          const parsed = JSON.parse(fnError.message);
+          errorMessage = parsed.error || parsed.message || fnError.message;
+        } catch {
+          /* keep */
+        }
+        if (fnError.context?.body) {
+          try {
+            const bodyError =
+              typeof fnError.context.body === 'string'
+                ? JSON.parse(fnError.context.body)
+                : fnError.context.body;
+            if (bodyError.error) errorMessage = bodyError.error;
+          } catch {
+            /* keep */
+          }
+        }
+        throw new Error(errorMessage);
+      }
+      if (!result?.success) throw new Error(result?.error || 'Failed to send');
+      toast.success(
+        result?.pdfAttached
+          ? `Certificate emailed to ${emailRecipient} with the PDF attached`
+          : `Certificate emailed to ${emailRecipient}`
+      );
+      setShowEmailDialog(false);
+      setEmailRecipient('');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send certificate email.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
   // Generate certificate PDF
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
@@ -363,8 +484,11 @@ export default function SolarPVCertificate() {
         }
       }
 
+      // Inject uploaded photos so the template's photos page renders
+      const photos = await fetchReportPhotos();
+
       // Format data for PDF generation using MCS compliant formatter
-      const pdfData = formatSolarPVJson(dataWithCertNumber);
+      const pdfData = formatSolarPVJson({ ...dataWithCertNumber, photos } as any);
 
       // Call edge function
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
@@ -481,11 +605,8 @@ export default function SolarPVCertificate() {
 
   if (isLoading) {
     return (
-      <div className="bg-background min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <Skeleton className="h-12 w-48 mb-4" />
-          <Skeleton className="h-64 w-full" />
-        </div>
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
       </div>
     );
   }
@@ -494,63 +615,70 @@ export default function SolarPVCertificate() {
     <div className="bg-background min-h-screen">
       {/* Recovery Dialog */}
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white text-base font-bold">
+              Recover unsaved work?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
               We found an unsaved Solar PV certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
               {recoveryDraft?.data?.clientName && (
-                <span className="block mt-2 font-medium">
+                <span className="block mt-2 font-medium text-elec-yellow">
                   Client: {recoveryDraft.data.clientName}
                 </span>
               )}
-              Would you like to recover this work?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction
+              onClick={handleRecoverDraft}
+              className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              Recover draft
+            </AlertDialogAction>
+            <AlertDialogCancel
+              onClick={handleDiscardDraft}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Start fresh
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Header — matches fire alarm pattern */}
-      <div className="bg-background">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <div>
-                <h1 className="text-lg font-bold text-white leading-tight">Solar PV</h1>
-                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">
-                  Installation Certificate
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95 disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-amber-500/40 via-amber-500/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate('/electrician/inspection-testing?section=specialist')}
+        title="Solar PV"
+        subtitle={
+          formData.certificateNumber ? `${formData.certificateNumber} · BS EN 62446` : null
+        }
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={[
+          { id: 'installation', label: 'Details' },
+          { id: 'system', label: 'System' },
+          { id: 'grid', label: 'Grid' },
+          { id: 'testing', label: 'Testing' },
+          { id: 'signoff', label: 'Sign off' },
+        ]}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as SolarPVTabValue);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          installation: !!tabProps.isTabComplete('installation'),
+          system: !!tabProps.isTabComplete('system'),
+          grid: !!tabProps.isTabComplete('grid'),
+          testing: !!tabProps.isTabComplete('testing'),
+          signoff: !!tabProps.isTabComplete('signoff'),
+        }}
+      />
 
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
@@ -565,8 +693,8 @@ export default function SolarPVCertificate() {
         onOpenVersion={openReport}
       />
 
-      {/* Main Content — full width on mobile */}
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      {/* Main Content */}
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div
           className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
           aria-disabled={isLocked || undefined}
@@ -595,6 +723,9 @@ export default function SolarPVCertificate() {
             }}
             onGenerateCertificate={handleGenerateCertificate}
             onCreateInvoice={handleCreateInvoice}
+            onEmailCertificate={handleEmailCertificate}
+            canEmail={!!savedReportId}
+            reportId={savedReportId}
             onSaveDraft={handleSaveDraft}
             canGenerateCertificate={!isGenerating}
             completedTabs={{
@@ -616,6 +747,71 @@ export default function SolarPVCertificate() {
         errorMessage={generationError}
         documentLabel="Certificate"
       />
+
+      {/* Email Dialog */}
+      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.1] rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white text-base font-bold">Email certificate</DialogTitle>
+            <DialogDescription className="text-white/85 text-sm">
+              Enter the recipient's email address.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-3">
+            <div>
+              <label
+                htmlFor="solar-pv-email"
+                className="mb-1 block text-[12px] font-medium text-white"
+              >
+                Recipient email
+              </label>
+              <Input
+                id="solar-pv-email"
+                type="email"
+                placeholder="client@example.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+                disabled={isSendingEmail}
+                className="input-underline h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
+              />
+            </div>
+            {formData.clientEmail && emailRecipient !== formData.clientEmail && (
+              <button
+                onClick={() => setEmailRecipient(formData.clientEmail)}
+                className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.1] text-white text-[13px] font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Use client email: {formData.clientEmail}
+              </button>
+            )}
+          </div>
+          {/* Plain column footer — DialogFooter's sm:space-x-2 skews stacked
+              buttons sideways, so the two never sat level. */}
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation"
+            >
+              {isSendingEmail ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                  Sending…
+                </>
+              ) : (
+                'Send certificate'
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="h-12 w-full rounded-xl border border-white/[0.1] bg-white/[0.04] font-medium text-white transition-all hover:bg-white/[0.08] hover:text-white active:scale-[0.98] disabled:opacity-40 touch-manipulation"
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </div>

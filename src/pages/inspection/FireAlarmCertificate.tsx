@@ -9,11 +9,9 @@
  * - PDF generation with email & quote/invoice creation
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAppReview } from '@/hooks/useAppReview';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +22,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Bell, Save, Download, Loader2, Mail } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { maybePromptLogBook } from '@/utils/fireAlarmLogBookPrompt';
 import { reportCloud } from '@/utils/reportCloud';
@@ -41,7 +39,8 @@ import { EmailCertificateDialog } from '@/components/certificate-completion/Emai
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 import FireAlarmFormTabs from '@/components/inspection/fire-alarm/FireAlarmFormTabs';
-import { useFireAlarmTabs } from '@/hooks/useFireAlarmTabs';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import { useFireAlarmTabs, type FireAlarmTabValue } from '@/hooks/useFireAlarmTabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -49,10 +48,17 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'fire-alarm' as const;
+
+const FA_STEPS = [
+  { id: 'client', label: 'Client' },
+  { id: 'system', label: 'System' },
+  { id: 'zones', label: 'Zones' },
+  { id: 'equipment', label: 'Equipment' },
+  { id: 'declarations', label: 'Sign off' },
+];
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -138,6 +144,69 @@ const {
   // Company profile for email
   const { companyProfile } = useCompanyProfile();
 
+  // General site photos (Photos section) live in the inspection_photos table —
+  // nothing writes them into formData.photos, so fetch them before formatting.
+  const [generalPhotoUrls, setGeneralPhotoUrls] = useState<string[]>([]);
+
+  const fetchGeneralPhotoUrls = useCallback(async (): Promise<string[]> => {
+    if (!savedReportId) return [];
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
+      const { data: reportRow } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('report_id', savedReportId)
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (!reportRow?.id) return [];
+      const { data: photoRows } = await supabase
+        .from('inspection_photos')
+        .select('photo_url')
+        .eq('report_id', reportRow.id)
+        .eq('item_id', 'general-photos')
+        .order('created_at');
+      return (photoRows || []).map((p: any) => p.photo_url).filter(Boolean);
+    } catch {
+      return [];
+    }
+  }, [savedReportId]);
+
+  // Build the formatter input: cert number fallback + company branding + photos.
+  // Shared by Generate and Email so both produce the same PDF payload.
+  const buildPdfFormData = useCallback(
+    (photos: string[]): Record<string, any> => {
+      let merged: Record<string, any> = {
+        ...formData,
+        certificateNumber: formData.certificateNumber || `FA-${Date.now()}`,
+        photos: [...(Array.isArray(formData.photos) ? formData.photos : []), ...photos],
+      };
+
+      if (hasSavedCompanyBranding) {
+        const branding = loadCompanyBranding();
+        if (branding) {
+          merged = {
+            ...merged,
+            companyLogo: branding.companyLogo || merged.companyLogo,
+            companyName: branding.companyName || merged.companyName || merged.installerCompany,
+            companyAddress: branding.companyAddress || merged.companyAddress,
+            companyPhone: branding.companyPhone || merged.companyPhone,
+            companyEmail: branding.companyEmail || merged.companyEmail,
+            accentColor: branding.accentColor || merged.accentColor,
+            registrationSchemeLogo:
+              branding.registrationSchemeLogo || merged.registrationSchemeLogo,
+            registrationScheme: branding.registrationScheme || merged.registrationScheme,
+          };
+        }
+      }
+
+      return merged;
+    },
+    [formData, hasSavedCompanyBranding, loadCompanyBranding]
+  );
+
   // Auto-generate certificate number for new certs
   useEffect(() => {
     if (!isNew || formData.certificateNumber) return;
@@ -156,6 +225,18 @@ const {
   // Email state
   const [showEmailDialog, setShowEmailDialog] = useState(false);
 
+  // Formatted payload for email — built while the dialog is open so the edge
+  // function can generate + attach a fresh PDF (avoids the pre-Generate 422
+  // and stale pdf_payload after post-Generate edits).
+  const emailFormattedData = useMemo(() => {
+    if (!showEmailDialog) return undefined;
+    try {
+      return formatFireAlarmJson(buildPdfFormData(generalPhotoUrls));
+    } catch {
+      return undefined; // fall back to server-side pdf_payload
+    }
+  }, [showEmailDialog, buildPdfFormData, generalPhotoUrls]);
+
   // Email hook
   const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
     certificateType: 'fire-alarm',
@@ -166,6 +247,7 @@ const {
     installationAddress: formData.premisesAddress,
     inspectionDate: formData.commissioningDate,
     companyName: companyProfile?.company_name,
+    formattedData: emailFormattedData,
   });
 
   // Check for recoverable draft on mount
@@ -305,32 +387,11 @@ const {
     try {
       await syncNowImmediate();
 
-      let dataWithCertNumber = {
-        ...formData,
-        certificateNumber: formData.certificateNumber || `FA-${Date.now()}`,
-      };
+      // Pull general site photos from inspection_photos so they reach the PDF
+      const generalPhotos = await fetchGeneralPhotoUrls();
+      setGeneralPhotoUrls(generalPhotos);
 
-      if (hasSavedCompanyBranding) {
-        const branding = loadCompanyBranding();
-        if (branding) {
-          dataWithCertNumber = {
-            ...dataWithCertNumber,
-            companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
-            companyName:
-              branding.companyName ||
-              dataWithCertNumber.companyName ||
-              dataWithCertNumber.installerCompany,
-            companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
-            companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
-            companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
-            accentColor: branding.accentColor || dataWithCertNumber.accentColor,
-            registrationSchemeLogo:
-              branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
-            registrationScheme:
-              branding.registrationScheme || dataWithCertNumber.registrationScheme,
-          };
-        }
-      }
+      const dataWithCertNumber = buildPdfFormData(generalPhotos);
 
       const pdfData = formatFireAlarmJson(dataWithCertNumber);
 
@@ -465,11 +526,8 @@ const {
 
   if (isLoading) {
     return (
-      <div className="bg-background min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <Skeleton className="h-12 w-48 mb-4" />
-          <Skeleton className="h-64 w-full" />
-        </div>
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
       </div>
     );
   }
@@ -478,53 +536,50 @@ const {
     <div className="bg-background min-h-screen">
       {/* Recovery Dialog */}
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
-              We found an unsaved Fire Alarm certificate from{' '}
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
+              We found an unsaved fire alarm certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
               {recoveryDraft?.data?.clientName && (
-                <span className="block mt-2 font-medium">
+                <span className="block mt-2 font-medium text-elec-yellow">
                   Client: {recoveryDraft.data.clientName}
                 </span>
               )}
-              Would you like to recover this work?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Header */}
-      <div className="bg-background">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button onClick={() => navigate(-1)} className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95">
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg font-bold text-white">Fire Alarm</h1>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">G2</span>
-                </div>
-                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">Installation Certificate</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <SyncStatusBadge status={syncStatus} />
-              <button onClick={handleSaveDraft} disabled={isSaving} className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95 disabled:opacity-50">
-                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Fire alarm installation"
+        subtitle={formData.certificateNumber ? `${formData.certificateNumber} · BS 5839-1` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={FA_STEPS}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as FireAlarmTabValue);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          client: !!tabProps.isTabComplete('client'),
+          system: !!tabProps.isTabComplete('system'),
+          zones: !!tabProps.isTabComplete('zones'),
+          equipment: !!tabProps.isTabComplete('equipment'),
+          declarations: !!tabProps.isTabComplete('declarations'),
+        }}
+      />
 
       {/* Main Content - Edge-to-edge on mobile, padded on desktop */}
       {/* ELE-1037 — lock / version bar */}
@@ -540,7 +595,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <FireAlarmFormTabs
           currentTab={tabProps.currentTab}
@@ -551,6 +606,7 @@ const {
           canAccessTab={tabProps.canAccessTab}
           formData={formData}
           onUpdate={handleUpdate}
+          savedReportId={savedReportId}
           tabNavigationProps={{
             currentTab: tabProps.currentTab,
             currentTabIndex: tabProps.currentTabIndex,
@@ -575,7 +631,11 @@ const {
           onCreateInvoice={handleCreateInvoice}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
-          onOpenEmailDialog={() => setShowEmailDialog(true)}
+          onOpenEmailDialog={() => {
+            setShowEmailDialog(true);
+            // Refresh general photos so the emailed PDF includes them
+            fetchGeneralPhotoUrls().then(setGeneralPhotoUrls);
+          }}
           canEmail={!!savedReportId}
         />
       </div>

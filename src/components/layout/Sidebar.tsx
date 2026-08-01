@@ -8,6 +8,8 @@ import { mainNavItems } from './SidebarNavItems';
 import { useEffect } from 'react';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
 import { useHasCollegeLink } from '@/hooks/useHasCollegeLink';
+import { isEmployerUser } from '@/config/employerAccess';
+import { useEmployerCoAdmin } from '@/hooks/useEmployerCoAdmin';
 import SafeLink from '@/components/common/SafeLink';
 import { ChevronLeft } from 'lucide-react';
 
@@ -27,6 +29,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   const { profile, user } = useAuth();
   const { hasCollegeLink } = useHasCollegeLink();
+  const { data: isEmployerCoAdmin = false } = useEmployerCoAdmin(user?.id);
 
   // Get the user role from the profile, defaulting to "visitor" if not available
   const userRole = profile?.role || 'visitor';
@@ -161,6 +164,7 @@ const Sidebar = ({
             userRole={userRole}
             userEmail={user?.email}
             hasCollegeLink={hasCollegeLink}
+            hasEmployerAccess={isEmployerUser(profile, user?.email) || isEmployerCoAdmin}
             adminRole={adminRole}
             onItemClick={() => setOpen(false)}
           />

@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Switch } from '@/components/ui/switch';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-// No icons — clean design
 import { cn } from '@/lib/utils';
 import { EVSectionHeader } from './EVSectionHeader';
 import {
@@ -17,45 +15,29 @@ interface EVChargingTestScheduleProps {
   onUpdate: (field: string, value: unknown) => void;
 }
 
-type TestResult = 'pass' | 'fail' | '';
+// Section card — brighter step, the only box on the page
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-// Section header — gradient line style
-const SectionTitle: React.FC<{ title: string }> = ({ title }) => <EVSectionHeader title={title} />;
+// Paper-form underline input
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-// Pass/Fail toggle buttons
-const TestResultToggle: React.FC<{
-  value: TestResult;
-  onChange: (value: TestResult) => void;
-}> = ({ value, onChange }) => (
-  <div className="grid grid-cols-2 gap-2">
-    <button
-      type="button"
-      onClick={() => onChange(value === 'pass' ? '' : 'pass')}
-      className={cn(
-        'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-        value === 'pass'
-          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-          : 'bg-white/[0.05] border border-white/[0.08] text-white'
-      )}
-    >
-      Pass
-    </button>
-    <button
-      type="button"
-      onClick={() => onChange(value === 'fail' ? '' : 'fail')}
-      className={cn(
-        'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-        value === 'fail'
-          ? 'bg-red-500/20 border border-red-500/40 text-red-400'
-          : 'bg-white/[0.05] border border-white/[0.08] text-white'
-      )}
-    >
-      Fail
-    </button>
-  </div>
-);
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
-// Validation badge — text-only, no icons
+const selectTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 touch-manipulation';
+
+// Pass/fail verdict buttons — semantic green/red, SOLID when selected
+const verdictCn = (selected: boolean, tone: 'pass' | 'fail') =>
+  cn(
+    'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
+    selected && tone === 'pass' && 'bg-green-500 border border-green-500 text-black',
+    selected && tone === 'fail' && 'bg-red-500 border border-red-500 text-white',
+    !selected && 'bg-white/[0.06] border border-white/[0.12] text-white'
+  );
+
+// Validation badge — text-only
 const ValidationBadge: React.FC<{ validation: TestResultValidation | undefined }> = ({
   validation,
 }) => {
@@ -64,19 +46,16 @@ const ValidationBadge: React.FC<{ validation: TestResultValidation | undefined }
   return (
     <span
       className={cn(
-        'text-[10px] font-bold px-1.5 py-0.5 rounded ml-2',
-        validation.status === 'pass' && 'bg-green-500/15 text-green-400',
-        validation.status === 'fail' && 'bg-red-500/15 text-red-400',
-        validation.status === 'warning' && 'bg-orange-500/15 text-orange-400'
+        'text-[11px] font-semibold ml-2',
+        validation.status === 'pass' && 'text-green-400',
+        validation.status === 'fail' && 'text-red-400',
+        validation.status === 'warning' && 'text-amber-300'
       )}
     >
       {validation.status.toUpperCase()}
     </span>
   );
 };
-
-const inputClass = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const labelClass = 'text-white text-xs mb-1.5 block';
 
 const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formData, onUpdate }) => {
   const { calculateZs, calculateVoltageDrop, validateTestResults } = useEVChargingSmartForm();
@@ -169,28 +148,27 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
   }, [testResults, validateTestResults]);
 
   return (
-    <div className="space-y-5 px-4 sm:px-0 py-2 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-5">
-      {/* Circuit Tests */}
-      <div>
-        <SectionTitle title="Circuit Tests" />
+    <div className="py-2 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Circuit Tests — wide */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <EVSectionHeader title="Circuit Tests" />
 
-        {/* Ambient Temperature */}
         {/* Ambient temp + correction in one compact row */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-end gap-4">
           <div className="w-24 shrink-0">
-            <label className={labelClass}>Temp (°C)</label>
+            <label className={labelCn}>Temp (°C)</label>
             <Input
               placeholder="20"
               inputMode="decimal"
               value={testResults.ambientTemperature || ''}
               onChange={(e) => updateTestResult('ambientTemperature', e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
           </div>
-          <label className="flex-1 flex items-center justify-between rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 cursor-pointer touch-manipulation mt-5">
+          <label className="flex-1 flex items-center justify-between rounded-xl bg-white/[0.05] px-3.5 py-3 cursor-pointer touch-manipulation">
             <div>
-              <span className="text-xs font-medium text-white block">1.2× Correction</span>
-              <span className="text-[10px] text-white">70°C operating temp</span>
+              <span className="text-sm font-medium text-white block">1.2× correction</span>
+              <span className="text-[11px] text-white/85">70°C operating temp</span>
             </div>
             <Switch
               checked={applyTempCorrection}
@@ -200,16 +178,16 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
           </label>
         </div>
 
-        {/* Zs Auto-calculation */}
+        {/* Zs auto-calculation */}
         {calculatedZs && (
-          <div className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 mb-4">
-            <div className="flex items-center gap-2 flex-1 min-w-0">
+          <div className="flex items-center gap-3 rounded-xl bg-white/[0.05] px-3.5 py-3">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
               <span className="text-lg font-bold text-elec-yellow tabular-nums">
                 {calculatedZs.calculatedZs.toFixed(2)}Ω
               </span>
               <div className="min-w-0">
-                <p className="text-[11px] font-medium text-white">Calculated Zs</p>
-                <p className="text-[10px] text-white">
+                <p className="text-[12px] font-medium text-white">Calculated Zs</p>
+                <p className="text-[11px] text-white/85">
                   Ze ({formData.ze}) + R1+R2 ({testResults.r1r2}) ×{' '}
                   {applyTempCorrection ? '1.2' : '1.0'}
                 </p>
@@ -219,7 +197,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               <button
                 type="button"
                 onClick={resetToCalculated}
-                className="text-[10px] font-medium text-elec-yellow touch-manipulation"
+                className="h-11 px-3 rounded-lg text-xs font-semibold text-elec-yellow touch-manipulation shrink-0"
               >
                 Reset
               </button>
@@ -227,14 +205,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
           </div>
         )}
 
-        {/* Continuity & Impedance */}
-        <div className="space-y-3 mb-4">
-          <p className="text-[11px] font-medium text-white uppercase tracking-wider">
-            Continuity & Impedance
-          </p>
-          <div className="grid grid-cols-2 gap-3 items-start">
+        {/* Continuity & impedance */}
+        <div className="space-y-4">
+          <p className="text-[13px] font-semibold text-white">Continuity and impedance</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-start">
             <div>
-              <label htmlFor="r1r2" className={labelClass}>R1+R2 (&Omega;)</label>
+              <label htmlFor="r1r2" className={labelCn}>
+                R1+R2 (&Omega;)
+              </label>
               <Input
                 id="r1r2"
                 placeholder="0.25"
@@ -242,11 +220,13 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 step="0.01"
                 value={testResults.r1r2 || ''}
                 onChange={(e) => updateTestResult('r1r2', e.target.value)}
-                className={inputClass}
+                className={inputCn}
               />
             </div>
             <div>
-              <label htmlFor="r2" className={labelClass}>R2 (&Omega;)</label>
+              <label htmlFor="r2" className={labelCn}>
+                R2 (&Omega;)
+              </label>
               <Input
                 id="r2"
                 placeholder="0.12"
@@ -254,12 +234,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 step="0.01"
                 value={testResults.r2 || ''}
                 onChange={(e) => updateTestResult('r2', e.target.value)}
-                className={inputClass}
+                className={inputCn}
               />
             </div>
             <div>
-              <div className="flex items-center mb-1.5">
-                <label htmlFor="zs" className="text-white text-xs">Zs (&Omega;)</label>
+              <div className="flex items-center mb-1">
+                <label htmlFor="zs" className="text-[12px] font-medium text-white">
+                  Zs (&Omega;)
+                </label>
                 <ValidationBadge validation={validations.zs} />
               </div>
               <div className="relative">
@@ -271,13 +253,13 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   value={testResults.zs || ''}
                   onChange={(e) => handleZsChange(e.target.value)}
                   className={cn(
-                    inputClass,
-                    validations.zs?.status === 'pass' && 'border-green-500/50',
-                    validations.zs?.status === 'fail' && 'border-red-500/50'
+                    inputCn,
+                    validations.zs?.status === 'pass' && 'border-green-500',
+                    validations.zs?.status === 'fail' && 'border-red-500'
                   )}
                 />
                 {!zsIsManual && calculatedZs && (
-                  <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold px-1 py-0.5 rounded bg-blue-500/15 text-blue-400">
+                  <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-blue-400">
                     Auto
                   </span>
                 )}
@@ -285,7 +267,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               {validations.zs && (
                 <p
                   className={cn(
-                    'text-[10px] mt-1',
+                    'text-[11px] mt-1',
                     validations.zs.status === 'pass' ? 'text-green-400' : 'text-red-400'
                   )}
                 >
@@ -294,7 +276,9 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               )}
             </div>
             <div>
-              <label htmlFor="maxZs" className={labelClass}>Max Zs (&Omega;)</label>
+              <label htmlFor="maxZs" className={labelCn}>
+                Max Zs (&Omega;)
+              </label>
               <Input
                 id="maxZs"
                 placeholder="1.09"
@@ -302,25 +286,26 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 step="0.01"
                 value={testResults.maxZs || ''}
                 onChange={(e) => updateTestResult('maxZs', e.target.value)}
-                className={cn(inputClass, 'bg-white/[0.04]')}
+                className={inputCn}
                 readOnly={!!testResults.maxZs && formData.protectionDeviceType}
               />
               {testResults.maxZs && formData.protectionDeviceType && (
-                <p className="text-[10px] text-blue-400 mt-1">Auto-filled</p>
+                <p className="text-[11px] text-blue-400 mt-1">Auto-filled</p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Insulation & Polarity */}
-        <div className="space-y-3">
-          <p className="text-[11px] font-medium text-white uppercase tracking-wider">
-            Insulation & Polarity
-          </p>
-          <div className="grid grid-cols-2 gap-3 items-start">
+        {/* Insulation & polarity */}
+        <div className="space-y-4">
+          <p className="text-[13px] font-semibold text-white">Insulation and polarity</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-start">
             <div>
-              <div className="flex items-center mb-1.5">
-                <label htmlFor="insulationResistance" className="text-white text-xs">
+              <div className="flex items-center mb-1">
+                <label
+                  htmlFor="insulationResistance"
+                  className="text-[12px] font-medium text-white"
+                >
                   Insulation (M&Omega;)
                 </label>
                 <ValidationBadge validation={validations.insulationResistance} />
@@ -333,40 +318,40 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 value={testResults.insulationResistance || ''}
                 onChange={(e) => updateTestResult('insulationResistance', e.target.value)}
                 className={cn(
-                  inputClass,
-                  validations.insulationResistance?.status === 'pass' && 'border-green-500/50',
-                  validations.insulationResistance?.status === 'fail' && 'border-red-500/50'
+                  inputCn,
+                  validations.insulationResistance?.status === 'pass' && 'border-green-500',
+                  validations.insulationResistance?.status === 'fail' && 'border-red-500'
                 )}
               />
-              <p className="text-[10px] text-white mt-1">Min 1M&Omega; required</p>
+              <p className="text-[11px] text-white/85 mt-1">Min 1M&Omega; required</p>
             </div>
             <div>
-              <div className="flex items-center mb-1.5">
-                <label className="text-white text-xs">Polarity</label>
+              <div className="flex items-center mb-1">
+                <label className="text-[12px] font-medium text-white">Polarity</label>
                 <ValidationBadge validation={validations.polarity} />
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => updateTestResult('polarity', testResults.polarity === 'correct' ? '' : 'correct')}
-                  className={cn(
-                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    testResults.polarity === 'correct'
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
+                  onClick={() =>
+                    updateTestResult(
+                      'polarity',
+                      testResults.polarity === 'correct' ? '' : 'correct'
+                    )
+                  }
+                  className={verdictCn(testResults.polarity === 'correct', 'pass')}
                 >
                   Correct
                 </button>
                 <button
                   type="button"
-                  onClick={() => updateTestResult('polarity', testResults.polarity === 'incorrect' ? '' : 'incorrect')}
-                  className={cn(
-                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    testResults.polarity === 'incorrect'
-                      ? 'bg-red-500/20 border border-red-500/40 text-red-400'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
+                  onClick={() =>
+                    updateTestResult(
+                      'polarity',
+                      testResults.polarity === 'incorrect' ? '' : 'incorrect'
+                    )
+                  }
+                  className={verdictCn(testResults.polarity === 'incorrect', 'fail')}
                 >
                   Incorrect
                 </button>
@@ -374,7 +359,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
             </div>
             {formData.earthElectrodeInstalled && (
               <div>
-                <label htmlFor="earthElectrodeRa" className={labelClass}>
+                <label htmlFor="earthElectrodeRa" className={labelCn}>
                   Earth Electrode Ra (&Omega;)
                 </label>
                 <Input
@@ -384,7 +369,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   step="0.01"
                   value={testResults.earthElectrodeRa || ''}
                   onChange={(e) => updateTestResult('earthElectrodeRa', e.target.value)}
-                  className={inputClass}
+                  className={inputCn}
                 />
               </div>
             )}
@@ -393,12 +378,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
       </div>
 
       {/* Additional Tests */}
-      <div>
-        <SectionTitle title="Additional Tests" />
+      <div className={cardCn}>
+        <EVSectionHeader title="Additional Tests" />
 
-        <div className="grid grid-cols-2 gap-3 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-start">
           <div>
-            <label htmlFor="continuityPE" className={labelClass}>PE Continuity (&Omega;)</label>
+            <label htmlFor="continuityPE" className={labelCn}>
+              PE Continuity (&Omega;)
+            </label>
             <Input
               id="continuityPE"
               placeholder="0.15"
@@ -406,12 +393,14 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               step="0.01"
               value={testResults.continuityPE || ''}
               onChange={(e) => updateTestResult('continuityPE', e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
-            <p className="text-[10px] text-white mt-1">Protective earth conductor</p>
+            <p className="text-[11px] text-white/85 mt-1">Protective earth conductor</p>
           </div>
           <div>
-            <label htmlFor="voltageDrop" className={labelClass}>Voltage Drop (V)</label>
+            <label htmlFor="voltageDrop" className={labelCn}>
+              Voltage Drop (V)
+            </label>
             <Input
               id="voltageDrop"
               placeholder="—"
@@ -419,17 +408,15 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               step="0.01"
               value={testResults.voltageDrop || ''}
               onChange={(e) => updateTestResult('voltageDrop', e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
-            <div className="flex items-center gap-1.5 mt-1">
-              <p className="text-[10px] text-white">Max 5% (11.5V)</p>
+            <div className="flex items-center gap-2 mt-1">
+              <p className="text-[11px] text-white/85">Max 5% (11.5V)</p>
               {voltageDrop && (
                 <span
                   className={cn(
-                    'text-[10px] font-bold px-1.5 py-0.5 rounded',
-                    voltageDrop.satisfactory
-                      ? 'bg-green-500/15 text-green-400'
-                      : 'bg-red-500/15 text-red-400'
+                    'text-[11px] font-semibold',
+                    voltageDrop.satisfactory ? 'text-green-400' : 'text-red-400'
                   )}
                 >
                   {voltageDrop.percentOf230V}%
@@ -439,7 +426,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
           </div>
           {formData.supplyPhases === 'three' && (
             <div>
-              <label className={labelClass}>Phase Rotation</label>
+              <label className={labelCn}>Phase Rotation</label>
               <MobileSelectPicker
                 label="Phase Rotation"
                 value={testResults.phaseRotation || ''}
@@ -450,25 +437,24 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   { value: 'N/A', label: 'N/A' },
                 ]}
                 placeholder="Select"
+                triggerClassName={selectTriggerCn}
               />
-              <p className="text-[10px] text-white mt-1">3-phase rotation check</p>
+              <p className="text-[11px] text-white/85 mt-1">3-phase rotation check</p>
             </div>
           )}
         </div>
 
-        {/* Voltage Drop result */}
+        {/* Voltage drop result */}
         {voltageDrop && (
-          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 mt-3">
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
             <div className="flex items-center justify-between">
               <span className="text-sm font-bold text-white">
                 {voltageDrop.voltageDropV}V ({voltageDrop.percentOf230V}%)
               </span>
               <span
                 className={cn(
-                  'text-[10px] font-bold px-1.5 py-0.5 rounded',
-                  voltageDrop.satisfactory
-                    ? 'bg-green-500/15 text-green-400'
-                    : 'bg-red-500/15 text-red-400'
+                  'text-[11px] font-semibold',
+                  voltageDrop.satisfactory ? 'text-green-400' : 'text-red-400'
                 )}
               >
                 {voltageDrop.satisfactory ? 'OK' : '>5%'}
@@ -479,13 +465,13 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
       </div>
 
       {/* RCD Tests */}
-      <div>
-        <SectionTitle title="RCD Tests" />
+      <div className={cardCn}>
+        <EVSectionHeader title="RCD Tests" />
 
-        <div className="grid grid-cols-2 gap-3 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-start">
           <div>
-            <div className="flex items-center mb-1.5">
-              <label htmlFor="rcdTripTime" className="text-white text-xs">
+            <div className="flex items-center mb-1">
+              <label htmlFor="rcdTripTime" className="text-[12px] font-medium text-white">
                 Trip @ I&Delta;n (ms)
               </label>
               <ValidationBadge validation={validations.rcdTripTime} />
@@ -498,27 +484,27 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               value={testResults.rcdTripTime || ''}
               onChange={(e) => updateTestResult('rcdTripTime', e.target.value)}
               className={cn(
-                inputClass,
-                validations.rcdTripTime?.status === 'pass' && 'border-green-500/50',
-                validations.rcdTripTime?.status === 'fail' && 'border-red-500/50'
+                inputCn,
+                validations.rcdTripTime?.status === 'pass' && 'border-green-500',
+                validations.rcdTripTime?.status === 'fail' && 'border-red-500'
               )}
             />
             {validations.rcdTripTime ? (
               <p
                 className={cn(
-                  'text-[10px] mt-1',
+                  'text-[11px] mt-1',
                   validations.rcdTripTime.status === 'pass' ? 'text-green-400' : 'text-red-400'
                 )}
               >
                 {validations.rcdTripTime.message}
               </p>
             ) : (
-              <p className="text-[10px] text-white mt-1">Max 300ms</p>
+              <p className="text-[11px] text-white/85 mt-1">Max 300ms</p>
             )}
           </div>
           <div>
-            <div className="flex items-center mb-1.5">
-              <label htmlFor="rcdTripTimeX5" className="text-white text-xs">
+            <div className="flex items-center mb-1">
+              <label htmlFor="rcdTripTimeX5" className="text-[12px] font-medium text-white">
                 Trip @ 5xI&Delta;n (ms)
               </label>
               <ValidationBadge validation={validations.rcdTripTimeX5} />
@@ -531,86 +517,146 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               value={testResults.rcdTripTimeX5 || ''}
               onChange={(e) => updateTestResult('rcdTripTimeX5', e.target.value)}
               className={cn(
-                inputClass,
-                validations.rcdTripTimeX5?.status === 'pass' && 'border-green-500/50',
-                validations.rcdTripTimeX5?.status === 'fail' && 'border-red-500/50'
+                inputCn,
+                validations.rcdTripTimeX5?.status === 'pass' && 'border-green-500',
+                validations.rcdTripTimeX5?.status === 'fail' && 'border-red-500'
               )}
             />
             {validations.rcdTripTimeX5 ? (
               <p
                 className={cn(
-                  'text-[10px] mt-1',
+                  'text-[11px] mt-1',
                   validations.rcdTripTimeX5.status === 'pass' ? 'text-green-400' : 'text-red-400'
                 )}
               >
                 {validations.rcdTripTimeX5.message}
               </p>
             ) : (
-              <p className="text-[10px] text-white mt-1">Max 40ms</p>
+              <p className="text-[11px] text-white/85 mt-1">Max 40ms</p>
             )}
           </div>
         </div>
 
-        {/* RCD Reference — compact */}
-        <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 mt-3">
-          <p className="text-[11px] font-medium text-white mb-1.5">RCD Limits</p>
-          <div className="flex items-center justify-between text-[11px] mb-1">
-            <span className="text-white">IΔn trip</span>
-            <span className="text-elec-yellow font-bold">≤ 300ms</span>
+        {/* RCD reference — compact */}
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-[12px] font-medium text-white mb-1.5">RCD Limits</p>
+          <div className="flex items-center justify-between text-[12px] mb-1">
+            <span className="text-white/85">IΔn trip</span>
+            <span className="text-elec-yellow font-semibold">≤ 300ms</span>
           </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-white">5×IΔn trip</span>
-            <span className="text-elec-yellow font-bold">≤ 40ms</span>
+          <div className="flex items-center justify-between text-[12px]">
+            <span className="text-white/85">5×IΔn trip</span>
+            <span className="text-elec-yellow font-semibold">≤ 40ms</span>
           </div>
         </div>
       </div>
 
-      {/* Functional Tests */}
-      <div>
-        <SectionTitle title="Functional Tests" />
+      {/* Functional Tests — wide */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <EVSectionHeader title="Functional Tests" />
 
         <div className="space-y-3">
           {/* Functional Test */}
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <label className="text-white text-xs font-medium block">Functional Test</label>
-              <p className="text-[10px] text-white">Powers up & communicates</p>
+              <label className="text-sm font-medium text-white block">Functional Test</label>
+              <p className="text-[11px] text-white/85">Powers up and communicates</p>
             </div>
-            <div className="flex gap-1.5 shrink-0">
-              <button type="button" onClick={() => updateTestResult('functionalTest', testResults.functionalTest === 'pass' ? '' : 'pass')} className={cn('h-9 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all', testResults.functionalTest === 'pass' ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow' : 'bg-white/[0.05] border border-white/[0.08] text-white')}>Pass</button>
-              <button type="button" onClick={() => updateTestResult('functionalTest', testResults.functionalTest === 'fail' ? '' : 'fail')} className={cn('h-9 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all', testResults.functionalTest === 'fail' ? 'bg-red-500/20 border border-red-500/40 text-red-400' : 'bg-white/[0.05] border border-white/[0.08] text-white')}>Fail</button>
+            <div className="grid grid-cols-2 gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() =>
+                  updateTestResult(
+                    'functionalTest',
+                    testResults.functionalTest === 'pass' ? '' : 'pass'
+                  )
+                }
+                className={cn(verdictCn(testResults.functionalTest === 'pass', 'pass'), 'px-5')}
+              >
+                Pass
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  updateTestResult(
+                    'functionalTest',
+                    testResults.functionalTest === 'fail' ? '' : 'fail'
+                  )
+                }
+                className={cn(verdictCn(testResults.functionalTest === 'fail', 'fail'), 'px-5')}
+              >
+                Fail
+              </button>
             </div>
           </div>
 
           {/* Load Test */}
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <label className="text-white text-xs font-medium block">Load Test</label>
-              <p className="text-[10px] text-white">Charging with EV or load box</p>
+              <label className="text-sm font-medium text-white block">Load Test</label>
+              <p className="text-[11px] text-white/85">Charging with EV or load box</p>
             </div>
-            <div className="flex gap-1.5 shrink-0">
-              <button type="button" onClick={() => updateTestResult('loadTest', testResults.loadTest === 'pass' ? '' : 'pass')} className={cn('h-9 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all', testResults.loadTest === 'pass' ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow' : 'bg-white/[0.05] border border-white/[0.08] text-white')}>Pass</button>
-              <button type="button" onClick={() => updateTestResult('loadTest', testResults.loadTest === 'fail' ? '' : 'fail')} className={cn('h-9 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all', testResults.loadTest === 'fail' ? 'bg-red-500/20 border border-red-500/40 text-red-400' : 'bg-white/[0.05] border border-white/[0.08] text-white')}>Fail</button>
+            <div className="grid grid-cols-2 gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() =>
+                  updateTestResult('loadTest', testResults.loadTest === 'pass' ? '' : 'pass')
+                }
+                className={cn(verdictCn(testResults.loadTest === 'pass', 'pass'), 'px-5')}
+              >
+                Pass
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  updateTestResult('loadTest', testResults.loadTest === 'fail' ? '' : 'fail')
+                }
+                className={cn(verdictCn(testResults.loadTest === 'fail', 'fail'), 'px-5')}
+              >
+                Fail
+              </button>
             </div>
           </div>
 
           {/* RCD Test Button */}
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <label className="text-white text-xs font-medium block">RCD Test Button</label>
-              <p className="text-[10px] text-white">Built-in RCD button check</p>
+              <label className="text-sm font-medium text-white block">RCD Test Button</label>
+              <p className="text-[11px] text-white/85">Built-in RCD button check</p>
             </div>
-            <div className="flex gap-1.5 shrink-0">
-              <button type="button" onClick={() => updateTestResult('rcdTestButton', testResults.rcdTestButton === 'pass' ? '' : 'pass')} className={cn('h-9 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all', testResults.rcdTestButton === 'pass' ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow' : 'bg-white/[0.05] border border-white/[0.08] text-white')}>Pass</button>
-              <button type="button" onClick={() => updateTestResult('rcdTestButton', testResults.rcdTestButton === 'fail' ? '' : 'fail')} className={cn('h-9 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all', testResults.rcdTestButton === 'fail' ? 'bg-red-500/20 border border-red-500/40 text-red-400' : 'bg-white/[0.05] border border-white/[0.08] text-white')}>Fail</button>
+            <div className="grid grid-cols-2 gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() =>
+                  updateTestResult(
+                    'rcdTestButton',
+                    testResults.rcdTestButton === 'pass' ? '' : 'pass'
+                  )
+                }
+                className={cn(verdictCn(testResults.rcdTestButton === 'pass', 'pass'), 'px-5')}
+              >
+                Pass
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  updateTestResult(
+                    'rcdTestButton',
+                    testResults.rcdTestButton === 'fail' ? '' : 'fail'
+                  )
+                }
+                className={cn(verdictCn(testResults.rcdTestButton === 'fail', 'fail'), 'px-5')}
+              >
+                Fail
+              </button>
             </div>
           </div>
 
           {/* Load Current */}
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <label className="text-white text-xs font-medium block">Load Current (A)</label>
-              <p className="text-[10px] text-white">Measured at full rate</p>
+              <label className="text-sm font-medium text-white block">Load Current (A)</label>
+              <p className="text-[11px] text-white/85">Measured at full rate</p>
             </div>
             <div className="w-24 shrink-0">
               <Input
@@ -619,15 +665,15 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 step="0.01"
                 value={testResults.loadTestCurrent || ''}
                 onChange={(e) => updateTestResult('loadTestCurrent', e.target.value)}
-                className={inputClass}
+                className={inputCn}
               />
             </div>
           </div>
         </div>
 
-        {/* Verification Checklist — flat list */}
-        <div className="mt-4 space-y-2">
-          <p className="text-[11px] font-medium text-white uppercase tracking-wider mb-2">Verification Checklist</p>
+        {/* Verification checklist — flat list */}
+        <div className="space-y-1">
+          <p className="text-[13px] font-semibold text-white mb-2">Verification Checklist</p>
           {[
             { id: 'chargerPowerUp', field: 'chargerPowerUpVerified', label: 'Charger powers up correctly' },
             { id: 'ledIndicators', field: 'ledIndicatorsVerified', label: 'LED indicators function correctly' },
@@ -637,7 +683,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
             <label
               key={item.id}
               htmlFor={item.id}
-              className="flex items-center gap-3 cursor-pointer touch-manipulation py-1"
+              className="flex items-center gap-3 cursor-pointer touch-manipulation min-h-[44px] py-1.5"
             >
               <Checkbox
                 id={item.id}
@@ -645,18 +691,21 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 onCheckedChange={(checked) => onUpdate(item.field, checked)}
                 className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
               />
-              <span className="text-xs text-white">{item.label}</span>
+              <span className="text-sm text-white">{item.label}</span>
             </label>
           ))}
         </div>
       </div>
 
       {/* Smart Features */}
-      <div>
-        <SectionTitle title="Smart Features" />
+      <div className={cardCn}>
+        <EVSectionHeader title="Smart Features" />
 
-        <div className="space-y-2">
-          <label htmlFor="smartChargingEnabled" className="flex items-center gap-3 cursor-pointer touch-manipulation py-1">
+        <div className="space-y-1">
+          <label
+            htmlFor="smartChargingEnabled"
+            className="flex items-center gap-3 cursor-pointer touch-manipulation min-h-[44px] py-1.5"
+          >
             <Checkbox
               id="smartChargingEnabled"
               checked={formData.smartChargingEnabled || false}
@@ -664,12 +713,15 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
             />
             <div>
-              <span className="text-xs font-medium text-white block">Smart Charging</span>
-              <span className="text-[10px] text-white">App control, scheduling</span>
+              <span className="text-sm font-medium text-white block">Smart Charging</span>
+              <span className="text-[11px] text-white/85">App control, scheduling</span>
             </div>
           </label>
 
-          <label htmlFor="loadManagement" className="flex items-center gap-3 cursor-pointer touch-manipulation py-1">
+          <label
+            htmlFor="loadManagement"
+            className="flex items-center gap-3 cursor-pointer touch-manipulation min-h-[44px] py-1.5"
+          >
             <Checkbox
               id="loadManagement"
               checked={formData.loadManagement || false}
@@ -677,15 +729,15 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
             />
             <div>
-              <span className="text-xs font-medium text-white block">Load Management</span>
-              <span className="text-[10px] text-white">CT clamp or similar</span>
+              <span className="text-sm font-medium text-white block">Load Management</span>
+              <span className="text-[11px] text-white/85">CT clamp or similar</span>
             </div>
           </label>
         </div>
 
         {formData.loadManagement && (
-          <div className="mt-3">
-            <label className={labelClass}>Load Management Type</label>
+          <div>
+            <label className={labelCn}>Load Management Type</label>
             <MobileSelectPicker
               label="Load Management Type"
               value={formData.loadManagementType || ''}
@@ -697,43 +749,44 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 { value: 'solar-integration', label: 'Solar Integration' },
               ]}
               placeholder="Select type"
+              triggerClassName={selectTriggerCn}
             />
           </div>
         )}
       </div>
 
       {/* Test Equipment */}
-      <div>
-        <SectionTitle title="Test Equipment" />
+      <div className={cardCn}>
+        <EVSectionHeader title="Test Equipment" />
 
-        <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <label className={labelClass}>Instrument Model</label>
+            <label className={labelCn}>Instrument Model</label>
             <Input
-              placeholder="e.g., Megger MFT-X1"
+              placeholder="e.g. Megger MFT-X1"
               value={formData.testInstrumentModel || ''}
               onChange={(e) => onUpdate('testInstrumentModel', e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
           </div>
           <div>
-            <label className={labelClass}>Serial Number</label>
+            <label className={labelCn}>Serial Number</label>
             <Input
               placeholder="Serial number"
               value={formData.testInstrumentSerial || ''}
               onChange={(e) => onUpdate('testInstrumentSerial', e.target.value)}
-              className={inputClass}
+              className={inputCn}
             />
           </div>
         </div>
 
         <div>
-          <label className={labelClass}>Calibration Date</label>
+          <label className={labelCn}>Calibration Date</label>
           <Input
             type="date"
             value={formData.testInstrumentCalDate || ''}
             onChange={(e) => onUpdate('testInstrumentCalDate', e.target.value)}
-            className={inputClass}
+            className={inputCn}
           />
         </div>
       </div>

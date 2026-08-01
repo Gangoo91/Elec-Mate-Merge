@@ -11,6 +11,7 @@ import { EnhancedQuoteItemsStep } from './steps/EnhancedQuoteItemsStep';
 import { QuoteSettingsStep } from './steps/QuoteSettingsStep';
 import { QuoteReviewStep } from './steps/QuoteReviewStep';
 import { EmailStatusBanner } from './EmailStatusBanner';
+import MarketBenchmarkHint from '@/components/live-pricing/MarketBenchmarkHint';
 import { FEATURES } from '@/config/features';
 import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transformer';
 import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
@@ -393,6 +394,19 @@ export const QuoteWizard = ({
   const canSave = !!quote.client?.name;
   const itemCount = quote.items?.length ?? 0;
 
+  // Text the Live Pricing taxonomy classifies to show a market-rate benchmark
+  const benchmarkJobText = useMemo(
+    () =>
+      [
+        quote.jobDetails?.title,
+        quote.jobDetails?.description,
+        ...(quote.items || []).map((it) => it.description),
+      ]
+        .filter(Boolean)
+        .join(' '),
+    [quote.jobDetails?.title, quote.jobDetails?.description, quote.items]
+  );
+
   // Live summary + stock check (quote lines linked to personal inventory)
   const { items: stockItems } = useInventoryStorage();
   const stockWarnings = useMemo(() => {
@@ -564,9 +578,21 @@ export const QuoteWizard = ({
 
         <section className={cn(step !== 1 && 'hidden')}>
           <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
+          <MarketBenchmarkHint
+            jobText={benchmarkJobText}
+            postcode={quote.client?.postcode}
+            className="mt-5"
+          />
         </section>
 
         <section className={cn(step !== 2 && 'hidden')}>
+          <MarketBenchmarkHint
+            jobText={benchmarkJobText}
+            postcode={quote.client?.postcode}
+            currentTotal={quote.total}
+            itemTexts={(quote.items || []).map((it) => it.description)}
+            className="mb-5"
+          />
           <EnhancedQuoteItemsStep
             items={quote.items || []}
             onAdd={addItem}

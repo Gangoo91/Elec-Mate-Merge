@@ -298,7 +298,7 @@ const DeviceContactsImportSheet: React.FC<DeviceContactsImportSheetProps> = ({
         <div className="flex h-full flex-col bg-background">
           <div className="mx-auto mt-2 h-1 w-9 rounded-full bg-white/20" aria-hidden />
           <div className="flex items-center gap-3 p-4 pb-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-elec-yellow/15">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06]">
               <Users className="h-5 w-5 text-elec-yellow" />
             </div>
             <div className="flex-1">
@@ -339,7 +339,7 @@ const DeviceContactsImportSheet: React.FC<DeviceContactsImportSheetProps> = ({
                 <button
                   type="button"
                   onClick={() => setLoadNonce((n) => n + 1)}
-                  className="mt-4 h-10 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 px-5 text-[13px] font-semibold text-elec-yellow touch-manipulation active:scale-[0.98]"
+                  className="mt-4 h-11 rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
                 >
                   Try again
                 </button>

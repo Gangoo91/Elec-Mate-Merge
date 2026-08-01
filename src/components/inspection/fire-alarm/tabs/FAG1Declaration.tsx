@@ -10,32 +10,19 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
 
-const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -48,7 +35,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -63,11 +50,12 @@ interface Props {
 
 export default function FAG1Declaration({ formData, onUpdate }: Props) {
   return (
-    <div className="space-y-5">
-      {/* Design Documentation */}
-      <Section title="Design Documentation" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Design Specification Ref">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Design documentation */}
+      <div className={cardCn}>
+        <SectionHeader title="Design documentation" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Design specification ref">
             <Input
               value={formData.designSpecRef || ''}
               onChange={(e) => onUpdate('designSpecRef', e.target.value)}
@@ -75,7 +63,7 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
               placeholder="e.g. SPEC-FA-001 Rev A"
             />
           </Field>
-          <Field label="Document Date">
+          <Field label="Document date">
             <Input
               type="date"
               value={formData.designDocDate || ''}
@@ -84,7 +72,7 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <Field label="Document Reference">
+        <Field label="Document reference">
           <Input
             value={formData.designDocRef || ''}
             onChange={(e) => onUpdate('designDocRef', e.target.value)}
@@ -92,10 +80,11 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
             placeholder="e.g. DWG-FA-001 Rev A"
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Related Standards */}
-      <Section title="Related Standards" accentColor="from-blue-500/40 to-cyan-400/20">
+      {/* Related standards */}
+      <div className={cardCn}>
+        <SectionHeader title="Related standards" />
         <div className="space-y-2">
           {[
             { field: 'relStdEN54', label: 'BS EN 54 — Fire detection and alarm systems' },
@@ -109,34 +98,16 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
               type="button"
               onClick={() => onUpdate(field, !formData[field])}
               className={cn(
-                'w-full text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all flex items-center gap-3',
+                'w-full min-h-11 text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
                 formData[field]
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-white/[0.03] border-white/[0.06]'
+                  ? 'bg-green-500 border-green-500'
+                  : 'bg-white/[0.06] border-white/[0.12]'
               )}
             >
-              <div
-                className={cn(
-                  'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                  formData[field] ? 'bg-green-500 border-green-500' : 'border-white/30'
-                )}
-              >
-                {formData[field] && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
               <span
                 className={cn(
-                  'text-sm font-medium',
-                  formData[field] ? 'text-green-400' : 'text-white'
+                  'text-sm',
+                  formData[field] ? 'text-black font-semibold' : 'text-white font-medium'
                 )}
               >
                 {label}
@@ -144,17 +115,18 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
             </button>
           ))}
         </div>
-      </Section>
+      </div>
 
-      {/* Deviations from Standard */}
-      <Section title="Deviations from BS 5839-1" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 mb-3">
-          <p className="text-xs text-white leading-relaxed">
+      {/* Deviations from standard */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Deviations from BS 5839-1" />
+        <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] p-3">
+          <p className="text-[12px] text-white/85 leading-relaxed">
             Any deviations from BS 5839-1:2025 recommendations must be documented with full
             justification.
           </p>
         </div>
-        <Field label="Deviations & Justification">
+        <Field label="Deviations & justification">
           <Textarea
             value={formData.designDeviations || ''}
             onChange={(e) => onUpdate('designDeviations', e.target.value)}
@@ -162,20 +134,21 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
             placeholder="List any departures from the standard and explain why they are acceptable..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Designer Declaration */}
-      <Section title="Designer Declaration" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3">
-          <p className="text-xs text-white leading-relaxed">
+      {/* Designer declaration */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Designer declaration" />
+        <div className="rounded-xl bg-white/[0.05] p-3.5">
+          <p className="text-[12px] text-white/85 leading-relaxed">
             I hereby certify that the fire detection and fire alarm system design described in this
             certificate has been carried out in accordance with BS 5839-1:2025 and is based on the
             fire risk assessment referenced above. The design provides adequate detection and alarm
             coverage for the identified fire risks, except for any variations stated.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Designer Name" required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Designer name" required>
             <Input
               value={formData.designerName || ''}
               onChange={(e) => onUpdate('designerName', e.target.value)}
@@ -199,7 +172,7 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
           />
         </Field>
         <SignatureInput
-          label="Designer Signature *"
+          label="Designer signature *"
           value={formData.designerSignature || ''}
           onChange={(sig) => onUpdate('designerSignature', sig || '')}
         />
@@ -211,17 +184,18 @@ export default function FAG1Declaration({ formData, onUpdate }: Props) {
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
       {/* Notes */}
-      <Section title="Notes" accentColor="from-white/20 to-white/5">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Notes" />
         <Textarea
           value={formData.additionalNotes || ''}
           onChange={(e) => onUpdate('additionalNotes', e.target.value)}
           className={textareaCn}
           placeholder="Additional design notes..."
         />
-      </Section>
+      </div>
     </div>
   );
 }

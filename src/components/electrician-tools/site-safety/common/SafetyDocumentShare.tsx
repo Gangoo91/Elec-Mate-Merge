@@ -92,7 +92,7 @@ export function SafetyDocumentShare({
               <p className="text-[13px] font-semibold text-white leading-tight">
                 {isNative ? 'Share document' : 'Download PDF'}
               </p>
-              <p className="text-[12px] text-white/50 truncate max-w-[220px] leading-tight mt-0.5">
+              <p className="text-[12px] text-white truncate max-w-[220px] leading-tight mt-0.5">
                 {documentTitle}
               </p>
             </div>
@@ -103,7 +103,7 @@ export function SafetyDocumentShare({
             className="w-8 h-8 rounded-full bg-white/[0.08] flex items-center justify-center shrink-0 touch-manipulation"
             aria-label="Close"
           >
-            <X className="h-4 w-4 text-white/70" />
+            <X className="h-4 w-4 text-white" />
           </button>
         </div>
 
@@ -139,7 +139,7 @@ export function SafetyDocumentShare({
           </button>
 
           {/* Context hint */}
-          <p className="text-[11.5px] text-white/40 text-center leading-snug px-2">
+          <p className="text-[11.5px] text-white text-center leading-snug px-2">
             {isNative
               ? 'Saves to your device — share via WhatsApp, AirDrop, email, or save to Files'
               : 'Downloads a PDF to your device for printing or sharing'}
@@ -152,7 +152,7 @@ export function SafetyDocumentShare({
           <button
             type="button"
             onClick={onClose}
-            className="w-full h-11 rounded-xl text-[14px] font-medium text-white/60 hover:text-white touch-manipulation transition-colors"
+            className="w-full h-11 rounded-xl text-[14px] font-medium text-white hover:text-white touch-manipulation transition-colors"
           >
             Close
           </button>

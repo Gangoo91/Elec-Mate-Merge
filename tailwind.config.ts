@@ -240,6 +240,15 @@ export default {
           '0%': { boxShadow: '0 0 0 0 hsl(var(--elec-yellow) / 0)' },
           '100%': { boxShadow: '0 0 0 4px hsl(var(--elec-yellow) / 0.15)' },
         },
+        // Minor Works shell — lateral step transitions (cert redesign v3)
+        'mw-step-in': {
+          '0%': { transform: 'translateX(22px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        'mw-step-back': {
+          '0%': { transform: 'translateX(-22px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -421,6 +430,8 @@ export default {
         'ios-pop': 'ios-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
         'ios-press': 'ios-press 0.15s ease-out',
         'ios-focus-ring': 'ios-focus-ring 0.2s ease-out forwards',
+        'mw-step-in': 'mw-step-in 0.26s cubic-bezier(0.22, 0.8, 0.26, 1)',
+        'mw-step-back': 'mw-step-back 0.26s cubic-bezier(0.22, 0.8, 0.26, 1)',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',

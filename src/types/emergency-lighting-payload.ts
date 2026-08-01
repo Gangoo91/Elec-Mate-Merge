@@ -145,6 +145,7 @@ export interface EmergencyLightingPayloadType {
   };
 
   monthly_test: {
+    has_monthly_test: boolean;
     date: string;
     all_luminaires_operational: boolean;
     all_luminaires_operational_display: string;
@@ -156,6 +157,7 @@ export interface EmergencyLightingPayloadType {
   };
 
   annual_test: {
+    has_annual_test: boolean;
     date: string;
     duration_tested: number | string;
     all_luminaires_operational: boolean;
@@ -170,6 +172,7 @@ export interface EmergencyLightingPayloadType {
   service_schedule: {
     next_monthly_test: string;
     next_annual_test: string;
+    next_three_yearly_inspection: string;
   };
 
   tester: {

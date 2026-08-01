@@ -8,44 +8,60 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import FAG6LogBookBridge from '../FAG6LogBookBridge';
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const comboTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:bg-transparent hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
 const checkboxCn =
   'border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
+);
+
+// Full-width confirm toggle — solid green when on
+const ToggleRow = ({
+  checked,
+  onClick,
+  label,
+}: {
+  checked: boolean;
+  onClick: () => void;
+  label: string;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={cn(
+      'flex min-h-11 w-full items-center rounded-xl border px-3.5 py-3 text-left text-sm touch-manipulation transition-all active:scale-[0.98]',
+      checked
+        ? 'border-green-500 bg-green-500 font-semibold text-black'
+        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+    )}
+  >
+    {label}
+  </button>
 );
 
 interface Props {
@@ -55,19 +71,20 @@ interface Props {
 
 export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
   return (
-    <div className="space-y-5">
-      {/* Extent of Inspection */}
-      <Section title="Extent of Inspection" accentColor="from-red-500/40 to-rose-400/20">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Extent of inspection */}
+      <div className={cardCn}>
+        <SectionHeader title="Extent of inspection" />
         <div className="space-y-2">
           {[
             {
               value: 'full-system',
-              label: 'Full System Inspection',
+              label: 'Full system inspection',
               description: 'All areas, zones, and devices inspected',
             },
             {
               value: 'partial',
-              label: 'Partial Inspection',
+              label: 'Partial inspection',
               description: 'Limited scope — specify below',
             },
           ].map((opt) => (
@@ -76,51 +93,34 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
               type="button"
               onClick={() => onUpdate('extentOfInspection', opt.value)}
               className={cn(
-                'w-full text-left p-4 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+                'w-full rounded-xl border p-4 text-left touch-manipulation transition-all active:scale-[0.98]',
                 formData.extentOfInspection === opt.value
-                  ? 'bg-red-500/10 border-red-500/30'
-                  : 'bg-white/[0.03] border-white/[0.06]'
+                  ? 'border-elec-yellow bg-elec-yellow'
+                  : 'border-white/[0.12] bg-white/[0.06]'
               )}
             >
-              <div className="flex items-center gap-3">
-                <div
-                  className={cn(
-                    'w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0',
-                    formData.extentOfInspection === opt.value
-                      ? 'bg-red-500 border-red-500'
-                      : 'border-white/30'
-                  )}
-                >
-                  {formData.extentOfInspection === opt.value && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={3}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
-                </div>
-                <div>
-                  <p
-                    className={cn(
-                      'text-sm font-semibold',
-                      formData.extentOfInspection === opt.value ? 'text-red-400' : 'text-white'
-                    )}
-                  >
-                    {opt.label}
-                  </p>
-                  <p className="text-xs text-white mt-0.5">{opt.description}</p>
-                </div>
-              </div>
+              <p
+                className={cn(
+                  'text-sm font-semibold',
+                  formData.extentOfInspection === opt.value ? 'text-black' : 'text-white'
+                )}
+              >
+                {opt.label}
+              </p>
+              <p
+                className={cn(
+                  'mt-0.5 text-[12px]',
+                  formData.extentOfInspection === opt.value ? 'text-black/70' : 'text-white/80'
+                )}
+              >
+                {opt.description}
+              </p>
             </button>
           ))}
         </div>
         {formData.extentOfInspection === 'partial' && (
           <>
-            <Field label="Agreed Scope">
+            <Field label="Agreed scope">
               <Textarea
                 value={formData.agreedScope || ''}
                 onChange={(e) => onUpdate('agreedScope', e.target.value)}
@@ -138,14 +138,12 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             </Field>
           </>
         )}
-      </Section>
+      </div>
 
-      {/* Building Changes */}
-      <Section
-        title="Building Changes Since Last Visit"
-        accentColor="from-amber-500/40 to-yellow-400/20"
-      >
-        <div className="space-y-3">
+      {/* Building changes */}
+      <div className={cardCn}>
+        <SectionHeader title="Building changes since last visit" />
+        <div className="space-y-1">
           {[
             {
               field: 'changesStructural',
@@ -158,24 +156,24 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
               label: 'Environmental changes (dust, temperature, ventilation)',
             },
           ].map(({ field, label }) => (
-            <div
+            <label
               key={field}
-              className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
+              className="flex min-h-11 cursor-pointer items-center gap-3 touch-manipulation"
             >
               <Checkbox
                 checked={formData[field] || false}
                 onCheckedChange={(v) => onUpdate(field, v)}
                 className={checkboxCn}
               />
-              <Label className="text-sm text-white">{label}</Label>
-            </div>
+              <span className="text-sm text-white">{label}</span>
+            </label>
           ))}
         </div>
         {(formData.changesStructural ||
           formData.changesOccupancy ||
           formData.changesEscapeRoutes ||
           formData.changesEnvironmental) && (
-          <Field label="Change Details">
+          <Field label="Change details">
             <Textarea
               value={formData.buildingChangeNotes || ''}
               onChange={(e) => onUpdate('buildingChangeNotes', e.target.value)}
@@ -184,48 +182,17 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             />
           </Field>
         )}
-      </Section>
+      </div>
 
-      {/* Logbook Review */}
-      <Section title="System Logbook" accentColor="from-blue-500/40 to-cyan-400/20">
-        <button
-          type="button"
+      {/* System logbook */}
+      <div className={cardCn}>
+        <SectionHeader title="System logbook" />
+        <ToggleRow
+          checked={!!formData.logbookReviewed}
           onClick={() => onUpdate('logbookReviewed', !formData.logbookReviewed)}
-          className={cn(
-            'w-full text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all flex items-center gap-3',
-            formData.logbookReviewed
-              ? 'bg-green-500/10 border-green-500/30'
-              : 'bg-white/[0.03] border-white/[0.06]'
-          )}
-        >
-          <div
-            className={cn(
-              'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-              formData.logbookReviewed ? 'bg-green-500 border-green-500' : 'border-white/30'
-            )}
-          >
-            {formData.logbookReviewed && (
-              <svg
-                className="w-3 h-3 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={3}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            )}
-          </div>
-          <span
-            className={cn(
-              'text-sm font-medium',
-              formData.logbookReviewed ? 'text-green-400' : 'text-white'
-            )}
-          >
-            System logbook reviewed
-          </span>
-        </button>
-        <Field label="Logbook Notes">
+          label="System logbook reviewed"
+        />
+        <Field label="Logbook notes">
           <Textarea
             value={formData.logbookNotes || ''}
             onChange={(e) => onUpdate('logbookNotes', e.target.value)}
@@ -233,110 +200,46 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             placeholder="Any entries noted in the logbook since last visit..."
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Weekly Testing Verification */}
-      <Section title="Weekly Testing" accentColor="from-green-500/40 to-emerald-400/20">
+      {/* Weekly testing */}
+      <div className={cardCn}>
+        <SectionHeader title="Weekly testing" />
         <div className="space-y-2">
-          <button
-            type="button"
+          <ToggleRow
+            checked={!!formData.weeklyTestingConfirmed}
             onClick={() => onUpdate('weeklyTestingConfirmed', !formData.weeklyTestingConfirmed)}
-            className={cn(
-              'w-full text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all flex items-center gap-3',
-              formData.weeklyTestingConfirmed
-                ? 'bg-green-500/10 border-green-500/30'
-                : 'bg-white/[0.03] border-white/[0.06]'
-            )}
-          >
-            <div
-              className={cn(
-                'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                formData.weeklyTestingConfirmed
-                  ? 'bg-green-500 border-green-500'
-                  : 'border-white/30'
-              )}
-            >
-              {formData.weeklyTestingConfirmed && (
-                <svg
-                  className="w-3 h-3 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-            </div>
-            <span
-              className={cn(
-                'text-sm font-medium',
-                formData.weeklyTestingConfirmed ? 'text-green-400' : 'text-white'
-              )}
-            >
-              Responsible person confirms weekly call point / sounder testing
-            </span>
-          </button>
-          <button
-            type="button"
+            label="Responsible person confirms weekly call point / sounder testing"
+          />
+          <ToggleRow
+            checked={!!formData.weeklyRecordsReviewed}
             onClick={() => onUpdate('weeklyRecordsReviewed', !formData.weeklyRecordsReviewed)}
-            className={cn(
-              'w-full text-left p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all flex items-center gap-3',
-              formData.weeklyRecordsReviewed
-                ? 'bg-green-500/10 border-green-500/30'
-                : 'bg-white/[0.03] border-white/[0.06]'
-            )}
-          >
-            <div
-              className={cn(
-                'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-                formData.weeklyRecordsReviewed ? 'bg-green-500 border-green-500' : 'border-white/30'
-              )}
-            >
-              {formData.weeklyRecordsReviewed && (
-                <svg
-                  className="w-3 h-3 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-            </div>
-            <span
-              className={cn(
-                'text-sm font-medium',
-                formData.weeklyRecordsReviewed ? 'text-green-400' : 'text-white'
-              )}
-            >
-              Weekly test records reviewed
-            </span>
-          </button>
+            label="Weekly test records reviewed"
+          />
         </div>
-      </Section>
+      </div>
 
       {/* Log book bridge — pulls history from the ELE-1396 digital log */}
-      <FAG6LogBookBridge formData={formData} onUpdate={onUpdate} />
+      <div className="lg:col-span-2">
+        <FAG6LogBookBridge formData={formData} onUpdate={onUpdate} />
+      </div>
 
-      {/* False Alarm Records */}
-      <Section title="False Alarm Records" accentColor="from-red-500/40 to-rose-400/20">
+      {/* False alarm records */}
+      <div className={cardCn}>
+        <SectionHeader title="False alarm records" />
         <Field label="False alarms since last inspection">
           <Input
             type="number"
             inputMode="numeric"
             value={formData.falseAlarmCount || ''}
             onChange={(e) => onUpdate('falseAlarmCount', e.target.value)}
-            className={
-              'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]'
-            }
+            className={inputCn}
             placeholder="0"
           />
         </Field>
         {parseInt(formData.falseAlarmCount || '0') > 0 && (
           <>
-            <Field label="Primary Cause">
+            <Field label="Primary cause">
               <ComboboxCell
                 value={formData.falseAlarmCause || ''}
                 onChange={(v) => onUpdate('falseAlarmCause', v)}
@@ -351,10 +254,10 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
                   { value: 'unknown', label: 'Unknown' },
                 ]}
                 placeholder="Select cause..."
-                className="h-12 text-base"
+                className={comboTriggerCn}
               />
             </Field>
-            <Field label="Action Taken">
+            <Field label="Action taken">
               <Textarea
                 value={formData.falseAlarmAction || ''}
                 onChange={(e) => onUpdate('falseAlarmAction', e.target.value)}
@@ -363,9 +266,8 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
               />
             </Field>
             {parseInt(formData.falseAlarmCount || '0') > 3 && (
-              <div className="flex items-start gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                <p className="text-xs text-red-400">
+              <div className="rounded-xl border border-red-500/30 bg-white/[0.05] px-3.5 py-3">
+                <p className="text-sm text-red-400">
                   More than 3 false alarms — consider a false alarm management review per BS
                   5839-1:2025 Clause 20. This may indicate detector contamination, environmental
                   issues, or inadequate alarm management strategy.
@@ -374,11 +276,12 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             )}
           </>
         )}
-      </Section>
+      </div>
 
       {/* Service History (G6 — BS 5839-1:2025 expects the cert to reference
           maintenance carried out since the last inspection) */}
-      <Section title="Service History Since Last Inspection" accentColor="from-red-500/40 to-rose-400/20">
+      <div className={cardCn}>
+        <SectionHeader title="Service history since last inspection" />
         <Field label="Maintenance and service visits in the period">
           <Textarea
             value={formData.serviceHistorySummary || ''}
@@ -387,20 +290,21 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             placeholder={'One per line, e.g.\n12 Mar 2026 — service visit by FireCo: six-monthly inspection (satisfactory)\n03 May 2026 — battery change (panel standby)'}
           />
         </Field>
-        <p className="text-[11px] text-white/40 leading-relaxed -mt-1">
+        <p className="-mt-1 text-[12px] leading-relaxed text-white/80">
           Linked a log book above? This fills itself — service visits, battery changes and
           firmware updates recorded in the period.
         </p>
-      </Section>
+      </div>
 
-      {/* Plan & Cause-and-Effect References */}
-      <Section title="Zone Plan & Cause-and-Effect" accentColor="from-red-500/40 to-rose-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Plan & cause-and-effect references */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Zone plan & cause-and-effect" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Zone plan reference">
             <Input
               value={formData.zonePlanRef || ''}
               onChange={(e) => onUpdate('zonePlanRef', e.target.value)}
-              className="h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+              className={inputCn}
               placeholder="Drawing no. / chart by panel"
             />
           </Field>
@@ -408,12 +312,12 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
             <Input
               value={formData.causeEffectReference || ''}
               onChange={(e) => onUpdate('causeEffectReference', e.target.value)}
-              className="h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+              className={inputCn}
               placeholder="Matrix ref / 'simultaneous evacuation'"
             />
           </Field>
         </div>
-        <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+        <label className="flex min-h-11 cursor-pointer items-center gap-3 touch-manipulation">
           <Checkbox
             checked={formData.zonePlanVerified || false}
             onCheckedChange={(v) => onUpdate('zonePlanVerified', v)}
@@ -422,8 +326,8 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
           <span className="text-sm text-white">
             Zone plan present at the panel and checked against the CIE zone text
           </span>
-        </div>
-        <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+        </label>
+        <label className="flex min-h-11 cursor-pointer items-center gap-3 touch-manipulation">
           <Checkbox
             checked={formData.causeEffectVerified || false}
             onCheckedChange={(v) => onUpdate('causeEffectVerified', v)}
@@ -432,12 +336,12 @@ export default function FAG6InspectionScope({ formData, onUpdate }: Props) {
           <span className="text-sm text-white">
             Cause &amp; effect operation verified during this inspection
           </span>
-        </div>
-        <p className="text-[11px] text-white/40 leading-relaxed">
+        </label>
+        <p className="text-[12px] leading-relaxed text-white/80">
           BS 5839-1:2025 treats a missing zone plan in multi-zone premises as an unacceptable
           variation — flag it as a defect if absent.
         </p>
-      </Section>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
-import React from 'react';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import React, { useRef } from 'react';
 import { PATTestingTabValue } from '@/hooks/usePATTestingTabs';
 import PATTestingClientDetails from './PATTestingClientDetails';
 import PATTestingApplianceList from './PATTestingApplianceList';
@@ -27,6 +26,7 @@ interface PATTestingFormTabsProps {
     isCurrentTabComplete: boolean;
     onGenerateCertificate?: () => void;
     canGenerateCertificate?: boolean;
+    onOpenEmailDialog?: () => void;
     whatsApp?: {
       type: string;
       id: string;
@@ -46,9 +46,10 @@ interface PATTestingFormTabsProps {
   onCopyApplianceData: (data: Partial<Appliance>) => void;
 }
 
+const TAB_ORDER: PATTestingTabValue[] = ['client', 'appliances', 'declarations'];
+
 const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   currentTab,
-  onTabChange,
   formData,
   onUpdate,
   tabNavigationProps,
@@ -61,61 +62,49 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   copiedApplianceData,
   onCopyApplianceData,
 }) => {
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'client',
-      label: 'Client',
-      shortLabel: 'Client',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4">
-          <PATTestingClientDetails formData={formData} onUpdate={onUpdate} />
-          <PATTestingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'appliances',
-      label: 'Items',
-      shortLabel: 'Items',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4">
-          <PATTestingApplianceList
-            formData={formData}
-            onUpdate={onUpdate}
-            activeApplianceId={activeApplianceId}
-            onOpenAppliance={onOpenAppliance}
-            onCloseAppliance={onCloseAppliance}
-            copiedApplianceData={copiedApplianceData}
-            onCopyApplianceData={onCopyApplianceData}
-          />
-          <PATTestingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'declarations',
-      label: 'Sign',
-      shortLabel: 'Sign',
-      content: (
-        <div className="pt-2 pb-48 sm:px-4">
-          <PATTestingDeclarations formData={formData} onUpdate={onUpdate} />
-          <PATTestingTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            onCreateInvoice={onCreateInvoice}
-            canGenerateCertificate={canGenerateCertificate}
-          />
-        </div>
-      ),
-    },
-  ];
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
+
+  const content: Record<PATTestingTabValue, React.ReactNode> = {
+    client: <PATTestingClientDetails formData={formData} onUpdate={onUpdate} />,
+    appliances: (
+      <PATTestingApplianceList
+        formData={formData}
+        onUpdate={onUpdate}
+        activeApplianceId={activeApplianceId}
+        onOpenAppliance={onOpenAppliance}
+        onCloseAppliance={onCloseAppliance}
+        copiedApplianceData={copiedApplianceData}
+        onCopyApplianceData={onCopyApplianceData}
+      />
+    ),
+    declarations: <PATTestingDeclarations formData={formData} onUpdate={onUpdate} />,
+  };
+
+  const isLast = currentTab === 'declarations';
 
   return (
-    <SmartTabs
-      tabs={smartTabs}
-      value={currentTab}
-      onValueChange={onTabChange}
-    />
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <PATTestingTabNavigation
+        {...tabNavigationProps}
+        onGenerateCertificate={
+          isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate
+        }
+        onCreateInvoice={onCreateInvoice}
+        canGenerateCertificate={canGenerateCertificate}
+      />
+    </>
   );
 };
 

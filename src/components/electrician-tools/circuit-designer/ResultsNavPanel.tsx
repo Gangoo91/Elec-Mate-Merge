@@ -6,6 +6,7 @@ import { CircuitDesign } from '@/types/installation-design';
 import { Search, CheckCircle2, AlertTriangle, AlertCircle, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { getZsCheck } from './zs-compliance';
 
 interface ResultsNavPanelProps {
   circuits: CircuitDesign[];
@@ -27,10 +28,11 @@ export const ResultsNavPanel = ({
   );
 
   const getCircuitStatus = (circuit: CircuitDesign) => {
-    // Safety-critical: direct Zs vs maxZs check — hard fail
-    const zsVal = circuit.calculations?.zs ?? 0;
-    const maxZsVal = circuit.calculations?.maxZs ?? 0;
-    if (maxZsVal > 0 && zsVal > maxZsVal) return 'fail';
+    // Safety-critical: direct Zs vs maxZs check — hard fail. ELE-1426: an
+    // uncalculated Zs is a warning, not a silent pass.
+    const zsCheck = getZsCheck(circuit);
+    if (zsCheck.state === 'fail') return 'fail';
+    if (zsCheck.state === 'not-calculated') return 'warning';
 
     // Check expected test results for Zs compliance
     const zsCompliant =

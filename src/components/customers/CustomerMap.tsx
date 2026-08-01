@@ -235,7 +235,7 @@ const MapBody: React.FC<CustomerMapProps> = ({ customers, selectedId, onSelect }
         <div className="absolute inset-x-3 bottom-3 z-10 rounded-2xl border border-elec-yellow/30 bg-[hsl(0_0%_10%)]/95 p-4 shadow-2xl backdrop-blur-md sm:left-auto sm:right-3 sm:max-w-sm">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+              <div className="text-[12px] font-semibold text-elec-yellow">
                 Customer
               </div>
               <div className="mt-1 truncate text-[15px] font-semibold text-white">

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Lock, ShieldCheck, FilePlus2, History, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { VersionHistorySheet } from '@/components/ui/VersionHistorySheet';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
@@ -65,9 +64,8 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
         <Button
           type="button"
           variant="ghost"
-          className="h-11 flex-1 sm:flex-initial gap-1.5 bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
+          className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] font-medium text-white hover:bg-white/[0.08] hover:text-white touch-manipulation sm:flex-initial"
         >
-          <History className="h-4 w-4" />
           History
         </Button>
       }
@@ -76,22 +74,16 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
 
   if (isLocked) {
     return (
-      <div className="px-4 pt-3">
-        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/[0.07] p-4">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-emerald-500/15 flex items-center justify-center">
-              <Lock className="h-4 w-4 text-emerald-400" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-emerald-300">
-                Issued &amp; locked{editVersion > 1 ? ` · Version ${editVersion}` : ''}
-              </p>
-              <p className="text-xs text-white/60 mt-0.5 leading-relaxed">
-                This certificate is final and read-only
-                {lockedAt ? ` — issued ${formatLockedDate(lockedAt)}` : ''}. Tap Amend to make
-                changes in a new version.
-              </p>
-            </div>
+      <div className="-mx-3 px-3 pt-3 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
+        <div className="rounded-xl border border-emerald-500/30 bg-white/[0.03] p-4">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-emerald-400">
+              Issued &amp; locked{editVersion > 1 ? ` · Version ${editVersion}` : ''}
+            </p>
+            <p className="text-[12.5px] text-white/85 mt-0.5 leading-relaxed">
+              Final and read-only{lockedAt ? ` — issued ${formatLockedDate(lockedAt)}` : ''}. Amend
+              creates a new version.
+            </p>
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             {databaseId && (
@@ -99,9 +91,8 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
                 type="button"
                 variant="ghost"
                 onClick={() => setPdfOpen(true)}
-                className="h-11 flex-1 sm:flex-initial gap-1.5 bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] font-medium text-white hover:bg-white/[0.08] hover:text-white touch-manipulation sm:flex-initial"
               >
-                <Download className="h-4 w-4" />
                 PDF
               </Button>
             )}
@@ -110,9 +101,8 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
               type="button"
               variant="outline"
               onClick={onAmend}
-              className="h-11 flex-1 sm:flex-initial gap-1.5 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 touch-manipulation"
+              className="h-11 flex-1 rounded-xl border-white/[0.12] bg-white/[0.04] font-medium text-white hover:bg-white/[0.08] hover:text-white touch-manipulation sm:flex-initial"
             >
-              <FilePlus2 className="h-4 w-4" />
               Amend
             </Button>
           </div>
@@ -124,31 +114,16 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
 
   if (canIssue) {
     return (
-      <div className="px-4 pt-3">
-        <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
-              <ShieldCheck className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white">Ready to issue?</p>
-              <p className="text-xs text-white/55 mt-1 leading-relaxed">
-                Lock the certificate to mark it final &amp; issued. It becomes read-only — any later
-                change creates a new version.
-              </p>
-            </div>
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {historySheet}
-            <Button
-              type="button"
-              onClick={onLock}
-              className="h-11 flex-1 sm:flex-initial gap-1.5 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation"
-            >
-              <Lock className="h-4 w-4" />
-              Issue &amp; lock
-            </Button>
-          </div>
+      <div className="-mx-3 sm:mx-0">
+        <div className="mx-auto px-3 pt-3 sm:px-4 lg:max-w-[1600px] lg:px-8">
+          <Button
+            type="button"
+            onClick={onLock}
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99]"
+          >
+            Issue &amp; lock
+          </Button>
+          {historySheet && <div className="mt-2 flex">{historySheet}</div>}
         </div>
       </div>
     );
@@ -157,9 +132,9 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
   // Unlocked, unsigned, but part of a version chain — still surface the timeline.
   if (showHistory) {
     return (
-      <div className="px-4 pt-3">
+      <div className="-mx-3 px-3 pt-3 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 flex items-center justify-between gap-3">
-          <p className="text-xs text-white/60">Version {editVersion} of this certificate</p>
+          <p className="text-[12.5px] text-white/85">Version {editVersion} of this certificate</p>
           {historySheet}
         </div>
       </div>

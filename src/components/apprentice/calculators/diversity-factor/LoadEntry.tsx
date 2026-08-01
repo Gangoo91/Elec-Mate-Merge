@@ -183,7 +183,7 @@ export function LoadEntry({
                 Cooker unit has socket outlet?
               </span>
               <p className="text-[12px] text-white/55 mt-0.5">
-                Adds 5A to diversified demand (Table 1B item 3)
+                Adds 5A to diversified demand (Table A2 item 3)
               </p>
             </div>
           </label>
@@ -205,8 +205,8 @@ export function LoadEntry({
               </span>
               <p className="text-[12px] text-white/55 mt-0.5">
                 {load.thermostaticallyControlled
-                  ? '100% — no diversity for thermostatic heating (Table 1B item 4)'
-                  : 'Largest 100% + 75% of remainder (Table 1B item 4)'}
+                  ? '100% — no diversity for thermostatic heating (Table A2 item 4)'
+                  : 'Largest 100% + 75% of remainder (Table A2 item 4)'}
               </p>
             </div>
           </label>

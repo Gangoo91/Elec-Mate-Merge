@@ -9,11 +9,9 @@
  * - PDF generation via PDF Monkey
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAppReview } from '@/hooks/useAppReview';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +22,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -36,7 +34,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 
 import PATTestingFormTabs from '@/components/inspection/pat-testing/PATTestingFormTabs';
-import { usePATTestingTabs } from '@/hooks/usePATTestingTabs';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import { usePATTestingTabs, PATTestingTabValue } from '@/hooks/usePATTestingTabs';
 import { getDefaultPATTestingFormData, Appliance } from '@/types/pat-testing';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
@@ -47,7 +46,6 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -186,18 +184,6 @@ const {
     companyProfile?.logo_data_url
   );
 
-  // ─── Email hook ──────────────────────────────────────────────────────────
-  const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
-    certificateType: 'pat-testing',
-    reportId: savedReportId || '',
-    certificateNumber: formData.certificateNumber,
-    clientName: formData.clientName,
-    clientEmail: formData.clientEmail,
-    installationAddress: formData.siteAddress,
-    inspectionDate: formData.testDate,
-    companyName: companyProfile?.company_name,
-  });
-
   // ─── Load company branding for PDF ──────────────────────────────────────
   const loadCompanyBranding = useCallback(() => {
     if (!companyProfile) return null;
@@ -221,6 +207,31 @@ const {
       registrationNumber: companyProfile.registration_number || '',
     };
   }, [companyProfile]);
+
+  // ─── Email hook ──────────────────────────────────────────────────────────
+  // Formatted payload for the email path so send-certificate-resend can
+  // generate + attach the PDF even before the user ever taps Generate
+  // (without it, a pre-Generate email 422s — no pdf_payload exists yet).
+  const emailFormattedData = useMemo(() => {
+    try {
+      const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
+      return formatPATTestingJson(formData, branding || undefined);
+    } catch {
+      return undefined; // fall back to server-side pdf_payload
+    }
+  }, [formData, hasSavedCompanyBranding, loadCompanyBranding]);
+
+  const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
+    certificateType: 'pat-testing',
+    reportId: savedReportId || '',
+    certificateNumber: formData.certificateNumber,
+    clientName: formData.clientName,
+    clientEmail: formData.clientEmail,
+    installationAddress: formData.siteAddress,
+    inspectionDate: formData.testDate,
+    companyName: companyProfile?.company_name,
+    formattedData: emailFormattedData,
+  });
 
   // ─── Load existing report ───────────────────────────────────────────────
   useEffect(() => {
@@ -485,7 +496,7 @@ const {
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-base font-bold">Recover Unsaved Work?</AlertDialogTitle>
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
             <AlertDialogDescription className="text-white text-sm">
               We found an unsaved PAT Testing certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
@@ -496,53 +507,41 @@ const {
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
-            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow font-medium hover:bg-elec-yellow/25 active:scale-[0.98] transition-all touch-manipulation">Recover Draft</AlertDialogAction>
-            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start Fresh</AlertDialogCancel>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Header — matches EICR/EIC/MW/EV pattern */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">PAT Testing</h1>
-                {formData.certificateNumber && (
-                  <p className="text-[10px] text-white font-mono mt-0.5">
-                    {formData.certificateNumber}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving || syncStatus.cloud === 'syncing'}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="PAT Testing"
+        subtitle={formData.certificateNumber ? `${formData.certificateNumber} · IET CoP` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={[
+          { id: 'client', label: 'Client' },
+          { id: 'appliances', label: 'Items' },
+          { id: 'declarations', label: 'Sign off' },
+        ]}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as PATTestingTabValue);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          client: !!tabProps.isTabComplete('client'),
+          appliances: !!tabProps.isTabComplete('appliances'),
+          declarations: !!tabProps.isTabComplete('declarations'),
+        }}
+      />
 
-      {/* Main Content - Edge-to-edge on mobile, padded on desktop */}
+      {/* Main Content */}
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
         isLocked={isLocked}
@@ -556,7 +555,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-4 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <PATTestingFormTabs
           currentTab={tabProps.currentTab}
@@ -579,10 +578,17 @@ const {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
             onGenerateCertificate: handleGenerateCertificate,
             canGenerateCertificate: !isGenerating,
+            onOpenEmailDialog: () => {
+              if (!savedReportId) {
+                toast.error('Please save the certificate first before emailing.');
+                return;
+              }
+              setShowEmailDialog(true);
+            },
             whatsApp: {
               type: 'pat-testing',
               id: savedReportId || id || 'new',
-              recipientPhone: formData.clientPhone || '',
+              recipientPhone: formData.clientTelephone || '',
               recipientName: formData.clientName || '',
               documentLabel: 'PAT Testing Certificate',
             },

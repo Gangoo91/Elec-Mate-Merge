@@ -5,18 +5,25 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useState, useCallback } from 'react';
 import { toast } from 'sonner';
-import { AlertTriangle, Download, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import CertificateClientSection from '@/components/inspection/shared/CertificateClientSection';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const voltButtonCn =
+  'w-full h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-transform flex items-center justify-center disabled:bg-elec-yellow disabled:text-black disabled:opacity-100';
 
 const categoryOptions = [
   { value: 'L1', label: 'L1 — Full Coverage' },
@@ -42,27 +49,8 @@ const premisesTypeOptions = [
   { value: 'Data Centre', label: 'Data Centre' },
 ];
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -75,7 +63,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -105,7 +93,7 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
         .from('reports')
         .select('data, report_type, updated_at, report_id')
         .eq('user_id', user.id)
-        .in('report_type', ['fire-alarm', 'fire-alarm-commissioning'])
+        .in('report_type', ['fire-alarm', 'fire-alarm-commissioning', 'fire-alarm-inspection'])
         .is('deleted_at', null)
         .order('updated_at', { ascending: false })
         .limit(20);
@@ -123,9 +111,17 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
   }, []);
 
   const handleSelectOriginalCert = useCallback(
-    (certData: any) => {
+    (certData: any, reportType?: string) => {
       if (!certData) return;
       onUpdate('originalCertRef', certData.certificateNumber || '');
+      if (!formData.designCertReference && certData.designCertReference)
+        onUpdate('designCertReference', certData.designCertReference);
+      if (!formData.commissioningCertRef) {
+        if (reportType === 'fire-alarm-commissioning' && certData.certificateNumber)
+          onUpdate('commissioningCertRef', certData.certificateNumber);
+        else if (certData.commissioningCertRef)
+          onUpdate('commissioningCertRef', certData.commissioningCertRef);
+      }
       if (!formData.clientName && certData.clientName) onUpdate('clientName', certData.clientName);
       if (!formData.clientTelephone && certData.clientTelephone)
         onUpdate('clientTelephone', certData.clientTelephone);
@@ -139,6 +135,8 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
         onUpdate('systemCategory', certData.systemCategory);
       if (!formData.systemMake && (certData.systemMake || certData.panelMake))
         onUpdate('systemMake', certData.systemMake || certData.panelMake);
+      if (!formData.existingZones && (certData.existingZones || certData.zonesCount))
+        onUpdate('existingZones', String(certData.existingZones || certData.zonesCount));
       setShowCertPicker(false);
       toast.success('Loaded from original certificate');
     },
@@ -146,56 +144,56 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
   );
 
   return (
-    <div className="space-y-5">
-      <div className="border-b border-red-500/20 pb-3">
-        <p className="text-sm font-bold text-red-400">FIRE ALARM MODIFICATION CERTIFICATE (G7)</p>
-        <p className="text-xs text-white mt-1">
-          BS 5839-1:2025 — Extension or alteration to existing system
-        </p>
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Certificate reference */}
+      <div className={cardCn}>
+        <SectionHeader title="Certificate reference" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Certificate number">
+            <Input
+              value={formData.certificateNumber || ''}
+              onChange={(e) => onUpdate('certificateNumber', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Modification date">
+            <Input
+              type="date"
+              value={formData.modificationDate || ''}
+              onChange={(e) => onUpdate('modificationDate', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+        </div>
       </div>
 
-      <Section title="Certificate Reference" accentColor="from-white/20 to-white/5">
-        <Field label="Certificate Number">
-          <Input
-            value={formData.certificateNumber || ''}
-            onChange={(e) => onUpdate('certificateNumber', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-        <Field label="Modification Date">
-          <Input
-            type="date"
-            value={formData.modificationDate || ''}
-            onChange={(e) => onUpdate('modificationDate', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-      </Section>
-
-      {/* Load from Original */}
-      <Section title="Load from Original" accentColor="from-elec-yellow/40 to-amber-400/20">
-        <Button
-          variant="outline"
+      {/* Load from original */}
+      <div className={cardCn}>
+        <SectionHeader title="Load from original" />
+        <button
+          type="button"
           onClick={handleLoadOriginal}
           disabled={loadingOriginal}
-          className="w-full h-12 text-sm border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98] rounded-xl"
+          className={voltButtonCn}
         >
           {loadingOriginal ? (
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+              Searching...
+            </>
           ) : (
-            <Download className="h-4 w-4 mr-2" />
+            'Load from original G2, G3 or G6 certificate'
           )}
-          {loadingOriginal ? 'Searching...' : 'Load from Original G2 or G3 Certificate'}
-        </Button>
-        <p className="text-xs text-white text-center">
+        </button>
+        <p className="text-[12px] text-white/85 text-center">
           Pre-fills client, premises, and system details from original installation
         </p>
         <Sheet open={showCertPicker} onOpenChange={setShowCertPicker}>
           <SheetContent side="bottom" className="h-[70dvh] p-0 rounded-t-2xl flex flex-col">
             <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
+              <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.08]">
                 <SheetTitle className="text-lg font-bold text-white">
-                  Select Original Certificate
+                  Select original certificate
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto overscroll-contain px-3 py-3">
@@ -203,23 +201,27 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
                   {originalCerts.map((report: any) => {
                     const d = report.data || {};
                     const typeLabel =
-                      report.report_type === 'fire-alarm' ? 'G2 Install' : 'G3 Commission';
+                      report.report_type === 'fire-alarm'
+                        ? 'G2 install'
+                        : report.report_type === 'fire-alarm-commissioning'
+                          ? 'G3 commission'
+                          : 'G6 inspection';
                     return (
                       <button
                         key={report.report_id}
                         type="button"
-                        onClick={() => handleSelectOriginalCert(d)}
-                        className="w-full text-left p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] active:scale-[0.98] transition-all touch-manipulation"
+                        onClick={() => handleSelectOriginalCert(d, report.report_type)}
+                        className="w-full text-left p-3.5 rounded-xl bg-white/[0.06] border border-white/[0.12] active:scale-[0.98] transition-all touch-manipulation"
                       >
                         <div className="flex items-center justify-between mb-1">
                           <p className="font-semibold text-white text-sm">
                             {d.certificateNumber || 'No cert number'}
                           </p>
-                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full border border-red-500/40 text-red-400">
                             {typeLabel}
                           </span>
                         </div>
-                        <p className="text-xs text-white">
+                        <p className="text-xs text-white/85">
                           {d.premisesAddress ||
                             d.installationAddress ||
                             d.clientName ||
@@ -233,22 +235,20 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
             </div>
           </SheetContent>
         </Sheet>
-      </Section>
+      </div>
 
-      <Section
-        title="Original System Certificates"
-        accentColor="from-amber-500/40 to-yellow-400/20"
-      >
+      {/* Original system certificates */}
+      <div className={cardCn}>
+        <SectionHeader title="Original system certificates" />
         {missingOriginalCert && (
-          <div className="flex items-start gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-            <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-            <p className="text-xs text-red-400">
+          <div className="rounded-xl border border-red-500/40 bg-white/[0.05] p-3">
+            <p className="text-xs text-red-400 leading-relaxed">
               Original certificate reference is mandatory for G7. If original certs are not
               available, a new G1+G2+G3 is required.
             </p>
           </div>
         )}
-        <Field label="Original Cert Reference" required>
+        <Field label="Original cert reference" required>
           <Input
             value={formData.originalCertRef || ''}
             onChange={(e) => onUpdate('originalCertRef', e.target.value)}
@@ -256,15 +256,15 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
             placeholder="G2 or G3 cert reference"
           />
         </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="G1 Design Ref">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="G1 design ref">
             <Input
               value={formData.designCertReference || ''}
               onChange={(e) => onUpdate('designCertReference', e.target.value)}
               className={inputCn}
             />
           </Field>
-          <Field label="G3 Commission Ref">
+          <Field label="G3 commission ref">
             <Input
               value={formData.commissioningCertRef || ''}
               onChange={(e) => onUpdate('commissioningCertRef', e.target.value)}
@@ -272,12 +272,14 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      <Section title="Client Details" accentColor="from-blue-500/40 to-cyan-400/20">
+      {/* Client details */}
+      <div className={cardCn}>
+        <SectionHeader title="Client details" />
         <CertificateClientSection formData={formData} onUpdate={onUpdate} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Client Name" required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Client name" required>
             <Input
               value={formData.clientName || ''}
               onChange={(e) => onUpdate('clientName', e.target.value)}
@@ -293,77 +295,80 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <Field label="Client Address">
+        <Field label="Client address">
           <Input
             value={formData.clientAddress || ''}
             onChange={(e) => onUpdate('clientAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      {/* Original system summary (shown after loading) */}
-      {formData.originalCertRef && formData.systemCategory && (
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5">
-          <p className="text-[10px] text-white uppercase tracking-wider mb-2">
-            Original System (before modification)
-          </p>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <p className="text-white">
-              Category:{' '}
-              <span className="font-semibold text-elec-yellow">{formData.systemCategory}</span>
+      {/* Premises & existing system */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Premises & existing system" />
+
+        {/* Original system summary (shown after loading) */}
+        {formData.originalCertRef && formData.systemCategory && (
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+            <p className="text-[12px] font-medium text-white mb-2">
+              Original system (before modification)
             </p>
-            {formData.systemMake && (
-              <p className="text-white">
-                Panel: <span className="font-semibold">{formData.systemMake}</span>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <p className="text-white/85">
+                Category:{' '}
+                <span className="font-semibold text-elec-yellow">{formData.systemCategory}</span>
               </p>
-            )}
-            {formData.existingZones && (
-              <p className="text-white">
-                Zones: <span className="font-semibold">{formData.existingZones}</span>
-              </p>
-            )}
+              {formData.systemMake && (
+                <p className="text-white/85">
+                  Panel: <span className="font-semibold text-white">{formData.systemMake}</span>
+                </p>
+              )}
+              {formData.existingZones && (
+                <p className="text-white/85">
+                  Zones: <span className="font-semibold text-white">{formData.existingZones}</span>
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <Section title="Premises & Existing System" accentColor="from-red-500/40 to-orange-400/20">
-        <Field label="Premises Address" required>
+        <Field label="Premises address" required>
           <Input
             value={formData.premisesAddress || ''}
             onChange={(e) => onUpdate('premisesAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Premises Type">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Premises type">
             <ComboboxCell
               value={formData.premisesType || ''}
               onChange={(v) => onUpdate('premisesType', v)}
               options={premisesTypeOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
-          <Field label="Existing Category">
+          <Field label="Existing category">
             <ComboboxCell
               value={formData.systemCategory || ''}
               onChange={(v) => onUpdate('systemCategory', v)}
               options={categoryOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className="h-11 text-base"
             />
           </Field>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Panel Make / Model">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Panel make / model">
             <Input
               value={formData.systemMake || ''}
               onChange={(e) => onUpdate('systemMake', e.target.value)}
               className={inputCn}
             />
           </Field>
-          <Field label="Existing Zones">
+          <Field label="Existing zones">
             <Input
               type="number"
               inputMode="numeric"
@@ -373,7 +378,7 @@ export default function FAG7ProjectOriginal({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
     </div>
   );
 }

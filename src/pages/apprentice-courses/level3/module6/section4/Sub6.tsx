@@ -32,8 +32,7 @@ import {
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Cable selection synthesis (4.6) | Level 3 Module 6.4.6 | Elec-Mate';
+const TITLE = 'Cable selection synthesis (4.6) | Level 3 Module 6.4.6 | Elec-Mate';
 const DESCRIPTION =
   'A capstone worked example. 100 A TN-C-S domestic supply with 7 kW EV charger, 4 kWp PV with battery and 8 kW heat pump — every cable taken through CCC, Vd, EFLI and adiabatic gates and synthesised into one integrated cable schedule.';
 
@@ -85,8 +84,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'In what order are the cable selection gates run when designing a circuit?',
+    question: 'In what order are the cable selection gates run when designing a circuit?',
     options: [
       'Adiabatic first (does the CPC survive?), then EFLI, then Vd, then CCC — fault survival always sets the cable size before steady-state current.',
       'CCC, then Vd, then EFLI, then adiabatic — sizing up to satisfy whichever gate demands the largest CSA.',
@@ -143,12 +141,7 @@ const quizQuestions = [
     id: 5,
     question:
       'On a TN-C-S supply with declared Ze = 0.35 Ω, what is the maximum permitted Zs for a 32 A B-curve MCB circuit per BS 7671 A4:2026 Table 41.3 (for the 230 V column)?',
-    options: [
-      '1.44 Ω (pre-A4)',
-      '1.37 Ω',
-      '0.55 Ω',
-      '0.86 Ω',
-    ],
+    options: ['1.44 Ω (pre-A4)', '1.37 Ω', '0.55 Ω', '0.86 Ω'],
     correctAnswer: 1,
     explanation:
       'BS 7671 A4:2026 Table 41.3 max Zs for a B32 (230 V) is 1.37 Ω. The pre-A4 figure was 1.44 Ω; the A4:2026 amendment tightened it to 1.37 Ω because the underlying calculation now uses the Cmin = 0.95 voltage factor formally. Many older study materials and OSG editions still quote 1.44 Ω — that figure is now obsolete. Always work from the current Table 41.3 values for design and verification.',
@@ -278,15 +271,13 @@ export default function Sub6() {
             plainEnglish="The four cable gates are independent checks asking different questions. Run them in sequence, in this order, and let whichever gate demands the largest CSA win. The same cable that wins for one circuit may lose for the next — every circuit gets its own honest calc."
             onSite="On a multi-load design the gate order matters because each gate prunes the choice. CCC sets the floor; Vd often pushes you up a CSA bracket on long runs; EFLI sometimes pushes you up another bracket; adiabatic occasionally adds a final constraint. The integrated design respects all four."
           >
-            <p>
-              The four gates revisited from Subs 4.1–4.5:
-            </p>
+            <p>The four gates revisited from Subs 4.1–4.5:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>CCC (Sub 4.2)</strong> — current-carrying capacity. Does the cable carry
-                Ib in steady state without exceeding the conductor temperature limit? Reference
-                Method, derate stack (Ca, Cg, Ci), required tabulated It ≥ Ib / total-derate.
-                Result: minimum CSA for thermal-steady-state.
+                <strong>CCC (Sub 4.2)</strong> — current-carrying capacity. Does the cable carry Ib
+                in steady state without exceeding the conductor temperature limit? Reference Method,
+                derate stack (Ca, Cg, Ci), required tabulated It ≥ Ib / total-derate. Result:
+                minimum CSA for thermal-steady-state.
               </li>
               <li>
                 <strong>Vd (Sub 4.4)</strong> — voltage drop. Does the load see enough voltage at
@@ -295,21 +286,21 @@ export default function Sub6() {
               </li>
               <li>
                 <strong>EFLI (Sub 5.1, run alongside cable selection)</strong> — earth fault loop
-                impedance. Does Zs at the end of the circuit clear ADS in time? Zs(design) =
-                Ze + (R1 + R2 at operating temperature) ≤ Table 41.3 max for the device. Result:
-                may force a larger CPC or larger overall cable to bring R1 + R2 down.
+                impedance. Does Zs at the end of the circuit clear ADS in time? Zs(design) = Ze +
+                (R1 + R2 at operating temperature) ≤ Table 41.3 max for the device. Result: may
+                force a larger CPC or larger overall cable to bring R1 + R2 down.
               </li>
               <li>
-                <strong>Adiabatic (Sub 4.5)</strong> — CPC survival. Does the CPC withstand the
-                I²t energy let-through during the fault? S = √(I²t) / k. Result: may force a
-                larger CPC fraction.
+                <strong>Adiabatic (Sub 4.5)</strong> — CPC survival. Does the CPC withstand the I²t
+                energy let-through during the fault? S = √(I²t) / k. Result: may force a larger CPC
+                fraction.
               </li>
             </ul>
             <p>
               The cable that goes on the schedule is whichever satisfies all four gates. On many
               circuits the gates resolve to the same answer; on some, one gate forces a step up.
-              Document each gate’s pass/fail figure on the design sheet so the result is
-              traceable and the next designer can see why each cable was chosen.
+              Document each gate’s pass/fail figure on the design sheet so the result is traceable
+              and the next designer can see why each cable was chosen.
             </p>
           </ConceptBlock>
 
@@ -332,22 +323,34 @@ export default function Sub6() {
               works (DNO upgrade booked). Existing CU: 8-way split-load with 30 mA RCDs, being
               replaced with a 14-way all-RCBO board (10 ways used now, 4 reserved for future).
             </p>
-            <p>
-              Loads to be designed in:
-            </p>
+            <p>Loads to be designed in:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>2 × 32 A radial sockets (kitchen, utility) on 4 mm² T&E or 6 mm² where Vd demands.</li>
+              <li>
+                2 × 32 A radial sockets (kitchen, utility) on 4 mm² T&E or 6 mm² where Vd demands.
+              </li>
               <li>2 × 6 A lighting circuits (downstairs, upstairs) on 1.5 mm² T&E.</li>
               <li>1 × 32 A oven (existing) on 6 mm² T&E.</li>
               <li>1 × 50 A 9.5 kW electric shower on 10 mm² T&E.</li>
-              <li>1 × 32 A EV charger on a dedicated 6 mm² T&E radial, 25 m route to driveway, with Type B RCD + OPDP open-PEN protection per Section 722.</li>
-              <li>1 × 4 kWp PV inverter feed on 2.5 mm² T&E with 16 A reverse-power-capable RCBO per Section 712.</li>
-              <li>1 × 5 kWh battery on 4 mm² T&E with 20 A RCBO and bidirectional power capability per Reg 551.</li>
-              <li>1 × 8 kW heat pump (16 A continuous) on 2.5 mm² T&E with 20 A RCBO, 12 m route to outdoor unit.</li>
+              <li>
+                1 × 32 A EV charger on a dedicated 6 mm² T&E radial, 25 m route to driveway, with
+                Type B RCD + OPDP open-PEN protection per Section 722.
+              </li>
+              <li>
+                1 × 4 kWp PV inverter feed on 2.5 mm² T&E with 16 A reverse-power-capable RCBO per
+                Section 712.
+              </li>
+              <li>
+                1 × 5 kWh battery on 4 mm² T&E with 20 A RCBO and bidirectional power capability per
+                Reg 551.
+              </li>
+              <li>
+                1 × 8 kW heat pump (16 A continuous) on 2.5 mm² T&E with 20 A RCBO, 12 m route to
+                outdoor unit.
+              </li>
             </ul>
             <p>
-              4 spare RCBO ways reserved for future loads — labelled "RESERVED FOR EXPANSION" in
-              the design pack with no specific allocation, but the supply maximum demand has been
+              4 spare RCBO ways reserved for future loads — labelled "RESERVED FOR EXPANSION" in the
+              design pack with no specific allocation, but the supply maximum demand has been
               calculated assuming up to a further 32 A of future load can be absorbed by load
               management.
             </p>
@@ -361,9 +364,7 @@ export default function Sub6() {
             title="Maximum demand calculation — diversity applied"
             plainEnglish="Connected total of all the new loads is around 196 A. After diversity, simultaneous worst-case demand is around 70–80 A, comfortably inside the 100 A supply. Smart load management ensures the EV charger and heat pump cannot simultaneously breach the supply rating during the worst-case winter evening."
           >
-            <p>
-              Connected total at full demand (every load on at full power simultaneously):
-            </p>
+            <p>Connected total at full demand (every load on at full power simultaneously):</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>2 × 32 A radial sockets — 64 A connected.</li>
               <li>2 × 6 A lighting — 12 A connected.</li>
@@ -378,17 +379,29 @@ export default function Sub6() {
               Total connected: roughly 196 A worst-case-simultaneous, before considering that some
               of these are imports and some are exports.
             </p>
-            <p>
-              Apply diversity per OSG Table 1A / IET Guidance Note 1:
-            </p>
+            <p>Apply diversity per OSG Table A2 / IET Guidance Note 1:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Sockets and lighting: 100 percent of largest + 40 percent of remainder ≈ 32 + 0.4 × 44 = 49.6 A.</li>
-              <li>Oven: 10 A + 30 percent of remainder + 5 A for socket on cooker switch = 10 + 0.3 × 22 + 5 = 21.6 A.</li>
-              <li>Shower: 100 percent of largest = 50 A (no diversity for the largest single fixed load).</li>
-              <li>EV charger: 100 percent (continuous, treated as full load with load management).</li>
+              <li>
+                Sockets and lighting: 100 percent of largest + 40 percent of remainder ≈ 32 + 0.4 ×
+                44 = 49.6 A.
+              </li>
+              <li>
+                Oven: 10 A + 30 percent of remainder + 5 A for socket on cooker switch = 10 + 0.3 ×
+                22 + 5 = 21.6 A.
+              </li>
+              <li>
+                Shower: 100 percent of largest = 50 A (no diversity for the largest single fixed
+                load).
+              </li>
+              <li>
+                EV charger: 100 percent (continuous, treated as full load with load management).
+              </li>
               <li>Heat pump: 100 percent continuous (sized to nameplate; inrush is brief).</li>
               <li>Battery: depends on direction — assume worst-case 16 A draw during charging.</li>
-              <li>PV: subtract from import demand during peak generation, but worst-case demand is at night when PV is zero.</li>
+              <li>
+                PV: subtract from import demand during peak generation, but worst-case demand is at
+                night when PV is zero.
+              </li>
             </ul>
             <p>
               Worst-case simultaneous winter evening (no PV, all heating loads on, EV charging,
@@ -398,10 +411,10 @@ export default function Sub6() {
               the 100 A supply rating with margin for surge.
             </p>
             <p>
-              The design call: 100 A supply is adequate provided smart load management is
-              specified and installed (e.g. Zappi 2.1 with the heat pump CT clamp, or a
-              DNO-approved load limiter on the meter side). Without load management, a supply
-              upgrade to 3-phase would be needed.
+              The design call: 100 A supply is adequate provided smart load management is specified
+              and installed (e.g. Zappi 2.1 with the heat pump CT clamp, or a DNO-approved load
+              limiter on the meter side). Without load management, a supply upgrade to 3-phase would
+              be needed.
             </p>
           </ConceptBlock>
 
@@ -424,16 +437,16 @@ export default function Sub6() {
             <p>
               For a 100 A single-phase TN-C-S supply with a meter cupboard on the outside wall and
               the consumer unit inside the kitchen 4 m away, 25 mm² 6181Y or equivalent tails are
-              the standard spec. CCC for 25 mm² single-core is comfortably above 100 A by Method
-              C; Vd at 100 A over 4 m on 25 mm² ≈ (1.75 × 100 × 4) / 1000 = 0.7 V — negligible.
-              Some DNOs require 35 mm² for any 100 A supply regardless of length — check the
-              connection agreement.
+              the standard spec. CCC for 25 mm² single-core is comfortably above 100 A by Method C;
+              Vd at 100 A over 4 m on 25 mm² ≈ (1.75 × 100 × 4) / 1000 = 0.7 V — negligible. Some
+              DNOs require 35 mm² for any 100 A supply regardless of length — check the connection
+              agreement.
             </p>
             <p>
-              Earthing arrangement: TN-C-S means the DNO supplies a combined PEN at the cut-out;
-              the installer’s side separates PEN into PE and N at the consumer’s main earthing
-              terminal (MET). The meter tail "earth" is a 16 mm² (typically) earthing conductor
-              from the cut-out earth terminal back to the MET.
+              Earthing arrangement: TN-C-S means the DNO supplies a combined PEN at the cut-out; the
+              installer’s side separates PEN into PE and N at the consumer’s main earthing terminal
+              (MET). The meter tail "earth" is a 16 mm² (typically) earthing conductor from the
+              cut-out earth terminal back to the MET.
             </p>
           </ConceptBlock>
 
@@ -463,8 +476,8 @@ export default function Sub6() {
             </p>
             <p>
               <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 1.5 mm² T&E (1.5/1.0 mm² CPC) at 70 °C:
-              cold ~30.20 mΩ/m × 1.20 = 36.24 mΩ/m × 25 m = 0.91 Ω. Zs(design) = 0.35 + 0.91 = 1.26 Ω.
-              Max Zs for B6 (Table 41.3 A4:2026) = 7.28 Ω. Pass with huge margin.
+              cold ~30.20 mΩ/m × 1.20 = 36.24 mΩ/m × 25 m = 0.91 Ω. Zs(design) = 0.35 + 0.91 = 1.26
+              Ω. Max Zs for B6 (Table 41.3 A4:2026) = 7.28 Ω. Pass with huge margin.
             </p>
             <p>
               <strong>Adiabatic:</strong> If = 230 × 0.95 / 1.26 = 173 A. B6 magnetic instantaneous
@@ -478,24 +491,24 @@ export default function Sub6() {
             plainEnglish="32 A radial in 4 mm² T&E for the kitchen sockets — modern domestic standard, generous CCC, comfortable Vd on typical runs."
           >
             <p>
-              <strong>CCC:</strong> 4 mm² T&E by Method C ≈ 36 A; Method 100 (under
-              insulation) ≈ 27 A. 32 A In with no derate stack (clipped direct on the joist run)
-              clears Method C; if the cable disappears under insulation for any portion of its
-              run, must derate (Ci) and re-check.
+              <strong>CCC:</strong> 4 mm² T&E by Method C ≈ 36 A; Method 100 (under insulation) ≈ 27
+              A. 32 A In with no derate stack (clipped direct on the joist run) clears Method C; if
+              the cable disappears under insulation for any portion of its run, must derate (Ci) and
+              re-check.
             </p>
             <p>
               <strong>Vd:</strong> at 32 A over 22 m on 4 mm² (mV/A/m ≈ 11): Vd = (11 × 32 × 22) /
               1000 = 7.74 V = 3.37 percent. Below 5 percent. Headroom adequate.
             </p>
             <p>
-              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 4 mm² T&E (1.5 mm² CPC) at 70 °C:
-              cold ~17.07 mΩ/m × 1.20 = 20.5 mΩ/m × 22 m = 0.45 Ω. Zs(design) = 0.35 + 0.45 = 0.80 Ω.
-              Max Zs for B32 = 1.37 Ω (A4:2026 Table 41.3). Pass.
+              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 4 mm² T&E (1.5 mm² CPC) at 70 °C: cold
+              ~17.07 mΩ/m × 1.20 = 20.5 mΩ/m × 22 m = 0.45 Ω. Zs(design) = 0.35 + 0.45 = 0.80 Ω. Max
+              Zs for B32 = 1.37 Ω (A4:2026 Table 41.3). Pass.
             </p>
             <p>
-              <strong>Adiabatic:</strong> If = 230 × 0.95 / 0.80 = 273 A. B32 instantaneous from
-              160 A; 273 A magnetic, t ≈ 0.03 s. S(min) = √(273² × 0.03) / 115 = √2236 / 115 =
-              47.3 / 115 = 0.41 mm². Installed CPC 1.5 mm² — pass.
+              <strong>Adiabatic:</strong> If = 230 × 0.95 / 0.80 = 273 A. B32 instantaneous from 160
+              A; 273 A magnetic, t ≈ 0.03 s. S(min) = √(273² × 0.03) / 115 = √2236 / 115 = 47.3 /
+              115 = 0.41 mm². Installed CPC 1.5 mm² — pass.
             </p>
           </ConceptBlock>
 
@@ -505,22 +518,22 @@ export default function Sub6() {
           >
             <p>
               <strong>CCC:</strong> 10 mm² T&E by Method C ≈ 64 A; Method 100 ≈ 47 A. With the run
-              partly under loft insulation, derate by Ci (typically Ci = 0.78), giving
-              effective It ≈ 50 A. Pass for 41 A continuous.
+              partly under loft insulation, derate by Ci (typically Ci = 0.78), giving effective It
+              ≈ 50 A. Pass for 41 A continuous.
             </p>
             <p>
               <strong>Vd:</strong> at 41 A over 8 m on 10 mm² (mV/A/m ≈ 4.4): Vd = (4.4 × 41 × 8) /
               1000 = 1.44 V = 0.63 percent. Comfortably under 5 percent.
             </p>
             <p>
-              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 10 mm²/4 mm² CPC at 70 °C ≈ cold
-              6.44 mΩ/m × 1.20 = 7.73 mΩ/m × 8 m = 0.062 Ω. Zs(design) = 0.35 + 0.062 = 0.412 Ω.
-              Max Zs for B50 (Table 41.3 A4:2026) = 0.87 Ω. Pass.
+              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 10 mm²/4 mm² CPC at 70 °C ≈ cold 6.44
+              mΩ/m × 1.20 = 7.73 mΩ/m × 8 m = 0.062 Ω. Zs(design) = 0.35 + 0.062 = 0.412 Ω. Max Zs
+              for B50 (Table 41.3 A4:2026) = 0.87 Ω. Pass.
             </p>
             <p>
-              <strong>Adiabatic:</strong> If = 230 × 0.95 / 0.412 = 530 A. B50 magnetic from
-              250 A; 530 A is in the magnetic region, t ≈ 0.025 s. S(min) = √(530² × 0.025) / 115 =
-              √7022 / 115 = 83.8 / 115 = 0.73 mm². Installed CPC 4 mm² — pass.
+              <strong>Adiabatic:</strong> If = 230 × 0.95 / 0.412 = 530 A. B50 magnetic from 250 A;
+              530 A is in the magnetic region, t ≈ 0.025 s. S(min) = √(530² × 0.025) / 115 = √7022 /
+              115 = 83.8 / 115 = 0.73 mm². Installed CPC 4 mm² — pass.
             </p>
           </ConceptBlock>
 
@@ -538,22 +551,22 @@ export default function Sub6() {
               1000 = 5.84 V = 2.54 percent. Below 5 percent with adequate headroom.
             </p>
             <p>
-              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 6 mm²/2.5 mm² CPC at 70 °C: cold
-              10.49 mΩ/m × 1.20 = 12.6 mΩ/m × 25 m = 0.315 Ω. Zs(design) = 0.35 + 0.315 = 0.665 Ω.
-              Max Zs for B32 (A4:2026) = 1.37 Ω. Pass with comfortable margin.
+              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 6 mm²/2.5 mm² CPC at 70 °C: cold 10.49
+              mΩ/m × 1.20 = 12.6 mΩ/m × 25 m = 0.315 Ω. Zs(design) = 0.35 + 0.315 = 0.665 Ω. Max Zs
+              for B32 (A4:2026) = 1.37 Ω. Pass with comfortable margin.
             </p>
             <p>
               <strong>Adiabatic:</strong> If = 230 × 0.95 / 0.665 = 329 A. B32 magnetic from 160 A;
-              329 A magnetic, t ≈ 0.03 s. S(min) = √(329² × 0.03) / 115 = √3247 / 115 =
-              56.98 / 115 = 0.50 mm². Installed CPC 2.5 mm² — pass.
+              329 A magnetic, t ≈ 0.03 s. S(min) = √(329² × 0.03) / 115 = √3247 / 115 = 56.98 / 115
+              = 0.50 mm². Installed CPC 2.5 mm² — pass.
             </p>
             <p>
               <strong>Section 722 specifics:</strong> Type B RCD (or Type A with DC residual
               monitoring, e.g. integrated into the EV unit). OPDP open-PEN protection at the
-              consumer end of the supply (Garo, Matt:e or Hager device — typically combined with
-              the Type B RCD in one enclosure). IP54 outdoor enclosure for the EV charger itself
-              (most domestic EV products are IP54 or IP65 by design). Dedicated 6 mm² T&E radial
-              from a labelled "EV CHARGER" way on the consumer unit, not shared with anything else.
+              consumer end of the supply (Garo, Matt:e or Hager device — typically combined with the
+              Type B RCD in one enclosure). IP54 outdoor enclosure for the EV charger itself (most
+              domestic EV products are IP54 or IP65 by design). Dedicated 6 mm² T&E radial from a
+              labelled "EV CHARGER" way on the consumer unit, not shared with anything else.
             </p>
           </ConceptBlock>
 
@@ -570,21 +583,22 @@ export default function Sub6() {
             plainEnglish="The 8 kW air-source heat pump runs at 16 A continuous nameplate. 2.5 mm² T&E on a 20 A RCBO is the standard call. Manufacturer’s installation manual is the source of truth for any inrush or specific protection demand."
           >
             <p>
-              <strong>CCC:</strong> 2.5 mm² T&E by Method C ≈ 27 A. Comfortably above 16 A continuous.
+              <strong>CCC:</strong> 2.5 mm² T&E by Method C ≈ 27 A. Comfortably above 16 A
+              continuous.
             </p>
             <p>
               <strong>Vd:</strong> at 16 A over 12 m on 2.5 mm² (mV/A/m ≈ 18): Vd = (18 × 16 × 12) /
               1000 = 3.46 V = 1.50 percent. Comfortably under 5 percent.
             </p>
             <p>
-              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 2.5 mm²/1.5 mm² CPC at 70 °C: cold
-              19.51 mΩ/m × 1.20 = 23.4 mΩ/m × 12 m = 0.281 Ω. Zs(design) = 0.35 + 0.281 = 0.631 Ω.
-              Max Zs for B20 (A4:2026) = 2.19 Ω. Pass.
+              <strong>EFLI:</strong> Ze 0.35 Ω + R1+R2 for 2.5 mm²/1.5 mm² CPC at 70 °C: cold 19.51
+              mΩ/m × 1.20 = 23.4 mΩ/m × 12 m = 0.281 Ω. Zs(design) = 0.35 + 0.281 = 0.631 Ω. Max Zs
+              for B20 (A4:2026) = 2.19 Ω. Pass.
             </p>
             <p>
               <strong>Adiabatic:</strong> If = 230 × 0.95 / 0.631 = 346 A. B20 magnetic from 100 A;
-              346 A magnetic, t ≈ 0.025 s. S(min) = √(346² × 0.025) / 115 = √2993 / 115 = 54.7 /
-              115 = 0.48 mm². Installed CPC 1.5 mm² — pass.
+              346 A magnetic, t ≈ 0.025 s. S(min) = √(346² × 0.025) / 115 = √2993 / 115 = 54.7 / 115
+              = 0.48 mm². Installed CPC 1.5 mm² — pass.
             </p>
           </ConceptBlock>
 
@@ -600,16 +614,16 @@ export default function Sub6() {
               17 A on 2.5 mm² (mV/A/m ≈ 18): Vd = (18 × 17 × 5) / 1000 = 1.53 V = 0.67 percent.
             </p>
             <p>
-              <strong>EFLI / adiabatic:</strong> short cable, low Zs, comfortable for any
-              reasonable B-curve RCBO at 16 A or 20 A.
+              <strong>EFLI / adiabatic:</strong> short cable, low Zs, comfortable for any reasonable
+              B-curve RCBO at 16 A or 20 A.
             </p>
             <p>
-              <strong>Section 712 specifics:</strong> DC isolators on the roof side of the
-              inverter (integrated into the inverter on most modern units). AC isolator labelled
-              "PV INVERTER ISOLATOR" in the loft adjacent to the inverter. PV warning labelling
-              on the consumer unit, on the inverter, and at the supply intake per Reg 712.537.
-              Reverse-power-capable RCBO at the consumer unit way (most modern RCBOs are; verify
-              the manufacturer datasheet).
+              <strong>Section 712 specifics:</strong> DC isolators on the roof side of the inverter
+              (integrated into the inverter on most modern units). AC isolator labelled "PV INVERTER
+              ISOLATOR" in the loft adjacent to the inverter. PV warning labelling on the consumer
+              unit, on the inverter, and at the supply intake per Reg 712.537. Reverse-power-capable
+              RCBO at the consumer unit way (most modern RCBOs are; verify the manufacturer
+              datasheet).
             </p>
           </ConceptBlock>
 
@@ -620,12 +634,11 @@ export default function Sub6() {
               <>
                 A4:2026 deleted the old "reasonably practicable" exception that used to let
                 designers off the open-PEN protection duty. On a TN-C-S (PME) domestic supply
-                feeding an outdoor EV charging point, you must do one of: drive an earth
-                electrode that limits the open-PEN voltage rise to 70 V (route b); fit an
-                open-PEN detection device that disconnects within 5 s (route c, the OPDP / Matt:e /
-                Garo / Hager type); or use a voltage-window detection device on the line-to-neutral
-                voltage (route d). Skipping this and trusting the PME earth alone is a straight
-                non-compliance.
+                feeding an outdoor EV charging point, you must do one of: drive an earth electrode
+                that limits the open-PEN voltage rise to 70 V (route b); fit an open-PEN detection
+                device that disconnects within 5 s (route c, the OPDP / Matt:e / Garo / Hager type);
+                or use a voltage-window detection device on the line-to-neutral voltage (route d).
+                Skipping this and trusting the PME earth alone is a straight non-compliance.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 7, Section 722, Regulation 722.411.4.1."
@@ -636,22 +649,23 @@ export default function Sub6() {
             plainEnglish="5 kWh AC-coupled battery. Charge and discharge currents both around 16 A. 4 mm² T&E on 20 A RCBO. Bidirectional protection per Reg 551."
           >
             <p>
-              <strong>CCC:</strong> 4 mm² T&E by Method C ≈ 36 A. Comfortable above 16 A bidirectional.
+              <strong>CCC:</strong> 4 mm² T&E by Method C ≈ 36 A. Comfortable above 16 A
+              bidirectional.
             </p>
             <p>
-              <strong>Vd:</strong> short run from loft to CU, ~6 m, 16 A on 4 mm² (mV/A/m ≈ 11):
-              Vd = (11 × 16 × 6) / 1000 = 1.06 V = 0.46 percent.
+              <strong>Vd:</strong> short run from loft to CU, ~6 m, 16 A on 4 mm² (mV/A/m ≈ 11): Vd
+              = (11 × 16 × 6) / 1000 = 1.06 V = 0.46 percent.
             </p>
             <p>
               <strong>EFLI / adiabatic:</strong> short cable, low Zs, all gates pass with margin.
             </p>
             <p>
               <strong>Reg 551 specifics:</strong> bidirectional protection (RCBO that operates on
-              fault current in either direction). Synchronisation and anti-islanding behaviour
-              built into the inverter that controls the battery (G98 / G99 compliant). Labelling
-              that identifies the bidirectional source. Disconnection scheme: how the battery is
-              isolated for maintenance (typically an isolator at the battery, plus the CU way),
-              clearly documented and labelled.
+              fault current in either direction). Synchronisation and anti-islanding behaviour built
+              into the inverter that controls the battery (G98 / G99 compliant). Labelling that
+              identifies the bidirectional source. Disconnection scheme: how the battery is isolated
+              for maintenance (typically an isolator at the battery, plus the CU way), clearly
+              documented and labelled.
             </p>
           </ConceptBlock>
 
@@ -671,17 +685,38 @@ export default function Sub6() {
               installed CPC CSA, protective device type / rating, RCD type and rating, any
               special-section reference (Section 722 for EV, 712 for PV, 551 for battery).
             </p>
-            <p>
-              Beyond the schedule, the design pack includes:
-            </p>
+            <p>Beyond the schedule, the design pack includes:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Single-line schematic showing supply intake → meter → CU → all circuits with bidirectional flow on PV / battery.</li>
-              <li>Layout drawing showing cable routes, accessory positions, the loft inverter and battery, the driveway EV charger.</li>
-              <li>Maximum demand calculation against the 100 A supply rating, with the smart load management strategy explicitly recorded.</li>
-              <li>Future-load notes for the 4 reserved CU ways: "RESERVED FOR EXPANSION", with a note that maximum demand has been calculated assuming up to 32 A of further load can be absorbed by load management.</li>
-              <li>RCD test schedule (every RCBO tested at IΔn and 1×IΔn at commissioning and periodically).</li>
-              <li>Operating notes for the homeowner — how to reset, how to isolate, what each indicator means, who to call when.</li>
-              <li>EIC plus schedule of inspections plus schedule of test results, signed by designer / installer / inspector (which on a small job may be the same person, signing three boxes).</li>
+              <li>
+                Single-line schematic showing supply intake → meter → CU → all circuits with
+                bidirectional flow on PV / battery.
+              </li>
+              <li>
+                Layout drawing showing cable routes, accessory positions, the loft inverter and
+                battery, the driveway EV charger.
+              </li>
+              <li>
+                Maximum demand calculation against the 100 A supply rating, with the smart load
+                management strategy explicitly recorded.
+              </li>
+              <li>
+                Future-load notes for the 4 reserved CU ways: "RESERVED FOR EXPANSION", with a note
+                that maximum demand has been calculated assuming up to 32 A of further load can be
+                absorbed by load management.
+              </li>
+              <li>
+                RCD test schedule (every RCBO tested at IΔn and 1×IΔn at commissioning and
+                periodically).
+              </li>
+              <li>
+                Operating notes for the homeowner — how to reset, how to isolate, what each
+                indicator means, who to call when.
+              </li>
+              <li>
+                EIC plus schedule of inspections plus schedule of test results, signed by designer /
+                installer / inspector (which on a small job may be the same person, signing three
+                boxes).
+              </li>
             </ul>
             <p>
               The customer keeps a copy. The designer keeps the master on file for the design life
@@ -695,14 +730,14 @@ export default function Sub6() {
             clause="Regulation 421.1.7 has been introduced recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents."
             meaning={
               <>
-                A4:2026 carries 421.1.7 as a recommendation, not a requirement, for general
-                AFDD use across AC final circuits. The wording is "recommending" — advisory
-                rather than "shall". Where AFDDs become mandatory in domestic work is via the
-                Building Safety Act 2022 framework for higher-risk residential buildings (HRRBs),
-                which adopt the recommendation as a hard duty. On the worked example here
-                (a single-family dwelling), AFDDs on the EV, heat pump and battery circuits is
-                the design call — the recommendation in 421.1.7 plus a duty-of-care position on
-                the higher-energy modern loads.
+                A4:2026 carries 421.1.7 as a recommendation, not a requirement, for general AFDD use
+                across AC final circuits. The wording is "recommending" — advisory rather than
+                "shall". Where AFDDs become mandatory in domestic work is via the Building Safety
+                Act 2022 framework for higher-risk residential buildings (HRRBs), which adopt the
+                recommendation as a hard duty. On the worked example here (a single-family
+                dwelling), AFDDs on the EV, heat pump and battery circuits is the design call — the
+                recommendation in 421.1.7 plus a duty-of-care position on the higher-energy modern
+                loads.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 421.1.7."
@@ -713,14 +748,14 @@ export default function Sub6() {
             clause="No addition or alteration, temporary or permanent, shall be made to an existing installation, unless it has been ascertained that the rating and the condition of any existing equipment, including that of the distributor, will be adequate for the altered circumstances. Furthermore, the earthing and bonding arrangements, if necessary for the protective measure applied for the safety of the addition or alteration, shall be adequate."
             meaning={
               <>
-                The design pack is the document the next designer relies on to discharge the
-                Reg 132.16 duty when an addition or alteration is proposed. On a single-circuit
-                job it can be three sheets; on a multi-load home like this worked example it can
-                be twenty pages plus the EIC. The completeness floor scales with the complexity
-                of the installation. The next person who works on the system — possibly fifteen
-                years later — needs to be able to read this pack, understand what was designed
-                and why, and ascertain that the rating and condition of equipment is adequate
-                for the altered circumstances.
+                The design pack is the document the next designer relies on to discharge the Reg
+                132.16 duty when an addition or alteration is proposed. On a single-circuit job it
+                can be three sheets; on a multi-load home like this worked example it can be twenty
+                pages plus the EIC. The completeness floor scales with the complexity of the
+                installation. The next person who works on the system — possibly fifteen years later
+                — needs to be able to read this pack, understand what was designed and why, and
+                ascertain that the rating and condition of equipment is adequate for the altered
+                circumstances.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Regulation 132.16 — full text from published amendment."
@@ -734,23 +769,23 @@ export default function Sub6() {
             title="Sizing the EV charger cable to the same spec as a regular socket circuit"
             whatHappens={
               <>
-                The apprentice runs the EV charger off a spare way on the existing CU, fits a
-                Type AC RCD shared with the kitchen sockets, picks 4 mm² T&E because "it’s a 32 A
-                radial like any other", and skips the OPDP open-PEN protection. The install passes
-                a casual visual check at handover. Six months later the supply PEN breaks in a
-                roadworks incident; the EV chassis goes to line voltage and someone touching the
-                car gets shocked.
+                The apprentice runs the EV charger off a spare way on the existing CU, fits a Type
+                AC RCD shared with the kitchen sockets, picks 4 mm² T&E because "it’s a 32 A radial
+                like any other", and skips the OPDP open-PEN protection. The install passes a casual
+                visual check at handover. Six months later the supply PEN breaks in a roadworks
+                incident; the EV chassis goes to line voltage and someone touching the car gets
+                shocked.
               </>
             }
             doInstead={
               <>
                 Run the EV charger as its own dedicated circuit per Section 722. Fit a Type B RCD
-                (or Type A with DC monitoring built into the EV unit). Fit OPDP open-PEN
-                protection on TN-C-S supplies. Use the manufacturer-recommended cable size for
-                the run length (6 mm² for 32 A over 20–30 m is the standard call). Never share
-                the EV with any other circuit, never put it behind a Type AC RCD, and never skip
-                the OPDP. The Section 722 requirements exist because the EV is a uniquely
-                hazardous load and the regulation has caught up.
+                (or Type A with DC monitoring built into the EV unit). Fit OPDP open-PEN protection
+                on TN-C-S supplies. Use the manufacturer-recommended cable size for the run length
+                (6 mm² for 32 A over 20–30 m is the standard call). Never share the EV with any
+                other circuit, never put it behind a Type AC RCD, and never skip the OPDP. The
+                Section 722 requirements exist because the EV is a uniquely hazardous load and the
+                regulation has caught up.
               </>
             }
           />
@@ -760,33 +795,33 @@ export default function Sub6() {
             situation={
               <>
                 The customer cannot afford the EV charger, PV, battery and heat pump all at once.
-                They want to budget the works over 18 months: CU upgrade and supply uplift now,
-                EV charger in 3 months, PV in 6 months, battery in 9 months, heat pump in 12
-                months. The first-fix electrician is asking how to handle this without doing
-                expensive rework at each stage.
+                They want to budget the works over 18 months: CU upgrade and supply uplift now, EV
+                charger in 3 months, PV in 6 months, battery in 9 months, heat pump in 12 months.
+                The first-fix electrician is asking how to handle this without doing expensive
+                rework at each stage.
               </>
             }
             whatToDo={
               <>
                 Design the end state up front. Fit the 14-way RCBO board now with all 10 immediate
                 ways used and 4 future ways labelled and documented. Run all the second-fix cables
-                during the initial first-fix while the walls and ceilings are open — cable to the
-                EV charger position, cable to the loft inverter and battery, cable to the heat
-                pump position. Cap and label each cable end at the second-fix accessory positions.
+                during the initial first-fix while the walls and ceilings are open — cable to the EV
+                charger position, cable to the loft inverter and battery, cable to the heat pump
+                position. Cap and label each cable end at the second-fix accessory positions.
                 Document the supply maximum demand assuming all future loads with smart load
-                management. At each subsequent commissioning visit, the install reduces to:
-                connect the device, configure the load management, test, certify, hand over.
-                Each second-fix visit is half a day rather than a 3-day rip-out.
+                management. At each subsequent commissioning visit, the install reduces to: connect
+                the device, configure the load management, test, certify, hand over. Each second-fix
+                visit is half a day rather than a 3-day rip-out.
               </>
             }
             whyItMatters={
               <>
                 Phased installs are the normal pattern for domestic energy upgrades. The L3
-                designer’s job is to design the end state once and execute in stages. Skipping
-                this and treating each stage as a fresh design produces unnecessary rework
-                (re-routing cables, re-boarding consumer units, re-doing maximum demand calcs)
-                and frustrates the customer. The design pack carries the staging plan so any
-                contractor coming in mid-stream can see what was anticipated.
+                designer’s job is to design the end state once and execute in stages. Skipping this
+                and treating each stage as a fresh design produces unnecessary rework (re-routing
+                cables, re-boarding consumer units, re-doing maximum demand calcs) and frustrates
+                the customer. The design pack carries the staging plan so any contractor coming in
+                mid-stream can see what was anticipated.
               </>
             }
           />
@@ -800,7 +835,7 @@ export default function Sub6() {
           <KeyTakeaways
             points={[
               'Cable selection is the synthesis of four independent gates: CCC, Vd, EFLI and adiabatic. The cable on the schedule is whichever satisfies the most demanding gate. Run all four for every circuit.',
-              'Maximum demand is calculated after diversity per OSG Table 1A / IET Guidance Note 1. On a multi-load home (EV + PV + battery + heat pump) on a 100 A supply, smart load management is normally needed to keep simultaneous demand inside the supply rating without a 3-phase upgrade.',
+              'Maximum demand is calculated after diversity per OSG Table A2 / IET Guidance Note 1. On a multi-load home (EV + PV + battery + heat pump) on a 100 A supply, smart load management is normally needed to keep simultaneous demand inside the supply rating without a 3-phase upgrade.',
               'EV chargers are governed by BS 7671 Section 722 — dedicated circuit, Type B (or Type A + DC monitor) RCD, OPDP open-PEN protection on TN-C-S, IP-rated outdoor enclosure. None of this is optional.',
               'PV inverter circuits are governed by Section 712 — DC isolators, AC isolator, reverse-power-capable RCBO, prominent labelling at supply / inverter / consumer unit.',
               'Battery installations are governed by Reg 551 — bidirectional protection, G98/G99 compliance for grid synchronisation and anti-islanding, clear isolation scheme.',

@@ -243,231 +243,233 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
             </div>
 
             {/* v2 rich detail — only when AI emitted v2 fields, read-only */}
-            {!isEditing && (() => {
-              const r: any = risk;
-              const hasV2 =
-                r.rationale ||
-                (Array.isArray(r.who_at_risk) && r.who_at_risk.length) ||
-                (Array.isArray(r.controlsStructured) && r.controlsStructured.length) ||
-                (Array.isArray(r.ppe_required) && r.ppe_required.length) ||
-                (Array.isArray(r.bs7671_cites) && r.bs7671_cites.length) ||
-                (Array.isArray(r.safety_cites) && r.safety_cites.length) ||
-                (Array.isArray(r.monitoring_checks) && r.monitoring_checks.length) ||
-                (Array.isArray(r.evidence_required) && r.evidence_required.length) ||
-                (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length);
-              if (!hasV2) return null;
+            {!isEditing &&
+              (() => {
+                const r: any = risk;
+                const hasV2 =
+                  r.rationale ||
+                  (Array.isArray(r.who_at_risk) && r.who_at_risk.length) ||
+                  (Array.isArray(r.controlsStructured) && r.controlsStructured.length) ||
+                  (Array.isArray(r.ppe_required) && r.ppe_required.length) ||
+                  (Array.isArray(r.bs7671_cites) && r.bs7671_cites.length) ||
+                  (Array.isArray(r.safety_cites) && r.safety_cites.length) ||
+                  (Array.isArray(r.monitoring_checks) && r.monitoring_checks.length) ||
+                  (Array.isArray(r.evidence_required) && r.evidence_required.length) ||
+                  (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length);
+                if (!hasV2) return null;
 
-              const tierLabel: Record<string, string> = {
-                eliminate: 'Eliminate',
-                substitute: 'Substitute',
-                engineer: 'Engineer',
-                admin: 'Administrative',
-                ppe: 'PPE',
-              };
+                const tierLabel: Record<string, string> = {
+                  eliminate: 'Eliminate',
+                  substitute: 'Substitute',
+                  engineer: 'Engineer',
+                  admin: 'Administrative',
+                  ppe: 'PPE',
+                };
 
-              const tieredControls: Array<{ tier: string; items: any[] }> = [];
-              if (Array.isArray(r.controlsStructured)) {
-                const byTier: Record<string, any[]> = {};
-                for (const c of r.controlsStructured) {
-                  const t = String(c.tier ?? 'admin').toLowerCase();
-                  (byTier[t] = byTier[t] ?? []).push(c);
+                const tieredControls: Array<{ tier: string; items: any[] }> = [];
+                if (Array.isArray(r.controlsStructured)) {
+                  const byTier: Record<string, any[]> = {};
+                  for (const c of r.controlsStructured) {
+                    const t = String(c.tier ?? 'admin').toLowerCase();
+                    (byTier[t] = byTier[t] ?? []).push(c);
+                  }
+                  for (const t of ['eliminate', 'substitute', 'engineer', 'admin', 'ppe']) {
+                    if (byTier[t]?.length) tieredControls.push({ tier: t, items: byTier[t] });
+                  }
                 }
-                for (const t of ['eliminate', 'substitute', 'engineer', 'admin', 'ppe']) {
-                  if (byTier[t]?.length) tieredControls.push({ tier: t, items: byTier[t] });
-                }
-              }
 
-              return (
-                <div className="space-y-5 pt-2">
-                  {r.rationale && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                        Rationale
+                return (
+                  <div className="space-y-5 pt-2">
+                    {r.rationale && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                          Rationale
+                        </div>
+                        <p className="text-[13px] text-white/80 leading-relaxed">{r.rationale}</p>
                       </div>
-                      <p className="text-[13px] text-white/80 leading-relaxed">{r.rationale}</p>
-                    </div>
-                  )}
+                    )}
 
-                  {Array.isArray(r.who_at_risk) && r.who_at_risk.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                        Who is at risk
+                    {Array.isArray(r.who_at_risk) && r.who_at_risk.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                          Who is at risk
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {r.who_at_risk.map((w: string, i: number) => (
+                            <span
+                              key={i}
+                              className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80"
+                            >
+                              {w}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {r.who_at_risk.map((w: string, i: number) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80"
-                          >
-                            {w}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                    )}
 
-                  {tieredControls.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
-                        Controls by hierarchy
-                      </div>
-                      <div className="space-y-3">
-                        {tieredControls.map(({ tier, items }) => (
-                          <div key={tier}>
-                            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/80 mb-1.5">
-                              {tierLabel[tier] ?? tier}
+                    {tieredControls.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
+                          Controls by hierarchy
+                        </div>
+                        <div className="space-y-3">
+                          {tieredControls.map(({ tier, items }) => (
+                            <div key={tier}>
+                              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/80 mb-1.5">
+                                {tierLabel[tier] ?? tier}
+                              </div>
+                              <ul className="space-y-2">
+                                {items.map((c: any, i: number) => (
+                                  <li
+                                    key={i}
+                                    className="text-[13px] leading-relaxed text-white/85 border-l-2 border-white/[0.08] pl-3"
+                                  >
+                                    <div className="font-medium text-white">{c.control}</div>
+                                    {c.detail && (
+                                      <div className="mt-0.5 text-[12.5px] text-white/65">
+                                        {c.detail}
+                                      </div>
+                                    )}
+                                    {c.responsible_role && (
+                                      <div className="mt-1 text-[11px] uppercase tracking-[0.12em] text-white/50">
+                                        Owner · {c.responsible_role}
+                                      </div>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
                             </div>
-                            <ul className="space-y-2">
-                              {items.map((c: any, i: number) => (
-                                <li
-                                  key={i}
-                                  className="text-[13px] leading-relaxed text-white/85 border-l-2 border-white/[0.08] pl-3"
-                                >
-                                  <div className="font-medium text-white">{c.control}</div>
-                                  {c.detail && (
-                                    <div className="mt-0.5 text-[12.5px] text-white/65">
-                                      {c.detail}
-                                    </div>
-                                  )}
-                                  {c.responsible_role && (
-                                    <div className="mt-1 text-[11px] uppercase tracking-[0.12em] text-white/50">
-                                      Owner · {c.responsible_role}
-                                    </div>
-                                  )}
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {(Array.isArray(r.ppe_required) && r.ppe_required.length > 0) ||
+                    (Array.isArray(r.competence_required) && r.competence_required.length > 0) ? (
+                      <div className="grid sm:grid-cols-2 gap-5">
+                        {Array.isArray(r.ppe_required) && r.ppe_required.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              PPE required
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {r.ppe_required.map((p: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {p}
                                 </li>
                               ))}
                             </ul>
                           </div>
-                        ))}
+                        )}
+                        {Array.isArray(r.competence_required) &&
+                          r.competence_required.length > 0 && (
+                            <div>
+                              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                                Competence
+                              </div>
+                              <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                                {r.competence_required.map((c: string, i: number) => (
+                                  <li key={i} className="leading-relaxed">
+                                    · {c}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                       </div>
-                    </div>
-                  )}
+                    ) : null}
 
-                  {(Array.isArray(r.ppe_required) && r.ppe_required.length > 0) ||
-                  (Array.isArray(r.competence_required) && r.competence_required.length > 0) ? (
-                    <div className="grid sm:grid-cols-2 gap-5">
-                      {Array.isArray(r.ppe_required) && r.ppe_required.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            PPE required
+                    {(Array.isArray(r.bs7671_cites) && r.bs7671_cites.length > 0) ||
+                    (Array.isArray(r.safety_cites) && r.safety_cites.length > 0) ? (
+                      <div className="grid sm:grid-cols-2 gap-5">
+                        {Array.isArray(r.bs7671_cites) && r.bs7671_cites.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              BS 7671 cites
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {r.bs7671_cites.map((c: string, i: number) => (
+                                <span
+                                  key={i}
+                                  className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow"
+                                >
+                                  {c}
+                                </span>
+                              ))}
+                            </div>
                           </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {r.ppe_required.map((p: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {p}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {Array.isArray(r.competence_required) && r.competence_required.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Competence
+                        )}
+                        {Array.isArray(r.safety_cites) && r.safety_cites.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              HSE / CDM cites
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {r.safety_cites.map((c: string, i: number) => (
+                                <span
+                                  key={i}
+                                  className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-white/[0.05] border border-white/[0.10] text-white/80"
+                                >
+                                  {c}
+                                </span>
+                              ))}
+                            </div>
                           </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {r.competence_required.map((c: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {c}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  ) : null}
+                        )}
+                      </div>
+                    ) : null}
 
-                  {(Array.isArray(r.bs7671_cites) && r.bs7671_cites.length > 0) ||
-                  (Array.isArray(r.safety_cites) && r.safety_cites.length > 0) ? (
-                    <div className="grid sm:grid-cols-2 gap-5">
-                      {Array.isArray(r.bs7671_cites) && r.bs7671_cites.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            BS 7671 cites
+                    {(Array.isArray(r.monitoring_checks) && r.monitoring_checks.length > 0) ||
+                    (Array.isArray(r.evidence_required) && r.evidence_required.length > 0) ||
+                    (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length > 0) ? (
+                      <div className="grid sm:grid-cols-3 gap-5">
+                        {Array.isArray(r.monitoring_checks) && r.monitoring_checks.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Monitoring
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {r.monitoring_checks.map((m: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {m}
+                                </li>
+                              ))}
+                            </ul>
                           </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {r.bs7671_cites.map((c: string, i: number) => (
-                              <span
-                                key={i}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow"
-                              >
-                                {c}
-                              </span>
-                            ))}
+                        )}
+                        {Array.isArray(r.evidence_required) && r.evidence_required.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Evidence
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {r.evidence_required.map((m: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {m}
+                                </li>
+                              ))}
+                            </ul>
                           </div>
-                        </div>
-                      )}
-                      {Array.isArray(r.safety_cites) && r.safety_cites.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            HSE / CDM cites
+                        )}
+                        {Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Stop work
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-red-300">
+                              {r.stop_work_triggers.map((m: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {m}
+                                </li>
+                              ))}
+                            </ul>
                           </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {r.safety_cites.map((c: string, i: number) => (
-                              <span
-                                key={i}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-white/[0.05] border border-white/[0.10] text-white/80"
-                              >
-                                {c}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ) : null}
-
-                  {(Array.isArray(r.monitoring_checks) && r.monitoring_checks.length > 0) ||
-                  (Array.isArray(r.evidence_required) && r.evidence_required.length > 0) ||
-                  (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length > 0) ? (
-                    <div className="grid sm:grid-cols-3 gap-5">
-                      {Array.isArray(r.monitoring_checks) && r.monitoring_checks.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Monitoring
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {r.monitoring_checks.map((m: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {m}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {Array.isArray(r.evidence_required) && r.evidence_required.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Evidence
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {r.evidence_required.map((m: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {m}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Stop work
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-red-300">
-                            {r.stop_work_triggers.map((m: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {m}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })()}
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })()}
 
             {/* Likelihood & Severity — editorial pip rows */}
             <div className="grid grid-cols-2 gap-6">

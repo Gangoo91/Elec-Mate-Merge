@@ -1,4 +1,3 @@
-import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -29,12 +28,11 @@ export const NotificationFilters = ({
     <div className="space-y-3 sm:space-y-0 sm:flex sm:items-center gap-2 sm:gap-3">
       {/* Search */}
       <div className="relative flex-1">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
         <Input
-          placeholder="Search certificates, work description, authority..."
+          placeholder="Search certificates, work or authority…"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10 min-h-[48px] sm:min-h-[40px] text-sm sm:text-base"
+          className="h-11 px-4 text-base"
         />
       </div>
 

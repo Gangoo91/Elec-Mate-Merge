@@ -3,8 +3,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { useSmartAutotype } from '@/hooks/useSmartAutotype';
 import { X } from 'lucide-react';
 
-interface SmartTextareaProps
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+interface SmartTextareaProps extends Omit<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  'onChange'
+> {
   value: string;
   onChange: (value: string) => void;
 }

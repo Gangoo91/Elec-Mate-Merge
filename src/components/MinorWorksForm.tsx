@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-// AnimatePresence removed - using SmartTabs animations
+// Step transitions handled by the v3 shell (keyed animate-mw-step-in/back)
 import StartNewEICRDialog from '@/components/StartNewEICRDialog';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
@@ -24,14 +21,15 @@ import CertLockBar from '@/components/inspection/CertLockBar';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
-import { useFormValidation } from '@/hooks/useFormValidation';
-import { useMinorWorksTabs } from '@/hooks/useMinorWorksTabs';
+import { useMinorWorksTabs, type MWTabValue } from '@/hooks/useMinorWorksTabs';
 // minorWorksDevFill.ts kept for future use — UI access removed
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { getZsLimitFromDeviceString } from '@/data/zsLimits';
 
-// New tab-based components
-import MWFormHeader from '@/components/minor-works/MWFormHeader';
+// Minor Works shell (cert redesign v3) + tab components
+import MWShellHeader, { MW_STEPS } from '@/components/minor-works/MWShellHeader';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import MWStickyFooter from '@/components/minor-works/MWStickyFooter';
 import DuplicatedFromBanner from '@/components/certificates/DuplicatedFromBanner';
 import LastCertSuggestionCard from '@/components/certificates/LastCertSuggestionCard';
 import { useCertPrefill } from '@/hooks/useCertPrefill';
@@ -39,10 +37,7 @@ import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
-import MinorWorksValidationPanel from '@/components/minor-works/MinorWorksValidationPanel';
 import { useMinorWorksValidation } from '@/hooks/useMinorWorksValidation';
-import EICRTabNavigation from '@/components/EICRTabNavigation';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 const MinorWorksForm = ({
@@ -54,7 +49,6 @@ const MinorWorksForm = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const [userId, setUserId] = useState<string | null>(null);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
 
@@ -261,7 +255,6 @@ const MinorWorksForm = ({
   });
 
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
-  const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -272,33 +265,48 @@ const MinorWorksForm = ({
     setTab,
     currentTabIndex,
     totalTabs,
-    canNavigateNext,
     canNavigatePrevious,
     navigateNext,
     navigatePrevious,
-    getProgressPercentage,
     isTabComplete,
-    toggleTabComplete,
-    hasRequiredFields,
-    getCurrentTabLabel,
   } = useMinorWorksTabs(formData);
 
-  // Smart defaults and validation
-  const { defaults, hasDefaults, applyDefaults, saveDefaults } = useSmartDefaults(
-    userId || undefined
-  );
-  const validation = useFormValidation(formData);
+  // Single source of truth for progress — the same field-based percentage the
+  // validation checklist counts. The header ring renders it; tapping the ring
+  // opens a bottom sheet listing exactly which required fields are missing.
+  const mwValidation = useMinorWorksValidation(formData);
+  const [showMissingSheet, setShowMissingSheet] = useState(false);
+
+  // Thumb-zone issue actions — MinorWorksPdfGenerator keeps this ref current so
+  // the sticky footer can trigger Generate / Email / Invoice on the Sign off step.
+  const pdfActionsRef = React.useRef<{
+    generate: () => void;
+    email: () => void;
+    invoice: () => void;
+  } | null>(null);
+
+  // Slide direction for the step transition — back navigation slides the other way.
+  const prevTabIndexRef = React.useRef(currentTabIndex);
+  const isNavigatingBack = currentTabIndex < prevTabIndexRef.current;
+  React.useEffect(() => {
+    prevTabIndexRef.current = currentTabIndex;
+  }, [currentTabIndex]);
+
+  // Every route into a step behaves identically — header tabs and footer nav
+  // both flush the sync hook and land at the top of the step.
+  const handleTabChange = (tab: MWTabValue) => {
+    setTab(tab);
+    onTabChange?.(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Smart defaults
+  const { defaults, hasDefaults, saveDefaults } = useSmartDefaults(userId || undefined);
 
   // Smart form auto-fill from Business Settings
   const {
     loading: smartFormLoading,
     hasAppliedDefaults: hasAppliedSmartDefaults,
-    hasSavedElectricianDetails,
-    hasSavedTestEquipment,
-    loadElectricianDetails,
-    loadTestEquipment,
-    loadContractorDetails,
-    getAvailableInstruments,
     applySmartDefaults,
   } = useMinorWorksSmartForm();
 
@@ -336,7 +344,6 @@ const MinorWorksForm = ({
   // Auto-save hook
   const {
     isSaving,
-    lastSaveTime,
     hasUnsavedChanges,
     manualSave: autoSaveManualSave,
     loadFromLocalStorage: loadFromIndexedDB,
@@ -386,6 +393,18 @@ const MinorWorksForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialReportId]);
 
+  // Default signatureDate to today on a brand-new MW (committed, not just
+  // displayed) — saves a guaranteed date-picker round trip per cert. Same
+  // guard pattern as workDate so loaded certs keep their saved date.
+  useEffect(() => {
+    if (initialReportId) return;
+    if (formData.signatureDate) return;
+    const today = new Date().toISOString().split('T')[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setFormData((prev: any) => ({ ...prev, signatureDate: today }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialReportId]);
+
   // Auto-fill from Business Settings for new certificates
   useEffect(() => {
     // Only apply smart defaults if:
@@ -431,11 +450,14 @@ const MinorWorksForm = ({
     }
   }, [formData.protectiveDeviceType, formData.protectiveDeviceRating, formData.circuitDescription]);
 
-  // Auto-set Phase Rotation based on supply phases
+  // Auto-set Phase Rotation based on supply phases. MWDetailsTab writes
+  // 'Single'/'Three' while older drafts (and the init default) store '1'/'3' —
+  // accept both token sets so toggling Three → Single re-sets N/A correctly.
   useEffect(() => {
-    if (formData.supplyPhases === '1') {
+    const phases = String(formData.supplyPhases || '');
+    if (phases === '1' || phases === 'Single') {
       handleUpdate('phaseRotation', 'na');
-    } else if (formData.supplyPhases === '3' && formData.phaseRotation === 'na') {
+    } else if ((phases === '3' || phases === 'Three') && formData.phaseRotation === 'na') {
       handleUpdate('phaseRotation', '');
     }
   }, [formData.supplyPhases]);
@@ -454,11 +476,13 @@ const MinorWorksForm = ({
     }
   }, [formData.workDate]);
 
-  // Auto-fill nextInspectionDue = workDate + 1 year
+  // Auto-fill nextInspectionDue = workDate + 5 years — the common MW case
+  // (addition tied to the next domestic EICR cycle). The 1/3/5/10 year chips
+  // on the Details tab let the sparky override.
   useEffect(() => {
     if (formData.workDate && !formData.nextInspectionDue) {
       const d = new Date(formData.workDate);
-      d.setFullYear(d.getFullYear() + 1);
+      d.setFullYear(d.getFullYear() + 5);
       handleUpdate('nextInspectionDue', d.toISOString().split('T')[0]);
     }
   }, [formData.workDate]);
@@ -710,8 +734,9 @@ const MinorWorksForm = ({
         setFormData((prev: any) => ({
           ...prev,
           ...draft.data,
-          // Preserve any existing certificate number
-          certificateNumber: prev.certificateNumber || draft.data.certificateNumber,
+          // The draft's original number is canonical — the mount-time generator
+          // may have already landed a fresh one (async race), which must lose.
+          certificateNumber: draft.data.certificateNumber || prev.certificateNumber,
         }));
         toast({
           title: 'Draft recovered',
@@ -729,8 +754,13 @@ const MinorWorksForm = ({
         certNumberGenerated.current = true;
         const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
         const certNumber = await generateCertificateNumber('minor-works');
+        // Fill only if still empty at commit time — draft recovery may have
+        // restored the original number while generation was in flight.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setFormData((prev: any) => ({ ...prev, certificateNumber: certNumber }));
+        setFormData((prev: any) => ({
+          ...prev,
+          certificateNumber: prev.certificateNumber || certNumber,
+        }));
       }
     };
     initCertificateNumber();
@@ -744,6 +774,10 @@ const MinorWorksForm = ({
   };
 
   const handleSaveDraft = async () => {
+    // Locked/QS-approved certs are immutable records — manual save must respect
+    // the same freeze that gates autosave (re-serialisation drifts the content
+    // hash, ELE-1183 incident class).
+    if (isLocked || isQsApproved) return;
     await autoSaveManualSave();
 
     // Persist earthing arrangement and other smart defaults for future certificates
@@ -764,7 +798,6 @@ const MinorWorksForm = ({
     const result = await syncToCloud(true);
     if (result && typeof result === 'object' && 'reportId' in result && result.reportId) {
       setCurrentReportId(result.reportId as string);
-      setLastSavedTime(new Date());
 
       if (customerIdFromNav && result.reportId) {
         const { linkCustomerToReport } = await import('@/utils/customerHelper');
@@ -916,7 +949,7 @@ const MinorWorksForm = ({
       qualificationLevel: '',
       schemeProvider: '',
       registrationNumber: '',
-      signatureDate: '',
+      signatureDate: new Date().toISOString().split('T')[0],
       signature: '',
       ietDeclaration: false,
       bs7671Compliance: false,
@@ -1049,8 +1082,11 @@ const MinorWorksForm = ({
     });
   };
 
-  // Handle PDF generation success
-  const handlePdfSuccess = async () => {
+  // Handle PDF generation success. The generator passes the report_id it
+  // actually saved under (it creates the report itself when none exists) —
+  // never fall back to certificateNumber, which is NOT a report_id and
+  // silently updates 0 rows.
+  const handlePdfSuccess = async (savedReportId?: string) => {
     try {
       const {
         data: { user },
@@ -1064,7 +1100,14 @@ const MinorWorksForm = ({
         return;
       }
 
-      const reportIdToUpdate = currentReportId || formData.certificateNumber;
+      const reportIdToUpdate = savedReportId || currentReportId;
+      if (!reportIdToUpdate) {
+        console.warn('[MinorWorks] No report_id available — skipping completed-status update');
+        return;
+      }
+      if (savedReportId && savedReportId !== currentReportId) {
+        setCurrentReportId(savedReportId);
+      }
 
       const completedData = {
         ...formData,
@@ -1113,102 +1156,42 @@ const MinorWorksForm = ({
     }
   };
 
-  // Shared nav props for inline EICRTabNavigation in each tab
-  const navProps = {
-    currentTab,
-    currentTabIndex,
-    totalTabs,
-    canNavigateNext,
-    canNavigatePrevious,
-    navigateNext,
-    navigatePrevious,
-    getProgressPercentage,
-    isCurrentTabComplete: isTabComplete(currentTab),
-    currentTabHasRequiredFields: hasRequiredFields(currentTab),
-    onToggleComplete: () => toggleTabComplete(currentTab, handleUpdate),
-    lastTabLabel: 'Complete',
+  // Tab content map — same tab components, rendered inside the v3 shell.
+  // The shell (header tabs + sticky footer) replaces the per-tab inline nav.
+  const tabContent: Record<string, React.ReactNode> = {
+    details: <MWDetailsTab formData={formData} onUpdate={handleUpdate} />,
+    circuit: <MWCircuitTab formData={formData} onUpdate={handleUpdate} />,
+    testing: <MWTestingTab formData={formData} onUpdate={handleUpdate} />,
+    declaration: (
+      <>
+        <MWDeclarationTab formData={formData} onUpdate={handleUpdate} />
+
+        {/* Certificate Actions — matches EIC pattern. reportId is the REAL
+            report_id or undefined — certificateNumber is never a valid
+            fallback (it matches no reports row). */}
+        <div className="mt-6">
+          <MinorWorksPdfGenerator
+            formData={formData}
+            reportId={currentReportId ?? undefined}
+            userId={userId || undefined}
+            onSuccess={handlePdfSuccess}
+            onReportIdChange={handleReportCreated}
+            onSaveDraft={handleSaveDraft}
+            onDuplicateForNextCircuit={handleDuplicateForNextCircuit}
+            actionsRef={pdfActionsRef}
+          />
+        </div>
+      </>
+    ),
   };
 
-  // Build SmartTabs configuration
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'details',
-      label: 'Client & Details',
-      shortLabel: 'Details',
-      content: (
-        <>
-          <MWDetailsTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
-          <EICRTabNavigation {...navProps} />
-        </>
-      ),
-    },
-    {
-      value: 'circuit',
-      label: 'Circuit Details',
-      shortLabel: 'Circuit',
-      content: (
-        <>
-          <MWCircuitTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
-          <EICRTabNavigation {...navProps} />
-        </>
-      ),
-    },
-    {
-      value: 'testing',
-      label: 'Test Results',
-      shortLabel: 'Tests',
-      content: (
-        <>
-          <MWTestingTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
-          <EICRTabNavigation {...navProps} />
-        </>
-      ),
-    },
-    {
-      value: 'declaration',
-      label: 'Declaration',
-      shortLabel: 'Declare',
-      content: (
-        <>
-          <MWDeclarationTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
-
-          {/* Certificate Actions — matches EIC pattern */}
-          <div className="mt-6">
-            <MinorWorksPdfGenerator
-              formData={formData}
-              isFormValid={true}
-              reportId={currentReportId || formData.certificateNumber}
-              userId={userId || undefined}
-              onSuccess={handlePdfSuccess}
-              onSaveDraft={handleSaveDraft}
-              onDuplicateForNextCircuit={handleDuplicateForNextCircuit}
-            />
-          </div>
-
-          <EICRTabNavigation {...navProps} />
-        </>
-      ),
-    },
-  ];
-
-  // Build completed tabs map for SmartTabs
+  // Build completed tabs map for the shell header
   const completedTabs: Record<string, boolean> = {
     details: isTabComplete('details'),
     circuit: isTabComplete('circuit'),
     testing: isTabComplete('testing'),
     declaration: isTabComplete('declaration'),
   };
-
-  // Per-tab error counts — feeds the SmartTabs red badge so sparkies see at
-  // a glance which tab has missing fields.
-  const mwValidation = useMinorWorksValidation(formData);
-  const errorCounts: Record<string, number> = mwValidation.errors.reduce(
-    (acc, rule) => {
-      acc[rule.tab] = (acc[rule.tab] || 0) + 1;
-      return acc;
-    },
-    {} as Record<string, number>
-  );
 
   // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
   // from the user's most recent Minor Works at the same address.
@@ -1236,24 +1219,25 @@ const MinorWorksForm = ({
       certificateNumber={formData.certificateNumber || ''}
       certificateType="minor-works"
       clientName={formData.clientName || ''}
-      installationAddress={formData.installationAddress || formData.clientAddress || ''}
+      installationAddress={formData.propertyAddress || formData.clientAddress || ''}
     >
       <div className="min-h-screen bg-background prevent-shortcuts">
-        {/* Header — EICR pattern */}
-        <div className="bg-background">
-          <div className="px-2 py-2.5">
-            <MWFormHeader
-              onBack={onBack}
-              isSaving={isSaving}
-              onManualSave={handleSaveDraft}
-              formData={formData}
-              syncState={syncState}
-              isOnline={isOnline}
-              isAuthenticated={isAuthenticated}
-            />
-          </div>
-          <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-        </div>
+        {/* v3 shell header — back · title/cert no · save word · progress ring · full-width step tabs */}
+        <MWShellHeader
+          onBack={onBack}
+          formData={formData}
+          isSaving={isSaving}
+          onManualSave={handleSaveDraft}
+          syncState={syncState}
+          saveDisabled={isLocked || isQsApproved}
+          isOnline={isOnline}
+          progressPercent={mwValidation.completionPercentage}
+          onProgressTap={() => setShowMissingSheet(true)}
+          currentTab={currentTab}
+          onTabChange={handleTabChange}
+          completedTabs={completedTabs}
+        />
+
 
         {/* ELE-1037 — lock / version bar */}
         <CertLockBar
@@ -1278,7 +1262,7 @@ const MinorWorksForm = ({
 
         {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
         {!isLocked && lastCertSuggestion && (
-          <div className="px-4 pt-3">
+          <div className="-mx-3 px-4 pt-3 sm:mx-0">
             <LastCertSuggestionCard
               suggestion={lastCertSuggestion}
               onApply={handleApplyLastCert}
@@ -1287,36 +1271,53 @@ const MinorWorksForm = ({
           </div>
         )}
 
-        {/* Main Content — full-width mobile. Read-only when the cert is locked. */}
+        {/* Main Content — counters Layout px-3 on mobile (-mx-3) then re-applies
+            px-4 so the tab interiors' -mx-4 cards land truly edge-to-edge.
+            Same arithmetic as EVChargingCertificate's main; the lg right inset
+            reserves the fixed validation rail. Read-only when the cert is locked. */}
         <div
           className={cn(
-            'py-4 pb-48 sm:px-4 sm:pb-8',
+            '-mx-3 px-4 py-4 sm:mx-auto sm:px-4 lg:px-8',
+            // Sign off carries the two-row issue footer — needs extra clearance.
+            currentTab === 'declaration' ? 'pb-48 sm:pb-40 lg:pb-28' : 'pb-32 sm:pb-24',
             isLocked && 'pointer-events-none select-none opacity-95'
           )}
           aria-disabled={isLocked || undefined}
         >
-          {/* Validation panel — always visible, tap a row to jump to that tab */}
-          <div className="px-4 mb-3 sm:px-0">
-            <MinorWorksValidationPanel
-              formData={formData}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onJumpToTab={(tab) => setTab(tab as any)}
-              isLastTab={currentTab === 'declaration'}
-            />
+          {/* Current step — keyed so each change replays the lateral slide.
+              motion-safe collapses it under reduced-motion. */}
+          <div
+            key={currentTab}
+            className={cn(
+              'lg:max-w-[1600px]',
+              isNavigatingBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+            )}
+          >
+            {tabContent[currentTab]}
           </div>
-          <SmartTabs
-            tabs={smartTabs}
-            value={currentTab}
-            onValueChange={(value) => {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              setTab(value as any);
-              onTabChange?.(value);
-            }}
-            completedTabs={completedTabs}
-            errorCounts={errorCounts}
-            showProgress={true}
-          />
         </div>
+
+        {/* v3 shell footer — single sticky step bar replaces per-tab inline nav */}
+        {!isLocked && (
+          <MWStickyFooter
+            currentTabIndex={currentTabIndex}
+            totalTabs={totalTabs}
+            canNavigatePrevious={canNavigatePrevious}
+            navigateNext={() => {
+              navigateNext();
+              onTabChange?.();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            navigatePrevious={() => {
+              navigatePrevious();
+              onTabChange?.();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onEmail={() => pdfActionsRef.current?.email()}
+            onInvoice={() => pdfActionsRef.current?.invoice()}
+            onGenerate={() => pdfActionsRef.current?.generate()}
+          />
+        )}
 
         <StartNewEICRDialog
           isOpen={showStartNewDialog}
@@ -1325,6 +1326,67 @@ const MinorWorksForm = ({
           onDuplicate={handleDuplicate}
           hasUnsavedChanges={hasUnsavedChanges}
         />
+
+        {/* Tap-the-ring — what's still missing, grouped by step, jump straight there */}
+        <Sheet open={showMissingSheet} onOpenChange={setShowMissingSheet}>
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl border-white/[0.1] p-0 overflow-hidden"
+          >
+            <div className="flex h-full flex-col bg-background">
+              <div className="border-b border-white/[0.08] px-4 pb-3 pt-4">
+                <h2 className="text-base font-bold text-white">
+                  {mwValidation.errors.length === 0 ? 'Ready to issue' : 'Still to complete'}
+                </h2>
+                <p className="text-[12px] text-white/60 tabular-nums">
+                  {mwValidation.completionPercentage}% complete
+                  {mwValidation.errors.length > 0 &&
+                    ` · ${mwValidation.errors.length} required ${
+                      mwValidation.errors.length === 1 ? 'field' : 'fields'
+                    } remaining`}
+                </p>
+              </div>
+              <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
+                {mwValidation.errors.length === 0 ? (
+                  <p className="text-sm text-white/85">
+                    Everything required is filled in. Head to Sign off to generate the
+                    certificate.
+                  </p>
+                ) : (
+                  MW_STEPS.map((step) => {
+                    const items = mwValidation.errors.filter((e) => e.tab === step.id);
+                    if (items.length === 0) return null;
+                    return (
+                      <div key={step.id}>
+                        <h3 className="mb-2 text-[13px] font-semibold text-white">
+                          {step.label}
+                        </h3>
+                        <div className="space-y-1.5">
+                          {items.map((item) => (
+                            <button
+                              key={item.field}
+                              type="button"
+                              onClick={() => {
+                                setShowMissingSheet(false);
+                                handleTabChange(step.id);
+                              }}
+                              className="flex h-11 w-full items-center justify-between rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 text-left text-sm font-medium text-white touch-manipulation transition-transform active:scale-[0.99]"
+                            >
+                              <span className="truncate">{item.message}</span>
+                              <span className="ml-3 shrink-0 text-[11.5px] font-semibold text-elec-yellow">
+                                Go
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </CertificatePhotoProvider>
   );

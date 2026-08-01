@@ -20,11 +20,22 @@ interface PATTestingDeclarationsProps {
   onUpdate: (field: string, value: any) => void;
 }
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
 const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({ formData, onUpdate }) => {
@@ -65,166 +76,161 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({ formDat
   }, [totalTested, totalPassed, totalFailed, onUpdate]);
 
   return (
-    <div className="space-y-5 px-4 sm:px-0">
-      {/* Test Summary */}
-      <div>
-        <SectionHeader title="Test Summary" />
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Test summary */}
+      <div className={`${cardCn} lg:col-span-2`}>
+        <SectionHeader title="Test summary" />
         <PATTestSummary appliances={appliances} />
       </div>
 
-      {/* Tester Declaration & Signature */}
-      <div>
-        <SectionHeader title="Tester Declaration" />
-        <div className="space-y-4">
-          <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3">
-            <p className="text-white text-sm">
-              <strong>Declaration:</strong> I certify that the appliances listed in this
-              report have been inspected and tested in accordance with the IET Code of
-              Practice for In-Service Inspection and Testing of Electrical Equipment, and the
-              results are as recorded.
+      {/* Tester declaration & signature */}
+      <div className={`${cardCn} lg:col-span-2`}>
+        <SectionHeader title="Tester declaration" />
+
+        <p className="text-sm text-white/85 leading-relaxed">
+          <span className="font-semibold text-white">Declaration:</span> I certify that the
+          appliances listed in this report have been inspected and tested in accordance with the
+          IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment, and
+          the results are as recorded.
+        </p>
+
+        {/* Tester info (read-only if set from Tab 1 profile) */}
+        {formData.testerName && (
+          <div className="rounded-xl bg-white/[0.05] p-3.5 space-y-1">
+            <p className="text-sm font-medium text-white">{formData.testerName}</p>
+            {formData.testerCompany && (
+              <p className="text-[12px] text-white/80">{formData.testerCompany}</p>
+            )}
+            {formData.testerQualifications && (
+              <p className="text-[12px] text-white/80">{formData.testerQualifications}</p>
+            )}
+            <p className="text-[12px] text-white/80">
+              Date: {formData.testerDate || new Date().toISOString().split('T')[0]}
             </p>
           </div>
+        )}
 
-          {/* Tester info (read-only if set from Tab 1 profile) */}
-          {formData.testerName && (
-            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 space-y-1">
-              <p className="text-white text-sm font-medium">{formData.testerName}</p>
-              {formData.testerCompany && (
-                <p className="text-white text-xs">{formData.testerCompany}</p>
-              )}
-              {formData.testerQualifications && (
-                <p className="text-white text-xs">{formData.testerQualifications}</p>
-              )}
-              <p className="text-white text-xs">
-                Date: {formData.testerDate || new Date().toISOString().split('T')[0]}
-              </p>
+        {/* Manual entry if no profile was selected */}
+        {!formData.testerName && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label className={labelCn} htmlFor="testerName">
+                Tester name *
+              </Label>
+              <Input
+                id="testerName"
+                placeholder="Full name"
+                value={formData.testerName || ''}
+                onChange={(e) => onUpdate('testerName', e.target.value)}
+                className={inputCn}
+              />
             </div>
-          )}
-
-          {/* Manual entry if no profile was selected */}
-          {!formData.testerName && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <Label className="text-white text-xs mb-1.5 block" htmlFor="testerName">
-                  Tester Name *
-                </Label>
-                <Input
-                  id="testerName"
-                  placeholder="Full name"
-                  value={formData.testerName || ''}
-                  onChange={(e) => onUpdate('testerName', e.target.value)}
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]"
-                />
-              </div>
-              <div>
-                <Label className="text-white text-xs mb-1.5 block" htmlFor="testerDate">
-                  Date
-                </Label>
-                <input
-                  id="testerDate"
-                  type="date"
-                  value={formData.testerDate || new Date().toISOString().split('T')[0]}
-                  onChange={(e) => onUpdate('testerDate', e.target.value)}
-                  className="flex h-11 w-full rounded-md px-3 py-2 text-sm touch-manipulation bg-white/[0.06] border border-white/[0.08] text-white [color-scheme:dark] [-webkit-appearance:none] [&::-webkit-date-and-time-value]:text-white [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:invert"
-                />
-              </div>
+            <div>
+              <Label className={labelCn} htmlFor="testerDate">
+                Date
+              </Label>
+              <Input
+                id="testerDate"
+                type="date"
+                value={formData.testerDate || new Date().toISOString().split('T')[0]}
+                onChange={(e) => onUpdate('testerDate', e.target.value)}
+                className={inputCn}
+              />
             </div>
-          )}
+          </div>
+        )}
 
-          <SignatureInput
-            label="Tester Signature *"
-            value={formData.testerSignature}
-            onChange={(sig) => onUpdate('testerSignature', sig)}
-            placeholder="Draw or type signature"
-            required
+        <SignatureInput
+          label="Tester signature *"
+          value={formData.testerSignature}
+          onChange={(sig) => onUpdate('testerSignature', sig)}
+          placeholder="Draw or type signature"
+          required
+        />
+      </div>
+
+      {/* Retest schedule */}
+      <div className={cardCn}>
+        <SectionHeader title="Retest schedule" />
+
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-[12px] text-white/85 leading-relaxed">
+            <span className="font-semibold text-white">IET CoP:</span> Retest intervals depend on
+            equipment type and environment. Construction sites: 3 months. Office IT: up to 48
+            months.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <Label className={labelCn}>Retest interval</Label>
+            <MobileSelectPicker
+              value={formData.suggestedRetestInterval || '12'}
+              onValueChange={(v) => {
+                onUpdate('suggestedRetestInterval', v);
+                const testDate = formData.testDate || new Date().toISOString().split('T')[0];
+                const date = new Date(testDate);
+                date.setMonth(date.getMonth() + parseInt(v));
+                onUpdate('nextTestDue', date.toISOString().split('T')[0]);
+              }}
+              options={[
+                { value: '3', label: '3 Months' },
+                { value: '6', label: '6 Months' },
+                { value: '12', label: '12 Months' },
+                { value: '24', label: '24 Months' },
+                { value: '48', label: '48 Months' },
+              ]}
+              placeholder="Select"
+              title="Retest interval"
+              triggerClassName={pickerTriggerCn}
+            />
+          </div>
+          <div>
+            <Label className={labelCn}>Next test due</Label>
+            <Input
+              type="date"
+              value={formData.nextTestDue || calculateNextTestDate()}
+              onChange={(e) => onUpdate('nextTestDue', e.target.value)}
+              className={inputCn}
+            />
+          </div>
+        </div>
+
+        <div>
+          <Label className={labelCn}>Recommendations</Label>
+          <Textarea
+            placeholder="Any recommendations for the client..."
+            value={formData.recommendations || ''}
+            onChange={(e) => onUpdate('recommendations', e.target.value)}
+            className={textareaCn}
+          />
+        </div>
+
+        <div>
+          <Label className={labelCn}>Additional notes</Label>
+          <Textarea
+            placeholder="Any additional notes..."
+            value={formData.additionalNotes || ''}
+            onChange={(e) => onUpdate('additionalNotes', e.target.value)}
+            className={textareaCn}
           />
         </div>
       </div>
 
-      {/* Retest Schedule */}
-      <div>
-        <SectionHeader title="Retest Schedule" />
-        <div className="space-y-4">
-          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
-            <p className="text-[11px] text-white leading-relaxed">
-              <span className="font-bold">IET CoP:</span> Retest intervals depend on equipment type and environment. Construction sites: 3 months. Office IT: up to 48 months.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <Label className="text-white text-xs mb-1.5 block">Retest Interval</Label>
-              <MobileSelectPicker
-                value={formData.suggestedRetestInterval || '12'}
-                onValueChange={(v) => {
-                  onUpdate('suggestedRetestInterval', v);
-                  const testDate = formData.testDate || new Date().toISOString().split('T')[0];
-                  const date = new Date(testDate);
-                  date.setMonth(date.getMonth() + parseInt(v));
-                  onUpdate('nextTestDue', date.toISOString().split('T')[0]);
-                }}
-                options={[
-                  { value: '3', label: '3 Months' },
-                  { value: '6', label: '6 Months' },
-                  { value: '12', label: '12 Months' },
-                  { value: '24', label: '24 Months' },
-                  { value: '48', label: '48 Months' },
-                ]}
-                placeholder="Select"
-                title="Retest Interval"
-              />
-            </div>
-            <div>
-              <Label className="text-white text-xs mb-1.5 block">Next Test Due</Label>
-              <input
-                type="date"
-                value={formData.nextTestDue || calculateNextTestDate()}
-                onChange={(e) => onUpdate('nextTestDue', e.target.value)}
-                className="flex h-11 w-full rounded-md px-3 py-2 text-sm touch-manipulation bg-white/[0.06] border border-white/[0.08] text-white [color-scheme:dark] [-webkit-appearance:none] [&::-webkit-date-and-time-value]:text-white [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:invert"
-              />
-            </div>
-          </div>
-
-          <div>
-            <Label className="text-white text-xs mb-1.5 block">Recommendations</Label>
-            <Textarea
-              placeholder="Any recommendations for the client..."
-              value={formData.recommendations || ''}
-              onChange={(e) => onUpdate('recommendations', e.target.value)}
-              className="text-base touch-manipulation min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white"
-            />
-          </div>
-
-          <div>
-            <Label className="text-white text-xs mb-1.5 block">Additional Notes</Label>
-            <Textarea
-              placeholder="Any additional notes..."
-              value={formData.additionalNotes || ''}
-              onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-              className="text-base touch-manipulation min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white"
-            />
-          </div>
-        </div>
+      {/* Final status */}
+      <div className={cardCn}>
+        {isComplete ? (
+          <p className="text-sm text-white leading-relaxed">
+            <span className="font-semibold text-green-400">Ready to generate.</span> All required
+            fields have been completed.
+          </p>
+        ) : (
+          <p className="text-sm text-white leading-relaxed">
+            <span className="font-semibold text-elec-yellow">Incomplete declaration.</span> Tester
+            name and signature are required before the certificate can be generated.
+          </p>
+        )}
       </div>
-
-      {/* Final Status */}
-      {isComplete ? (
-        <div className="relative overflow-hidden card-surface-interactive rounded-xl">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-emerald-400 to-green-400 opacity-60" />
-          <div className="relative z-10 p-3">
-            <p className="text-emerald-400 text-sm font-bold">Ready to generate</p>
-            <p className="text-white text-xs mt-0.5">All required fields completed</p>
-          </div>
-        </div>
-      ) : (
-        <div className="relative overflow-hidden card-surface-interactive rounded-xl">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 opacity-60" />
-          <div className="relative z-10 p-3">
-            <p className="text-amber-400 text-sm font-bold">Incomplete declaration</p>
-            <p className="text-white text-xs mt-0.5">Tester name and signature required</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

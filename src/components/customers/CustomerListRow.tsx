@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
-import { Pill, Dot, Arrow } from '@/components/college/primitives';
 
 interface CustomerListRowProps {
   customer: Customer;
@@ -23,15 +22,16 @@ interface CustomerListRowProps {
   onTagClick?: (tag: string) => void;
 }
 
-type ActivityTone = 'green' | 'amber' | 'red' | 'yellow';
+type ActivityTone = 'green' | 'amber' | 'red';
 
-const reliabilityPill: Record<
-  Exclude<ReliabilityLevel, 'none'>,
-  { label: string; tone: 'green' | 'amber' | 'red' }
-> = {
-  good: { label: 'Reliable', tone: 'green' },
-  fair: { label: 'Fair', tone: 'amber' },
-  poor: { label: 'Late', tone: 'red' },
+const chipBase =
+  'inline-flex h-6 items-center rounded-full border px-2.5 text-[11px] font-semibold whitespace-nowrap';
+const chipNeutral = 'border-white/[0.1] bg-white/[0.06] text-white/70';
+
+const reliabilityChip: Record<Exclude<ReliabilityLevel, 'none'>, { label: string; cls: string }> = {
+  good: { label: 'Reliable', cls: 'border-green-500/25 bg-green-500/[0.1] text-green-400' },
+  fair: { label: 'Fair', cls: 'border-amber-500/25 bg-amber-500/[0.1] text-amber-300' },
+  poor: { label: 'Pays late', cls: 'border-red-500/25 bg-red-500/[0.12] text-red-400' },
 };
 
 const getInitials = (name: string): string =>
@@ -121,32 +121,24 @@ export const CustomerListRow = ({
         }
       }}
       className={cn(
-        // flex-col + h-full so cards in the desktop 2-col grid are equal
-        // height regardless of tags/pills — footer pins to the bottom
-        'group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
+        // flex-col + h-full so cards in the desktop grid are equal height
+        // regardless of tags/chips — footer pins to the bottom
+        'group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
         selected
-          ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+          ? 'border-elec-yellow'
           : isDuplicate
-            ? 'border-amber-500/30 bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
-            : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
+            ? 'border-amber-500/30 hover:border-amber-500/50'
+            : 'border-white/[0.12] hover:border-white/[0.22]'
       )}
     >
-      {/* Hairline yellow accent */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
-      />
-
-      {/* Top row: avatar + name + cert pill */}
+      {/* Top row: avatar + name + status chips */}
       <div className="mb-4 flex items-start gap-3">
         {/* Selection checkbox (selection mode only) */}
         {selectionMode && (
           <div
             className={cn(
               'mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors',
-              selected
-                ? 'border-elec-yellow bg-elec-yellow'
-                : 'border-white/30 bg-transparent'
+              selected ? 'border-elec-yellow bg-elec-yellow' : 'border-white/30 bg-transparent'
             )}
           >
             {selected && (
@@ -164,13 +156,13 @@ export const CustomerListRow = ({
         )}
         {/* Avatar with status dot */}
         <div className="relative shrink-0">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.06]">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.06]">
             <span className="text-[13px] font-semibold text-white">{initials}</span>
           </div>
           <span
             aria-label={`Last activity: ${formatLastActivity(customer.lastActivityAt)}`}
             className={cn(
-              'absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-[hsl(0_0%_12%)]',
+              'absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-[hsl(0_0%_10%)]',
               activity === 'green' && 'bg-emerald-400',
               activity === 'amber' && 'bg-amber-400',
               activity === 'red' && 'bg-red-400'
@@ -180,10 +172,10 @@ export const CustomerListRow = ({
 
         {/* Name + sub */}
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-[16px] font-semibold leading-tight text-white sm:text-[17px]">
+          <h3 className="truncate text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
             {customer.name}
           </h3>
-          <p className="mt-1 truncate text-[12.5px] text-white/65">
+          <p className="mt-1 truncate text-[12.5px] text-white/60">
             {[customer.companyName, customer.phone || customer.email || customer.address]
               .filter(Boolean)
               .join(' · ') || 'No contact info'}
@@ -198,14 +190,14 @@ export const CustomerListRow = ({
                       e.stopPropagation();
                       onTagClick(tag);
                     }}
-                    className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75 transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow touch-manipulation"
+                    className="inline-flex h-5 items-center rounded-full border border-white/[0.1] bg-white/[0.05] px-2 text-[10.5px] font-medium text-white/75 transition-colors hover:border-white/[0.25] hover:text-white touch-manipulation"
                   >
                     {tag}
                   </button>
                 ) : (
                   <span
                     key={tag}
-                    className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75"
+                    className="inline-flex h-5 items-center rounded-full border border-white/[0.1] bg-white/[0.05] px-2 text-[10.5px] font-medium text-white/75"
                   >
                     {tag}
                   </span>
@@ -220,39 +212,38 @@ export const CustomerListRow = ({
           )}
         </div>
 
-        {/* Right side pills */}
+        {/* Right side chips */}
         <div className="flex shrink-0 flex-col items-end gap-1.5">
           {hasOverdue && (
-            <Pill tone="red">
-              <Dot tone="red" className="mr-1.5" />
+            <span className={cn(chipBase, 'border-red-500/25 bg-red-500/[0.12] text-red-400')}>
               Overdue invoice
-            </Pill>
+            </span>
           )}
-          {customer.status === 'lead' && <Pill tone="blue">Lead</Pill>}
-          {customer.status === 'inactive' && <Pill tone="grey">Inactive</Pill>}
+          {customer.status === 'lead' && <span className={cn(chipBase, chipNeutral)}>Lead</span>}
+          {customer.status === 'inactive' && (
+            <span className={cn(chipBase, chipNeutral)}>Inactive</span>
+          )}
           {isDuplicate && (
-            <Pill tone="amber">
-              <Dot tone="amber" className="mr-1.5" />
+            <span className={cn(chipBase, 'border-amber-500/25 bg-amber-500/[0.1] text-amber-300')}>
               Possible duplicate
-            </Pill>
+            </span>
           )}
           {certCount > 0 && (
-            <Pill tone="green">
+            <span className={cn(chipBase, chipNeutral, 'tabular-nums')}>
               {certCount} cert{certCount !== 1 ? 's' : ''}
-            </Pill>
+            </span>
           )}
           {paymentReliability && paymentReliability !== 'none' && (
-            <Pill tone={reliabilityPill[paymentReliability].tone}>
-              <Dot tone={reliabilityPill[paymentReliability].tone} className="mr-1.5" />
-              {reliabilityPill[paymentReliability].label}
-            </Pill>
+            <span className={cn(chipBase, reliabilityChip[paymentReliability].cls)}>
+              {reliabilityChip[paymentReliability].label}
+            </span>
           )}
         </div>
       </div>
 
       {/* Footer row: last activity + quick actions — pinned to the card base */}
       <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
-        <span className="text-[11.5px] font-medium uppercase tracking-[0.06em] text-white/55">
+        <span className="text-[12px] text-white/50">
           {formatLastActivity(customer.lastActivityAt)}
         </span>
         <div className="flex items-center gap-1.5">
@@ -260,7 +251,7 @@ export const CustomerListRow = ({
             <a
               href={`tel:${customer.phone}`}
               onClick={stopPropagation}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/10 hover:text-elec-yellow touch-manipulation"
+              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] touch-manipulation"
               aria-label={`Call ${customer.name}`}
             >
               Call
@@ -270,14 +261,14 @@ export const CustomerListRow = ({
             <a
               href={`mailto:${customer.email}`}
               onClick={stopPropagation}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/10 hover:text-elec-yellow touch-manipulation"
+              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] touch-manipulation"
               aria-label={`Email ${customer.name}`}
             >
               Email
             </a>
           )}
-          <span className="ml-1 group-hover:translate-x-0.5 transition-transform">
-            <Arrow />
+          <span className="ml-1 flex h-9 items-center text-[12.5px] font-semibold text-elec-yellow">
+            Open
           </span>
         </div>
       </div>

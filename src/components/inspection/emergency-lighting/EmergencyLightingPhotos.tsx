@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Camera, Upload, X, Image, Loader2, ZoomIn } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -30,6 +29,22 @@ const PHOTO_CATEGORIES = [
   { value: 'central-battery', label: 'Central Battery' },
   { value: 'exit-sign', label: 'Exit Sign' },
 ] as const;
+
+// Gallery grouping includes 'defect' — defect photos are captured from defect
+// rows in Test Results (not via the upload picker) but must still show here.
+const GALLERY_CATEGORIES = [
+  ...PHOTO_CATEGORIES,
+  { value: 'defect', label: 'Defect Evidence' },
+] as const;
+
+// Paper-form underline input
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const selectTriggerCn =
+  'h-11 w-full touch-manipulation rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none';
 
 export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = ({
   photos,
@@ -136,7 +151,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
         caption: caption || undefined,
         uploadedAt: new Date().toISOString(),
         category: selectedCategory,
-        linkedItemId: selectedLinkedId || undefined,
+        linkedItemId: selectedLinkedId && selectedLinkedId !== 'none' ? selectedLinkedId : undefined,
       };
 
       onPhotosChange([...photos, newPhoto]);
@@ -202,31 +217,31 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   };
 
   const getCategoryLabel = (category: CertificatePhoto['category']): string => {
-    return PHOTO_CATEGORIES.find((c) => c.value === category)?.label || category;
+    return GALLERY_CATEGORIES.find((c) => c.value === category)?.label || category;
   };
 
-  const photosByCategory = PHOTO_CATEGORIES.map((cat) => ({
+  const photosByCategory = GALLERY_CATEGORIES.map((cat) => ({
     ...cat,
     photos: photos.filter((p) => p.category === cat.value),
   })).filter((cat) => cat.photos.length > 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Upload Section */}
-      <div className="bg-card/50 border border-white/10 rounded-lg p-4 space-y-4">
-        <h4 className="font-medium text-sm flex items-center gap-2">
-          <Camera className="h-4 w-4 text-amber-400" />
-          Add Photo
-        </h4>
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <p className="text-[13px] font-semibold text-white shrink-0">Add Photo</p>
+          <div className="h-px flex-1 bg-white/[0.08]" />
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label className="text-xs text-white">Photo Category</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <Label className={labelCn}>Photo Category</Label>
             <Select
               value={selectedCategory}
               onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
             >
-              <SelectTrigger className="h-11 touch-manipulation">
+              <SelectTrigger className={selectTriggerCn}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -240,14 +255,14 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
           </div>
 
           {selectedCategory === 'luminaire' && luminaires.length > 0 && (
-            <div className="space-y-2">
-              <Label className="text-xs text-white">Link to Luminaire (Optional)</Label>
+            <div>
+              <Label className={labelCn}>Link to Luminaire (Optional)</Label>
               <Select value={selectedLinkedId} onValueChange={setSelectedLinkedId}>
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className={selectTriggerCn}>
                   <SelectValue placeholder="Select luminaire..." />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No link</SelectItem>
+                  <SelectItem value="none">No link</SelectItem>
                   {luminaires.map((lum, idx) => (
                     <SelectItem key={lum.id} value={lum.id}>
                       #{idx + 1} - {lum.location || 'Unnamed'}
@@ -259,13 +274,13 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
           )}
         </div>
 
-        <div className="space-y-2">
-          <Label className="text-xs text-white">Caption (Optional)</Label>
+        <div>
+          <Label className={labelCn}>Caption (Optional)</Label>
           <Input
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             placeholder="e.g., Ground floor corridor exit sign"
-            className="h-11 touch-manipulation"
+            className={inputCn}
           />
         </div>
 
@@ -278,25 +293,21 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
           className="hidden"
         />
 
-        <div className="flex gap-2">
-          <Button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isUploading}
-            className="flex-1 h-11 touch-manipulation bg-amber-600 hover:bg-amber-700"
-          >
-            {isUploading ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Uploading...
-              </>
-            ) : (
-              <>
-                <Upload className="h-4 w-4 mr-2" />
-                Upload Photo
-              </>
-            )}
-          </Button>
-        </div>
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isUploading}
+          className="flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100"
+        >
+          {isUploading ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin text-black" />
+              Uploading...
+            </>
+          ) : (
+            'Upload Photo'
+          )}
+        </button>
       </div>
 
       {/* Photos Grid */}
@@ -304,24 +315,23 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
         <div className="space-y-4">
           {photosByCategory.map((category) => (
             <div key={category.value} className="space-y-2">
-              <h4 className="text-sm font-medium text-white flex items-center gap-2">
-                <Image className="h-4 w-4" />
-                {category.label} ({category.photos.length})
-              </h4>
+              <div className="flex items-center gap-3">
+                <p className="text-[13px] font-semibold text-white shrink-0">
+                  {category.label} <span className="text-white/80">({category.photos.length})</span>
+                </p>
+                <div className="h-px flex-1 bg-white/[0.08]" />
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {category.photos.map((photo) => (
-                  <div key={photo.id} className="relative group">
+                  <div key={photo.id} className="relative">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <div className="aspect-square rounded-lg overflow-hidden border border-white/10 cursor-pointer hover:border-amber-500/50 transition-colors">
+                        <div className="aspect-square rounded-xl overflow-hidden border border-white/[0.12] cursor-pointer touch-manipulation">
                           <img
                             src={photo.url}
                             alt={photo.caption || getCategoryLabel(photo.category)}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                            <ZoomIn className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </div>
                         </div>
                       </DialogTrigger>
                       <DialogContent className="max-w-3xl p-2">
@@ -336,14 +346,13 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
                       </DialogContent>
                     </Dialog>
 
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="absolute top-1 right-1 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity touch-manipulation"
+                    <button
+                      type="button"
+                      className="absolute top-1.5 right-1.5 h-9 rounded-lg bg-black/70 px-2.5 text-xs font-medium text-white touch-manipulation"
                       onClick={() => deletePhoto(photo.id)}
                     >
-                      <X className="h-3 w-3" />
-                    </Button>
+                      Remove
+                    </button>
 
                     {(photo.caption || photo.linkedItemId) && (
                       <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-2 py-1 text-xs text-white truncate">
@@ -357,10 +366,9 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
           ))}
         </div>
       ) : (
-        <div className="text-center py-8 text-white">
-          <Image className="h-12 w-12 mx-auto mb-2 opacity-30" />
-          <p className="text-sm">No photos added yet</p>
-          <p className="text-xs">Upload photos to document the installation</p>
+        <div className="text-center py-8">
+          <p className="text-sm font-medium text-white">No photos added yet</p>
+          <p className="text-xs text-white/80 mt-1">Upload photos to document the installation</p>
         </div>
       )}
     </div>

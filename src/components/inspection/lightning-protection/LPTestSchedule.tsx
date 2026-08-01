@@ -1,56 +1,73 @@
 import { useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Trash2, Camera, X } from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 import { EarthElectrodeTest, DownConductorTest, BondingTest, SPDCheck, SeparationDistanceCheck, EARTH_RESISTANCE_THRESHOLD, CONTINUITY_THRESHOLD, BONDING_THRESHOLD } from '@/types/lightning-protection';
 
-const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const pickerTrigger = 'h-10 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const pickerTrigger =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const addButtonCn =
+  'w-full h-11 rounded-xl border border-dashed border-white/[0.25] text-sm font-medium text-elec-yellow touch-manipulation active:scale-[0.98] transition-all';
+
+const removeButtonCn =
+  'h-11 shrink-0 px-2 text-[13px] font-medium text-red-400 touch-manipulation active:scale-[0.97]';
+
+const photoButtonCn = (hasPhoto: boolean) =>
+  cn('h-11 shrink-0 px-2 text-[13px] font-medium touch-manipulation active:scale-[0.97]', hasPhoto ? 'text-elec-yellow' : 'text-white/85');
+
+const entryCn = (idx: number) => cn('space-y-3', idx > 0 && 'border-t border-white/[0.08] pt-4');
 
 const SectionHeader = ({ title, count, subtitle }: { title: string; count?: number; subtitle?: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-      {title}
-      {count !== undefined && <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">{count}</span>}
-      {subtitle && <span className="text-[10px] text-white font-normal">— {subtitle}</span>}
-    </h2>
+  <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+    <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+    {count !== undefined && <span className="text-[12px] font-semibold tabular-nums text-white/80">{count}</span>}
+    {subtitle && <span className="text-[12px] text-white/80">— {subtitle}</span>}
   </div>
 );
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+    <p className="text-[12px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}</Label>{children}</div>
+  <div><Label className={labelCn}>{label}</Label>{children}</div>
 );
 
 const PassFailBadge = ({ value }: { value: 'pass' | 'fail' | '' }) => {
   if (!value) return null;
-  return <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', value === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400')}>{value.toUpperCase()}</span>;
+  return <span className={cn('text-[11px] font-bold', value === 'pass' ? 'text-green-400' : 'text-red-400')}>{value.toUpperCase()}</span>;
 };
 
 const Toggle = ({ label, value, onChange }: { label: string; value: boolean | undefined; onChange: (v: boolean) => void }) => (
-  <div className="flex items-center justify-between">
-    <Label className="text-white text-xs font-medium">{label}</Label>
-    <div className="flex gap-1.5">
+  <div className="flex min-h-11 items-center justify-between gap-3">
+    <Label className="text-[13px] font-medium text-white">{label}</Label>
+    <div className="flex gap-2">
       {[true, false].map((v) => (
         <button
           key={String(v)}
           type="button"
           onClick={() => onChange(v)}
           className={cn(
-            'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+            'h-11 w-16 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98]',
             value === v
-              ? v ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-              : 'bg-white/[0.06] text-white border border-white/[0.08]'
+              ? v ? 'bg-green-500 border border-green-500 text-black font-semibold' : 'bg-red-500 border border-red-500 text-white font-semibold'
+              : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
           )}
         >
           {v ? 'Yes' : 'No'}
@@ -136,6 +153,13 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
     { value: 'stakeless', label: 'Stakeless' },
     { value: 'clamp-on', label: 'Clamp-on' },
   ];
+  const electrodeTypeOptions = [
+    { value: 'rod', label: 'Rod' },
+    { value: 'plate', label: 'Plate' },
+    { value: 'strip', label: 'Strip' },
+    { value: 'ring', label: 'Ring' },
+    { value: 'foundation', label: 'Foundation' },
+  ];
   const spdTypeOptions = [
     { value: '1', label: 'Type 1' },
     { value: '2', label: 'Type 2' },
@@ -152,224 +176,216 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
   ];
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       <input ref={testPhotoRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleTestPhoto} />
 
       {/* ── Test Conditions ── */}
-      <div>
-        <SectionHeader title="Test Conditions" subtitle="Weather, soil, instrument" />
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Weather">
-              <MobileSelectPicker value={formData.weatherCondition} onValueChange={(v) => onUpdate('weatherCondition', v)} options={weatherOptions} placeholder="Select..." title="Weather" triggerClassName={pickerTrigger} />
-            </Field>
-            <Field label="Soil Condition">
-              <MobileSelectPicker value={formData.soilCondition} onValueChange={(v) => onUpdate('soilCondition', v)} options={soilOptions} placeholder="Select..." title="Soil Condition" triggerClassName={pickerTrigger} />
-            </Field>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Ambient Temp (°C)">
-              <Input type="number" value={formData.ambientTemp} onChange={(e) => onUpdate('ambientTemp', e.target.value)} className={inputCn} />
-            </Field>
-            <Field label="Soil Resistivity (Ω·m)">
-              <Input type="number" step="0.1" value={formData.soilResistivity} onChange={(e) => onUpdate('soilResistivity', e.target.value)} className={inputCn} placeholder="If measured" />
-            </Field>
-          </div>
-
-          <Sub title="LPS Drawing" />
-          <Field label="Drawing / Schematic Ref">
-            <Input value={formData.lpsDrawingRef} onChange={(e) => onUpdate('lpsDrawingRef', e.target.value)} className={inputCn} placeholder="e.g. DWG-LP-001 Rev B" />
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Test conditions" subtitle="Weather, soil, instrument" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Weather">
+            <MobileSelectPicker value={formData.weatherCondition} onValueChange={(v) => onUpdate('weatherCondition', v)} options={weatherOptions} placeholder="Select..." title="Weather" triggerClassName={pickerTrigger} />
           </Field>
+          <Field label="Soil condition">
+            <MobileSelectPicker value={formData.soilCondition} onValueChange={(v) => onUpdate('soilCondition', v)} options={soilOptions} placeholder="Select..." title="Soil Condition" triggerClassName={pickerTrigger} />
+          </Field>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Ambient temp (°C)">
+            <Input type="number" value={formData.ambientTemp} onChange={(e) => onUpdate('ambientTemp', e.target.value)} className={inputCn} />
+          </Field>
+          <Field label="Soil resistivity (Ω·m)">
+            <Input type="number" step="0.1" value={formData.soilResistivity} onChange={(e) => onUpdate('soilResistivity', e.target.value)} className={inputCn} placeholder="If measured" />
+          </Field>
+        </div>
 
-          <Sub title="Test Limitations" />
-          <Toggle label="Test limitations apply" value={formData.hasTestLimitations} onChange={(v) => onUpdate('hasTestLimitations', v)} />
-          {formData.hasTestLimitations && (
-            <Field label="Describe Limitations">
-              <Input value={formData.testLimitations} onChange={(e) => onUpdate('testLimitations', e.target.value)} className={inputCn} placeholder="e.g. Test clamp DC4 inaccessible — locked plant room" />
-            </Field>
-          )}
+        <Sub title="LPS drawing" />
+        <Field label="Drawing / schematic ref">
+          <Input value={formData.lpsDrawingRef} onChange={(e) => onUpdate('lpsDrawingRef', e.target.value)} className={inputCn} placeholder="e.g. DWG-LP-001 Rev B" />
+        </Field>
+        <Toggle label="Drawing attached to certificate" value={formData.lpsDrawingAttached} onChange={(v) => onUpdate('lpsDrawingAttached', v)} />
 
-          <Sub title="Instrument Details" />
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Instrument Make">
-              <Input value={formData.instrumentMake} onChange={(e) => onUpdate('instrumentMake', e.target.value)} className={inputCn} placeholder="e.g. Megger" />
-            </Field>
-            <Field label="Model">
-              <Input value={formData.instrumentModel} onChange={(e) => onUpdate('instrumentModel', e.target.value)} className={inputCn} placeholder="e.g. DET4TC" />
-            </Field>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Serial No.">
-              <Input value={formData.instrumentSerial} onChange={(e) => onUpdate('instrumentSerial', e.target.value)} className={inputCn} />
-            </Field>
-            <Field label="Cal. Date">
-              <Input type="date" value={formData.instrumentCalDate} onChange={(e) => onUpdate('instrumentCalDate', e.target.value)} className={inputCn} />
-            </Field>
-          </div>
+        <Sub title="Test limitations" />
+        <Toggle label="Test limitations apply" value={formData.hasTestLimitations} onChange={(v) => onUpdate('hasTestLimitations', v)} />
+        {formData.hasTestLimitations && (
+          <Field label="Describe limitations">
+            <Input value={formData.testLimitations} onChange={(e) => onUpdate('testLimitations', e.target.value)} className={inputCn} placeholder="e.g. Test clamp DC4 inaccessible — locked plant room" />
+          </Field>
+        )}
+
+        <Sub title="Instrument details" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Instrument make">
+            <Input value={formData.instrumentMake} onChange={(e) => onUpdate('instrumentMake', e.target.value)} className={inputCn} placeholder="e.g. Megger" />
+          </Field>
+          <Field label="Model">
+            <Input value={formData.instrumentModel} onChange={(e) => onUpdate('instrumentModel', e.target.value)} className={inputCn} placeholder="e.g. DET4TC" />
+          </Field>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Serial no.">
+            <Input value={formData.instrumentSerial} onChange={(e) => onUpdate('instrumentSerial', e.target.value)} className={inputCn} />
+          </Field>
+          <Field label="Cal. date">
+            <Input type="date" value={formData.instrumentCalDate} onChange={(e) => onUpdate('instrumentCalDate', e.target.value)} className={inputCn} />
+          </Field>
         </div>
       </div>
 
       {/* ── Earth Electrode Tests ── */}
-      <div>
-        <SectionHeader title={`Earth Electrode Resistance (\u2264${EARTH_RESISTANCE_THRESHOLD}\u03A9)`} count={earthTests.length} />
-        <div className="space-y-2">
-          {earthTests.map((test) => (
-            <div key={test.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-elec-yellow">{test.reference}</span>
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title={`Earth electrode resistance (≤${EARTH_RESISTANCE_THRESHOLD}Ω)`} count={earthTests.length} />
+        <div>
+          {earthTests.map((test, idx) => (
+            <div key={test.id} className={entryCn(idx)}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-sm font-semibold text-elec-yellow">{test.reference}</span>
                   <PassFailBadge value={isEarthResistancePass(test.measuredResistance)} />
                 </div>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => { setPhotoTarget({ type: 'earth', id: test.id }); testPhotoRef.current?.click(); }}
-                    className={cn('w-8 h-8 rounded-lg flex items-center justify-center touch-manipulation', test.photo ? 'bg-cyan-500/20 border border-cyan-500/30' : 'bg-white/[0.04] border border-white/[0.08]')}>
-                    <Camera className={cn('h-3.5 w-3.5', test.photo ? 'text-cyan-400' : 'text-white')} />
+                  <button onClick={() => { setPhotoTarget({ type: 'earth', id: test.id }); testPhotoRef.current?.click(); }} className={photoButtonCn(!!test.photo)}>
+                    {test.photo ? 'Photo added' : 'Photo'}
                   </button>
-                  {earthTests.length > 1 && <button onClick={() => removeEarthTest(test.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>}
+                  {earthTests.length > 1 && <button onClick={() => removeEarthTest(test.id)} className={removeButtonCn}>Remove</button>}
                 </div>
               </div>
               {test.photo && (
-                <div className="relative w-16 h-16 rounded-lg overflow-hidden">
+                <div className="relative w-20 h-20 rounded-xl overflow-hidden">
                   <img src={test.photo} alt="" className="w-full h-full object-cover" />
-                  <button onClick={() => updateEarthTest(test.id, 'photo', '')} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center"><X className="h-3 w-3 text-white" /></button>
+                  <button onClick={() => updateEarthTest(test.id, 'photo', '')} className="absolute top-1 right-1 rounded-md bg-black/70 px-1.5 py-0.5 text-[11px] font-medium text-white touch-manipulation">Remove</button>
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Input value={test.reference} onChange={(e) => updateEarthTest(test.id, 'reference', e.target.value)} className={inputCn} placeholder="Ref" />
                 <Input value={test.location} onChange={(e) => updateEarthTest(test.id, 'location', e.target.value)} className={inputCn} placeholder="Location" />
               </div>
+              <MobileSelectPicker value={test.electrodeType} onValueChange={(v) => updateEarthTest(test.id, 'electrodeType', v)} options={electrodeTypeOptions} placeholder="Electrode type" title="Electrode Type" triggerClassName={pickerTrigger} />
               <Sub title="Test readings" />
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <MobileSelectPicker value={test.testMethod} onValueChange={(v) => updateEarthTest(test.id, 'testMethod', v)} options={testMethodOptions} placeholder="Method" title="Test Method" triggerClassName={pickerTrigger} />
-                <Input value={test.measuredResistance} onChange={(e) => updateEarthTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (\u03A9)" />
+                <Input value={test.measuredResistance} onChange={(e) => updateEarthTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" />
               </div>
-              <Input value={test.previousReading} onChange={(e) => updateEarthTest(test.id, 'previousReading', e.target.value)} className={cn(inputCn, 'opacity-60')} placeholder="Previous (\u03A9)" />
+              <Input value={test.previousReading} onChange={(e) => updateEarthTest(test.id, 'previousReading', e.target.value)} className={cn(inputCn, 'opacity-60')} placeholder="Previous (Ω)" />
             </div>
           ))}
-          <button onClick={addEarthTest} className="w-full h-10 rounded-xl border-2 border-dashed border-elec-yellow/20 flex items-center justify-center gap-2 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]">
-            <Plus className="h-4 w-4" /> Add Earth Electrode
-          </button>
         </div>
+        <button onClick={addEarthTest} className={addButtonCn}>Add earth electrode</button>
       </div>
 
       {/* ── Down Conductor Continuity ── */}
-      <div>
-        <SectionHeader title={`Down Conductor Continuity (<${CONTINUITY_THRESHOLD}\u03A9)`} count={dcTests.length} />
-        <div className="space-y-2">
-          {dcTests.map((test) => (
-            <div key={test.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-elec-yellow">{test.reference}</span>
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title={`Down conductor continuity (<${CONTINUITY_THRESHOLD}Ω)`} count={dcTests.length} />
+        <div>
+          {dcTests.map((test, idx) => (
+            <div key={test.id} className={entryCn(idx)}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-sm font-semibold text-elec-yellow">{test.reference}</span>
                   <PassFailBadge value={isContinuityPass(test.measuredResistance)} />
                 </div>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => { setPhotoTarget({ type: 'dc', id: test.id }); testPhotoRef.current?.click(); }}
-                    className={cn('w-8 h-8 rounded-lg flex items-center justify-center touch-manipulation', test.photo ? 'bg-cyan-500/20 border border-cyan-500/30' : 'bg-white/[0.04] border border-white/[0.08]')}>
-                    <Camera className={cn('h-3.5 w-3.5', test.photo ? 'text-cyan-400' : 'text-white')} />
+                  <button onClick={() => { setPhotoTarget({ type: 'dc', id: test.id }); testPhotoRef.current?.click(); }} className={photoButtonCn(!!test.photo)}>
+                    {test.photo ? 'Photo added' : 'Photo'}
                   </button>
-                  {dcTests.length > 1 && <button onClick={() => removeDcTest(test.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>}
+                  {dcTests.length > 1 && <button onClick={() => removeDcTest(test.id)} className={removeButtonCn}>Remove</button>}
                 </div>
               </div>
               {test.photo && (
-                <div className="relative w-16 h-16 rounded-lg overflow-hidden">
+                <div className="relative w-20 h-20 rounded-xl overflow-hidden">
                   <img src={test.photo} alt="" className="w-full h-full object-cover" />
-                  <button onClick={() => updateDcTest(test.id, 'photo', '')} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center"><X className="h-3 w-3 text-white" /></button>
+                  <button onClick={() => updateDcTest(test.id, 'photo', '')} className="absolute top-1 right-1 rounded-md bg-black/70 px-1.5 py-0.5 text-[11px] font-medium text-white touch-manipulation">Remove</button>
                 </div>
               )}
               <Input value={test.location} onChange={(e) => updateDcTest(test.id, 'location', e.target.value)} className={inputCn} placeholder="Location (e.g. NE corner)" />
               <Sub title="Continuity path" />
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Input value={test.fromPoint} onChange={(e) => updateDcTest(test.id, 'fromPoint', e.target.value)} className={inputCn} placeholder="From" />
                 <Input value={test.toPoint} onChange={(e) => updateDcTest(test.id, 'toPoint', e.target.value)} className={inputCn} placeholder="To" />
               </div>
-              <Input value={test.measuredResistance} onChange={(e) => updateDcTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (\u03A9)" />
+              <Input value={test.measuredResistance} onChange={(e) => updateDcTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" />
             </div>
           ))}
-          <button onClick={addDcTest} className="w-full h-10 rounded-xl border-2 border-dashed border-elec-yellow/20 flex items-center justify-center gap-2 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]">
-            <Plus className="h-4 w-4" /> Add Down Conductor
-          </button>
         </div>
+        <button onClick={addDcTest} className={addButtonCn}>Add down conductor</button>
       </div>
 
       {/* ── Bonding Tests ── */}
-      <div>
-        <SectionHeader title={`Bonding Tests (\u2264${BONDING_THRESHOLD}\u03A9)`} count={bondTests.length} />
-        <div className="space-y-2">
-          {bondTests.map((test) => (
-            <div key={test.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-elec-yellow">{test.reference}</span>
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title={`Bonding tests (≤${BONDING_THRESHOLD}Ω)`} count={bondTests.length} />
+        <div>
+          {bondTests.map((test, idx) => (
+            <div key={test.id} className={entryCn(idx)}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-sm font-semibold text-elec-yellow">{test.reference}</span>
                   <PassFailBadge value={isBondingPass(test.measuredResistance)} />
                 </div>
-                {bondTests.length > 1 && <button onClick={() => removeBondTest(test.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>}
+                {bondTests.length > 1 && <button onClick={() => removeBondTest(test.id)} className={removeButtonCn}>Remove</button>}
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Input value={test.serviceBonded} onChange={(e) => updateBondTest(test.id, 'serviceBonded', e.target.value)} className={inputCn} placeholder="Service (gas, water...)" />
                 <Input value={test.bondLocation} onChange={(e) => updateBondTest(test.id, 'bondLocation', e.target.value)} className={inputCn} placeholder="Bond location" />
               </div>
               <Sub title="Readings" />
-              <div className="grid grid-cols-2 gap-2">
-                <Input value={test.conductorSize} onChange={(e) => updateBondTest(test.id, 'conductorSize', e.target.value)} className={inputCn} placeholder="Size (mm\u00B2)" />
-                <Input value={test.measuredResistance} onChange={(e) => updateBondTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (\u03A9)" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Input value={test.conductorSize} onChange={(e) => updateBondTest(test.id, 'conductorSize', e.target.value)} className={inputCn} placeholder="Size (mm²)" />
+                <Input value={test.measuredResistance} onChange={(e) => updateBondTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" />
               </div>
             </div>
           ))}
-          <button onClick={addBondTest} className="w-full h-10 rounded-xl border-2 border-dashed border-elec-yellow/20 flex items-center justify-center gap-2 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]">
-            <Plus className="h-4 w-4" /> Add Bonding Test
-          </button>
         </div>
+        <button onClick={addBondTest} className={addButtonCn}>Add bonding test</button>
       </div>
 
       {/* ── SPD Checks ── */}
-      <div>
-        <SectionHeader title="SPD Checks" count={spdChecks.length} />
-        <div className="space-y-2">
-          {spdChecks.map((check) => (
-            <div key={check.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-elec-yellow">{check.reference}</span>
-                <button onClick={() => removeSpdCheck(check.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="SPD checks" count={spdChecks.length} />
+        <div>
+          {spdChecks.map((check, idx) => (
+            <div key={check.id} className={entryCn(idx)}>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-sm font-semibold text-elec-yellow">{check.reference}</span>
+                <button onClick={() => removeSpdCheck(check.id)} className={removeButtonCn}>Remove</button>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Input value={check.location} onChange={(e) => updateSpdCheck(check.id, 'location', e.target.value)} className={inputCn} placeholder="Location" />
                 <MobileSelectPicker value={check.spdType} onValueChange={(v) => updateSpdCheck(check.id, 'spdType', v)} options={spdTypeOptions} placeholder="Type" title="SPD Type" triggerClassName={pickerTrigger} />
               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <Input value={check.make} onChange={(e) => updateSpdCheck(check.id, 'make', e.target.value)} className={inputCn} placeholder="Make" />
+                <Input value={check.model} onChange={(e) => updateSpdCheck(check.id, 'model', e.target.value)} className={inputCn} placeholder="Model" />
+              </div>
               <Sub title="Status" />
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <MobileSelectPicker value={check.statusIndicator} onValueChange={(v) => updateSpdCheck(check.id, 'statusIndicator', v)} options={spdStatusOptions} placeholder="Status" title="Status Indicator" triggerClassName={pickerTrigger} />
                 <MobileSelectPicker value={check.disconnectorCheck} onValueChange={(v) => updateSpdCheck(check.id, 'disconnectorCheck', v)} options={disconnectorOptions} placeholder="Disconnector" title="Disconnector Check" triggerClassName={pickerTrigger} />
               </div>
             </div>
           ))}
-          <button onClick={addSpdCheck} className="w-full h-10 rounded-xl border-2 border-dashed border-elec-yellow/20 flex items-center justify-center gap-2 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]">
-            <Plus className="h-4 w-4" /> Add SPD Check
-          </button>
         </div>
+        <button onClick={addSpdCheck} className={addButtonCn}>Add SPD check</button>
       </div>
 
       {/* ── Separation Distance ── */}
-      <div>
-        <SectionHeader title="Separation Distance" subtitle="Optional" count={sepChecks.length} />
-        <div className="space-y-2">
-          {sepChecks.map((check) => (
-            <div key={check.id} className="p-3 bg-white/[0.03] rounded-xl border border-white/[0.06] space-y-2">
-              <div className="flex items-center justify-between">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Separation distance" subtitle="Optional" count={sepChecks.length} />
+        <div>
+          {sepChecks.map((check, idx) => (
+            <div key={check.id} className={entryCn(idx)}>
+              <div className="flex items-center justify-between gap-3">
                 <PassFailBadge value={check.measuredDistance && check.requiredDistance ? (parseFloat(check.measuredDistance) >= parseFloat(check.requiredDistance) ? 'pass' : 'fail') : ''} />
-                <button onClick={() => removeSepCheck(check.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>
+                <button onClick={() => removeSepCheck(check.id)} className={removeButtonCn}>Remove</button>
               </div>
               <Input value={check.location} onChange={(e) => updateSepCheck(check.id, 'location', e.target.value)} className={inputCn} placeholder="Location" />
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Input value={check.measuredDistance} onChange={(e) => updateSepCheck(check.id, 'measuredDistance', e.target.value)} className={inputCn} placeholder="Measured (mm)" />
                 <Input value={check.requiredDistance} onChange={(e) => updateSepCheck(check.id, 'requiredDistance', e.target.value)} className={inputCn} placeholder="Required (mm)" />
               </div>
             </div>
           ))}
-          <button onClick={addSepCheck} className="w-full h-10 rounded-xl border-2 border-dashed border-elec-yellow/20 flex items-center justify-center gap-2 text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]">
-            <Plus className="h-4 w-4" /> Add Separation Check
-          </button>
         </div>
+        <button onClick={addSepCheck} className={addButtonCn}>Add separation check</button>
       </div>
     </div>
   );

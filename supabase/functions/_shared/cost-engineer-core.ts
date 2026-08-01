@@ -35,6 +35,7 @@ import {
   type MarketplaceCoupon,
 } from './marketplace-pricing.ts';
 import { searchFacets, formatFacetsForPrompt, type BS7671Facet } from './bs7671-facets-rag.ts';
+import { classifyAiError, logAiCall, recordAiFailure } from './ai-log.ts';
 import { searchPracticalWorkIntelligence } from './rag-practical-work.ts';
 import { ingestAttachments, type IngestedAttachments, type AttachmentInput } from './attachment-ingest.ts';
 import {
@@ -2137,8 +2138,10 @@ function toTitleCase(s: string): string {
 async function openaiChat(body: Record<string, unknown>, timeoutMs: number): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const model = String((body as { model?: unknown }).model ?? 'unknown');
+  const started = Date.now();
   try {
-    return await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
@@ -2147,13 +2150,50 @@ async function openaiChat(body: Record<string, unknown>, timeoutMs: number): Pro
       body: JSON.stringify(body),
       signal: controller.signal,
     });
+    if (response.ok) {
+      logAiCall({
+        fn: 'cost-engineer',
+        provider: 'openai',
+        model,
+        status: 'ok',
+        duration_ms: Date.now() - started,
+      });
+    } else {
+      const entry = {
+        fn: 'cost-engineer',
+        provider: 'openai',
+        model,
+        status: 'error' as const,
+        http_status: response.status,
+        error_class: classifyAiError(response.status),
+        duration_ms: Date.now() - started,
+      };
+      logAiCall(entry);
+      await recordAiFailure(entry);
+    }
+    return response;
   } catch (err: any) {
     if (err?.name === 'AbortError') {
       console.error(`[cost-engineer] OpenAI call aborted after ${timeoutMs}ms`);
     }
+    const message = String(err?.message ?? 'openai_failure');
+    const entry = {
+      fn: 'cost-engineer',
+      provider: 'openai',
+      model,
+      status: 'error' as const,
+      error_class: classifyAiError(undefined, message),
+      duration_ms: Date.now() - started,
+      detail: message,
+    };
+    logAiCall(entry);
+    await recordAiFailure(entry);
     // Return a synthetic non-ok Response so callers can use their existing
-    // fallback paths without special-casing fetch failure.
-    return new Response(JSON.stringify({ error: err?.message ?? 'openai_failure' }), { status: 599 });
+    // fallback paths without special-casing fetch failure. Body is sanitised —
+    // it can end up in the job's user-visible error_message (ELE-1155).
+    return new Response(JSON.stringify({ error: 'AI service unavailable — please try again' }), {
+      status: 599,
+    });
   } finally {
     clearTimeout(timer);
   }

@@ -42,7 +42,7 @@ const STATUS_PILL: Record<'green' | 'amber' | 'blue' | 'neutral', string> = {
   green: 'bg-green-500/10 text-green-400 border-green-500/25',
   amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
   blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
 function StatusPill({ status }: { status: FireWatchRecord['status'] }) {
@@ -96,7 +96,9 @@ function RecordRow({
   const [showShare, setShowShare] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const { data: jobs = [] } = useSparkProjects('active');
-  const linkedJobTitle = record.job_id ? jobs.find((j) => j.id === record.job_id)?.title ?? null : null;
+  const linkedJobTitle = record.job_id
+    ? (jobs.find((j) => j.id === record.job_id)?.title ?? null)
+    : null;
 
   const checklist: FireWatchChecklistItem[] = Array.isArray(record.checklist)
     ? record.checklist
@@ -122,7 +124,7 @@ function RecordRow({
               aria-hidden
               animate={{ rotate: expanded ? 180 : 0 }}
               transition={{ duration: 0.2 }}
-              className="text-white/45 text-[13px] leading-none"
+              className="text-white text-[13px] leading-none"
             >
               ⌄
             </motion.span>
@@ -142,13 +144,13 @@ function RecordRow({
             <div className="px-5 sm:px-6 pb-5 pt-1 space-y-3">
               <Eyebrow>Fire watch checklist</Eyebrow>
               {checklist.length === 0 ? (
-                <p className="text-[12.5px] text-white/55">No checklist data recorded.</p>
+                <p className="text-[12.5px] text-white">No checklist data recorded.</p>
               ) : (
                 <div className="space-y-1.5">
                   {checklist.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 px-3 py-2 rounded-lg bg-[hsl(0_0%_9%)] border border-white/[0.06]"
+                      className="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]"
                     >
                       <span
                         className={cn(
@@ -161,18 +163,20 @@ function RecordRow({
                       >
                         ✓
                       </span>
-                      <span className="text-[13px] text-white/90">{item.label}</span>
+                      <span className="text-[13px] text-white">{item.label}</span>
                     </div>
                   ))}
                 </div>
               )}
 
               {record.job_id && (
-                <p className="text-[12px] text-white/55">Project: {linkedJobTitle || 'Linked project'}</p>
+                <p className="text-[12px] text-white">
+                  Project: {linkedJobTitle || 'Linked project'}
+                </p>
               )}
 
               {record.completed_by && (
-                <p className="text-[12px] text-white/55">Completed by {record.completed_by}</p>
+                <p className="text-[12px] text-white">Completed by {record.completed_by}</p>
               )}
 
               <div className="flex flex-wrap gap-2 pt-1">
@@ -273,11 +277,7 @@ export function FireWatchHistory({ records, isLoading, onStartNewWatch }: FireWa
             <Eyebrow>{dateLabel}</Eyebrow>
             <ListCard>
               {dateRecords.map((record) => (
-                <RecordRow
-                  key={record.id}
-                  record={record}
-                  onStartNewWatch={onStartNewWatch}
-                />
+                <RecordRow key={record.id} record={record} onStartNewWatch={onStartNewWatch} />
               ))}
             </ListCard>
           </div>

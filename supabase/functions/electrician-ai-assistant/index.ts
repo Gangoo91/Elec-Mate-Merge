@@ -1,5 +1,11 @@
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/cors.ts';
+import {
+  classifyAiError,
+  friendlyAiError,
+  logAiCall,
+  recordAiFailure,
+} from '../_shared/ai-log.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { understandBS7671Query } from '../_shared/bs7671-query-understanding.ts';
 import {
@@ -616,6 +622,7 @@ Always use British English (earth not ground, consumer unit not panel).`;
       messages.push({ role: 'user', content: prompt });
     }
 
+    const aiStarted = Date.now();
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -642,32 +649,39 @@ Always use British English (earth not ground, consumer unit not panel).`;
 
     const data = await response.json();
 
-    if (!response.ok) {
-      console.error('OpenAI API Error:', data.error || response.statusText);
-      return new Response(
-        JSON.stringify({
-          error: `Error from OpenAI API: ${data.error?.message || response.statusText}`,
-          status: response.status,
-          statusText: response.statusText,
-        }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    if (!response.ok || data.error) {
+      const providerMessage = data.error?.message || response.statusText || 'Unknown API error';
+      const errorClass = classifyAiError(
+        response.ok ? undefined : response.status,
+        providerMessage
       );
-    }
-
-    if (data.error) {
-      console.error('OpenAI API Error:', data.error);
-      return new Response(
-        JSON.stringify({
-          error: 'Error from OpenAI API: ' + (data.error.message || 'Unknown API error'),
-        }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      const entry = {
+        fn: 'electrician-ai-assistant',
+        provider: 'openai',
+        model: 'gpt-5.4-mini-2026-03-17',
+        status: 'error' as const,
+        http_status: response.ok ? undefined : response.status,
+        error_class: errorClass,
+        duration_ms: Date.now() - aiStarted,
+        detail: String(providerMessage).slice(0, 500),
+      };
+      logAiCall(entry);
+      await recordAiFailure(entry);
+      // Never forward raw provider errors to the client (ELE-1155).
+      return new Response(JSON.stringify({ error: friendlyAiError(errorClass) }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const aiResponse = data.choices[0].message.content;
-    console.log('OpenAI response received successfully');
-    console.log('Raw OpenAI response data:', JSON.stringify(data, null, 2));
-    console.log('Content field:', aiResponse);
+    logAiCall({
+      fn: 'electrician-ai-assistant',
+      provider: 'openai',
+      model: 'gpt-5.4-mini-2026-03-17',
+      status: 'ok',
+      duration_ms: Date.now() - aiStarted,
+    });
 
     // Handle structured responses for structured_assistant type
     if (type === 'structured_assistant') {

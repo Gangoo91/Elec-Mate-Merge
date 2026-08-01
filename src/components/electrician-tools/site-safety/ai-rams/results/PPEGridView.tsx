@@ -76,9 +76,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
   };
 
   const handleItemChange = (id: string, updates: Partial<PPEItem>) => {
-    setEditedPPE((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, ...updates } : item))
-    );
+    setEditedPPE((prev) => prev.map((item) => (item.id === id ? { ...item, ...updates } : item)));
   };
 
   const handleAddItem = () => {
@@ -95,9 +93,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
 
   const handleRemoveItem = (id: string) => {
     setEditedPPE((prev) =>
-      prev
-        .filter((item) => item.id !== id)
-        .map((item, idx) => ({ ...item, itemNumber: idx + 1 }))
+      prev.filter((item) => item.id !== id).map((item, idx) => ({ ...item, itemNumber: idx + 1 }))
     );
   };
 

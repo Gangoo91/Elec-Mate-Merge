@@ -9,20 +9,22 @@
  */
 
 import * as React from 'react';
-import { Check, ChevronsUpDown, User, MapPin, Calendar, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 export interface PreviousClient {
   id: string;
@@ -204,93 +206,109 @@ export function ExistingClientSelect({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
+        <button
+          type="button"
           role="combobox"
           aria-expanded={open}
           disabled={disabled}
           className={cn(
-            'w-full justify-between h-11 touch-manipulation',
-            'bg-elec-gray border-white/30 text-foreground',
-            'hover:bg-gray-700 hover:border-white/40',
-            'focus:border-yellow-500 focus:ring-yellow-500',
-            'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
+            'w-full h-11 px-3.5 flex items-center justify-between rounded-xl text-left touch-manipulation active:scale-[0.98] transition-all',
+            'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]',
             disabled && 'opacity-50 cursor-not-allowed',
             className
           )}
         >
           <span
             className={cn(
-              'truncate flex items-center gap-2',
-              !selectedClient && 'text-white'
+              'truncate text-sm',
+              selectedClient ? 'font-medium text-white' : 'text-white/80'
             )}
           >
-            <User className="h-4 w-4 shrink-0 opacity-60" />
             {selectedClient ? selectedClient.clientName : placeholder}
           </span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
+        className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border-white/[0.08] shadow-xl z-[100]"
         align="start"
         sideOffset={4}
       >
-        <Command className="bg-elec-gray" shouldFilter={false}>
-          <CommandInput
-            placeholder="Search clients..."
-            value={search}
-            onValueChange={setSearch}
-            className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
-          />
-          <CommandList className="bg-elec-gray max-h-[300px]">
+        <Command className="bg-background" shouldFilter={false}>
+          <div className="px-3 pt-1 pb-2.5">
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search clients"
+              className={searchInputCn}
+            />
+          </div>
+          <CommandList className="max-h-[300px]">
             {loading ? (
               <div className="flex items-center justify-center py-6">
                 <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
-                <span className="ml-2 text-sm text-white">Loading clients...</span>
+                <span className="ml-2 text-sm text-white/80">Loading clients…</span>
               </div>
             ) : (
               <>
-                <CommandEmpty className="p-4 text-sm text-white">
-                  {clients.length === 0
-                    ? 'No previous fire alarm clients found.'
-                    : 'No matching clients.'}
+                <CommandEmpty className="py-6 text-center">
+                  <p className="text-white text-sm">
+                    {clients.length === 0
+                      ? 'No previous fire alarm clients found.'
+                      : 'No matching clients.'}
+                  </p>
                 </CommandEmpty>
 
                 {filteredClients.length > 0 && (
-                  <CommandGroup heading="Previous Clients" className="bg-elec-gray">
-                    {filteredClients.map((client) => (
-                      <CommandItem
-                        key={client.id}
-                        value={client.id}
-                        onSelect={handleSelect}
-                        className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2.5"
-                      >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4 shrink-0',
-                            selectedClientId === client.id
-                              ? 'opacity-100 text-elec-yellow'
-                              : 'opacity-0'
-                          )}
-                        />
-                        <div className="flex flex-col flex-1 min-w-0 gap-0.5">
-                          <span className="font-medium truncate">{client.clientName}</span>
-                          {(client.premisesAddress || client.premisesName) && (
-                            <span className="text-xs text-white truncate flex items-center gap-1">
-                              <MapPin className="h-3 w-3 shrink-0" />
-                              {client.premisesName || client.premisesAddress}
+                  <CommandGroup heading="Previous clients" className="py-2">
+                    {filteredClients.map((client) => {
+                      const isSelected = selectedClientId === client.id;
+                      return (
+                        <CommandItem
+                          key={client.id}
+                          value={client.id}
+                          onSelect={handleSelect}
+                          className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
+                        >
+                          <div
+                            className={cn(
+                              'w-full rounded-xl p-2.5 cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
+                              isSelected
+                                ? 'bg-elec-yellow border border-elec-yellow'
+                                : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]'
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                'block text-sm font-medium truncate',
+                                isSelected ? 'text-black' : 'text-white'
+                              )}
+                            >
+                              {client.clientName}
                             </span>
-                          )}
-                          {client.inspectionDate && (
-                            <span className="text-xs text-white flex items-center gap-1">
-                              <Calendar className="h-3 w-3 shrink-0" />
-                              Last: {formatDate(client.inspectionDate)}
-                            </span>
-                          )}
-                        </div>
-                      </CommandItem>
-                    ))}
+                            {(client.premisesAddress || client.premisesName) && (
+                              <span
+                                className={cn(
+                                  'block text-xs truncate mt-0.5',
+                                  isSelected ? 'text-black/70' : 'text-white/85'
+                                )}
+                              >
+                                {client.premisesName || client.premisesAddress}
+                              </span>
+                            )}
+                            {client.inspectionDate && (
+                              <span
+                                className={cn(
+                                  'block text-xs mt-0.5',
+                                  isSelected ? 'text-black/70' : 'text-white/85'
+                                )}
+                              >
+                                Last: {formatDate(client.inspectionDate)}
+                              </span>
+                            )}
+                          </div>
+                        </CommandItem>
+                      );
+                    })}
                   </CommandGroup>
                 )}
               </>

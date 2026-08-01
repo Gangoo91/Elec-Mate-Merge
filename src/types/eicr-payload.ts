@@ -55,6 +55,10 @@ export interface EICRCircuit {
   notes: string;
   source_circuit_id: string;
   auto_filled: boolean | string;
+  /** Board-scan metadata — way number, spare flag, per-row phase (L1/L2/L3) */
+  way_number: string;
+  is_spare: boolean;
+  phase_assignment: string;
   phase_type: string;
   phase_rotation: string;
   phase_balance_l1: string;
@@ -282,6 +286,7 @@ export interface EICRPayload {
     board_type: string;
     board_location: string;
     board_manufacturer: string;
+    board_model: string;
     board_ways: string;
   };
 
@@ -293,8 +298,9 @@ export interface EICRPayload {
   };
 
   earthing_bonding: {
-    means_of_earthing_distributor: boolean;
-    means_of_earthing_electrode: boolean;
+    /** boolean, or an ELE-849 limitation marker string ('LIM' | 'N/V' | 'N/A') */
+    means_of_earthing_distributor: boolean | string;
+    means_of_earthing_electrode: boolean | string;
     earth_electrode_type: string;
     earth_electrode_location: string;
     earth_electrode_resistance: string;
@@ -314,8 +320,8 @@ export interface EICRPayload {
     bonding_other: boolean;
     bonding_other_specify: string;
     bonding_compliance: string;
-    earthing_conductor_continuity_verified: boolean;
-    bonding_conductor_continuity_verified: boolean;
+    earthing_conductor_continuity_verified: boolean | string;
+    bonding_conductor_continuity_verified: boolean | string;
     supplementary_bonding: string;
     supplementary_bonding_size: string;
     supplementary_bonding_size_custom: string;
@@ -342,6 +348,8 @@ export interface EICRPayload {
     confirmed_correct_polarity: boolean;
     confirmed_phase_sequence: boolean;
     spd_operational_status: boolean;
+    /** Raw board-scanner SPD status: 'OK' | 'Replace' | 'Check' | '' */
+    spd_status: string;
     spd_na: boolean;
   };
 
@@ -397,8 +405,9 @@ export interface EICRPayload {
       address: string;
       membership_no: string;
     };
-    bs7671_compliance: boolean;
-    building_regs_compliance: boolean;
+    /** 3-state: true | false | 'na' — N/A passes through, never printed as No */
+    bs7671_compliance: boolean | 'na';
+    building_regs_compliance: boolean | 'na';
     competent_person_scheme: boolean;
     overall_assessment: string;
     satisfactory_for_continued_use: string;

@@ -120,7 +120,7 @@ const STATUS_PILL: Record<Tone | 'neutral', string> = {
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
   yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
 function statusTone(status: string): Tone | undefined {
@@ -348,7 +348,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
       moduleName="Document Hub"
       trailing={
         documents.length > 0 ? (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-white/55 border-white/10 tabular-nums">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border bg-white/[0.05] text-white border-white/10 tabular-nums">
             {documents.length}
           </span>
         ) : undefined
@@ -464,25 +464,27 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                   title={doc.title}
                   subtitle={
                     <span className="inline-flex items-center gap-1.5">
-                      <span className="uppercase tracking-[0.1em] text-[10.5px] text-white/45">
+                      <span className="uppercase tracking-[0.1em] text-[10.5px] text-white">
                         {FAMILY_LABEL[family]}
                       </span>
-                      <span className="text-white/25" aria-hidden>
+                      <span className="text-white" aria-hidden>
                         ·
                       </span>
                       <span>{doc.type}</span>
                       {doc.siteAddress && (
                         <>
-                          <span className="text-white/25" aria-hidden>
+                          <span className="text-white" aria-hidden>
                             ·
                           </span>
                           <span className="truncate">{doc.siteAddress}</span>
                         </>
                       )}
-                      <span className="text-white/25" aria-hidden>
+                      <span className="text-white" aria-hidden>
                         ·
                       </span>
-                      <span className="tabular-nums text-white/45">{fmtRelative(doc.updatedAt)}</span>
+                      <span className="tabular-nums text-white">
+                        {fmtRelative(doc.updatedAt)}
+                      </span>
                     </span>
                   }
                   trailing={
@@ -503,7 +505,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                               e.stopPropagation();
                               openAmend(doc.sourceId);
                             }}
-                            className="text-[11.5px] font-medium text-white/60 hover:text-elec-yellow hover:bg-white/[0.05] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation"
+                            className="text-[11.5px] font-medium text-white hover:text-elec-yellow hover:bg-white/[0.05] px-2.5 py-1.5 rounded-lg transition-colors touch-manipulation"
                           >
                             Amend
                           </button>
@@ -546,7 +548,10 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
 
       {/* ─── Status update sheet ─── */}
       <Sheet open={!!approvalDoc} onOpenChange={(o) => !o && setApprovalDoc(null)}>
-        <SheetContent side="bottom" className="h-auto max-h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           {approvalDoc && (
             <SheetShell
               eyebrow={`${FAMILY_LABEL[FAMILY_OF[approvalDoc.type]]} · ${approvalDoc.type}`}
@@ -558,7 +563,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                 </span>
               }
             >
-              <div className="text-[13px] text-white/85">{approvalDoc.title}</div>
+              <div className="text-[13px] text-white">{approvalDoc.title}</div>
               <div className="space-y-2 pt-1">
                 {getAvailableTransitions(approvalDoc).map((transition) => (
                   <PrimaryButton

@@ -18,8 +18,18 @@ const sendPushNotification = async (
 };
 
 // Types
+/** Records surfaced from the Electrical Hub are read-only projections here.
+ *  Absent/undefined = this hub's own record, which is fully editable. */
+export type FinanceRecordSource = 'electrical_hub';
+
+/** Bridged rows belong to another hub — block mutations rather than let them
+ *  silently affect zero rows. */
+export const isBridgedRecord = (r: { source?: string | null }): boolean =>
+  r.source === 'electrical_hub';
+
 export interface Quote {
   id: string;
+  source?: FinanceRecordSource | null;
   quote_number: string;
   client: string;
   client_address?: string | null;
@@ -49,6 +59,7 @@ export interface Quote {
 
 export interface Invoice {
   id: string;
+  source?: FinanceRecordSource | null;
   invoice_number: string;
   client: string;
   project: string | null;
@@ -173,13 +184,30 @@ export interface PriceBookItem {
 }
 
 // Quotes
+//
+// Two sources, deliberately. `employer_quotes` is the Employer Hub's own table;
+// `quotes` is where the Electrical Hub quote/invoice builder actually writes,
+// and is the one carrying real trading history. An owner quoting in the
+// Electrical Hub and an office manager working in the Employer Hub were
+// otherwise looking at two systems that never met. The bridged rows are
+// READ-ONLY projections (see get_employer_bridged_quotes) — creating and
+// editing still happens in whichever hub owns the record.
 export async function getQuotes(): Promise<Quote[]> {
-  const { data, error } = await supabase
-    .from('employer_quotes')
-    .select('*')
-    .order('created_at', { ascending: false });
-  if (error) throw error;
-  return data || [];
+  const [own, bridged] = await Promise.all([
+    supabase.from('employer_quotes').select('*').order('created_at', { ascending: false }),
+    // Cast: RPC postdates the last types.ts regeneration.
+    supabase.rpc('get_employer_bridged_quotes' as never),
+  ]);
+  if (own.error) throw own.error;
+  // A bridge failure must never blank the hub's own quotes.
+  if (bridged.error) return (own.data ?? []) as Quote[];
+  const merged = [
+    ...((own.data ?? []) as Quote[]),
+    ...((bridged.data ?? []) as unknown as Quote[]),
+  ];
+  return merged.sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 }
 
 export async function createQuote(
@@ -191,6 +219,10 @@ export async function createQuote(
 }
 
 export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
+  // A quote bridged in from the Electrical Hub lives in `quotes`, not
+  // `employer_quotes`. Checked by EXISTENCE rather than `updates.source`,
+  // because callers pass only the changed fields — a source check on the patch
+  // would never fire. The pre-fetch below is the reliable signal.
   // Get original quote to check for status change
   // employer_id defaults to auth.uid() at insert — created_by is a display
   // string ('Admin'), never a user id, so it must not be a push target
@@ -198,7 +230,13 @@ export async function updateQuote(id: string, updates: Partial<Quote>): Promise<
     .from('employer_quotes')
     .select('status, employer_id, quote_number, client')
     .eq('id', id)
-    .single();
+    .maybeSingle();
+
+  if (!originalQuote) {
+    throw new Error(
+      'This quote was created in the Electrical Hub — open it there to make changes.'
+    );
+  }
 
   const { data, error } = await supabase
     .from('employer_quotes')
@@ -237,14 +275,24 @@ export async function sendQuote(id: string): Promise<Quote> {
   return updateQuote(id, { status: 'Sent', sent_date: new Date().toISOString().split('T')[0] });
 }
 
-// Invoices
+// Invoices. Same two-source bridge as getQuotes — note that raised invoices
+// live in the `quotes` table itself (invoice_raised / invoice_status), which is
+// why they are projected from there rather than from a separate invoices table.
 export async function getInvoices(): Promise<Invoice[]> {
-  const { data, error } = await supabase
-    .from('employer_invoices')
-    .select('*')
-    .order('created_at', { ascending: false });
-  if (error) throw error;
-  return data || [];
+  const [own, bridged] = await Promise.all([
+    supabase.from('employer_invoices').select('*').order('created_at', { ascending: false }),
+    // Cast: RPC postdates the last types.ts regeneration.
+    supabase.rpc('get_employer_bridged_invoices' as never),
+  ]);
+  if (own.error) throw own.error;
+  if (bridged.error) return (own.data ?? []) as Invoice[];
+  const merged = [
+    ...((own.data ?? []) as Invoice[]),
+    ...((bridged.data ?? []) as unknown as Invoice[]),
+  ];
+  return merged.sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 }
 
 export async function createInvoice(
@@ -260,13 +308,21 @@ export async function createInvoice(
 }
 
 export async function updateInvoice(id: string, updates: Partial<Invoice>): Promise<Invoice> {
+  // See updateQuote — bridged invoices live in `quotes` and are read-only here.
+  // .select().single() already fails on a bridged id (0 rows matched); this
+  // just turns a cryptic PostgREST error into something actionable.
   const { data, error } = await supabase
     .from('employer_invoices')
     .update(updates)
     .eq('id', id)
     .select()
-    .single();
+    .maybeSingle();
   if (error) throw error;
+  if (!data) {
+    throw new Error(
+      'This invoice was created in the Electrical Hub — open it there to make changes.'
+    );
+  }
   return data;
 }
 

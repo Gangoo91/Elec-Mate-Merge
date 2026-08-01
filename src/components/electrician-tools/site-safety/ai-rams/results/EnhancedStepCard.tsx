@@ -296,10 +296,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                 ) : (
                   <ul className="space-y-2 text-left">
                     {step.qualifications?.map((q, i) => (
-                      <li
-                        key={i}
-                        className="text-[13.5px] text-white/85 leading-relaxed text-left"
-                      >
+                      <li key={i} className="text-[13.5px] text-white/85 leading-relaxed text-left">
                         {q}
                       </li>
                     ))}
@@ -309,278 +306,283 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
             )}
 
             {/* v2 rich detail — only when AI emitted v2 fields, read-only */}
-            {!isEditing && (() => {
-              const s: any = step;
-              const hasV2 =
-                s.phase ||
-                s.objective ||
-                (Array.isArray(s.linked_hazard_titles) && s.linked_hazard_titles.length) ||
-                (Array.isArray(s.inputs) && s.inputs.length) ||
-                (Array.isArray(s.outputs) && s.outputs.length) ||
-                (Array.isArray(s.named_instruments) && s.named_instruments.length) ||
-                (Array.isArray(s.named_values) && s.named_values.length) ||
-                (Array.isArray(s.hold_points) && s.hold_points.length) ||
-                (Array.isArray(s.witness_points) && s.witness_points.length) ||
-                (Array.isArray(s.quality_checks) && s.quality_checks.length) ||
-                (Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length) ||
-                (Array.isArray(s.bs7671_cites) && s.bs7671_cites.length) ||
-                (Array.isArray(s.safety_cites) && s.safety_cites.length) ||
-                (Array.isArray(s.ppe_required) && s.ppe_required.length) ||
-                (Array.isArray(s.stop_work_triggers) && s.stop_work_triggers.length);
-              if (!hasV2) return null;
+            {!isEditing &&
+              (() => {
+                const s: any = step;
+                const hasV2 =
+                  s.phase ||
+                  s.objective ||
+                  (Array.isArray(s.linked_hazard_titles) && s.linked_hazard_titles.length) ||
+                  (Array.isArray(s.inputs) && s.inputs.length) ||
+                  (Array.isArray(s.outputs) && s.outputs.length) ||
+                  (Array.isArray(s.named_instruments) && s.named_instruments.length) ||
+                  (Array.isArray(s.named_values) && s.named_values.length) ||
+                  (Array.isArray(s.hold_points) && s.hold_points.length) ||
+                  (Array.isArray(s.witness_points) && s.witness_points.length) ||
+                  (Array.isArray(s.quality_checks) && s.quality_checks.length) ||
+                  (Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length) ||
+                  (Array.isArray(s.bs7671_cites) && s.bs7671_cites.length) ||
+                  (Array.isArray(s.safety_cites) && s.safety_cites.length) ||
+                  (Array.isArray(s.ppe_required) && s.ppe_required.length) ||
+                  (Array.isArray(s.stop_work_triggers) && s.stop_work_triggers.length);
+                if (!hasV2) return null;
 
-              return (
-                <div className="space-y-5">
-                  {(s.phase || s.objective) && (
-                    <div className="grid sm:grid-cols-2 gap-5">
-                      {s.phase && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Phase
-                          </div>
-                          <p className="text-[13px] text-white/85">{s.phase}</p>
-                        </div>
-                      )}
-                      {s.objective && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Objective
-                          </div>
-                          <p className="text-[13px] text-white/85 leading-relaxed">{s.objective}</p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {Array.isArray(s.named_instruments) && s.named_instruments.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                        Named instruments
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {s.named_instruments.map((m: string, i: number) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/85"
-                          >
-                            {m}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {Array.isArray(s.named_values) && s.named_values.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
-                        Target values
-                      </div>
-                      <ul className="divide-y divide-white/[0.06] border border-white/[0.08] rounded-xl overflow-hidden">
-                        {s.named_values.map((nv: any, i: number) => (
-                          <li key={i} className="px-3 py-2.5 text-[12.5px]">
-                            <div className="flex items-baseline justify-between gap-3">
-                              <span className="font-medium text-white">{nv.parameter}</span>
-                              <span className="tabular-nums text-elec-yellow font-semibold">
-                                {nv.value}
-                              </span>
+                return (
+                  <div className="space-y-5">
+                    {(s.phase || s.objective) && (
+                      <div className="grid sm:grid-cols-2 gap-5">
+                        {s.phase && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Phase
                             </div>
-                            {nv.method && (
-                              <p className="mt-1 text-white/65 leading-relaxed">{nv.method}</p>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-400/85 mb-2">
-                        Acceptance criteria
+                            <p className="text-[13px] text-white/85">{s.phase}</p>
+                          </div>
+                        )}
+                        {s.objective && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Objective
+                            </div>
+                            <p className="text-[13px] text-white/85 leading-relaxed">
+                              {s.objective}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                      <ul className="space-y-1.5 text-[13px] text-white/85">
-                        {s.acceptance_criteria.map((c: string, i: number) => (
-                          <li key={i} className="leading-relaxed">
-                            · {c}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                    )}
 
-                  {((Array.isArray(s.inputs) && s.inputs.length > 0) ||
-                    (Array.isArray(s.outputs) && s.outputs.length > 0)) && (
-                    <div className="grid sm:grid-cols-2 gap-5">
-                      {Array.isArray(s.inputs) && s.inputs.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Inputs
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {s.inputs.map((x: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {x}
-                              </li>
-                            ))}
-                          </ul>
+                    {Array.isArray(s.named_instruments) && s.named_instruments.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                          Named instruments
                         </div>
-                      )}
-                      {Array.isArray(s.outputs) && s.outputs.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Outputs
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {s.outputs.map((x: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {x}
-                              </li>
-                            ))}
-                          </ul>
+                        <div className="flex flex-wrap gap-1.5">
+                          {s.named_instruments.map((m: string, i: number) => (
+                            <span
+                              key={i}
+                              className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/85"
+                            >
+                              {m}
+                            </span>
+                          ))}
                         </div>
-                      )}
-                    </div>
-                  )}
-
-                  {((Array.isArray(s.hold_points) && s.hold_points.length > 0) ||
-                    (Array.isArray(s.witness_points) && s.witness_points.length > 0) ||
-                    (Array.isArray(s.quality_checks) && s.quality_checks.length > 0)) && (
-                    <div className="grid sm:grid-cols-3 gap-5">
-                      {Array.isArray(s.hold_points) && s.hold_points.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Hold points
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {s.hold_points.map((x: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {x}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {Array.isArray(s.witness_points) && s.witness_points.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Witness points
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {s.witness_points.map((x: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {x}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {Array.isArray(s.quality_checks) && s.quality_checks.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Quality checks
-                          </div>
-                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                            {s.quality_checks.map((x: string, i: number) => (
-                              <li key={i} className="leading-relaxed">
-                                · {x}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {((Array.isArray(s.bs7671_cites) && s.bs7671_cites.length > 0) ||
-                    (Array.isArray(s.safety_cites) && s.safety_cites.length > 0) ||
-                    (Array.isArray(s.linked_hazard_titles) && s.linked_hazard_titles.length > 0)) && (
-                    <div className="space-y-3">
-                      {Array.isArray(s.linked_hazard_titles) && s.linked_hazard_titles.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            Linked hazards
-                          </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {s.linked_hazard_titles.map((h: string, i: number) => (
-                              <span
-                                key={i}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-red-500/10 border border-red-500/30 text-red-300"
-                              >
-                                {h}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {Array.isArray(s.bs7671_cites) && s.bs7671_cites.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            BS 7671
-                          </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {s.bs7671_cites.map((c: string, i: number) => (
-                              <span
-                                key={i}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow"
-                              >
-                                {c}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {Array.isArray(s.safety_cites) && s.safety_cites.length > 0 && (
-                        <div>
-                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                            HSE / CDM
-                          </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {s.safety_cites.map((c: string, i: number) => (
-                              <span
-                                key={i}
-                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-white/[0.05] border border-white/[0.10] text-white/80"
-                              >
-                                {c}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {Array.isArray(s.ppe_required) && s.ppe_required.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
-                        PPE for this step
                       </div>
-                      <ul className="space-y-1.5 text-[12.5px] text-white/80">
-                        {s.ppe_required.map((p: string, i: number) => (
-                          <li key={i} className="leading-relaxed">
-                            · {p}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                    )}
 
-                  {Array.isArray(s.stop_work_triggers) && s.stop_work_triggers.length > 0 && (
-                    <div>
-                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400 mb-2">
-                        Stop work
+                    {Array.isArray(s.named_values) && s.named_values.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
+                          Target values
+                        </div>
+                        <ul className="divide-y divide-white/[0.06] border border-white/[0.08] rounded-xl overflow-hidden">
+                          {s.named_values.map((nv: any, i: number) => (
+                            <li key={i} className="px-3 py-2.5 text-[12.5px]">
+                              <div className="flex items-baseline justify-between gap-3">
+                                <span className="font-medium text-white">{nv.parameter}</span>
+                                <span className="tabular-nums text-elec-yellow font-semibold">
+                                  {nv.value}
+                                </span>
+                              </div>
+                              {nv.method && (
+                                <p className="mt-1 text-white/65 leading-relaxed">{nv.method}</p>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <ul className="space-y-1.5 text-[12.5px] text-red-300">
-                        {s.stop_work_triggers.map((x: string, i: number) => (
-                          <li key={i} className="leading-relaxed">
-                            · {x}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
+                    )}
+
+                    {Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-400/85 mb-2">
+                          Acceptance criteria
+                        </div>
+                        <ul className="space-y-1.5 text-[13px] text-white/85">
+                          {s.acceptance_criteria.map((c: string, i: number) => (
+                            <li key={i} className="leading-relaxed">
+                              · {c}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {((Array.isArray(s.inputs) && s.inputs.length > 0) ||
+                      (Array.isArray(s.outputs) && s.outputs.length > 0)) && (
+                      <div className="grid sm:grid-cols-2 gap-5">
+                        {Array.isArray(s.inputs) && s.inputs.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Inputs
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {s.inputs.map((x: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {x}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {Array.isArray(s.outputs) && s.outputs.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Outputs
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {s.outputs.map((x: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {x}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {((Array.isArray(s.hold_points) && s.hold_points.length > 0) ||
+                      (Array.isArray(s.witness_points) && s.witness_points.length > 0) ||
+                      (Array.isArray(s.quality_checks) && s.quality_checks.length > 0)) && (
+                      <div className="grid sm:grid-cols-3 gap-5">
+                        {Array.isArray(s.hold_points) && s.hold_points.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Hold points
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {s.hold_points.map((x: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {x}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {Array.isArray(s.witness_points) && s.witness_points.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Witness points
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {s.witness_points.map((x: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {x}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {Array.isArray(s.quality_checks) && s.quality_checks.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              Quality checks
+                            </div>
+                            <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                              {s.quality_checks.map((x: string, i: number) => (
+                                <li key={i} className="leading-relaxed">
+                                  · {x}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {((Array.isArray(s.bs7671_cites) && s.bs7671_cites.length > 0) ||
+                      (Array.isArray(s.safety_cites) && s.safety_cites.length > 0) ||
+                      (Array.isArray(s.linked_hazard_titles) &&
+                        s.linked_hazard_titles.length > 0)) && (
+                      <div className="space-y-3">
+                        {Array.isArray(s.linked_hazard_titles) &&
+                          s.linked_hazard_titles.length > 0 && (
+                            <div>
+                              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                                Linked hazards
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {s.linked_hazard_titles.map((h: string, i: number) => (
+                                  <span
+                                    key={i}
+                                    className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-red-500/10 border border-red-500/30 text-red-300"
+                                  >
+                                    {h}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        {Array.isArray(s.bs7671_cites) && s.bs7671_cites.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              BS 7671
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {s.bs7671_cites.map((c: string, i: number) => (
+                                <span
+                                  key={i}
+                                  className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow"
+                                >
+                                  {c}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        {Array.isArray(s.safety_cites) && s.safety_cites.length > 0 && (
+                          <div>
+                            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                              HSE / CDM
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {s.safety_cites.map((c: string, i: number) => (
+                                <span
+                                  key={i}
+                                  className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-white/[0.05] border border-white/[0.10] text-white/80"
+                                >
+                                  {c}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {Array.isArray(s.ppe_required) && s.ppe_required.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                          PPE for this step
+                        </div>
+                        <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                          {s.ppe_required.map((p: string, i: number) => (
+                            <li key={i} className="leading-relaxed">
+                              · {p}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {Array.isArray(s.stop_work_triggers) && s.stop_work_triggers.length > 0 && (
+                      <div>
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400 mb-2">
+                          Stop work
+                        </div>
+                        <ul className="space-y-1.5 text-[12.5px] text-red-300">
+                          {s.stop_work_triggers.map((x: string, i: number) => (
+                            <li key={i} className="leading-relaxed">
+                              · {x}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
 
             {/* Duration + Risk level */}
             <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/[0.06]">

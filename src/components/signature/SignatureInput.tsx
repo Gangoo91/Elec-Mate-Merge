@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
-import { PenTool, Type, Upload } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignaturePad, { SignaturePadRef } from './SignaturePad';
 import SignatureManagerDialog from './SignatureManagerDialog';
@@ -77,9 +76,9 @@ const SignatureInput = ({
   const hasSignature = textSignature || digitalSignature;
 
   const tabs = [
-    { value: 'text' as const, label: 'Text', icon: Type },
-    { value: 'draw' as const, label: 'Draw', icon: PenTool },
-    { value: 'saved' as const, label: 'Saved', icon: Upload },
+    { value: 'text' as const, label: 'Text' },
+    { value: 'draw' as const, label: 'Draw' },
+    { value: 'saved' as const, label: 'Saved' },
   ];
 
   return (
@@ -92,13 +91,12 @@ const SignatureInput = ({
             type="button"
             onClick={() => setActiveTab(tab.value)}
             className={cn(
-              'h-9 rounded-lg font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5',
+              'flex h-10 items-center justify-center rounded-lg text-[12.5px] font-semibold transition-all touch-manipulation active:scale-[0.98]',
               activeTab === tab.value
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                ? 'border border-elec-yellow bg-elec-yellow text-black'
+                : 'border border-white/[0.1] bg-white/[0.05] text-white'
             )}
           >
-            <tab.icon className="h-3 w-3" />
             {tab.label}
           </button>
         ))}
@@ -165,14 +163,13 @@ const SignatureInput = ({
               type="button"
               className="w-full h-11 rounded-lg text-xs font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              <Upload className="h-3.5 w-3.5" />
-              Select from Saved Signatures
+              Select from saved signatures
             </button>
           }
         />
       )}
 
-      {hasSignature && <p className="text-[10px] text-green-400">✓ Signature captured</p>}
+      {hasSignature && <p className="text-[11.5px] font-medium text-green-400">Signature captured</p>}
     </div>
   );
 };

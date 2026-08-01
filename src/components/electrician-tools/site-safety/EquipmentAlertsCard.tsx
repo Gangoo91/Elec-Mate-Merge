@@ -61,7 +61,9 @@ export function EquipmentAlertsCard({
           >
             <div className="px-4 pb-4 space-y-2">
               {overdueItems.map((item) => {
-                const days = Math.abs(daysUntil(item.next_inspection || item.calibration_due || ''));
+                const days = Math.abs(
+                  daysUntil(item.next_inspection || item.calibration_due || '')
+                );
                 return (
                   <button
                     key={item.id}

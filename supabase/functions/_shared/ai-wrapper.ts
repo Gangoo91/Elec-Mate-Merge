@@ -13,6 +13,7 @@
 
 import { withTimeout, Timeouts } from './timeout.ts';
 import { withRetry, RetryPresets } from './retry.ts';
+import { classifyAiError, logAiCall, recordAiFailure } from './ai-log.ts';
 
 export class AIError extends Error {
   constructor(
@@ -365,6 +366,14 @@ export async function callAI(apiKey: string, options: AICallOptions): Promise<AI
     const duration = Date.now() - startTime;
     console.log(`✅ AI call succeeded (${duration}ms, provider: ${providerName})`);
 
+    logAiCall({
+      fn: '',
+      provider: useAnthropicDirect ? 'anthropic' : provider === 'openai' ? 'openai' : 'gateway',
+      model,
+      status: 'ok',
+      duration_ms: duration,
+    });
+
     return {
       content: result.content,
       model,
@@ -376,17 +385,27 @@ export async function callAI(apiKey: string, options: AICallOptions): Promise<AI
     const duration = Date.now() - startTime;
     console.error(`❌ AI call failed after ${duration}ms:`, error);
 
+    const message = error instanceof Error ? error.message : String(error);
+    const httpStatus = error instanceof AIError ? error.statusCode : undefined;
+    const entry = {
+      fn: '',
+      provider: useAnthropicDirect ? 'anthropic' : provider === 'openai' ? 'openai' : 'gateway',
+      model,
+      status: 'error' as const,
+      http_status: httpStatus,
+      error_class: classifyAiError(httpStatus, message),
+      duration_ms: duration,
+      detail: message,
+    };
+    logAiCall(entry);
+    await recordAiFailure(entry);
+
     // Re-throw with proper context
     if (error instanceof AIError) {
       throw error;
     }
 
-    throw new AIError(
-      error instanceof Error ? error.message : 'AI call failed',
-      providerName,
-      undefined,
-      false
-    );
+    throw new AIError(message, providerName, undefined, false);
   }
 }
 

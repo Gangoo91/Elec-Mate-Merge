@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, Camera, X, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -155,45 +155,38 @@ const defaultData = (): PermitData => ({
 });
 
 const DRAFT_KEY = 'elec-mate-draft-permit-to-work';
-const inputCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
-const textareaCn = 'touch-manipulation text-base min-h-[100px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
-const dateTimeCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+const inputCn = 'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+const textareaCn = 'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+const dateTimeCn = inputCn;
 
-const Section = ({ title, accentColor, children }: { title: string; accentColor?: string; children: React.ReactNode }) => (
-  <motion.section variants={itemVariants} className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div className={cn('h-[2px] w-full rounded-full bg-gradient-to-r mb-2', accentColor || 'from-orange-500 to-amber-400')} />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
+const Section = ({ title, children, className }: { title: string; children: React.ReactNode; className?: string }) => (
+  <motion.section variants={itemVariants} className={cn('-mx-4 rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] sm:mx-0 sm:rounded-2xl sm:border-x p-4 sm:p-5 space-y-4', className)}>
+    <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
     {children}
   </motion.section>
 );
 
 const Field = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    <Label className="text-[12px] font-medium text-white mb-1 block">{label}{required && ' *'}</Label>
     {children}
   </div>
 );
 
-const TickButton = ({ checked, label, color = 'orange', onChange }: { checked: boolean; label: string; color?: 'orange' | 'emerald' | 'red' | 'blue' | 'amber'; onChange: () => void }) => {
-  const colors: Record<string, { bg: string; check: string; text: string }> = {
-    orange: { bg: 'bg-orange-500/10 border-orange-500/25', check: 'bg-orange-500 border-orange-500', text: 'text-orange-400' },
-    amber: { bg: 'bg-amber-500/10 border-amber-500/25', check: 'bg-amber-500 border-amber-500 text-black', text: 'text-amber-400' },
-    emerald: { bg: 'bg-emerald-500/10 border-emerald-500/25', check: 'bg-emerald-500 border-emerald-500', text: 'text-emerald-400' },
-    red: { bg: 'bg-red-500/10 border-red-500/25', check: 'bg-red-500 border-red-500', text: 'text-red-400' },
-    blue: { bg: 'bg-blue-500/10 border-blue-500/25', check: 'bg-blue-500 border-blue-500', text: 'text-blue-400' },
-  };
-  const c = colors[color];
-  return (
-    <button onClick={onChange} className={cn('w-full flex items-center gap-3 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all', checked ? c.bg : 'bg-white/[0.03] border-white/[0.06]')}>
-      <div className={cn('w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0', checked ? c.check : 'border-white/30')}>
-        {checked && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
-      </div>
-      <span className={cn('text-sm font-medium', checked ? c.text : 'text-white')}>{label}</span>
-    </button>
-  );
-};
+const TickButton = ({ checked, label, onChange }: { checked: boolean; label: string; onChange: () => void }) => (
+  <button
+    onClick={onChange}
+    className={cn(
+      'w-full flex items-center gap-3 p-3 min-h-[44px] rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all',
+      checked ? 'bg-elec-yellow border-elec-yellow' : 'bg-white/[0.06] border-white/[0.1]'
+    )}
+  >
+    <div className={cn('w-5 h-5 rounded border-2 flex items-center justify-center transition-all flex-shrink-0', checked ? 'border-black/70' : 'border-white/30')}>
+      {checked && <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
+    </div>
+    <span className={cn('text-sm', checked ? 'font-semibold text-black' : 'font-medium text-white')}>{label}</span>
+  </button>
+);
 
 export default function PermitToWorkPage() {
   const navigate = useNavigate();
@@ -212,6 +205,7 @@ export default function PermitToWorkPage() {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return;
       const result = await reportCloud.getReportData(editId, user.id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (result) { setData((prev) => ({ ...prev, ...(result as any) })); setExistingReportId(editId); }
     });
   }, [editId]);
@@ -245,6 +239,7 @@ export default function PermitToWorkPage() {
     });
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const update = useCallback((field: keyof PermitData, value: any) => {
     setData((prev) => ({ ...prev, [field]: value }));
   }, []);
@@ -300,8 +295,10 @@ export default function PermitToWorkPage() {
 
       const savedReportId = existingReportId || data.permitNumber;
       if (existingReportId) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await reportCloud.updateReport(existingReportId, user.id, data as any);
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result = await reportCloud.createReport(user.id, 'permit-to-work', data as any);
         if (!result.success) { toast.error('Failed to save'); setIsSaving(false); return; }
       }
@@ -375,32 +372,23 @@ export default function PermitToWorkPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                <Zap className="h-4 w-4 text-orange-400" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Permit to Work</h1>
+      <div className="px-4 pt-3 pb-1 lg:px-8">
+        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
+          <button onClick={() => navigate(-1)} className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation">Back</button>
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Permit to Work</h1>
+              <p className="mt-1 text-[13px] text-white/50"><span className="font-semibold text-elec-yellow">Formal authorisation.</span> Work on electrical systems in accordance with HSE HSG250 and BS 7671:2018+A3:2024 — Issue, Receipt, Clearance, Cancellation.</p>
+              <p className="mt-1 font-mono text-[12px] text-white/50">{data.permitNumber}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-6 max-w-3xl mx-auto">
-
-        {/* Banner */}
-        <motion.div variants={itemVariants} className="border-b border-orange-500/20 pb-4">
-          <p className="text-sm font-bold text-orange-400">ELECTRICAL PERMIT TO WORK</p>
-          <p className="text-xs text-white mt-1">Formal authorisation to carry out work on electrical systems in accordance with HSE HSG250 and BS 7671:2018+A3:2024. This permit follows the 4-part lifecycle: Issue, Receipt, Clearance, Cancellation.</p>
-        </motion.div>
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-5 mx-auto max-w-3xl lg:max-w-[1600px] lg:px-8 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
 
         {/* Reference */}
-        <Section title="Reference" accentColor="from-white/30 to-white/5">
+        <Section title="Reference">
           <Field label="Permit Number"><Input value={data.permitNumber} onChange={(e) => update('permitNumber', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Date Issued"><Input type="date" value={data.dateIssued} onChange={(e) => update('dateIssued', e.target.value)} className={dateTimeCn} /></Field>
@@ -413,97 +401,97 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Issued By */}
-        <Section title="Issued By" accentColor="from-elec-yellow/50 to-amber-400/20">
-          <div className="grid grid-cols-2 gap-3">
+        <Section title="Issued by">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Name"><Input value={data.contractorName} onChange={(e) => update('contractorName', e.target.value)} className={inputCn} /></Field>
             <Field label="Company"><Input value={data.contractorCompany} onChange={(e) => update('contractorCompany', e.target.value)} className={inputCn} /></Field>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Phone"><Input type="tel" value={data.contractorPhone} onChange={(e) => update('contractorPhone', e.target.value)} className={inputCn} /></Field>
             <Field label="Email"><Input type="email" value={data.contractorEmail} onChange={(e) => update('contractorEmail', e.target.value)} className={inputCn} /></Field>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Scheme"><Input value={data.registrationScheme} onChange={(e) => update('registrationScheme', e.target.value)} className={inputCn} placeholder="NICEIC, NAPIT..." /></Field>
             <Field label="Reg. No."><Input value={data.registrationNumber} onChange={(e) => update('registrationNumber', e.target.value)} className={inputCn} /></Field>
           </div>
         </Section>
 
         {/* Site Details */}
-        <Section title="Site Details" accentColor="from-blue-500/40 to-cyan-400/20">
-          <div className="grid grid-cols-2 gap-3">
+        <Section title="Site details">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Site Name"><Input value={data.siteName} onChange={(e) => update('siteName', e.target.value)} className={inputCn} /></Field>
             <Field label="Site Contact"><Input value={data.siteContactName} onChange={(e) => update('siteContactName', e.target.value)} className={inputCn} /></Field>
           </div>
           <Field label="Site Address"><Input value={data.siteAddress} onChange={(e) => update('siteAddress', e.target.value)} className={inputCn} /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Contact Phone"><Input type="tel" value={data.siteContactPhone} onChange={(e) => update('siteContactPhone', e.target.value)} className={inputCn} /></Field>
             <Field label="Emergency Contact"><Input type="tel" value={data.emergencyContact} onChange={(e) => update('emergencyContact', e.target.value)} className={inputCn} /></Field>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Nearest First Aider"><Input value={data.nearestFirstAider} onChange={(e) => update('nearestFirstAider', e.target.value)} className={inputCn} /></Field>
             <Field label="Fire Assembly Point"><Input value={data.fireAssemblyPoint} onChange={(e) => update('fireAssemblyPoint', e.target.value)} className={inputCn} /></Field>
           </div>
         </Section>
 
         {/* Part 1: Work Description */}
-        <Section title="Part 1 — Work Description" accentColor="from-orange-500/50 to-amber-400/20">
+        <Section title="Part 1 — Work description">
           <Field label="Description of Work" required><Textarea value={data.descriptionOfWork} onChange={(e) => update('descriptionOfWork', e.target.value)} className={textareaCn} placeholder="Describe the electrical work to be carried out..." /></Field>
           <Field label="Equipment to Be Worked On"><Input value={data.equipmentToBeWorkedOn} onChange={(e) => update('equipmentToBeWorkedOn', e.target.value)} className={inputCn} placeholder="e.g. Distribution board DB1" /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Location"><Input value={data.locationOfWork} onChange={(e) => update('locationOfWork', e.target.value)} className={inputCn} placeholder="e.g. Plant room, Floor 2" /></Field>
             <Field label="DB Reference"><Input value={data.distributionBoardRef} onChange={(e) => update('distributionBoardRef', e.target.value)} className={inputCn} /></Field>
           </div>
         </Section>
 
         {/* Part 1: Hazards */}
-        <Section title="Part 1 — Hazards Identified" accentColor="from-red-500/50 to-orange-400/20">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-white">Select all hazards present</p>
-            <button onClick={applyStandardElectrical} className="text-[11px] font-medium text-orange-400 bg-orange-500/10 border border-orange-500/20 px-3 py-1.5 rounded-lg touch-manipulation active:scale-[0.98]">
+        <Section title="Part 1 — Hazards identified">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-[12.5px] text-white/90">Select all hazards present</p>
+            <button onClick={applyStandardElectrical} className="h-11 shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-semibold text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-colors">
               Standard Electrical
             </button>
           </div>
           <div className="space-y-2">
             {hazards.map((h) => (
-              <TickButton key={h.key} checked={data[h.key] as boolean} label={h.label} color="red" onChange={() => update(h.key, !data[h.key])} />
+              <TickButton key={h.key} checked={data[h.key] as boolean} label={h.label} onChange={() => update(h.key, !data[h.key])} />
             ))}
             {data.hazardOther && <div className="pl-8"><Input value={data.hazardOtherDescription} onChange={(e) => update('hazardOtherDescription', e.target.value)} className={inputCn} placeholder="Describe..." /></div>}
           </div>
         </Section>
 
         {/* Part 1: Precautions */}
-        <Section title="Part 1 — Precautions Required" accentColor="from-emerald-500/50 to-green-400/20">
+        <Section title="Part 1 — Precautions required">
           <div className="space-y-2">
             {precautions.map((p) => (
-              <TickButton key={p.key} checked={data[p.key] as boolean} label={p.label} color="emerald" onChange={() => update(p.key, !data[p.key])} />
+              <TickButton key={p.key} checked={data[p.key] as boolean} label={p.label} onChange={() => update(p.key, !data[p.key])} />
             ))}
             {data.precautionOther && <div className="pl-8"><Input value={data.precautionOtherDescription} onChange={(e) => update('precautionOtherDescription', e.target.value)} className={inputCn} placeholder="Describe..." /></div>}
           </div>
         </Section>
 
         {/* Part 1: PPE */}
-        <Section title="Part 1 — PPE Required" accentColor="from-blue-500/50 to-cyan-400/20">
+        <Section title="Part 1 — PPE required">
           <div className="space-y-2">
             {ppe.map((p) => (
-              <TickButton key={p.key} checked={data[p.key] as boolean} label={p.label} color="blue" onChange={() => update(p.key, !data[p.key])} />
+              <TickButton key={p.key} checked={data[p.key] as boolean} label={p.label} onChange={() => update(p.key, !data[p.key])} />
             ))}
             {data.ppeOther && <div className="pl-8"><Input value={data.ppeOtherDescription} onChange={(e) => update('ppeOtherDescription', e.target.value)} className={inputCn} placeholder="Describe..." /></div>}
           </div>
         </Section>
 
         {/* Part 1: Isolation */}
-        <Section title="Part 1 — Isolation Details" accentColor="from-amber-500/50 to-yellow-400/20">
+        <Section title="Part 1 — Isolation details">
           <Field label="Point(s) of Isolation"><Input value={data.isolationPoints} onChange={(e) => update('isolationPoints', e.target.value)} className={inputCn} placeholder="e.g. MCB 5, DB3" /></Field>
           <Field label="Method of Isolation"><Input value={data.isolationMethod} onChange={(e) => update('isolationMethod', e.target.value)} className={inputCn} placeholder="e.g. MCB off, locked with padlock" /></Field>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Lock / Tag Number"><Input value={data.lockTagNumber} onChange={(e) => update('lockTagNumber', e.target.value)} className={inputCn} /></Field>
             <Field label="Linked Isolation Cert"><Input value={data.linkedIsolationCertRef} onChange={(e) => update('linkedIsolationCertRef', e.target.value)} className={inputCn} placeholder="ISO-..." /></Field>
           </div>
         </Section>
 
         {/* Part 1: Authorisation */}
-        <Section title="Part 1 — Authorisation" accentColor="from-orange-500/50 to-amber-400/20">
-          <div className="grid grid-cols-2 gap-3">
+        <Section title="Part 1 — Authorisation">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Authorised By"><Input value={data.authorisedByName} onChange={(e) => update('authorisedByName', e.target.value)} className={inputCn} /></Field>
             <Field label="Position"><Input value={data.authorisedByPosition} onChange={(e) => update('authorisedByPosition', e.target.value)} className={inputCn} placeholder="e.g. Authorised Person" /></Field>
           </div>
@@ -516,15 +504,13 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Part 2: Receipt */}
-        <Section title="Part 2 — Receipt" accentColor="from-cyan-500/50 to-blue-400/20">
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3.5 mb-3">
-            <p className="text-xs text-white leading-relaxed">{data.receiptDeclaration}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
+        <Section title="Part 2 — Receipt">
+          <p className="border-b border-white/[0.06] pb-3 text-[12.5px] text-white/90 leading-relaxed">{data.receiptDeclaration}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Person in Charge"><Input value={data.personInChargeName} onChange={(e) => update('personInChargeName', e.target.value)} className={inputCn} /></Field>
             <Field label="Position"><Input value={data.personInChargePosition} onChange={(e) => update('personInChargePosition', e.target.value)} className={inputCn} /></Field>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Phone"><Input type="tel" value={data.personInChargePhone} onChange={(e) => update('personInChargePhone', e.target.value)} className={inputCn} /></Field>
             <Field label="Email"><Input type="email" value={data.personInChargeEmail} onChange={(e) => update('personInChargeEmail', e.target.value)} className={inputCn} /></Field>
           </div>
@@ -536,12 +522,12 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Part 3: Clearance */}
-        <Section title="Part 3 — Clearance" accentColor="from-emerald-500/50 to-green-400/20">
+        <Section title="Part 3 — Clearance">
           <div className="space-y-2">
-            <TickButton checked={data.workCompleted} label="All work completed" color="emerald" onChange={() => update('workCompleted', !data.workCompleted)} />
-            <TickButton checked={data.allPersonsClear} label="All persons clear of equipment" color="emerald" onChange={() => update('allPersonsClear', !data.allPersonsClear)} />
-            <TickButton checked={data.areaSafe} label="Area inspected and safe" color="emerald" onChange={() => update('areaSafe', !data.areaSafe)} />
-            <TickButton checked={data.toolsRemoved} label="All tools and equipment removed" color="emerald" onChange={() => update('toolsRemoved', !data.toolsRemoved)} />
+            <TickButton checked={data.workCompleted} label="All work completed" onChange={() => update('workCompleted', !data.workCompleted)} />
+            <TickButton checked={data.allPersonsClear} label="All persons clear of equipment" onChange={() => update('allPersonsClear', !data.allPersonsClear)} />
+            <TickButton checked={data.areaSafe} label="Area inspected and safe" onChange={() => update('areaSafe', !data.areaSafe)} />
+            <TickButton checked={data.toolsRemoved} label="All tools and equipment removed" onChange={() => update('toolsRemoved', !data.toolsRemoved)} />
           </div>
           <Field label="Person in Charge"><Input value={data.clearanceName} onChange={(e) => update('clearanceName', e.target.value)} className={inputCn} /></Field>
           <div className="grid grid-cols-2 gap-3">
@@ -552,13 +538,13 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Part 4: Cancellation */}
-        <Section title="Part 4 — Cancellation" accentColor="from-red-500/50 to-rose-400/20">
+        <Section title="Part 4 — Cancellation">
           <div className="space-y-2">
-            <TickButton checked={data.permitCancelled} label="Permit cancelled" color="red" onChange={() => update('permitCancelled', !data.permitCancelled)} />
-            <TickButton checked={data.safeToReturn} label="Safe to return to normal service" color="emerald" onChange={() => update('safeToReturn', !data.safeToReturn)} />
+            <TickButton checked={data.permitCancelled} label="Permit cancelled" onChange={() => update('permitCancelled', !data.permitCancelled)} />
+            <TickButton checked={data.safeToReturn} label="Safe to return to normal service" onChange={() => update('safeToReturn', !data.safeToReturn)} />
           </div>
           {data.permitCancelled && (
-            <div className="space-y-4 mt-3">
+            <div className="space-y-4">
               <Field label="Cancelled By"><Input value={data.cancellationName} onChange={(e) => update('cancellationName', e.target.value)} className={inputCn} /></Field>
               <div className="grid grid-cols-2 gap-3">
                 <Field label="Date"><Input type="date" value={data.cancellationDate} onChange={(e) => update('cancellationDate', e.target.value)} className={dateTimeCn} /></Field>
@@ -570,10 +556,10 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Extension */}
-        <Section title="Extension" accentColor="from-violet-500/50 to-purple-400/20">
-          <TickButton checked={data.extended} label="Permit validity extended" color="blue" onChange={() => update('extended', !data.extended)} />
+        <Section title="Extension" className="lg:col-span-2">
+          <TickButton checked={data.extended} label="Permit validity extended" onChange={() => update('extended', !data.extended)} />
           {data.extended && (
-            <div className="space-y-4 mt-3">
+            <div className="space-y-4">
               <Field label="Extended Valid Until"><Input type="date" value={data.extendedValidUntil} onChange={(e) => update('extendedValidUntil', e.target.value)} className={dateTimeCn} /></Field>
               <Field label="Extended By"><Input value={data.extendedByName} onChange={(e) => update('extendedByName', e.target.value)} className={inputCn} /></Field>
               <SignatureInput label="Extension Signature" value={data.extendedBySignature} onChange={(sig) => update('extendedBySignature', sig || '')} />
@@ -582,17 +568,17 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Photo Evidence */}
-        <Section title="Photo Evidence" accentColor="from-cyan-500/40 to-blue-400/20">
+        <Section title="Photo evidence" className="lg:col-span-2">
           <input ref={photoInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoCapture} />
-          <button onClick={() => photoInputRef.current?.click()} className="w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center gap-2.5 text-sm text-white touch-manipulation active:scale-[0.98] hover:border-white/[0.25] transition-colors">
-            <Camera className="h-4 w-4" /> Add Photos
+          <button onClick={() => photoInputRef.current?.click()} className="h-11 w-full rounded-xl border border-dashed border-white/[0.2] text-[13px] font-semibold text-white hover:border-white/[0.35] touch-manipulation active:scale-[0.98] transition-colors">
+            Add Photos
           </button>
           {data.photos.length > 0 && (
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
               {data.photos.map((photo, i) => (
                 <div key={i} className="relative rounded-xl overflow-hidden aspect-square">
                   <img src={photo} alt={`Evidence ${i + 1}`} className="w-full h-full object-cover" />
-                  <button onClick={() => removePhoto(i)} className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center touch-manipulation"><X className="h-3.5 w-3.5 text-white" /></button>
+                  <button onClick={() => removePhoto(i)} aria-label="Remove photo" className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-base leading-none text-white touch-manipulation">×</button>
                 </div>
               ))}
             </div>
@@ -600,16 +586,16 @@ export default function PermitToWorkPage() {
         </Section>
 
         {/* Notes */}
-        <Section title="Notes" accentColor="from-white/20 to-white/5">
+        <Section title="Notes" className="lg:col-span-2">
           <Textarea value={data.notes} onChange={(e) => update('notes', e.target.value)} className={textareaCn} placeholder="Additional notes..." />
         </Section>
 
         {/* Actions */}
-        <motion.div variants={itemVariants} className="flex gap-3 pt-2">
-          <Button variant="outline" className="flex-1 h-12 text-sm font-medium touch-manipulation active:scale-[0.98] border-white/[0.08] text-white hover:bg-white/[0.06]" onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}>
+        <motion.div variants={itemVariants} className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end lg:col-span-2">
+          <Button variant="outline" className="h-12 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white hover:bg-white/[0.08] hover:text-white touch-manipulation sm:px-8" onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}>
             Save Draft
           </Button>
-          <Button className="flex-1 h-12 text-sm font-medium touch-manipulation active:scale-[0.98] bg-orange-500 text-white hover:bg-orange-600" onClick={handleSave} disabled={isSaving}>
+          <Button className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation sm:w-auto sm:px-10" onClick={handleSave} disabled={isSaving}>
             {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Saving...</> : existingReportId ? 'Update Permit' : 'Download PDF'}
           </Button>
         </motion.div>

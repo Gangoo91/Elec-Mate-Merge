@@ -2,13 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import {
-  SheetShell,
-  Field,
-  Eyebrow,
-  PrimaryButton,
-  inputClass,
-} from '@/components/college/primitives';
+import { SheetShell, Field, Eyebrow, PrimaryButton } from '@/components/college/primitives';
+import { safetyInputCn } from '../common/SafetyDocField';
 import { SignatureField } from '../common/SignatureField';
 import { useUpdateIsolationRecord } from '@/hooks/useSafeIsolationRecords';
 import { toast } from 'sonner';
@@ -99,7 +94,10 @@ export function ReEnergisationSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+      >
         <SheetShell
           eyebrow="GS38 safe isolation"
           title="Re-energise circuit"
@@ -122,7 +120,7 @@ export function ReEnergisationSheet({
             className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] p-4 space-y-1"
           >
             <Eyebrow className="text-amber-300/90">Safety warning</Eyebrow>
-            <p className="text-xs text-white/70 leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               Verify all personnel are clear of the circuit before re-energising. Ensure all work
               has been completed and tested.
             </p>
@@ -155,7 +153,7 @@ export function ReEnergisationSheet({
                 >
                   ✓
                 </span>
-                <span className="text-[13px] text-white/90">{item.label}</span>
+                <span className="text-[13px] text-white">{item.label}</span>
               </motion.button>
             ))}
           </div>
@@ -168,7 +166,7 @@ export function ReEnergisationSheet({
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className={inputClass}
+                className={safetyInputCn}
                 placeholder="Enter your full name"
               />
             </Field>

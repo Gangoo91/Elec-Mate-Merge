@@ -62,6 +62,7 @@ import {
   type CostTier,
   type InstallationCost,
 } from './cost-calculator';
+import { getZsCheck, getCableAdequacy, getVoltageDrop } from './zs-compliance';
 
 interface EditorialDesignResultsProps {
   design: any;
@@ -618,6 +619,26 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
     [circuits, installType, supply?.earthingSystem]
   );
 
+  // ELE-1425 — the backend cable-capacity tripwire is flag-only by design (it
+  // does not auto-correct a cable size), and its output had no reader on this
+  // side, so an undersized cable reached the user with no warning at all.
+  // Surface it in the design audit as an error.
+  const cableCapacityFindings = useMemo(() => {
+    const issues = (design as { cableCapacityIssues?: unknown }).cableCapacityIssues;
+    if (!Array.isArray(issues)) return [];
+    return issues.map((issue: Record<string, unknown>) => ({
+      severity: 'error' as const,
+      scope: 'circuit' as const,
+      circuitNumber:
+        typeof issue.circuitNumber === 'number' ? (issue.circuitNumber as number) : undefined,
+      circuitName: typeof issue.circuitName === 'string' ? (issue.circuitName as string) : undefined,
+      title: 'Cable capacity below protective device rating',
+      detail: String(issue.error ?? 'Cable current-carrying capacity is insufficient.'),
+      reg: '433.1.1',
+      recommendation: typeof issue.recommendation === 'string' ? issue.recommendation : undefined,
+    }));
+  }, [design]);
+
   // ── Compliance concerns: failing circuits that need attention ─────────
   // We compute this AFTER the layout (so we have boardZdb per circuit) and
   // factor in the submain chain when checking Zs. Defined further down — see
@@ -1111,8 +1132,24 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
           onSelectCircuit={setSelectedIdx}
         />
 
-        {/* DESIGN AUDIT — multi-pass critique loop output */}
-        {design?.criticReview && <DesignAuditSection review={design.criticReview} />}
+        {/* DESIGN AUDIT — multi-pass critique loop output, plus the cable
+            capacity tripwire. ELE-1425: the backend has always flagged a cable
+            whose Iz is below the protective device rating and attached it as
+            `cableCapacityIssues`, but nothing on the frontend ever read that
+            field — it was the only pipeline output with no consumer. A design
+            recommending 1.5mm² for a 330A circuit was detected server-side and
+            the finding silently dropped. Fold it in as error-severity so it
+            cannot be missed. */}
+        {(design?.criticReview || cableCapacityFindings.length > 0) && (
+          <DesignAuditSection
+            review={{
+              pass: 'design-audit-v1',
+              summary: design?.criticReview?.summary ?? '',
+              durationMs: design?.criticReview?.durationMs ?? 0,
+              findings: [...cableCapacityFindings, ...(design?.criticReview?.findings ?? [])],
+            }}
+          />
+        )}
 
         {/* HERO */}
         <section className="space-y-3">
@@ -4583,28 +4620,47 @@ const CircuitKeyStats = ({
   const proRating = circuit?.protectionDevice?.rating;
   const proType = circuit?.protectionDevice?.type ?? 'MCB';
   const proCurve = circuit?.protectionDevice?.curve;
-  const ib = Number(circuit?.calculations?.Ib ?? 0);
-  const iz = Number(circuit?.calculations?.Iz ?? 0);
-  const vdPct = Number(circuit?.calculations?.voltageDrop?.percent ?? 0);
-  const vdLimit = Number(circuit?.calculations?.voltageDrop?.limit ?? 5);
-  const aiZs = Number(circuit?.calculations?.zs ?? NaN);
+  const ib = Number(circuit?.calculations?.Ib ?? circuit?.designCurrent ?? 0);
   const ze = Number(supplyZe ?? 0.35);
   const zdb = Number(boardZdb ?? ze);
-  const zsCorrection = Math.max(0, zdb - ze);
-  const zs = Number.isFinite(aiZs) ? aiZs + zsCorrection : NaN;
-  const maxZs = Number(circuit?.calculations?.maxZs ?? NaN);
 
-  // Headroom: how much headroom does Iz have above the protection rating?
-  // Healthy: Iz > In × 1.2. Tight: 1.0–1.2. Failed: Iz < In.
+  // ELE-1424/1425/1426 — this strip used to read the AI's numbers straight out
+  // of `calculations`. When the model omitted one it came through as 0, and 0
+  // renders as "—" (Vd) or ticks green (Zs). Everything here is now derived.
+  //
+  // Zs is measured from the BOARD's Zdb rather than the origin Ze, so a circuit
+  // fed through a submain carries that extra impedance — the correction this
+  // component already made, now applied to a calculated value instead of a
+  // claimed one.
+  const zsCheck = getZsCheck(circuit, zdb);
+  const cable = getCableAdequacy(circuit);
+  const vd = getVoltageDrop(circuit);
+
+  const iz = cable.iz ?? Number(circuit?.calculations?.Iz ?? 0);
+  const vdPct = vd.known ? (vd.percent ?? 0) : Number(circuit?.calculations?.voltageDrop?.percent ?? 0);
+  const vdLimit = vd.limit;
+  const zs = zsCheck.value;
+  const maxZs = zsCheck.max;
+  const zsCorrection = Math.max(0, zdb - ze);
+
+  // ELE-1424 — headroom used to be (Iz − In) / In, which ignores the design
+  // current entirely. A circuit drawing 330 A through a 16 A cable on a 16 A
+  // device read "+0% headroom", because Iz happened to equal In — a
+  // catastrophic overload presented as sitting exactly on the limit.
+  //
+  // Reg 433.1.1 is Ib ≤ In ≤ Iz, so the cable must carry whichever of Ib and In
+  // is larger. Measuring spare capacity against that is what "headroom" means.
+  const required = cable.required ?? Math.max(ib, Number(proRating ?? 0));
   const izHeadroomPct =
-    iz > 0 && proRating > 0 ? Math.round(((iz - proRating) / proRating) * 100) : null;
+    iz > 0 && required > 0 ? Math.round(((iz - required) / required) * 100) : null;
+  const overloaded = izHeadroomPct != null && izHeadroomPct < 0;
 
   // Tone helpers
-  const vdTone = vdPct === 0 ? 'neutral' : vdPct <= vdLimit ? 'good' : 'bad';
+  const vdTone = !vd.known && vdPct === 0 ? 'neutral' : vdPct <= vdLimit ? 'good' : 'bad';
   const zsTone =
-    !Number.isFinite(zs) || !Number.isFinite(maxZs)
+    zsCheck.state === 'not-calculated' || zsCheck.state === 'no-limit'
       ? 'neutral'
-      : zs <= maxZs
+      : zsCheck.compliant
         ? 'good'
         : 'bad';
   const izTone =
@@ -4633,7 +4689,13 @@ const CircuitKeyStats = ({
         <KeyStatCell
           label="Ib / Iz"
           value={iz > 0 ? `${ib.toFixed(0)} / ${iz.toFixed(0)} A` : `${ib.toFixed(0)} A`}
-          sub={izHeadroomPct != null ? `${izHeadroomPct >= 0 ? '+' : ''}${izHeadroomPct}% headroom` : ''}
+          sub={
+            overloaded
+              ? `OVERLOAD — needs ${required.toFixed(0)} A`
+              : izHeadroomPct != null
+                ? `+${izHeadroomPct}% headroom`
+                : ''
+          }
           tone={izTone}
         />
         <KeyStatCell
@@ -4645,11 +4707,11 @@ const CircuitKeyStats = ({
         <KeyStatCell
           label="Zs / max"
           value={
-            Number.isFinite(zs) && Number.isFinite(maxZs)
+            zs != null && maxZs != null
               ? `${zs.toFixed(2)} / ${maxZs.toFixed(2)} Ω`
-              : Number.isFinite(zs)
+              : zs != null
                 ? `${zs.toFixed(2)} Ω`
-                : '—'
+                : 'Not calculated'
           }
           sub={zsCorrection > 0.005 ? `incl. +${zsCorrection.toFixed(2)} Ω submain` : ''}
           tone={zsTone}

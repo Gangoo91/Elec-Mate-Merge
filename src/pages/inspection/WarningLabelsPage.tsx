@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Minus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { generateWarningLabelsPdf, type LabelForPdf } from '@/utils/generate-warning-labels-pdf';
 
-const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 interface LabelDef {
   id: string;
@@ -74,15 +74,11 @@ interface SelectedLabel {
   testedBy?: string;
 }
 
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
-
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}</Label>{children}</div>
+  <div>
+    <Label className="text-[12px] font-medium text-white mb-1 block">{label}</Label>
+    {children}
+  </div>
 );
 
 export default function WarningLabelsPage() {
@@ -122,112 +118,140 @@ export default function WarningLabelsPage() {
     }
   };
 
+  const activeCat = labelCategories.find((c) => c.key === activeCategory);
   const filteredLabels = allLabels.filter((l) => l.category === activeCategory);
 
   return (
     <div className="bg-background min-h-screen">
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <h1 className="text-sm font-bold text-white leading-tight">Warning Labels</h1>
+      {/* Header */}
+      <div className="px-4 pt-3 pb-1 lg:px-8">
+        <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
+          <button
+            onClick={() => navigate(-1)}
+            className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
+          >
+            Back
+          </button>
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Warning Labels</h1>
+              <p className="mt-1 text-[13px] text-white/50">
+                <span className="font-semibold text-elec-yellow">Printable BS 7671 labels.</span> Select labels and quantities — generates an A4 sheet with cut lines for self-adhesive label paper (Avery L7163) or plain A4.
+              </p>
             </div>
             {totalLabels > 0 && (
-              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-elec-yellow/15 text-elec-yellow">{totalLabels} selected</span>
+              <span className="pb-0.5 text-[13px] font-semibold text-elec-yellow whitespace-nowrap">{totalLabels} selected</span>
             )}
           </div>
         </div>
-        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8 space-y-6">
-        {/* Info banner */}
-        <div className="px-4 sm:px-0">
-          <div className="rounded-lg bg-white/[0.04] border border-white/[0.06] p-3">
-            <p className="text-xs text-white leading-relaxed">Select labels and quantities. Generates a printable A4 sheet with cut lines. Use on self-adhesive label paper (Avery L7163) or print on plain A4 and cut to size.</p>
-          </div>
-        </div>
-
+      <main className="mx-auto max-w-3xl px-4 py-4 pb-40 space-y-5 lg:max-w-[1600px] lg:px-8">
         {/* Category toggles */}
-        <div className="px-4 sm:px-0">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {labelCategories.map((cat) => (
-              <button
-                key={cat.key}
-                onClick={() => setActiveCategory(cat.key)}
-                className={cn(
-                  'h-9 rounded-lg text-[11px] font-semibold border touch-manipulation active:scale-[0.98] transition-all',
-                  activeCategory === cat.key
-                    ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.06] border-white/[0.08] text-white'
-                )}
-              >
-                {cat.title}
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {labelCategories.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className={cn(
+                'h-11 rounded-xl px-2 text-[12px] transition-all touch-manipulation active:scale-[0.98]',
+                activeCategory === cat.key
+                  ? 'bg-elec-yellow border border-elec-yellow font-semibold text-black'
+                  : 'bg-white/[0.06] border border-white/[0.1] font-medium text-white'
+              )}
+            >
+              {cat.title}
+            </button>
+          ))}
         </div>
 
-        {/* Active category section */}
-        <div className="px-4 sm:px-0 space-y-3">
-          <SectionHeader title={labelCategories.find((c) => c.key === activeCategory)?.title || ''} />
-          <p className="text-[11px] text-white">{labelCategories.find((c) => c.key === activeCategory)?.description}</p>
+        {/* Active category */}
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-[15px] font-semibold tracking-tight text-white">{activeCat?.title}</h2>
+            <p className="mt-1 text-[12.5px] text-white/90">{activeCat?.description}</p>
+          </div>
 
-          {filteredLabels.map((label) => {
-            const sel = getSelectedForLabel(label.id);
-            const isSelected = !!sel;
-            const style = colourStyles[label.colour] || colourStyles.warning;
+          <div className="space-y-3 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+            {filteredLabels.map((label) => {
+              const sel = getSelectedForLabel(label.id);
+              const isSelected = !!sel;
+              const style = colourStyles[label.colour] || colourStyles.warning;
 
-            return (
-              <div key={label.id} className={cn('rounded-xl border overflow-hidden transition-all', isSelected ? 'border-elec-yellow/30 bg-white/[0.04]' : 'border-white/[0.06] bg-white/[0.02]')}>
-                <button onClick={() => toggleLabel(label.id)} className="w-full flex items-center gap-3.5 p-3.5 text-left touch-manipulation active:bg-white/[0.04] transition-colors">
-                  <div className={cn('flex-shrink-0 w-14 h-9 rounded-lg flex items-center justify-center border-2', style.bg, style.border)}>
-                    <span className={cn('text-[6px] font-black text-center leading-tight px-1', style.text)}>{label.text || 'CUSTOM'}</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-white">{label.title}</p>
-                    {label.regulation && <p className="text-[11px] text-white mt-0.5">{label.regulation}</p>}
-                  </div>
-                  <span className={cn('text-[11px] font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all touch-manipulation', isSelected ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] border border-white/[0.08] text-white')}>
-                    {isSelected ? 'Added' : 'Add'}
-                  </span>
-                </button>
-                {isSelected && (
-                  <div className="px-3.5 pb-3.5 space-y-3 border-t border-white/[0.06] pt-3">
-                    <div className="flex items-center gap-3">
-                      <Label className="text-white text-xs flex-1">Quantity</Label>
-                      <div className="flex items-center gap-2">
-                        <button onClick={() => updateQuantity(label.id, -1)} className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"><Minus className="w-3.5 h-3.5 text-white" /></button>
-                        <span className="w-8 text-center text-sm font-semibold text-white">{sel?.quantity}</span>
-                        <button onClick={() => updateQuantity(label.id, 1)} className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"><Plus className="w-3.5 h-3.5 text-white" /></button>
-                      </div>
+              return (
+                <div
+                  key={label.id}
+                  className={cn(
+                    'rounded-xl border overflow-hidden transition-all',
+                    isSelected ? 'border-elec-yellow bg-white/[0.05]' : 'border-white/[0.1] bg-white/[0.03]'
+                  )}
+                >
+                  <button
+                    onClick={() => toggleLabel(label.id)}
+                    className="w-full flex items-center gap-3.5 p-3.5 text-left touch-manipulation active:bg-white/[0.04] transition-colors"
+                  >
+                    <div className={cn('flex-shrink-0 w-14 h-9 rounded-lg flex items-center justify-center border-2', style.bg, style.border)}>
+                      <span className={cn('text-[6px] font-black text-center leading-tight px-1', style.text)}>{label.text || 'CUSTOM'}</span>
                     </div>
-                    {label.hasDateField && (
-                      <Field label="Date"><Input type="date" value={sel?.nextTestDate || ''} onChange={(e) => updateField(label.id, 'nextTestDate', e.target.value)} className={inputCn} /></Field>
-                    )}
-                    {label.hasTestedByField && (
-                      <Field label="Tested By"><Input value={sel?.testedBy || ''} onChange={(e) => updateField(label.id, 'testedBy', e.target.value)} className={inputCn} placeholder="Name" /></Field>
-                    )}
-                    {label.hasCustomText && (
-                      <Field label="Label Text"><Input value={sel?.customText || ''} onChange={(e) => updateField(label.id, 'customText', e.target.value)} className={inputCn} placeholder="Enter label text..." /></Field>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-white">{label.title}</p>
+                      {label.regulation && <p className="text-[12px] text-white/85 mt-0.5">{label.regulation}</p>}
+                    </div>
+                    <span
+                      className={cn(
+                        'text-[12px] font-semibold px-3.5 py-2 rounded-lg flex-shrink-0 transition-all',
+                        isSelected ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] border border-white/[0.1] text-white'
+                      )}
+                    >
+                      {isSelected ? 'Added' : 'Add'}
+                    </span>
+                  </button>
+                  {isSelected && (
+                    <div className="px-3.5 pb-3.5 space-y-3 border-t border-white/[0.1] pt-3">
+                      <div className="flex items-center gap-3">
+                        <Label className="text-[13px] font-medium text-white flex-1">Quantity</Label>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => updateQuantity(label.id, -1)}
+                            aria-label="Decrease quantity"
+                            className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-lg font-semibold text-white touch-manipulation active:scale-[0.95]"
+                          >
+                            &minus;
+                          </button>
+                          <span className="w-8 text-center text-sm font-semibold text-white">{sel?.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(label.id, 1)}
+                            aria-label="Increase quantity"
+                            className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-lg font-semibold text-white touch-manipulation active:scale-[0.95]"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      {label.hasDateField && (
+                        <Field label="Date"><Input type="date" value={sel?.nextTestDate || ''} onChange={(e) => updateField(label.id, 'nextTestDate', e.target.value)} className={inputCn} /></Field>
+                      )}
+                      {label.hasTestedByField && (
+                        <Field label="Tested By"><Input value={sel?.testedBy || ''} onChange={(e) => updateField(label.id, 'testedBy', e.target.value)} className={inputCn} placeholder="Name" /></Field>
+                      )}
+                      {label.hasCustomText && (
+                        <Field label="Label Text"><Input value={sel?.customText || ''} onChange={(e) => updateField(label.id, 'customText', e.target.value)} className={inputCn} placeholder="Enter label text..." /></Field>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </main>
 
-      {/* Sticky generate button */}
+      {/* Fixed generate button */}
       {totalLabels > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3">
-          <div className="max-w-3xl mx-auto">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-white/[0.12] px-4 py-3 lg:px-8">
+          <div className="mx-auto max-w-3xl lg:max-w-[1600px] lg:flex lg:justify-end">
             <button
-              className="w-full h-11 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] bg-elec-yellow text-black transition-all"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation lg:w-auto lg:px-10"
               onClick={handleGenerate}
             >
               Generate PDF — {totalLabels} label{totalLabels !== 1 ? 's' : ''} selected

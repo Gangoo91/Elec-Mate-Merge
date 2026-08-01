@@ -24,11 +24,8 @@ export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProp
     try {
       const doc = new jsPDF();
       const marginX = 20;
-      const contentWidth =
-        doc.internal.pageSize.getWidth() - marginX * 2;
-      const brand = getBrandColour(
-        briefing.company?.accent_color || briefing.brand_colour
-      );
+      const contentWidth = doc.internal.pageSize.getWidth() - marginX * 2;
+      const brand = getBrandColour(briefing.company?.accent_color || briefing.brand_colour);
 
       // Brand accent strip + title
       addAccentBar(doc, brand);
@@ -43,11 +40,7 @@ export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProp
       y += 15;
       doc.text(`Location: ${briefing.location}`, marginX, y);
       y += 7;
-      doc.text(
-        `Date: ${new Date(briefing.briefing_date).toLocaleDateString('en-GB')}`,
-        marginX,
-        y
-      );
+      doc.text(`Date: ${new Date(briefing.briefing_date).toLocaleDateString('en-GB')}`, marginX, y);
       y += 7;
       doc.text(`Time: ${briefing.briefing_time}`, marginX, y);
 

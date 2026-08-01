@@ -21,6 +21,7 @@ import {
   BIDIRECTIONAL_DEVICE_TYPES,
 } from '@/types/solar-pv';
 import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
+import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import {
   Section,
@@ -500,6 +501,16 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
           </div>
           <Field label="Trip Time (ms)">
             <Input type="number" inputMode="numeric" value={formData.testResults?.acTests?.rcdTripTime || ''} onChange={(e) => updateAcTest('rcdTripTime', parseInt(e.target.value) || 0)} placeholder="≤300ms" className={inputSmCn} />
+          </Field>
+          <Field label="BS Standard">
+            <ComboboxCell
+              value={formData.testResults?.acTests?.rcdBsStandard || ''}
+              onChange={(v) => updateAcTest('rcdBsStandard', v)}
+              options={rcdBsStandardOptions}
+              placeholder="Select standard..."
+              className="h-10 text-sm"
+              allowCustom
+            />
           </Field>
           {rcdSuggestion && hasBattery && formData.testResults?.acTests?.rcdType !== 'Type B' && (
             <p className="text-[10px] text-orange-400">⚠ {rcdSuggestion.reason}</p>

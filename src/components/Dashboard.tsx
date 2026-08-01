@@ -601,6 +601,15 @@ const Dashboard = ({
 
   const expiringReminders = filterByTimeRange(reminders, '90');
   const expiringCount = expiringReminders.length;
+  // Beyond the 90-day window the tile still points at the forward pipeline.
+  const nextDueDate = useMemo(() => {
+    const next = [...(reminders ?? [])]
+      .filter((r) => new Date(r.expiry_date).getTime() > Date.now())
+      .sort((a, b) => new Date(a.expiry_date).getTime() - new Date(b.expiry_date).getTime())[0];
+    return next
+      ? new Date(next.expiry_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+      : null;
+  }, [reminders]);
   const expiredCertsCount = reminders.filter(
     (r) => getExpiryUrgency(r.expiry_date) === 'expired'
   ).length;
@@ -681,7 +690,9 @@ const Dashboard = ({
           ? `${expiredCertsCount} expired`
           : expiringCount > 0
             ? 'Within 90 days'
-            : 'All clear',
+            : nextDueDate
+              ? `Next due ${nextDueDate}`
+              : 'All clear',
       onClick: () => navigate('/certificate-expiry'),
     },
     {

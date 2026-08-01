@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -22,7 +20,6 @@ interface DocDef {
   title: string;
   description: string;
   badge: string;
-  accentColor: string;
   comingSoon?: boolean;
   href?: string;
 }
@@ -33,7 +30,6 @@ const noticesAndPermits: DocDef[] = [
     title: 'Danger Notice',
     description: 'C1 danger — issue on the spot',
     badge: 'BS 7671',
-    accentColor: 'from-red-500 via-rose-400 to-pink-400',
     href: '/electrician/inspection-testing/danger-notice',
   },
   {
@@ -41,7 +37,6 @@ const noticesAndPermits: DocDef[] = [
     title: 'Isolation Certificate',
     description: 'Safe isolation record',
     badge: 'GS 38',
-    accentColor: 'from-amber-500 via-amber-400 to-yellow-400',
     href: '/electrician/inspection-testing/isolation-certificate',
   },
   {
@@ -49,7 +44,6 @@ const noticesAndPermits: DocDef[] = [
     title: 'Permit to Work',
     description: 'Work authorisation',
     badge: 'HSE',
-    accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
     href: '/electrician/inspection-testing/permit-to-work',
   },
   {
@@ -57,7 +51,6 @@ const noticesAndPermits: DocDef[] = [
     title: 'Limitation Notice',
     description: 'Record limitations on inspection',
     badge: 'BS 7671',
-    accentColor: 'from-blue-500 via-blue-400 to-cyan-400',
     href: '/electrician/inspection-testing/limitation-notice',
   },
   {
@@ -65,7 +58,6 @@ const noticesAndPermits: DocDef[] = [
     title: 'Non-Compliance Notice',
     description: 'Fire alarm non-compliance',
     badge: 'BS 5839',
-    accentColor: 'from-red-500 via-orange-400 to-amber-400',
     href: '/electrician/inspection-testing/non-compliance-notice',
   },
   {
@@ -73,7 +65,6 @@ const noticesAndPermits: DocDef[] = [
     title: 'Completion Notice',
     description: 'Work completion confirmation',
     badge: 'General',
-    accentColor: 'from-emerald-500 via-emerald-400 to-green-400',
     href: '/electrician/inspection-testing/completion-notice',
   },
 ];
@@ -84,7 +75,6 @@ const printables: DocDef[] = [
     title: 'Warning Labels',
     description: 'Printable BS 7671 labels',
     badge: 'BS 7671',
-    accentColor: 'from-yellow-500 via-amber-400 to-orange-400',
     href: '/electrician/inspection-testing/warning-labels',
   },
   {
@@ -92,7 +82,6 @@ const printables: DocDef[] = [
     title: 'Board Schedule',
     description: 'CU door label & A4 schedule',
     badge: 'Printable',
-    accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
     href: '/electrician/inspection-testing/board-schedule',
   },
 ];
@@ -103,7 +92,6 @@ const siteRecords: DocDef[] = [
     title: 'Safe Isolation',
     description: 'GS 38 isolation checklist',
     badge: 'GS 38',
-    accentColor: 'from-emerald-500 via-emerald-400 to-green-400',
     href: '/electrician/inspection-testing/safe-isolation',
   },
   {
@@ -111,7 +99,6 @@ const siteRecords: DocDef[] = [
     title: 'Risk Assessment',
     description: 'AI-generated risk assessment',
     badge: 'AI-Powered',
-    accentColor: 'from-blue-500 via-blue-400 to-cyan-400',
     href: '/electrician/health-safety',
   },
 ];
@@ -122,81 +109,70 @@ const clientHandouts: DocDef[] = [
     title: 'Client Handouts',
     description: 'Branded guides for clients',
     badge: '9 Templates',
-    accentColor: 'from-emerald-500 via-green-400 to-teal-400',
     href: '/electrician/inspection-testing/client-handouts',
   },
 ];
 
-interface DocCardProps {
-  doc: DocDef;
-  onClick?: () => void;
-}
-
-// Editorial tiled card — sits inside a HubSection grid with hairline seams.
-const DocCard = ({ doc, onClick }: DocCardProps) => {
+// Card — the shared recipe: gradient surface, volt mark, neutral badge,
+// action pinned to the base. Graphite and volt only.
+const DocCard = ({ doc }: { doc: DocDef }) => {
   const navigate = useNavigate();
   const disabled = !!doc.comingSoon && !doc.href;
-  // Derive a solid accent dot from the gradient's "from-" token.
-  const dot = doc.accentColor.split(' ')[0].replace('from-', 'bg-');
-
-  const handleClick = () => {
-    if (doc.href) navigate(doc.href);
-    else if (onClick) onClick();
-  };
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      disabled={disabled}
+    <div
       className={cn(
-        'group relative flex flex-col text-left min-h-[112px] p-4 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation',
-        'focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50',
-        disabled ? 'opacity-50' : 'hover:bg-elec-yellow/[0.05] active:bg-white/[0.05]'
+        'group relative flex flex-col overflow-hidden rounded-2xl p-5',
+        'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
+        'transition-all duration-200',
+        disabled
+          ? 'opacity-50'
+          : 'hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05] hover:shadow-[0_10px_32px_rgba(0,0,0,0.35)] focus-within:border-elec-yellow/50'
       )}
     >
-      {/* accent dot + standard badge */}
-      <div className="flex items-start justify-between gap-2">
-        <span className={cn('mt-1 w-2 h-2 rounded-full shrink-0', dot)} aria-hidden />
-        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
+      <div className="flex items-center justify-between gap-2">
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/[0.06] border border-white/[0.12] shrink-0">
+          <span className="h-2.5 w-2.5 rounded-full bg-elec-yellow" aria-hidden />
+        </span>
+        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
           {doc.badge}
         </span>
       </div>
 
-      <h3 className="mt-3 text-[16.5px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+      <h3 className="mt-4 text-[19px] font-semibold tracking-tight leading-[1.15] text-white">
         {doc.title}
       </h3>
-      <p className="mt-1.5 text-[12px] leading-relaxed text-white/55 line-clamp-2">
+      <p className="mt-1.5 text-[13px] leading-relaxed text-white/65 line-clamp-2">
         {doc.description}
       </p>
 
-      <div className="flex-grow min-h-[10px]" />
-
-      <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow">
-        {disabled ? 'Coming soon' : 'Open'}
-        {!disabled && (
-          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-        )}
-      </span>
-    </button>
+      <div className="mt-auto pt-5 flex items-center justify-end">
+        <button
+          type="button"
+          onClick={() => doc.href && navigate(doc.href)}
+          disabled={disabled}
+          className={cn(
+            'h-11 px-5 rounded-xl text-[13px] font-bold touch-manipulation transition-transform',
+            disabled
+              ? 'bg-white/[0.08] text-white/50'
+              : 'bg-elec-yellow text-black active:scale-[0.97] shadow-[0_4px_16px_rgba(245,184,28,0.18)]'
+          )}
+        >
+          {disabled ? 'Coming soon' : 'Open'}
+        </button>
+      </div>
+    </div>
   );
 };
 
-// Editorial section: micro-label header + tiled card grid (hairline seams,
-// gold top hairline) — mirrors EditorialHubGrid.
+// Section: plain-text group label + responsive card grid.
 const HubSection = ({ title, docs }: { title: string; docs: DocDef[] }) => (
-  <motion.section variants={itemVariants} className="space-y-2.5">
-    <div className="flex items-end justify-between gap-3 px-0.5">
-      <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">{title}</h2>
-      <span className="text-[10.5px] text-white/30 tabular-nums">{docs.length}</span>
+  <motion.section variants={itemVariants} className="space-y-3">
+    <div className="flex items-baseline gap-2.5 px-0.5">
+      <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+      <span className="text-[12px] text-white/40 tabular-nums">{docs.length}</span>
     </div>
-    <div
-      className={cn(
-        'relative grid gap-[1.5px] bg-white/[0.14] border border-white/[0.14] rounded-2xl overflow-hidden',
-        docs.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
-      )}
-    >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
       {docs.map((doc) => (
         <DocCard key={doc.id} doc={doc} />
       ))}
@@ -231,6 +207,7 @@ const DOC_TYPE_ROUTES: Record<string, string> = {
 
 const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -277,109 +254,95 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Labels & Warnings</h1>
-          </div>
+      {/* Header — quiet, no rules or eyebrows; the cards carry the page */}
+      <div className="px-4 lg:px-8 pt-3 pb-1">
+        <button
+          type="button"
+          onClick={onBack}
+          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+        >
+          Back
+        </button>
+        <div className="flex items-baseline gap-3 flex-wrap">
+          <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
+            Notices & Labels
+          </h1>
+          <span className="text-[13px] text-white/50">Danger, isolation, permits and handouts</span>
         </div>
-        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="px-4 py-4 space-y-5"
+        className="px-4 py-4 lg:px-8 space-y-7 lg:max-w-[1600px]"
       >
-        <HubSection title="Client Documents" docs={clientHandouts} />
         <HubSection title="Notices & Permits" docs={noticesAndPermits} />
         <HubSection title="Site Records" docs={siteRecords} />
         <HubSection title="Printables" docs={printables} />
+        <HubSection title="Client Documents" docs={clientHandouts} />
 
-        {/* Recent Documents — editorial list, hairline-separated to match the grids above */}
+        {/* Recent documents — same card recipe, compact */}
         {savedDocs && savedDocs.length > 0 && (
-          <motion.section variants={itemVariants} className="space-y-2.5">
-            <div className="flex items-end justify-between gap-3 px-0.5">
-              <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                Recent Documents
+          <motion.section variants={itemVariants} className="space-y-3">
+            <div className="flex items-baseline gap-2.5 px-0.5">
+              <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                Recent documents
               </h2>
-              <span className="text-[10.5px] text-white/30 tabular-nums">{savedDocs.length}</span>
+              <span className="text-[12px] text-white/40 tabular-nums">{savedDocs.length}</span>
             </div>
-            <div className="relative border border-white/[0.14] rounded-2xl overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-              <div className="divide-y divide-white/[0.18]">
-                {savedDocs.map((doc) => {
-                  const typeInfo = DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC', color: '' };
-                  const route = DOC_TYPE_ROUTES[doc.report_type];
-                  const title = doc.client_name || doc.installation_address || 'Untitled';
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+              {savedDocs.map((doc) => {
+                const typeInfo = DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC' };
+                const route = DOC_TYPE_ROUTES[doc.report_type];
+                const title = doc.client_name || doc.installation_address || 'Untitled';
 
-                  return (
-                    <button
-                      key={doc.report_id}
-                      onClick={() =>
-                        route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)
-                      }
-                      className="group relative flex w-full flex-col text-left p-4 sm:p-5 bg-[hsl(0_0%_11%)] transition-colors touch-manipulation hover:bg-elec-yellow/[0.05] active:bg-white/[0.05] focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50"
+                return (
+                  <div
+                    key={doc.report_id}
+                    className={cn(
+                      'group relative flex flex-col overflow-hidden rounded-2xl p-4',
+                      'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
+                      'transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]'
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
+                        {typeInfo.label}
+                      </span>
+                      <span className="ml-auto text-[11px] text-white/50 tabular-nums">
+                        {formatTimeAgo(doc.updated_at)}
+                      </span>
+                    </div>
+
+                    <h3
+                      title={title}
+                      className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate"
                     >
-                      {/* status dot + mono type badge */}
-                      <div className="flex items-start justify-between gap-2">
-                        <span
-                          className="mt-1 w-2 h-2 rounded-full shrink-0 bg-emerald-400"
-                          aria-hidden
-                        />
-                        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
-                          {typeInfo.label}
-                        </span>
-                      </div>
+                      {title}
+                    </h3>
+                    <p
+                      title={doc.installation_address || undefined}
+                      className="text-[12px] text-white/60 truncate mt-0.5 min-h-[18px]"
+                    >
+                      {doc.installation_address || 'No address'}
+                    </p>
 
-                      <h3
-                        title={title}
-                        className="mt-3 text-[17px] sm:text-[18px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors truncate"
+                    <div className="mt-3 pt-3 flex items-center justify-between gap-2 border-t border-white/[0.07]">
+                      <span className="text-[11.5px] font-semibold text-emerald-300">Issued</span>
+                      <button
+                        onClick={() =>
+                          route &&
+                          navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)
+                        }
+                        className="h-11 px-5 rounded-xl text-[13px] font-bold bg-elec-yellow text-black touch-manipulation active:scale-[0.97] transition-transform"
                       >
-                        {title}
-                      </h3>
-                      <p
-                        className={cn(
-                          'mt-1.5 flex items-center gap-1.5 text-[12px] leading-relaxed min-w-0',
-                          doc.installation_address ? 'text-white/55' : 'text-white/35'
-                        )}
-                      >
-                        <MapPin className="h-3 w-3 shrink-0" aria-hidden />
-                        <span
-                          title={doc.installation_address || undefined}
-                          className={cn('truncate', !doc.installation_address && 'italic')}
-                        >
-                          {doc.installation_address || 'No address'}
-                        </span>
-                      </p>
-
-                      <div className="mt-3 flex items-center justify-between gap-3">
-                        <span className="min-w-0 truncate text-[11px] uppercase tracking-[0.1em] text-white/45">
-                          Issued
-                          <span className="mx-1.5 text-white/20">·</span>
-                          <span className="normal-case tracking-normal tabular-nums">
-                            {formatTimeAgo(doc.updated_at)}
-                          </span>
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-elec-yellow shrink-0">
-                          Open
-                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+                        Open
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </motion.section>
         )}

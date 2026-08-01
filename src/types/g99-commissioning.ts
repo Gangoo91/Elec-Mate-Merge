@@ -51,6 +51,11 @@ export interface G99FormData {
   mpan: string;
   supplyType: string;
   earthingArrangement: string;
+  // Client
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  clientAddress: string;
   // Equipment
   equipmentType: string;
   equipmentManufacturer: string;
@@ -112,6 +117,9 @@ export interface G99FormData {
   customerSignature: string;
   customerDate: string;
   notes: string;
+  /** Photo evidence URLs — injected at generate/email time from
+      inspection_photos (never persisted on the form itself). */
+  photos?: string[];
   // Form state
   completedSections: { [key: string]: boolean };
   status: 'draft' | 'in-progress' | 'completed';
@@ -128,6 +136,7 @@ export const getDefaultG99FormData = (): G99FormData => ({
   installerName: '', installerCompany: '', installerPhone: '', installerEmail: '',
   mcsNumber: '', registrationScheme: '', registrationNumber: '',
   installationAddress: '', mpan: '', supplyType: 'three-phase', earthingArrangement: '',
+  clientName: '', clientEmail: '', clientPhone: '', clientAddress: '',
   equipmentType: '', equipmentManufacturer: '', equipmentModel: '', equipmentSerial: '',
   ratedOutput: '', numberOfPhases: '3', numberOfGeneratingUnits: '1',
   typeTestCertRef: '', inverterManufacturer: '', inverterModel: '',

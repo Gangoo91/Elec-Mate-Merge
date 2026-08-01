@@ -16,6 +16,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { createInvitation } from '@/services/conversationService';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 import {
   Field,
   FormCard,
@@ -71,7 +72,7 @@ export function InviteToApplyDialog({
         const { data: vacanciesData, error: vacanciesError } = await supabase
           .from('employer_vacancies')
           .select('id, title, location, status, created_at')
-          .eq('employer_id', user.id)
+          .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
           .eq('status', 'Open')
           .order('created_at', { ascending: false });
 

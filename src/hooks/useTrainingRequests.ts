@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 export interface TrainingRequest {
   id: string;
@@ -51,7 +52,7 @@ export function useTrainingRequests() {
 
       if (isEmployer) {
         // Employer sees requests they've sent
-        query = query.eq('employer_id', user.id);
+        query = query.eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id);
       } else {
         // Worker sees requests they've received. Resolve their elec-id profile
         // via their employer_employees record — employee_id FKs to
@@ -111,7 +112,7 @@ export function useTrainingRequests() {
       try {
         const { error } = await supabase.from('elec_id_training_requests').insert({
           worker_profile_id: input.workerProfileId,
-          employer_id: user.id,
+          employer_id: (await getActingEmployerId(user.id)) ?? user.id,
           training_name: input.trainingName,
           provider: input.provider,
           completed_date: input.completedDate,

@@ -137,14 +137,12 @@ function SignatureRow({
       accent={accent}
       title={item.label}
       subtitle={
-        allSigned
-          ? `All ${item.total} signed`
-          : `${item.unsigned} of ${item.total} outstanding`
+        allSigned ? `All ${item.total} signed` : `${item.unsigned} of ${item.total} outstanding`
       }
       trailing={
         <div className="flex flex-col items-end gap-1">
           <StatusPill allSigned={allSigned} />
-          <span className="text-[11px] tabular-nums text-white/55">
+          <span className="text-[11px] tabular-nums text-white">
             <span className="text-green-400">{item.signed}</span>
             {' / '}
             {item.total}

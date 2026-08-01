@@ -177,8 +177,9 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     coverage_rationale: get('coverageRationale'),
     has_design_basis: !!(get('designBasis') || get('coverageRationale')),
 
-    // Panel
-    panel_make: get('systemMake'),
+    // Panel — fall back to the raw autocomplete value when the user typed a
+    // panel without selecting one and left Make blank.
+    panel_make: get('systemMake') || get('panelId'),
     panel_model: get('systemModel'),
     network_type: get('networkType'),
     network_type_display: networkTypes[get('networkType')] || get('networkType'),
@@ -253,7 +254,13 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     sound_target_general: get('soundTargetGeneral') || '65',
     sound_target_sleeping: get('soundTargetSleeping') || '75',
     sound_design_notes: get('soundDesignNotes'),
-    has_sound_targets: !!get('soundDesignNotes'),
+    // True when the user wrote notes OR edited either dB target (the form only
+    // writes the target keys on user edit — defaults stay unset).
+    has_sound_targets: !!(
+      get('soundDesignNotes') ||
+      get('soundTargetGeneral') ||
+      get('soundTargetSleeping')
+    ),
 
     // Drawing Schedule (G1 unique)
     drawings: (formData.drawings || []).map((d: any, i: number) => ({
@@ -263,7 +270,13 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
       date: formatDateUK(d.date || ''),
     })),
     has_drawings: (formData.drawings || []).length > 0,
-    drawing_numbers: get('drawingNumbers'),
+    // No form input writes drawingNumbers — derive from the drawings schedule.
+    drawing_numbers:
+      get('drawingNumbers') ||
+      (formData.drawings || [])
+        .map((d: any) => d.number)
+        .filter(Boolean)
+        .join(', '),
 
     // Cable Route
     cable_route_notes: get('cableRouteNotes'),
@@ -299,6 +312,11 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
     designer_qualifications: get('designerQualifications'),
     designer_signature: get('designerSignature'),
     designer_date: getDate('designerDate'),
+
+    // Survey photos (mirrors fireAlarmJsonFormatter photos mapping)
+    photos: formData.photos || [],
+    has_photos: (formData.photos || []).length > 0,
+    photo_count: (formData.photos || []).length,
 
     // Notes
     additional_notes: get('additionalNotes'),

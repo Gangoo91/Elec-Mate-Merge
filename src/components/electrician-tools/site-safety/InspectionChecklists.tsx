@@ -24,7 +24,6 @@ import {
   ListRow,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
   toneAccent,
   type Tone,
 } from '@/components/college/primitives';
@@ -32,6 +31,7 @@ import {
 import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { SignatureField } from './common/SignatureField';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
 import { SmartTextarea } from './common/SmartTextarea';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
@@ -780,10 +780,16 @@ const PILL_TONE: Record<'green' | 'amber' | 'red' | 'orange' | 'neutral', string
   amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
   orange: 'bg-orange-500/10 text-orange-400 border-orange-500/25',
   red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  neutral: 'bg-white/[0.05] text-white/55 border-white/10',
+  neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
-function StatusPill({ children, tone }: { children: React.ReactNode; tone: keyof typeof PILL_TONE }) {
+function StatusPill({
+  children,
+  tone,
+}: {
+  children: React.ReactNode;
+  tone: keyof typeof PILL_TONE;
+}) {
   return (
     <span
       className={cn(
@@ -881,7 +887,8 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
   const { data: jobs = [] } = useSparkProjects('active');
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
+  const jobTitleFor = (id: string | null) =>
+    id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
   // ─── Draft Auto-save ───
   const inspectionDraftData = useMemo(
@@ -1059,8 +1066,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
     });
   };
 
-  const toggleSection = (id: string) =>
-    setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleSection = (id: string) => setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const allItems = sections.flatMap((s) => s.items);
   const answeredCount = allItems.filter((i) => i.result !== null).length;
@@ -1136,7 +1142,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
         trailing={
           <div className="flex items-center gap-2">
             <DraftSaveIndicator status={draftStatus} />
-            <span className="text-[11px] tabular-nums text-white/60">
+            <span className="text-[11px] tabular-nums text-white">
               {answeredCount}/{totalItems}
             </span>
           </div>
@@ -1146,11 +1152,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             eyebrow="Inspection in progress"
             title={activeTemplate.title}
             description={activeTemplate.regulation}
-            tone={
-              answeredCount === 0
-                ? 'blue'
-                : resultTone(overallResultLive)
-            }
+            tone={answeredCount === 0 ? 'blue' : resultTone(overallResultLive)}
           />
         }
       >
@@ -1189,7 +1191,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             <input
               value={inspectorName}
               onChange={(e) => setInspectorName(e.target.value)}
-              className={inputClass}
+              className={safetyInputCn}
               placeholder="Your name"
               autoComplete="name"
             />
@@ -1198,7 +1200,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             <input
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className={inputClass}
+              className={safetyInputCn}
               placeholder="Site / area"
             />
           </Field>
@@ -1235,10 +1237,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                     {sectionFails > 0 && <StatusPill tone="red">{sectionFails} fail</StatusPill>}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[11px] tabular-nums text-white/55">
+                    <span className="text-[11px] tabular-nums text-white">
                       {sectionAnswered}/{section.items.length}
                     </span>
-                    <span aria-hidden className="text-white/40 text-sm">
+                    <span aria-hidden className="text-white text-sm">
                       {isOpen ? '▲' : '▼'}
                     </span>
                   </div>
@@ -1286,7 +1288,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                     'flex-1 flex items-center justify-center h-11 rounded-xl border text-[12.5px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
                                     isActive
                                       ? activeClass
-                                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white/70'
+                                      : 'border-white/[0.12] bg-white/[0.06] text-white'
                                   )}
                                 >
                                   {RESULT_LABEL[result]}
@@ -1324,10 +1326,12 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                           'flex-1 flex flex-col items-center justify-center py-2 rounded-xl border touch-manipulation active:scale-[0.97] transition-all',
                                           isActive
                                             ? activeClass
-                                            : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white/70'
+                                            : 'border-white/[0.12] bg-white/[0.06] text-white'
                                         )}
                                       >
-                                        <span className="text-[12px] font-semibold">{cfg.label}</span>
+                                        <span className="text-[12px] font-semibold">
+                                          {cfg.label}
+                                        </span>
                                         <span className="text-[10px] mt-0.5 opacity-75 text-center px-1">
                                           {cfg.description}
                                         </span>
@@ -1340,14 +1344,14 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                               <input
                                 value={item.notes}
                                 onChange={(e) => setItemNotes(sectionIdx, itemIdx, e.target.value)}
-                                className={inputClass}
+                                className={safetyInputCn}
                                 placeholder="Describe the defect or issue…"
                               />
                               {/* Remedial action */}
                               <SmartTextarea
                                 value={item.remedial_action}
                                 onChange={(val) => setItemRemedialAction(sectionIdx, itemIdx, val)}
-                                className="touch-manipulation text-[13px] min-h-[60px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                                className={cn(safetyTextareaCn, 'min-h-[60px]')}
                                 placeholder="Remedial action required…"
                               />
                               {/* Assigned to & due date */}
@@ -1357,7 +1361,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                   onChange={(e) =>
                                     setItemAssignedTo(sectionIdx, itemIdx, e.target.value)
                                   }
-                                  className={cn(inputClass, 'flex-1')}
+                                  className={cn(safetyInputCn, 'flex-1')}
                                   placeholder="Assigned to…"
                                 />
                                 <input
@@ -1366,7 +1370,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                   onChange={(e) =>
                                     setItemDueDate(sectionIdx, itemIdx, e.target.value)
                                   }
-                                  className={cn(inputClass, 'w-[150px]')}
+                                  className={cn(safetyInputCn, 'w-[150px]')}
                                 />
                               </div>
                             </div>
@@ -1408,7 +1412,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             <SmartTextarea
               value={additionalNotes}
               onChange={setAdditionalNotes}
-              className="touch-manipulation text-[13px] min-h-[80px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+              className={cn(safetyTextareaCn, 'min-h-[80px]')}
               placeholder="Any additional observations…"
             />
           </Field>
@@ -1421,7 +1425,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
             <input
               value={inspectorSigName}
               onChange={(e) => setInspectorSigName(e.target.value)}
-              className={inputClass}
+              className={safetyInputCn}
               placeholder="Name on signature"
               autoComplete="name"
             />
@@ -1462,17 +1466,39 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
           title="Run standardised safety inspections"
           description="Workplace, scaffold, electrical, fire and BS 7671 check sheets — record pass / fail / N/A results, classify non-conformances and track them to close-out."
           tone="indigo"
-          actions={<PrimaryButton onClick={() => setShowTemplates(true)}>Start inspection</PrimaryButton>}
+          actions={
+            <PrimaryButton onClick={() => setShowTemplates(true)}>Start inspection</PrimaryButton>
+          }
         />
       }
       stats={
         completedInspections.length > 0 ? (
           <StatStrip
             stats={[
-              { value: completedInspections.length, label: 'Total', accent: true, onClick: () => setFilterResult('all') },
-              { value: resultCounts.pass, label: 'Pass', tone: 'green', onClick: () => setFilterResult('pass') },
-              { value: resultCounts.advisory, label: 'Advisory', tone: 'amber', onClick: () => setFilterResult('advisory') },
-              { value: resultCounts.fail, label: 'Fail', tone: resultCounts.fail > 0 ? 'red' : undefined, onClick: () => setFilterResult('fail') },
+              {
+                value: completedInspections.length,
+                label: 'Total',
+                accent: true,
+                onClick: () => setFilterResult('all'),
+              },
+              {
+                value: resultCounts.pass,
+                label: 'Pass',
+                tone: 'green',
+                onClick: () => setFilterResult('pass'),
+              },
+              {
+                value: resultCounts.advisory,
+                label: 'Advisory',
+                tone: 'amber',
+                onClick: () => setFilterResult('advisory'),
+              },
+              {
+                value: resultCounts.fail,
+                label: 'Fail',
+                tone: resultCounts.fail > 0 ? 'red' : undefined,
+                onClick: () => setFilterResult('fail'),
+              },
             ]}
           />
         ) : undefined
@@ -1505,7 +1531,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
           onAction={() => setShowTemplates(true)}
         />
       ) : filteredInspections.length === 0 ? (
-        <EmptyState title="No inspections match your filter" description="Try a different result tab or clear your search." />
+        <EmptyState
+          title="No inspections match your filter"
+          description="Try a different result tab or clear your search."
+        />
       ) : (
         <div className="space-y-3">
           <ListCard>
@@ -1533,7 +1562,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                       <StatusPill tone={pillTone}>
                         {inspection.overall_result.toUpperCase()}
                       </StatusPill>
-                      <span className="text-[11px] tabular-nums text-white/45">
+                      <span className="text-[11px] tabular-nums text-white">
                         {inspection.pass_count}P · {inspection.fail_count}F · {passRate}%
                       </span>
                     </div>
@@ -1550,7 +1579,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
 
       {/* ─── Template picker ─── */}
       <Sheet open={showTemplates} onOpenChange={setShowTemplates}>
-        <SheetContent side="bottom" className="h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <SheetShell
             eyebrow="New inspection"
             title="Choose a checklist template"
@@ -1570,7 +1602,11 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                     }
                     title={template.title}
                     subtitle={`${template.description} · ${itemCount} check items`}
-                    trailing={<span aria-hidden className="text-elec-yellow/80">→</span>}
+                    trailing={
+                      <span aria-hidden className="text-elec-yellow/80">
+                        →
+                      </span>
+                    }
                   />
                 );
               })}
@@ -1581,7 +1617,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
 
       {/* ─── Inspection detail ─── */}
       <Sheet open={!!viewingInspection} onOpenChange={() => setViewingInspection(null)}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           {viewingInspection &&
             (() => {
               const detailTone = resultTone(viewingInspection.overall_result);
@@ -1597,7 +1636,9 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
               const failedItems = viewingInspection.sections.flatMap((s) =>
                 s.items.filter((i) => i.result === 'fail')
               );
-              const viewCritical = failedItems.filter((i) => i.classification === 'critical').length;
+              const viewCritical = failedItems.filter(
+                (i) => i.classification === 'critical'
+              ).length;
               const viewMajor = failedItems.filter((i) => i.classification === 'major').length;
               const viewMinor = failedItems.filter((i) => i.classification === 'minor').length;
               return (
@@ -1609,7 +1650,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                       <StatusPill tone={pillTone}>
                         {viewingInspection.overall_result.toUpperCase()}
                       </StatusPill>
-                      <span className="text-[12px] text-white/65">
+                      <span className="text-[12px] text-white">
                         {viewingInspection.inspector_name || 'Unknown'}
                         {viewingInspection.location ? ` · ${viewingInspection.location}` : ''}
                       </span>
@@ -1631,19 +1672,28 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                   }
                 >
                   {/* Result accent line — bleeds to the sheet edges */}
-                  <div className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[detailTone])} />
+                  <div
+                    className={cn(
+                      '-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r',
+                      toneAccent[detailTone]
+                    )}
+                  />
 
                   {/* Result summary */}
                   <StatStrip
                     columns={3}
                     stats={[
                       { value: viewingInspection.pass_count, label: 'Pass', tone: 'green' },
-                      { value: viewingInspection.fail_count, label: 'Fail', tone: viewingInspection.fail_count > 0 ? 'red' : undefined },
+                      {
+                        value: viewingInspection.fail_count,
+                        label: 'Fail',
+                        tone: viewingInspection.fail_count > 0 ? 'red' : undefined,
+                      },
                       { value: viewingInspection.na_count, label: 'N/A' },
                     ]}
                   />
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-[12.5px] text-white/65">Overall pass rate</span>
+                    <span className="text-[12.5px] text-white">Overall pass rate</span>
                     <span
                       className={cn(
                         'text-lg font-semibold tabular-nums',
@@ -1663,7 +1713,9 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                     <div>
                       <Eyebrow className="mb-2">Non-conformances ({failedItems.length})</Eyebrow>
                       <div className="flex flex-wrap gap-1.5 mb-2">
-                        {viewCritical > 0 && <StatusPill tone="red">{viewCritical} Critical</StatusPill>}
+                        {viewCritical > 0 && (
+                          <StatusPill tone="red">{viewCritical} Critical</StatusPill>
+                        )}
                         {viewMajor > 0 && <StatusPill tone="orange">{viewMajor} Major</StatusPill>}
                         {viewMinor > 0 && <StatusPill tone="amber">{viewMinor} Minor</StatusPill>}
                       </div>
@@ -1678,7 +1730,13 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                 {clsCfg && (
                                   <span className="shrink-0">
                                     <StatusPill
-                                      tone={clsCfg.tone === 'amber' ? 'amber' : clsCfg.tone === 'orange' ? 'orange' : 'red'}
+                                      tone={
+                                        clsCfg.tone === 'amber'
+                                          ? 'amber'
+                                          : clsCfg.tone === 'orange'
+                                            ? 'orange'
+                                            : 'red'
+                                      }
                                     >
                                       {clsCfg.label}
                                     </StatusPill>
@@ -1696,12 +1754,12 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                               {(item.assigned_to || item.due_date || item.nc_status) && (
                                 <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                                   {item.assigned_to && (
-                                    <span className="text-[10px] text-white/70 bg-white/[0.05] px-2 py-0.5 rounded-full border border-white/10">
+                                    <span className="text-[10px] text-white bg-white/[0.05] px-2 py-0.5 rounded-full border border-white/10">
                                       Assigned: {item.assigned_to}
                                     </span>
                                   )}
                                   {item.due_date && (
-                                    <span className="text-[10px] text-white/70 bg-white/[0.05] px-2 py-0.5 rounded-full border border-white/10">
+                                    <span className="text-[10px] text-white bg-white/[0.05] px-2 py-0.5 rounded-full border border-white/10">
                                       Due: {new Date(item.due_date).toLocaleDateString('en-GB')}
                                     </span>
                                   )}
@@ -1717,7 +1775,8 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                     >
                                       {item.nc_status === 'in_progress'
                                         ? 'In Progress'
-                                        : item.nc_status.charAt(0).toUpperCase() + item.nc_status.slice(1)}
+                                        : item.nc_status.charAt(0).toUpperCase() +
+                                          item.nc_status.slice(1)}
                                     </StatusPill>
                                   )}
                                 </div>
@@ -1742,10 +1801,10 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                           <Eyebrow>{section.title}</Eyebrow>
                           <div className="flex items-center gap-1.5 text-[10px] tabular-nums shrink-0">
                             <span className="text-emerald-400">{sPass}P</span>
-                            <span className="text-white/40">/</span>
+                            <span className="text-white">/</span>
                             <span className="text-red-400">{sFail}F</span>
-                            <span className="text-white/40">/</span>
-                            <span className="text-white/55">{sNa}NA</span>
+                            <span className="text-white">/</span>
+                            <span className="text-white">{sNa}NA</span>
                             {sAnswered > 0 && (
                               <StatusPill
                                 tone={sRate >= 80 ? 'green' : sRate >= 50 ? 'amber' : 'red'}
@@ -1766,9 +1825,11 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                                 key={item.id}
                                 className="flex items-center justify-between gap-3 px-5 py-2.5"
                               >
-                                <span className="text-[12.5px] text-white/85">{item.text}</span>
+                                <span className="text-[12.5px] text-white">{item.text}</span>
                                 <span className="shrink-0">
-                                  <StatusPill tone={itemPillTone}>{RESULT_LABEL[result]}</StatusPill>
+                                  <StatusPill tone={itemPillTone}>
+                                    {RESULT_LABEL[result]}
+                                  </StatusPill>
                                 </span>
                               </div>
                             );
@@ -1781,7 +1842,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                   {viewingInspection.additional_notes && (
                     <div>
                       <Eyebrow className="mb-1.5">Additional notes</Eyebrow>
-                      <p className="text-[13px] text-white/85 leading-relaxed">
+                      <p className="text-[13px] text-white leading-relaxed">
                         {viewingInspection.additional_notes}
                       </p>
                     </div>
@@ -1790,7 +1851,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
                   {viewingInspection.job_id && (
                     <div>
                       <Eyebrow className="mb-1.5">Linked project</Eyebrow>
-                      <p className="text-[13px] text-white/85 leading-relaxed">
+                      <p className="text-[13px] text-white leading-relaxed">
                         {jobTitleFor(viewingInspection.job_id) ?? 'Linked project'}
                       </p>
                     </div>

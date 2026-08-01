@@ -68,7 +68,14 @@ Deno.serve(async (req) => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
-      targetEmployerId = user.id;
+      // A co-admin acts for someone else's company, so the caller's own uid is
+      // not necessarily the employer being billed. my_default_employer_id() is
+      // the same resolver the column defaults and RLS scope use; it returns
+      // auth.uid() for ordinary owners, so this is a no-op for them. Without
+      // it, a co-admin adding a worker would sync seat quantity against their
+      // OWN (empty) company and the real employer would be under-billed.
+      const { data: actingEmployerId } = await caller.rpc('my_default_employer_id');
+      targetEmployerId = (actingEmployerId as string | null) ?? user.id;
     }
 
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });

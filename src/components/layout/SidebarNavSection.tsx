@@ -8,6 +8,9 @@ interface SidebarNavSectionProps {
   userRole: string;
   userEmail?: string;
   hasCollegeLink?: boolean;
+  /** Result of isEmployerUser() — computed once by the parent so the nav and
+      EmployerGuard read the same predicate. */
+  hasEmployerAccess?: boolean;
   adminRole?: 'super_admin' | 'admin' | null;
   className?: string;
   onItemClick?: () => void;
@@ -19,6 +22,7 @@ const SidebarNavSection = ({
   userRole,
   userEmail,
   hasCollegeLink,
+  hasEmployerAccess,
   adminRole,
   className,
   onItemClick,
@@ -33,6 +37,9 @@ const SidebarNavSection = ({
       if (!userEmail || !item.allowedEmails.includes(userEmail.toLowerCase())) {
         return false;
       }
+    }
+    if (item.requireEmployerAccess && !hasEmployerAccess) {
+      return false;
     }
     if (item.requireCollegeLink && !hasCollegeLink) {
       return false;

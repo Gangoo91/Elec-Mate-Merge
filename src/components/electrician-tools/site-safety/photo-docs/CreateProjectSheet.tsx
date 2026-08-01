@@ -20,7 +20,8 @@ export default function CreateProjectSheet({
   onCreated,
   editProject,
 }: CreateProjectSheetProps) {
-  const { createProject, isCreating, updateProject, isUpdating, generateJobReference } = usePhotoProjects();
+  const { createProject, isCreating, updateProject, isUpdating, generateJobReference } =
+    usePhotoProjects();
   const isEditMode = Boolean(editProject);
 
   const [name, setName] = useState('');
@@ -37,7 +38,10 @@ export default function CreateProjectSheet({
       setJobReference(editProject.job_reference || '');
       setAddress(editProject.address || '');
       if (editProject.customer_id && editProject.customer_name) {
-        setSelectedCustomer({ id: editProject.customer_id, name: editProject.customer_name } as Customer);
+        setSelectedCustomer({
+          id: editProject.customer_id,
+          name: editProject.customer_name,
+        } as Customer);
       }
     }
   }, [editProject, open]);
@@ -133,7 +137,9 @@ export default function CreateProjectSheet({
 
           {/* Header */}
           <div className="flex-shrink-0 px-4 pt-3 pb-3">
-            <h2 className="text-lg font-semibold text-white">{isEditMode ? 'Edit Project' : 'New Project'}</h2>
+            <h2 className="text-lg font-semibold text-white">
+              {isEditMode ? 'Edit Project' : 'New Project'}
+            </h2>
           </div>
 
           {/* Form */}
@@ -212,7 +218,7 @@ export default function CreateProjectSheet({
               disabled={!name.trim() || isCreating || isUpdating}
               className="w-full h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:opacity-50 transition-all"
             >
-              {(isCreating || isUpdating) ? (
+              {isCreating || isUpdating ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
                   <span>{isEditMode ? 'Saving...' : 'Creating...'}</span>

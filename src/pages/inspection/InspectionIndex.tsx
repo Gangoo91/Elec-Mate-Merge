@@ -1,8 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/notifications/NotificationsManager';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
@@ -248,22 +246,22 @@ const InspectionIndex = () => {
       case 'notifications':
         return (
           <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-            {/* Sticky Header — matches Business Hub */}
-            <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-              <div className="px-4 py-2">
-                <div className="flex items-center gap-3 h-11">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleNavigate('dashboard')}
-                    className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]"
-                  >
-                    <ArrowLeft className="h-5 w-5" />
-                  </Button>
-                  <h1 className="text-sm font-bold text-white tracking-wide uppercase">Part P Notifications</h1>
-                </div>
+            {/* Page header */}
+            <div className="px-4 pt-3 pb-1 lg:px-8">
+              <div className="mx-auto lg:max-w-[1600px]">
+                <button
+                  onClick={() => handleNavigate('dashboard')}
+                  className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+                >
+                  Back
+                </button>
+                <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">
+                  Part P Notifications
+                </h1>
+                <p className="mt-1 text-[13px] text-white/50">
+                  Notifiable work and the 30-day Building Regs clock — submit, track, done.
+                </p>
               </div>
-              <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
             </div>
 
             {/* Main Content — motion stagger like Business Hub */}
@@ -271,7 +269,7 @@ const InspectionIndex = () => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="px-4 py-4 space-y-5"
+              className="mx-auto space-y-5 px-4 py-4 lg:max-w-[1600px] lg:px-8"
             >
               <NotificationsManager onNavigate={handleNavigate} partPOnly itemVariants={itemVariants} />
             </motion.main>

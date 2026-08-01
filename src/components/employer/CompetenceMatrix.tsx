@@ -67,6 +67,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 const fmtShort = (iso: string | null): string =>
   iso
@@ -210,7 +211,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         const { data, error } = await supabase
           .from('competence_requirement_sets' as never)
           .select('id, preset_id, credential_keys, horizon_days')
-          .eq('employer_id', user.id)
+          .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
           .eq('name', 'Default')
           .order('updated_at', { ascending: false })
           .limit(1);
@@ -240,7 +241,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
             const { data: inserted, error: insertError } = await supabase
               .from('competence_requirement_sets' as never)
               .insert({
-                employer_id: user.id,
+                employer_id: (await getActingEmployerId(user.id)) ?? user.id,
                 name: 'Default',
                 preset_id: localReq?.presetId ?? null,
                 credential_keys: localReq?.keys ?? [],
@@ -293,7 +294,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
           const { data: existing } = await supabase
             .from('competence_requirement_sets' as never)
             .select('id')
-            .eq('employer_id', user.id)
+            .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
             .eq('name', 'Default')
             .order('updated_at', { ascending: false })
             .limit(1);
@@ -309,7 +310,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
         } else {
           const { data: inserted, error } = await supabase
             .from('competence_requirement_sets' as never)
-            .insert({ employer_id: user.id, name: 'Default', ...payload } as never)
+            .insert({ employer_id: (await getActingEmployerId(user.id)) ?? user.id, name: 'Default', ...payload } as never)
             .select('id')
             .single();
           if (error) throw error;

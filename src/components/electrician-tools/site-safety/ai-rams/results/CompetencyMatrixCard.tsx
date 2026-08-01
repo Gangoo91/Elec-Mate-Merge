@@ -56,10 +56,7 @@ export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) 
         <CompetencyRow label="Competency required" value={competency.competencyRequirements} />
         <CompetencyRow label="Training required" value={competency.trainingRequired} />
         <CompetencyRow label="Supervision" value={competency.supervisionLevel} tone="warning" />
-        <CompetencyRow
-          label="Additional certs"
-          value={competency.additionalCertifications}
-        />
+        <CompetencyRow label="Additional certs" value={competency.additionalCertifications} />
       </div>
 
       <p className="text-[12px] text-white/55 leading-relaxed">

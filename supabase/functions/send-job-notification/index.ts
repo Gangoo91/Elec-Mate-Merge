@@ -145,7 +145,22 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('id', employee_id)
       .single();
 
-    if (!employeeError && employee && employee.employer_id !== user.id) {
+    // Companies the caller may act for: their own account plus any firm where
+    // they hold an active co-admin seat. Resolved explicitly (rather than via
+    // my_employer_scope) because this function holds a service-role client, not
+    // a caller-scoped one. An ordinary owner resolves to just [user.id], so
+    // behaviour is unchanged for them.
+    const { data: coAdminRows } = await supabase
+      .from('employer_admins')
+      .select('employer_id')
+      .eq('user_id', user.id)
+      .eq('status', 'active');
+    const allowedEmployerIds = [
+      user.id,
+      ...((coAdminRows ?? []) as Array<{ employer_id: string }>).map((r) => r.employer_id),
+    ];
+
+    if (!employeeError && employee && !allowedEmployerIds.includes(employee.employer_id)) {
       return new Response(JSON.stringify({ error: 'Not your team member' }), {
         status: 403,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -1,5 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 export type CommunicationType = 'announcement' | 'message' | 'alert';
 export type CommunicationPriority = 'low' | 'normal' | 'high' | 'urgent';
@@ -236,7 +237,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
     const { data: employees } = await supabase
       .from('employer_employees')
       .select('id')
-      .eq('employer_id', user.id)
+      .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
       .ilike('status', 'active');
 
     employeeIds = (employees || []).map((e) => e.id);
@@ -244,7 +245,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
     const { data: employees } = await supabase
       .from('employer_employees')
       .select('id')
-      .eq('employer_id', user.id)
+      .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
       .ilike('status', 'active')
       .in('team_role', ['Manager', 'Admin', 'Supervisor']);
 

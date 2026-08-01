@@ -57,6 +57,11 @@ export const formatEmergencyLightingJson = (
   // Format luminaires for table
   const formatLuminaires = () => {
     const luminaires: Luminaire[] = formData.luminaires || [];
+    const photos: CertificatePhoto[] = formData.photos || [];
+    // No UI writes luminaire.photoUrl directly — luminaire photos are stored
+    // in photos[] with a linkedItemId — so fall back to the linked photo.
+    const linkedPhotoUrl = (lum: Luminaire): string =>
+      photos.find((p) => p.category === 'luminaire' && p.linkedItemId === lum.id)?.url || '';
     return luminaires.map((lum: Luminaire, index: number) => ({
       number: index + 1,
       location: lum.location || '',
@@ -77,7 +82,7 @@ export const formatEmergencyLightingJson = (
       wattage: lum.wattage || 0,
       notes: lum.notes || '',
       install_date: lum.installDate || '',
-      photo_url: lum.photoUrl || '',
+      photo_url: lum.photoUrl || linkedPhotoUrl(lum),
     }));
   };
 
@@ -220,6 +225,25 @@ export const formatEmergencyLightingJson = (
   const monthlyTest = formData.monthlyFunctionalTest || {};
   const annualTest = formData.annualDurationTest || {};
 
+  // Only print PASS/FAIL when the section was actually filled in — an
+  // untouched section (e.g. on a commissioning-only certificate) must not
+  // render FAIL rows for tests that were never performed.
+  const hasMonthlyTest = !!(
+    monthlyTest.date ||
+    monthlyTest.allLuminairesOperational ||
+    monthlyTest.chargingIndicatorsNormal ||
+    (monthlyTest.faultsFound && monthlyTest.faultsFound.trim()) ||
+    (monthlyTest.actionTaken && monthlyTest.actionTaken.trim())
+  );
+  const hasAnnualTest = !!(
+    annualTest.date ||
+    annualTest.duration ||
+    annualTest.allLuminairesOperational ||
+    annualTest.batteryCondition ||
+    (annualTest.faultsFound && annualTest.faultsFound.trim()) ||
+    (annualTest.actionTaken && annualTest.actionTaken.trim())
+  );
+
   return {
     // ============================================
     // METADATA
@@ -320,11 +344,20 @@ export const formatEmergencyLightingJson = (
     // TEST RESULTS - MONTHLY FUNCTIONAL
     // ============================================
     monthly_test: {
+      has_monthly_test: hasMonthlyTest,
       date: formatDateUK(monthlyTest.date || ''),
       all_luminaires_operational: monthlyTest.allLuminairesOperational || false,
-      all_luminaires_operational_display: monthlyTest.allLuminairesOperational ? 'PASS' : 'FAIL',
+      all_luminaires_operational_display: monthlyTest.allLuminairesOperational
+        ? 'PASS'
+        : hasMonthlyTest
+          ? 'FAIL'
+          : '',
       charging_indicators_normal: monthlyTest.chargingIndicatorsNormal || false,
-      charging_indicators_normal_display: monthlyTest.chargingIndicatorsNormal ? 'PASS' : 'FAIL',
+      charging_indicators_normal_display: monthlyTest.chargingIndicatorsNormal
+        ? 'PASS'
+        : hasMonthlyTest
+          ? 'FAIL'
+          : '',
       faults_found: monthlyTest.faultsFound || '',
       action_taken: monthlyTest.actionTaken || '',
       has_faults: !!(monthlyTest.faultsFound && monthlyTest.faultsFound.trim()),
@@ -334,10 +367,15 @@ export const formatEmergencyLightingJson = (
     // TEST RESULTS - ANNUAL DURATION
     // ============================================
     annual_test: {
+      has_annual_test: hasAnnualTest,
       date: formatDateUK(annualTest.date || ''),
       duration_tested: annualTest.duration || 0,
       all_luminaires_operational: annualTest.allLuminairesOperational || false,
-      all_luminaires_operational_display: annualTest.allLuminairesOperational ? 'PASS' : 'FAIL',
+      all_luminaires_operational_display: annualTest.allLuminairesOperational
+        ? 'PASS'
+        : hasAnnualTest
+          ? 'FAIL'
+          : '',
       battery_condition: annualTest.batteryCondition || '',
       battery_condition_display: formatBatteryCondition(annualTest.batteryCondition || ''),
       faults_found: annualTest.faultsFound || '',
@@ -386,6 +424,7 @@ export const formatEmergencyLightingJson = (
     service_schedule: {
       next_monthly_test: getDate('nextMonthlyTestDue'),
       next_annual_test: getDate('nextAnnualTestDue'),
+      next_three_yearly_inspection: getDate('nextThreeYearlyInspectionDue'),
     },
 
     // ============================================
@@ -487,7 +526,7 @@ export const formatEmergencyLightingJson = (
     // Service schedule (flat)
     next_monthly_test_due: getDate('nextMonthlyTestDue'),
     next_annual_test_due: getDate('nextAnnualTestDue'),
-    next_three_yearly_inspection_due: get('nextThreeYearlyInspectionDue'),
+    next_three_yearly_inspection_due: getDate('nextThreeYearlyInspectionDue'),
     previous_certificate_number: get('previousCertificateNumber'),
     risk_assessment_reference: get('riskAssessmentReference'),
     drawing_reference: get('drawingReference'),

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
 import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
@@ -10,17 +11,22 @@ import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload
 import InspectionPhotoGallery from '@/components/inspection/InspectionPhotoGallery';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const textareaCn = 'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+const cardWideCn = cardCn + ' lg:col-span-2';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div><Label className="text-white text-xs mb-1.5 block">{label}</Label>{children}</div>
+  <div><Label className="text-[12px] font-medium text-white mb-1 block">{label}</Label>{children}</div>
 );
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -66,9 +72,9 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
   }, [pendingFile, reportId, uploadPhoto]);
 
   return (
-    <div className="space-y-6 sm:[&>div]:rounded-2xl sm:[&>div]:border sm:[&>div]:border-white/[0.07] sm:[&>div]:bg-white/[0.03] sm:[&>div]:p-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Customer Handover */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Customer Handover" />
         <Sub title="Documentation" />
         <div className="space-y-2">
@@ -79,12 +85,12 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
             { field: 'mcsCertificateProvided', label: 'MCS certificate' },
           ].map(({ field, label }) => (
             <div key={field} className="flex items-center justify-between">
-              <Label className="text-white text-xs font-medium">{label}</Label>
+              <Label className="text-[12px] font-medium text-white">{label}</Label>
               <div className="flex gap-1.5">
                 {[true, false].map((v) => (
                   <button key={String(v)} type="button" onClick={() => onUpdate(field, v)}
-                    className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                      formData[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                    className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                      formData[field] === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-white/20 border border-white/20 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                     {v ? 'Yes' : 'No'}
                   </button>
                 ))}
@@ -101,12 +107,12 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
             { field: 'buildingControlNotified', label: 'Building control notified' },
           ].map(({ field, label }) => (
             <div key={field} className="flex items-center justify-between">
-              <Label className="text-white text-xs font-medium">{label}</Label>
+              <Label className="text-[12px] font-medium text-white">{label}</Label>
               <div className="flex gap-1.5">
                 {[true, false].map((v) => (
                   <button key={String(v)} type="button" onClick={() => onUpdate(field, v)}
-                    className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                      formData[field] === v ? (v ? 'bg-green-500 text-white' : 'bg-white/20 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                    className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                      formData[field] === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-white/20 border border-white/20 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                     {v ? 'Yes' : 'No'}
                   </button>
                 ))}
@@ -118,10 +124,10 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
 
 
       {/* Declaration & Signatures */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Declaration & Signatures" />
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-          <p className="text-[11px] text-white leading-relaxed">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A4:2026, the IET Code of Practice for Electrical Energy Storage Systems (3rd Edition), MCS MIS 3012:2025, PAS 63100:2024 (where applicable), and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</p>
+        <div className="rounded-xl bg-white/[0.05] p-3.5">
+          <p className="text-[12px] text-white/90 leading-relaxed">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A4:2026, the IET Code of Practice for Electrical Energy Storage Systems (3rd Edition), MCS MIS 3012:2025, PAS 63100:2024 (where applicable), and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</p>
         </div>
 
         <Sub title="Installer" />
@@ -138,17 +144,17 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
       </div>
 
       {/* Compliance */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Compliance & Next Inspection" />
 
         {formData.installationType === 'domestic' && (
           <div className="flex items-center justify-between">
-            <Label className="text-white text-xs font-medium">PAS 63100:2024 compliant</Label>
+            <Label className="text-[12px] font-medium text-white">PAS 63100:2024 compliant</Label>
             <div className="flex gap-1.5">
               {[true, false].map((v) => (
                 <button key={String(v)} type="button" onClick={() => onUpdate('pas63100Compliant', v)}
-                  className={cn('w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                    formData.pas63100Compliant === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                  className={cn('h-11 w-16 rounded-xl text-[12px] font-semibold touch-manipulation transition-all',
+                    formData.pas63100Compliant === v ? (v ? 'bg-green-500 border border-green-500 text-black' : 'bg-red-500 border border-red-500 text-white') : 'bg-white/[0.06] border border-white/[0.12] text-white')}>
                   {v ? 'Yes' : 'No'}
                 </button>
               ))}
@@ -157,27 +163,27 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
         )}
 
         <Sub title="Next Inspection" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Next Inspection Date"><Input type="date" value={formData.nextInspectionDate} onChange={(e) => onUpdate('nextInspectionDate', e.target.value)} className={inputCn} /></Field>
           <Field label="Interval (months)"><Input type="number" value={formData.nextInspectionInterval} onChange={(e) => onUpdate('nextInspectionInterval', e.target.value)} className={inputCn} placeholder="12" /></Field>
         </div>
 
         <Sub title="References" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Building Control Ref"><Input value={formData.buildingControlRef} onChange={(e) => onUpdate('buildingControlRef', e.target.value)} className={inputCn} placeholder="If notified" /></Field>
           <Field label="Linked EIC / EICR Ref"><Input value={formData.eicReference} onChange={(e) => onUpdate('eicReference', e.target.value)} className={inputCn} placeholder="EIC-xxx" /></Field>
         </div>
       </div>
 
       {/* Photos — uses EICR shared components */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Photo Evidence" />
         <InspectionPhotoUpload
           onPhotoCapture={handlePhotoCapture}
           isUploading={isUploading}
         />
         {pendingFile && reportId && reportId !== 'new' && (
-          <button onClick={handleRetryPending} className="w-full h-11 rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.98]">
+          <button onClick={handleRetryPending} className="w-full h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]">
             Upload pending photo now
           </button>
         )}
@@ -195,11 +201,11 @@ export default function BESSDeclarations({ formData, onUpdate, reportId, onSaveF
             }}
           />
         )}
-        <p className="text-[10px] text-white/50">Recommended: battery, warning labels, AC + DC isolation, CU, meter, cable routing</p>
+        <p className="text-[11px] text-white/80">Recommended: battery, warning labels, AC + DC isolation, CU, meter, cable routing</p>
       </div>
 
       {/* Notes */}
-      <div className="space-y-4">
+      <div className={cardWideCn}>
         <SectionHeader title="Notes & Observations" />
         <Field label="Defects / Observations"><Textarea value={formData.defectsObservations} onChange={(e) => onUpdate('defectsObservations', e.target.value)} className={textareaCn} placeholder="Any defects found or observations..." /></Field>
         <Field label="Additional Notes"><Textarea value={formData.additionalNotes} onChange={(e) => onUpdate('additionalNotes', e.target.value)} className={textareaCn} placeholder="Additional notes, recommendations..." /></Field>

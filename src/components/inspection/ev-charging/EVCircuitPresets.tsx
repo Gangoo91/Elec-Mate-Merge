@@ -174,7 +174,7 @@ export const EVCircuitPresetsTrigger: React.FC<{ onClick: () => void; className?
     type="button"
     onClick={onClick}
     className={cn(
-      'w-full h-10 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98]',
+      'w-full h-11 rounded-xl font-semibold text-sm bg-elec-yellow border border-elec-yellow text-black touch-manipulation active:scale-[0.98] transition-all',
       className
     )}
   >
@@ -206,15 +206,15 @@ const EVCircuitPresets: React.FC<EVCircuitPresetsProps> = ({ onApplyPreset, clas
         contentClassName="pb-safe max-h-[85vh] overflow-y-auto"
       >
         {/* Phase toggle */}
-        <div className="flex gap-1 mb-3">
+        <div className="flex gap-2 mb-4">
           <button
             type="button"
             onClick={() => setPhase('single')}
             className={cn(
-              'flex-1 h-10 rounded-lg font-semibold text-xs touch-manipulation active:scale-[0.98]',
+              'flex-1 h-11 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
               phase === 'single'
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+                : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
             )}
           >
             Single Phase
@@ -223,10 +223,10 @@ const EVCircuitPresets: React.FC<EVCircuitPresetsProps> = ({ onApplyPreset, clas
             type="button"
             onClick={() => setPhase('three')}
             className={cn(
-              'flex-1 h-10 rounded-lg font-semibold text-xs touch-manipulation active:scale-[0.98]',
+              'flex-1 h-11 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
               phase === 'three'
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+                : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
             )}
           >
             Three Phase
@@ -234,17 +234,16 @@ const EVCircuitPresets: React.FC<EVCircuitPresetsProps> = ({ onApplyPreset, clas
         </div>
 
         {/* Presets grid */}
-        <div className="grid grid-cols-2 gap-1">
+        <div className="grid grid-cols-2 gap-2">
           {presets.map((preset) => (
             <button
               key={preset.id}
               type="button"
               onClick={() => handleSelect(preset.values)}
-              className="flex flex-col items-start p-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation text-left border border-white/[0.06]"
+              className="flex flex-col items-start min-h-[64px] p-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation text-left border border-white/[0.12]"
             >
-              <div className="w-full h-[2px] rounded-full bg-gradient-to-r from-elec-yellow/60 to-amber-500/40 mb-2" />
               <span className="text-[15px] font-semibold text-white">{preset.label}</span>
-              <span className="text-xs text-white mt-0.5">{preset.desc}</span>
+              <span className="text-xs text-white/85 mt-0.5">{preset.desc}</span>
             </button>
           ))}
         </div>

@@ -16,7 +16,13 @@ import {
 
 import { Switch } from '@/components/ui/switch';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import {
@@ -33,8 +39,6 @@ import {
   SheetShell,
   PrimaryButton,
   SecondaryButton,
-  inputClass,
-  selectTriggerClass,
   selectContentClass,
   type Tone,
 } from '@/components/college/primitives';
@@ -43,6 +47,7 @@ import { SignatureField } from './common/SignatureField';
 import { ReadinessGate } from './common/ReadinessGate';
 import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
 import { SmartTextarea } from './common/SmartTextarea';
 import { LocationAutoFill } from './common/LocationAutoFill';
 import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
@@ -50,7 +55,11 @@ import { LoadMoreButton } from './common/LoadMoreButton';
 import { fmtCardDate } from './common/SafetyRecordCard';
 import { SafetyDocumentShare } from './common/SafetyDocumentShare';
 import { RemoteSignShareSheet } from './common/RemoteSignShareSheet';
-import { createSafetySignToken, buildSignUrl, useRecordSignatures } from '@/hooks/useRemoteSignToken';
+import {
+  createSafetySignToken,
+  buildSignUrl,
+  useRecordSignatures,
+} from '@/hooks/useRemoteSignToken';
 import { CorrectiveActionsPanel } from './common/CorrectiveActionsPanel';
 import { FiveWhysAnalysis } from './common/FiveWhysAnalysis';
 import { RIDDORCountdown } from './common/RIDDORCountdown';
@@ -228,7 +237,11 @@ const SEVERITIES: { id: Severity; label: string; description: string }[] = [
 ];
 
 function sevTone(severity: Severity): Tone {
-  return severity === 'fatal' || severity === 'major' ? 'red' : severity === 'moderate' ? 'amber' : 'green';
+  return severity === 'fatal' || severity === 'major'
+    ? 'red'
+    : severity === 'moderate'
+      ? 'amber'
+      : 'green';
 }
 
 const SEV_CLASS: Record<Tone, string> = {
@@ -397,8 +410,7 @@ const emptyForm = (): Partial<AccidentRecord> => ({
   job_id: null,
 });
 
-const softTextareaClass =
-  'min-h-[100px] text-[13px] resize-none bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl';
+const softTextareaClass = cn(safetyTextareaCn, 'min-h-[100px]');
 
 function CollapsibleSection({
   title,
@@ -417,7 +429,10 @@ function CollapsibleSection({
         <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
           <Eyebrow>{title}</Eyebrow>
           <span
-            className={cn('text-white/40 text-[13px] transition-transform duration-200', open && 'rotate-180')}
+            className={cn(
+              'text-white text-[13px] transition-transform duration-200',
+              open && 'rotate-180'
+            )}
             aria-hidden
           >
             ⌄
@@ -433,7 +448,7 @@ function DetailField({ label, value }: { label: string; value?: React.ReactNode 
   if (value === undefined || value === null || value === '') return null;
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[11px] text-white/55">{label}</span>
+      <span className="text-[11px] text-white">{label}</span>
       <span className="text-[13px] text-white">{value}</span>
     </div>
   );
@@ -500,7 +515,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
   // Spark project link
   const { data: jobs = [] } = useSparkProjects('active');
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
+  const jobTitleFor = (id: string | null) =>
+    id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
   // ─── Draft persistence ───
   const {
@@ -525,8 +541,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const [showSignShare, setShowSignShare] = useState(false);
   const [signUrl, setSignUrl] = useState('');
   const [signLoading, setSignLoading] = useState(false);
-  const { data: accidentSignatures = [] } = useRecordSignatures('accident', viewingRecord?.id ?? null);
-  const remoteSupervisor = accidentSignatures.find((s) => s.role === 'supervisor' && s.signed_signature);
+  const { data: accidentSignatures = [] } = useRecordSignatures(
+    'accident',
+    viewingRecord?.id ?? null
+  );
+  const remoteSupervisor = accidentSignatures.find(
+    (s) => s.role === 'supervisor' && s.signed_signature
+  );
 
   const requestSupervisorSignOff = async (rec: AccidentRecord) => {
     setSignLoading(true);
@@ -568,7 +589,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   // RIDDOR reporting state
   const [showMarkReported, setShowMarkReported] = useState(false);
   const [riddorRef, setRiddorRef] = useState('');
-  const [riddorReportedDate, setRiddorReportedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [riddorReportedDate, setRiddorReportedDate] = useState(
+    new Date().toISOString().split('T')[0]
+  );
   const markReported = useMarkRIDDORReported();
 
   const handleMarkReported = async () => {
@@ -603,7 +626,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
     { ok: !!(form.incident_date || '').trim(), label: 'Incident date' },
     { ok: !!(form.location || '').trim(), label: 'Location' },
     { ok: (form.incident_description || '').trim().length > 0, label: 'How it happened' },
-    { ok: !!form.injury_type && !!form.body_part && !!form.severity, label: 'Injury, body part & severity' },
+    {
+      ok: !!form.injury_type && !!form.body_part && !!form.severity,
+      label: 'Injury, body part & severity',
+    },
     { ok: !!(form.recorded_by || '').trim(), label: 'Recorded by' },
   ];
   const formReady = readiness.every((r) => r.ok);
@@ -685,7 +711,8 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       const st = getRIDDORDeadlineStatus(r as never).status;
       if (st === 'reported') return false;
     }
-    if (statusFilter === 'fatal_major' && r.severity !== 'fatal' && r.severity !== 'major') return false;
+    if (statusFilter === 'fatal_major' && r.severity !== 'fatal' && r.severity !== 'major')
+      return false;
     // Search filter
     const q = searchQuery.toLowerCase();
     return (
@@ -746,7 +773,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
         />
         <div className="mx-auto max-w-3xl px-4 py-4 space-y-4">
           <AnimatePresence>
-            {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+            {recoveredDraft && (
+              <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+            )}
           </AnimatePresence>
 
           {/* Injured person */}
@@ -756,7 +785,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.injured_name}
                 onChange={(e) => updateForm({ injured_name: e.target.value })}
                 placeholder="Name of injured person"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <div className="grid grid-cols-2 gap-3">
@@ -765,7 +794,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   value={form.injured_role}
                   onChange={(e) => updateForm({ injured_role: e.target.value })}
                   placeholder="e.g. Electrician"
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
               <Field label="Employer">
@@ -773,7 +802,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   value={form.injured_employer}
                   onChange={(e) => updateForm({ injured_employer: e.target.value })}
                   placeholder="Company name"
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
             </div>
@@ -782,7 +811,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.injured_address}
                 onChange={(e) => updateForm({ injured_address: e.target.value })}
                 placeholder="Home address"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
           </FormCard>
@@ -794,11 +823,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <input
                   type="date"
                   value={form.incident_date}
-                  onChange={(e) =>
-                    updateForm({ incident_date: sanitiseDateToISO(e.target.value) })
-                  }
+                  onChange={(e) => updateForm({ incident_date: sanitiseDateToISO(e.target.value) })}
                   placeholder="DD/MM/YYYY"
-                  className={cn(inputClass, '[color-scheme:dark]')}
+                  className={cn(safetyInputCn, '[color-scheme:dark]')}
                 />
                 {form.incident_date && !isValidISODate(form.incident_date) && (
                   <p className="text-[11px] text-red-400 mt-1">
@@ -811,7 +838,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   type="time"
                   value={form.incident_time}
                   onChange={(e) => updateForm({ incident_time: e.target.value })}
-                  className={cn(inputClass, '[color-scheme:dark]')}
+                  className={cn(safetyInputCn, '[color-scheme:dark]')}
                 />
               </Field>
             </div>
@@ -826,7 +853,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.location_detail}
                 onChange={(e) => updateForm({ location_detail: e.target.value })}
                 placeholder="e.g. Plant room, Level 2, Riser 3"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <JobLinkField
@@ -843,7 +870,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.activity_at_time}
                 onChange={(e) => updateForm({ activity_at_time: e.target.value })}
                 placeholder="e.g. Installing containment at height"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <Field label="How did the incident happen?" required>
@@ -859,7 +886,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.cause}
                 onChange={(e) => updateForm({ cause: e.target.value })}
                 placeholder="e.g. Wet floor, faulty equipment, inadequate PPE"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <Field label="Witnesses">
@@ -867,7 +894,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.witnesses}
                 onChange={(e) => updateForm({ witnesses: e.target.value })}
                 placeholder="Names and contact details of witnesses"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
           </FormCard>
@@ -879,7 +906,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.injury_type}
                 onValueChange={(v) => updateForm({ injury_type: v as InjuryType })}
               >
-                <SelectTrigger className={selectTriggerClass}>
+                <SelectTrigger className={safetySelectTriggerCn}>
                   <SelectValue placeholder="Select injury type…" />
                 </SelectTrigger>
                 <SelectContent className={cn(selectContentClass, 'max-h-[300px]')}>
@@ -893,8 +920,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             </Field>
 
             <Field label="Body part injured" required>
-              <Select value={form.body_part} onValueChange={(v) => updateForm({ body_part: v as BodyPart })}>
-                <SelectTrigger className={selectTriggerClass}>
+              <Select
+                value={form.body_part}
+                onValueChange={(v) => updateForm({ body_part: v as BodyPart })}
+              >
+                <SelectTrigger className={safetySelectTriggerCn}>
                   <SelectValue placeholder="Select body part…" />
                 </SelectTrigger>
                 <SelectContent className={cn(selectContentClass, 'max-h-[300px]')}>
@@ -918,11 +948,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       onClick={() => updateForm({ severity: s.id })}
                       className={cn(
                         'p-3 rounded-xl border text-left transition-all active:scale-[0.98] touch-manipulation',
-                        selected ? SEV_CLASS[sevTone(s.id)] : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
+                        selected
+                          ? SEV_CLASS[sevTone(s.id)]
+                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white'
                       )}
                     >
                       <span className="text-[13px] font-medium block">{s.label}</span>
-                      <span className="text-[11px] text-white/55">{s.description}</span>
+                      <span className="text-[11px] text-white">{s.description}</span>
                     </button>
                   );
                 })}
@@ -946,9 +978,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           </FormCard>
 
           {/* Treatment & aftermath (optional) */}
-          <CollapsibleSection title="Treatment & aftermath (optional)" open={treatmentOpen} onOpenChange={setTreatmentOpen}>
+          <CollapsibleSection
+            title="Treatment & aftermath (optional)"
+            open={treatmentOpen}
+            onOpenChange={setTreatmentOpen}
+          >
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">First aid given?</span>
+              <span className="text-[12.5px] text-white">First aid given?</span>
               <Switch
                 checked={form.first_aid_given}
                 onCheckedChange={(c) => updateForm({ first_aid_given: c })}
@@ -968,14 +1004,14 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   <input
                     value={form.first_aider_name}
                     onChange={(e) => updateForm({ first_aider_name: e.target.value })}
-                    className={inputClass}
+                    className={safetyInputCn}
                   />
                 </Field>
               </>
             )}
 
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">Hospital visit required?</span>
+              <span className="text-[12.5px] text-white">Hospital visit required?</span>
               <Switch
                 checked={form.hospital_visit}
                 onCheckedChange={(c) => updateForm({ hospital_visit: c })}
@@ -986,13 +1022,13 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <input
                   value={form.hospital_name}
                   onChange={(e) => updateForm({ hospital_name: e.target.value })}
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
             )}
 
             <div className="flex items-center justify-between">
-              <span className="text-[12.5px] text-white/80">Time off work required?</span>
+              <span className="text-[12.5px] text-white">Time off work required?</span>
               <Switch
                 checked={form.time_off_work}
                 onCheckedChange={(c) => updateForm({ time_off_work: c })}
@@ -1006,7 +1042,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     inputMode="numeric"
                     value={form.days_off}
                     onChange={(e) => updateForm({ days_off: parseInt(e.target.value) || 0 })}
-                    className={inputClass}
+                    className={safetyInputCn}
                   />
                 </Field>
                 <Field label="Expected return">
@@ -1014,7 +1050,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                     type="date"
                     value={form.return_date}
                     onChange={(e) => updateForm({ return_date: e.target.value })}
-                    className={cn(inputClass, '[color-scheme:dark]')}
+                    className={cn(safetyInputCn, '[color-scheme:dark]')}
                   />
                 </Field>
               </div>
@@ -1048,13 +1084,17 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           )}
 
           {/* Reporting & sign-off (optional) */}
-          <CollapsibleSection title="Reporting & corrective actions (optional)" open={reportingOpen} onOpenChange={setReportingOpen}>
+          <CollapsibleSection
+            title="Reporting & corrective actions (optional)"
+            open={reportingOpen}
+            onOpenChange={setReportingOpen}
+          >
             <Field label="Reported to">
               <input
                 value={form.reported_to}
                 onChange={(e) => updateForm({ reported_to: e.target.value })}
                 placeholder="Supervisor / manager name"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <Field label="Corrective actions taken">
@@ -1082,10 +1122,14 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={form.recorded_by}
                 onChange={(e) => updateForm({ recorded_by: e.target.value })}
                 placeholder="Your full name"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
-            <SignatureField label="Reporter signature" value={reporterSigData} onChange={setReporterSigData} />
+            <SignatureField
+              label="Reporter signature"
+              value={reporterSigData}
+              onChange={setReporterSigData}
+            />
           </FormCard>
 
           <ReadinessGate items={readiness} title="Ready to save?" />
@@ -1131,7 +1175,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           tone="red"
           actions={
             <>
-              <SecondaryButton onClick={() => setShowRIDDORGuide(true)}>RIDDOR guide</SecondaryButton>
+              <SecondaryButton onClick={() => setShowRIDDORGuide(true)}>
+                RIDDOR guide
+              </SecondaryButton>
               <PrimaryButton
                 onClick={() => {
                   resetForm();
@@ -1149,7 +1195,12 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           <StatStrip
             stats={[
               { value: total, label: 'Total' },
-              { value: riddorPending, label: 'RIDDOR pending', sub: 'awaiting HSE report', tone: riddorPending > 0 ? 'red' : undefined },
+              {
+                value: riddorPending,
+                label: 'RIDDOR pending',
+                sub: 'awaiting HSE report',
+                tone: riddorPending > 0 ? 'red' : undefined,
+              },
               { value: fatalMajor, label: 'Fatal / major' },
               { value: archivedCount, label: 'Archived', sub: '3-year statutory' },
             ]}
@@ -1197,7 +1248,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
           }}
         />
       ) : sortedRecords.length === 0 ? (
-        <EmptyState title="No matching records" description="Try a different tab or clear your search." />
+        <EmptyState
+          title="No matching records"
+          description="Try a different tab or clear your search."
+        />
       ) : (
         <div className="space-y-2.5">
           {visibleRecords.map((record) => {
@@ -1226,7 +1280,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                           {riddorStatus.label}
                         </span>
                       )}
-                      <span className="text-[11px] text-white/45 tabular-nums">
+                      <span className="text-[11px] text-white tabular-nums">
                         {fmtCardDate(record.incident_date)}
                       </span>
                     </div>
@@ -1235,13 +1289,18 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </ListCard>
             );
           })}
-          {hasMoreRecords && <LoadMoreButton onLoadMore={loadMoreRecords} remaining={remainingRecords} />}
+          {hasMoreRecords && (
+            <LoadMoreButton onLoadMore={loadMoreRecords} remaining={remainingRecords} />
+          )}
         </div>
       )}
 
       {/* Record detail sheet */}
       <Sheet open={!!viewingRecord} onOpenChange={() => setViewingRecord(null)}>
-        <SheetContent side="bottom" className="h-[88vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]">
+        <SheetContent
+          side="bottom"
+          className="h-[88vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]"
+        >
           {viewingRecord && (
             <SheetShell
               eyebrow={`Accident · ${SEV_LABEL[viewingRecord.severity]}${
@@ -1259,7 +1318,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       disabled={isExporting && exportingId === viewingRecord.id}
                       onClick={() => exportPDF('accident', viewingRecord.id)}
                     >
-                      {isExporting && exportingId === viewingRecord.id ? 'Exporting…' : 'Export PDF'}
+                      {isExporting && exportingId === viewingRecord.id
+                        ? 'Exporting…'
+                        : 'Export PDF'}
                     </PrimaryButton>
                     <SecondaryButton fullWidth onClick={() => setShowShare(true)}>
                       Share
@@ -1271,7 +1332,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                       disabled={isExporting && exportingId === viewingRecord.id}
                       className="w-full h-11 rounded-full border border-red-500/30 bg-red-500/10 text-red-300 text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-40"
                     >
-                      {isExporting && exportingId === viewingRecord.id ? 'Exporting…' : 'Export RIDDOR report'}
+                      {isExporting && exportingId === viewingRecord.id
+                        ? 'Exporting…'
+                        : 'Export RIDDOR report'}
                     </button>
                   )}
                 </div>
@@ -1307,18 +1370,21 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                           className={cn(
                             'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border',
                             SEV_CLASS[riddorTone(deadlineStatus.status)],
-                            (deadlineStatus.status === 'overdue' || deadlineStatus.status === 'immediate') &&
+                            (deadlineStatus.status === 'overdue' ||
+                              deadlineStatus.status === 'immediate') &&
                               'animate-pulse'
                           )}
                         >
                           {deadlineStatus.label}
                         </span>
                       </div>
-                      <p className="text-[12px] text-white/70">{viewingRecord.riddor_category}</p>
+                      <p className="text-[12px] text-white">{viewingRecord.riddor_category}</p>
                       {viewingRecord.riddor_deadline && (
                         <DetailField
                           label="Deadline"
-                          value={new Date(viewingRecord.riddor_deadline).toLocaleDateString('en-GB')}
+                          value={new Date(viewingRecord.riddor_deadline).toLocaleDateString(
+                            'en-GB'
+                          )}
                         />
                       )}
                       {viewingRecord.riddor_reference && (
@@ -1329,7 +1395,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                           label="Reported"
                           value={
                             <span className="text-green-400">
-                              {new Date(viewingRecord.riddor_reported_date).toLocaleDateString('en-GB')}
+                              {new Date(viewingRecord.riddor_reported_date).toLocaleDateString(
+                                'en-GB'
+                              )}
                             </span>
                           }
                         />
@@ -1344,7 +1412,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                                 <span className="text-green-400 mt-0.5 text-[11px]" aria-hidden>
                                   ✓
                                 </span>
-                                <span className="text-[11px] text-white/80">{item}</span>
+                                <span className="text-[11px] text-white">{item}</span>
                               </div>
                             ))}
                           </div>
@@ -1403,7 +1471,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <DetailField label="Cause" value={viewingRecord.cause} />
                 <DetailField label="Witnesses" value={viewingRecord.witnesses} />
                 {viewingRecord.job_id && (
-                  <DetailField label="Linked project" value={jobTitleFor(viewingRecord.job_id) || 'Linked project'} />
+                  <DetailField
+                    label="Linked project"
+                    value={jobTitleFor(viewingRecord.job_id) || 'Linked project'}
+                  />
                 )}
               </FormCard>
 
@@ -1455,7 +1526,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 existingCategory={
                   ((viewingRecord as Record<string, unknown>).root_cause_category as string) || ''
                 }
-                existingSummary={((viewingRecord as Record<string, unknown>).root_cause as string) || ''}
+                existingSummary={
+                  ((viewingRecord as Record<string, unknown>).root_cause as string) || ''
+                }
               />
 
               {/* Corrective actions tracker */}
@@ -1468,12 +1541,22 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   <div className="p-3 rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06]">
                     <p className="text-[11.5px] text-emerald-400 mb-2">
                       Signed by {remoteSupervisor.signed_name || 'supervisor'}
-                      {remoteSupervisor.signed_at ? ` · ${new Date(remoteSupervisor.signed_at).toLocaleDateString('en-GB')}` : ''}
+                      {remoteSupervisor.signed_at
+                        ? ` · ${new Date(remoteSupervisor.signed_at).toLocaleDateString('en-GB')}`
+                        : ''}
                     </p>
-                    <img src={remoteSupervisor.signed_signature} alt="Supervisor signature" className="h-12 opacity-80" />
+                    <img
+                      src={remoteSupervisor.signed_signature}
+                      alt="Supervisor signature"
+                      className="h-12 opacity-80"
+                    />
                   </div>
                 ) : (
-                  <SecondaryButton fullWidth disabled={signLoading} onClick={() => requestSupervisorSignOff(viewingRecord)}>
+                  <SecondaryButton
+                    fullWidth
+                    disabled={signLoading}
+                    onClick={() => requestSupervisorSignOff(viewingRecord)}
+                  >
                     {signLoading ? 'Preparing link…' : 'Request supervisor sign-off'}
                   </SecondaryButton>
                 )}
@@ -1481,9 +1564,11 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
               {/* Meta */}
               <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                <div className="flex justify-between text-[11px] text-white/55">
+                <div className="flex justify-between text-[11px] text-white">
                   <span>Recorded by: {viewingRecord.recorded_by}</span>
-                  {viewingRecord.reported_to && <span>Reported to: {viewingRecord.reported_to}</span>}
+                  {viewingRecord.reported_to && (
+                    <span>Reported to: {viewingRecord.reported_to}</span>
+                  )}
                 </div>
                 {isArchived(viewingRecord) && (
                   <p className="text-[10px] text-amber-400 mt-2 text-center">
@@ -1518,7 +1603,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 value={riddorRef}
                 onChange={(e) => setRiddorRef(e.target.value)}
                 placeholder="e.g. 2024/12345"
-                className={inputClass}
+                className={safetyInputCn}
               />
             </Field>
             <Field label="Date reported">
@@ -1526,7 +1611,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 type="date"
                 value={riddorReportedDate}
                 onChange={(e) => setRiddorReportedDate(e.target.value)}
-                className={cn(inputClass, '[color-scheme:dark]')}
+                className={cn(safetyInputCn, '[color-scheme:dark]')}
               />
             </Field>
           </SheetShell>
@@ -1535,7 +1620,10 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
       {/* RIDDOR guide sheet */}
       <Sheet open={showRIDDORGuide} onOpenChange={setShowRIDDORGuide}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]"
+        >
           <SheetShell
             eyebrow="RIDDOR 2013"
             title="RIDDOR reporting guide"
@@ -1544,15 +1632,19 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
             <FormCard eyebrow="When must you report?">
               <div className="p-3 rounded-xl border border-red-500/20 bg-red-500/5">
                 <Eyebrow className="text-red-400">Immediately (by phone)</Eyebrow>
-                <p className="text-[12px] text-white/80 mt-1">Deaths and specified injuries — call 0345 300 9923</p>
+                <p className="text-[12px] text-white mt-1">
+                  Deaths and specified injuries — call 0345 300 9923
+                </p>
               </div>
               <div className="p-3 rounded-xl border border-orange-500/20 bg-orange-500/5">
                 <Eyebrow className="text-orange-400">Within 15 days</Eyebrow>
-                <p className="text-[12px] text-white/80 mt-1">Over-7-day incapacitation injuries</p>
+                <p className="text-[12px] text-white mt-1">Over-7-day incapacitation injuries</p>
               </div>
               <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-500/5">
                 <Eyebrow className="text-amber-400">Within 10 days</Eyebrow>
-                <p className="text-[12px] text-white/80 mt-1">Dangerous occurrences and occupational diseases</p>
+                <p className="text-[12px] text-white mt-1">
+                  Dangerous occurrences and occupational diseases
+                </p>
               </div>
             </FormCard>
 
@@ -1562,7 +1654,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   <span className="text-red-400 mt-0.5 text-[11px]" aria-hidden>
                     •
                   </span>
-                  <span className="text-[12px] text-white/80">{injury}</span>
+                  <span className="text-[12px] text-white">{injury}</span>
                 </div>
               ))}
             </FormCard>
@@ -1573,25 +1665,25 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   <span className="text-amber-400 mt-0.5 text-[11px]" aria-hidden>
                     •
                   </span>
-                  <span className="text-[12px] text-white/80">{occurrence}</span>
+                  <span className="text-[12px] text-white">{occurrence}</span>
                 </div>
               ))}
             </FormCard>
 
             <div className="p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 space-y-1">
               <Eyebrow className="text-blue-400">How to report</Eyebrow>
-              <p className="text-[12px] text-white/80">
+              <p className="text-[12px] text-white">
                 <strong>Online:</strong> www.hse.gov.uk/riddor
               </p>
-              <p className="text-[12px] text-white/80">
+              <p className="text-[12px] text-white">
                 <strong>Phone (fatal/specified):</strong> 0345 300 9923
               </p>
-              <p className="text-[12px] text-white/80">
+              <p className="text-[12px] text-white">
                 <strong>Record keeping:</strong> Keep records for minimum 3 years
               </p>
-              <p className="text-[12px] text-white/80">
-                <strong>Who reports:</strong> The responsible person (employer, self-employed person, or person
-                in control of premises)
+              <p className="text-[12px] text-white">
+                <strong>Who reports:</strong> The responsible person (employer, self-employed
+                person, or person in control of premises)
               </p>
             </div>
           </SheetShell>

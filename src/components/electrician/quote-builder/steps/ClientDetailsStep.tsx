@@ -11,6 +11,8 @@ import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import { supabase } from '@/integrations/supabase/client';
+import { TrendingUp } from 'lucide-react';
+import { regionFromPostcode } from '@/components/live-pricing/lib/postcodeRegion';
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
@@ -254,6 +256,25 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                 : ''
             }
           />
+          {(() => {
+            const region = regionFromPostcode(form.watch('postcode') || '');
+            return (
+              <p className="flex items-start gap-1.5 text-[11px] text-white/65 mt-2">
+                <TrendingUp className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-px" />
+                {region ? (
+                  <span>
+                    Counts towards <span className="text-elec-yellow font-medium">{region}</span>{' '}
+                    live pricing benchmarks — always anonymised
+                  </span>
+                ) : (
+                  <span>
+                    Adding the job address puts this quote in your region's live pricing
+                    benchmarks — always anonymised
+                  </span>
+                )}
+              </p>
+            );
+          })()}
           </div>
         </div>
 

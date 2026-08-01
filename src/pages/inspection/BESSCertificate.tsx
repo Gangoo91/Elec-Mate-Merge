@@ -21,7 +21,6 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -29,19 +28,27 @@ import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 
 import BESSFormTabs from '@/components/inspection/bess/BESSFormTabs';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
 import { useBESSTabs } from '@/hooks/useBESSTabs';
 import { getDefaultBESSFormData } from '@/types/bess';
 import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
-import { formatBESSJson } from '@/utils/bessJsonFormatter';
+import { formatBESSJson, fetchBESSReportPhotos } from '@/utils/bessJsonFormatter';
 import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
 const REPORT_TYPE = 'bess' as const;
+
+const BESS_STEPS = [
+  { id: 'installation', label: 'Install' },
+  { id: 'system-design', label: 'Design' },
+  { id: 'electrical', label: 'Electrical' },
+  { id: 'testing', label: 'Testing' },
+  { id: 'declarations', label: 'Sign off' },
+];
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -153,7 +160,7 @@ const {
   const {
     currentTab, setCurrentTab, currentTabIndex, totalTabs,
     canNavigateNext, canNavigatePrevious, navigateNext, navigatePrevious,
-    isCurrentTabComplete, getProgressPercentage,
+    isCurrentTabComplete, isTabComplete, getProgressPercentage,
   } = useBESSTabs(formData);
 
   const { hasSavedCompanyBranding, loadCompanyBranding, getMCSMissingFields } = useBESSSmartForm();
@@ -184,13 +191,27 @@ const {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not signed in');
 
-      let dataWithCertNumber = {
+      // Photo evidence lives in the inspection_photos table (nothing writes
+      // formData.photos) — fetch and inject it so it reaches the PDF payload.
+      const photos = savedReportId ? await fetchBESSReportPhotos(savedReportId) : [];
+
+      const dataWithCertNumber = {
         ...formData,
+        photos,
         certificateNumber: formData.certificateNumber || `BESS-${Date.now().toString(36).toUpperCase()}`,
       };
 
       const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
       const pdfData = formatBESSJson(dataWithCertNumber, branding || undefined);
+
+      // Persist the payload so server-side email regeneration has a source —
+      // every autosave NULLs pdf_payload, so repopulate it at generate (EV pattern).
+      if (savedReportId) {
+        await supabase
+          .from('reports')
+          .update({ pdf_payload: pdfData })
+          .eq('report_id', savedReportId);
+      }
 
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
         'generate-bess-pdf',
@@ -242,38 +263,29 @@ const {
 
   return (
     <div className="bg-background min-h-screen">
-      {/* Header — EIC pattern */}
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">BESS Certificate</h1>
-                {formData.certificateNumber && (
-                  <p className="text-[10px] text-white font-mono mt-0.5">{formData.certificateNumber}</p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
-              >
-                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="BESS"
+        subtitle={formData.certificateNumber ? `${formData.certificateNumber} · IET CoP` : null}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={getProgressPercentage()}
+        steps={BESS_STEPS}
+        currentTab={currentTab}
+        onTabChange={(tab) => {
+          handleTabChange(tab);
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          installation: !!isTabComplete('installation'),
+          'system-design': !!isTabComplete('system-design'),
+          electrical: !!isTabComplete('electrical'),
+          testing: !!isTabComplete('testing'),
+          declarations: !!isTabComplete('declarations'),
+        }}
+      />
 
       {/* Form — full-width mobile */}
       {/* ELE-1037 — lock / version bar */}
@@ -289,7 +301,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <BESSFormTabs
           formData={formData}
@@ -316,16 +328,16 @@ const {
 
       {/* Draft recovery dialog */}
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent className="bg-[#1a1a1e] border-white/[0.08] text-white">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Recover Draft?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
               A previous unsaved BESS certificate was found{recoveryDraft?.lastModified ? ` from ${recoveryDraft.lastModified.toLocaleDateString('en-GB')}` : ''}. Would you like to recover it?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft} className="border-white/[0.12] text-white hover:bg-white/[0.06]">Discard</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft} className="bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30">Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Discard</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

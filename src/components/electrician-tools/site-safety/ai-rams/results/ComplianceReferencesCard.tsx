@@ -20,9 +20,7 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
   const ragCitations = methodData.ragCitations || [];
 
   const hasAny =
-    complianceRegulations.length > 0 ||
-    complianceWarnings.length > 0 ||
-    ragCitations.length > 0;
+    complianceRegulations.length > 0 || complianceWarnings.length > 0 || ragCitations.length > 0;
   if (!hasAny) return null;
 
   return (
@@ -120,8 +118,8 @@ export function ComplianceReferencesCard({ methodData }: ComplianceReferencesCar
       )}
 
       <p className="text-[12px] text-white/55 leading-relaxed">
-        All work must comply with current UK regulations and industry standards. Consult the
-        latest editions of referenced documents.
+        All work must comply with current UK regulations and industry standards. Consult the latest
+        editions of referenced documents.
       </p>
     </section>
   );

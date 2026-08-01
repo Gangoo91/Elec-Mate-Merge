@@ -298,6 +298,22 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     setIsSendingEmail(true);
 
     try {
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the user emails before ever tapping Generate.
+      let formattedData: Awaited<ReturnType<typeof formatEicJson>> | undefined;
+      try {
+        formattedData = await formatEicJson(
+          {
+            ...formData,
+            certificateNumber: formData.certificateNumber || `EIC-${Date.now()}`,
+          },
+          companyProfile,
+          reportId
+        );
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
+
       // Call the Resend-based edge function to generate PDF and send email
       const { data: result, error: fnError } = await supabase.functions.invoke(
         'send-certificate-resend',
@@ -305,6 +321,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           body: {
             reportId: reportId,
             recipientEmail: emailRecipient,
+            formattedData,
           },
         }
       );
@@ -327,7 +344,9 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       haptic.success();
       toast({
         title: 'Certificate Sent',
-        description: `EIC certificate sent successfully to ${emailRecipient}`,
+        description: result?.pdfAttached
+          ? `EIC certificate sent to ${emailRecipient} with the PDF attached`
+          : `EIC certificate sent successfully to ${emailRecipient}`,
       });
 
       setShowEmailDialog(false);

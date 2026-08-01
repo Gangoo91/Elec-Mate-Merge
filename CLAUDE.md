@@ -44,55 +44,76 @@ npx supabase functions deploy <function-name> --project-ref jtwygbeceundfgnkirof
 
 ## Design System
 
-### Form Sections (EICR Pattern)
+**Reference implementation: `src/components/inspection/ev-charging/`.**
+The specialist certificates (EV charging, emergency lighting, BESS, lightning
+protection, PAT, fire alarm, solar PV) carry the current form language. Copy
+from those, not from older screens.
+
+⚠️ **Two languages exist in the codebase.** `eic/`, `eicr/`, `minor-works/` and
+most of the Employer Hub are still on the superseded boxed style and are being
+migrated. Seeing the old pattern in those files is not licence to write more of
+it — new work uses the language below.
+
+### Form Controls — underline, not boxed
+
+Fields are underlines on a transparent background. No filled boxes, no focus
+rings; the caret and the bottom border carry focus.
 
 ```tsx
-<div className="eicr-section-card">
-  <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-    <SectionHeader title="..." icon={Icon} isOpen={isOpen} color="amber-500" />
-    <CollapsibleContent>
-      <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+// Input — h-11, bottom border only, yellow caret + focus border, NO ring
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] ' +
+  'bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 ' +
+  'caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow ' +
+  'focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation';
+
+// Label — sentence case, FULL white. Never white/60-70 (reads grey).
+<Label className="text-[12px] font-medium text-white mb-1 block">
+
+// Select — MobileSelectPicker, not a raw <Select>
+<MobileSelectPicker ... />
+
+// Single-choice — chips beat a select for 2-3 options
+const chipOn  = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
 ```
 
-### Section Headers
+### Cards — edge-to-edge on mobile
+
+Full-bleed on phones, inset and rounded from `sm:` up.
 
 ```tsx
-// Simple (with colored dot)
-<h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-  <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-  Title
-</h3>
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x ' +
+  'bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+```
 
-// Gradient (for important sections)
-<div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-lg px-4 py-3">
-  <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
-    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
-    Title
-  </h3>
+### Section Headings — typography only
+
+No icons, no coloured dots, no gradient bars. Hierarchy comes from type and
+spacing (see `EVSectionHeader.tsx`).
+
+```tsx
+<h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+
+// Sub-heading inside a card — separated by a rule, not decoration
+<div className="border-t border-white/[0.1] pt-4">
+  <h3 className="text-sm font-semibold text-white">{children}</h3>
 </div>
 ```
 
-### Form Controls
+### Multi-step forms
+
+Long forms are tabbed steps with per-tab completion and prev/next navigation,
+not one long scroll. Direction-aware slide: `animate-mw-step-in` forward,
+`animate-mw-step-back` on the way back.
+
+### Sheets (forms, tools, AI features, scanners)
+
+Bottom sheet, never a centred `Dialog` — a centred modal cannot be reached
+one-handed on a phone. **`h-[85vh]` is the standard**; don't invent 90/92/95.
 
 ```tsx
-// Input
-<Input className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500" />
-
-// Select
-<SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-<SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-
-// Checkbox
-<Checkbox className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black" />
-
-// Textarea
-<Textarea className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500" />
-```
-
-### Tool Sheets (AI Features, Scanners)
-
-```tsx
-// 85vh bottom sheet, not full page
 <Sheet open={true} onOpenChange={...}>
   <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
     <div className="flex flex-col h-full bg-background">
@@ -103,10 +124,13 @@ npx supabase functions deploy <function-name> --project-ref jtwygbeceundfgnkirof
 | Element         | Classes                                                         |
 | --------------- | --------------------------------------------------------------- |
 | Primary accent  | `elec-yellow`, `bg-elec-yellow`                                 |
-| Input focus     | `border-yellow-500 focus:ring-yellow-500`                       |
-| Card background | `bg-elec-gray`, `bg-card/50`                                    |
-| Dot indicators  | `bg-yellow-400`, `bg-blue-400`, `bg-green-400`, `bg-purple-400` |
+| Input focus     | `focus:border-elec-yellow` + `caret-elec-yellow`, **no ring**   |
+| Field underline | `border-b border-white/[0.15]`, hover `white/[0.3]`             |
+| Card background | `bg-gradient-to-b from-white/[0.08] to-white/[0.04]`            |
 | Alerts          | `border-orange-500/30 bg-orange-500/10 text-orange-300`         |
+
+⚠️ **All text is `text-white`.** Low-opacity white (`text-white/65`) renders as
+grey and is not allowed — including field labels and helper text.
 
 ## Study Centre Structure
 

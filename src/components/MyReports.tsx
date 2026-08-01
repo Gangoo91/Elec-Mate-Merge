@@ -4,18 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import {
-  Search,
   FileText,
-  Plus,
   X,
-  Upload,
-  CheckSquare,
   Loader2,
   Users,
-  Archive,
-  ArrowLeft,
-  MoreVertical,
-  ChevronRight,
+  Search,
 } from 'lucide-react';
 import { SortDropdown, SortOption } from './reports/SortDropdown';
 import { BulkActionsBar } from './reports/BulkActionsBar';
@@ -1094,14 +1087,13 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       <div className="min-h-screen bg-background text-foreground pb-8">
         <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
           <div className="flex items-center gap-3 h-11 px-4 py-2">
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
+              type="button"
               onClick={onBack}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation"
+              className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation"
             >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
+              Back
+            </button>
             <div>
               <h1 className="text-base font-semibold text-white">My Certificates</h1>
               <p className="text-[11px] text-white">Loading...</p>
@@ -1126,19 +1118,18 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
           <div className="flex items-center gap-2 px-3 py-2">
             {/* Back */}
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
+              type="button"
               onClick={onBack}
-              className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]"
+              className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 flex-shrink-0 touch-manipulation active:scale-[0.97]"
             >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
+              Back
+            </button>
 
             {/* Title — single line with count */}
-            <h1 className="text-sm font-bold text-white tracking-wide uppercase flex-1 min-w-0 truncate">
+            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex-1 min-w-0 truncate">
               My Certificates
-              <span className="text-white/30 font-normal tracking-normal normal-case text-xs ml-1.5">{totalCount}</span>
+              <span className="text-white/40 font-normal text-[13px] ml-2 tabular-nums">{totalCount}</span>
             </h1>
 
             {/* Search Toggle */}
@@ -1148,18 +1139,18 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 setShowSearch(!showSearch);
               }}
               className={cn(
-                'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 touch-manipulation active:scale-[0.98] transition-colors',
-                showSearch ? 'text-elec-yellow bg-elec-yellow/10' : 'text-white hover:text-white hover:bg-white/10'
+                'h-11 px-2 rounded-lg text-[13px] font-semibold flex-shrink-0 touch-manipulation active:scale-[0.97] transition-colors',
+                showSearch ? 'text-elec-yellow' : 'text-white/70 hover:text-white'
               )}
             >
-              <Search className="h-4 w-4" />
+              Search
             </button>
 
             {/* Overflow Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors">
-                  <MoreVertical className="h-4 w-4" />
+                <button className="h-11 px-2 rounded-lg flex-shrink-0 text-[13px] font-semibold text-white/70 hover:text-white touch-manipulation active:scale-[0.97] transition-colors">
+                  More
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-[hsl(240_5.9%_12%)] border-white/10">
@@ -1170,7 +1161,6 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   }}
                   className="text-white focus:text-white focus:bg-white/10"
                 >
-                  <CheckSquare className="h-4 w-4 mr-2" />
                   {isBulkMode ? 'Cancel Selection' : 'Select Multiple'}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-white/10" />
@@ -1181,7 +1171,6 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   }}
                   className="text-white focus:text-white focus:bg-white/10"
                 >
-                  <Upload className="h-4 w-4 mr-2" />
                   Import CSV
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -1191,7 +1180,6 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   }}
                   className="text-white focus:text-white focus:bg-white/10"
                 >
-                  <Archive className="h-4 w-4 mr-2" />
                   Legacy PDFs
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-white/10" />
@@ -1203,13 +1191,13 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
             {/* New Certificate */}
             <button
-              className="w-9 h-9 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black flex items-center justify-center flex-shrink-0 touch-manipulation active:scale-[0.98] transition-colors"
+              className="h-11 px-4 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-bold flex-shrink-0 touch-manipulation active:scale-[0.97] transition-colors"
               onClick={() => {
                 navigator.vibrate?.(10);
                 setShowNewCertSheet(true);
               }}
             >
-              <Plus className="h-4 w-4" />
+              New
             </button>
           </div>
 
@@ -1224,12 +1212,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 className="px-4 pb-3 overflow-hidden"
               >
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     placeholder="Search by name, address, or certificate..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 h-11 bg-white/[0.06] border-white/[0.08] text-base touch-manipulation text-white placeholder:text-white/30"
+                    className="h-11 bg-white/[0.08] border-white/[0.14] text-base touch-manipulation text-white placeholder:text-white/40"
                     autoFocus
                   />
                   {searchQuery && (
@@ -1321,7 +1308,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   className={cn(
                     'flex-1 min-w-0 h-9 rounded-lg text-[11px] sm:text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1',
                     statusFilter === value
-                      ? 'bg-elec-yellow/15 text-elec-yellow ring-1 ring-inset ring-elec-yellow/25'
+                      ? 'bg-elec-yellow text-black'
                       : 'text-white/60 hover:text-white'
                   )}
                 >
@@ -1331,7 +1318,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     <span
                       className={cn(
                         'hidden sm:inline text-[10px] tabular-nums leading-none',
-                        statusFilter === value ? 'text-elec-yellow/70' : 'text-white/35'
+                        statusFilter === value ? 'text-black/60' : 'text-white/35'
                       )}
                     >
                       {count}
@@ -1389,7 +1376,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     className={cn(
                       'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-1.5',
                       typeFilter === value
-                        ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                        ? 'bg-elec-yellow text-black border border-elec-yellow'
                         : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
                     )}
                   >
@@ -1399,7 +1386,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                         className={cn(
                           'text-[9px] px-1 py-0.5 rounded-sm tabular-nums leading-none',
                           typeFilter === value
-                            ? 'bg-elec-yellow/20 text-elec-yellow'
+                            ? 'bg-black/[0.15] text-black'
                             : 'bg-white/[0.06] text-white/60'
                         )}
                       >
@@ -1431,7 +1418,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 className={cn(
                   'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98]',
                   datePreset === value
-                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    ? 'bg-elec-yellow text-black border border-elec-yellow'
                     : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
                 )}
               >
@@ -1530,7 +1517,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               <div className="space-y-2.5">
                 {/* Editorial section label — mirrors HubSection on the I&T pages */}
                 <div className="flex items-end justify-between gap-3 px-0.5">
-                  <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+                  <h2 className="text-[14px] font-semibold tracking-tight text-white/80 capitalize">
                     {typeFilter === 'all' ? 'Certificates' : typeFilter.replace(/-/g, ' ')}
                     {/* ELE-1421 — name the active scope. Mixed lists are the
                         default, so the heading is what tells a QS at a glance
@@ -1637,7 +1624,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     </p>
                     <p className="text-[11.5px] text-white/50 mt-0.5 truncate">{desc}</p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0" />
+                  <span className="text-[12px] font-bold text-elec-yellow shrink-0">Open</span>
                 </div>
               </button>
             ))}
@@ -1874,7 +1861,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                               <p className="text-[11px] text-white truncate">{customer.address}</p>
                             )}
                           </div>
-                          <ChevronRight className="h-4 w-4 text-white/20 flex-shrink-0" />
+
                         </div>
                       </CommandItem>
                     ))}

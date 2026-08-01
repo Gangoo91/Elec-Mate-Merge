@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,8 @@ import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import { formatEVChargingJson } from '@/utils/evChargingJsonFormatter';
+import { cn } from '@/lib/utils';
 
 interface EVChargingTabNavigationProps {
   currentTab: string;
@@ -28,10 +30,36 @@ interface EVChargingTabNavigationProps {
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
   reportId?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData?: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   whatsApp?: any;
 }
+
+const NEXT_LABELS = ['Continue to Supply', 'Continue to Testing', 'Continue to Sign off'];
+
+/** Slide the footer away while the user is typing so it never covers a field. */
+const useTypingFocus = () => {
+  const [typing, setTyping] = useState(false);
+  useEffect(() => {
+    const isTextEntry = (el: EventTarget | null): boolean =>
+      el instanceof HTMLElement &&
+      (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+    const onFocusIn = (e: FocusEvent) => {
+      if (isTextEntry(e.target)) setTyping(true);
+    };
+    const onFocusOut = (e: FocusEvent) => {
+      if (!isTextEntry(e.relatedTarget)) setTyping(false);
+    };
+    document.addEventListener('focusin', onFocusIn);
+    document.addEventListener('focusout', onFocusOut);
+    return () => {
+      document.removeEventListener('focusin', onFocusIn);
+      document.removeEventListener('focusout', onFocusOut);
+    };
+  }, []);
+  return typing;
+};
 
 const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
   currentTabIndex,
@@ -40,14 +68,13 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
   canNavigatePrevious,
   navigateNext,
   navigatePrevious,
-  getProgressPercentage,
   onGenerateCertificate,
   canGenerateCertificate = true,
   reportId,
   formData,
 }) => {
   const navigate = useNavigate();
-  const progress = getProgressPercentage();
+  const typing = useTypingFocus();
   const isLastTab = currentTabIndex === totalTabs - 1;
 
   // Email dialog state
@@ -76,17 +103,40 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
     }
     setIsSendingEmail(true);
     try {
+      // Send the formatted payload so the function can generate + attach the
+      // PDF even when the user emails before ever tapping Generate.
+      let formattedData: Record<string, unknown> | undefined;
+      try {
+        formattedData = formData
+          ? formatEVChargingJson({
+              ...formData,
+              certificateNumber: formData.certificateNumber || `EVC-${Date.now()}`,
+            })
+          : undefined;
+      } catch {
+        formattedData = undefined; // fall back to server-side pdf_payload
+      }
       const { data: result, error: fnError } = await supabase.functions.invoke(
         'send-certificate-resend',
-        { body: { reportId, recipientEmail: emailRecipient } }
+        { body: { reportId, recipientEmail: emailRecipient, formattedData } }
       );
       if (fnError) {
         let errorMessage = fnError.message;
         try { const parsed = JSON.parse(fnError.message); errorMessage = parsed.error || parsed.message || fnError.message; } catch { /* keep */ }
+        if (fnError.context?.body) {
+          try {
+            const bodyError = typeof fnError.context.body === 'string' ? JSON.parse(fnError.context.body) : fnError.context.body;
+            if (bodyError.error) errorMessage = bodyError.error;
+          } catch { /* keep */ }
+        }
         throw new Error(errorMessage);
       }
       if (!result?.success) throw new Error(result?.error || 'Failed to send');
-      toast.success(`Certificate sent to ${emailRecipient}`);
+      toast.success(
+        result?.pdfAttached
+          ? `Certificate emailed to ${emailRecipient} with the PDF attached`
+          : `Certificate emailed to ${emailRecipient}`
+      );
       setShowEmailDialog(false);
       setEmailRecipient('');
     } catch (error) {
@@ -114,92 +164,85 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
 
   return (
     <>
-      <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
-        {/* Progress bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-[10px] text-white">
-              {currentTabIndex + 1}/{totalTabs}
-            </span>
-            <span className="text-[10px] font-medium text-white">{progress}%</span>
-          </div>
-          <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow transition-all duration-300 rounded-full"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-
-        {isLastTab ? (
-          <div className="space-y-2">
-            {/* Generate Certificate */}
-            <Button
-              onClick={onGenerateCertificate}
-              disabled={!canGenerateCertificate}
-              className="w-full h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
-            >
-              Generate Certificate
-            </Button>
-
-            {/* Action row: Email + Invoice + Previous */}
-            <div className="flex gap-2">
+      {/* Fixed footer — slides away while typing so it never covers a field. */}
+      <div
+        className={cn(
+          'fixed bottom-0 right-0 z-40 border-t border-white/[0.08] bg-background/95 backdrop-blur-md transition-transform duration-200',
+          typing && 'translate-y-full'
+        )}
+        style={{ left: 'var(--sidebar-width, 0px)' }}
+      >
+        <div className="mx-auto flex flex-col gap-2 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 lg:max-w-[1600px] lg:flex-row lg:items-center lg:px-8">
+          <span className="hidden text-[12px] tabular-nums text-white/80 lg:block">
+            Step {currentTabIndex + 1} of {totalTabs}
+          </span>
+          {isLastTab ? (
+            <>
+              <div className="flex gap-2 lg:ml-auto">
+                <button
+                  onClick={handleNavigatePrevious}
+                  disabled={!canNavigatePrevious}
+                  className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={handleEmailCertificate}
+                  className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"
+                >
+                  Email
+                </button>
+                <button
+                  onClick={handleCreateInvoice}
+                  className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"
+                >
+                  Invoice
+                </button>
+              </div>
               <Button
-                variant="outline"
+                onClick={onGenerateCertificate}
+                disabled={!canGenerateCertificate}
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10"
+              >
+                Generate certificate
+              </Button>
+            </>
+          ) : (
+            <div className="flex w-full gap-2 lg:ml-auto lg:w-auto">
+              <button
                 onClick={handleNavigatePrevious}
                 disabled={!canNavigatePrevious}
-                className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
+                className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"
               >
-                Previous
+                Back
+              </button>
+              <Button
+                onClick={handleNavigateNext}
+                disabled={!canNavigateNext}
+                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10"
+              >
+                {NEXT_LABELS[currentTabIndex] || 'Continue'}
               </Button>
-              <button
-                onClick={handleEmailCertificate}
-                className="h-11 px-4 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
-              >
-                Email
-              </button>
-              <button
-                onClick={handleCreateInvoice}
-                className="h-11 px-4 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
-              >
-                Invoice
-              </button>
             </div>
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={handleNavigatePrevious}
-              disabled={!canNavigatePrevious}
-              className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={handleNavigateNext}
-              disabled={!canNavigateNext}
-              className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
-            >
-              Next
-            </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+      {/* Spacer so the last fields clear the fixed footer */}
+      <div className="h-24" aria-hidden="true" />
 
       {/* Email Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl">
+        <DialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.1] rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-white text-base font-bold">Email Certificate</DialogTitle>
-            <DialogDescription className="text-white text-sm">
+            <DialogTitle className="text-white text-base font-bold">Email certificate</DialogTitle>
+            <DialogDescription className="text-white/85 text-sm">
               Enter the recipient's email address.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 py-3">
             <div>
-              <label htmlFor="ev-email" className="text-white text-xs mb-1.5 block">
-                Recipient Email
+              <label htmlFor="ev-email" className="mb-1 block text-[12px] font-medium text-white">
+                Recipient email
               </label>
               <Input
                 id="ev-email"
@@ -208,35 +251,44 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
                 value={emailRecipient}
                 onChange={(e) => setEmailRecipient(e.target.value)}
                 disabled={isSendingEmail}
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white"
+                className="input-underline h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
               />
             </div>
             {formData?.clientEmail && emailRecipient !== formData.clientEmail && (
               <button
                 onClick={() => setEmailRecipient(formData.clientEmail)}
-                className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-xs font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+                className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.1] text-white text-[13px] font-medium hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
               >
-                Use Client Email: {formData.clientEmail}
+                Use client email: {formData.clientEmail}
               </button>
             )}
           </div>
-          <DialogFooter className="flex-col gap-2 sm:flex-col">
+          {/* Plain column footer — DialogFooter's sm:space-x-2 skews stacked
+              buttons sideways, so the two never sat level. */}
+          <div className="flex flex-col gap-2">
             <Button
               onClick={handleSendEmail}
               disabled={isSendingEmail || !emailRecipient}
-              className="w-full h-11 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow font-medium hover:bg-elec-yellow/25 active:scale-[0.98] transition-all touch-manipulation"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation"
             >
-              {isSendingEmail ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Sending...</> : 'Send Certificate'}
+              {isSendingEmail ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                  Sending…
+                </>
+              ) : (
+                'Send certificate'
+              )}
             </Button>
             <Button
               variant="outline"
               onClick={() => setShowEmailDialog(false)}
               disabled={isSendingEmail}
-              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
+              className="h-12 w-full rounded-xl border border-white/[0.1] bg-white/[0.04] font-medium text-white transition-all hover:bg-white/[0.08] hover:text-white active:scale-[0.98] disabled:opacity-40 touch-manipulation"
             >
               Cancel
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </>

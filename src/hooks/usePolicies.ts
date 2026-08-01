@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 export type PolicyCategory = 'Safety' | 'HR' | 'Legal' | 'Operations';
 export type PolicyStatus = 'Draft' | 'Active' | 'Review Due' | 'Archived';
@@ -178,7 +179,7 @@ export function usePolicyStats() {
       const { data, error } = await supabase
         .from('employer_policies')
         .select('id, status, review_date')
-        .eq('user_id', user.id);
+        .eq('user_id', (await getActingEmployerId(user.id)) ?? user.id);
 
       if (error) throw error;
 
@@ -217,7 +218,7 @@ export function useAdoptedTemplateIds() {
       const { data, error } = await supabase
         .from('employer_policies')
         .select('template_id')
-        .eq('user_id', user.id)
+        .eq('user_id', (await getActingEmployerId(user.id)) ?? user.id)
         .not('template_id', 'is', null);
 
       if (error) throw error;
@@ -257,7 +258,7 @@ export function useAdoptPolicy() {
       const { data, error } = await supabase
         .from('employer_policies')
         .insert({
-          user_id: user.id,
+          user_id: (await getActingEmployerId(user.id)) ?? user.id,
           template_id: input.template_id,
           name: template.name,
           content: content,

@@ -5,18 +5,19 @@ interface PageTransitionProps {
   children: ReactNode;
 }
 
+// Opacity only — a transform here (the old x: 8 slide) makes this wrapper the
+// containing block for every position:fixed descendant while animating, which
+// mis-anchors fixed headers/footers on all routed pages. Fade carries the same
+// feel at 150ms without that hazard.
 const pageVariants = {
   initial: {
     opacity: 0,
-    x: 8,
   },
   animate: {
     opacity: 1,
-    x: 0,
   },
   exit: {
     opacity: 0,
-    x: -8,
   },
 };
 

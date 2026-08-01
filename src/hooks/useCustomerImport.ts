@@ -15,8 +15,30 @@ export interface ImportCustomer {
 export interface ImportResult {
   successCount: number;
   errorCount: number;
+  /** Rows skipped because the customer already exists (matched on email or phone) */
+  skippedCount: number;
   errors: Array<{ row: ImportCustomer; error: string }>;
 }
+
+// Excel mangles UK numbers (drops the leading 0, or leaves a 44 prefix).
+// Normalise to national format with a space so stored numbers are consistent.
+export const normaliseUkPhone = (phone?: string): string | undefined => {
+  if (!phone) return undefined;
+  const digits = phone.replace(/[^\d]/g, '');
+  if (!digits) return phone.trim() || undefined;
+  let national = digits;
+  if (digits.startsWith('44') && digits.length >= 11) national = '0' + digits.slice(2);
+  else if (!digits.startsWith('0') && digits.length === 10) national = '0' + digits;
+  if (national.length === 11) return `${national.slice(0, 5)} ${national.slice(5)}`;
+  return phone.trim();
+};
+
+// Comparable key for duplicate detection — last 10 digits, 44 folded to 0.
+const phoneKey = (phone?: string | null): string | null => {
+  if (!phone) return null;
+  const key = phone.replace(/[^\d]/g, '').replace(/^44/, '0').slice(-10);
+  return key.length >= 9 ? key : null;
+};
 
 // Column name mappings for common trade management apps
 // (Tradify, ServiceM8, Fergus, SimPRO, Jobber, Powered Now, Xero, generic)
@@ -204,18 +226,21 @@ export const useCustomerImport = () => {
         throw new Error('Unsupported file format. Please use CSV or Excel files.');
       }
 
-      const customers = mapColumns(rawRows);
+      const customers = mapColumns(rawRows).map((c) => ({
+        ...c,
+        phone: normaliseUkPhone(c.phone),
+      }));
 
-      setImportProgress(30);
+      setImportProgress(20);
 
       // Validate all customers
-      const validCustomers: ImportCustomer[] = [];
+      const candidates: ImportCustomer[] = [];
       const errors: Array<{ row: ImportCustomer; error: string }> = [];
 
       customers.forEach((customer) => {
         const validation = validateCustomer(customer);
         if (validation.valid) {
-          validCustomers.push(customer);
+          candidates.push(customer);
         } else {
           errors.push({
             row: customer,
@@ -223,6 +248,35 @@ export const useCustomerImport = () => {
           });
         }
       });
+
+      setImportProgress(35);
+
+      // Skip rows that already exist in the book (matched on email or phone) —
+      // re-importing an export or overlapping app data shouldn't create the
+      // duplicates the merge banner then has to clean up. Also dedupe within
+      // the file itself.
+      const { data: existingRows } = await supabase
+        .from('customers')
+        .select('email, phone')
+        .eq('user_id', user.id);
+      const seenEmails = new Set(
+        (existingRows || []).map((r) => r.email?.trim().toLowerCase()).filter(Boolean)
+      );
+      const seenPhones = new Set((existingRows || []).map((r) => phoneKey(r.phone)).filter(Boolean));
+
+      let skippedCount = 0;
+      const validCustomers: ImportCustomer[] = [];
+      for (const c of candidates) {
+        const email = c.email?.trim().toLowerCase();
+        const pKey = phoneKey(c.phone);
+        if ((email && seenEmails.has(email)) || (pKey && seenPhones.has(pKey))) {
+          skippedCount++;
+          continue;
+        }
+        if (email) seenEmails.add(email);
+        if (pKey) seenPhones.add(pKey);
+        validCustomers.push(c);
+      }
 
       setImportProgress(50);
 
@@ -278,12 +332,16 @@ export const useCustomerImport = () => {
       const result: ImportResult = {
         successCount: insertedCount,
         errorCount: dbErrors.length + errors.length,
+        skippedCount,
         errors: [...errors, ...dbErrors],
       };
 
+      const parts = [`Imported ${result.successCount}`];
+      if (result.skippedCount > 0) parts.push(`${result.skippedCount} already in your book`);
+      if (result.errorCount > 0) parts.push(`${result.errorCount} with errors`);
       toast({
         title: 'Import complete',
-        description: `Successfully imported ${result.successCount} customers${result.errorCount > 0 ? ` with ${result.errorCount} errors` : ''}.`,
+        description: `${parts.join(' · ')}.`,
       });
 
       return result;

@@ -55,12 +55,12 @@ function CollapsibleSection({
       >
         <span className="text-[14px] font-medium text-white flex-1">{title}</span>
         {typeof count === 'number' && (
-          <span className="text-[11px] text-white/45 tabular-nums">{count}</span>
+          <span className="text-[11px] text-white tabular-nums">{count}</span>
         )}
         <span
           aria-hidden
           className={cn(
-            'text-white/40 text-[13px] transition-transform duration-200',
+            'text-white text-[13px] transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         >
@@ -109,7 +109,10 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
     try {
       await copyText(text);
       setCopied(true);
-      toast({ title: 'Copied to clipboard', description: 'Hazard information copied successfully' });
+      toast({
+        title: 'Copied to clipboard',
+        description: 'Hazard information copied successfully',
+      });
       setTimeout(() => setCopied(false), 2000);
     } catch {
       toast({
@@ -132,7 +135,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
           description={
             <span className="inline-flex items-center gap-2">
               <RiskPill riskRating={hazard.riskRating} />
-              <span className="text-[12px] text-white/55 tabular-nums">
+              <span className="text-[12px] text-white tabular-nums">
                 Risk rating {hazard.riskRating}/25
               </span>
             </span>
@@ -161,7 +164,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
           <div className={cn('-mx-5 -mt-5 mb-1 h-0.5 bg-gradient-to-r', toneAccent[tone])} />
 
           {/* Consequence */}
-          <p className="text-[13px] text-white/85 leading-relaxed">{hazard.consequence}</p>
+          <p className="text-[13px] text-white leading-relaxed">{hazard.consequence}</p>
 
           {/* Control hierarchy */}
           <div>
@@ -184,9 +187,11 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                       <span className="w-5 text-[11px] font-medium tabular-nums text-elec-yellow/80 shrink-0">
                         {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="text-[13px] font-medium text-white flex-1">{step.label}</span>
+                      <span className="text-[13px] font-medium text-white flex-1">
+                        {step.label}
+                      </span>
                       {hasControls && (
-                        <span className="text-[11px] text-white/45 tabular-nums">
+                        <span className="text-[11px] text-white tabular-nums">
                           {measures.length}
                         </span>
                       )}
@@ -196,7 +201,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                         {measures.map((measure, i) => (
                           <li
                             key={i}
-                            className="text-[12.5px] text-white/75 leading-relaxed flex gap-2"
+                            className="text-[12.5px] text-white leading-relaxed flex gap-2"
                           >
                             <span aria-hidden className="text-elec-yellow/70 mt-0.5">
                               •
@@ -220,7 +225,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                 {hazard.bs7671References.map((ref, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center px-2.5 py-1 rounded-lg text-[11.5px] text-white/80 bg-white/[0.05] border border-white/10"
+                    className="inline-flex items-center px-2.5 py-1 rounded-lg text-[11.5px] text-white bg-white/[0.05] border border-white/10"
                   >
                     {ref}
                   </span>
@@ -240,7 +245,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                 {hazard.guidanceNotes.map((note, i) => (
                   <div
                     key={i}
-                    className="px-5 py-3 text-[12.5px] text-white/85 leading-relaxed flex gap-2.5"
+                    className="px-5 py-3 text-[12.5px] text-white leading-relaxed flex gap-2.5"
                   >
                     <span aria-hidden className="text-elec-yellow/70 mt-0.5">
                       •
@@ -264,7 +269,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                     <span className="w-5 text-[11px] font-medium tabular-nums text-red-400 shrink-0 mt-0.5">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-[12.5px] text-white/85 leading-relaxed">{proc}</span>
+                    <span className="text-[12.5px] text-white leading-relaxed">{proc}</span>
                   </div>
                 ))}
               </div>
@@ -278,7 +283,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
                 {hazard.trainingRequired.map((training, i) => (
                   <div
                     key={i}
-                    className="px-5 py-3 text-[12.5px] text-white/85 leading-relaxed flex gap-2.5"
+                    className="px-5 py-3 text-[12.5px] text-white leading-relaxed flex gap-2.5"
                   >
                     <span aria-hidden className="text-emerald-400 mt-0.5">
                       ✓

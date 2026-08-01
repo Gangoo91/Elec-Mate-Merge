@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface Tab {
@@ -21,44 +20,48 @@ export function BriefingFilterTabs({
   className,
 }: BriefingFilterTabsProps) {
   return (
-    <div className={cn('flex p-1 bg-white/5 rounded-xl border border-white/10', className)}>
+    /* Volt underline, not a filled box — the same step-tab language the
+       specialist certificates use. A filled pill on a dark card reads as a
+       second surface; an underline just marks position. */
+    <nav
+      className={cn('flex border-b border-white/[0.1]', className)}
+      aria-label="Briefings filter"
+    >
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab;
         return (
           <button
             key={tab.id}
             onClick={() => onChange(tab.id)}
+            aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'relative flex-1 flex items-center justify-center gap-1.5',
-              'px-3 py-2.5 rounded-lg text-sm font-medium',
-              'transition-colors duration-200',
-              'touch-manipulation min-h-[44px]',
-              isActive ? 'text-white' : 'text-white hover:text-white'
+              'relative flex-1 h-11 text-[13px] font-semibold touch-manipulation transition-colors',
+              'flex items-center justify-center gap-1.5',
+              isActive ? 'text-white' : 'text-white'
             )}
           >
-            {isActive && (
-              <motion.div
-                layoutId="activeTabBg"
-                className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-yellow-400/10 rounded-lg border border-yellow-400/30"
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              />
-            )}
-            <span className="relative z-10">{tab.label}</span>
+            {tab.label}
             {tab.count !== undefined && tab.count > 0 && (
               <span
                 className={cn(
-                  'relative z-10 min-w-[20px] h-5 flex items-center justify-center',
-                  'px-1.5 rounded-full text-xs font-bold',
+                  'min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-bold tabular-nums',
+                  'flex items-center justify-center',
                   isActive ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white'
                 )}
               >
                 {tab.count}
               </span>
             )}
+            <span
+              className={cn(
+                'absolute left-[14%] right-[14%] bottom-0 h-[2px] rounded-full transition-colors',
+                isActive ? 'bg-elec-yellow' : 'bg-transparent'
+              )}
+            />
           </button>
         );
       })}
-    </div>
+    </nav>
   );
 }
 

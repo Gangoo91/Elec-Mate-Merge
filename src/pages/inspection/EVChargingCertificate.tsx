@@ -23,7 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
@@ -33,6 +33,7 @@ import { trackFeatureUse } from '@/components/ActivityTracker';
 import { formatEVChargingJson } from '@/utils/evChargingJsonFormatter';
 
 import EVChargingFormTabs from '@/components/inspection/ev-charging/EVChargingFormTabs';
+import EVShellHeader from '@/components/inspection/ev-charging/EVShellHeader';
 import { useEVChargingTabs } from '@/hooks/useEVChargingTabs';
 import { getDefaultEVChargingFormData } from '@/types/ev-charging';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
@@ -41,7 +42,6 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 
 const REPORT_TYPE = 'ev-charging' as const;
@@ -160,14 +160,20 @@ const {
           }
 
           const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
-          const report = await reportCloud.getReportData(id, authUser.id);
+          // getReportDataWithId returns updated_at metadata — getReportData only returns
+          // the data JSON, which left updated_at undefined and made ANY local draft
+          // "newer" than cloud (stale drafts silently overwrote newer cloud copies).
+          const report = await reportCloud.getReportDataWithId(id, authUser.id);
 
           if (report) {
-            if (localDraft && draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at)) {
+            if (
+              localDraft &&
+              draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updatedAt ?? null)
+            ) {
               setFormData({ ...getDefaultEVChargingFormData(), ...localDraft.data });
               toast.info('Loaded local changes (newer than cloud)');
             } else {
-              setFormData({ ...getDefaultEVChargingFormData(), ...report });
+              setFormData({ ...getDefaultEVChargingFormData(), ...report.data });
             }
           } else if (localDraft) {
             setFormData({ ...getDefaultEVChargingFormData(), ...localDraft.data });
@@ -409,7 +415,7 @@ const {
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-base font-bold">Recover Unsaved Work?</AlertDialogTitle>
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
             <AlertDialogDescription className="text-white text-sm">
               We found an unsaved EV Charging certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
@@ -420,51 +426,34 @@ const {
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
-            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow font-medium hover:bg-elec-yellow/25 active:scale-[0.98] transition-all touch-manipulation">Recover Draft</AlertDialogAction>
-            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start Fresh</AlertDialogCancel>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Header — matches EICR/EIC/MW pattern */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
-        <div className="px-2 py-2.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-              <div>
-                <h1 className="text-sm font-bold text-white leading-tight">EV Charging</h1>
-                {formData.certificateNumber && (
-                  <p className="text-[10px] text-white font-mono mt-0.5">
-                    {formData.certificateNumber}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving || syncStatus.cloud === 'syncing'}
-                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <EVShellHeader
+        onBack={() => navigate(-1)}
+        formData={formData}
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          installation: !!tabProps.isTabComplete('installation'),
+          supply: !!tabProps.isTabComplete('supply'),
+          testing: !!tabProps.isTabComplete('testing'),
+          declarations: !!tabProps.isTabComplete('declarations'),
+        }}
+      />
 
       {/* Main Content */}
       {/* ELE-1037 — lock / version bar */}
@@ -480,7 +469,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-4 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <EVChargingFormTabs
           currentTab={tabProps.currentTab}

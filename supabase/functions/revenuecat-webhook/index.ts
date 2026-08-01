@@ -71,12 +71,23 @@ serve(async (req) => {
   }
 
   try {
-    // Verify webhook auth (set in RevenueCat dashboard)
+    // Verify webhook auth (set in RevenueCat dashboard). RC sends the
+    // dashboard-configured value VERBATIM, so accept the secret with or
+    // without a "Bearer " prefix on either side — an exact-match check here
+    // silently 401'd every delivery for months (2026-08-01 incident).
+    const stripBearer = (value: string | null | undefined) =>
+      (value ?? '').replace(/^Bearer\s+/i, '').trim();
     const authHeader = req.headers.get('authorization');
     const webhookSecret = Deno.env.get('REVENUECAT_WEBHOOK_SECRET');
 
-    if (webhookSecret && authHeader !== `Bearer ${webhookSecret}`) {
-      console.error('Webhook auth failed');
+    if (webhookSecret && stripBearer(authHeader) !== stripBearer(webhookSecret)) {
+      // Diagnostic only — never log header or secret values.
+      console.error('Webhook auth failed', {
+        headerPresent: !!authHeader,
+        headerHasBearerPrefix: /^Bearer\s/i.test(authHeader ?? ''),
+        headerLength: (authHeader ?? '').length,
+        secretLength: webhookSecret.length,
+      });
       return new Response(JSON.stringify({ error: 'Unauthorised' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -446,7 +457,10 @@ serve(async (req) => {
           fireCapiEvent({
             event_name: eventName,
             event_id: `rc_${type}_${transaction_id || product_id}_${app_user_id}`,
-            action_source: 'app',
+            // 'app' requires full device extinfo which a server webhook doesn't
+            // have — Meta 400s with subcode 2804043. Server events without
+            // device data must be 'system_generated'.
+            action_source: 'system_generated',
             email: email || undefined,
             external_id: app_user_id,
             first_name: firstName || undefined,

@@ -392,6 +392,11 @@ const handler = async (req: Request): Promise<Response> => {
     const recipientEmail = body.recipientEmail;
     const customMessage = body.customMessage;
     const formattedDataFromClient = body.formattedData;
+    // Custom PDF template (e.g. user's own PDFMonkey Minor Works template) —
+    // forwarded to the generate function so the email path renders with the
+    // same template as the in-app Generate button. Undefined is dropped by
+    // JSON.stringify, so types that never send it are unaffected.
+    const templateIdFromClient = body.templateId;
 
     if (!reportId || typeof reportId !== 'string') {
       throw new Error('Report ID is required.');
@@ -491,25 +496,35 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 7: Determine report type and generate PDF
     // ========================================================================
     const reportType = (report.report_type || '').toLowerCase().replace(/\s+/g, '-');
-    let edgeFunctionName = '';
 
-    if (reportType === 'eic') {
-      edgeFunctionName = 'generate-eic-pdf';
-    } else if (reportType === 'eicr') {
-      edgeFunctionName = 'generate-eicr-pdf';
-    } else if (reportType === 'minor-works' || reportType === 'minor works') {
-      edgeFunctionName = 'generate-minor-works-pdf';
-    } else if (reportType === 'ev-charging' || reportType === 'ev charging') {
-      edgeFunctionName = 'generate-ev-charging-pdf';
-    } else if (reportType === 'pat-testing' || reportType === 'pat testing') {
-      edgeFunctionName = 'generate-pat-testing-pdf';
-    } else if (reportType === 'fire-alarm' || reportType === 'fire alarm') {
-      edgeFunctionName = 'generate-fire-alarm-pdf';
-    } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
-      edgeFunctionName = 'generate-emergency-lighting-pdf';
-    } else if (reportType === 'solar-pv' || reportType === 'solar pv') {
-      edgeFunctionName = 'generate-solar-pv-pdf';
-    } else {
+    // Every certificate type must be emailable — one map, kept in step with
+    // the generate-*-pdf functions. The four fire-alarm variants share the
+    // grade-aware generate-fire-alarm-pdf (payload built client-side by the
+    // per-grade formatter and stored in pdf_payload / sent as formattedData).
+    const PDF_FUNCTION_BY_TYPE: Record<string, string> = {
+      eic: 'generate-eic-pdf',
+      eicr: 'generate-eicr-pdf',
+      'minor-works': 'generate-minor-works-pdf',
+      'ev-charging': 'generate-ev-charging-pdf',
+      'pat-testing': 'generate-pat-testing-pdf',
+      'fire-alarm': 'generate-fire-alarm-pdf',
+      'fire-alarm-design': 'generate-fire-alarm-pdf',
+      'fire-alarm-commissioning': 'generate-fire-alarm-pdf',
+      'fire-alarm-inspection': 'generate-fire-alarm-pdf',
+      'fire-alarm-modification': 'generate-fire-alarm-pdf',
+      'emergency-lighting': 'generate-emergency-lighting-pdf',
+      'solar-pv': 'generate-solar-pv-pdf',
+      bess: 'generate-bess-pdf',
+      'lightning-protection': 'generate-lightning-protection-pdf',
+      disconnection: 'generate-disconnection-certificate-pdf',
+      'g98-commissioning': 'generate-g98-commissioning-pdf',
+      'g99-commissioning': 'generate-g99-commissioning-pdf',
+      'smoke-co-alarm': 'generate-smoke-co-alarm-pdf',
+      'testing-only': 'generate-testing-only-pdf',
+    };
+
+    const edgeFunctionName = PDF_FUNCTION_BY_TYPE[reportType];
+    if (!edgeFunctionName) {
       console.error('Unsupported report type:', reportType);
       throw new Error(`Unsupported certificate type: "${report.report_type}"`);
     }
@@ -540,6 +555,7 @@ const handler = async (req: Request): Promise<Response> => {
           body: JSON.stringify({
             formData: availableFormData,
             reportId: report.report_id,
+            templateId: templateIdFromClient,
           }),
         });
 
@@ -627,22 +643,47 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // ========================================================================
+    // STEP 7.5: Hard attachment guarantee — a certificate email must carry the
+    // PDF (or at minimum a real download link for the oversize fallback).
+    // Without this, a cert that was never generated went out as a bare email
+    // with no PDF and no link, and nobody knew (2026-08-01, EV Charging).
+    // ========================================================================
+    if (!pdfAttachmentSuccess && !pdfUrl) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error:
+            'No PDF exists for this certificate yet. Tap Generate certificate first, then email it.',
+        }),
+        { status: 422, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // ========================================================================
     // STEP 8: Build email HTML
     // ========================================================================
-    const certificateTypeDisplay =
-      reportType === 'minor-works'
-        ? 'Minor Works'
-        : reportType === 'ev-charging'
-          ? 'EV Charging'
-          : reportType === 'pat-testing'
-            ? 'PAT Testing'
-            : reportType === 'fire-alarm'
-              ? 'Fire Alarm'
-              : reportType === 'emergency-lighting'
-                ? 'Emergency Lighting'
-                : reportType === 'solar-pv'
-                  ? 'Solar PV'
-                  : reportType.toUpperCase();
+    const DISPLAY_BY_TYPE: Record<string, string> = {
+      eic: 'EIC',
+      eicr: 'EICR',
+      'minor-works': 'Minor Works',
+      'ev-charging': 'EV Charging',
+      'pat-testing': 'PAT Testing',
+      'fire-alarm': 'Fire Alarm',
+      'fire-alarm-design': 'Fire Alarm Design',
+      'fire-alarm-commissioning': 'Fire Alarm Commissioning',
+      'fire-alarm-inspection': 'Fire Alarm Inspection',
+      'fire-alarm-modification': 'Fire Alarm Modification',
+      'emergency-lighting': 'Emergency Lighting',
+      'solar-pv': 'Solar PV',
+      bess: 'Battery Storage',
+      'lightning-protection': 'Lightning Protection',
+      disconnection: 'Disconnection',
+      'g98-commissioning': 'G98 Commissioning',
+      'g99-commissioning': 'G99 Commissioning',
+      'smoke-co-alarm': 'Smoke & CO Alarm',
+      'testing-only': 'Testing Only',
+    };
+    const certificateTypeDisplay = DISPLAY_BY_TYPE[reportType] || reportType.toUpperCase();
 
     const rawAssessment =
       reportData.overallAssessment || reportData.overall_assessment || report.overall_assessment;

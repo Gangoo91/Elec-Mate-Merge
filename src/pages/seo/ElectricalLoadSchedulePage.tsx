@@ -55,7 +55,7 @@ export default function ElectricalLoadSchedulePage() {
       readingTime={11}
       keyTakeaways={[
         'A load schedule lists every circuit in the installation with its connected load, protective device, cable size, and design current.',
-        'Diversity is applied per IET On-Site Guide Table 1A to calculate the assessed maximum demand, which determines whether the supply is adequate.',
+        'Diversity is applied per IET On-Site Guide Table A2 to calculate the assessed maximum demand, which determines whether the supply is adequate.',
         'For three-phase installations, the load schedule shows phase allocation and helps balance loads across L1, L2, and L3.',
         'The total demand from the load schedule feeds directly into supply assessments, EIC certificates, and design documentation.',
         'Elec-Mate builds load schedules interactively — add circuits, and diversity and totals update in real time.',
@@ -229,7 +229,7 @@ export default function ElectricalLoadSchedulePage() {
                 Once every circuit is listed with its connected load, diversity is applied to
                 calculate the assessed maximum demand. Without diversity, the total connected load
                 of a typical domestic installation might exceed 30 kW. With diversity applied per
-                IET On-Site Guide Table 1A, the assessed maximum demand typically falls to 12-18 kW.
+                IET On-Site Guide Table A2, the assessed maximum demand typically falls to 12-18 kW.
               </p>
               <p>
                 Diversity is applied by load type, not by circuit. The main categories and their
@@ -271,7 +271,7 @@ export default function ElectricalLoadSchedulePage() {
           appBridge: {
             title: 'Diversity Applied Automatically',
             description:
-              'Elec-Mate categorises each circuit by load type and applies IET On-Site Guide Table 1A diversity factors automatically.',
+              'Elec-Mate categorises each circuit by load type and applies IET On-Site Guide Table A2 diversity factors automatically.',
             icon: BarChart3,
           },
         },
@@ -342,7 +342,7 @@ export default function ElectricalLoadSchedulePage() {
           icon: BarChart3,
           title: 'Automatic Diversity',
           description:
-            'IET On-Site Guide Table 1A diversity factors applied automatically by load type. Assessed maximum demand updates in real time as you add circuits.',
+            'IET On-Site Guide Table A2 diversity factors applied automatically by load type. Assessed maximum demand updates in real time as you add circuits.',
         },
         {
           icon: Grid3X3,
@@ -390,7 +390,7 @@ export default function ElectricalLoadSchedulePage() {
         {
           question: 'What diversity factors should I use for a commercial installation?',
           answer:
-            'The IET On-Site Guide Table 1A covers domestic and small commercial installations. For larger commercial installations, diversity is typically agreed with the client and the DNO based on the type of building, occupancy pattern, and historical usage data. Typical commercial diversity factors are: general socket outlets 50%, lighting 90% (higher than domestic because commercial lighting is usually all on during working hours), mechanical plant 80%, and IT equipment 70%. Always confirm with the DNO when applying for a commercial supply.',
+            'The IET On-Site Guide Table A2 covers domestic and small commercial installations. For larger commercial installations, diversity is typically agreed with the client and the DNO based on the type of building, occupancy pattern, and historical usage data. Typical commercial diversity factors are: general socket outlets 50%, lighting 90% (higher than domestic because commercial lighting is usually all on during working hours), mechanical plant 80%, and IT equipment 70%. Always confirm with the DNO when applying for a commercial supply.',
         },
         {
           question: 'Can the load schedule help with generator sizing?',
@@ -416,7 +416,7 @@ export default function ElectricalLoadSchedulePage() {
           href: '/tools/diversity-factor-calculator',
           title: 'Diversity Factor Calculator',
           description:
-            'Calculate diversity factors per IET On-Site Guide Table 1A for every load type.',
+            'Calculate diversity factors per IET On-Site Guide Table A2 for every load type.',
           icon: Calculator,
           category: 'Calculators',
         },

@@ -80,6 +80,7 @@ import { Eyebrow } from '@/components/college/primitives';
 import { ExpectedTestsDisplay } from './ExpectedTestsDisplay';
 import { InstallationGuidancePanel } from './InstallationGuidancePanel';
 import { storeContextForAgent, type AgentType } from '@/utils/circuit-context-generator';
+import { getZsCheck } from './zs-compliance';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -878,11 +879,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             actualZsString: `${fmt(circuit.calculations?.zs, 2)}Ω`,
             maximumZs: circuit.calculations?.maxZs ?? 0,
             maximumZsString: `${fmt(circuit.calculations?.maxZs, 2)}Ω`,
-            compliant: (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999),
+            // ELE-1426 — an uncalculated Zs must not be exported as COMPLIANT.
+            compliant: getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant,
             complianceText:
-              (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999)
-                ? '✓ COMPLIANT'
-                : '✗ NON-COMPLIANT',
+              getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).state === 'not-calculated'
+                ? '⚠ ZS NOT CALCULATED'
+                : getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant
+                  ? '✓ COMPLIANT'
+                  : '✗ NON-COMPLIANT',
             expectedR1R2: circuit.expectedTestResults?.r1r2?.at20C || 'TBC on-site',
           },
         },
@@ -2430,8 +2434,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 const isActive = idx === selectedCircuit;
                 const hasWarnings = circuit.warnings?.length > 0;
                 const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
-                const zsCompliant =
-                  (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999);
+                const zsCompliant = getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant;
                 const hasIssues = !vdCompliant || !zsCompliant;
 
                 return (
@@ -2512,7 +2515,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                             (circuit.calculations?.voltageDrop?.compliant ?? true)
                           : // Final fallback: use calculations (shouldn't happen with proper AI output)
                             circuit.calculations?.voltageDrop?.compliant &&
-                            (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
+                            getZsCheck(circuit, design.consumerUnit?.incomingSupply?.Ze).compliant;
 
                     // Determine status variant based on complianceStatus
                     const statusVariant =

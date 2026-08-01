@@ -9,21 +9,21 @@
  */
 
 import * as React from 'react';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
 import { useIsMobile } from '@/hooks/use-mobile';
+
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 // ----- PAT Tester Database (UK market) -----
 export interface PATTesterModel {
@@ -187,32 +187,33 @@ export function PATTesterAutocomplete({
   const displayValue = React.useMemo(() => {
     if (currentMake && currentModel) return `${currentMake} ${currentModel}`;
     if (currentMake) return currentMake;
-    return 'Select PAT tester...';
+    return null;
   }, [currentMake, currentModel]);
 
-  const hasValue = !!currentMake;
-
-  // Trigger button
+  // Trigger button — neutral surface, no icons
   const triggerButton = (
-    <Button
-      variant="outline"
+    <button
+      type="button"
       role="combobox"
       aria-expanded={open}
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full justify-between h-11 touch-manipulation',
-        'bg-white/[0.06] border-white/[0.08] text-white',
-        'hover:bg-white/[0.09]',
+        'flex h-11 w-full items-center justify-between rounded-xl px-3.5 text-left touch-manipulation active:scale-[0.98] transition-all',
+        'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !hasValue && 'text-white')}>{displayValue}</span>
-    </Button>
+      {displayValue ? (
+        <span className="truncate text-sm font-medium text-white">{displayValue}</span>
+      ) : (
+        <span className="truncate text-sm text-white/80">Select PAT tester...</span>
+      )}
+    </button>
   );
 
-  // Render tester item
+  // Render tester item — neutral surface, solid volt when selected
   const renderTesterItem = (
     tester: PATTesterModel,
     showManufacturer = false,
@@ -224,19 +225,31 @@ export function PATTesterAutocomplete({
         key={tester.id}
         onClick={() => handleSelect(tester)}
         className={cn(
-          'rounded-lg cursor-pointer transition-colors flex items-center',
-          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2',
-          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
-          isSelected && 'bg-elec-yellow/20'
+          'rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
+          forMobile ? 'px-3.5 py-3.5 min-h-[56px]' : 'px-2.5 py-2',
+          isSelected
+            ? 'bg-elec-yellow border border-elec-yellow'
+            : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]'
         )}
       >
-        <span className={cn('shrink-0 text-elec-yellow font-bold', forMobile ? 'mr-3 text-sm' : 'mr-2 text-xs', isSelected ? 'opacity-100' : 'opacity-0')}>✓</span>
-        <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn('font-medium truncate text-white', forMobile && 'text-base')}>
+        <div className="flex min-w-0 flex-col">
+          <span
+            className={cn(
+              'truncate font-medium',
+              isSelected ? 'text-black' : 'text-white',
+              forMobile && 'text-base'
+            )}
+          >
             {showManufacturer ? `${tester.make} ${tester.model}` : tester.model}
           </span>
           {tester.features && (
-            <span className={cn('text-white truncate', forMobile ? 'text-sm' : 'text-xs')}>
+            <span
+              className={cn(
+                'truncate',
+                isSelected ? 'text-black/70' : 'text-white/80',
+                forMobile ? 'text-sm' : 'text-xs'
+              )}
+            >
               {tester.features}
             </span>
           )}
@@ -254,52 +267,52 @@ export function PATTesterAutocomplete({
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
-          title="Select PAT Tester"
+          title="Select PAT tester"
           contentClassName="p-0"
         >
           <div className="flex flex-col max-h-[70vh]">
             {/* Search */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0">
+            <div className="flex items-center gap-2 px-4 pt-1 pb-3 bg-background sticky top-0">
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search testers..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+                className={searchInputCn}
               />
               {search && (
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={() => setSearch('')}
-                  className="h-9 w-9 p-0"
+                  aria-label="Clear search"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-base text-white/80 touch-manipulation active:scale-[0.98]"
                 >
-                  <X className="h-4 w-4" />
-                </Button>
+                  &times;
+                </button>
               )}
             </div>
 
             {/* List */}
-            <div className="flex-1 overflow-y-auto momentum-scroll-y">
+            <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-2">
               {filteredTesters && filteredTesters.length > 0 ? (
-                <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-white font-medium">Search Results</p>
-                  <div className="space-y-1">
+                <div>
+                  <p className="px-1 py-2 text-sm font-medium text-white/80">Search results</p>
+                  <div className="space-y-2">
                     {filteredTesters.map((tester) => renderTesterItem(tester, true, true))}
                   </div>
                 </div>
               ) : search.trim() ? (
-                <div className="py-12 text-center text-white">
-                  <p className="text-base">No testers found</p>
-                  <p className="text-sm mt-1">Try a different search term</p>
+                <div className="py-12 text-center">
+                  <p className="text-base font-semibold text-white">No testers found</p>
+                  <p className="mt-1 text-sm text-white/80">Try a different search term</p>
                 </div>
               ) : (
-                <div className="px-2 py-2">
+                <div>
                   {Object.entries(testersGrouped).map(([manufacturer, testers]) => (
                     <div key={manufacturer} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
+                      <p className="px-1 py-2 text-sm font-medium text-white/80 sticky top-0 bg-background">
                         {manufacturer}
                       </p>
-                      <div className="space-y-1">
+                      <div className="space-y-2">
                         {testers.map((tester) => renderTesterItem(tester, false, true))}
                       </div>
                     </div>
@@ -310,7 +323,7 @@ export function PATTesterAutocomplete({
 
             {/* Footer */}
             <div className="border-t border-white/[0.06] px-4 py-3 bg-background">
-              <p className="text-xs text-white text-center flex items-center justify-center gap-1">
+              <p className="text-xs text-white/80 text-center">
                 Selecting fills make &amp; model fields
               </p>
             </div>
@@ -326,58 +339,53 @@ export function PATTesterAutocomplete({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border border-white/20 shadow-lg z-[100]"
+          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border-white/[0.08] shadow-xl z-[100]"
           align="start"
           sideOffset={4}
         >
           <Command className="bg-background" shouldFilter={false}>
-            <CommandInput
-              placeholder="Search testers..."
-              value={search}
-              onValueChange={setSearch}
-              className="border-none bg-background text-white placeholder:text-gray-400"
-            />
+            <div className="px-3 pt-1 pb-2.5">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search testers..."
+                className={searchInputCn}
+              />
+            </div>
             <CommandList className="bg-background max-h-[300px]">
               <CommandEmpty className="p-4 text-sm text-white">No testers found.</CommandEmpty>
 
               {filteredTesters && filteredTesters.length > 0 ? (
-                <CommandGroup heading="Search Results" className="bg-background">
+                <CommandGroup
+                  heading="Search results"
+                  className="bg-background [&_[cmdk-group-heading]]:text-white/80"
+                >
                   {filteredTesters.map((tester) => (
                     <CommandItem
                       key={tester.id}
                       value={tester.id}
                       onSelect={() => handleSelect(tester)}
-                      className="bg-background hover:bg-white/[0.06] cursor-pointer text-white py-2"
+                      className="mb-1 cursor-pointer rounded-xl p-0 hover:bg-transparent"
                     >
-                      <span className={cn('mr-2 text-xs font-bold text-elec-yellow shrink-0', selectedTester?.id === tester.id ? 'opacity-100' : 'opacity-0')}>✓</span>
-                      <div className="flex flex-col flex-1 min-w-0">
-                        <span className="font-medium truncate text-white">
-                          {tester.make} {tester.model}
-                        </span>
-                        {tester.features && (
-                          <span className="text-xs text-white truncate">{tester.features}</span>
-                        )}
-                      </div>
+                      <div className="w-full">{renderTesterItem(tester, true, false)}</div>
                     </CommandItem>
                   ))}
                 </CommandGroup>
               ) : (
                 Object.entries(testersGrouped).map(([manufacturer, testers]) => (
-                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-background">
+                  <CommandGroup
+                    key={manufacturer}
+                    heading={manufacturer}
+                    className="bg-background [&_[cmdk-group-heading]]:text-white/80"
+                  >
                     {testers.map((tester) => (
                       <CommandItem
                         key={tester.id}
                         value={tester.id}
                         onSelect={() => handleSelect(tester)}
-                        className="bg-background hover:bg-white/[0.06] cursor-pointer text-white py-2"
+                        className="mb-1 cursor-pointer rounded-xl p-0 hover:bg-transparent"
                       >
-                        <span className={cn('mr-2 text-xs font-bold text-elec-yellow shrink-0', selectedTester?.id === tester.id ? 'opacity-100' : 'opacity-0')}>✓</span>
-                        <div className="flex flex-col flex-1 min-w-0">
-                          <span className="font-medium truncate text-white">{tester.model}</span>
-                          {tester.features && (
-                            <span className="text-xs text-white truncate">{tester.features}</span>
-                          )}
-                        </div>
+                        <div className="w-full">{renderTesterItem(tester, false, false)}</div>
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -388,7 +396,7 @@ export function PATTesterAutocomplete({
 
           {/* Footer */}
           <div className="border-t border-white/[0.06] px-3 py-2">
-            <p className="text-[10px] text-white text-center">
+            <p className="text-[11px] text-white/80 text-center">
               Selecting fills make & model fields
             </p>
           </div>

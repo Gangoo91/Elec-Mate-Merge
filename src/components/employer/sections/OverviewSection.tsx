@@ -62,7 +62,7 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
     activeJobs,
     expiringCertifications: expiringCerts,
     pendingExpenses,
-    safetyScore,
+    certComplianceRate,
   } = stats;
 
   const newApplications = vacancyStats?.newApplications || 0;
@@ -332,8 +332,10 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
             onClick: onOpenAlerts,
           },
           {
-            label: 'Safety',
-            value: `${safetyScore}%`,
+            label: 'Certificates',
+            // ELE-555 — was labelled "Safety" showing a score that only ever
+            // measured certificate validity, and read 100% with no certs at all.
+            value: certComplianceRate != null ? `${certComplianceRate}%` : '—',
             accent: true,
             onClick: onOpenSafety,
           },
@@ -532,7 +534,13 @@ export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: Overv
             description="RAMS and compliance"
             tone="orange"
             cta="Open"
-            meta={expiringCerts > 0 ? `${expiringCerts} alerts` : `${safetyScore}% score`}
+            meta={
+              expiringCerts > 0
+                ? `${expiringCerts} alerts`
+                : certComplianceRate != null
+                  ? `${certComplianceRate}% in date`
+                  : 'No certificates yet'
+            }
             onClick={onOpenSafety}
           />
           <HubCard

@@ -9,10 +9,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { X, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -28,16 +27,22 @@ import PATLocationPicker from './PATLocationPicker';
 import { SerialNumberScannerSheet } from '@/components/inspection/fire-alarm/SerialNumberScannerSheet';
 
 /* ─── Shared style tokens ─── */
-const inputClass = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const labelClass = 'text-white text-xs mb-1.5 block';
-const textareaClass = 'text-base touch-manipulation min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-/* ─── Section header with gradient line ─── */
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const voltCn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const neutralCn = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+
 const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 interface PATTestSheetProps {
@@ -52,6 +57,8 @@ interface PATTestSheetProps {
   copiedData: Partial<Appliance> | null;
   recentLocations: string[];
   onAddRecentLocation: (location: string) => void;
+  /** Open the barcode/serial scanner as soon as the sheet mounts (Scan button flow). */
+  openScannerOnMount?: boolean;
 }
 
 /** Three-button result group: Pass / Fail / N/A */
@@ -62,8 +69,8 @@ const ResultButtonGroup: React.FC<{
 }> = ({ result, onChange, size = 'sm' }) => {
   const base =
     size === 'md'
-      ? 'h-11 px-3 text-sm font-semibold rounded-lg'
-      : 'h-10 px-2.5 text-xs font-semibold rounded-lg';
+      ? 'h-11 px-3 text-sm rounded-lg'
+      : 'h-11 px-2.5 text-xs rounded-lg';
 
   const options: { value: TestResult; label: string }[] = [
     { value: 'pass', label: 'Pass' },
@@ -75,13 +82,13 @@ const ResultButtonGroup: React.FC<{
     <div className="flex gap-1">
       {options.map((opt) => {
         const isActive = result === opt.value;
-        let activeClasses = 'bg-white/[0.05] border border-white/[0.08] text-white';
+        let activeClasses = neutralCn;
         if (isActive && opt.value === 'pass') {
-          activeClasses = 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow';
+          activeClasses = 'bg-green-500 border border-green-500 text-black font-semibold';
         } else if (isActive && opt.value === 'fail') {
-          activeClasses = 'bg-red-500/20 border border-red-500/40 text-red-400';
+          activeClasses = 'bg-red-500 border border-red-500 text-white font-semibold';
         } else if (isActive && opt.value === 'na') {
-          activeClasses = 'bg-blue-500/20 border border-blue-500/40 text-blue-400';
+          activeClasses = 'bg-white border border-white text-black font-semibold';
         }
 
         return (
@@ -111,10 +118,11 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
   copiedData,
   recentLocations,
   onAddRecentLocation,
+  openScannerOnMount = false,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const aiPhotoInputRef = useRef<HTMLInputElement>(null);
-  const [scannerOpen, setScannerOpen] = useState(false);
+  const [scannerOpen, setScannerOpen] = useState(openScannerOnMount);
   const [isIdentifying, setIsIdentifying] = useState(false);
 
   // Helper to update a field on the current appliance
@@ -377,16 +385,19 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
         className="hidden"
       />
       <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 bg-background border-white/[0.06] rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 bg-background border-white/[0.08] rounded-t-2xl overflow-hidden">
           <div className="flex flex-col h-full bg-background">
-            {/* Sticky Header */}
-            <div className="sticky top-0 z-20 bg-background border-b border-white/[0.06] px-4 py-3 flex items-center justify-between">
+            {/* Sticky header */}
+            <div className="sticky top-0 z-20 bg-background border-b border-white/[0.08] px-4 py-2.5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => onNavigate('prev')}
                   disabled={applianceIndex === 0}
-                  className="h-9 px-3 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.08] text-white text-xs font-medium touch-manipulation disabled:opacity-30 active:scale-[0.97] transition-all"
+                  className={cn(
+                    'h-11 px-3.5 flex items-center justify-center rounded-xl text-sm touch-manipulation disabled:opacity-30 active:scale-[0.97] transition-all',
+                    neutralCn
+                  )}
                 >
                   Prev
                 </button>
@@ -397,7 +408,10 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                   type="button"
                   onClick={handleSaveAndNext}
                   disabled={applianceIndex >= totalAppliances - 1}
-                  className="h-9 px-3 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.08] text-white text-xs font-medium touch-manipulation disabled:opacity-30 active:scale-[0.97] transition-all"
+                  className={cn(
+                    'h-11 px-3.5 flex items-center justify-center rounded-xl text-sm touch-manipulation disabled:opacity-30 active:scale-[0.97] transition-all',
+                    neutralCn
+                  )}
                 >
                   Next
                 </button>
@@ -405,120 +419,123 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="h-9 w-9 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.08] touch-manipulation active:scale-[0.95] transition-all"
+                aria-label="Close"
+                className={cn(
+                  'h-11 w-11 flex items-center justify-center rounded-xl text-lg leading-none touch-manipulation active:scale-[0.95] transition-all',
+                  neutralCn
+                )}
               >
-                <X className="h-4 w-4 text-white" />
+                &times;
               </button>
             </div>
 
-            {/* Scrollable Content */}
+            {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto pb-32">
-              <div className="p-4 space-y-6">
-                {/* ─── AI Identify + Photos ─── */}
-                <div className="space-y-3">
-                  <SectionHeader title="Photos & AI Identify" />
+              <div className="p-4 space-y-4">
+                {/* ─── AI identify + photos ─── */}
+                <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
+                  <SectionHeader title="Photos & AI identify" />
 
-                  <button
-                    type="button"
-                    disabled={isIdentifying}
-                    onClick={() => aiPhotoInputRef.current?.click()}
-                    className="w-full rounded-xl overflow-hidden touch-manipulation active:scale-[0.98] transition-transform"
-                  >
-                    <div
-                      className={cn(
-                        'relative px-4 py-3.5 flex items-center gap-3',
-                        'bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-500/20',
-                        'border border-purple-500/25 rounded-xl'
-                      )}
-                    >
-                      <div className="flex-1 text-left">
-                        <span className="text-sm font-semibold text-white block">
-                          {isIdentifying ? 'Identifying...' : 'AI Identify'}
-                        </span>
-                        <span className="text-xs text-white block">
-                          {isIdentifying
-                            ? 'Analysing photo with Gemini'
-                            : 'Snap a photo — auto-fills all fields'}
-                        </span>
-                      </div>
-                      {isIdentifying && (
-                        <Loader2 className="h-5 w-5 text-purple-300 animate-spin shrink-0" />
-                      )}
-                    </div>
-                  </button>
-
-                  {/* Photo thumbnails */}
-                  <div className="flex flex-wrap gap-2">
-                    {(appliance.photos || []).map((photo, i) => (
-                      <div
-                        key={i}
-                        className="relative w-20 h-20 rounded-xl overflow-hidden border border-white/[0.08] bg-white/[0.06]"
-                      >
-                        <img
-                          src={photo}
-                          alt={`Photo ${i + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => removePhoto(i)}
-                          className="absolute -top-1 -right-1 h-7 w-7 bg-black/80 rounded-full flex items-center justify-center touch-manipulation active:scale-90 transition-transform border border-white/20"
-                        >
-                          <X className="h-3.5 w-3.5 text-white" />
-                        </button>
-                      </div>
-                    ))}
+                  <div className="space-y-3">
                     <button
                       type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-20 h-20 rounded-xl border-2 border-dashed border-white/[0.12] flex flex-col items-center justify-center gap-1 text-white touch-manipulation hover:bg-white/[0.04] transition-colors"
+                      disabled={isIdentifying}
+                      onClick={() => aiPhotoInputRef.current?.click()}
+                      className="w-full rounded-xl bg-elec-yellow px-4 py-3 text-left touch-manipulation active:scale-[0.98] transition-transform disabled:bg-elec-yellow disabled:opacity-100"
                     >
-                      <span className="text-lg leading-none">+</span>
-                      <span className="text-[10px]">Add</span>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1">
+                          <span className="block text-sm font-semibold text-black">
+                            {isIdentifying ? 'Identifying...' : 'AI identify'}
+                          </span>
+                          <span className="block text-xs text-black/70">
+                            {isIdentifying
+                              ? 'Analysing photo'
+                              : 'Snap a photo — auto-fills all fields'}
+                          </span>
+                        </div>
+                        {isIdentifying && (
+                          <Loader2 className="h-5 w-5 text-black animate-spin shrink-0" />
+                        )}
+                      </div>
                     </button>
+
+                    {/* Photo thumbnails */}
+                    <div className="flex flex-wrap gap-2">
+                      {(appliance.photos || []).map((photo, i) => (
+                        <div
+                          key={i}
+                          className="relative w-20 h-20 rounded-xl overflow-hidden border border-white/[0.12] bg-white/[0.06]"
+                        >
+                          <img
+                            src={photo}
+                            alt={`Photo ${i + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removePhoto(i)}
+                            aria-label={`Remove photo ${i + 1}`}
+                            className="absolute -top-1 -right-1 h-7 w-7 bg-black/80 rounded-full flex items-center justify-center text-white text-sm leading-none touch-manipulation active:scale-90 transition-transform border border-white/20"
+                          >
+                            &times;
+                          </button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-20 h-20 rounded-xl border-2 border-dashed border-white/[0.15] flex flex-col items-center justify-center gap-1 text-white touch-manipulation active:scale-[0.98] transition-transform"
+                      >
+                        <span className="text-lg leading-none">+</span>
+                        <span className="text-[10px]">Add</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                {/* ─── Asset Details ─── */}
-                <div className="space-y-3">
-                  <SectionHeader title="Asset Details" />
+                {/* ─── Asset details ─── */}
+                <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
+                  <SectionHeader title="Asset details" />
 
-                  <div className="space-y-3">
-                    {/* Asset Number + Scan */}
+                  <div className="space-y-4">
+                    {/* Asset number + scan */}
                     <div>
-                      <label className={labelClass}>Asset No.</label>
-                      <div className="flex gap-2">
+                      <label className={labelCn}>Asset number</label>
+                      <div className="flex items-end gap-2">
                         <Input
-                          placeholder="e.g., PAT001"
+                          placeholder="e.g. PAT001"
                           value={appliance.assetNumber || ''}
                           onChange={(e) => update('assetNumber', e.target.value)}
-                          className={cn(inputClass, 'flex-1')}
+                          className={cn(inputCn, 'flex-1')}
                         />
-                        <Button
+                        <button
                           type="button"
-                          variant="outline"
                           onClick={() => setScannerOpen(true)}
-                          className="h-11 px-3 shrink-0 touch-manipulation bg-white/[0.06] border-white/[0.08] text-white text-xs font-medium"
+                          className={cn(
+                            'h-11 px-4 shrink-0 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
+                            neutralCn
+                          )}
                         >
                           Scan
-                        </Button>
+                        </button>
                       </div>
                     </div>
 
                     {/* Description */}
                     <div>
-                      <label className={labelClass}>Description</label>
+                      <label className={labelCn}>Description</label>
                       <Input
-                        placeholder="e.g., Kettle, Monitor, Drill"
+                        placeholder="e.g. Kettle, monitor, drill"
                         value={appliance.description || ''}
                         onChange={(e) => update('description', e.target.value)}
-                        className={inputClass}
+                        className={inputCn}
                       />
                     </div>
 
                     {/* Location */}
                     <div>
-                      <label className={labelClass}>Location</label>
+                      <label className={labelCn}>Location</label>
                       <PATLocationPicker
                         value={appliance.location || ''}
                         onChange={(v) => update('location', v)}
@@ -527,26 +544,26 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                       />
                     </div>
 
-                    {/* Make + Model side by side */}
-                    <div className="grid grid-cols-2 gap-3">
+                    {/* Make + model side by side */}
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                       <div>
-                        <label className={labelClass}>Make</label>
-                        <Input placeholder="Manufacturer" value={appliance.make || ''} onChange={(e) => update('make', e.target.value)} className={inputClass} />
+                        <label className={labelCn}>Make</label>
+                        <Input placeholder="Manufacturer" value={appliance.make || ''} onChange={(e) => update('make', e.target.value)} className={inputCn} />
                       </div>
                       <div>
-                        <label className={labelClass}>Model</label>
-                        <Input placeholder="Model" value={appliance.model || ''} onChange={(e) => update('model', e.target.value)} className={inputClass} />
+                        <label className={labelCn}>Model</label>
+                        <Input placeholder="Model" value={appliance.model || ''} onChange={(e) => update('model', e.target.value)} className={inputCn} />
                       </div>
                     </div>
 
-                    {/* Serial + Class side by side */}
-                    <div className="grid grid-cols-2 gap-3">
+                    {/* Serial + class side by side */}
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                       <div>
-                        <label className={labelClass}>Serial No.</label>
-                        <Input placeholder="Serial number" value={appliance.serialNumber || ''} onChange={(e) => update('serialNumber', e.target.value)} className={inputClass} />
+                        <label className={labelCn}>Serial number</label>
+                        <Input placeholder="Serial number" value={appliance.serialNumber || ''} onChange={(e) => update('serialNumber', e.target.value)} className={inputCn} />
                       </div>
                       <div>
-                        <label className={labelClass}>Class</label>
+                        <label className={labelCn}>Class</label>
                         <div className="flex gap-1.5">
                           {([{ value: 'I' as ApplianceClass, label: 'I' }, { value: 'II' as ApplianceClass, label: 'II' }, { value: 'III' as ApplianceClass, label: 'III' }]).map(({ value, label }) => (
                             <button
@@ -554,10 +571,8 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                               type="button"
                               onClick={() => update('applianceClass', value)}
                               className={cn(
-                                'flex-1 h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                                appliance.applianceClass === value
-                                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                                'flex-1 h-11 rounded-lg text-sm transition-all touch-manipulation active:scale-[0.98]',
+                                appliance.applianceClass === value ? voltCn : neutralCn
                               )}
                             >
                               {label}
@@ -569,43 +584,43 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
 
                     {/* Category */}
                     <div>
-                      <label className={labelClass}>Category</label>
+                      <label className={labelCn}>Category</label>
                       <MobileSelectPicker
                         value={appliance.category || 'portable'}
                         onValueChange={(v) => update('category', v as ApplianceCategory)}
                         options={categoryOptions}
                         placeholder="Select category"
-                        title="Appliance Category"
-                        triggerClassName={inputClass}
+                        title="Appliance category"
+                        triggerClassName={pickerTriggerCn}
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* ─── Visual Inspection ─── */}
-                <div className="space-y-3">
-                  <SectionHeader title="Visual Inspection" />
+                {/* ─── Visual inspection ─── */}
+                <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
+                  <SectionHeader title="Visual inspection" />
 
-                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl divide-y divide-white/[0.06]">
+                  <div>
                     {/* Flex */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs">Flex / Cable</span>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Flex / cable</span>
                       <ResultButtonGroup
                         result={appliance.visualInspection.flexCondition}
                         onChange={(v) => updateVisual('flexCondition', v)}
                       />
                     </div>
                     {/* Plug */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs">Plug</span>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Plug</span>
                       <ResultButtonGroup
                         result={appliance.visualInspection.plugCondition}
                         onChange={(v) => updateVisual('plugCondition', v)}
                       />
                     </div>
-                    {/* Fuse Rating */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs">Fuse Rating</span>
+                    {/* Fuse rating */}
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Fuse rating</span>
                       <div className="flex gap-1">
                         {['3A', '5A', '13A', 'N/A'].map((fuse) => (
                           <button
@@ -613,10 +628,8 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             type="button"
                             onClick={() => updateVisual('fuseRating', fuse)}
                             className={cn(
-                              'h-10 px-3 text-xs font-semibold rounded-lg transition-all touch-manipulation active:scale-[0.98]',
-                              appliance.visualInspection.fuseRating === fuse
-                                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                              'h-11 px-3 text-xs rounded-lg transition-all touch-manipulation active:scale-[0.98]',
+                              appliance.visualInspection.fuseRating === fuse ? voltCn : neutralCn
                             )}
                           >
                             {fuse}
@@ -625,57 +638,57 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                       </div>
                     </div>
                     {/* Enclosure */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs">Enclosure</span>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Enclosure</span>
                       <ResultButtonGroup
                         result={appliance.visualInspection.enclosureCondition}
                         onChange={(v) => updateVisual('enclosureCondition', v)}
                       />
                     </div>
                     {/* Switches */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs">Switches / Controls</span>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Switches / controls</span>
                       <ResultButtonGroup
                         result={appliance.visualInspection.switchesControls}
                         onChange={(v) => updateVisual('switchesControls', v)}
                       />
                     </div>
                     {/* Environment */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs">Environment</span>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Environment</span>
                       <ResultButtonGroup
                         result={appliance.visualInspection.suitableForEnvironment}
                         onChange={(v) => updateVisual('suitableForEnvironment', v)}
                       />
                     </div>
-                    {/* Visual Inspection Notes */}
-                    <div className="p-3">
+                    {/* Visual inspection notes */}
+                    <div className="border-t border-white/[0.08] pt-3">
                       <Textarea
                         placeholder="Visual inspection notes (optional)"
                         value={appliance.visualInspection.notes || ''}
                         onChange={(e) => updateVisual('notes', e.target.value)}
-                        className="touch-manipulation text-sm min-h-[60px] bg-transparent border-white/[0.08] text-white"
+                        className={cn(textareaCn, 'min-h-[60px]')}
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* ─── Electrical Tests ─── */}
-                <div className="space-y-3">
-                  <SectionHeader title="Electrical Tests" />
+                {/* ─── Electrical tests ─── */}
+                <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
+                  <SectionHeader title="Electrical tests" />
 
-                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl divide-y divide-white/[0.06]">
-                    {/* Earth Continuity — Class I only */}
+                  <div>
+                    {/* Earth continuity — Class I only */}
                     {appliance.applianceClass === 'I' ? (
-                    <div className="p-3 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-white text-xs font-medium">Earth Continuity</span>
+                    <div className="border-t border-white/[0.08] py-3 space-y-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">Earth continuity</span>
                         <ResultButtonGroup
                           result={appliance.electricalTests.earthContinuity.result}
                           onChange={(v) => updateElectricalNested('earthContinuity', 'result', v)}
                         />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex items-end gap-2">
                         <div className="flex-1">
                           <Input
                             placeholder="Reading"
@@ -683,26 +696,26 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             onChange={(e) =>
                               updateElectricalNested('earthContinuity', 'reading', e.target.value)
                             }
-                            className={inputClass}
+                            className={inputCn}
                             inputMode="decimal"
                           />
                         </div>
-                        <div className="flex items-center px-2 bg-white/[0.04] rounded-lg border border-white/[0.06] text-white text-xs">
+                        <span className="flex h-11 items-center px-1 text-sm text-white/80">
                           &Omega;
-                        </div>
+                        </span>
                       </div>
                     </div>
                     ) : (
-                    <div className="p-3">
-                      <span className="text-white text-xs">Earth Continuity — N/A (Class {appliance.applianceClass})</span>
+                    <div className="border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] text-white/80">Earth continuity — N/A (Class {appliance.applianceClass})</span>
                     </div>
                     )}
 
-                    {/* Insulation Resistance */}
-                    <div className="p-3 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-white text-xs font-medium">
-                          Insulation Resistance
+                    {/* Insulation resistance */}
+                    <div className="border-t border-white/[0.08] py-3 space-y-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">
+                          Insulation resistance
                         </span>
                         <ResultButtonGroup
                           result={appliance.electricalTests.insulationResistance.result}
@@ -711,7 +724,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                           }
                         />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex items-end gap-2">
                         <div className="flex-1">
                           <Input
                             placeholder="Reading"
@@ -723,26 +736,26 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                                 e.target.value
                               )
                             }
-                            className={inputClass}
+                            className={inputCn}
                             inputMode="decimal"
                           />
                         </div>
-                        <div className="flex items-center px-2 bg-white/[0.04] rounded-lg border border-white/[0.06] text-white text-xs">
+                        <span className="flex h-11 items-center px-1 text-sm text-white/80">
                           M&Omega;
-                        </div>
+                        </span>
                       </div>
                     </div>
 
-                    {/* Load Test */}
-                    <div className="p-3 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-white text-xs font-medium">Load Test</span>
+                    {/* Load test */}
+                    <div className="border-t border-white/[0.08] py-3 space-y-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">Load test</span>
                         <ResultButtonGroup
                           result={appliance.electricalTests.loadTest?.result || ''}
                           onChange={(v) => updateElectricalNested('loadTest', 'result', v)}
                         />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex items-end gap-2">
                         <div className="flex-1">
                           <Input
                             placeholder="Reading"
@@ -750,28 +763,28 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             onChange={(e) =>
                               updateElectricalNested('loadTest', 'reading', e.target.value)
                             }
-                            className={inputClass}
+                            className={inputCn}
                             inputMode="decimal"
                           />
                         </div>
-                        <div className="flex items-center px-2 bg-white/[0.04] rounded-lg border border-white/[0.06] text-white text-xs">
+                        <span className="flex h-11 items-center px-1 text-sm text-white/80">
                           kVA
-                        </div>
+                        </span>
                       </div>
                     </div>
 
-                    {/* Leakage Current — required for Class II/III */}
-                    <div className="p-3 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-white text-xs font-medium">
-                          Leakage Current{appliance.applianceClass !== 'I' ? ' *' : ''}
+                    {/* Leakage current — required for Class II/III */}
+                    <div className="border-t border-white/[0.08] py-3 space-y-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] font-medium text-white">
+                          Leakage current{appliance.applianceClass !== 'I' ? ' *' : ''}
                         </span>
                         <ResultButtonGroup
                           result={appliance.electricalTests.leakageCurrent.result || ''}
                           onChange={(v) => updateElectricalNested('leakageCurrent', 'result', v)}
                         />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex items-end gap-2">
                         <div className="flex-1">
                           <Input
                             placeholder="Reading"
@@ -779,28 +792,28 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             onChange={(e) =>
                               updateElectricalNested('leakageCurrent', 'reading', e.target.value)
                             }
-                            className={inputClass}
+                            className={inputCn}
                             inputMode="decimal"
                           />
                         </div>
-                        <div className="flex items-center px-2 bg-white/[0.04] rounded-lg border border-white/[0.06] text-white text-xs">
+                        <span className="flex h-11 items-center px-1 text-sm text-white/80">
                           mA
-                        </div>
+                        </span>
                       </div>
                     </div>
 
                     {/* Polarity */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs font-medium">Polarity</span>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Polarity</span>
                       <ResultButtonGroup
                         result={appliance.electricalTests.polarity}
                         onChange={(v) => updateElectrical('polarity', v)}
                       />
                     </div>
 
-                    {/* Functional Check */}
-                    <div className="flex items-center justify-between p-3">
-                      <span className="text-white text-xs font-medium">Functional Check</span>
+                    {/* Functional check */}
+                    <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] py-3">
+                      <span className="text-[13px] font-medium text-white">Functional check</span>
                       <ResultButtonGroup
                         result={appliance.electricalTests.functionalCheck}
                         onChange={(v) => updateElectrical('functionalCheck', v)}
@@ -809,36 +822,36 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                   </div>
                 </div>
 
-                {/* ─── Overall Result ─── */}
-                <div className="space-y-3">
-                  <SectionHeader title="Overall Result" />
+                {/* ─── Overall result ─── */}
+                <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
+                  <SectionHeader title="Overall result" />
 
                   <div
                     className={cn(
-                      'rounded-xl border p-4 space-y-3',
+                      'rounded-xl border bg-white/[0.05] p-4 space-y-4',
                       displayResult === 'pass'
-                        ? 'bg-elec-yellow/10 border-elec-yellow/30'
+                        ? 'border-green-500/40'
                         : displayResult === 'fail'
-                          ? 'bg-red-500/10 border-red-500/30'
-                          : 'bg-white/[0.04] border-white/[0.06]'
+                          ? 'border-red-500/40'
+                          : 'border-white/[0.12]'
                     )}
                   >
                     {/* Overall result toggle */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-3">
                       <span
                         className={cn(
                           'text-lg font-bold',
                           displayResult === 'pass'
-                            ? 'text-elec-yellow'
+                            ? 'text-green-400'
                             : displayResult === 'fail'
                               ? 'text-red-400'
                               : 'text-white'
                         )}
                       >
                         {displayResult === 'pass'
-                          ? 'PASSED'
+                          ? 'Passed'
                           : displayResult === 'fail'
-                            ? 'FAILED'
+                            ? 'Failed'
                             : 'Untested'}
                       </span>
                       <div className="flex gap-1">
@@ -846,10 +859,10 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                           type="button"
                           onClick={() => update('overallResult', 'pass')}
                           className={cn(
-                            'h-10 px-4 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                            'h-11 px-4 rounded-lg text-sm transition-all touch-manipulation active:scale-[0.98]',
                             (appliance.overallResult || autoResult) === 'pass'
-                              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                              : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                              ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                              : neutralCn
                           )}
                         >
                           Pass
@@ -858,10 +871,10 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                           type="button"
                           onClick={() => update('overallResult', 'fail')}
                           className={cn(
-                            'h-10 px-4 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                            'h-11 px-4 rounded-lg text-sm transition-all touch-manipulation active:scale-[0.98]',
                             (appliance.overallResult || autoResult) === 'fail'
-                              ? 'bg-red-500/20 border border-red-500/40 text-red-400'
-                              : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                              ? 'bg-red-500 border border-red-500 text-white font-semibold'
+                              : neutralCn
                           )}
                         >
                           Fail
@@ -869,49 +882,52 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                       </div>
                     </div>
 
-                    {/* Repair Code */}
+                    {/* Repair code */}
                     <div>
-                      <label className={labelClass}>Repair Code</label>
+                      <label className={labelCn}>Repair code</label>
                       <MobileSelectPicker
                         value={appliance.repairCode || '_none'}
                         onValueChange={(v) => update('repairCode', v === '_none' ? '' : v as PATRepairCode)}
                         options={repairCodeOptions}
                         placeholder="N/A — No repair needed"
-                        title="Repair Code"
-                        triggerClassName={inputClass}
+                        title="Repair code"
+                        triggerClassName={pickerTriggerCn}
                       />
                     </div>
 
-                    {/* Next Test Due */}
+                    {/* Next test due */}
                     <div>
-                      <label className={labelClass}>Next Test Due</label>
+                      <label className={labelCn}>Next test due</label>
                       <Input
                         type="date"
                         value={appliance.nextTestDue || ''}
                         onChange={(e) => update('nextTestDue', e.target.value)}
-                        className={inputClass}
+                        className={inputCn}
                       />
                     </div>
 
                     {/* Notes */}
                     <div>
-                      <label className={labelClass}>Notes</label>
+                      <label className={labelCn}>Notes</label>
                       <Textarea
                         placeholder="Additional notes for this appliance..."
                         value={appliance.notes || ''}
                         onChange={(e) => update('notes', e.target.value)}
-                        className={textareaClass}
+                        className={textareaCn}
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* ─── Action Buttons ─── */}
+                {/* ─── Action buttons ─── */}
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={handleCopyData}
-                    className="flex items-center gap-1.5 h-11 px-3 text-xs text-white font-medium rounded-lg bg-white/[0.05] border border-white/[0.08] touch-manipulation active:scale-[0.97] transition-all"
+                    className={cn(
+                      'h-11 px-4 rounded-xl text-sm touch-manipulation active:scale-[0.97] transition-all',
+                      neutralCn
+                    )}
                   >
                     Copy
                   </button>
@@ -919,7 +935,10 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                     <button
                       type="button"
                       onClick={handlePasteData}
-                      className="flex items-center gap-1.5 h-11 px-3 text-xs text-elec-yellow font-medium rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 touch-manipulation active:scale-[0.97] transition-all"
+                      className={cn(
+                        'h-11 px-4 rounded-xl text-sm touch-manipulation active:scale-[0.97] transition-all',
+                        voltCn
+                      )}
                     >
                       Paste
                     </button>
@@ -928,7 +947,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="flex items-center gap-1.5 h-11 px-3 text-xs text-red-400 font-medium rounded-lg bg-red-500/10 border border-red-500/20 touch-manipulation active:scale-[0.97] transition-all"
+                    className="h-11 px-3 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.97] transition-all"
                   >
                     Reset
                   </button>
@@ -936,61 +955,73 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
               </div>
             </div>
 
-            {/* Sticky Footer */}
-            <div className="absolute bottom-0 left-0 right-0 bg-background border-t border-white/[0.06] p-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
-              <Button
-                variant="outline"
+            {/* Sticky footer */}
+            <div className="absolute bottom-0 left-0 right-0 bg-background border-t border-white/[0.08] p-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
+              <button
+                type="button"
                 onClick={() => onNavigate('prev')}
                 disabled={applianceIndex === 0}
-                className="h-12 px-5 touch-manipulation bg-white/[0.05] border-white/[0.08] text-white"
+                className={cn(
+                  'h-12 px-5 rounded-xl text-sm touch-manipulation disabled:opacity-30 active:scale-[0.98] transition-all',
+                  neutralCn
+                )}
               >
                 Prev
-              </Button>
+              </button>
 
               <div className="text-center">
-                <span className="text-xs text-white">
+                <span className="text-xs text-white/80">
                   {applianceIndex + 1} / {totalAppliances}
                 </span>
               </div>
 
               {applianceIndex < totalAppliances - 1 ? (
-                <Button
+                <button
+                  type="button"
                   onClick={handleSaveAndNext}
-                  className="h-12 px-5 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                  className={cn(
+                    'h-12 px-5 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
+                    voltCn
+                  )}
                 >
-                  Save & Next
-                </Button>
+                  Save & next
+                </button>
               ) : (
-                <Button
+                <button
+                  type="button"
                   onClick={onClose}
-                  className="h-12 px-5 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+                  className={cn(
+                    'h-12 px-5 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
+                    voltCn
+                  )}
                 >
                   Done
-                </Button>
+                </button>
               )}
             </div>
           </div>
         </SheetContent>
 
-        {/* Barcode / Serial Number Scanner */}
+        {/* Barcode / serial number scanner */}
         <SerialNumberScannerSheet
           open={scannerOpen}
           onOpenChange={setScannerOpen}
           onSerialExtracted={(serial, photoBase64) => {
-            update('assetNumber', serial);
-            update('barcodeScanned', true);
-            // Add the scanned photo to the appliance photos
-            if (photoBase64) {
-              const dataUrl = photoBase64.startsWith('data:')
+            // Single consolidated update — sequential update() calls each
+            // spread the same stale appliance closure, so the second call
+            // reverted assetNumber whenever the scanner returned no photo.
+            const dataUrl = photoBase64
+              ? photoBase64.startsWith('data:')
                 ? photoBase64
-                : `data:image/jpeg;base64,${photoBase64}`;
-              onUpdateAppliance({
-                ...appliance,
-                assetNumber: serial,
-                barcodeScanned: true,
-                photos: [...(appliance.photos || []), dataUrl],
-              });
-            }
+                : `data:image/jpeg;base64,${photoBase64}`
+              : null;
+            onUpdateAppliance({
+              ...appliance,
+              assetNumber: serial,
+              barcodeScanned: true,
+              // Add the scanned photo to the appliance photos
+              photos: dataUrl ? [...(appliance.photos || []), dataUrl] : appliance.photos,
+            });
             setScannerOpen(false);
           }}
         />

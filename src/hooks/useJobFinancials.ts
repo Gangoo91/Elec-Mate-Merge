@@ -36,7 +36,7 @@ export interface JobFinancial {
 }
 
 // Untyped RPC escape hatch (the generated types don't include our new RPCs yet).
-const rpcCall = supabase.rpc as unknown as (
+const rpcCall = (supabase.rpc.bind(supabase) as unknown) as (
   fn: string,
   args?: Record<string, unknown>
 ) => Promise<{ data: unknown; error: unknown }>;

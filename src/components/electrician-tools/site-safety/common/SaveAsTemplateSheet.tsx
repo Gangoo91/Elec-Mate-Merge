@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Loader2, Save } from "lucide-react";
-import { useSaveAsTemplate, ModuleType } from "@/hooks/useSafetyFormTemplates";
+import { useState } from 'react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Loader2, Save } from 'lucide-react';
+import { useSaveAsTemplate, ModuleType } from '@/hooks/useSafetyFormTemplates';
 
 interface SaveAsTemplateSheetProps {
   open: boolean;
@@ -19,8 +19,8 @@ export function SaveAsTemplateSheet({
   moduleType,
   getTemplateData,
 }: SaveAsTemplateSheetProps) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const saveTemplate = useSaveAsTemplate();
 
   const handleSave = async () => {
@@ -34,8 +34,8 @@ export function SaveAsTemplateSheet({
       templateData: data,
     });
 
-    setName("");
-    setDescription("");
+    setName('');
+    setDescription('');
     onOpenChange(false);
   };
 

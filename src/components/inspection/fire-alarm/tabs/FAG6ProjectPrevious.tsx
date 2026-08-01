@@ -5,18 +5,24 @@
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect, useState, useCallback } from 'react';
 import { toast } from 'sonner';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import CertificateClientSection from '@/components/inspection/shared/CertificateClientSection';
-import { AlertTriangle, Download, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const comboTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:bg-transparent hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const premisesTypeOptions = [
   { value: 'Office', label: 'Office' },
@@ -31,27 +37,8 @@ const premisesTypeOptions = [
   { value: 'Data Centre', label: 'Data Centre' },
 ];
 
-const Section = ({
-  title,
-  accentColor,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-    </div>
-    {children}
-  </div>
+const SectionHeader = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Field = ({
@@ -64,7 +51,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -203,65 +190,61 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
   })();
 
   return (
-    <div className="space-y-5">
-      <div className="border-b border-red-500/20 pb-3">
-        <p className="text-sm font-bold text-red-400">
-          FIRE ALARM INSPECTION & SERVICING CERTIFICATE (G6)
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Certificate reference */}
+      <div className={cardCn}>
+        <SectionHeader title="Certificate reference" />
+        <p className="-mt-2 text-sm text-white/80">
+          Fire alarm inspection &amp; servicing certificate (G6) — BS 5839-1:2025 periodic
+          inspection and servicing.
         </p>
-        <p className="text-xs text-white mt-1">
-          BS 5839-1:2025 — Periodic inspection and servicing
-        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Certificate number">
+            <Input
+              value={formData.certificateNumber || ''}
+              onChange={(e) => onUpdate('certificateNumber', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Inspection date">
+            <Input
+              type="date"
+              value={formData.inspectionDate || ''}
+              onChange={(e) => onUpdate('inspectionDate', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+        </div>
       </div>
 
-      <Section title="Certificate Reference" accentColor="from-white/20 to-white/5">
-        <Field label="Certificate Number">
-          <Input
-            value={formData.certificateNumber || ''}
-            onChange={(e) => onUpdate('certificateNumber', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-        <Field label="Inspection Date">
-          <Input
-            type="date"
-            value={formData.inspectionDate || ''}
-            onChange={(e) => onUpdate('inspectionDate', e.target.value)}
-            className={inputCn}
-          />
-        </Field>
-      </Section>
-
-      {/* Load from Previous */}
-      <Section title="Load from Previous" accentColor="from-elec-yellow/40 to-amber-400/20">
-        <Button
-          variant="outline"
+      {/* Load from previous */}
+      <div className={cardCn}>
+        <SectionHeader title="Load from previous" />
+        <button
+          type="button"
           onClick={handleLoadPrevious}
           disabled={loadingPrevious}
-          className="w-full h-12 text-sm border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98] rounded-xl"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation transition-transform active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100"
         >
-          {loadingPrevious ? (
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-          ) : (
-            <Download className="h-4 w-4 mr-2" />
-          )}
-          {loadingPrevious ? 'Searching...' : 'Load from Previous Certificate'}
-        </Button>
-        <p className="text-xs text-white text-center">
-          Pre-fills client, premises, system details, and previous defects
+          {loadingPrevious && <Loader2 className="h-4 w-4 animate-spin" />}
+          {loadingPrevious ? 'Searching...' : 'Load from previous certificate'}
+        </button>
+        <p className="text-sm text-white/80">
+          Pre-fills client, premises, system details, and previous defects.
         </p>
 
-        {/* Cert Picker Sheet */}
+        {/* Cert picker sheet */}
         <Sheet open={showCertPicker} onOpenChange={setShowCertPicker}>
           <SheetContent side="bottom" className="h-[70dvh] p-0 rounded-t-2xl flex flex-col">
             <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
+              <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.08]">
                 <SheetTitle className="text-lg font-bold text-white">
-                  Select Previous Certificate
+                  Select previous certificate
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto overscroll-contain px-3 py-3">
                 {previousCerts.length === 0 ? (
-                  <p className="text-sm text-white text-center py-8">
+                  <p className="text-sm text-white/80 text-center py-8">
                     No previous certificates found
                   </p>
                 ) : (
@@ -270,10 +253,10 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
                       const d = report.data || {};
                       const typeLabel =
                         report.report_type === 'fire-alarm'
-                          ? 'G2 Install'
+                          ? 'G2 install'
                           : report.report_type === 'fire-alarm-commissioning'
-                            ? 'G3 Commission'
-                            : 'G6 Inspection';
+                            ? 'G3 commission'
+                            : 'G6 inspection';
                       const date =
                         d.commissioningDate || d.inspectionDate || d.installationDate || '';
                       return (
@@ -281,25 +264,25 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
                           key={report.report_id}
                           type="button"
                           onClick={() => handleSelectCert(d)}
-                          className="w-full text-left p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] active:scale-[0.98] transition-all touch-manipulation"
+                          className="w-full text-left p-3.5 rounded-xl bg-white/[0.06] border border-white/[0.12] active:scale-[0.98] transition-all touch-manipulation"
                         >
-                          <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center justify-between gap-2 mb-1">
                             <p className="font-semibold text-white text-sm">
                               {d.certificateNumber || 'No cert number'}
                             </p>
-                            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">
+                            <span className="shrink-0 rounded-full border border-red-500/30 px-2 py-0.5 text-[10px] font-semibold text-red-400">
                               {typeLabel}
                             </span>
                           </div>
-                          <p className="text-xs text-white">
+                          <p className="text-[12px] text-white/80">
                             {d.premisesAddress ||
                               d.installationAddress ||
                               d.clientName ||
                               'No address'}
                           </p>
-                          {date && <p className="text-xs text-white mt-0.5">{date}</p>}
+                          {date && <p className="text-[12px] text-white/80 mt-0.5">{date}</p>}
                           {d.defectsFound?.length > 0 && (
-                            <p className="text-xs text-amber-400 mt-0.5">
+                            <p className="text-[12px] text-amber-400 mt-0.5">
                               {d.defectsFound.length} defect{d.defectsFound.length > 1 ? 's' : ''}{' '}
                               recorded
                             </p>
@@ -313,11 +296,13 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
             </div>
           </SheetContent>
         </Sheet>
-      </Section>
+      </div>
 
-      <Section title="Previous Certificate" accentColor="from-amber-500/40 to-yellow-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Previous Cert Reference">
+      {/* Previous certificate */}
+      <div className={cardCn}>
+        <SectionHeader title="Previous certificate" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Previous cert reference">
             <Input
               value={formData.previousCertificateRef || ''}
               onChange={(e) => onUpdate('previousCertificateRef', e.target.value)}
@@ -325,7 +310,7 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
               placeholder="G6 or G3 cert ref"
             />
           </Field>
-          <Field label="Previous Cert Date">
+          <Field label="Previous cert date">
             <Input
               type="date"
               value={formData.previousInspectionDate || ''}
@@ -333,16 +318,14 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
               className={inputCn}
             />
           </Field>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Previous Inspector">
+          <Field label="Previous inspector">
             <Input
               value={formData.previousInspector || ''}
               onChange={(e) => onUpdate('previousInspector', e.target.value)}
               className={inputCn}
             />
           </Field>
-          <Field label="Previous Company">
+          <Field label="Previous company">
             <Input
               value={formData.previousInspectorCompany || ''}
               onChange={(e) => onUpdate('previousInspectorCompany', e.target.value)}
@@ -351,17 +334,18 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
           </Field>
         </div>
         {intervalWarning && (
-          <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-            <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-            <p className="text-xs text-amber-400">{intervalWarning}</p>
+          <div className="rounded-xl border border-amber-500/30 bg-white/[0.05] px-3.5 py-3">
+            <p className="text-sm text-amber-400">{intervalWarning}</p>
           </div>
         )}
-      </Section>
+      </div>
 
-      <Section title="Client Details" accentColor="from-blue-500/40 to-cyan-400/20">
+      {/* Client details */}
+      <div className={cardCn}>
+        <SectionHeader title="Client details" />
         <CertificateClientSection formData={formData} onUpdate={onUpdate} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Client Name" required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Client name" required>
             <Input
               value={formData.clientName || ''}
               onChange={(e) => onUpdate('clientName', e.target.value)}
@@ -377,38 +361,40 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <Field label="Client Address">
+        <Field label="Client address">
           <Input
             value={formData.clientAddress || ''}
             onChange={(e) => onUpdate('clientAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
 
-      <Section title="Premises" accentColor="from-red-500/40 to-orange-400/20">
-        <Field label="Premises Name">
+      {/* Premises */}
+      <div className={cardCn}>
+        <SectionHeader title="Premises" />
+        <Field label="Premises name">
           <Input
             value={formData.premisesName || ''}
             onChange={(e) => onUpdate('premisesName', e.target.value)}
             className={inputCn}
           />
         </Field>
-        <Field label="Premises Address" required>
+        <Field label="Premises address" required>
           <Input
             value={formData.premisesAddress || ''}
             onChange={(e) => onUpdate('premisesAddress', e.target.value)}
             className={inputCn}
           />
         </Field>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="Premises Type">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="Premises type">
             <ComboboxCell
               value={formData.premisesType || ''}
               onChange={(v) => onUpdate('premisesType', v)}
               options={premisesTypeOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className={comboTriggerCn}
             />
           </Field>
           <Field label="Floors">
@@ -421,20 +407,22 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-      </Section>
+      </div>
 
-      <Section title="System Reference" accentColor="from-green-500/40 to-emerald-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Field label="System Category">
+      {/* System reference */}
+      <div className={cardCn}>
+        <SectionHeader title="System reference" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <Field label="System category">
             <ComboboxCell
               value={formData.systemCategory || ''}
               onChange={(v) => onUpdate('systemCategory', v)}
               options={categoryOptions}
               placeholder="Select..."
-              className="h-12 text-base"
+              className={comboTriggerCn}
             />
           </Field>
-          <Field label="Panel Make / Model">
+          <Field label="Panel make / model">
             <Input
               value={formData.systemMake || ''}
               onChange={(e) => onUpdate('systemMake', e.target.value)}
@@ -442,14 +430,14 @@ export default function FAG6ProjectPrevious({ formData, onUpdate }: Props) {
             />
           </Field>
         </div>
-        <Field label="Panel Location">
+        <Field label="Panel location">
           <Input
             value={formData.panelLocation || ''}
             onChange={(e) => onUpdate('panelLocation', e.target.value)}
             className={inputCn}
           />
         </Field>
-      </Section>
+      </div>
     </div>
   );
 }

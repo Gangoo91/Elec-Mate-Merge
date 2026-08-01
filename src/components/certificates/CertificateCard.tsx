@@ -1,6 +1,5 @@
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowRight, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface CertificateData {
@@ -211,7 +210,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         <span className="flex items-center gap-1.5 shrink-0">
           {version > 1 && (
             <span
-              className="text-[9px] font-bold uppercase tracking-[0.1em] text-blue-300 border border-blue-400/30 bg-blue-400/[0.08] rounded px-1.5 py-0.5"
+              className="text-[9px] font-bold uppercase tracking-[0.1em] text-white/70 border border-white/[0.16] bg-white/[0.06] rounded px-1.5 py-0.5"
               title={`Amended — version ${version}`}
             >
               V{version}
@@ -219,10 +218,10 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           )}
           {certificate.lockedAt && (
             <span
-              className="inline-flex items-center justify-center h-[18px] w-[18px] border border-emerald-400/40 bg-emerald-400/[0.06] text-emerald-300 rounded"
+              className="text-[9px] font-bold uppercase tracking-[0.1em] text-emerald-300 border border-emerald-400/40 bg-emerald-400/[0.06] rounded px-1.5 py-0.5"
               title="Issued & locked — signed off"
             >
-              <Lock className="h-2.5 w-2.5" aria-hidden />
+              Locked
             </span>
           )}
           <span
@@ -301,9 +300,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             {formatDate(certificate.lastModified)}
           </span>
         </span>
-        <span className="shrink-0 h-6 w-6 rounded-full bg-elec-yellow/[0.12] flex items-center justify-center transition-colors group-hover:bg-elec-yellow/25">
-          <ArrowRight className="h-3.5 w-3.5 text-elec-yellow transition-transform group-hover:translate-x-0.5" />
-        </span>
+        <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
       </div>
     </button>
   );

@@ -31,26 +31,30 @@ interface Props {
   ) => void;
 }
 
+// Section card — the only box on the page
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+// Paper-form underline input
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
 const pickerTrigger =
-  'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
 
 const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
-      {title}
-    </p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+  <div className="flex items-center gap-3 pt-2">
+    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -64,7 +68,7 @@ const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
@@ -83,21 +87,19 @@ const Toggle = ({
   value: boolean | undefined;
   onUpdate: (f: string, v: boolean) => void;
 }) => (
-  <div className="flex items-center justify-between">
-    <Label className="text-white text-xs font-medium">{label}</Label>
-    <div className="flex gap-1.5">
+  <div className="flex items-center justify-between gap-3">
+    <Label className="text-[12px] font-medium text-white">{label}</Label>
+    <div className="flex gap-2">
       {[true, false].map((v) => (
         <button
           key={String(v)}
           type="button"
           onClick={() => onUpdate(field, v)}
           className={cn(
-            'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+            'h-11 w-16 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98]',
             value === v
-              ? v
-                ? 'bg-green-500 text-white'
-                : 'bg-white/20 text-white'
-              : 'bg-white/[0.06] text-white border border-white/[0.08]'
+              ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+              : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
           )}
         >
           {v ? 'Yes' : 'No'}
@@ -182,9 +184,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
   };
 
   return (
-    <div className="space-y-6">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Client Details */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Client Details" />
         <CertificateClientSection formData={formData} onUpdate={onUpdate} />
 
@@ -202,7 +204,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           />
         )}
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Client Name" required>
             <Input
               value={formData.clientName || ''}
@@ -220,7 +222,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Email">
             <Input
               type="email"
@@ -249,9 +251,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
       </div>
 
       {/* Premises */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Premises Details" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Premises Name">
             <Input
               value={formData.premisesName || ''}
@@ -265,7 +267,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               <button
                 type="button"
                 onClick={copyClientAddress}
-                className="h-11 w-full rounded-lg bg-white/[0.04] border border-white/[0.08] text-[11px] text-white touch-manipulation active:scale-[0.98]"
+                className="h-11 w-full rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
               >
                 Same as client address
               </button>
@@ -283,7 +285,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             placeholder="Full installation address"
           />
         </Field>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Premises Type">
             <MobileSelectPicker
               value={formData.premisesType || ''}
@@ -329,9 +331,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
       </div>
 
       {/* System Classification */}
-      <div className="space-y-4">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="System Classification (BS 5266)" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Certificate Type">
             <MobileSelectPicker
               value={formData.certificateType || ''}
@@ -360,7 +362,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Test Date" required>
             <Input
               type="date"
@@ -406,16 +408,10 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           )}
         </div>
         {durationGuidance && (
-          <div
-            className={`rounded-lg p-2.5 border ${durationGuidance.duration === 180 ? 'bg-purple-500/5 border-purple-500/15' : 'bg-blue-500/5 border-blue-500/15'}`}
-          >
-            <p
-              className={`text-[11px] font-semibold ${durationGuidance.duration === 180 ? 'text-purple-300' : 'text-blue-300'}`}
-            >
-              {durationGuidance.title}
-            </p>
-            <p className="text-[10px] text-white mt-0.5">{durationGuidance.content}</p>
-            <p className="text-[9px] text-white mt-0.5">{durationGuidance.reference}</p>
+          <div className="rounded-xl bg-white/[0.05] p-3.5">
+            <p className="text-[12px] font-semibold text-white">{durationGuidance.title}</p>
+            <p className="text-xs text-white/80 mt-1">{durationGuidance.content}</p>
+            <p className="text-[11px] text-white/80 mt-1">{durationGuidance.reference}</p>
           </div>
         )}
 
@@ -448,7 +444,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
         </div>
 
         <Sub title="Compliance References" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Design Standard">
             <MobileSelectPicker
               value={formData.designStandard || 'BS 5266-1:2016'}
@@ -471,7 +467,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Risk Assessment Ref">
             <Input
               value={formData.riskAssessmentReference || ''}
@@ -524,9 +520,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
       </div>
 
       {/* Purpose of System */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Purpose of System (BS 5266)" />
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Toggle
             label="Escape route lighting"
             field="purposeEscapeRoute"
@@ -555,9 +551,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
       </div>
 
       {/* Equipment Summary */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Equipment Summary" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Luminaire Count">
             <Input
               type="number"
@@ -603,11 +599,11 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             />
           </Field>
         )}
-        <div className="rounded-lg bg-elec-yellow/5 border border-elec-yellow/15 p-3 text-center">
+        <div className="rounded-xl bg-white/[0.05] p-4 text-center">
           <p className="text-2xl font-bold text-elec-yellow">
             {(formData.luminaireCount || 0) + (formData.exitSignCount || 0)}
           </p>
-          <p className="text-[10px] text-white mt-0.5">
+          <p className="text-xs text-white/80 mt-1">
             {formData.luminaireCount || 0} luminaires + {formData.exitSignCount || 0} exit signs
           </p>
         </div>

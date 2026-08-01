@@ -1,14 +1,16 @@
-import React from 'react';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import React, { useRef } from 'react';
 import { SolarPVTabValue } from '@/hooks/useSolarPVTabs';
 import SolarPVInstallationDetails from './SolarPVInstallationDetails';
 import SolarPVSystemDesign from './SolarPVSystemDesign';
 import SolarPVGridConnection from './SolarPVGridConnection';
 import SolarPVTestSchedule from './SolarPVTestSchedule';
 import SolarPVDeclarations from './SolarPVDeclarations';
-import SolarPVTabNavigation from './SolarPVTabNavigation';
-import { Building2, Cpu, Zap, TestTube, FileText } from 'lucide-react';
+import CertShellFooter, {
+  certFooterNeutralButton,
+} from '@/components/inspection/shared/CertShellFooter';
 import { SolarPVFormData } from '@/types/solar-pv';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface SolarPVFormTabsProps {
   currentTab: SolarPVTabValue;
@@ -38,109 +40,97 @@ interface SolarPVFormTabsProps {
   };
   onGenerateCertificate: () => void;
   onCreateInvoice?: () => void;
+  onEmailCertificate?: () => void;
+  canEmail?: boolean;
+  /** Saved report id from the page — kept current after autosave creates the
+      report (useParams still says 'new' until a reload). */
+  reportId?: string | null;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
   completedTabs?: Record<string, boolean>;
 }
 
+const TAB_ORDER: SolarPVTabValue[] = ['installation', 'system', 'grid', 'testing', 'signoff'];
+
+const NEXT_LABELS = [
+  'Continue to System',
+  'Continue to Grid',
+  'Continue to Testing',
+  'Continue to Sign off',
+];
+
 const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
   currentTab,
-  onTabChange,
-  canAccessTab,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
   onCreateInvoice,
-  onSaveDraft,
+  onEmailCertificate,
+  canEmail = false,
+  reportId,
   canGenerateCertificate = true,
-  completedTabs,
 }) => {
-  // Form tabs are width-capped + centred on desktop (matches the EICR/EV layout);
-  // the testing schedule stays full-width for the wide test tables.
-  const wrapBase = 'pb-24 sm:pb-8 sm:px-4';
-  const contentWrapperClass = `${wrapBase} mx-auto w-full lg:max-w-6xl xl:max-w-7xl`;
-  const testingWrapperClass = wrapBase;
+  // Track direction so the step slide matches travel (forward vs back).
+  const prevIndexRef = useRef(TAB_ORDER.indexOf(currentTab));
+  const currentIndex = TAB_ORDER.indexOf(currentTab);
+  const isBack = currentIndex < prevIndexRef.current;
+  prevIndexRef.current = currentIndex;
 
-  const smartTabs: SmartTab[] = [
-    {
-      value: 'installation',
-      label: 'Installation',
-      shortLabel: 'Install',
-      icon: <Building2 className="h-4 w-4" />,
-      content: (
-        <div className={contentWrapperClass}>
-          <SolarPVInstallationDetails formData={formData} onUpdate={onUpdate} />
-          <SolarPVTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'system',
-      label: 'System Design',
-      shortLabel: 'System',
-      icon: <Cpu className="h-4 w-4" />,
-      content: (
-        <div className={contentWrapperClass}>
-          <SolarPVSystemDesign formData={formData} onUpdate={onUpdate} />
-          <SolarPVTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'grid',
-      label: 'Grid Connection',
-      shortLabel: 'Grid',
-      icon: <Zap className="h-4 w-4" />,
-      content: (
-        <div className={contentWrapperClass}>
-          <SolarPVGridConnection formData={formData} onUpdate={onUpdate} />
-          <SolarPVTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'testing',
-      label: 'Testing',
-      shortLabel: 'Test',
-      icon: <TestTube className="h-4 w-4" />,
-      content: (
-        <div className={testingWrapperClass}>
-          <SolarPVTestSchedule formData={formData} onUpdate={onUpdate} />
-          <SolarPVTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'signoff',
-      label: 'Sign-Off',
-      shortLabel: 'Sign',
-      icon: <FileText className="h-4 w-4" />,
-      content: (
-        <div className={contentWrapperClass}>
-          <SolarPVDeclarations formData={formData} onUpdate={onUpdate} />
-          <SolarPVTabNavigation
-            {...tabNavigationProps}
-            onGenerateCertificate={onGenerateCertificate}
-            onCreateInvoice={onCreateInvoice}
-            canGenerateCertificate={canGenerateCertificate}
-          />
-        </div>
-      ),
-    },
-  ];
+  const content: Record<SolarPVTabValue, React.ReactNode> = {
+    installation: <SolarPVInstallationDetails formData={formData} onUpdate={onUpdate} />,
+    system: <SolarPVSystemDesign formData={formData} onUpdate={onUpdate} />,
+    grid: <SolarPVGridConnection formData={formData} onUpdate={onUpdate} />,
+    testing: <SolarPVTestSchedule formData={formData} onUpdate={onUpdate} />,
+    signoff: <SolarPVDeclarations formData={formData} onUpdate={onUpdate} reportId={reportId} />,
+  };
+
+  const isLast = currentTab === 'signoff';
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={onTabChange}
-        className="space-y-4"
-        completedTabs={completedTabs}
-        showProgress
+    <>
+      <div
+        key={currentTab}
+        className={
+          isBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+        }
+      >
+        {content[currentTab]}
+      </div>
+      <CertShellFooter
+        currentIndex={tabNavigationProps.currentTabIndex}
+        totalSteps={tabNavigationProps.totalTabs}
+        canPrevious={tabNavigationProps.canNavigatePrevious}
+        canNext={tabNavigationProps.canNavigateNext}
+        onPrevious={tabNavigationProps.navigatePrevious}
+        onNext={tabNavigationProps.navigateNext}
+        nextLabels={NEXT_LABELS}
+        isLastStep={isLast}
+        onGenerate={onGenerateCertificate}
+        canGenerate={canGenerateCertificate}
+        generateLabel="Generate certificate"
+        lastStepActions={
+          onEmailCertificate || onCreateInvoice ? (
+            <>
+              {onEmailCertificate && (
+                <button
+                  onClick={onEmailCertificate}
+                  disabled={!canEmail}
+                  className={certFooterNeutralButton}
+                >
+                  Email
+                </button>
+              )}
+              {onCreateInvoice && (
+                <button onClick={onCreateInvoice} className={certFooterNeutralButton}>
+                  Invoice
+                </button>
+              )}
+            </>
+          ) : undefined
+        }
       />
-    </div>
+    </>
   );
 };
 

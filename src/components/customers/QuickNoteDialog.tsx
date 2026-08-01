@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useCustomerActivity, ActivityType } from '@/hooks/inspection/useCustomerActivity';
-import { StickyNote, Phone, Mail, MapPin, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface QuickNoteDialogProps {
@@ -19,36 +19,11 @@ interface QuickNoteDialogProps {
   customerId: string;
 }
 
-const activityTypes: {
-  value: ActivityType;
-  label: string;
-  icon: React.ElementType;
-  color: string;
-}[] = [
-  {
-    value: 'note',
-    label: 'Note',
-    icon: StickyNote,
-    color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  },
-  {
-    value: 'call',
-    label: 'Call',
-    icon: Phone,
-    color: 'bg-green-500/20 text-green-400 border-green-500/30',
-  },
-  {
-    value: 'email',
-    label: 'Email',
-    icon: Mail,
-    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  },
-  {
-    value: 'visit',
-    label: 'Site Visit',
-    icon: MapPin,
-    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  },
+const activityTypes: { value: ActivityType; label: string }[] = [
+  { value: 'note', label: 'Note' },
+  { value: 'call', label: 'Call' },
+  { value: 'email', label: 'Email' },
+  { value: 'visit', label: 'Site visit' },
 ];
 
 export const QuickNoteDialog = ({ open, onOpenChange, customerId }: QuickNoteDialogProps) => {
@@ -105,18 +80,20 @@ export const QuickNoteDialog = ({ open, onOpenChange, customerId }: QuickNoteDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card border-border p-4 sm:p-6">
+      <DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-[500px] overflow-y-auto rounded-2xl border border-white/[0.1] bg-[#111114] p-4 shadow-2xl sm:p-6">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl text-foreground">Log Activity</DialogTitle>
-          <DialogDescription className="text-sm text-neutral-400">
-            Record a note, call, email, or site visit for this customer.
+          <DialogTitle className="text-lg font-bold tracking-tight text-white">
+            Log activity
+          </DialogTitle>
+          <DialogDescription className="text-[13px] text-white/55">
+            Record a note, call, email or site visit for this customer.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 mt-4">
           {/* Activity Type Selection */}
           <div className="space-y-2">
-            <Label className="text-foreground">Activity Type</Label>
+            <Label className="text-foreground">Activity type</Label>
             <div className="grid grid-cols-4 gap-2">
               {activityTypes.map((type) => (
                 <button
@@ -124,14 +101,13 @@ export const QuickNoteDialog = ({ open, onOpenChange, customerId }: QuickNoteDia
                   type="button"
                   onClick={() => setSelectedType(type.value)}
                   className={cn(
-                    'flex flex-col items-center gap-1 p-3 rounded-lg border transition-all touch-manipulation',
+                    'flex h-11 items-center justify-center rounded-xl border px-1 text-[12.5px] font-medium transition-all touch-manipulation',
                     selectedType === type.value
-                      ? type.color
-                      : 'bg-background border-border hover:border-border/80'
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.1] bg-white/[0.04] text-white hover:border-white/[0.25]'
                   )}
                 >
-                  <type.icon className="h-5 w-5" />
-                  <span className="text-xs font-medium">{type.label}</span>
+                  {type.label}
                 </button>
               ))}
             </div>
@@ -191,7 +167,7 @@ export const QuickNoteDialog = ({ open, onOpenChange, customerId }: QuickNoteDia
                   Saving...
                 </>
               ) : (
-                'Save Activity'
+                'Save activity'
               )}
             </Button>
           </div>

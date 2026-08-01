@@ -83,20 +83,22 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   const savedDraft = loadInputDraft();
 
   const [jobDescription, setJobDescription] = useState(savedDraft?.jobDescription ?? '');
-  const [projectInfo, setProjectInfo] = useState(savedDraft?.projectInfo ?? {
-    projectName: '',
-    location: '',
-    assessor: '',
-    contractor: '',
-    supervisor: '',
-    siteManagerName: '',
-    siteManagerPhone: '',
-    firstAiderName: '',
-    firstAiderPhone: '',
-    safetyOfficerName: '',
-    safetyOfficerPhone: '',
-    assemblyPoint: '',
-  });
+  const [projectInfo, setProjectInfo] = useState(
+    savedDraft?.projectInfo ?? {
+      projectName: '',
+      location: '',
+      assessor: '',
+      contractor: '',
+      supervisor: '',
+      siteManagerName: '',
+      siteManagerPhone: '',
+      firstAiderName: '',
+      firstAiderPhone: '',
+      safetyOfficerName: '',
+      safetyOfficerPhone: '',
+      assemblyPoint: '',
+    }
+  );
 
   const [detectedScale, setDetectedScale] = useState<'domestic' | 'commercial' | 'industrial'>(
     'commercial'
@@ -114,9 +116,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   // colliding. The path is moved into the final job_id namespace by the
   // edge function at create time if needed; for now we keep them grouped
   // under this temp id.
-  const [uploadSessionId] = useState(
-    () => `pending-${crypto.randomUUID().slice(0, 8)}`
-  );
+  const [uploadSessionId] = useState(() => `pending-${crypto.randomUUID().slice(0, 8)}`);
 
   const MAX_ATTACHMENTS = 6;
   const MAX_FILE_SIZE_MB = 10;
@@ -192,16 +192,14 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   }, []);
 
   const handlePickQuote = (q: QuotePickerRow) => {
-    const description =
-      q.job_details?.description?.trim() || q.job_details?.title?.trim() || '';
+    const description = q.job_details?.description?.trim() || q.job_details?.title?.trim() || '';
     if (description) setJobDescription(description);
     setProjectInfo((prev) => ({
       ...prev,
       projectName:
         q.job_details?.title?.trim() ||
         (q.client_data?.name ? `${q.client_data.name} job` : prev.projectName),
-      location:
-        q.job_details?.location?.trim() || q.client_data?.address?.trim() || prev.location,
+      location: q.job_details?.location?.trim() || q.client_data?.address?.trim() || prev.location,
     }));
     toast({
       title: 'Pre-filled from quote',
@@ -392,9 +390,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         <div
           className={cn(
             'relative bg-[hsl(0_0%_10%)] border rounded-2xl p-5 transition-colors',
-            hasDescription
-              ? 'border-elec-yellow/40'
-              : 'border-white/[0.10] hover:border-white/15'
+            hasDescription ? 'border-elec-yellow/40' : 'border-white/[0.10] hover:border-white/15'
           )}
         >
           <textarea
@@ -457,8 +453,8 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
             </span>
           </div>
           <p className="text-[12px] text-white/65 leading-relaxed">
-            Add up to {MAX_ATTACHMENTS} photos of the site, distribution boards or work
-            area. We&rsquo;ll pull visible hazards into the risk register.
+            Add up to {MAX_ATTACHMENTS} photos of the site, distribution boards or work area.
+            We&rsquo;ll pull visible hazards into the risk register.
           </p>
 
           {attachments.length > 0 && (
@@ -469,11 +465,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
                   className="relative aspect-square rounded-xl overflow-hidden bg-[hsl(0_0%_10%)] border border-white/[0.10]"
                 >
                   {a.previewUrl && a.type.startsWith('image/') ? (
-                    <img
-                      src={a.previewUrl}
-                      alt={a.name}
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={a.previewUrl} alt={a.name} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-white/55 text-[11px] p-2 text-center">
                       {a.name}
@@ -573,9 +565,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
             <IOSInput
               label="Supervisor (optional)"
               value={projectInfo.supervisor}
-              onChange={(e) =>
-                setProjectInfo((prev) => ({ ...prev, supervisor: e.target.value }))
-              }
+              onChange={(e) => setProjectInfo((prev) => ({ ...prev, supervisor: e.target.value }))}
               placeholder="Site supervisor"
               disabled={isProcessing}
             />

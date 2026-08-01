@@ -7,14 +7,22 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { AlertTriangle, CheckCircle, Loader2, FileText, Link2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { SolarPVFormData, UK_DNOS, SUPPLY_FUSE_RATINGS } from '@/types/solar-pv';
 import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
-import { Section, Field, inputCn, inputSmCn, textareaCn, CheckboxCard } from './SolarPVSection';
+import {
+  Section,
+  Field,
+  inputCn,
+  inputSmCn,
+  textareaCn,
+  pickerTriggerCn,
+  CheckboxCard,
+} from './SolarPVSection';
 
 interface Props {
   formData: SolarPVFormData;
@@ -69,10 +77,10 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
   }, [formData.inverters]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* DNO & Supply */}
-      <Section title="DNO & Supply Details" accentColor="from-blue-500/40 to-cyan-400/20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+      <Section title="DNO & Supply Details">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Distribution Network Operator (DNO) *">
             <ComboboxCell
               value={formData.gridConnection?.dnoName || ''}
@@ -83,7 +91,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
               }}
               options={UK_DNOS.map((d) => ({ value: d.name, label: d.name }))}
               placeholder="Select DNO..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>
@@ -94,7 +102,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
               onChange={(v) => updateGridConnection('dnoRegion', v)}
               options={dnoRegions.map((r) => ({ value: r, label: r }))}
               placeholder="Select region..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom
             />
           </Field>
@@ -109,18 +117,15 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
             className={cn(inputCn, 'font-mono')}
           />
           {mpanValidation && !mpanValidation.valid && (
-            <div className="flex items-center gap-1.5 mt-1">
-              <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
-              <p className="text-xs text-orange-400">{mpanValidation.error}</p>
-            </div>
+            <p className="mt-1 text-xs text-orange-400">{mpanValidation.error}</p>
           )}
-          <p className="text-[10px] text-white mt-1">Found on the electricity bill. 13 or 21 digits.</p>
+          <p className="mt-1 text-[11px] text-white/85">Found on the electricity bill. 13 or 21 digits.</p>
         </Field>
 
         {/* Supply details */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Supply Phases">
-            <div className="flex gap-1.5">
+            <div className="flex gap-2">
               {(['single', 'three'] as const).map((phase) => (
                 <button
                   key={phase}
@@ -130,10 +135,10 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
                     updateGridConnection('supplyVoltage', phase === 'single' ? 230 : 400);
                   }}
                   className={cn(
-                    'flex-1 h-12 rounded-xl border text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all',
+                    'flex-1 h-11 rounded-xl border text-sm touch-manipulation active:scale-[0.98] transition-all',
                     formData.gridConnection?.supplyPhases === phase
-                      ? 'bg-blue-500 border-blue-500 text-white'
-                      : 'bg-white/[0.03] border-white/[0.1] text-white/50'
+                      ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                      : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
                   )}
                 >
                   {phase === 'single' ? '1Φ 230V' : '3Φ 400V'}
@@ -148,7 +153,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
               onChange={(v) => updateGridConnection('maxSupplyFuse', parseInt(v))}
               options={SUPPLY_FUSE_RATINGS.map((f) => ({ value: f.value.toString(), label: f.label }))}
               placeholder="Fuse..."
-              className="h-12 text-base"
+              className={pickerTriggerCn}
               allowCustom={true}
             />
           </Field>
@@ -165,10 +170,10 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
       </Section>
 
       {/* DNO Notification (G98/G99) */}
-      <Section title="DNO Notification (G98/G99)" accentColor="from-amber-500/40 to-yellow-400/20">
+      <Section title="DNO Notification (G98/G99)">
         {/* G98/G99 toggle buttons */}
         <Field label="Application Type *">
-          <div className="flex gap-1.5">
+          <div className="flex gap-2">
             {[
               { val: 'G98', label: 'G98', sub: '≤16A per phase', desc: 'Notification only' },
               { val: 'G99', label: 'G99', sub: '>16A per phase', desc: 'Application required' },
@@ -180,18 +185,28 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
                 className={cn(
                   'flex-1 py-3 rounded-xl border flex flex-col items-center justify-center touch-manipulation active:scale-[0.98] transition-all',
                   formData.gridConnection?.applicationType === opt.val
-                    ? 'bg-amber-500/15 border-amber-500/30'
-                    : 'bg-white/[0.03] border-white/[0.06]'
+                    ? 'bg-elec-yellow border-elec-yellow'
+                    : 'bg-white/[0.06] border-white/[0.12]'
                 )}
               >
                 <span className={cn(
                   'text-base font-bold',
-                  formData.gridConnection?.applicationType === opt.val ? 'text-amber-400' : 'text-white/50'
+                  formData.gridConnection?.applicationType === opt.val ? 'text-black' : 'text-white'
                 )}>
                   {opt.label}
                 </span>
-                <span className="text-[10px] text-white">{opt.sub}</span>
-                <span className="text-[9px] text-white/30 mt-0.5">{opt.desc}</span>
+                <span className={cn(
+                  'text-[11px]',
+                  formData.gridConnection?.applicationType === opt.val ? 'text-black/80' : 'text-white/85'
+                )}>
+                  {opt.sub}
+                </span>
+                <span className={cn(
+                  'text-[11px] mt-0.5',
+                  formData.gridConnection?.applicationType === opt.val ? 'text-black/80' : 'text-white/85'
+                )}>
+                  {opt.desc}
+                </span>
               </button>
             ))}
           </div>
@@ -199,13 +214,12 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
 
         {suggestedApplication && formData.totalCapacity > 0 && (
           <div className={cn(
-            'p-2.5 rounded-xl flex items-center gap-2',
-            suggestedApplication === 'G98' ? 'bg-green-500/10 border border-green-500/20' : 'bg-orange-500/10 border border-orange-500/20'
+            'rounded-xl border bg-white/[0.05] px-3.5 py-3',
+            suggestedApplication === 'G98' ? 'border-green-500/40' : 'border-orange-500/40'
           )}>
-            <CheckCircle className={cn('h-3.5 w-3.5 flex-shrink-0', suggestedApplication === 'G98' ? 'text-green-400' : 'text-orange-400')} />
-            <span className={cn('text-xs', suggestedApplication === 'G98' ? 'text-green-300' : 'text-orange-300')}>
+            <p className={cn('text-xs', suggestedApplication === 'G98' ? 'text-green-400' : 'text-orange-400')}>
               {formData.totalCapacity.toFixed(1)}kWp → <strong>{suggestedApplication}</strong> recommended
-            </span>
+            </p>
           </div>
         )}
 
@@ -218,7 +232,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
           />
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Application Reference">
             <Input
               value={formData.gridConnection?.applicationReference || ''}
@@ -249,7 +263,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
         </Field>
 
         {formData.gridConnection?.approvalStatus === 'approved' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Approval Date">
               <Input
                 type="date"
@@ -271,7 +285,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
       </Section>
 
       {/* Export Limiting */}
-      <Section title="Export Limiting" accentColor="from-orange-500/40 to-red-400/20">
+      <Section title="Export Limiting">
         <CheckboxCard
           label="Export Limiting Required / Applied"
           description="System export is limited to a specified value"
@@ -281,7 +295,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
         />
 
         {formData.gridConnection?.exportLimited && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <Field label="Export Limit (kW)">
               <Input
                 type="number"
@@ -306,7 +320,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
       </Section>
 
       {/* Metering */}
-      <Section title="Metering" accentColor="from-green-500/40 to-emerald-400/20">
+      <Section title="Metering">
         <Field label="Meter Type">
           <ComboboxCell
             value={formData.metering?.meterType || 'smart'}
@@ -317,7 +331,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
             allowCustom
           />
         </Field>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Meter Make">
             <Input
               value={formData.metering?.meterMake || ''}
@@ -349,6 +363,15 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
             value={formData.metering?.meterLocation || ''}
             onChange={(e) => updateMetering('meterLocation', e.target.value)}
             placeholder="e.g., Meter cupboard, hallway"
+            className={inputCn}
+          />
+        </Field>
+
+        <Field label="CT Ratio">
+          <Input
+            value={formData.metering?.ctRatio || ''}
+            onChange={(e) => updateMetering('ctRatio', e.target.value)}
+            placeholder="e.g., 100:5 (CT metering only)"
             className={inputCn}
           />
         </Field>
@@ -521,18 +544,15 @@ function G98G99CertActions({
   if (createdRef) {
     return (
       <div className="space-y-2">
-        <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center gap-3">
-          <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-green-400">{certLabel} Certificate Created</p>
-            <p className="text-xs text-white/50 truncate">Ref: {createdRef} — saved to your certificates</p>
-          </div>
+        <div className="rounded-xl border border-green-500/40 bg-white/[0.05] px-3.5 py-3">
+          <p className="text-sm font-medium text-green-400">{certLabel} Certificate Created</p>
+          <p className="text-xs text-white/80 truncate">Ref: {createdRef} — saved to your certificates</p>
         </div>
         <div className="flex gap-2">
           <button
             type="button"
             onClick={() => { setCreatedRef(null); onReferenceLinked(''); }}
-            className="flex-1 h-10 rounded-xl border border-white/[0.06] bg-white/[0.03] text-xs text-white/50 touch-manipulation active:scale-[0.98]"
+            className="flex-1 h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
           >
             Undo — Link Different Cert Instead
           </button>
@@ -544,11 +564,11 @@ function G98G99CertActions({
   if (isLinking) {
     return (
       <div className="space-y-2">
-        <p className="text-[10px] text-white uppercase tracking-wider">Select existing {certLabel} certificate</p>
+        <p className="text-[12px] font-medium text-white">Select existing {certLabel} certificate</p>
         {existingCerts.length === 0 ? (
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
-            <p className="text-sm text-white/50">No {certLabel} certificates found</p>
-            <p className="text-xs text-white/30 mt-1">Create one using the button below</p>
+          <div className="rounded-xl bg-white/[0.05] p-4 text-center">
+            <p className="text-sm text-white">No {certLabel} certificates found</p>
+            <p className="text-xs text-white/80 mt-1">Create one using the button below</p>
           </div>
         ) : (
           existingCerts.map((cert: any) => (
@@ -561,20 +581,17 @@ function G98G99CertActions({
                 setIsLinking(false);
                 toast.success(`Linked to ${certLabel}: ${ref}`);
               }}
-              className="w-full text-left p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] flex items-center gap-3 touch-manipulation active:scale-[0.98]"
+              className="w-full text-left p-3 rounded-xl border border-white/[0.12] bg-white/[0.06] touch-manipulation active:scale-[0.98]"
             >
-              <Link2 className="h-4 w-4 text-amber-400 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">{cert.data?.referenceNumber || 'No reference'}</p>
-                <p className="text-xs text-white">{cert.data?.installationAddress || 'No address'} • {new Date(cert.created_at).toLocaleDateString('en-GB')}</p>
-              </div>
+              <p className="text-sm font-medium text-white truncate">{cert.data?.referenceNumber || 'No reference'}</p>
+              <p className="text-xs text-white/80">{cert.data?.installationAddress || 'No address'} • {new Date(cert.created_at).toLocaleDateString('en-GB')}</p>
             </button>
           ))
         )}
         <button
           type="button"
           onClick={() => setIsLinking(false)}
-          className="w-full text-center text-xs text-white py-2 touch-manipulation"
+          className="w-full h-11 text-center text-sm font-medium text-white touch-manipulation"
         >
           Cancel
         </button>
@@ -588,22 +605,17 @@ function G98G99CertActions({
         type="button"
         onClick={createInBackground}
         disabled={isCreating}
-        className="flex-1 h-12 rounded-xl border border-amber-500/20 bg-amber-500/10 flex items-center justify-center gap-2 text-sm font-medium text-amber-400 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+        className="flex-1 h-11 rounded-xl bg-elec-yellow flex items-center justify-center gap-2 text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-elec-yellow disabled:text-black disabled:opacity-100"
       >
-        {isCreating ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
-        ) : (
-          <FileText className="h-4 w-4" />
-        )}
+        {isCreating && <Loader2 className="h-4 w-4 animate-spin text-black" />}
         Create {certLabel} Cert
       </button>
       <button
         type="button"
         onClick={loadExistingCerts}
         disabled={isLinking}
-        className="flex-1 h-12 rounded-xl border border-white/[0.06] bg-white/[0.03] flex items-center justify-center gap-2 text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
+        className="flex-1 h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
       >
-        <Link2 className="h-4 w-4" />
         Link Existing
       </button>
     </div>

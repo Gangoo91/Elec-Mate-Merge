@@ -32,12 +32,12 @@ const faqs = [
   {
     question: 'Where are diversity allowances published?',
     answer:
-      'The IET publishes diversity allowances in the On-Site Guide, Table 1A (for individual domestic and small commercial installations) and Table 1B (for blocks of flats and other grouped installations). These tables give the recommended diversity percentages for each type of load: lighting, heating, cooking appliances, socket outlets, water heaters, showers, and electric vehicle charge points. The values are based on decades of recorded usage patterns in UK properties.',
+      'The IET publishes diversity allowances in the On-Site Guide, Appendix A, Table A2. It has three columns: individual household installations (including an individual dwelling of a block), small shops, stores, offices and business premises, and small hotels, boarding and guest houses. The On-Site Guide gives no guidance for blocks of residential dwellings, large hotels or industrial and large commercial premises — those are assessed case by case. The table gives the recommended allowances for each type of load: lighting, heating, cooking appliances, socket outlets, water heaters, showers, and electric vehicle charge points. The values are based on decades of recorded usage patterns in UK properties.',
   },
   {
     question: 'Can I apply diversity to every circuit?',
     answer:
-      'No. Certain loads must always be taken at their full rated current with no diversity applied. These include electric showers (100%), immersion heaters (100%), storage heating (100%), and electric vehicle charge points (100% for the first, with possible diversity for additional units in multi-charger installations). The IET On-Site Guide Table 1A specifies exactly which circuits can have diversity applied and which must be taken at full load.',
+      'No. On-Site Guide Table A2 marks three categories as "no diversity allowable": thermostatically controlled water heaters (so an immersion heater is taken at 100%), floor warming installations, and thermal storage space heating. An instantaneous water heater — one that heats only while the tap is running, which includes an electric shower — falls under row 5, so a single unit is taken at 100% of its full load. Electric vehicle charge points and heat pumps are not in Table A2 at all: the table predates them. BS 7671 requires EV charging to be included in the maximum demand of the installation, and a reduced figure may only be taken where load management actively limits the output (Reg 722.311.201) — otherwise treat them as 100% demand items.',
   },
   {
     question: 'How does diversity affect cable sizing and supply?',
@@ -47,12 +47,12 @@ const faqs = [
   {
     question: 'Is diversity the same as demand factor?',
     answer:
-      'They are closely related but not identical. Diversity factor is the ratio of actual maximum demand to the total connected load, always less than 1. Demand factor is sometimes used interchangeably in UK practice, particularly in the IET On-Site Guide. In some international standards, demand factor refers to the ratio for a single load, while diversity factor refers to the combined effect across a group of loads. In UK electrical work to BS 7671, the IET On-Site Guide Table 1A terminology is used.',
+      'They are closely related but not identical. Diversity factor is the ratio of actual maximum demand to the total connected load, always less than 1. Demand factor is sometimes used interchangeably in UK practice, particularly in the IET On-Site Guide. In some international standards, demand factor refers to the ratio for a single load, while diversity factor refers to the combined effect across a group of loads. In UK electrical work to BS 7671, the IET On-Site Guide Table A2 terminology is used.',
   },
   {
     question: 'Do I apply diversity when completing an EICR or EIC?',
     answer:
-      'Yes. When completing the maximum demand section of an Electrical Installation Certificate (EIC) or Electrical Installation Condition Report (EICR), you should apply diversity in accordance with IET On-Site Guide Table 1A. The assessed maximum demand figure is entered on the certificate and is used to verify that the incoming supply is adequate for the installation. Elec-Mate calculates this automatically when you enter the circuit details.',
+      'Yes. When completing the maximum demand section of an Electrical Installation Certificate (EIC) or Electrical Installation Condition Report (EICR), you should apply diversity in accordance with IET On-Site Guide Table A2. The assessed maximum demand figure is entered on the certificate and is used to verify that the incoming supply is adequate for the installation. Elec-Mate calculates this automatically when you enter the circuit details.',
   },
 ];
 
@@ -71,9 +71,9 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: 'IET Table 1A Built In',
+    title: 'IET Table A2 Built In',
     description:
-      'All diversity percentages from the IET On-Site Guide Table 1A are built into the calculator. No need to look up tables or remember which loads get 66%…',
+      'All diversity percentages from the IET On-Site Guide Table A2 are built into the calculator. No need to look up tables or remember which loads get 66%…',
   },
   {
     icon: Gauge,
@@ -154,7 +154,7 @@ export default function DiversityFactorCalculatorPage() {
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Calculate diversity factors for domestic and commercial electrical installations using
-            IET On-Site Guide Table 1A allowances. Instantly determine whether the DNO supply is
+            IET On-Site Guide Table A2 allowances. Instantly determine whether the DNO supply is
             adequate.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -216,7 +216,7 @@ export default function DiversityFactorCalculatorPage() {
               Getting diversity right is critical. Apply too much diversity and the supply could be
               overloaded, causing the DNO fuse to blow or the main switch to trip. Apply too little
               diversity and the installation may require an unnecessarily expensive supply upgrade,
-              larger main tails, and an oversized distribution board. The IET On-Site Guide Table 1A
+              larger main tails, and an oversized distribution board. The IET On-Site Guide Table A2
               provides standardised diversity allowances based on decades of measured usage patterns
               in UK installations. Use the{' '}
               <SEOInternalLink href="/tools/cable-sizing-calculator">
@@ -240,12 +240,12 @@ export default function DiversityFactorCalculatorPage() {
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              IET On-Site Guide Table 1A Diversity Allowances
+              IET On-Site Guide Table A2 Diversity Allowances
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The IET On-Site Guide, which accompanies BS 7671:2018+A4:2026, contains Table 1A
+              The IET On-Site Guide, which accompanies BS 7671:2018+A4:2026, contains Table A2
               setting out the recommended diversity allowances for individual domestic and similar
               installations. These are the values that every UK electrician should use when
               assessing maximum demand:
@@ -377,7 +377,7 @@ export default function DiversityFactorCalculatorPage() {
             </ul>
 
             <h3 className="font-bold text-yellow-400 text-lg mt-6">
-              Applying Diversity (Table 1A)
+              Applying Diversity (Table A2)
             </h3>
             <div className="space-y-3 my-4">
               <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -500,7 +500,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Calculate Diversity Instantly with Elec-Mate"
-            description="Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and Elec-Mate applies IET On-Site Guide Table 1A diversity…"
+            description="Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and Elec-Mate applies IET On-Site Guide Table A2 diversity…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />

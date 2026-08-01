@@ -5,7 +5,6 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import {
@@ -25,6 +24,9 @@ import {
   getPowerOptionsLabel,
   searchChargers,
 } from '@/data/evChargerDatabase';
+
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 interface ChargerAutocompleteProps {
   value?: { make: string; model: string };
@@ -81,7 +83,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
       ? `${value.make} ${value.model}`
       : null;
 
-  // Charger list item — clean card style
+  // Charger list item — neutral surface, solid volt when selected
   const renderChargerItem = (charger: EVCharger, forMobile = false) => {
     const isSelected = selectedCharger?.id === charger.id;
     return (
@@ -89,67 +91,88 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         key={charger.id}
         onClick={() => handleSelect(charger)}
         className={cn(
-          'group relative overflow-hidden rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
+          'rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
           forMobile ? 'p-3.5' : 'p-2.5 mx-1',
           isSelected
-            ? 'bg-elec-yellow/10 border border-elec-yellow/30'
-            : 'bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06]'
+            ? 'bg-elec-yellow border border-elec-yellow'
+            : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]'
         )}
       >
-        {/* Accent line */}
-        <div className={cn(
-          'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-0 group-hover:opacity-60 transition-opacity',
-          isSelected ? 'from-elec-yellow to-amber-400 opacity-60' : 'from-elec-yellow/40 to-elec-yellow/10'
-        )} />
-
-        <div className="relative z-10">
-          {/* Make + Model */}
-          <div className="flex items-baseline gap-1.5 mb-1.5">
-            <span className={cn('font-bold text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
-              {charger.make}
-            </span>
-            <span className={cn('text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
-              {charger.model}
-            </span>
-          </div>
-
-          {/* Spec badges — no icons, just coloured text badges */}
-          <div className={cn('flex items-center gap-1.5 flex-wrap', forMobile ? '' : '')}>
-            <span className={cn(
-              'font-bold px-1.5 py-0.5 rounded bg-elec-yellow/15 text-elec-yellow',
-              forMobile ? 'text-[11px]' : 'text-[10px]'
-            )}>
-              {getPowerOptionsLabel(charger)}
-            </span>
-            <span className={cn(
-              'font-medium px-1.5 py-0.5 rounded bg-white/[0.06] text-white',
-              forMobile ? 'text-[11px]' : 'text-[10px]'
-            )}>
-              {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
-            </span>
-            <span className={cn(
-              'font-medium px-1.5 py-0.5 rounded bg-white/[0.06] text-white',
-              forMobile ? 'text-[11px]' : 'text-[10px]'
-            )}>
-              {charger.socketType}
-            </span>
-            {charger.rcdIntegral && (
-              <span className={cn(
-                'font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400',
-                forMobile ? 'text-[11px]' : 'text-[10px]'
-              )}>
-                RCD Built-in
-              </span>
+        {/* Make + Model */}
+        <div className="flex items-baseline gap-1.5 mb-1.5">
+          <span
+            className={cn(
+              'font-bold',
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
             )}
-          </div>
+          >
+            {charger.make}
+          </span>
+          <span
+            className={cn(
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
+            )}
+          >
+            {charger.model}
+          </span>
+        </div>
 
-          {/* Notes */}
-          {charger.notes && (
-            <p className={cn('text-white mt-1.5 line-clamp-1', forMobile ? 'text-[11px]' : 'text-[10px]')}>
-              {charger.notes}
-            </p>
+        {/* Spec badges — no icons, coloured text on neutral surfaces */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span
+            className={cn(
+              'font-bold px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-elec-yellow',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {getPowerOptionsLabel(charger)}
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {charger.socketType}
+          </span>
+          {charger.rcdIntegral && (
+            <span
+              className={cn(
+                'font-bold px-1.5 py-0.5 rounded',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-emerald-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              RCD Built-in
+            </span>
           )}
         </div>
+
+        {/* Notes */}
+        {charger.notes && (
+          <p
+            className={cn(
+              'mt-1.5 line-clamp-1',
+              isSelected ? 'text-black/70' : 'text-white/85',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {charger.notes}
+          </p>
+        )}
       </div>
     );
   };
@@ -161,8 +184,8 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full h-11 px-3 flex items-center justify-between rounded-lg text-left touch-manipulation active:scale-[0.98] transition-all',
-        'bg-white/[0.06] border border-white/[0.08]',
+        'w-full h-11 px-3.5 flex items-center justify-between rounded-xl text-left touch-manipulation active:scale-[0.98] transition-all',
+        'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
@@ -176,7 +199,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             )}
           </div>
         ) : (
-          <span className="text-sm text-white">Search UK chargers...</span>
+          <span className="text-sm text-white/80">Search UK chargers…</span>
         )}
       </div>
       {selectedCharger && (
@@ -193,9 +216,9 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
               handleClear(e as unknown as React.MouseEvent);
             }
           }}
-          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0"
+          className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0 text-white text-base leading-none"
         >
-          <X className="h-3.5 w-3.5 text-white" />
+          &times;
         </span>
       )}
     </button>
@@ -214,12 +237,12 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         >
           <div className="flex flex-col max-h-[70vh]">
             {/* Search */}
-            <div className="px-4 py-3 border-b border-white/[0.06] sticky top-0 bg-background">
+            <div className="px-4 pt-1 pb-3 sticky top-0 bg-background">
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by make or model..."
-                className="h-11 text-base bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30"
+                placeholder="e.g. Zappi, Ohme, Easee"
+                className={searchInputCn}
               />
             </div>
 
@@ -228,7 +251,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
               {filteredChargers.length === 0 ? (
                 <div className="py-12 text-center">
                   <p className="text-sm font-semibold text-white">No chargers found</p>
-                  <p className="text-xs text-white mt-1">Try a different make or model</p>
+                  <p className="text-xs text-white/85 mt-1">Try a different make or model</p>
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -239,7 +262,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
 
             {/* Footer */}
             <div className="border-t border-white/[0.06] px-4 py-2.5">
-              <p className="text-[10px] text-white text-center">
+              <p className="text-[11px] text-white/80 text-center">
                 {EV_CHARGERS.length} UK chargers · 2025/2026
               </p>
             </div>
@@ -259,12 +282,12 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         sideOffset={4}
       >
         <Command className="bg-background" shouldFilter={false}>
-          <div className="px-3 py-2.5 border-b border-white/[0.06]">
+          <div className="px-3 pt-1 pb-2.5">
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search chargers..."
-              className="h-9 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white/30"
+              placeholder="e.g. Zappi, Ohme, Easee"
+              className={searchInputCn}
             />
           </div>
 
@@ -293,7 +316,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
           </CommandList>
 
           <div className="border-t border-white/[0.06] px-3 py-2">
-            <p className="text-[10px] text-white text-center">
+            <p className="text-[11px] text-white/80 text-center">
               {EV_CHARGERS.length} UK chargers · 2025/2026
             </p>
           </div>

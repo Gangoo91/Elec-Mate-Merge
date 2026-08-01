@@ -85,6 +85,7 @@ export interface EICDistributionBoard {
   spd_na: boolean;
   polarity_confirmed: boolean;
   phase_sequence_confirmed: boolean;
+  ring_final_circuit_confirmed: boolean;
   supply_from: string;
   supply_cable_size: string;
   supply_cable_type: string;
@@ -188,6 +189,8 @@ export interface EICPayload {
     board_size: string;
     board_type: string;
     board_location: string;
+    board_make: string;
+    board_model: string;
   };
 
   distribution_boards: EICDistributionBoard[];
@@ -256,6 +259,7 @@ export interface EICPayload {
     confirmed_phase_sequence: boolean;
     spd_operational_status: boolean;
     spd_na: boolean;
+    ring_final_circuit_confirmed: boolean;
   };
 
   designer: {
@@ -281,6 +285,7 @@ export interface EICPayload {
     phone: string;
     date: string;
     signature: string;
+    bs7671_amendment_date: string;
   };
 
   constructor: {

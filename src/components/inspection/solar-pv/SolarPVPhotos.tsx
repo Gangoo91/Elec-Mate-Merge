@@ -12,19 +12,7 @@
  */
 
 import React, { useRef, useState } from 'react';
-import {
-  Camera,
-  Upload,
-  X,
-  Image,
-  Loader2,
-  ZoomIn,
-  Sun,
-  Zap,
-  Gauge,
-  Power,
-  Tag,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -50,13 +38,24 @@ interface SolarPVPhotosProps {
 }
 
 const PHOTO_CATEGORIES = [
-  { value: 'array', label: 'PV Array', icon: Sun, color: 'text-amber-400' },
-  { value: 'inverter', label: 'Inverter', icon: Zap, color: 'text-blue-400' },
-  { value: 'meter', label: 'Meter', icon: Gauge, color: 'text-green-400' },
-  { value: 'isolator', label: 'Isolator', icon: Power, color: 'text-red-400' },
-  { value: 'label', label: 'Labels & Signage', icon: Tag, color: 'text-purple-400' },
-  { value: 'general', label: 'General', icon: Image, color: 'text-white' },
+  { value: 'array', label: 'PV Array' },
+  { value: 'inverter', label: 'Inverter' },
+  { value: 'meter', label: 'Meter' },
+  { value: 'isolator', label: 'Isolator' },
+  { value: 'label', label: 'Labels & Signage' },
+  { value: 'general', label: 'General' },
 ] as const;
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const selectTriggerCn =
+  'h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none data-[state=open]:border-elec-yellow data-[state=open]:ring-0 touch-manipulation';
 
 export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
   photos,
@@ -209,16 +208,6 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
     toast.success('Photo deleted');
   };
 
-  const getCategoryIcon = (category: CertificatePhoto['category']) => {
-    const cat = PHOTO_CATEGORIES.find((c) => c.value === category);
-    return cat ? cat.icon : Image;
-  };
-
-  const getCategoryColor = (category: CertificatePhoto['category']) => {
-    const cat = PHOTO_CATEGORIES.find((c) => c.value === category);
-    return cat ? cat.color : 'text-white';
-  };
-
   const getCategoryLabel = (category: CertificatePhoto['category']): string => {
     return PHOTO_CATEGORIES.find((c) => c.value === category)?.label || category;
   };
@@ -248,50 +237,41 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
   const linkOptions = getLinkOptions();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Upload Section */}
-      <div className="bg-card/50 border border-white/10 rounded-lg p-4 space-y-4">
-        <h4 className="font-medium text-sm flex items-center gap-2">
-          <Camera className="h-4 w-4 text-amber-400" />
-          Add Photo
-        </h4>
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Add Photo</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label className="text-xs text-white">Photo Category</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <Label className={labelCn}>Photo Category</Label>
             <Select
               value={selectedCategory}
               onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
             >
-              <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+              <SelectTrigger className={selectTriggerCn}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-white/20">
-                {PHOTO_CATEGORIES.map((cat) => {
-                  const Icon = cat.icon;
-                  return (
-                    <SelectItem key={cat.value} value={cat.value}>
-                      <div className="flex items-center gap-2">
-                        <Icon className={`h-4 w-4 ${cat.color}`} />
-                        {cat.label}
-                      </div>
-                    </SelectItem>
-                  );
-                })}
+              <SelectContent className="z-[100] bg-elec-gray border-white/[0.12] text-white">
+                {PHOTO_CATEGORIES.map((cat) => (
+                  <SelectItem key={cat.value} value={cat.value}>
+                    {cat.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
 
           {linkOptions.length > 0 && (
-            <div className="space-y-2">
-              <Label className="text-xs text-white">
+            <div>
+              <Label className={labelCn}>
                 Link to {selectedCategory === 'array' ? 'Array' : 'Inverter'} (Optional)
               </Label>
               <Select value={selectedLinkedId} onValueChange={setSelectedLinkedId}>
-                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                <SelectTrigger className={selectTriggerCn}>
                   <SelectValue placeholder={`Select ${selectedCategory}...`} />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-white/20">
+                <SelectContent className="z-[100] bg-elec-gray border-white/[0.12] text-white">
                   <SelectItem value="">No link</SelectItem>
                   {linkOptions.map((opt) => (
                     <SelectItem key={opt.id} value={opt.id}>
@@ -304,13 +284,13 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
           )}
         </div>
 
-        <div className="space-y-2">
-          <Label className="text-xs text-white">Caption (Optional)</Label>
+        <div>
+          <Label className={labelCn}>Caption (Optional)</Label>
           <Input
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
-            placeholder="e.g., South-facing array on main roof"
-            className="h-11 touch-manipulation bg-elec-gray border-white/30"
+            placeholder="e.g. South-facing array on main roof"
+            className={inputCn}
           />
         </div>
 
@@ -323,30 +303,25 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
           className="hidden"
         />
 
-        <div className="flex gap-2">
-          <Button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isUploading}
-            className="flex-1 h-11 touch-manipulation bg-amber-600 hover:bg-amber-700"
-          >
-            {isUploading ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Uploading...
-              </>
-            ) : (
-              <>
-                <Upload className="h-4 w-4 mr-2" />
-                Upload Photo
-              </>
-            )}
-          </Button>
-        </div>
+        <Button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isUploading}
+          className="w-full h-12 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation disabled:bg-elec-yellow disabled:text-black disabled:opacity-100"
+        >
+          {isUploading ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin text-black" />
+              Uploading...
+            </>
+          ) : (
+            'Upload Photo'
+          )}
+        </Button>
 
         {/* Photo Requirements Info */}
-        <div className="text-xs text-white bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-          <p className="font-medium text-amber-400 mb-1">MCS Photo Requirements:</p>
-          <ul className="space-y-0.5 list-disc list-inside">
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-[12px] font-semibold text-elec-yellow mb-1">MCS photo requirements</p>
+          <ul className="space-y-0.5 list-disc list-inside text-[12px] text-white/90">
             <li>At least one photo of each PV array</li>
             <li>Inverter installation showing labels</li>
             <li>AC and DC isolator positions</li>
@@ -358,90 +333,81 @@ export const SolarPVPhotos: React.FC<SolarPVPhotosProps> = ({
 
       {/* Photos Grid */}
       {photos.length > 0 ? (
-        <div className="space-y-4">
-          {photosByCategory.map((category) => {
-            const Icon = category.icon;
-            return (
-              <div key={category.value} className="space-y-2">
-                <h4 className="text-sm font-medium text-white flex items-center gap-2">
-                  <Icon className={`h-4 w-4 ${category.color}`} />
-                  {category.label} ({category.photos.length})
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {category.photos.map((photo) => (
-                    <div key={photo.id} className="relative group">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <div className="aspect-square rounded-lg overflow-hidden border border-white/10 cursor-pointer hover:border-amber-500/50 transition-colors">
-                            <img
-                              src={photo.url}
-                              alt={photo.caption || getCategoryLabel(photo.category)}
-                              className="w-full h-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                              <ZoomIn className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </div>
-                          </div>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-3xl p-2 bg-elec-gray border-white/20">
+        <div className={cardCn}>
+          {photosByCategory.map((category) => (
+            <div key={category.value} className="space-y-2">
+              <h3 className="text-sm font-semibold text-white">
+                {category.label} ({category.photos.length})
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {category.photos.map((photo) => (
+                  <div key={photo.id} className="relative">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div className="aspect-square rounded-xl overflow-hidden border border-white/[0.12] cursor-pointer touch-manipulation">
                           <img
                             src={photo.url}
                             alt={photo.caption || getCategoryLabel(photo.category)}
-                            className="w-full h-auto rounded-lg"
+                            className="w-full h-full object-cover"
                           />
-                          {photo.caption && (
-                            <p className="text-center text-sm text-white mt-2">{photo.caption}</p>
-                          )}
-                        </DialogContent>
-                      </Dialog>
-
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        className="absolute top-1 right-1 h-11 w-11 opacity-0 group-hover:opacity-100 transition-opacity touch-manipulation"
-                        aria-label="Remove photo"
-                        onClick={() => deletePhoto(photo.id)}
-                      >
-                        <X className="h-3 w-3" />
-                      </Button>
-
-                      {photo.caption && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-2 py-1 text-xs text-white truncate">
-                          {photo.caption}
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl p-2 bg-elec-gray border-white/[0.12]">
+                        <img
+                          src={photo.url}
+                          alt={photo.caption || getCategoryLabel(photo.category)}
+                          className="w-full h-auto rounded-xl"
+                        />
+                        {photo.caption && (
+                          <p className="text-center text-sm text-white mt-2">{photo.caption}</p>
+                        )}
+                      </DialogContent>
+                    </Dialog>
+
+                    <button
+                      type="button"
+                      aria-label="Remove photo"
+                      onClick={() => deletePhoto(photo.id)}
+                      className="absolute top-1.5 right-1.5 w-8 h-8 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90 text-white text-base leading-none"
+                    >
+                      &times;
+                    </button>
+
+                    {photo.caption && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-2 py-1 text-[11px] text-white truncate rounded-b-xl">
+                        {photo.caption}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       ) : (
-        <div className="text-center py-8 text-white">
-          <Sun className="h-12 w-12 mx-auto mb-2 opacity-30" />
-          <p className="text-sm">No photos added yet</p>
-          <p className="text-xs">Upload photos to document the installation</p>
+        <div className={cardCn}>
+          <div className="rounded-xl border border-dashed border-white/[0.2] p-6 text-center">
+            <p className="text-sm text-white">No photos added yet</p>
+            <p className="text-[12px] text-white/80 mt-0.5">Upload photos to document the installation</p>
+          </div>
         </div>
       )}
 
       {/* Photo Count Summary */}
       {photos.length > 0 && (
-        <div className="bg-card/50 border border-white/10 rounded-lg p-3">
+        <div className={cardCn}>
           <div className="flex items-center justify-between text-sm">
             <span className="text-white">Total Photos</span>
-            <span className="font-semibold text-amber-400">{photos.length}</span>
+            <span className="font-semibold text-elec-yellow">{photos.length}</span>
           </div>
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
             {PHOTO_CATEGORIES.map((cat) => {
               const count = photos.filter((p) => p.category === cat.value).length;
               if (count === 0) return null;
-              const Icon = cat.icon;
               return (
-                <div key={cat.value} className="flex items-center gap-1 text-xs text-white">
-                  <Icon className={`h-3 w-3 ${cat.color}`} />
-                  {count}
-                </div>
+                <span key={cat.value} className="text-[12px] text-white/90">
+                  {cat.label}: <span className="font-semibold text-white">{count}</span>
+                </span>
               );
             })}
           </div>

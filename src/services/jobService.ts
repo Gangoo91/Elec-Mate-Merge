@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 export type JobStatus = 'Active' | 'Pending' | 'Completed' | 'On Hold' | 'Cancelled';
 
@@ -136,7 +137,12 @@ export const createJob = async (
 
   const { data, error } = await supabase
     .from('employer_jobs')
-    .insert({ ...job, ...(coords ?? {}), user_id: userData.user.id })
+    .insert({
+      ...job,
+      ...(coords ?? {}),
+      // user_id IS the owning company on employer_jobs (no employer_id column).
+      user_id: (await getActingEmployerId(userData.user.id)) ?? userData.user.id,
+    })
     .select()
     .single();
 

@@ -90,7 +90,8 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
   const [showForm, setShowForm] = useState(false);
   const { data: checks = [], isLoading } = usePreUseChecks();
   const { data: jobs = [] } = useSparkProjects('active');
-  const jobTitleFor = (id: string | null) => (id ? jobs.find((j) => j.id === id)?.title ?? null : null);
+  const jobTitleFor = (id: string | null) =>
+    id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
   const [searchQuery, setSearchQuery] = useState('');
   const [resultFilter, setResultFilter] = useState('all');
 
@@ -106,8 +107,14 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
     });
   }, [checks, searchQuery, resultFilter]);
 
-  const passCount = useMemo(() => checks.filter((c) => c.overall_result === 'pass').length, [checks]);
-  const failCount = useMemo(() => checks.filter((c) => c.overall_result === 'fail').length, [checks]);
+  const passCount = useMemo(
+    () => checks.filter((c) => c.overall_result === 'pass').length,
+    [checks]
+  );
+  const failCount = useMemo(
+    () => checks.filter((c) => c.overall_result === 'fail').length,
+    [checks]
+  );
 
   const filterTabs = useMemo(
     () => [
@@ -176,8 +183,18 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
           <StatStrip
             stats={[
               { value: checks.length, label: 'Total', onClick: () => setResultFilter('all') },
-              { value: passCount, label: 'Pass', tone: 'green', onClick: () => setResultFilter('pass') },
-              { value: failCount, label: 'Fail', tone: 'red', onClick: () => setResultFilter('fail') },
+              {
+                value: passCount,
+                label: 'Pass',
+                tone: 'green',
+                onClick: () => setResultFilter('pass'),
+              },
+              {
+                value: failCount,
+                label: 'Fail',
+                tone: 'red',
+                onClick: () => setResultFilter('fail'),
+              },
             ]}
             columns={3}
           />
@@ -206,7 +223,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
               <button
                 key={cat.key}
                 onClick={() => handleCategorySelect(cat.key)}
-                className="text-left p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-[hsl(0_0%_12%)] touch-manipulation active:scale-[0.98] transition-all"
+                className="text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.04] hover:bg-[hsl(0_0%_12%)] touch-manipulation active:scale-[0.98] transition-all"
               >
                 <span className="block text-[13px] font-medium text-white">{cat.label}</span>
                 <span className="mt-1.5 flex items-center gap-2">
@@ -215,7 +232,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                       {reg.shortName}
                     </span>
                   )}
-                  <span className="text-[10.5px] text-white/45">{itemCount} checks</span>
+                  <span className="text-[10.5px] text-white">{itemCount} checks</span>
                 </span>
               </button>
             );
@@ -262,7 +279,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
                     trailing={
                       <div className="flex flex-col items-end gap-1">
                         <ResultPill result={check.overall_result} />
-                        <span className="text-[11px] text-white/45 tabular-nums">
+                        <span className="text-[11px] text-white tabular-nums">
                           {fmtCardDate(check.created_at)}
                         </span>
                       </div>

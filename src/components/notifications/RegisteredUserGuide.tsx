@@ -1,7 +1,5 @@
-import { ArrowUpRight } from 'lucide-react';
 import { PORTAL_LINKS } from '@/utils/portalLinks';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { cn } from '@/lib/utils';
 
 interface RegisteredUserGuideProps {
   showNiceic: boolean;
@@ -18,31 +16,31 @@ export const RegisteredUserGuide = ({ showNiceic, showNapit }: RegisteredUserGui
   // If neither flag is set we can't tell which scheme — offer both portals.
   const showBoth = !showNiceic && !showNapit;
   const portals = [
-    (showNapit || showBoth) && { name: 'NAPIT', dot: 'bg-blue-400', url: PORTAL_LINKS.napit.url },
-    (showNiceic || showBoth) && { name: 'NICEIC', dot: 'bg-amber-400', url: PORTAL_LINKS.niceic.url },
-  ].filter(Boolean) as { name: string; dot: string; url: string }[];
+    (showNapit || showBoth) && { name: 'NAPIT', url: PORTAL_LINKS.napit.url },
+    (showNiceic || showBoth) && { name: 'NICEIC', url: PORTAL_LINKS.niceic.url },
+  ].filter(Boolean) as { name: string; url: string }[];
 
   return (
-    <div className="rounded-2xl border border-white/[0.09] bg-white/[0.02] p-4">
-      <div className="flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" aria-hidden />
-        <p className="text-[13.5px] font-semibold tracking-tight text-white">
-          Registered with {portals.map((p) => p.name).join(' & ')}
+    <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" aria-hidden />
+          <p className="text-[13.5px] font-semibold tracking-tight text-white">
+            Registered with {portals.map((p) => p.name).join(' & ')}
+          </p>
+        </div>
+        <p className="mt-0.5 text-[12px] leading-relaxed text-white/60">
+          Self-certify and submit directly — no Building Control fee.
         </p>
       </div>
-      <p className="mt-1 text-[12px] leading-relaxed text-white/75">
-        Self-certify and submit directly — no Building Control fee.
-      </p>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="flex shrink-0 flex-wrap gap-2">
         {portals.map((p) => (
           <button
             key={p.name}
             onClick={() => openExternalUrl(p.url)}
-            className="group inline-flex items-center gap-2 h-9 px-3.5 rounded-xl border border-white/[0.1] bg-white/[0.03] text-[13px] font-medium text-white touch-manipulation transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.05] active:scale-[0.98] focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50"
+            className="inline-flex h-10 items-center rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation transition-colors hover:bg-elec-yellow/90 active:scale-[0.98]"
           >
-            <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', p.dot)} aria-hidden />
-            {p.name} portal
-            <ArrowUpRight className="h-3.5 w-3.5 text-elec-yellow transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            Open {p.name} portal
           </button>
         ))}
       </div>

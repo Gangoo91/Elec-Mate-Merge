@@ -3,7 +3,13 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 import {
   PageHero,
@@ -19,11 +25,11 @@ import {
   ListRow,
   PrimaryButton,
   SecondaryButton,
-  selectTriggerClass,
   selectContentClass,
-  inputClass,
   type Tone,
 } from '@/components/college/primitives';
+
+import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
 
 import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { HazardSelect } from './common/HazardSelect';
@@ -160,7 +166,13 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
   });
 
   const resetDraft = () =>
-    setCurrentRisk({ category: '', description: '', likelihood: 1, severity: 1, controlMeasures: [] });
+    setCurrentRisk({
+      category: '',
+      description: '',
+      likelihood: 1,
+      severity: 1,
+      controlMeasures: [],
+    });
 
   const closeSheet = () => {
     setShowAddSheet(false);
@@ -225,7 +237,8 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
 
   // Most severe to the top, then by score.
   const sorted = [...filtered].sort((a, b) => {
-    if (bandRank[a.riskLevel] !== bandRank[b.riskLevel]) return bandRank[a.riskLevel] - bandRank[b.riskLevel];
+    if (bandRank[a.riskLevel] !== bandRank[b.riskLevel])
+      return bandRank[a.riskLevel] - bandRank[b.riskLevel];
     return b.likelihood * b.severity - a.likelihood * a.severity;
   });
 
@@ -281,10 +294,30 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
         riskFactors.length > 0 ? (
           <StatStrip
             stats={[
-              { value: stats.total, label: 'Total', accent: true, onClick: () => setFilterBand('all') },
-              { value: stats.high, label: 'High risk', tone: 'red', onClick: () => setFilterBand('High') },
-              { value: stats.medium, label: 'Medium', tone: 'amber', onClick: () => setFilterBand('Medium') },
-              { value: stats.low, label: 'Low', tone: 'green', onClick: () => setFilterBand('Low') },
+              {
+                value: stats.total,
+                label: 'Total',
+                accent: true,
+                onClick: () => setFilterBand('all'),
+              },
+              {
+                value: stats.high,
+                label: 'High risk',
+                tone: 'red',
+                onClick: () => setFilterBand('High'),
+              },
+              {
+                value: stats.medium,
+                label: 'Medium',
+                tone: 'amber',
+                onClick: () => setFilterBand('Medium'),
+              },
+              {
+                value: stats.low,
+                label: 'Low',
+                tone: 'green',
+                onClick: () => setFilterBand('Low'),
+              },
             ]}
           />
         ) : undefined
@@ -317,7 +350,10 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
           }}
         />
       ) : filtered.length === 0 ? (
-        <EmptyState title="No hazards match your filter" description="Try a different risk band or clear your search." />
+        <EmptyState
+          title="No hazards match your filter"
+          description="Try a different risk band or clear your search."
+        />
       ) : (
         <div className="space-y-6">
           <ListCard>
@@ -332,7 +368,9 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                   subtitle={
                     <span>
                       {risk.category} · L{risk.likelihood} × S{risk.severity} = {score}
-                      {missingControls ? ' · No control recorded' : ` · ${risk.controlMeasures.length} control${risk.controlMeasures.length === 1 ? '' : 's'}`}
+                      {missingControls
+                        ? ' · No control recorded'
+                        : ` · ${risk.controlMeasures.length} control${risk.controlMeasures.length === 1 ? '' : 's'}`}
                     </span>
                   }
                   trailing={
@@ -345,7 +383,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                           removeRiskFactor(risk.id);
                         }}
                         aria-label="Remove risk factor"
-                        className="text-[11px] font-medium text-white/45 hover:text-red-400 transition-colors touch-manipulation h-11 px-1 -mr-1"
+                        className="text-[11px] font-medium text-white hover:text-red-400 transition-colors touch-manipulation h-11 px-1 -mr-1"
                       >
                         Remove
                       </button>
@@ -372,7 +410,10 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
 
       {/* ─── Add risk factor sheet ─── */}
       <Sheet open={showAddSheet} onOpenChange={(o) => (o ? setShowAddSheet(true) : closeSheet())}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <SheetShell
             eyebrow="New risk factor"
             title="Identify a hazard"
@@ -402,7 +443,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                     }));
                   }}
                 >
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={safetySelectTriggerCn}>
                     <SelectValue placeholder="Select a hazard category" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -418,7 +459,9 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
               <Field label="Specific hazard" required>
                 <HazardSelect
                   value={currentRisk.description}
-                  onValueChange={(value) => setCurrentRisk((prev) => ({ ...prev, description: value }))}
+                  onValueChange={(value) =>
+                    setCurrentRisk((prev) => ({ ...prev, description: value }))
+                  }
                   placeholder="Select or search for a specific hazard…"
                   showQuickPicks={false}
                 />
@@ -430,9 +473,11 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                 <Field label="Likelihood (1–5)">
                   <Select
                     value={String(currentRisk.likelihood)}
-                    onValueChange={(v) => setCurrentRisk((prev) => ({ ...prev, likelihood: Number(v) }))}
+                    onValueChange={(v) =>
+                      setCurrentRisk((prev) => ({ ...prev, likelihood: Number(v) }))
+                    }
                   >
-                    <SelectTrigger className={selectTriggerClass}>
+                    <SelectTrigger className={safetySelectTriggerCn}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className={selectContentClass}>
@@ -447,9 +492,11 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                 <Field label="Severity (1–5)">
                   <Select
                     value={String(currentRisk.severity)}
-                    onValueChange={(v) => setCurrentRisk((prev) => ({ ...prev, severity: Number(v) }))}
+                    onValueChange={(v) =>
+                      setCurrentRisk((prev) => ({ ...prev, severity: Number(v) }))
+                    }
                   >
-                    <SelectTrigger className={selectTriggerClass}>
+                    <SelectTrigger className={safetySelectTriggerCn}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className={selectContentClass}>
@@ -463,8 +510,8 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                 </Field>
               </div>
 
-              <div className="flex items-center justify-between gap-3 px-3 h-11 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]">
-                <span className="text-[12.5px] text-white/70">
+              <div className="flex h-11 items-center justify-between gap-3 border-b border-white/[0.15] px-1">
+                <span className="text-[12.5px] text-white">
                   Score {currentRisk.likelihood * currentRisk.severity}/25
                 </span>
                 <BandPill band={draftBand} />
@@ -502,8 +549,13 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                 <ListCard>
                   {currentRisk.controlMeasures.map((c, i) => (
                     <div key={`${c}-${i}`} className="flex items-center gap-3 px-4 py-3">
-                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0" />
-                      <span className="flex-1 min-w-0 text-[12.5px] text-white/90 leading-relaxed">{c}</span>
+                      <span
+                        aria-hidden
+                        className="h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0"
+                      />
+                      <span className="flex-1 min-w-0 text-[12.5px] text-white leading-relaxed">
+                        {c}
+                      </span>
                       <button
                         type="button"
                         onClick={() =>
@@ -513,7 +565,7 @@ const RiskAssessmentBuilder = ({ onBack }: { onBack?: () => void } = {}) => {
                           }))
                         }
                         aria-label="Remove control measure"
-                        className="text-[11px] font-medium text-white/45 hover:text-red-400 transition-colors touch-manipulation shrink-0"
+                        className="text-[11px] font-medium text-white hover:text-red-400 transition-colors touch-manipulation shrink-0"
                       >
                         Remove
                       </button>
@@ -556,7 +608,7 @@ function AddControlInput({ onAdd }: { onAdd: (text: string) => void }) {
             submit();
           }
         }}
-        className={inputClass}
+        className={safetyInputCn}
         placeholder="Type a control measure…"
       />
       <SecondaryButton onClick={submit} disabled={!value.trim()}>

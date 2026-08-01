@@ -94,8 +94,8 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
       )}
 
       <p className="text-[12px] text-white/55 leading-relaxed">
-        See the Risk Assessment tab for full hazard analysis, control measures and residual
-        risk ratings.
+        See the Risk Assessment tab for full hazard analysis, control measures and residual risk
+        ratings.
       </p>
     </section>
   );

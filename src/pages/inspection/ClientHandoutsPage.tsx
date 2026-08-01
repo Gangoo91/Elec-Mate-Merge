@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Loader2, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
@@ -106,7 +105,8 @@ const handouts: HandoutDef[] = [
   },
 ];
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30 focus:border-yellow-500 focus:ring-yellow-500';
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 export default function ClientHandoutsPage() {
   const navigate = useNavigate();
@@ -177,69 +177,68 @@ export default function ClientHandoutsPage() {
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Client Handouts</h1>
+        <div className="px-4 pt-3 pb-2 lg:px-8">
+          <div className="mx-auto max-w-3xl lg:max-w-[1600px]">
+            <button
+              onClick={() => navigate(-1)}
+              className="h-11 pr-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white touch-manipulation"
+            >
+              Back
+            </button>
+            <div className="flex items-end justify-between gap-3">
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">Client Handouts</h1>
+                <p className="mt-1 text-[13px] text-white/50">
+                  <span className="font-semibold text-elec-yellow">{handouts.length} branded PDF templates.</span>{' '}
+                  Your company name, logo, phone and email are added automatically from Business Settings — leave them with clients after jobs.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="h-[2px] bg-gradient-to-r from-emerald-500/40 via-emerald-500/20 to-transparent" />
       </div>
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-3xl mx-auto">
-        {/* Intro */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden card-surface-interactive rounded-2xl">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500/50 via-emerald-500/25 to-transparent" />
-          <div className="relative z-10 p-4">
-            <p className="text-sm font-bold text-white">Professional branded documents</p>
-            <p className="text-xs text-white mt-1 leading-relaxed">
-              Your company name, logo, phone and email are added automatically from Business Settings. Leave them with clients after jobs.
-            </p>
-          </div>
-        </motion.div>
-
+      <motion.main
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto max-w-3xl px-4 py-4 space-y-4 lg:max-w-[1600px] lg:px-8"
+      >
         {/* Handout cards */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <div className="border-b border-white/[0.06] pb-1">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-              {handouts.length} Templates
-            </h2>
-          </div>
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">{handouts.length} templates</h2>
 
-          {handouts.map((handout) => (
-            <motion.div key={handout.id} variants={itemVariants}>
-              <div className="group relative overflow-hidden card-surface-interactive rounded-2xl">
-                <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity', handout.accentColor)} />
-                <div className="relative z-10 p-4">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4">
+            {handouts.map((handout) => (
+              <motion.div key={handout.id} variants={itemVariants} className="h-full">
+                <div className="flex h-full flex-col -mx-4 rounded-none border-y border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] sm:mx-0 sm:rounded-2xl sm:border-x p-4 sm:p-5">
                   {/* Title row */}
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
-                        {handout.title}
-                      </h3>
-                    </div>
-                    <span className="text-[10px] font-bold text-white/30 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded flex-shrink-0">
+                  <div className="mb-2 flex items-start justify-between gap-3">
+                    <h3 className="min-w-0 flex-1 text-[15px] font-semibold leading-tight text-white">
+                      {handout.title}
+                    </h3>
+                    <span className="flex-shrink-0 rounded border border-white/[0.1] bg-white/[0.06] px-2 py-0.5 text-[11px] font-medium text-white/90">
                       {handout.pages}
                     </span>
                   </div>
 
                   {/* Description */}
-                  <p className="text-[12px] text-white leading-relaxed mb-3">{handout.description}</p>
+                  <p className="mb-3 text-[12.5px] leading-relaxed text-white/90">{handout.description}</p>
 
                   {/* Location fields for New Build Handover */}
                   {handout.id === 'new-build-handover' && (
                     <div className="mb-3">
                       <button
-                        onClick={(e) => { e.stopPropagation(); setShowLocationFields(!showLocationFields); }}
-                        className="text-[11px] font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowLocationFields(!showLocationFields);
+                        }}
+                        className="h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation active:scale-[0.98]"
                       >
                         {showLocationFields ? 'Hide location fields' : 'Add isolator locations (optional)'}
                       </button>
                       {showLocationFields && (
-                        <div className="space-y-2 mt-2">
+                        <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
                           {[
                             { key: 'cu_location', label: 'Consumer unit location', placeholder: 'e.g. Under stairs cupboard' },
                             { key: 'main_switch_rating', label: 'Main switch rating', placeholder: 'e.g. 100A' },
@@ -249,7 +248,7 @@ export default function ClientHandoutsPage() {
                             { key: 'immersion_location', label: 'Immersion heater (if fitted)', placeholder: 'e.g. Hot press, landing' },
                           ].map(({ key, label, placeholder }) => (
                             <div key={key}>
-                              <Label className="text-white text-[10px] mb-1 block">{label}</Label>
+                              <Label className="mb-1.5 block text-[13px] font-medium text-white">{label}</Label>
                               <Input
                                 value={locations[key as keyof typeof locations]}
                                 onChange={(e) => setLocations(p => ({ ...p, [key]: e.target.value }))}
@@ -266,34 +265,29 @@ export default function ClientHandoutsPage() {
                   {/* Download button */}
                   <button
                     className={cn(
-                      'w-full flex items-center justify-between h-11 px-4 rounded-xl text-sm font-medium touch-manipulation active:scale-[0.98] transition-all',
+                      'mt-auto h-11 w-full rounded-xl text-[14px] font-medium touch-manipulation active:scale-[0.99] transition-colors',
                       handout.category === 'coming-soon'
-                        ? 'bg-white/[0.04] border border-white/[0.06] text-white cursor-not-allowed'
-                        : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]'
+                        ? 'cursor-not-allowed border border-white/[0.08] bg-white/[0.04] text-white/90'
+                        : 'border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.1]'
                     )}
                     onClick={() => handleGenerate(handout)}
                     disabled={generatingId === handout.id || handout.category === 'coming-soon'}
                   >
-                    <span>
-                      {generatingId === handout.id ? (
-                        <span className="flex items-center gap-2">
-                          <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                          Generating...
-                        </span>
-                      ) : handout.category === 'coming-soon' ? (
-                        'Coming Soon'
-                      ) : (
-                        'Download PDF'
-                      )}
-                    </span>
-                    {handout.category !== 'coming-soon' && generatingId !== handout.id && (
-                      <ChevronRight className="h-4 w-4 text-white/30" />
+                    {generatingId === handout.id ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                        Generating...
+                      </span>
+                    ) : handout.category === 'coming-soon' ? (
+                      'Coming Soon'
+                    ) : (
+                      'Download PDF'
                     )}
                   </button>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </motion.section>
       </motion.main>
     </div>

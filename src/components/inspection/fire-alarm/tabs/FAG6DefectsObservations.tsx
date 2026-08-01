@@ -7,53 +7,42 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import { useParams } from 'react-router-dom';
-import { Trash2 as TrashPhoto } from 'lucide-react';
 
-const inputSmCn =
-  'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const Section = ({
-  title,
-  accentColor,
-  count,
-  children,
-}: {
-  title: string;
-  accentColor?: string;
-  count?: number;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-4">
-    <div className="border-b border-white/[0.06] pb-1 mb-3">
-      <div
-        className={cn(
-          'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
-          accentColor || 'from-red-500 to-rose-400'
-        )}
-      />
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-        {title}
-        {count !== undefined && (
-          <span className="text-[10px] font-bold text-white bg-white/[0.1] px-2 py-0.5 rounded">
-            {count}
-          </span>
-        )}
-      </h2>
-    </div>
-    {children}
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const comboTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:bg-transparent hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const addButtonCn =
+  'flex h-12 w-full items-center justify-center rounded-xl border-2 border-dashed border-white/[0.15] text-sm font-medium text-white touch-manipulation active:scale-[0.98]';
+
+const SectionHeader = ({ title, count }: { title: string; count?: number }) => (
+  <div className="mb-3 flex items-center justify-between gap-3">
+    <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+    {count !== undefined && count > 0 && (
+      <span className="shrink-0 text-sm font-medium text-white/80">{count}</span>
+    )}
   </div>
 );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -73,12 +62,14 @@ const severityOptions = [
 interface Props {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  /** Real report id from page state — useParams stays 'new' after replaceState. */
+  reportId?: string | null;
 }
 
-export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
+export default function FAG6DefectsObservations({ formData, onUpdate, reportId }: Props) {
   const { id } = useParams<{ id: string }>();
   const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
-    reportId: id || 'new', reportType: 'fire-alarm-inspection', itemId: 'general-photos',
+    reportId: reportId || id || 'new', reportType: 'fire-alarm-inspection', itemId: 'general-photos',
   });
   const previousDefects: any[] = formData.previousDefects || [];
   const newDefects: any[] = formData.defectsFound || [];
@@ -140,15 +131,12 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
 
 
   return (
-    <div className="space-y-5">
-      {/* Previous Defects */}
-      <Section
-        title="Previous Defects (from last visit)"
-        accentColor="from-amber-500/40 to-yellow-400/20"
-        count={previousDefects.length}
-      >
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Previous defects */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Previous defects (from last visit)" count={previousDefects.length} />
         {previousDefects.length === 0 && (
-          <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-4 text-center">
+          <div className="rounded-xl border border-green-500/30 bg-white/[0.05] p-4 text-center">
             <p className="text-sm font-medium text-green-400">No previous defects recorded</p>
           </div>
         )}
@@ -158,66 +146,49 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
             (a, b) => (a.status === 'outstanding' ? -1 : 1) - (b.status === 'outstanding' ? -1 : 1)
           )
           .map((d: any, idx: number) => (
-            <div
-              key={d.id}
-              className={cn(
-                'rounded-xl border overflow-hidden',
-                d.status === 'outstanding'
-                  ? 'border-red-500/30'
-                  : d.status === 'rectified'
-                    ? 'border-green-500/30'
-                    : 'border-white/[0.06]'
-              )}
-            >
-              <div
-                className={cn(
-                  'flex items-center justify-between px-3.5 py-2 border-b border-white/[0.06]',
-                  d.status === 'outstanding'
-                    ? 'bg-red-500/[0.05]'
-                    : d.status === 'rectified'
-                      ? 'bg-green-500/[0.05]'
-                      : 'bg-white/[0.04]'
-                )}
-              >
-                <span
-                  className={cn(
-                    'text-xs font-bold',
-                    d.status === 'outstanding'
-                      ? 'text-red-400'
+            <div key={d.id} className="border-t border-white/[0.08] pt-4">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <p className="text-sm font-semibold text-white">
+                  Previous defect {idx + 1}{' '}
+                  <span
+                    className={cn(
+                      d.status === 'outstanding'
+                        ? 'text-red-400'
+                        : d.status === 'rectified'
+                          ? 'text-green-400'
+                          : 'text-amber-400'
+                    )}
+                  >
+                    —{' '}
+                    {d.status === 'outstanding'
+                      ? 'Outstanding'
                       : d.status === 'rectified'
-                        ? 'text-green-400'
-                        : 'text-amber-400'
-                  )}
-                >
-                  Previous Defect {idx + 1} —{' '}
-                  {d.status === 'outstanding'
-                    ? 'OUTSTANDING'
-                    : d.status === 'rectified'
-                      ? 'RECTIFIED'
-                      : 'N/A'}
-                </span>
+                        ? 'Rectified'
+                        : 'N/A'}
+                  </span>
+                </p>
                 <button
                   onClick={() => removePreviousDefect(d.id)}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                  className="min-h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  Remove
                 </button>
               </div>
-              <div className="p-3.5 space-y-3 bg-white/[0.02]">
+              <div className="space-y-4">
                 <Field label="Description">
                   <Input
                     value={d.description || ''}
                     onChange={(e) => updatePreviousDefect(d.id, 'description', e.target.value)}
-                    className={inputSmCn}
+                    className={inputCn}
                   />
                 </Field>
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="Original Date">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Original date">
                     <Input
                       type="date"
                       value={d.originalDate || ''}
                       onChange={(e) => updatePreviousDefect(d.id, 'originalDate', e.target.value)}
-                      className={cn(inputSmCn, '[color-scheme:dark]')}
+                      className={inputCn}
                     />
                   </Field>
                   <Field label="Status">
@@ -226,7 +197,7 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
                       onChange={(v) => updatePreviousDefect(d.id, 'status', v)}
                       options={statusOptions}
                       placeholder="Status..."
-                      className="h-10 text-sm"
+                      className={comboTriggerCn}
                       allowCustom={false}
                     />
                   </Field>
@@ -235,49 +206,43 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
                   <Input
                     value={d.notes || ''}
                     onChange={(e) => updatePreviousDefect(d.id, 'notes', e.target.value)}
-                    className={inputSmCn}
+                    className={inputCn}
                     placeholder="Action taken..."
                   />
                 </Field>
               </div>
             </div>
           ))}
-        <button
-          onClick={addPreviousDefect}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-amber-500/20 flex items-center justify-center gap-2 text-sm font-medium text-amber-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add Previous Defect
+        <button onClick={addPreviousDefect} className={addButtonCn}>
+          Add previous defect
         </button>
-      </Section>
+      </div>
 
-      {/* New Defects */}
-      <Section
-        title="New Defects Found This Visit"
-        accentColor="from-red-500/40 to-rose-400/20"
-        count={newDefects.length}
-      >
+      {/* New defects */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="New defects found this visit" count={newDefects.length} />
         {newDefects.length === 0 && (
-          <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-4 text-center">
+          <div className="rounded-xl border border-green-500/30 bg-white/[0.05] p-4 text-center">
             <p className="text-sm font-medium text-green-400">No new defects found</p>
           </div>
         )}
         {newDefects.map((d: any, idx: number) => (
-          <div key={d.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
-              <span className="text-xs font-bold text-red-400">New Defect {idx + 1}</span>
+          <div key={d.id} className="border-t border-white/[0.08] pt-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-white">New defect {idx + 1}</p>
               <button
                 onClick={() => removeNewDefect(d.id)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="min-h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
               >
-                <Trash2 className="h-4 w-4" />
+                Remove
               </button>
             </div>
-            <div className="p-3.5 space-y-3 bg-white/[0.02]">
+            <div className="space-y-4">
               <Field label="Description">
                 <Textarea
                   value={d.description || ''}
                   onChange={(e) => updateNewDefect(d.id, 'description', e.target.value)}
-                  className="touch-manipulation text-base min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500"
+                  className={textareaCn}
                 />
               </Field>
               <Field label="Severity">
@@ -286,22 +251,24 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
                   onChange={(v) => updateNewDefect(d.id, 'severity', v)}
                   options={severityOptions}
                   placeholder="Select..."
-                  className="h-10 text-sm"
+                  className={comboTriggerCn}
                   allowCustom={false}
                 />
               </Field>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <button
-                  type="button"
-                  onClick={() => updateNewDefect(d.id, 'rectified', !d.rectified)}
+              <button
+                type="button"
+                onClick={() => updateNewDefect(d.id, 'rectified', !d.rectified)}
+                className="flex min-h-11 w-full items-center gap-3 text-left touch-manipulation"
+              >
+                <span
                   className={cn(
-                    'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0',
-                    d.rectified ? 'bg-green-500 border-green-500' : 'border-white/30'
+                    'flex h-5 w-5 shrink-0 items-center justify-center rounded border-2',
+                    d.rectified ? 'border-green-500 bg-green-500' : 'border-white/40'
                   )}
                 >
                   {d.rectified && (
                     <svg
-                      className="w-3 h-3 text-white"
+                      className="h-3 w-3 text-black"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -310,53 +277,53 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   )}
-                </button>
+                </span>
                 <span
-                  className={cn(
-                    'text-sm',
-                    d.rectified ? 'text-green-400 font-medium' : 'text-white'
-                  )}
+                  className={cn('text-sm', d.rectified ? 'font-medium text-green-400' : 'text-white')}
                 >
                   Rectified
                 </span>
-              </div>
+              </button>
               {d.rectified && (
-                <Field label="Rectification Date">
+                <Field label="Rectification date">
                   <Input
                     type="date"
                     value={d.rectificationDate || ''}
                     onChange={(e) => updateNewDefect(d.id, 'rectificationDate', e.target.value)}
-                    className={cn(inputSmCn, '[color-scheme:dark]')}
+                    className={inputCn}
                   />
                 </Field>
               )}
             </div>
           </div>
         ))}
-        <button
-          onClick={addNewDefect}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-red-500/20 flex items-center justify-center gap-2 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.98]"
-        >
-          <Plus className="h-4 w-4" /> Add New Defect
+        <button onClick={addNewDefect} className={addButtonCn}>
+          Add new defect
         </button>
-      </Section>
+      </div>
 
       {/* Photos */}
-      <Section title="Inspection Photos" accentColor="from-cyan-500/40 to-blue-400/20">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionHeader title="Inspection photos" />
         <InspectionPhotoUpload onPhotoCapture={async (file) => { await uploadPhoto(file); }} isUploading={isUploading} />
         {uploadedPhotos.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {uploadedPhotos.map((p) => (
-              <div key={p.id} className="relative rounded-xl overflow-hidden aspect-square">
-                <img src={p.url || p.thumbnailUrl} alt="" className="w-full h-full object-cover" />
-                <button type="button" onClick={() => deletePhoto(p.id)} className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90">
-                  <TrashPhoto className="h-3.5 w-3.5 text-white" />
+              <div key={p.id} className="relative aspect-square overflow-hidden rounded-xl">
+                <img src={p.url || p.thumbnailUrl} alt="" className="h-full w-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => deletePhoto(p.id)}
+                  className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-base leading-none text-white touch-manipulation active:scale-90"
+                  aria-label="Delete photo"
+                >
+                  ×
                 </button>
               </div>
             ))}
           </div>
         )}
-      </Section>
+      </div>
     </div>
   );
 }

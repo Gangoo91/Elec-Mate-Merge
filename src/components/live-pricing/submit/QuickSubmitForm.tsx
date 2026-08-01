@@ -19,6 +19,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { JobTypeConfig } from '@/hooks/useJobTypes';
 import JobTypeSelector from './JobTypeSelector';
 import JobTypeAttributeFields from './JobTypeAttributeFields';
+import { useLivePricingBenchmarks } from '../hooks/useLivePricing';
+import { classifyJobText, OTHER_JOB_TYPE } from '../lib/jobTaxonomy';
+import { regionFromPostcode } from '../lib/postcodeRegion';
 
 // Price Preview Component - extracted to avoid render issues
 function PricePreview({ price, averagePrice }: { price: string; averagePrice: number | null }) {
@@ -45,7 +48,7 @@ function PricePreview({ price, averagePrice }: { price: string; averagePrice: nu
 
     comparison = (
       <div className="text-right">
-        <p className="text-sm text-white">Market average</p>
+        <p className="text-sm text-white">Market median</p>
         <p className="text-lg font-semibold text-white">£{formattedAvg}</p>
         <p
           className={cn('text-xs font-medium mt-1', isAbove ? 'text-amber-400' : 'text-green-400')}
@@ -108,57 +111,42 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
     getUser();
   }, []);
 
-  // Fetch average price when job type and postcode change
+  // Real market median from live benchmarks (regional where available, else UK)
+  const { data: benchmarks } = useLivePricingBenchmarks();
   useEffect(() => {
-    const fetchAveragePrice = async () => {
-      // Need at least 2 characters for postcode district (e.g. "SW", "M1")
-      if (!formData.jobType || !formData.postcode || formData.postcode.length < 2) {
-        setAveragePrice(null);
-        return;
-      }
+    if (!formData.jobType || !benchmarks) {
+      setAveragePrice(null);
+      return;
+    }
 
-      const postcodeDistrict = formData.postcode.split(' ')[0].toUpperCase();
+    const classifierText = [
+      formData.jobType,
+      formData.customJobDescription,
+      Object.values(formData.jobAttributes).join(' '),
+    ].join(' ');
+    const canonicalType = classifyJobText(classifierText);
+    if (canonicalType === OTHER_JOB_TYPE) {
+      setAveragePrice(null);
+      return;
+    }
 
-      // Must have at least 2 chars for valid district
-      if (postcodeDistrict.length < 2) {
-        setAveragePrice(null);
-        return;
-      }
-
-      try {
-        // First try enhanced_regional_pricing for local market data
-        const { data: regionalData, error: regionalError } = await supabase
-          .from('enhanced_regional_pricing')
-          .select('average_price')
-          .eq('job_type', formData.jobType)
-          .eq('postcode_district', postcodeDistrict)
-          .maybeSingle();
-
-        if (!regionalError && regionalData?.average_price) {
-          setAveragePrice(regionalData.average_price);
-          return;
-        }
-
-        // Fallback to job_pricing_baseline if no regional data
-        const { data: baselineData, error: baselineError } = await supabase
-          .from('job_pricing_baseline')
-          .select('average_price')
-          .eq('job_type', formData.jobType)
-          .maybeSingle();
-
-        if (!baselineError && baselineData?.average_price) {
-          setAveragePrice(baselineData.average_price);
-        } else {
-          setAveragePrice(null);
-        }
-      } catch (error) {
-        console.error('Error fetching average price:', error);
-        setAveragePrice(null);
-      }
-    };
-
-    fetchAveragePrice();
-  }, [formData.jobType, formData.postcode]);
+    const region = regionFromPostcode(formData.postcode);
+    const regional = region
+      ? benchmarks.find(
+          (b) => b.scope === 'regional' && b.job_type === canonicalType && b.region === region
+        )
+      : undefined;
+    const national = benchmarks.find(
+      (b) => b.scope === 'national' && b.job_type === canonicalType
+    );
+    setAveragePrice((regional ?? national)?.median_price ?? null);
+  }, [
+    formData.jobType,
+    formData.postcode,
+    formData.customJobDescription,
+    formData.jobAttributes,
+    benchmarks,
+  ]);
 
   // Check price against average
   useEffect(() => {
@@ -465,7 +453,8 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
 
       {/* Helper Text */}
       <p className="text-xs text-white text-center">
-        Your data helps other electricians price jobs fairly
+        Quotes you create in Elec-Mate feed the benchmarks automatically — use this form for jobs
+        you priced elsewhere
       </p>
     </div>
   );

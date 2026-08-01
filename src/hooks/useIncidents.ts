@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useToast } from '@/hooks/use-toast';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 // Types based on database schema
 export type IncidentType =
@@ -144,7 +145,7 @@ export function useIncidents() {
       const { data, error } = await supabase
         .from('employer_incidents')
         .select('*')
-        .eq('employer_id', user.id)
+        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
         .order('reported_at', { ascending: false });
 
       // Surface real failures — a safety register must never render a
@@ -188,7 +189,7 @@ export function useIncidentsByStatus(status: IncidentStatus) {
       const { data, error } = await supabase
         .from('employer_incidents')
         .select('*')
-        .eq('employer_id', user.id)
+        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
         .eq('status', status)
         .order('reported_at', { ascending: false });
 
@@ -220,7 +221,7 @@ export function useIncidentStats() {
       const { data, error } = await supabase
         .from('employer_incidents')
         .select('status, severity, incident_type')
-        .eq('employer_id', user.id);
+        .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id);
 
       // Surface real failures instead of fabricating an all-zero safety record.
       if (error) throw error;

@@ -28,7 +28,9 @@ const SEVERITY_ORDER: Severity[] = ['critical', 'high', 'medium', 'low'];
 const SEVERITY_RANK: Record<Severity, number> = { critical: 0, high: 1, medium: 2, low: 3 };
 
 const fmtDate = (d?: string | null) =>
-  d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
 
 // Colour follows one meaningful dimension: severity.
 function severityTone(severity: string): Tone {
@@ -89,18 +91,25 @@ function AlertRow({ alert }: { alert: SafetyAlert }) {
         onClick={() => setIsExpanded((v) => !v)}
         className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
       >
-        <span aria-hidden className={cn('w-[3px] h-10 rounded-full shrink-0', SEVERITY_DOT[tone])} />
+        <span
+          aria-hidden
+          className={cn('w-[3px] h-10 rounded-full shrink-0', SEVERITY_DOT[tone])}
+        />
         <div className="flex-1 min-w-0">
-          <div className="text-sm sm:text-[15px] font-medium text-white truncate">{alert.title}</div>
-          <div className="mt-0.5 text-[11.5px] text-white/75 line-clamp-2">{alert.summary}</div>
+          <div className="text-sm sm:text-[15px] font-medium text-white truncate">
+            {alert.title}
+          </div>
+          <div className="mt-0.5 text-[11.5px] text-white line-clamp-2">{alert.summary}</div>
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
           <SeverityPill severity={alert.severity} />
-          <span className="text-[11px] tabular-nums text-white/45">{fmtDate(alert.date_published)}</span>
+          <span className="text-[11px] tabular-nums text-white">
+            {fmtDate(alert.date_published)}
+          </span>
         </div>
         <span
           className={cn(
-            'text-white/40 text-[13px] transition-transform duration-200 shrink-0',
+            'text-white text-[13px] transition-transform duration-200 shrink-0',
             isExpanded && 'rotate-180'
           )}
           aria-hidden
@@ -121,7 +130,7 @@ function AlertRow({ alert }: { alert: SafetyAlert }) {
             <div className="px-5 sm:px-6 pb-5 pt-0">
               <div className="border-t border-white/[0.06] pt-3">
                 <div
-                  className="prose prose-invert prose-sm max-w-none text-white/85 [&_p]:text-white/85 [&_li]:text-white/85 [&_h3]:text-white [&_h4]:text-white [&_a]:text-elec-yellow"
+                  className="prose prose-invert prose-sm max-w-none text-white [&_p]:text-white [&_li]:text-white [&_h3]:text-white [&_h4]:text-white [&_a]:text-elec-yellow"
                   dangerouslySetInnerHTML={{ __html: alert.content }}
                 />
               </div>
@@ -144,7 +153,9 @@ export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
   const severityCounts = useMemo(() => {
     const counts: Record<Severity, number> = { critical: 0, high: 0, medium: 0, low: 0 };
     for (const a of allAlerts) {
-      const key = (SEVERITY_ORDER.includes(a.severity as Severity) ? a.severity : 'medium') as Severity;
+      const key = (
+        SEVERITY_ORDER.includes(a.severity as Severity) ? a.severity : 'medium'
+      ) as Severity;
       counts[key] += 1;
     }
     return counts;
@@ -153,8 +164,14 @@ export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
   // Critical/high sort to top, then by date — urgent first.
   const sortedAlerts = useMemo(() => {
     return [...allAlerts].sort((a, b) => {
-      const ra = SEVERITY_RANK[(a.severity as Severity) in SEVERITY_RANK ? (a.severity as Severity) : 'medium'];
-      const rb = SEVERITY_RANK[(b.severity as Severity) in SEVERITY_RANK ? (b.severity as Severity) : 'medium'];
+      const ra =
+        SEVERITY_RANK[
+          (a.severity as Severity) in SEVERITY_RANK ? (a.severity as Severity) : 'medium'
+        ];
+      const rb =
+        SEVERITY_RANK[
+          (b.severity as Severity) in SEVERITY_RANK ? (b.severity as Severity) : 'medium'
+        ];
       if (ra !== rb) return ra - rb;
       return new Date(b.date_published).getTime() - new Date(a.date_published).getTime();
     });
@@ -246,7 +263,10 @@ export function SafetyAlertsFeed({ onBack }: SafetyAlertsFeedProps) {
           description="There are no safety alerts at the moment. Check back later for the latest industry notices."
         />
       ) : filteredAlerts.length === 0 ? (
-        <EmptyState title="No alerts match your filter" description="Try a different severity tab or clear your search." />
+        <EmptyState
+          title="No alerts match your filter"
+          description="Try a different severity tab or clear your search."
+        />
       ) : (
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
           {filteredAlerts.map((alert) => (

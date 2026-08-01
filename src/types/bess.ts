@@ -36,6 +36,7 @@ export interface BESSFormData {
   clientName: string;
   clientTelephone: string;
   clientEmail: string;
+  clientAddress: string;
 
   // Installation
   installationType: 'domestic' | 'commercial' | 'industrial';
@@ -289,6 +290,7 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   clientName: '',
   clientTelephone: '',
   clientEmail: '',
+  clientAddress: '',
 
   installationType: 'domestic',
   installationAddress: '',

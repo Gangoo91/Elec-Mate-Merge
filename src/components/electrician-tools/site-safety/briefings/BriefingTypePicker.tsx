@@ -1,65 +1,69 @@
-import { motion } from 'framer-motion';
-import { HardHat, Zap, Wrench, Flame, ArrowUp, Settings } from 'lucide-react';
+/**
+ * BriefingTypePicker — choosing what kind of briefing this is.
+ *
+ * This was a three-across grid of 88px tiles, each with a coloured icon and a
+ * one-word label: a hard hat, a lightning bolt, a spanner, a flame, an arrow, a
+ * cog. Six tiles, six different accent colours, and the `description` written
+ * for every one of them was never rendered — so "Toolbox" had to carry "daily
+ * toolbox talk" on its own, and "Custom" told the user nothing at all.
+ *
+ * The specialist certificates make this kind of choice as a ruled list: the
+ * option in full white, what it means underneath, and the selection carried by
+ * the accent rather than by a filled box. That is what this is now. The
+ * descriptions are visible, the six accent colours are gone, and a briefing type
+ * reads as a decision rather than an icon you have to interpret.
+ *
+ * The icons are not swapped for better icons — they are removed. The design
+ * system carries meaning in type (`.claude/rules/frontend.md`: "Section headings
+ * are plain type: no icons, no dots, no gradient bars").
+ */
+
 import { cn } from '@/lib/utils';
 
 export type BriefingType =
-  | 'site-induction'
-  | 'electrical'
-  | 'toolbox-talk'
-  | 'hot-works'
-  | 'height-work'
-  | 'custom';
+  'site-induction' | 'electrical' | 'toolbox-talk' | 'hot-works' | 'height-work' | 'custom';
 
 interface BriefingTypeOption {
   id: BriefingType;
   label: string;
   description: string;
-  icon: typeof HardHat;
-  color: string;
 }
 
+/**
+ * Labels are the full name now rather than the tile-width abbreviation —
+ * "Toolbox" was short because it had to fit a three-column grid, not because
+ * that is what the briefing is called on paper.
+ */
 const briefingTypes: BriefingTypeOption[] = [
   {
     id: 'site-induction',
-    label: 'Induction',
-    description: 'Site induction briefing',
-    icon: HardHat,
-    color: 'from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-400',
+    label: 'Site induction',
+    description: 'First day on site — layout, rules, welfare and emergency arrangements',
   },
   {
     id: 'electrical',
-    label: 'Electrical',
-    description: 'Electrical safety briefing',
-    icon: Zap,
-    color: 'from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow',
+    label: 'Electrical safety',
+    description: 'Isolation, proving dead, live working and the safe system of work',
   },
   {
     id: 'toolbox-talk',
-    label: 'Toolbox',
-    description: 'Daily toolbox talk',
-    icon: Wrench,
-    color: 'from-blue-500/20 to-blue-500/5 border-blue-500/30 text-blue-400',
+    label: 'Toolbox talk',
+    description: 'Short daily talk on a single topic before work starts',
   },
   {
     id: 'hot-works',
-    label: 'Hot Works',
-    description: 'Hot works permit briefing',
-    icon: Flame,
-    color: 'from-red-500/20 to-red-500/5 border-red-500/30 text-red-400',
+    label: 'Hot works',
+    description: 'Cutting, grinding or soldering — permit, fire watch and extinguishers',
   },
   {
     id: 'height-work',
-    label: 'Heights',
-    description: 'Working at heights',
-    icon: ArrowUp,
-    color: 'from-purple-500/20 to-purple-500/5 border-purple-500/30 text-purple-400',
+    label: 'Working at height',
+    description: 'Access equipment, edge protection and dropped-object control',
   },
   {
     id: 'custom',
-    label: 'Custom',
-    description: 'Create your own',
-    icon: Settings,
-    color: 'from-white/10 to-white/5 border-white/20 text-white',
+    label: 'Custom briefing',
+    description: 'Anything else — you write the content and the hazards',
   },
 ];
 
@@ -71,50 +75,56 @@ interface BriefingTypePickerProps {
 
 export function BriefingTypePicker({ value, onChange, error }: BriefingTypePickerProps) {
   return (
-    <div className="space-y-3">
-      <label className="block text-sm font-medium text-white">Select Briefing Type</label>
+    <fieldset className="space-y-1">
+      <legend className="mb-1 block text-[12px] font-medium text-white">
+        Briefing type
+        <span className="text-elec-yellow"> *</span>
+      </legend>
 
-      <div className="grid grid-cols-3 gap-2.5">
-        {briefingTypes.map((type, index) => {
+      <div
+        role="radiogroup"
+        aria-invalid={error ? true : undefined}
+        className="divide-y divide-white/[0.08] border-y border-white/[0.08]"
+      >
+        {briefingTypes.map((type) => {
           const isSelected = value === type.id;
-          const Icon = type.icon;
 
           return (
-            <motion.button
+            <button
               key={type.id}
               type="button"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
+              role="radio"
+              aria-checked={isSelected}
               onClick={() => onChange(type.id)}
-              className={cn(
-                'relative flex flex-col items-center justify-center p-4',
-                'rounded-xl border transition-all duration-200',
-                'touch-manipulation min-h-[88px]',
-                'active:scale-95',
-                isSelected
-                  ? cn('bg-gradient-to-br', type.color)
-                  : 'bg-white/5 border-white/10 hover:bg-white/10'
-              )}
+              className="flex w-full touch-manipulation items-start gap-3 px-1 py-3 text-left transition-colors active:bg-white/[0.04]"
             >
-              {isSelected && (
-                <motion.div
-                  layoutId="selectedType"
-                  className="absolute inset-0 rounded-xl ring-2 ring-elec-yellow"
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                />
-              )}
-              <Icon className={cn('h-6 w-6 mb-1.5', isSelected ? '' : 'text-white')} />
-              <span className={cn('text-sm font-medium', isSelected ? 'text-white' : 'text-white')}>
-                {type.label}
-              </span>
-            </motion.button>
+              <div className="min-w-0 flex-1">
+                <p
+                  className={cn(
+                    'text-[15px] text-white',
+                    isSelected ? 'font-semibold' : 'font-medium'
+                  )}
+                >
+                  {type.label}
+                </p>
+                <p className="mt-0.5 text-[12px] leading-snug text-white">{type.description}</p>
+              </div>
+
+              {/* Selection is a mark against the row, not a coloured fill. */}
+              <span
+                aria-hidden
+                className={cn(
+                  'mt-1.5 h-2 w-2 shrink-0 rounded-full transition-colors',
+                  isSelected ? 'bg-elec-yellow' : 'bg-transparent'
+                )}
+              />
+            </button>
           );
         })}
       </div>
 
-      {error && <p className="text-sm text-red-400 mt-1">{error}</p>}
-    </div>
+      {error && <p className="mt-1 text-[11px] font-medium text-red-400">{error}</p>}
+    </fieldset>
   );
 }
 

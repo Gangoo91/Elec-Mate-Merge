@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { SPD_MAKES, SPD_RATED_KA } from '@/constants/spdData';
@@ -28,14 +27,22 @@ import {
 } from '@/constants/deviceMappings';
 
 // ---------------------------------------------------------------------------
-// Local UI helpers (matching EIC pattern)
+// Local UI recipe (specialist-cert design system)
 // ---------------------------------------------------------------------------
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
 const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const FormField = ({
@@ -50,12 +57,12 @@ const FormField = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
+    <Label className={labelCn}>
       {label}
       {required && ' *'}
     </Label>
     {children}
-    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white/85 block mt-1">{hint}</span>}
   </div>
 );
 
@@ -66,11 +73,21 @@ const FormField = ({
 interface MWCircuitTabProps {
   formData: Record<string, string | boolean>;
   onUpdate: (field: string, value: string | boolean) => void;
-  isMobile?: boolean;
 }
 
-const inputClass =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]';
+// Protection state a preset must own outright: any of these it doesn't set are
+// reset on apply, so a previously applied preset (e.g. Ring Final's RCBO) can't
+// leak into one that doesn't use them (e.g. Cooker on an MCB standard).
+const PRESET_PROTECTION_RESETS: Record<string, string | boolean> = {
+  protectionRcd: false,
+  protectionRcbo: false,
+  protectionAfdd: false,
+  protectionSpd: false,
+  rcdType: '',
+  rcdIdn: '',
+  rcdBsEn: '',
+  rcdRatingAmps: '',
+};
 
 const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   // ============================================================================
@@ -78,6 +95,11 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   // ============================================================================
 
   const handleSmartDefaultApply = (values: SmartDefault['values']) => {
+    Object.entries(PRESET_PROTECTION_RESETS).forEach(([key, resetValue]) => {
+      if ((values as Record<string, string | boolean | undefined>)[key] === undefined) {
+        onUpdate(key, resetValue);
+      }
+    });
     Object.entries(values).forEach(([key, value]) => {
       if (value !== undefined) {
         onUpdate(key, value);
@@ -187,6 +209,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
     }
   };
 
+  // Handle live conductor size change, reconciling a stored CPC that the new
+  // size no longer permits (mirrors the filteredCpcSizes rule, BS 7671 Table 54.7)
+  const handleLiveConductorSizeChange = (value: string) => {
+    onUpdate('liveConductorSize', value);
+    if (!value || !formData.cpcSize) return;
+    const maxCpc = Math.max(parseFloat(value), 16);
+    if (parseFloat(formData.cpcSize as string) > maxCpc) {
+      onUpdate('cpcSize', '');
+    }
+  };
+
   // Auto-fill RCD defaults when protection type is toggled on
   const handleProtectionToggle = (field: string, checked: boolean) => {
     onUpdate(field, checked);
@@ -207,22 +240,26 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
     selected,
     label,
     onClick,
+    disabled,
   }: {
     selected: boolean;
     label: string;
     onClick: () => void;
+    disabled?: boolean;
   }) => (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
+      aria-disabled={disabled || undefined}
       className={cn(
-        'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+        'h-11 rounded-lg transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
         selected
-          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-          : 'bg-white/[0.05] border border-white/[0.08] text-white'
+          ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+          : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium',
+        disabled && 'opacity-40 active:scale-100'
       )}
     >
-      {selected && <Check className="h-3.5 w-3.5" />}
       {label}
     </button>
   );
@@ -238,17 +275,20 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   // ============================================================================
 
   return (
-    <div className="space-y-4">
+    <div className="px-4 sm:px-0 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Smart Defaults Quick Fill */}
-      <MWSmartDefaults onApply={handleSmartDefaultApply} />
+      <div className="lg:col-span-2">
+        <MWSmartDefaults onApply={handleSmartDefaultApply} />
+      </div>
 
       {/* ------------------------------------------------------------------ */}
       {/* CIRCUIT DETAILS                                                     */}
       {/* ------------------------------------------------------------------ */}
-      <SectionTitle title="Circuit Details" />
-      <div className="space-y-3">
-        <FormField label="Distribution Board">
-          <div className="grid grid-cols-4 gap-1 mb-1.5">
+      <div className={cardCn}>
+        <SectionTitle title="Circuit details" />
+
+        <FormField label="Distribution board">
+          <div className="grid grid-cols-4 gap-1.5 mb-2">
             {['Main DB', 'Submain', 'Garage CU', 'EV CU'].map((preset) => (
               <ToggleButton
                 key={preset}
@@ -262,12 +302,12 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
             value={(formData.distributionBoard as string) || ''}
             onChange={(e) => onUpdate('distributionBoard', e.target.value)}
             placeholder="Or type custom name"
-            className={inputClass}
+            className={inputCn}
           />
         </FormField>
 
-        <FormField label="DB Location">
-          <div className="grid grid-cols-4 gap-1 mb-1.5">
+        <FormField label="DB location">
+          <div className="grid grid-cols-4 gap-1.5 mb-2">
             {['Under stairs', 'Hallway', 'Garage', 'Loft'].map((preset) => (
               <ToggleButton
                 key={preset}
@@ -281,32 +321,32 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
             value={(formData.dbLocationType as string) || ''}
             onChange={(e) => onUpdate('dbLocationType', e.target.value)}
             placeholder="Or type custom location"
-            className={inputClass}
+            className={inputCn}
           />
         </FormField>
 
-        <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="Circuit No." required>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Circuit no." required>
             <Input
               data-field="circuitDesignation"
               value={(formData.circuitDesignation as string) || ''}
               onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
               placeholder="e.g., C1 or MCB-05"
-              className={inputClass}
+              className={inputCn}
             />
           </FormField>
-          <FormField label="Circuit Description">
+          <FormField label="Circuit description">
             <Input
               value={(formData.circuitDescription as string) || ''}
               onChange={(e) => onUpdate('circuitDescription', e.target.value)}
               placeholder="Tap a preset or type"
-              className={inputClass}
+              className={inputCn}
             />
           </FormField>
         </div>
 
         {/* Circuit description presets */}
-        <div className="grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-4 gap-1.5">
           {[
             'Sockets', 'Lighting', 'Cooker', 'Shower',
             'Immersion', 'Hob', 'EV charger', 'Heating',
@@ -320,8 +360,8 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
           ))}
         </div>
 
-        <FormField label="Circuit Type">
-          <div className="grid grid-cols-2 gap-1">
+        <FormField label="Circuit type">
+          <div className="grid grid-cols-2 gap-1.5">
             {CIRCUIT_TYPES.map((opt) => (
               <ToggleButton
                 key={opt.value}
@@ -337,59 +377,62 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
       {/* ------------------------------------------------------------------ */}
       {/* PROTECTIVE DEVICE                                                   */}
       {/* ------------------------------------------------------------------ */}
-      <SectionTitle title="Protective Device" />
-      <div className="space-y-3">
-        <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="BS (EN) Standard">
+      <div className={cardCn}>
+        <SectionTitle title="Protective device" />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="BS (EN) standard">
             <MobileSelectPicker
               value={(formData.overcurrentDeviceBsEn as string) || ''}
               onValueChange={handleStandardChange}
               options={BS_EN_STANDARDS}
               placeholder="Select standard"
-              title="BS (EN) Standard"
+              title="BS (EN) standard"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
-          <FormField label="Device Type" required>
+          <FormField label="Device type" required>
             <MobileSelectPicker
               value={(formData.protectiveDeviceType as string) || ''}
               onValueChange={handleDeviceTypeChange}
               options={filteredDeviceTypes}
               placeholder="Select type"
-              title="Device Type"
-              
+              title="Device type"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
         </div>
         {formData.overcurrentDeviceBsEn &&
           filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
-            <span className="text-[10px] text-white block">
+            <span className="text-[11px] text-white/85 block">
               Filtered for {formData.overcurrentDeviceBsEn as string}
             </span>
           )}
 
-        <div className="grid grid-cols-2 gap-2 items-end">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField label="Rating (A)" required>
             <MobileSelectPicker
               value={(formData.protectiveDeviceRating as string) || ''}
               onValueChange={(v) => onUpdate('protectiveDeviceRating', v)}
               options={filteredRatings}
               placeholder="Rating"
-              title="Device Rating (A)"
-              
+              title="Device rating (A)"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
-          <FormField label="Breaking Capacity (kA)">
+          <FormField label="Breaking capacity (kA)">
             <MobileSelectPicker
               value={(formData.protectiveDeviceKaRating as string) || ''}
               onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v)}
               options={filteredKaRatings}
               placeholder="kA rating"
-              title="Breaking Capacity (kA)"
+              title="Breaking capacity (kA)"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
         </div>
         {formData.protectiveDeviceType && filteredRatings.length < DEVICE_RATINGS.length && (
-          <span className="text-[10px] text-white block">
+          <span className="text-[11px] text-white/85 block">
             BS 7671 ratings for{' '}
             {PROTECTIVE_DEVICE_TYPES.find((d) => d.value === formData.protectiveDeviceType)
               ?.label || (formData.protectiveDeviceType as string)}
@@ -397,8 +440,8 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
         )}
 
         {/* Additional Protection toggles */}
-        <FormField label="Additional Protection">
-          <div className="grid grid-cols-4 gap-1">
+        <FormField label="Additional protection">
+          <div className="grid grid-cols-4 gap-1.5">
             {[
               { id: 'protectionRcd', label: 'RCD' },
               { id: 'protectionRcbo', label: 'RCBO' },
@@ -417,13 +460,12 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   }
                 }}
                 className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+                  'h-11 rounded-lg transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
                   formData[item.id]
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+                    : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
                 )}
               >
-                {formData[item.id] && <Check className="h-3.5 w-3.5" />}
                 {item.label}
               </button>
             ))}
@@ -432,93 +474,97 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
 
         {/* RCD Details sub-panel */}
         {(formData.protectionRcd || formData.protectionRcbo) && (
-          <div className="rounded-xl border border-white/10 bg-blue-500/5 border-l-2 border-l-blue-500 overflow-hidden">
-            <div className="px-3 py-2 bg-blue-500/10 border-b border-white/5">
-              <span className="text-sm font-medium text-white">RCD Details</span>
+          <div className="border-t border-white/[0.1] pt-4 space-y-4">
+            <h3 className="text-sm font-semibold text-white">RCD details</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <FormField label="BS (EN) standard">
+                <MobileSelectPicker
+                  value={(formData.rcdBsEn as string) || ''}
+                  onValueChange={(v) => onUpdate('rcdBsEn', v)}
+                  options={[
+                    { value: 'BS EN 61008', label: 'BS EN 61008', description: 'RCDs without overcurrent protection' },
+                    { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
+                    { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
+                  ]}
+                  placeholder="Select standard"
+                  title="RCD BS (EN) standard"
+                  triggerClassName={pickerTriggerCn}
+                />
+              </FormField>
+              <FormField label="IΔn (mA)">
+                <MobileSelectPicker
+                  value={(formData.rcdIdn as string) || ''}
+                  onValueChange={(v) => onUpdate('rcdIdn', v)}
+                  options={RCD_RATINGS}
+                  placeholder="Select rating"
+                  title="RCD rating (mA)"
+                  triggerClassName={pickerTriggerCn}
+                />
+              </FormField>
             </div>
-            <div className="p-3 space-y-3">
-              <div className="grid grid-cols-2 gap-2 items-end">
-                <FormField label="BS (EN) Standard">
-                  <MobileSelectPicker
-                    value={(formData.rcdBsEn as string) || ''}
-                    onValueChange={(v) => onUpdate('rcdBsEn', v)}
-                    options={[
-                      { value: 'BS EN 61008', label: 'BS EN 61008', description: 'RCDs without overcurrent protection' },
-                      { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
-                      { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
-                    ]}
-                    placeholder="Select standard"
-                    title="RCD BS (EN) Standard"
-                  />
-                </FormField>
-                <FormField label="IΔn (mA)">
-                  <MobileSelectPicker
-                    value={(formData.rcdIdn as string) || ''}
-                    onValueChange={(v) => onUpdate('rcdIdn', v)}
-                    options={RCD_RATINGS}
-                    placeholder="Select rating"
-                    title="RCD Rating (mA)"
-                  />
-                </FormField>
-              </div>
-              <div className="grid grid-cols-2 gap-2 items-end">
-                <FormField label="Type">
-                  <div className="grid grid-cols-4 gap-1">
-                    {RCD_TYPES.map((opt) => (
-                      <ToggleButton
-                        key={opt.value}
-                        selected={formData.rcdType === opt.value}
-                        label={opt.label.replace('Type ', '')}
-                        onClick={() => onUpdate('rcdType', opt.value)}
-                      />
-                    ))}
-                  </div>
-                </FormField>
-                <FormField label="Rating (A)">
-                  <Input
-                    type="number"
-                    value={(formData.rcdRatingAmps as string) || ''}
-                    onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
-                    placeholder="63"
-                    className={inputClass}
-                  />
-                </FormField>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <FormField label="Type">
+                <div className="grid grid-cols-4 gap-1.5">
+                  {RCD_TYPES.map((opt) => (
+                    <ToggleButton
+                      key={opt.value}
+                      selected={formData.rcdType === opt.value}
+                      label={opt.label.replace('Type ', '')}
+                      onClick={() => onUpdate('rcdType', opt.value)}
+                    />
+                  ))}
+                </div>
+              </FormField>
+              <FormField label="Rating (A)">
+                <Input
+                  type="number"
+                  value={(formData.rcdRatingAmps as string) || ''}
+                  onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
+                  placeholder="63"
+                  className={inputCn}
+                />
+              </FormField>
             </div>
           </div>
         )}
 
         {/* AFDD Details */}
         {formData.protectionAfdd && (
-          <div className="grid grid-cols-2 gap-2 items-end">
-            <FormField label="AFDD BS (EN)">
-              <MobileSelectPicker
-                value={(formData.afddBsEn as string) || ''}
-                onValueChange={(v) => onUpdate('afddBsEn', v)}
-                options={[
-                  { value: 'BS EN 62606', label: 'BS EN 62606' },
-                ]}
-                placeholder="Standard"
-                title="AFDD BS (EN)"
-              />
-            </FormField>
-            <FormField label="AFDD Rating (A)">
-              <MobileSelectPicker
-                value={(formData.afddRating as string) || ''}
-                onValueChange={(v) => onUpdate('afddRating', v)}
-                options={DEVICE_RATINGS}
-                placeholder="Rating"
-                title="AFDD Rating (A)"
-              />
-            </FormField>
+          <div className="border-t border-white/[0.1] pt-4 space-y-4">
+            <h3 className="text-sm font-semibold text-white">AFDD details</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+              <FormField label="AFDD BS (EN)">
+                <MobileSelectPicker
+                  value={(formData.afddBsEn as string) || ''}
+                  onValueChange={(v) => onUpdate('afddBsEn', v)}
+                  options={[
+                    { value: 'BS EN 62606', label: 'BS EN 62606' },
+                  ]}
+                  placeholder="Standard"
+                  title="AFDD BS (EN)"
+                  triggerClassName={pickerTriggerCn}
+                />
+              </FormField>
+              <FormField label="AFDD rating (A)">
+                <MobileSelectPicker
+                  value={(formData.afddRating as string) || ''}
+                  onValueChange={(v) => onUpdate('afddRating', v)}
+                  options={DEVICE_RATINGS}
+                  placeholder="Rating"
+                  title="AFDD rating (A)"
+                  triggerClassName={pickerTriggerCn}
+                />
+              </FormField>
+            </div>
           </div>
         )}
 
         {/* SPD Details */}
         {formData.protectionSpd && (
-          <div className="space-y-2">
-            <FormField label="SPD Type">
-              <div className="grid grid-cols-5 gap-1">
+          <div className="border-t border-white/[0.1] pt-4 space-y-4">
+            <h3 className="text-sm font-semibold text-white">SPD details</h3>
+            <FormField label="SPD type">
+              <div className="grid grid-cols-5 gap-1.5">
                 {['1', '2', '3', '1+2', '2+3'].map((t) => (
                   <ToggleButton
                     key={t}
@@ -529,7 +575,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 ))}
               </div>
             </FormField>
-            <div className="grid grid-cols-3 gap-2 items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
               <FormField label="SPD BS (EN)">
                 <MobileSelectPicker
                   value={(formData.spdBsEn as string) || ''}
@@ -540,15 +586,17 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   ]}
                   placeholder="Standard"
                   title="SPD BS (EN)"
+                  triggerClassName={pickerTriggerCn}
                 />
               </FormField>
-              <FormField label="SPD Make">
+              <FormField label="SPD make">
                 <MobileSelectPicker
                   value={(formData.spdMake as string) || ''}
                   onValueChange={(v) => onUpdate('spdMake', v)}
                   options={SPD_MAKES}
                   placeholder="Select"
-                  title="SPD Make"
+                  title="SPD make"
+                  triggerClassName={pickerTriggerCn}
                 />
               </FormField>
               <FormField label="Rated kA">
@@ -558,6 +606,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   options={SPD_RATED_KA}
                   placeholder="Select"
                   title="Rated kA"
+                  triggerClassName={pickerTriggerCn}
                 />
               </FormField>
             </div>
@@ -568,11 +617,12 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
       {/* ------------------------------------------------------------------ */}
       {/* CABLE & INSTALLATION                                                */}
       {/* ------------------------------------------------------------------ */}
-      <SectionTitle title="Cable & Installation" />
-      <div className="space-y-3">
-        <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="No. of Conductors">
-            <div className="grid grid-cols-4 gap-1">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <SectionTitle title="Cable & installation" />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="No. of conductors">
+            <div className="grid grid-cols-4 gap-1.5">
               {['2', '3', '4', '5'].map((n) => (
                 <ToggleButton
                   key={n}
@@ -583,26 +633,27 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               ))}
             </div>
           </FormField>
-          <FormField label="Cable Type">
+          <FormField label="Cable type">
             <MobileSelectPicker
               value={(formData.cableType as string) || ''}
               onValueChange={(v) => onUpdate('cableType', v)}
               options={CABLE_TYPES}
               placeholder="Type"
-              title="Cable Type"
+              title="Cable type"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
         </div>
 
         {/* Live Conductor Size — common sizes as chips, "Other" opens picker for full list */}
-        <FormField label="Live Conductor Size" required>
+        <FormField label="Live conductor size" required>
           <div className="grid grid-cols-7 gap-1">
             {COMMON_CABLE_SIZES.map((size) => (
               <ToggleButton
                 key={size}
                 selected={formData.liveConductorSize === size}
                 label={size}
-                onClick={() => onUpdate('liveConductorSize', size)}
+                onClick={() => handleLiveConductorSizeChange(size)}
               />
             ))}
             <div className="col-span-1">
@@ -612,29 +663,29 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     ? ''
                     : (formData.liveConductorSize as string) || ''
                 }
-                onValueChange={(v) => onUpdate('liveConductorSize', v)}
+                onValueChange={handleLiveConductorSizeChange}
                 options={CONDUCTOR_SIZES.filter((o) => !COMMON_CABLE_SIZES.includes(o.value))}
                 placeholder="Other"
-                title="Live Conductor Size (mm²)"
+                title="Live conductor size (mm²)"
                 triggerClassName={cn(
-                  'h-10 rounded-lg font-semibold text-xs touch-manipulation',
+                  'h-11 rounded-lg font-semibold text-xs touch-manipulation',
                   !COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string) &&
                     formData.liveConductorSize
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    ? 'bg-elec-yellow border border-elec-yellow text-black'
+                    : 'bg-white/[0.06] border border-white/[0.12] text-white'
                 )}
               />
             </div>
           </div>
           {!COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string) &&
             formData.liveConductorSize && (
-              <span className="text-[10px] text-elec-yellow mt-1 block">
+              <span className="text-[11px] text-elec-yellow mt-1 block">
                 {formData.liveConductorSize as string}mm²
               </span>
             )}
         </FormField>
 
-        <FormField label="CPC Size">
+        <FormField label="CPC size">
           <div className="grid grid-cols-7 gap-1">
             {COMMON_CABLE_SIZES.map((size) => {
               const allowed = filteredCpcSizes.some((o) => o.value === size);
@@ -643,7 +694,8 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   key={size}
                   selected={formData.cpcSize === size}
                   label={size}
-                  onClick={() => allowed && onUpdate('cpcSize', size)}
+                  disabled={!allowed}
+                  onClick={() => onUpdate('cpcSize', size)}
                 />
               );
             })}
@@ -657,52 +709,54 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 onValueChange={(v) => onUpdate('cpcSize', v)}
                 options={filteredCpcSizes.filter((o) => !COMMON_CABLE_SIZES.includes(o.value))}
                 placeholder="Other"
-                title="CPC Size (mm²)"
+                title="CPC size (mm²)"
                 triggerClassName={cn(
-                  'h-10 rounded-lg font-semibold text-xs touch-manipulation',
+                  'h-11 rounded-lg font-semibold text-xs touch-manipulation',
                   !COMMON_CABLE_SIZES.includes(formData.cpcSize as string) && formData.cpcSize
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    ? 'bg-elec-yellow border border-elec-yellow text-black'
+                    : 'bg-white/[0.06] border border-white/[0.12] text-white'
                 )}
               />
             </div>
           </div>
           {!COMMON_CABLE_SIZES.includes(formData.cpcSize as string) &&
             formData.cpcSize && (
-              <span className="text-[10px] text-elec-yellow mt-1 block">
+              <span className="text-[11px] text-elec-yellow mt-1 block">
                 {formData.cpcSize as string}mm²
               </span>
             )}
           {formData.liveConductorSize &&
             parseFloat(formData.liveConductorSize as string) > 16 && (
-              <span className="text-[10px] text-white block mt-1">
+              <span className="text-[11px] text-white/85 block mt-1">
                 CPC limited to {formData.liveConductorSize as string}mm² (BS 7671)
               </span>
             )}
         </FormField>
 
-        <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="Installation Method">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Installation method">
             <MobileSelectPicker
               value={(formData.installationMethod as string) || ''}
               onValueChange={handleInstallationMethodChange}
               options={INSTALLATION_METHODS}
               placeholder="Method"
-              title="Installation Method"
+              title="Installation method"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
-          <FormField label="Reference Method">
+          <FormField label="Reference method">
             <MobileSelectPicker
               value={(formData.referenceMethod as string) || ''}
               onValueChange={(v) => onUpdate('referenceMethod', v)}
               options={REFERENCE_METHODS}
               placeholder="e.g., A, B, C"
-              title="Reference Method (BS 7671)"
+              title="Reference method (BS 7671)"
+              triggerClassName={pickerTriggerCn}
             />
           </FormField>
         </div>
         {formData.referenceMethod && (
-          <span className="text-[10px] text-white block">
+          <span className="text-[11px] text-white/85 block">
             {REFERENCE_METHODS.find((r) => r.value === formData.referenceMethod)?.description}
           </span>
         )}

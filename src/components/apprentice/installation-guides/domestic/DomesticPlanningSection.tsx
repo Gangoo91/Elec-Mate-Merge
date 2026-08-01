@@ -135,9 +135,10 @@ const DomesticPlanningSection = () => {
     diversityFactors: [
       { circuit: 'Lighting', diversity: '66%', notes: 'Assume 66% of total lighting load in use' },
       {
-        circuit: 'Socket Outlets (Ring)',
-        diversity: 'See table',
-        notes: 'First 10A + 30% of remainder + 5A per socket over 10',
+        circuit: 'Socket Outlets (standard circuits)',
+        diversity: '100% largest + 40% others',
+        notes:
+          'Table A2 row 9: 100% of the current demand of the largest circuit + 40% of every other circuit',
       },
       {
         circuit: 'Cooker',
@@ -152,28 +153,29 @@ const DomesticPlanningSection = () => {
     exampleCalculation: [
       { item: 'Lighting (10 x 100W)', connected: '1000W', diversity: '66%', demand: '660W (2.9A)' },
       {
-        item: 'Ring Circuit 1 (kitchen)',
+        item: 'Ring Circuit 1 (kitchen) — largest',
         connected: '7200W (32A)',
-        diversity: 'First 10A + 30%',
-        demand: '16.6A',
+        diversity: '100% (largest circuit)',
+        demand: '32.0A',
       },
       {
         item: 'Ring Circuit 2 (ground)',
         connected: '7200W (32A)',
-        diversity: 'First 10A + 30%',
-        demand: '16.6A',
+        diversity: '40% (every other circuit)',
+        demand: '12.8A',
       },
       {
         item: 'Ring Circuit 3 (first)',
         connected: '7200W (32A)',
-        diversity: 'First 10A + 30%',
-        demand: '16.6A',
+        diversity: '40% (every other circuit)',
+        demand: '12.8A',
       },
       { item: 'Cooker (12kW)', connected: '52A', diversity: '10A + 30%', demand: '22.6A' },
       { item: 'Shower (9.5kW)', connected: '41A', diversity: '100%', demand: '41A' },
       { item: 'Immersion (3kW)', connected: '13A', diversity: '100%', demand: '13A' },
     ],
-    totalDemand: 'Approximately 130A - requires 100A supply with careful load management',
+    totalDemand:
+      'Approximately 137A — exceeds a 100A supply, so load management or a supply upgrade is needed. Note the consumer unit must still be rated for the full connected load without diversity (On-Site Guide Table A2, note †).',
     considerations: [
       'Always verify supply capacity with DNO if close to limits',
       'Consider smart load management for EV charging',
@@ -483,7 +485,9 @@ const DomesticPlanningSection = () => {
           </Alert>
 
           <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
-            <h4 className="font-medium text-white mb-3">Diversity Factors (IET On-Site Guide Appendix A)</h4>
+            <h4 className="font-medium text-white mb-3">
+              Diversity Factors (IET On-Site Guide Appendix A)
+            </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>

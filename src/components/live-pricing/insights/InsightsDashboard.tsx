@@ -1,338 +1,304 @@
-import { useState, useEffect } from 'react';
-import {
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  Users,
-  MapPin,
-  Award,
-  Download,
-  BarChart3,
-  Calendar,
-  Zap,
-  Target,
-  Trophy,
-  Star,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useMemo } from 'react';
 import { cn } from '@/lib/utils';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  useLivePricingBenchmarks,
+  useLivePricingInsights,
+  useMyPricingStats,
+} from '../hooks/useLivePricing';
+import { OTHER_JOB_TYPE } from '../lib/jobTaxonomy';
+import { InsightsSkeleton } from '../ui/PricingSkeleton';
 
-interface UserStats {
-  totalContributions: number;
-  areasContributed: number;
-  impactScore: number;
-  badges: string[];
-}
+const gbp = (value: number) => `£${Math.round(value).toLocaleString('en-GB')}`;
 
-interface MarketStats {
-  totalSubmissions: number;
-  activeContributors: number;
-  regionsWithData: number;
-  averagePriceChange: number;
-}
+// Large totals in compact form so they fit stat tiles on narrow phones.
+const gbpCompact = (value: number) =>
+  value >= 1_000_000
+    ? `£${(value / 1_000_000).toFixed(2)}m`
+    : value >= 100_000
+      ? `£${Math.round(value / 1_000)}k`
+      : gbp(value);
+
+const monthLabel = (yyyyMm: string) => {
+  const [year, month] = yyyyMm.split('-').map(Number);
+  return new Date(year, month - 1, 1).toLocaleDateString('en-GB', { month: 'short' });
+};
+
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+    {children}
+  </p>
+);
+
+/** Baseline-anchored horizontal bar — rounded only at the data end. */
+const HBar = ({ pct }: { pct: number }) => (
+  <div className="flex-1 h-3 border-l border-white/15">
+    <div
+      className="h-full rounded-r-[4px] bg-gradient-to-r from-elec-yellow/60 to-elec-yellow"
+      style={{ width: `${Math.max(Math.min(pct, 100), 1.5)}%` }}
+    />
+  </div>
+);
 
 const InsightsDashboard = ({ className }: { className?: string }) => {
-  const [userStats, setUserStats] = useState<UserStats>({
-    totalContributions: 0,
-    areasContributed: 0,
-    impactScore: 0,
-    badges: [],
-  });
-  const [marketStats, setMarketStats] = useState<MarketStats>({
-    totalSubmissions: 0,
-    activeContributors: 0,
-    regionsWithData: 12,
-    averagePriceChange: 2.3,
-  });
-  const [topJobs, setTopJobs] = useState<{ job: string; searches: number }[]>([]);
-  const [hotRegions, setHotRegions] = useState<{ region: string; change: number }[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: insights, isLoading } = useLivePricingInsights();
+  const { data: benchmarks } = useLivePricingBenchmarks();
+  const { data: myStats } = useMyPricingStats();
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (user) {
-          const { data: userContribs, count } = await supabase
-            .from('community_pricing_submissions')
-            .select('postcode_district', { count: 'exact' })
-            .eq('user_id', user.id);
-
-          if (userContribs) {
-            const uniqueAreas = new Set(userContribs.map((c) => c.postcode_district)).size;
-            setUserStats({
-              totalContributions: count || 0,
-              areasContributed: uniqueAreas,
-              impactScore: (count || 0) * 10 + uniqueAreas * 5,
-              badges: getBadges(count || 0),
-            });
-          }
-        }
-
-        const { count: totalCount } = await supabase
-          .from('community_pricing_submissions')
-          .select('*', { count: 'exact', head: true });
-
-        setMarketStats((prev) => ({
-          ...prev,
-          totalSubmissions: totalCount || 0,
-        }));
-
-        setTopJobs([
-          { job: 'EV Charger Install', searches: 1240 },
-          { job: 'Fuse Box Upgrade', searches: 980 },
-          { job: 'Socket Installation', searches: 850 },
-          { job: 'EICR Inspection', searches: 720 },
-          { job: 'Rewiring', searches: 540 },
-        ]);
-
-        setHotRegions([
-          { region: 'London (SW)', change: 5.2 },
-          { region: 'Manchester (M)', change: 3.8 },
-          { region: 'Birmingham (B)', change: 3.1 },
-          { region: 'Leeds (LS)', change: -1.2 },
-          { region: 'Bristol (BS)', change: 2.4 },
-        ]);
-      } catch (error) {
-        console.error('Error fetching insights:', error);
-      } finally {
-        setIsLoading(false);
+  const nationalByJob = useMemo(() => {
+    const map = new Map<string, { median: number; sample: number }>();
+    for (const row of benchmarks ?? []) {
+      if (row.scope === 'national') {
+        map.set(row.job_type, { median: row.median_price, sample: row.sample_size });
       }
-    };
+    }
+    return map;
+  }, [benchmarks]);
 
-    fetchStats();
-  }, []);
+  const youVsMarket = useMemo(() => {
+    if (!myStats) return [];
+    return myStats.jobTypes
+      .filter((t) => t.jobType !== OTHER_JOB_TYPE && t.count >= 3 && nationalByJob.has(t.jobType))
+      .map((t) => {
+        const market = nationalByJob.get(t.jobType)!;
+        const deltaPct = Math.round(((t.medianPrice - market.median) / market.median) * 100);
+        return { ...t, marketMedian: market.median, marketSample: market.sample, deltaPct };
+      })
+      .slice(0, 6);
+  }, [myStats, nationalByJob]);
 
-  const getBadges = (contributions: number): string[] => {
-    const badges = [];
-    if (contributions >= 1) badges.push('First Contribution');
-    if (contributions >= 5) badges.push('Active Contributor');
-    if (contributions >= 10) badges.push('Community Helper');
-    if (contributions >= 25) badges.push('Pricing Expert');
-    if (contributions >= 50) badges.push('Data Champion');
-    return badges;
-  };
+  if (isLoading || !insights) {
+    return <InsightsSkeleton />;
+  }
 
-  const handleExport = () => {
-    alert('Export feature coming soon!');
-  };
-
-  const TrendIndicator = ({ value }: { value: number }) => {
-    const isUp = value > 0;
-    const isDown = value < 0;
-
-    return (
-      <div
-        className={cn(
-          'flex items-center gap-1 text-sm font-bold',
-          isUp && 'text-emerald-400',
-          isDown && 'text-rose-400',
-          !isUp && !isDown && 'text-white'
-        )}
-      >
-        {isUp && <TrendingUp className="h-4 w-4" />}
-        {isDown && <TrendingDown className="h-4 w-4" />}
-        {!isUp && !isDown && <Minus className="h-4 w-4" />}
-        <span>
-          {isUp && '+'}
-          {value.toFixed(1)}%
-        </span>
-      </div>
-    );
-  };
+  const {
+    totals,
+    top_job_types: topJobs,
+    monthly_trend: trend,
+    region_coverage: regions,
+    pricing_power: pricingPower,
+  } = insights;
+  const maxTrendN = Math.max(...trend.map((m) => m.n), 1);
+  const maxJobN = Math.max(...topJobs.map((j) => j.n), 1);
+  const maxRegionN = Math.max(...regions.map((r) => r.n), 1);
 
   return (
     <div className={cn('space-y-6', className)}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Your Insights</h2>
-          <p className="text-sm text-white mt-1">Track your community impact</p>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleExport}
-          className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white rounded-xl h-10"
-        >
-          <Download className="h-4 w-4 mr-1.5" />
-          Export
-        </Button>
+      <div>
+        <h2 className="text-2xl font-bold text-white">Market Insights</h2>
+        <p className="text-sm text-white/80 mt-1">
+          Computed live from real quotes created in Elec-Mate
+        </p>
       </div>
 
-      {/* Personal Stats - Hero Cards */}
+      {/* Market pulse tiles */}
       <div className="grid grid-cols-2 gap-3">
-        {/* Contributions Card */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 border border-blue-500/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-8 translate-x-8" />
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3">
-              <BarChart3 className="h-5 w-5 text-white" />
-            </div>
-            <p className="text-4xl font-black text-white">{userStats.totalContributions}</p>
-            <p className="text-sm text-white font-medium mt-1">Contributions</p>
-          </div>
+        <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/60">
+            Quotes analysed
+          </p>
+          <p className="text-2xl sm:text-3xl font-black text-white tabular-nums mt-1.5">
+            {totals.quotes.toLocaleString('en-GB')}
+          </p>
         </div>
-
-        {/* Impact Score Card */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-600 border border-yellow-400/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-8 translate-x-8" />
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3">
-              <Zap className="h-5 w-5 text-white" />
-            </div>
-            <p className="text-4xl font-black text-white">{userStats.impactScore}</p>
-            <p className="text-sm text-white font-medium mt-1">Impact Score</p>
-          </div>
+        <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/60">
+            Job types benchmarked
+          </p>
+          <p className="text-2xl sm:text-3xl font-black text-white tabular-nums mt-1.5">
+            {(benchmarks ?? []).filter((b) => b.scope === 'national').length || '—'}
+          </p>
         </div>
-
-        {/* Areas Card */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-600 to-green-700 border border-emerald-500/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-8 translate-x-8" />
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3">
-              <MapPin className="h-5 w-5 text-white" />
-            </div>
-            <p className="text-4xl font-black text-white">{userStats.areasContributed}</p>
-            <p className="text-sm text-white font-medium mt-1">Areas Covered</p>
-          </div>
+        <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/60">
+            Work quoted to date
+          </p>
+          <p className="text-2xl sm:text-3xl font-black text-white tabular-nums mt-1.5">
+            {gbpCompact(totals.total_value)}
+          </p>
         </div>
-
-        {/* Badges Card */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 border border-purple-500/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-8 translate-x-8" />
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mb-3">
-              <Trophy className="h-5 w-5 text-white" />
-            </div>
-            <p className="text-4xl font-black text-white">{userStats.badges.length}</p>
-            <p className="text-sm text-white font-medium mt-1">Badges Earned</p>
-          </div>
+        <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/60">
+            Quotes · last 90 days
+          </p>
+          <p className="text-2xl sm:text-3xl font-black text-white tabular-nums mt-1.5">
+            {totals.quotes_90d.toLocaleString('en-GB')}
+          </p>
         </div>
       </div>
 
-      {/* Badges Display */}
-      {userStats.badges.length > 0 && (
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
-            Your Badges
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {userStats.badges.map((badge) => (
-              <span
-                key={badge}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-gradient-to-r from-yellow-400/20 to-amber-500/20 text-yellow-400 border border-yellow-400/30 rounded-xl"
-              >
-                <Star className="h-4 w-4" />
-                {badge}
+      {/* Quote volume trend */}
+      {trend.length >= 3 && (
+        <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+          <Eyebrow>Market activity</Eyebrow>
+          <p className="text-xs text-white/70 mt-0.5 mb-4">Quotes created per month</p>
+          <div className="flex gap-2 h-32 border-b border-white/15">
+            {trend.map((m, idx) => {
+              const isEndpoint = idx === 0 || idx === trend.length - 1;
+              const isPeak = m.n === maxTrendN;
+              return (
+                <div
+                  key={m.month}
+                  className="flex-1 h-full flex flex-col items-center justify-end gap-1 min-w-0"
+                >
+                  {(isEndpoint || isPeak) && (
+                    <span className="text-xs font-semibold text-white tabular-nums">{m.n}</span>
+                  )}
+                  <div
+                    className="w-full max-w-10 rounded-t-[4px] bg-gradient-to-t from-elec-yellow/60 to-elec-yellow"
+                    style={{ height: `${Math.max((m.n / maxTrendN) * 78, 2)}%` }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex gap-2 mt-1.5">
+            {trend.map((m) => (
+              <span key={m.month} className="flex-1 text-center text-[10px] text-white/70">
+                {monthLabel(m.month)}
               </span>
             ))}
           </div>
         </div>
       )}
 
-      {/* Market Intelligence Section */}
-      <div className="pt-6 border-t border-white/10">
-        <div className="flex items-center gap-2 mb-5">
-          <div className="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center">
-            <Target className="h-5 w-5 text-yellow-400" />
-          </div>
-          <div>
-            <h3 className="text-lg font-bold text-white">Market Intelligence</h3>
-            <p className="text-xs text-white">Live pricing trends across the UK</p>
-          </div>
-        </div>
-
-        {/* Market Stats Row */}
-        <div className="grid grid-cols-3 gap-3 mb-5">
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-            <p className="text-3xl font-black text-white">
-              {marketStats.totalSubmissions.toLocaleString()}
-            </p>
-            <p className="text-xs text-white font-medium mt-1">Total Prices</p>
-          </div>
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-            <p className="text-3xl font-black text-white">{marketStats.regionsWithData}</p>
-            <p className="text-xs text-white font-medium mt-1">UK Regions</p>
-          </div>
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-            <TrendIndicator value={marketStats.averagePriceChange} />
-            <p className="text-xs text-white font-medium mt-1">Avg Change</p>
-          </div>
-        </div>
-
-        {/* Top Jobs & Regions */}
-        <div className="grid grid-cols-1 gap-4">
-          {/* Top Searched Jobs */}
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
-            <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-yellow-400" />
-              Most Searched Jobs
-            </h4>
-            <div className="space-y-3">
-              {topJobs.map((job, index) => (
-                <div key={job.job} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={cn(
-                        'w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold',
-                        index === 0 && 'bg-yellow-400 text-black',
-                        index === 1 && 'bg-white/30 text-white',
-                        index === 2 && 'bg-orange-500 text-white',
-                        index > 2 && 'bg-white/10 text-white'
-                      )}
-                    >
-                      {index + 1}
+      {/* Most quoted job types */}
+      <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+        <Eyebrow>Most quoted jobs</Eyebrow>
+        <p className="text-xs text-white/70 mt-0.5 mb-4">
+          UK median for the job on its own · acceptance rate
+        </p>
+        <div className="space-y-3">
+          {topJobs.map((job) => (
+            <div key={job.job_type}>
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <span className="text-sm font-medium text-white truncate">{job.job_type}</span>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-sm font-bold text-white tabular-nums">
+                    {gbp(job.median)}
+                  </span>
+                  {job.win_rate != null && (
+                    <span className="text-xs text-green-400 font-medium tabular-nums">
+                      {Math.round(job.win_rate * 100)}% won
                     </span>
-                    <span className="text-white font-medium">{job.job}</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <HBar pct={(job.n / maxJobN) * 100} />
+                <span className="text-[10px] text-white/70 w-14 text-right tabular-nums">
+                  {job.n} quotes
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Pricing power */}
+      {pricingPower && pricingPower.length > 0 && (
+        <div className="p-5 rounded-2xl bg-white/[0.04] border border-elec-yellow/25">
+          <Eyebrow>Pricing power</Eyebrow>
+          <p className="text-xs text-white/70 mt-0.5 mb-4">
+            Win rate by where the quote sat against the going rate for that job
+          </p>
+          <div className="space-y-3">
+            {pricingPower.map((row) => (
+              <div key={row.bucket}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm text-white">{row.bucket}</span>
+                  <span className="text-sm font-bold text-white tabular-nums">
+                    {Math.round(row.win_rate * 100)}% won
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <HBar pct={row.win_rate * 100} />
+                  <span className="text-[10px] text-white/70 w-16 text-right tabular-nums">
+                    {row.n} quotes
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-white/70 mt-4 leading-relaxed">
+            Pricing above the going rate barely dents acceptance — quoting well above the median
+            still won{' '}
+            {Math.round((pricingPower[pricingPower.length - 1]?.win_rate ?? 0) * 100)}% of the
+            time. Underpricing doesn't win more work; it just costs margin.
+          </p>
+        </div>
+      )}
+
+      {/* You vs the market */}
+      <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+        <Eyebrow>You vs the market</Eyebrow>
+        {youVsMarket.length > 0 ? (
+          <>
+            <p className="text-xs text-white/70 mt-0.5 mb-4">
+              Your median quote against the UK median, for jobs you've quoted 3+ times
+            </p>
+            <div className="space-y-2">
+              {youVsMarket.map((row) => (
+                <div
+                  key={row.jobType}
+                  className="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-white truncate">{row.jobType}</p>
+                    <p className="text-xs text-white/80 tabular-nums">
+                      You {gbp(row.medianPrice)} · UK {gbp(row.marketMedian)}
+                    </p>
                   </div>
-                  <span className="text-sm text-white font-semibold">
-                    {job.searches.toLocaleString()}
+                  <span
+                    className={cn(
+                      'px-2.5 py-1 rounded-lg text-xs font-bold flex-shrink-0 tabular-nums',
+                      Math.abs(row.deltaPct) <= 5
+                        ? 'bg-white/10 text-white'
+                        : row.deltaPct > 0
+                          ? 'bg-amber-500/15 text-amber-400'
+                          : 'bg-sky-500/15 text-sky-400'
+                    )}
+                  >
+                    {Math.abs(row.deltaPct) <= 5
+                      ? 'On market'
+                      : `${row.deltaPct > 0 ? '+' : ''}${row.deltaPct}% vs UK`}
                   </span>
                 </div>
               ))}
             </div>
-          </div>
+          </>
+        ) : (
+          <p className="text-sm text-white mt-2 leading-relaxed">
+            Quote 3+ jobs of the same type in Elec-Mate and we'll show how your pricing compares
+            with the UK market — automatically and privately.
+          </p>
+        )}
+      </div>
 
-          {/* Regional Changes */}
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
-            <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-yellow-400" />
-              Regional Price Trends
-            </h4>
-            <div className="space-y-3">
-              {hotRegions.map((region) => (
-                <div key={region.region} className="flex items-center justify-between">
-                  <span className="text-white font-medium">{region.region}</span>
-                  <TrendIndicator value={region.change} />
-                </div>
-              ))}
+      {/* Regional coverage */}
+      <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
+        <Eyebrow>Data by region</Eyebrow>
+        <p className="text-xs text-white/70 mt-0.5 mb-4">Quotes with a location, by UK region</p>
+        <div className="space-y-2">
+          {regions.map((r) => (
+            <div key={r.region} className="flex items-center gap-3">
+              <span className="text-sm text-white w-28 sm:w-36 flex-shrink-0 truncate">
+                {r.region}
+              </span>
+              <HBar pct={(r.n / maxRegionN) * 100} />
+              <span className="text-xs text-white/70 w-8 text-right tabular-nums">{r.n}</span>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Call to Action for New Users */}
-      {userStats.totalContributions === 0 && (
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-yellow-400/20 to-amber-500/20 border-2 border-yellow-400/30">
-          <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
-              <Users className="h-7 w-7 text-yellow-400" />
-            </div>
-            <div>
-              <h4 className="font-bold text-white text-xl">Start Contributing!</h4>
-              <p className="text-white mt-2 leading-relaxed">
-                Submit your first job price to help fellow electricians and start earning badges.
-                Your contributions make the community stronger.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* How this works */}
+      <p className="text-xs text-white/70 leading-relaxed">
+        Every stat on this page is an anonymised aggregate of real quotes created by Elec-Mate
+        electricians
+        {myStats && myStats.quoteCount > 0 ? ` — including your ${myStats.quoteCount}` : ''}.
+        Individual quotes and client details are never shown to anyone else.
+      </p>
     </div>
   );
 };

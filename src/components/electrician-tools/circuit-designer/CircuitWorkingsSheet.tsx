@@ -2,6 +2,7 @@ import { CircuitDesign, InstallationDesign } from '@/types/installation-design';
 import { Drawer } from 'vaul';
 import { X, Calculator, Cable, TrendingDown, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { getZsCheck } from './zs-compliance';
 
 interface CircuitWorkingsSheetProps {
   circuit: CircuitDesign;
@@ -269,7 +270,12 @@ export const CircuitWorkingsSheet = ({
                       <span className="text-sm text-foreground/90">
                         {fmt(calculations?.maxZs, 2)}Ω
                       </span>
-                      {(calculations?.zs ?? 0) <= (calculations?.maxZs ?? 999) ? (
+                      {/* ELE-1426 — do not badge an uncalculated Zs as compliant. */}
+                      {getZsCheck(circuit, Ze).state === 'not-calculated' ? (
+                        <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 text-sm px-3 py-1">
+                          Zs not calculated
+                        </Badge>
+                      ) : getZsCheck(circuit, Ze).compliant ? (
                         <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-sm px-3 py-1">
                           ✓ Compliant
                         </Badge>

@@ -12,7 +12,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { sortQuotes, sortInvoices } from '@/utils/financeSorting';
 import { computeAging, type AgingInvoice } from '@/utils/invoiceAging';
 import type { Quote, Invoice } from '@/services/financeService';
-import { sendInvoice as sendInvoiceService } from '@/services/financeService';
+import { sendInvoice as sendInvoiceService, isBridgedRecord } from '@/services/financeService';
 import { toast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import {
@@ -56,6 +56,8 @@ interface CombinedRow {
   statusTone: Tone;
   timestamp: number;
   timeAgo: string;
+  /** Bridged in from the Electrical Hub — read-only here, edited in that hub. */
+  isBridged: boolean;
   raw: Quote | Invoice;
 }
 
@@ -276,6 +278,7 @@ export function QuotesInvoicesSection() {
       statusTone: quoteStatusTone(q.status),
       timestamp: new Date(q.updated_at || q.created_at || 0).getTime() || 0,
       timeAgo: timeAgo(q.updated_at || q.created_at),
+      isBridged: isBridgedRecord(q),
       raw: q,
     }));
     const iRows: CombinedRow[] = sortedInvoices.map((inv) => ({
@@ -289,6 +292,7 @@ export function QuotesInvoicesSection() {
       statusTone: invoiceStatusTone(inv.status),
       timestamp: new Date(inv.updated_at || inv.created_at || 0).getTime() || 0,
       timeAgo: timeAgo(inv.updated_at || inv.created_at),
+      isBridged: isBridgedRecord(inv),
       raw: inv,
     }));
     return [...qRows, ...iRows].sort((a, b) => b.timestamp - a.timestamp);
@@ -483,7 +487,10 @@ export function QuotesInvoicesSection() {
                             </SecondaryButton>
                           </div>
                         ) : (
-                          <Pill tone={row.statusTone}>{row.status}</Pill>
+                          <div className="flex items-center gap-2">
+                            {row.isBridged && <Pill tone="blue">Electrical Hub</Pill>}
+                            <Pill tone={row.statusTone}>{row.status}</Pill>
+                          </div>
                         )
                       }
                       onClick={() => openRow(row)}

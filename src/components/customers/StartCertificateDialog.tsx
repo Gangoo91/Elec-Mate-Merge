@@ -7,28 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { useCustomerProperties } from '@/hooks/inspection/useCustomerProperties';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
-import {
-  FileText,
-  ClipboardCheck,
-  Wrench,
-  MapPin,
-  ArrowRight,
-  PoundSterling,
-  Receipt,
-  Flame,
-  Lightbulb,
-  Zap,
-  Sun,
-  ClipboardList,
-  Shield,
-  Cpu,
-  CheckCircle2,
-  Settings,
-  FolderKanban,
-  ChevronRight,
-  Sparkles,
-  Loader2,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface StartCertificateDialogProps {
@@ -79,153 +58,102 @@ const actionTypes: {
   value: ActionType;
   label: string;
   description: string;
-  icon: React.ElementType;
-  color: string;
-  selectedBg: string;
   group: 'certificate' | 'business' | 'job' | 'ai';
 }[] = [
   {
     value: 'site-visit',
     label: 'Site Visit',
     description: 'Pre-site survey & scope',
-    icon: ClipboardList,
-    color: 'text-emerald-400',
-    selectedBg: 'bg-emerald-500/20 border-emerald-500/40',
     group: 'job',
   },
   {
     value: 'rams',
     label: 'RAMS',
     description: 'Risk assessment & method statement',
-    icon: Shield,
-    color: 'text-orange-400',
-    selectedBg: 'bg-orange-500/20 border-orange-500/40',
     group: 'job',
   },
   {
     value: 'quote',
     label: 'New Quote',
     description: 'Create a quote',
-    icon: FileText,
-    color: 'text-yellow-400',
-    selectedBg: 'bg-yellow-500/20 border-yellow-500/40',
     group: 'business',
   },
   {
     value: 'invoice',
     label: 'New Invoice',
     description: 'Create an invoice',
-    icon: PoundSterling,
-    color: 'text-green-400',
-    selectedBg: 'bg-green-500/20 border-green-500/40',
     group: 'business',
   },
   {
     value: 'cost-engineer',
     label: 'Cost Engineer',
     description: 'AI cost analysis',
-    icon: PoundSterling,
-    color: 'text-emerald-400',
-    selectedBg: 'bg-emerald-500/20 border-emerald-500/40',
     group: 'ai',
   },
   {
     value: 'circuit-designer',
     label: 'Circuit Designer',
     description: 'AI circuit design',
-    icon: Cpu,
-    color: 'text-blue-400',
-    selectedBg: 'bg-blue-500/20 border-blue-500/40',
     group: 'ai',
   },
   {
     value: 'installation-specialist',
     label: 'Installation',
     description: 'AI method statement',
-    icon: Wrench,
-    color: 'text-purple-400',
-    selectedBg: 'bg-purple-500/20 border-purple-500/40',
     group: 'ai',
   },
   {
     value: 'commissioning',
     label: 'Commissioning',
     description: 'AI testing & commissioning',
-    icon: CheckCircle2,
-    color: 'text-cyan-400',
-    selectedBg: 'bg-cyan-500/20 border-cyan-500/40',
     group: 'ai',
   },
   {
     value: 'maintenance',
     label: 'Maintenance',
     description: 'AI maintenance instructions',
-    icon: Settings,
-    color: 'text-amber-400',
-    selectedBg: 'bg-amber-500/20 border-amber-500/40',
     group: 'ai',
   },
   {
     value: 'eicr',
     label: 'EICR',
     description: 'Electrical Installation Condition Report',
-    icon: ClipboardCheck,
-    color: 'text-blue-400',
-    selectedBg: 'bg-blue-500/20 border-blue-500/40',
     group: 'certificate',
   },
   {
     value: 'eic',
     label: 'EIC',
     description: 'Electrical Installation Certificate',
-    icon: Receipt,
-    color: 'text-cyan-400',
-    selectedBg: 'bg-cyan-500/20 border-cyan-500/40',
     group: 'certificate',
   },
   {
     value: 'minor-works',
     label: 'Minor Works',
     description: 'Minor Electrical Installation Works Certificate',
-    icon: Wrench,
-    color: 'text-purple-400',
-    selectedBg: 'bg-purple-500/20 border-purple-500/40',
     group: 'certificate',
   },
   {
     value: 'fire-alarm',
     label: 'Fire Alarm',
     description: 'BS 5839 Fire Detection & Alarm',
-    icon: Flame,
-    color: 'text-red-400',
-    selectedBg: 'bg-red-500/20 border-red-500/40',
     group: 'certificate',
   },
   {
     value: 'emergency-lighting',
     label: 'Emergency Lighting',
     description: 'BS 5266 Emergency Lighting',
-    icon: Lightbulb,
-    color: 'text-amber-400',
-    selectedBg: 'bg-amber-500/20 border-amber-500/40',
     group: 'certificate',
   },
   {
     value: 'ev-charging',
     label: 'EV Charging',
     description: 'IET Code of Practice EV Charging',
-    icon: Zap,
-    color: 'text-emerald-400',
-    selectedBg: 'bg-emerald-500/20 border-emerald-500/40',
     group: 'certificate',
   },
   {
     value: 'solar-pv',
     label: 'Solar PV',
     description: 'MCS Compliant Solar PV Installation',
-    icon: Sun,
-    color: 'text-orange-400',
-    selectedBg: 'bg-orange-500/20 border-orange-500/40',
     group: 'certificate',
   },
 ];
@@ -389,24 +317,6 @@ export const StartCertificateDialog = ({
     }
   };
 
-  const selectedAction = actionTypes.find((a) => a.value === selectedType);
-
-  // Derive a solid button colour from the selected action's colour class
-  const startButtonClass = (() => {
-    if (!selectedAction) return 'bg-white text-black hover:bg-white/90';
-    const c = selectedAction.color;
-    if (c.includes('emerald')) return 'bg-emerald-500 hover:bg-emerald-400 text-black';
-    if (c.includes('orange')) return 'bg-orange-500 hover:bg-orange-400 text-black';
-    if (c.includes('yellow')) return 'bg-yellow-400 hover:bg-yellow-300 text-black';
-    if (c.includes('green')) return 'bg-green-500 hover:bg-green-400 text-black';
-    if (c.includes('blue')) return 'bg-blue-500 hover:bg-blue-400 text-white';
-    if (c.includes('purple')) return 'bg-purple-500 hover:bg-purple-400 text-white';
-    if (c.includes('cyan')) return 'bg-cyan-500 hover:bg-cyan-400 text-black';
-    if (c.includes('red')) return 'bg-red-500 hover:bg-red-400 text-white';
-    if (c.includes('amber')) return 'bg-amber-500 hover:bg-amber-400 text-black';
-    return 'bg-white text-black hover:bg-white/90';
-  })();
-
   const jobActions = actionTypes.filter((a) => a.group === 'job');
   const businessActions = actionTypes.filter((a) => a.group === 'business');
   const aiActions = actionTypes.filter((a) => a.group === 'ai');
@@ -434,25 +344,21 @@ export const StartCertificateDialog = ({
         <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-6">
 
           {/* ── NEW PROJECT HERO ── */}
-          <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#0d2010] to-[#071508] overflow-hidden">
+          <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03]">
             <button
               type="button"
               onClick={() => setProjectExpanded((v) => !v)}
-              className="w-full flex items-center gap-4 p-4 touch-manipulation text-left"
+              className="flex w-full items-center gap-4 p-4 text-left touch-manipulation"
             >
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                <FolderKanban className="h-6 w-6 text-emerald-400" />
+              <div className="min-w-0 flex-1">
+                <p className="text-base font-semibold tracking-tight text-white">New project</p>
+                <p className="mt-0.5 text-[12.5px] text-white/60">
+                  Track all tasks, certs, quotes &amp; docs in one place
+                </p>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-white text-base">New Project</p>
-                <p className="text-sm text-white mt-0.5">Track all tasks, certs, quotes &amp; docs in one place</p>
-              </div>
-              <ChevronRight
-                className={cn(
-                  'h-5 w-5 text-white flex-shrink-0 transition-transform duration-200',
-                  projectExpanded && 'rotate-90'
-                )}
-              />
+              <span className="shrink-0 text-[12.5px] font-semibold text-elec-yellow">
+                {projectExpanded ? 'Close' : 'Open'}
+              </span>
             </button>
 
             {/* Inline expanded form */}
@@ -460,7 +366,7 @@ export const StartCertificateDialog = ({
               <div className="px-4 pb-4 space-y-3 border-t border-white/[0.06] pt-4">
                 {/* Title input */}
                 <div>
-                  <p className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-2">Project Name</p>
+                  <p className="text-[13px] font-semibold text-white mb-2">Project Name</p>
                   <Input
                     value={projectTitle}
                     onChange={(e) => setProjectTitle(e.target.value)}
@@ -471,7 +377,7 @@ export const StartCertificateDialog = ({
 
                 {/* Job type pills */}
                 <div>
-                  <p className="text-xs font-semibold text-white/50 uppercase tracking-widest mb-2">Job Type</p>
+                  <p className="text-[13px] font-semibold text-white mb-2">Job Type</p>
                   <div className="flex flex-wrap gap-2">
                     {PROJECT_TYPES.map((type) => (
                       <button
@@ -481,7 +387,7 @@ export const StartCertificateDialog = ({
                         className={cn(
                           'px-3 py-1.5 rounded-lg text-sm font-medium border transition-all touch-manipulation',
                           projectType === type
-                            ? 'bg-emerald-500/25 border-emerald-500/50 text-emerald-300'
+                            ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
                             : 'bg-white/[0.05] border-white/[0.08] text-white hover:bg-white/[0.09]'
                         )}
                       >
@@ -495,7 +401,7 @@ export const StartCertificateDialog = ({
                 <Button
                   onClick={handleCreateProject}
                   disabled={creatingProject || !projectTitle.trim()}
-                  className="w-full h-12 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl mt-1 text-base"
+                  className="mt-1 h-12 w-full rounded-xl bg-elec-yellow text-base font-bold text-black hover:bg-elec-yellow/90"
                 >
                   {creatingProject ? (
                     <>
@@ -503,10 +409,7 @@ export const StartCertificateDialog = ({
                       Creating…
                     </>
                   ) : (
-                    <>
-                      <FolderKanban className="h-4 w-4 mr-2" />
-                      Create Project
-                    </>
+                    'Create project'
                   )}
                 </Button>
               </div>
@@ -516,13 +419,13 @@ export const StartCertificateDialog = ({
           {/* ── DIVIDER ── */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-white/[0.07]" />
-            <span className="text-xs text-white font-medium uppercase tracking-widest">Or quick action</span>
+            <span className="text-[12px] font-medium text-white/55">Or quick action</span>
             <div className="flex-1 h-px bg-white/[0.07]" />
           </div>
 
           {/* ── JOBS ── */}
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">Jobs</p>
+            <p className="text-[13px] font-semibold text-white">Jobs</p>
             <div className="grid grid-cols-2 gap-2">
               {jobActions.map((type) => (
                 <ActionCard
@@ -537,7 +440,7 @@ export const StartCertificateDialog = ({
 
           {/* ── CERTIFICATES ── */}
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">Certificates</p>
+            <p className="text-[13px] font-semibold text-white">Certificates</p>
             <div className="space-y-2">
               {certificateActions.map((type) => (
                 <ActionCard
@@ -553,7 +456,7 @@ export const StartCertificateDialog = ({
 
           {/* ── BUSINESS ── */}
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">Business</p>
+            <p className="text-[13px] font-semibold text-white">Business</p>
             <div className="grid grid-cols-2 gap-2">
               {businessActions.map((type) => (
                 <ActionCard
@@ -568,10 +471,7 @@ export const StartCertificateDialog = ({
 
           {/* ── AI AGENTS ── */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">AI Agents</p>
-              <Sparkles className="h-3 w-3 text-white" />
-            </div>
+            <p className="text-[13px] font-semibold text-white">AI Agents</p>
             <div className="grid grid-cols-2 gap-2">
               {aiActions.map((type) => (
                 <ActionCard
@@ -587,9 +487,7 @@ export const StartCertificateDialog = ({
           {/* ── PROPERTY (if available) ── */}
           {properties.length > 0 && (
             <div className="space-y-2">
-              <p className="text-xs font-semibold text-white/50 uppercase tracking-widest flex items-center gap-1.5">
-                <MapPin className="h-3 w-3" /> Property
-              </p>
+              <p className="text-[13px] font-semibold text-white">Property</p>
               <div className="bg-white/[0.05] border border-white/[0.08] rounded-xl overflow-hidden">
                 <MobileSelectPicker
                   value={selectedPropertyId || defaultProperty?.id || ''}
@@ -609,9 +507,7 @@ export const StartCertificateDialog = ({
           {/* ── NO PROPERTIES fallback address ── */}
           {properties.length === 0 && customer.address && (
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.07]">
-              <p className="text-xs text-white/50 flex items-center gap-1.5 mb-1">
-                <MapPin className="h-3 w-3" /> Address
-              </p>
+              <p className="mb-1 text-xs text-white/50">Address</p>
               <p className="text-sm text-white whitespace-pre-wrap">{customer.address}</p>
             </div>
           )}
@@ -620,13 +516,9 @@ export const StartCertificateDialog = ({
           <div className="space-y-2 pt-1">
             <Button
               onClick={handleStart}
-              className={cn(
-                'w-full h-12 rounded-2xl font-bold text-base touch-manipulation',
-                startButtonClass
-              )}
+              className="h-12 w-full rounded-2xl bg-elec-yellow text-base font-bold text-black hover:bg-elec-yellow/90 touch-manipulation"
             >
               {getStartLabel()}
-              <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
             <Button
               variant="ghost"
@@ -651,40 +543,28 @@ interface ActionCardProps {
 }
 
 const ActionCard = ({ action, selected, onSelect, fullWidth }: ActionCardProps) => {
-  const Icon = action.icon;
   return (
     <button
       type="button"
       onClick={onSelect}
       className={cn(
-        'flex items-center gap-3 p-3.5 rounded-2xl border transition-all touch-manipulation text-left',
+        'flex min-h-[52px] items-center gap-3 rounded-2xl border p-3.5 text-left transition-all touch-manipulation',
         fullWidth ? 'w-full' : '',
         selected
-          ? action.selectedBg
-          : 'bg-white/[0.05] border-white/[0.07] hover:bg-white/[0.09]'
+          ? 'border-elec-yellow bg-elec-yellow'
+          : 'border-white/[0.1] bg-white/[0.05] hover:border-white/[0.22]'
       )}
     >
-      <div
-        className={cn(
-          'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
-          selected ? 'bg-white/10' : 'bg-white/[0.07]'
-        )}
-      >
-        <Icon className={cn('h-4 w-4', selected ? action.color : 'text-white')} />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className={cn('font-medium text-sm', selected ? 'text-white' : 'text-white')}>
+      <div className="min-w-0 flex-1">
+        <p className={cn('text-sm font-semibold', selected ? 'text-black' : 'text-white')}>
           {action.label}
         </p>
         {fullWidth && (
-          <p className={cn('text-xs mt-0.5', selected ? 'text-white' : 'text-white')}>
+          <p className={cn('mt-0.5 text-xs', selected ? 'text-black/70' : 'text-white/55')}>
             {action.description}
           </p>
         )}
       </div>
-      {selected && fullWidth && (
-        <div className={cn('w-2 h-2 rounded-full flex-shrink-0', action.color.replace('text-', 'bg-'))} />
-      )}
     </button>
   );
 };

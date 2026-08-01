@@ -11,7 +11,13 @@ import { useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 import { useHaptic } from '@/hooks/useHaptic';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
@@ -53,15 +59,15 @@ import {
   PrimaryButton,
   SecondaryButton,
   TextAction,
-  inputClass,
-  selectTriggerClass,
   selectContentClass,
 } from '@/components/college/primitives';
+import { safetyInputCn, safetySelectTriggerCn } from '../common/SafetyDocField';
 
 type TypeFilter = 'all' | 'positive' | 'improvement_needed';
 type ObservationType = 'positive' | 'improvement_needed';
 
-const STATUS_PILL = 'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap bg-emerald-500/10 text-emerald-400 border-emerald-500/25';
+const STATUS_PILL =
+  'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap bg-emerald-500/10 text-emerald-400 border-emerald-500/25';
 
 interface SafetyObservationCardProps {
   onBack?: () => void;
@@ -207,7 +213,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
 
   // ─── Stats ───
   const positiveCount = observations.filter((o) => o.observation_type === 'positive').length;
-  const improvementCount = observations.filter((o) => o.observation_type === 'improvement_needed').length;
+  const improvementCount = observations.filter(
+    (o) => o.observation_type === 'improvement_needed'
+  ).length;
   const openCount = observations.filter(
     (o) => o.observation_type === 'improvement_needed' && (o.status || 'open') !== 'closed'
   ).length;
@@ -244,9 +252,24 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
           <StatStrip
             stats={[
               { value: observations.length, label: 'Total', onClick: () => setTypeFilter('all') },
-              { value: positiveCount, label: 'Positive', tone: 'green', onClick: () => setTypeFilter('positive') },
-              { value: improvementCount, label: 'Improvement', tone: 'amber', onClick: () => setTypeFilter('improvement_needed') },
-              { value: openCount, label: 'Open', accent: true, onClick: () => setTypeFilter('improvement_needed') },
+              {
+                value: positiveCount,
+                label: 'Positive',
+                tone: 'green',
+                onClick: () => setTypeFilter('positive'),
+              },
+              {
+                value: improvementCount,
+                label: 'Improvement',
+                tone: 'amber',
+                onClick: () => setTypeFilter('improvement_needed'),
+              },
+              {
+                value: openCount,
+                label: 'Open',
+                accent: true,
+                onClick: () => setTypeFilter('improvement_needed'),
+              },
             ]}
           />
         ) : undefined
@@ -286,14 +309,19 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
 
       {/* ─── Log observation sheet ─── */}
       <Sheet open={showLog} onOpenChange={setShowLog}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
           <SheetShell
             eyebrow="New observation"
             title="Log observation"
             description={<DraftSaveIndicator status={draftStatus} />}
             footer={
               <>
-                <SecondaryButton onClick={() => setShowSaveTemplate(true)}>Save template</SecondaryButton>
+                <SecondaryButton onClick={() => setShowSaveTemplate(true)}>
+                  Save template
+                </SecondaryButton>
                 <PrimaryButton fullWidth disabled={!canSubmit || isLogging} onClick={handleSubmit}>
                   {isLogging ? 'Saving…' : 'Log observation'}
                 </PrimaryButton>
@@ -301,13 +329,17 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
             }
           >
             <AnimatePresence>
-              {recoveredDraft && <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />}
+              {recoveredDraft && (
+                <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
+              )}
             </AnimatePresence>
 
-            <TextAction onClick={() => setShowLoadTemplate(true)}>Load from a saved template →</TextAction>
+            <TextAction onClick={() => setShowLoadTemplate(true)}>
+              Load from a saved template →
+            </TextAction>
 
             <FormCard eyebrow="Observation type">
-              <div className="grid grid-cols-2 gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl">
+              <div className="grid grid-cols-2 gap-1 p-1 border-b border-white/[0.15] rounded-xl">
                 {[
                   { v: 'positive' as const, label: 'Positive' },
                   { v: 'improvement_needed' as const, label: 'Improvement' },
@@ -318,7 +350,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                     onClick={() => setObservationType(opt.v)}
                     className={cn(
                       'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
-                      observationType === opt.v ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                      observationType === opt.v
+                        ? 'bg-elec-yellow text-black'
+                        : 'text-white hover:text-white'
                     )}
                   >
                     {opt.label}
@@ -328,7 +362,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
 
               {observationType === 'improvement_needed' && (
                 <Field label="Severity">
-                  <div className="grid grid-cols-3 gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl">
+                  <div className="grid grid-cols-3 gap-1 p-1 border-b border-white/[0.15] rounded-xl">
                     {SEVERITY_OPTIONS.map((s) => (
                       <button
                         key={s.value}
@@ -336,7 +370,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                         onClick={() => setSeverity(severity === s.value ? '' : s.value)}
                         className={cn(
                           'h-9 rounded-lg text-[12.5px] font-medium touch-manipulation transition-colors',
-                          severity === s.value ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                          severity === s.value
+                            ? 'bg-elec-yellow text-black'
+                            : 'text-white hover:text-white'
                         )}
                       >
                         {s.label}
@@ -350,7 +386,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
             <FormCard eyebrow="What did you observe?">
               <Field label="Category" required>
                 <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className={selectTriggerClass}>
+                  <SelectTrigger className={safetySelectTriggerCn}>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent className={selectContentClass}>
@@ -368,7 +404,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   value={description}
                   onChange={setDescription}
                   placeholder="Describe what you observed…"
-                  className="touch-manipulation text-[13px] min-h-[100px] bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow/60 rounded-xl"
+                  className="touch-manipulation text-[13px] min-h-[100px] border-white/[0.15] focus:border-elec-yellow/60 rounded-xl"
                 />
               </Field>
 
@@ -377,7 +413,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   value={personObserved}
                   onChange={(e) => setPersonObserved(e.target.value)}
                   placeholder="Name or role (optional)"
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
 
@@ -410,7 +446,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   value={observerSigName}
                   onChange={(e) => setObserverSigName(e.target.value)}
                   placeholder="Your full name (optional)"
-                  className={inputClass}
+                  className={safetyInputCn}
                 />
               </Field>
             </FormCard>

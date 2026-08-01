@@ -1,16 +1,16 @@
 /**
- * Inverter Autocomplete — Best-in-Class Mobile
- * Matches PVPanelAutocomplete pattern exactly
+ * Inverter Autocomplete
+ * Searchable inverter picker — bottom sheet on mobile, popover on desktop.
+ * No icons, clean dark design matching the ChargerAutocomplete pattern.
  */
 
 import * as React from 'react';
-import { Check, ChevronsUpDown, Sparkles, Zap, Battery, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
@@ -20,11 +20,13 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import {
   getInvertersGroupedByManufacturer,
   searchInverters,
-  findInverterById,
   getInverterDefaults,
   getInverterCount,
   type SolarInverter,
 } from '@/data/solarInverterDatabase';
+
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 interface InverterAutocompleteProps {
   value?: string;
@@ -74,169 +76,240 @@ export function InverterAutocomplete({
     [value, onValueChange, onInverterSelect]
   );
 
+  const handleClear = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onInverterSelect?.(null);
+      onValueChange?.('');
+      setSearch('');
+    },
+    [onInverterSelect, onValueChange]
+  );
+
   const displayValue = React.useMemo(() => {
-    if (!selectedInverter) return placeholder;
+    if (!selectedInverter) return null;
     return `${selectedInverter.make} ${selectedInverter.model}`;
-  }, [selectedInverter, placeholder]);
+  }, [selectedInverter]);
 
   const hasAutoFill = React.useMemo(() => {
     if (!selectedInverter) return false;
     return getInverterDefaults(selectedInverter.id) !== null;
   }, [selectedInverter]);
 
-  // Trigger — matches PVPanelAutocomplete exactly
+  // Inverter list item — neutral surface, solid volt when selected
+  const renderItem = (inverter: SolarInverter, forMobile = false) => {
+    const isSelected = selectedInverter?.id === inverter.id;
+    return (
+      <div
+        key={inverter.id}
+        onClick={() => handleSelect(inverter)}
+        className={cn(
+          'rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
+          forMobile ? 'p-3.5' : 'p-2.5 mx-1',
+          isSelected
+            ? 'bg-elec-yellow border border-elec-yellow'
+            : 'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]'
+        )}
+      >
+        {/* Make + Model */}
+        <div className="flex items-baseline gap-1.5 mb-1.5">
+          <span
+            className={cn(
+              'font-bold',
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
+            )}
+          >
+            {inverter.make}
+          </span>
+          <span
+            className={cn(
+              isSelected ? 'text-black' : 'text-white',
+              forMobile ? 'text-[15px]' : 'text-sm'
+            )}
+          >
+            {inverter.model}
+          </span>
+        </div>
+
+        {/* Spec badges — no icons, coloured text on neutral surfaces */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span
+            className={cn(
+              'font-bold px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-elec-yellow',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {inverter.ratedPowerAc}kW
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {inverter.phases === 'three' ? 'Three Phase' : 'Single Phase'}
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {inverter.mpptCount} MPPT
+          </span>
+          <span
+            className={cn(
+              'font-medium px-1.5 py-0.5 rounded',
+              isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}
+          >
+            {inverter.type}
+          </span>
+          {inverter.hybridCapable && (
+            <span
+              className={cn(
+                'font-bold px-1.5 py-0.5 rounded',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-emerald-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              Hybrid
+            </span>
+          )}
+          {inverter.mcsCertified && (
+            <span
+              className={cn(
+                'font-bold px-1.5 py-0.5 rounded',
+                isSelected ? 'bg-black/10 text-black' : 'bg-white/[0.06] text-emerald-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              MCS
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // Trigger button — clean, no icons
   const triggerButton = (
     <button
       type="button"
       role="combobox"
       aria-expanded={open}
       disabled={disabled}
-      onClick={() => setOpen(true)}
+      onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full h-12 text-sm px-3 rounded-xl',
-        'bg-white/[0.06] border border-white/[0.08] text-white',
-        'flex items-center justify-between gap-2',
-        'focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation',
-        'hover:bg-white/[0.08] active:scale-[0.98] transition-all',
-        !selectedInverter && 'text-white',
+        'w-full h-11 px-3.5 flex items-center justify-between rounded-xl text-left touch-manipulation active:scale-[0.98] transition-all',
+        'bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.09]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className="truncate text-left flex-1">{displayValue}</span>
-      <ChevronsUpDown className="h-3.5 w-3.5 opacity-40 flex-shrink-0" />
+      <div className="flex-1 min-w-0">
+        {displayValue ? (
+          <div>
+            <span className="text-sm font-medium text-white truncate block">{displayValue}</span>
+            <span className="text-[10px] text-elec-yellow">
+              {selectedInverter?.ratedPowerAc}kW · {selectedInverter?.mpptCount} MPPT
+            </span>
+          </div>
+        ) : (
+          <span className="text-sm text-white/80">{placeholder}</span>
+        )}
+      </div>
+      {selectedInverter && (
+        // Not a <button> — nested buttons are invalid DOM.
+        <span
+          role="button"
+          tabIndex={0}
+          aria-label="Clear selected inverter"
+          onClick={handleClear}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleClear(e as unknown as React.MouseEvent);
+            }
+          }}
+          className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0 text-white text-base leading-none"
+        >
+          &times;
+        </span>
+      )}
     </button>
   );
 
-  // Item renderer — card-style, no purple, matches panel pattern
-  const renderItem = (inverter: SolarInverter, showMake = false, forMobile = false) => {
-    const isSelected = selectedInverter?.id === inverter.id;
-    return (
-      <button
-        key={inverter.id}
-        type="button"
-        onClick={() => handleSelect(inverter)}
-        className={cn(
-          'w-full text-left flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-all',
-          forMobile
-            ? 'my-1 px-3 py-3 rounded-xl border'
-            : 'px-2 py-2 rounded-lg',
-          isSelected
-            ? forMobile
-              ? 'bg-elec-yellow/10 border-elec-yellow/20'
-              : 'bg-elec-yellow/10'
-            : forMobile
-              ? 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]'
-              : 'hover:bg-white/[0.04]'
-        )}
-      >
-        <div
-          className={cn(
-            'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
-            isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/20'
-          )}
-        >
-          {isSelected && <Check className="h-3 w-3 text-black" />}
-        </div>
-        <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn('font-medium truncate', isSelected ? 'text-elec-yellow' : 'text-white', forMobile && 'text-sm')}>
-            {showMake ? `${inverter.make} ${inverter.model}` : inverter.model}
-          </span>
-          <span className="text-xs text-white/50 truncate">
-            {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} • {inverter.mpptCount} MPPT
-          </span>
-        </div>
-        <div className="flex items-center gap-1 flex-shrink-0 ml-1">
-          <span className="text-[8px] text-amber-400 bg-amber-500/15 px-1 py-0.5 rounded font-bold">
-            {inverter.type}
-          </span>
-          {inverter.hybridCapable && (
-            <Battery className="h-3 w-3 text-green-400 flex-shrink-0" />
-          )}
-          {inverter.mcsCertified && (
-            <span className="text-[8px] text-green-400 bg-green-500/15 px-1 py-0.5 rounded font-bold">MCS</span>
-          )}
-        </div>
-      </button>
-    );
-  };
+  const autoFillBadge = showAutoFillBadge && hasAutoFill && (
+    <div className="absolute -top-3 right-2 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
+      Auto-filled
+    </div>
+  );
 
-  // Mobile: SwipeableBottomSheet — matches panel pattern exactly
+  // Mobile: SwipeableBottomSheet
   if (isMobile) {
     return (
       <div className="relative">
         {triggerButton}
+        {autoFillBadge}
 
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
+          title="Select Inverter"
           contentClassName="p-0"
         >
-          <div className="flex flex-col max-h-[65vh]">
-            {/* Header */}
+          <div className="flex flex-col max-h-[70vh]">
+            {/* Search */}
             <div className="px-4 pt-1 pb-3 sticky top-0 bg-background z-10">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-[10px] font-bold text-white uppercase tracking-wider">
-                  {filteredInverters ? `${filteredInverters.length} results` : `${getInverterCount()} inverters`}
-                </p>
-                {selectedInverter && (
-                  <button
-                    onClick={() => { onInverterSelect?.(null); onValueChange?.(''); setOpen(false); }}
-                    className="text-[10px] text-red-400 font-medium touch-manipulation"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
-              <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
-                <Search className="h-4 w-4 text-white flex-shrink-0" />
-                <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by make, model, power..."
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
-                />
-                {search && (
-                  <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                )}
-              </div>
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="e.g. SolarEdge, GivEnergy, Solis"
+                className={searchInputCn}
+              />
             </div>
 
             {/* List */}
-            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y pb-6 px-4">
-              {filteredInverters && filteredInverters.length > 0 ? (
-                <div className="space-y-1">
-                  {filteredInverters.map((inv) => renderItem(inv, true, true))}
-                </div>
-              ) : search.trim() ? (
-                <div className="py-12 text-center">
-                  <Zap className="h-8 w-8 mx-auto mb-2 text-white/20" />
-                  <p className="text-sm text-white">No inverters found</p>
-                </div>
+            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y px-3 py-2 pb-6">
+              {filteredInverters ? (
+                filteredInverters.length > 0 ? (
+                  <div className="space-y-2">
+                    {filteredInverters.map((inv) => renderItem(inv, true))}
+                  </div>
+                ) : (
+                  <div className="py-12 text-center">
+                    <p className="text-sm font-semibold text-white">No inverters found</p>
+                    <p className="text-[12px] text-white/80 mt-1">Try a different make or model</p>
+                  </div>
+                )
               ) : (
                 Object.entries(invertersGrouped).map(([manufacturer, inverters]) => (
                   <div key={manufacturer} className="mb-3">
-                    <p className="py-2 text-[10px] font-bold text-white/50 uppercase tracking-wider sticky top-0 bg-background">
+                    <p className="py-2 text-[12px] font-semibold text-white/80 sticky top-0 bg-background">
                       {manufacturer}
                     </p>
-                    <div className="space-y-1">
-                      {inverters.map((inv) => renderItem(inv, false, true))}
+                    <div className="space-y-2">
+                      {inverters.map((inv) => renderItem(inv, true))}
                     </div>
                   </div>
                 ))
               )}
             </div>
+
+            {/* Footer */}
+            <div className="border-t border-white/[0.06] px-4 py-2.5">
+              <p className="text-[11px] text-white/80 text-center">
+                {getInverterCount()} inverters
+              </p>
+            </div>
           </div>
         </SwipeableBottomSheet>
-
-        {showAutoFillBadge && hasAutoFill && (
-          <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
-            <Sparkles className="h-3 w-3" />
-            Auto-filled
-          </div>
-        )}
       </div>
     );
   }
@@ -247,86 +320,67 @@ export function InverterAutocomplete({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border border-white/[0.1] rounded-xl shadow-xl z-[9999]"
+          className="w-[calc(100vw-2rem)] sm:w-[420px] p-0 bg-background border-white/[0.08] shadow-xl z-[100]"
           align="start"
           sideOffset={4}
         >
           <Command className="bg-background" shouldFilter={false}>
-            <CommandInput
-              placeholder="Search inverters..."
-              value={search}
-              onValueChange={setSearch}
-              className="border-none bg-background text-white placeholder:text-white"
-            />
-            <CommandList className="bg-background max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-white">No inverters found.</CommandEmpty>
+            <div className="px-3 pt-1 pb-2.5">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="e.g. SolarEdge, GivEnergy, Solis"
+                className={searchInputCn}
+              />
+            </div>
 
-              {filteredInverters && filteredInverters.length > 0 ? (
-                <CommandGroup heading="Search Results" className="bg-background">
-                  {filteredInverters.map((inverter) => (
-                    <CommandItem
-                      key={inverter.id}
-                      value={inverter.id}
-                      onSelect={() => handleSelect(inverter)}
-                      className="hover:bg-white/[0.04] cursor-pointer text-white py-2"
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4 shrink-0',
-                          selectedInverter?.id === inverter.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-                        )}
-                      />
-                      <div className="flex flex-col flex-1 min-w-0">
-                        <span className="font-medium truncate">{inverter.make} {inverter.model}</span>
-                        <span className="text-xs text-white/50 truncate">
-                          {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'} • {inverter.mpptCount} MPPT
-                        </span>
-                      </div>
-                      <span className="text-[9px] text-amber-400 bg-amber-500/15 px-1 py-0.5 rounded font-bold ml-2">
-                        {inverter.type}
-                      </span>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+            <CommandList className="max-h-[320px]">
+              {filteredInverters ? (
+                filteredInverters.length > 0 ? (
+                  <CommandGroup className="py-2">
+                    {filteredInverters.map((inverter) => (
+                      <CommandItem
+                        key={inverter.id}
+                        value={inverter.id}
+                        onSelect={() => handleSelect(inverter)}
+                        className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
+                      >
+                        {renderItem(inverter)}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                ) : (
+                  <CommandEmpty className="py-6 text-center">
+                    <p className="text-white text-sm">No inverters found</p>
+                  </CommandEmpty>
+                )
               ) : (
                 Object.entries(invertersGrouped).map(([manufacturer, inverters]) => (
-                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-background">
+                  <CommandGroup key={manufacturer} heading={manufacturer} className="py-2">
                     {inverters.map((inverter) => (
                       <CommandItem
                         key={inverter.id}
                         value={inverter.id}
                         onSelect={() => handleSelect(inverter)}
-                        className="hover:bg-white/[0.04] cursor-pointer text-white py-2"
+                        className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
                       >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4 shrink-0',
-                            selectedInverter?.id === inverter.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-                          )}
-                        />
-                        <div className="flex flex-col flex-1 min-w-0">
-                          <span className="font-medium truncate">{inverter.model}</span>
-                          <span className="text-xs text-white/50 truncate">
-                            {inverter.ratedPowerAc}kW • {inverter.phases === 'three' ? '3Φ' : '1Φ'}
-                          </span>
-                        </div>
-                        {inverter.hybridCapable && <Battery className="h-3 w-3 text-green-400 ml-1" />}
+                        {renderItem(inverter)}
                       </CommandItem>
                     ))}
                   </CommandGroup>
                 ))
               )}
             </CommandList>
+
+            <div className="border-t border-white/[0.06] px-3 py-2">
+              <p className="text-[11px] text-white/80 text-center">
+                {getInverterCount()} inverters
+              </p>
+            </div>
           </Command>
         </PopoverContent>
       </Popover>
-
-      {showAutoFillBadge && hasAutoFill && (
-        <div className="absolute -top-3 right-2 flex items-center gap-1 px-2 py-0.5 bg-background border border-elec-yellow/40 rounded-full text-xs font-semibold text-elec-yellow shadow-sm">
-          <Sparkles className="h-3 w-3" />
-          Auto-filled
-        </div>
-      )}
+      {autoFillBadge}
     </div>
   );
 }

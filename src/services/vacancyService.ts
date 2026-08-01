@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 // Helper to send push notification (fire and forget)
 const sendPushNotification = async (
@@ -139,7 +140,7 @@ export const getVacancies = async (): Promise<Vacancy[]> => {
   const { data, error } = await supabase
     .from('employer_vacancies')
     .select('*')
-    .eq('employer_id', user.id)
+    .eq('employer_id', (await getActingEmployerId(user.id)) ?? user.id)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -943,7 +944,7 @@ export const getVacancyTemplates = async (): Promise<VacancyTemplate[]> => {
   const { data, error } = await supabase
     .from('employer_vacancy_templates')
     .select('*')
-    .eq('user_id', user?.id || '')
+    .eq('user_id', (await getActingEmployerId(user?.id)) ?? user?.id ?? '')
     .order('updated_at', { ascending: false });
 
   if (error) {
@@ -1027,7 +1028,7 @@ export const saveVacancyAsTemplate = async (
   const { data, error } = await supabase
     .from('employer_vacancy_templates')
     .insert({
-      user_id: user.id,
+      user_id: (await getActingEmployerId(user.id)) ?? user.id,
       name,
       template_data,
     })

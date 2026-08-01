@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2, Loader2, X } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { EmergencyLightingPhotos } from './EmergencyLightingPhotos';
 import { cn } from '@/lib/utils';
@@ -29,16 +29,35 @@ interface EmergencyLightingTestResultsProps {
   ) => void;
 }
 
+// Section card — the only box on the page
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+// Paper-form underline input
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
-const pickerTrigger =
-  'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
 const textareaCn =
-  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTrigger =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+// Pass/fail chips — solid when selected
+const verdictCn = (selected: boolean, tone: 'pass' | 'fail' | 'neutral') =>
+  cn(
+    'flex-1 h-11 rounded-xl text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
+    selected && tone === 'pass' && 'bg-green-500 border border-green-500 text-black',
+    selected && tone === 'fail' && 'bg-red-500 border border-red-500 text-white',
+    selected && tone === 'neutral' && 'bg-white/25 border border-white/25 text-white',
+    !selected && 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
+  );
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+    <Label className={labelCn}>{label}</Label>
     {children}
   </div>
 );
@@ -52,21 +71,21 @@ const Toggle = ({
   value: boolean | undefined;
   onChange: (v: boolean) => void;
 }) => (
-  <div className="flex items-center justify-between">
-    <Label className="text-white text-xs font-medium">{label}</Label>
-    <div className="flex gap-1.5">
+  <div className="flex items-center justify-between gap-3">
+    <Label className="text-[12px] font-medium text-white">{label}</Label>
+    <div className="flex gap-2">
       {[true, false].map((v) => (
         <button
           key={String(v)}
           type="button"
           onClick={() => onChange(v)}
           className={cn(
-            'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+            'h-11 w-16 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98]',
             value === v
               ? v
-                ? 'bg-green-500 text-white'
-                : 'bg-red-500 text-white'
-              : 'bg-white/[0.06] text-white border border-white/[0.08]'
+                ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                : 'bg-red-500 border border-red-500 text-white font-semibold'
+              : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
           )}
         >
           {v ? 'Yes' : 'No'}
@@ -77,18 +96,13 @@ const Toggle = ({
 );
 
 const SectionHeader = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
-      {title}
-    </p>
-    <div className="h-px flex-1 bg-white/[0.06]" />
+  <div className="flex items-center gap-3 pt-2">
+    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
+    <div className="h-px flex-1 bg-white/[0.08]" />
   </div>
 );
 
@@ -356,11 +370,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Test Equipment */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Test Equipment" />
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Lux Meter Make">
             <MobileSelectPicker
               value={formData.luxMeterMake || ''}
@@ -387,7 +401,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
             />
           </Field>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Serial No.">
             <Input
               value={formData.luxMeterSerial || ''}
@@ -407,14 +421,14 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       </div>
 
       {/* Monthly Functional Test */}
-      <div className="space-y-4">
+      <div className={cardCn}>
         <SectionHeader title="Monthly Functional Test" />
-        <div className="rounded-lg p-2.5 bg-elec-yellow/5 border border-elec-yellow/15">
-          <p className="text-[10px] text-white">
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-xs text-white/80">
             BS 5266 — Monthly flick test: simulate mains failure, verify all luminaires illuminate
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Test Date">
             <Input
               type="date"
@@ -425,7 +439,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           </Field>
           {nextTestDates && monthlyTest.date && (
             <Field label="Next Due">
-              <div className="h-11 flex items-center px-3 bg-white/[0.06] border border-white/[0.08] rounded-md text-white text-sm">
+              <div className="flex h-11 items-center border-b border-white/[0.15] px-1 text-base font-medium text-white">
                 {formatDate(nextTestDates.nextMonthlyTest)}
               </div>
             </Field>
@@ -469,16 +483,16 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       </div>
 
       {/* Annual Duration Test */}
-      <div className="space-y-3">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Annual Duration Test" />
-        <div className="rounded-lg p-2.5 bg-elec-yellow/5 border border-elec-yellow/15">
-          <p className="text-[10px] text-white">
+        <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+          <p className="text-xs text-white/80">
             BS 5266 — Annual full duration test: run for rated duration (1hr or 3hr) and verify
             operation throughout
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Test Date">
             <Input
               type="date"
@@ -500,9 +514,9 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
         </div>
 
         {nextTestDates && annualTest.date && (
-          <div className="text-xs text-white bg-white/[0.04] border border-white/[0.06] rounded-md px-3 py-2">
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3 text-xs text-white/80">
             Next Annual Duration Test Due:{' '}
-            <span className="text-white font-medium">
+            <span className="font-medium text-white">
               {formatDate(nextTestDates.nextAnnualTest)}
             </span>
           </div>
@@ -520,7 +534,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-white text-xs">Battery Condition</Label>
+            <Label className="text-[12px] font-medium text-white">Battery Condition</Label>
             {annualTest.batteryCondition && (
               <BatteryConditionBadge condition={annualTest.batteryCondition} />
             )}
@@ -534,7 +548,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
             triggerClassName={pickerTrigger}
           />
           {annualTest.batteryCondition === 'poor' && (
-            <p className="text-xs text-red-400">
+            <p className="text-xs font-medium text-red-400">
               Battery replacement required - add to defects list
             </p>
           )}
@@ -582,13 +596,13 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           const durUntested = total - durPass - durFail;
 
           return (
-            <div className="space-y-3">
+            <div className={cn(cardCn, 'lg:col-span-2')}>
               <SectionHeader title="Luminaire Summary" />
               <div className="space-y-3">
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="text-white font-medium">Functional Test</span>
-                    <span className="text-white">
+                    <span className="font-medium text-white">Functional Test</span>
+                    <span className="text-white/80">
                       {funcPass} Pass{funcFail > 0 ? `, ${funcFail} Fail` : ''}
                       {funcUntested > 0 ? `, ${funcUntested} Untested` : ''}
                     </span>
@@ -610,8 +624,8 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="text-white font-medium">Duration Test</span>
-                    <span className="text-white">
+                    <span className="font-medium text-white">Duration Test</span>
+                    <span className="text-white/80">
                       {durPass} Pass{durFail > 0 ? `, ${durFail} Fail` : ''}
                       {durUntested > 0 ? `, ${durUntested} Untested` : ''}
                     </span>
@@ -638,7 +652,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
       {/* Individual Luminaire Results */}
       {(formData.luminaires || []).length > 0 && (
-        <div className="space-y-3">
+        <div className={cn(cardCn, 'lg:col-span-2')}>
           <SectionHeader title="Individual Luminaire Results" />
 
           <div className="grid grid-cols-2 gap-2">
@@ -652,7 +666,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 }));
                 onUpdate('luminaires', updated);
               }}
-              className="h-11 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
+              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
             >
               All Functional PASS
             </button>
@@ -666,43 +680,35 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 }));
                 onUpdate('luminaires', updated);
               }}
-              className="h-11 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
+              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
             >
               All Duration PASS
             </button>
           </div>
 
           {(formData.luminaires || []).map((lum: Luminaire, index: number) => (
-            <div
-              key={lum.id}
-              className="bg-white/[0.03] border border-white/[0.06] rounded-lg p-3 space-y-2"
-            >
+            <div key={lum.id} className="border-t border-white/[0.08] pt-4 space-y-3">
               <div>
-                <p className="text-white text-xs font-medium">
-                  #{index + 1} {lum.location || 'Unknown location'}
+                <p className="text-[13px] font-medium text-white">
+                  <span className="font-semibold text-elec-yellow">#{index + 1}</span>{' '}
+                  {lum.location || 'Unknown location'}
                 </p>
-                <p className="text-[10px] text-white">
+                <p className="text-xs text-white/80">
                   {lum.luminaireType || 'Type not specified'}
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <Label className="text-white text-[10px]">Functional</Label>
-                  <div className="flex gap-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                <div>
+                  <Label className={labelCn}>Functional</Label>
+                  <div className="flex gap-2">
                     {['pass', 'fail', 'na'].map((v) => (
                       <button
                         key={v}
                         type="button"
                         onClick={() => updateLuminaireTest(lum.id, 'functionalTestResult', v)}
-                        className={cn(
-                          'flex-1 h-8 rounded-lg text-[10px] font-semibold touch-manipulation transition-all',
-                          lum.functionalTestResult === v
-                            ? v === 'pass'
-                              ? 'bg-green-500 text-white'
-                              : v === 'fail'
-                                ? 'bg-red-500 text-white'
-                                : 'bg-white/20 text-white'
-                            : 'bg-white/[0.06] text-white border border-white/[0.08]'
+                        className={verdictCn(
+                          lum.functionalTestResult === v,
+                          v === 'pass' ? 'pass' : v === 'fail' ? 'fail' : 'neutral'
                         )}
                       >
                         {v === 'pass' ? 'Pass' : v === 'fail' ? 'Fail' : 'N/A'}
@@ -710,23 +716,17 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                     ))}
                   </div>
                 </div>
-                <div className="space-y-1">
-                  <Label className="text-white text-[10px]">Duration</Label>
-                  <div className="flex gap-1">
+                <div>
+                  <Label className={labelCn}>Duration</Label>
+                  <div className="flex gap-2">
                     {['pass', 'fail', 'na'].map((v) => (
                       <button
                         key={v}
                         type="button"
                         onClick={() => updateLuminaireTest(lum.id, 'durationTestResult', v)}
-                        className={cn(
-                          'flex-1 h-8 rounded-lg text-[10px] font-semibold touch-manipulation transition-all',
-                          lum.durationTestResult === v
-                            ? v === 'pass'
-                              ? 'bg-green-500 text-white'
-                              : v === 'fail'
-                                ? 'bg-red-500 text-white'
-                                : 'bg-white/20 text-white'
-                            : 'bg-white/[0.06] text-white border border-white/[0.08]'
+                        className={verdictCn(
+                          lum.durationTestResult === v,
+                          v === 'pass' ? 'pass' : v === 'fail' ? 'fail' : 'neutral'
                         )}
                       >
                         {v === 'pass' ? 'Pass' : v === 'fail' ? 'Fail' : 'N/A'}
@@ -741,72 +741,69 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       )}
 
       {/* Lux Readings (BS EN 1838 Compliance) */}
-      <div className="space-y-3">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Lux Readings (BS EN 1838)" />
 
-        <div className="bg-white/[0.04] border border-white/[0.06] rounded-lg p-3">
-          <p className="text-[10px] font-semibold text-white uppercase tracking-wider mb-2">
+        <div className="rounded-xl bg-white/[0.05] p-3.5">
+          <p className="text-[13px] font-semibold text-white mb-2">
             Minimum Illuminance Requirements
           </p>
-          <div className="grid grid-cols-3 gap-2 text-[10px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-green-500 shrink-0" />
-              <span className="text-white">
+              <span className="text-white/80">
                 Escape: <strong className="text-white">{'≥'}1 lux</strong>
               </span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-              <span className="text-white">
+              <span className="text-white/80">
                 Open: <strong className="text-white">{'≥'}0.5 lux</strong>
               </span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
-              <span className="text-white">
+              <span className="text-white/80">
                 High Risk: <strong className="text-white">{'≥'}15 lux</strong>
               </span>
             </div>
           </div>
-          <p className="text-[10px] text-white mt-2">
+          <p className="text-xs text-white/80 mt-2">
             Measured at floor level (0.5m above) under emergency lighting conditions
           </p>
         </div>
 
         {(formData.luxReadings || []).length === 0 ? (
-          <div className="text-center py-6 text-white">
-            <p className="text-xs">No lux readings recorded</p>
-            <p className="text-[10px]">Add readings to verify BS EN 1838 compliance</p>
+          <div className="text-center py-6">
+            <p className="text-sm font-medium text-white">No lux readings recorded</p>
+            <p className="text-xs text-white/80 mt-1">
+              Add readings to verify BS EN 1838 compliance
+            </p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {(formData.luxReadings || []).map((reading: LuxReading, index: number) => (
-              <div
-                key={reading.id}
-                className="bg-white/[0.03] border border-white/[0.06] rounded-lg p-3 space-y-2"
-              >
-                <div className="flex items-center justify-between">
-                  <p className="text-white text-xs font-medium">Reading #{index + 1}</p>
+              <div key={reading.id} className="border-t border-white/[0.08] pt-4 space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-[13px] font-medium text-white">Reading #{index + 1}</p>
                   <button
                     onClick={() => removeLuxReading(reading.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-500/10 touch-manipulation"
+                    className="h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                     aria-label="Remove lux reading"
                   >
-                    <X className="h-3.5 w-3.5" />
+                    Remove
                   </button>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="col-span-2 sm:col-span-1 space-y-1">
-                    <Label className="text-white text-[10px]">Location</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                  <Field label="Location">
                     <Input
                       placeholder="e.g., Corridor A"
                       value={reading.location || ''}
                       onChange={(e) => updateLuxReading(reading.id, 'location', e.target.value)}
                       className={inputCn}
                     />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-white text-[10px]">Zone Category</Label>
+                  </Field>
+                  <Field label="Zone Category">
                     <MobileSelectPicker
                       value={reading.category || ''}
                       onValueChange={(v) => {
@@ -820,9 +817,8 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                       title="Zone Category"
                       triggerClassName={pickerTrigger}
                     />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-white text-[10px]">Lux Reading</Label>
+                  </Field>
+                  <Field label="Lux Reading">
                     <Input
                       type="number"
                       step="0.1"
@@ -834,31 +830,29 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                       }
                       className={cn(
                         inputCn,
-                        reading.result === 'pass' && 'border-green-500/50 bg-green-500/10',
-                        reading.result === 'fail' && 'border-red-500/50 bg-red-500/10'
+                        reading.result === 'pass' && 'border-green-500',
+                        reading.result === 'fail' && 'border-red-500'
                       )}
                     />
-                  </div>
-                  <div className="space-y-1">
-                    <Label className="text-white text-[10px]">Result</Label>
+                  </Field>
+                  <Field label="Result">
                     <div
                       className={cn(
-                        'h-11 flex items-center justify-center rounded-md text-xs font-medium',
-                        reading.result === 'pass' &&
-                          'bg-green-500/20 text-green-400 border border-green-500/30',
-                        reading.result === 'fail' &&
-                          'bg-red-500/20 text-red-400 border border-red-500/30',
-                        !reading.result && 'bg-white/[0.04] text-white border border-white/[0.06]'
+                        'h-11 flex items-center justify-center rounded-xl text-sm font-semibold',
+                        reading.result === 'pass' && 'bg-green-500 text-black',
+                        reading.result === 'fail' && 'bg-red-500 text-white',
+                        !reading.result &&
+                          'bg-white/[0.06] border border-white/[0.12] text-white/80'
                       )}
                     >
                       {reading.result === 'pass' && 'PASS'}
                       {reading.result === 'fail' && 'FAIL'}
                       {!reading.result && '--'}
                     </div>
-                  </div>
+                  </Field>
                 </div>
                 {reading.minRequired && (
-                  <p className="text-[10px] text-white">Minimum required: {reading.minRequired}</p>
+                  <p className="text-xs text-white/80">Minimum required: {reading.minRequired}</p>
                 )}
               </div>
             ))}
@@ -867,223 +861,210 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
         <button
           onClick={addLuxReading}
-          className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center text-sm text-white touch-manipulation active:scale-[0.98]"
+          className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
         >
-          <Plus className="h-3.5 w-3.5 mr-2" />
           Add Lux Reading
         </button>
       </div>
 
       {/* Defects Found */}
-      <div className="space-y-3">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Defects & Observations" />
 
         {(formData.defectsFound || []).map(
           (defect: EmergencyLightingFormData['defectsFound'][number], defectIndex: number) => (
-            <div
-              key={defect.id}
-              className="bg-white/[0.03] border border-white/[0.06] rounded-lg overflow-hidden"
-            >
-              <div className="flex items-center justify-between px-3 py-2 border-b border-white/[0.06]">
-                <p className="text-white text-xs font-medium">Defect #{defectIndex + 1}</p>
+            <div key={defect.id} className="border-t border-white/[0.08] pt-4 space-y-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[13px] font-medium text-white">Defect #{defectIndex + 1}</p>
                 <button
                   onClick={() => removeDefect(defect.id)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-red-400 hover:bg-red-500/10 touch-manipulation"
+                  className="h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                   aria-label="Remove defect"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  Remove
                 </button>
               </div>
 
-              <div className="p-3 space-y-3">
-                {!defect.description && (
-                  <div className="space-y-1.5">
-                    <Label className="text-[10px] text-white">Tap to select common defect:</Label>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {[
-                        'Failed functional test',
-                        'Low battery',
-                        'Charging fault',
-                        'Exit sign damaged',
-                        'Lens dirty/obscured',
-                        'Missing luminaire',
-                      ].map((quickDefect) => (
-                        <button
-                          key={quickDefect}
-                          type="button"
-                          onClick={() => handleDefectDescriptionChange(defect.id, quickDefect)}
-                          className="h-9 px-3 text-[10px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] rounded-lg touch-manipulation transition-colors text-left text-white"
-                        >
-                          {quickDefect}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {defect.description && (
-                  <Field label="Description">
-                    <Textarea
-                      placeholder="Add more details..."
-                      value={defect.description || ''}
-                      onChange={(e) => handleDefectDescriptionChange(defect.id, e.target.value)}
-                      className="touch-manipulation text-base min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white"
-                    />
-                  </Field>
-                )}
-
+              {!defect.description && (
                 <div className="space-y-1.5">
-                  <Label className="text-[10px] text-white">Priority</Label>
-                  <div className="flex flex-wrap gap-1.5">
-                    {priorityOptions.map((priority) => (
+                  <Label className={labelCn}>Tap to select common defect:</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {[
+                      'Failed functional test',
+                      'Low battery',
+                      'Charging fault',
+                      'Exit sign damaged',
+                      'Lens dirty/obscured',
+                      'Missing luminaire',
+                    ].map((quickDefect) => (
                       <button
-                        key={priority.value}
+                        key={quickDefect}
                         type="button"
-                        onClick={() => updateDefect(defect.id, 'priority', priority.value)}
-                        className={cn(
-                          'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-all flex items-center gap-1.5',
-                          defect.priority === priority.value
-                            ? priority.color === 'red'
-                              ? 'bg-red-500 text-white'
-                              : priority.color === 'orange'
-                                ? 'bg-orange-500 text-white'
-                                : priority.color === 'amber'
-                                  ? 'bg-amber-500 text-white'
-                                  : 'bg-blue-500 text-white'
-                            : 'bg-white/[0.06] text-white border border-white/[0.08]'
-                        )}
+                        onClick={() => handleDefectDescriptionChange(defect.id, quickDefect)}
+                        className="h-11 px-3 text-xs font-medium bg-white/[0.06] border border-white/[0.12] rounded-xl touch-manipulation transition-colors text-left text-white active:scale-[0.98]"
                       >
-                        <span
-                          className={cn(
-                            'w-1.5 h-1.5 rounded-full shrink-0',
-                            defect.priority === priority.value
-                              ? 'bg-white/60'
-                              : priority.color === 'red'
-                                ? 'bg-red-500'
-                                : priority.color === 'orange'
-                                  ? 'bg-orange-500'
-                                  : priority.color === 'amber'
-                                    ? 'bg-amber-500'
-                                    : 'bg-blue-500'
-                          )}
-                        />
-                        {priority.label}
+                        {quickDefect}
                       </button>
                     ))}
                   </div>
                 </div>
+              )}
 
-                <div className="grid grid-cols-2 gap-3">
-                  {(formData.luminaires || []).length > 0 && (
-                    <div className="space-y-1">
-                      <Label className="text-[10px] text-white">Link to Luminaire</Label>
-                      <MobileSelectPicker
-                        value={defect.luminaireId || 'general'}
-                        onValueChange={(v) =>
-                          updateDefect(defect.id, 'luminaireId', v === 'general' ? '' : v)
-                        }
-                        options={[
-                          { value: 'general', label: 'General (not specific)' },
-                          ...(formData.luminaires || []).map((lum: Luminaire, index: number) => ({
-                            value: lum.id,
-                            label: `#${index + 1} - ${lum.location || 'Unknown'}`,
-                          })),
-                        ]}
-                        placeholder="General"
-                        title="Link to Luminaire"
-                        triggerClassName={pickerTrigger}
+              {defect.description && (
+                <Field label="Description">
+                  <Textarea
+                    placeholder="Add more details..."
+                    value={defect.description || ''}
+                    onChange={(e) => handleDefectDescriptionChange(defect.id, e.target.value)}
+                    className={cn(textareaCn, 'min-h-[60px]')}
+                  />
+                </Field>
+              )}
+
+              <div className="space-y-1.5">
+                <Label className={labelCn}>Priority</Label>
+                <div className="flex flex-wrap gap-2">
+                  {priorityOptions.map((priority) => (
+                    <button
+                      key={priority.value}
+                      type="button"
+                      onClick={() => updateDefect(defect.id, 'priority', priority.value)}
+                      className={cn(
+                        'h-11 px-3.5 rounded-xl text-xs font-semibold touch-manipulation transition-all flex items-center gap-1.5 active:scale-[0.98]',
+                        defect.priority === priority.value
+                          ? priority.color === 'red'
+                            ? 'bg-red-500 border border-red-500 text-white'
+                            : priority.color === 'orange'
+                              ? 'bg-orange-500 border border-orange-500 text-black'
+                              : priority.color === 'amber'
+                                ? 'bg-amber-500 border border-amber-500 text-black'
+                                : 'bg-blue-500 border border-blue-500 text-white'
+                          : 'bg-white/[0.06] text-white border border-white/[0.12]'
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          'w-1.5 h-1.5 rounded-full shrink-0',
+                          defect.priority === priority.value
+                            ? priority.color === 'red' || priority.color === 'blue'
+                              ? 'bg-white/60'
+                              : 'bg-black/40'
+                            : priority.color === 'red'
+                              ? 'bg-red-500'
+                              : priority.color === 'orange'
+                                ? 'bg-orange-500'
+                                : priority.color === 'amber'
+                                  ? 'bg-amber-500'
+                                  : 'bg-blue-500'
+                        )}
                       />
-                    </div>
-                  )}
+                      {priority.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-                  <div className="space-y-1">
-                    <Label className="text-[10px] text-white">Rectified on site</Label>
-                    <div className="flex gap-1.5">
-                      {[true, false].map((v) => (
-                        <button
-                          key={String(v)}
-                          type="button"
-                          onClick={() => updateDefect(defect.id, 'rectified', v)}
-                          className={cn(
-                            'flex-1 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
-                            defect.rectified === v
-                              ? v
-                                ? 'bg-green-500 text-white'
-                                : 'bg-red-500 text-white'
-                              : 'bg-white/[0.06] text-white border border-white/[0.08]'
-                          )}
-                        >
-                          {v ? 'Yes' : 'No'}
-                        </button>
-                      ))}
-                    </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                {(formData.luminaires || []).length > 0 && (
+                  <Field label="Link to Luminaire">
+                    <MobileSelectPicker
+                      value={defect.luminaireId || 'general'}
+                      onValueChange={(v) =>
+                        updateDefect(defect.id, 'luminaireId', v === 'general' ? '' : v)
+                      }
+                      options={[
+                        { value: 'general', label: 'General (not specific)' },
+                        ...(formData.luminaires || []).map((lum: Luminaire, index: number) => ({
+                          value: lum.id,
+                          label: `#${index + 1} - ${lum.location || 'Unknown'}`,
+                        })),
+                      ]}
+                      placeholder="General"
+                      title="Link to Luminaire"
+                      triggerClassName={pickerTrigger}
+                    />
+                  </Field>
+                )}
+
+                <div>
+                  <Label className={labelCn}>Rectified on site</Label>
+                  <div className="flex gap-2">
+                    {[true, false].map((v) => (
+                      <button
+                        key={String(v)}
+                        type="button"
+                        onClick={() => updateDefect(defect.id, 'rectified', v)}
+                        className={verdictCn(defect.rectified === v, v ? 'pass' : 'fail')}
+                      >
+                        {v ? 'Yes' : 'No'}
+                      </button>
+                    ))}
                   </div>
                 </div>
-
-                <Sub title="Photo Evidence" />
-                {defect.photoUrl ? (
-                  <div className="relative">
-                    <img
-                      src={defect.photoUrl}
-                      alt="Defect evidence"
-                      className="w-full h-32 object-cover rounded-lg border border-white/[0.08]"
-                    />
-                    <button
-                      onClick={() => removeDefectPhoto(defect.id)}
-                      className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center bg-black/60 hover:bg-red-500/80 rounded-full touch-manipulation"
-                    >
-                      <X className="h-4 w-4 text-white" />
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      capture="environment"
-                      ref={(el) => {
-                        defectPhotoInputRefs.current[defect.id] = el;
-                      }}
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) handleDefectPhotoUpload(defect.id, file);
-                      }}
-                      className="hidden"
-                    />
-                    <button
-                      onClick={() => defectPhotoInputRefs.current[defect.id]?.click()}
-                      disabled={uploadingDefectId === defect.id}
-                      className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center text-sm text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
-                    >
-                      {uploadingDefectId === defect.id ? (
-                        <>
-                          <Loader2 className="h-3.5 w-3.5 mr-2 animate-spin" />
-                          Uploading...
-                        </>
-                      ) : (
-                        'Add Photo'
-                      )}
-                    </button>
-                  </div>
-                )}
               </div>
+
+              <Sub title="Photo Evidence" />
+              {defect.photoUrl ? (
+                <div className="relative">
+                  <img
+                    src={defect.photoUrl}
+                    alt="Defect evidence"
+                    className="w-full h-32 object-cover rounded-xl"
+                  />
+                  <button
+                    onClick={() => removeDefectPhoto(defect.id)}
+                    className="absolute top-2 right-2 h-9 rounded-lg bg-black/70 px-3 text-xs font-medium text-white touch-manipulation"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    ref={(el) => {
+                      defectPhotoInputRefs.current[defect.id] = el;
+                    }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleDefectPhotoUpload(defect.id, file);
+                    }}
+                    className="hidden"
+                  />
+                  <button
+                    onClick={() => defectPhotoInputRefs.current[defect.id]?.click()}
+                    disabled={uploadingDefectId === defect.id}
+                    className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                  >
+                    {uploadingDefectId === defect.id ? (
+                      <>
+                        <Loader2 className="h-3.5 w-3.5 mr-2 animate-spin" />
+                        Uploading...
+                      </>
+                    ) : (
+                      'Add Photo'
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           )
         )}
 
         <button
           onClick={addDefect}
-          className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center text-sm text-white touch-manipulation active:scale-[0.98]"
+          className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
         >
-          <Plus className="h-3.5 w-3.5 mr-2" />
           Add Defect
         </button>
       </div>
 
       {/* Photo Evidence */}
-      <div className="space-y-3">
+      <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionHeader title="Photo Evidence" />
-        <p className="text-xs text-white">
+        <p className="text-xs text-white/80">
           Upload photos of luminaires, exit signs, defects, and the overall installation for
           documentation.
         </p>

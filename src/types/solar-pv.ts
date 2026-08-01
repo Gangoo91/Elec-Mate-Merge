@@ -300,6 +300,7 @@ export interface ACTestResults {
   // RCD Protection
   rcdInstalled: boolean;
   rcdType: string; // Type A, Type B, etc.
+  rcdBsStandard?: string; // e.g. RCBO (BS EN 61009)
   rcdRating: number; // mA (typically 30)
   rcdTripTime: number; // ms at rated current
   rcdTripTimeAt5x?: number; // ms at 5× rated (for Type A)

@@ -17,11 +17,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
 import FireAlarmG6FormTabs from '@/components/inspection/fire-alarm/FireAlarmG6FormTabs';
 import { useFireAlarmG6Tabs } from '@/hooks/useFireAlarmG6Tabs';
 import { getDefaultFireAlarmFormData } from '@/types/fire-alarm';
@@ -31,9 +31,9 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
-import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG6Json } from '@/utils/fireAlarmG6JsonFormatter';
+import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 
 const REPORT_TYPE = 'fire-alarm-inspection' as const;
 
@@ -56,6 +56,8 @@ export default function FireAlarmInspectionCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [isEmailSending, setIsEmailSending] = useState(false);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
   const [recoveryDraft, setRecoveryDraft] = useState<{
     data: Record<string, any>;
@@ -112,6 +114,42 @@ const {
 
   const tabProps = useFireAlarmG6Tabs(formData);
   const { loadCompanyBranding, hasSavedCompanyBranding } = useFireAlarmSmartForm();
+  const { companyProfile } = useCompanyProfile();
+
+  // Photos live in the inspection_photos table keyed by the reports.id uuid —
+  // resolve it the same way useInspectionPhotos does, then map to {url, caption}
+  // so the formatter's photos passthrough reaches the PDF payload.
+  const fetchInspectionPhotos = useCallback(async (): Promise<
+    { url: string; caption: string }[]
+  > => {
+    if (!savedReportId) return [];
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return [];
+      const { data: reportRow } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('report_id', savedReportId)
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (!reportRow?.id) return [];
+      const { data: photoRows } = await supabase
+        .from('inspection_photos')
+        .select('file_path, fault_description')
+        .eq('report_id', reportRow.id)
+        .order('uploaded_at');
+      return (photoRows || [])
+        .filter((p) => p.file_path)
+        .map((p) => ({
+          url: supabase.storage.from('inspection-photos').getPublicUrl(p.file_path).data.publicUrl,
+          caption: p.fault_description || '',
+        }));
+    } catch {
+      return [];
+    }
+  }, [savedReportId]);
 
   useEffect(() => {
     if (!isNew || formData.certificateNumber) return;
@@ -207,6 +245,9 @@ const {
         const b = loadCompanyBranding();
         if (b) data = { ...data, ...b };
       }
+      // Inject captured photos so they reach the PDF payload
+      const photos = await fetchInspectionPhotos();
+      data = { ...data, photos };
       const pdfData = formatFireAlarmG6Json(data);
       if (savedReportId)
         await supabase
@@ -275,6 +316,40 @@ const {
     }
   };
 
+  const handleSendEmail = async (recipientEmail: string, cc?: string[], customMessage?: string) => {
+    if (!savedReportId) throw new Error('Save the report before emailing the certificate');
+    setIsEmailSending(true);
+    try {
+      // Format current form data so pre-Generate emails still attach a PDF
+      let formattedData: Record<string, any> | undefined;
+      try {
+        let data = {
+          ...formData,
+          certificateNumber: formData.certificateNumber || `FA/G6-${Date.now()}`,
+          photos: await fetchInspectionPhotos(),
+        };
+        if (hasSavedCompanyBranding) {
+          const b = loadCompanyBranding();
+          if (b) data = { ...data, ...b };
+        }
+        formattedData = formatFireAlarmG6Json(data);
+      } catch {
+        formattedData = undefined;
+      }
+      const { data: result, error: fnErr } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        { body: { reportId: savedReportId, recipientEmail, cc, customMessage, formattedData } }
+      );
+      if (fnErr) throw new Error(fnErr.message || 'Failed to send certificate email');
+      if (!result?.success)
+        throw new Error(result?.error || result?.hint || 'Failed to send certificate email');
+      if (result.pdfAttached) toast.success(`Certificate emailed to ${recipientEmail}`);
+      else toast.success(`Email sent to ${recipientEmail} — PDF attachment unavailable`);
+    } finally {
+      setIsEmailSending(false);
+    }
+  };
+
   if (isLoading)
     return (
       <div className="bg-background min-h-screen p-4">
@@ -286,60 +361,57 @@ const {
   return (
     <div className="bg-background min-h-screen">
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
-              We found an unsaved G6 Inspection Certificate.
+            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
+              We found an unsaved fire alarm inspection certificate.
+              {recoveryDraft?.data?.clientName && (
+                <span className="block mt-2 font-medium text-elec-yellow">
+                  Client: {recoveryDraft.data.clientName}
+                </span>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      <div className="bg-background">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate(-1)}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg font-bold text-white">Fire Alarm</h1>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">
-                    G6
-                  </span>
-                </div>
-                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">
-                  Inspection Certificate
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <SyncStatusBadge status={syncStatus} />
-              <button
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95 disabled:opacity-50"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
-      </div>
+      {/* Shell header — fixed bar with progress ring + full-width step tabs */}
+      <CertShellHeader
+        onBack={() => navigate(-1)}
+        title="Fire Alarm Inspection"
+        subtitle={
+          formData.certificateNumber ? `${formData.certificateNumber} · BS 5839-1` : null
+        }
+        isSaving={isSaving}
+        onManualSave={handleSaveDraft}
+        syncStatus={syncStatus}
+        progressPercent={tabProps.getProgressPercentage()}
+        steps={[
+          { id: 'project', label: 'Project' },
+          { id: 'scope', label: 'Scope' },
+          { id: 'tests', label: 'Tests' },
+          { id: 'defects', label: 'Defects' },
+          { id: 'declaration', label: 'Sign off' },
+        ]}
+        currentTab={tabProps.currentTab}
+        onTabChange={(tab) => {
+          tabProps.setCurrentTab(tab as any);
+          syncOnTabChange();
+          window.scrollTo({ top: 0 });
+        }}
+        completedTabs={{
+          project: !!tabProps.isTabComplete('project'),
+          scope: !!tabProps.isTabComplete('scope'),
+          tests: !!tabProps.isTabComplete('tests'),
+          defects: !!tabProps.isTabComplete('defects'),
+          declaration: !!tabProps.isTabComplete('declaration'),
+        }}
+      />
 
       {/* ELE-1037 — lock / version bar */}
       <CertLockBar
@@ -354,7 +426,7 @@ const {
         onOpenVersion={openReport}
       />
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <FireAlarmG6FormTabs
           currentTab={tabProps.currentTab}
@@ -379,9 +451,26 @@ const {
           onCreateInvoice={() => toast('Invoice creation coming soon')}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
+          onOpenEmailDialog={() => setShowEmailDialog(true)}
+          canEmail={!!savedReportId}
+          reportId={savedReportId}
         />
       </div>
       </main>
+
+      <EmailCertificateDialog
+        open={showEmailDialog}
+        onOpenChange={setShowEmailDialog}
+        certificateType="Fire Alarm"
+        certificateNumber={formData.certificateNumber}
+        clientName={formData.clientName}
+        clientEmail={formData.clientEmail}
+        installationAddress={formData.premisesAddress}
+        inspectionDate={formData.inspectionDate}
+        companyName={companyProfile?.company_name}
+        onSend={handleSendEmail}
+        isLoading={isEmailSending}
+      />
 
       <CertificateGenerationDialog
         open={showGenerationDialog}
