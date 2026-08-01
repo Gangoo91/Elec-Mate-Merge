@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { QRCodeCanvas } from 'qrcode.react';
 import {
   usePublicElecIdByToken,
   usePublicElecIdByNumber,
@@ -7,7 +8,43 @@ import {
 } from '@/hooks/usePublicElecId';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/utils/clipboard';
-import { getQualificationLabel, getJobTitleLabel, getECSCardType } from '@/data/uk-electrician-constants';
+import {
+  getQualificationLabel,
+  getJobTitleLabel,
+  getECSCardType,
+  getEcsCardLabel,
+} from '@/data/uk-electrician-constants';
+import { generateElecIdVerificationPdf } from '@/utils/elecIdVerificationPdf';
+import { supabase } from '@/integrations/supabase/client';
+
+/** Download a vCard so the site manager keeps the spark in their contacts. */
+function downloadVCard(opts: {
+  name: string;
+  role: string;
+  email?: string | null;
+  phone?: string | null;
+  url: string;
+}) {
+  const [first, ...rest] = opts.name.split(' ');
+  const vcf = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `N:${rest.join(' ')};${first};;;`,
+    `FN:${opts.name}`,
+    `TITLE:${opts.role}`,
+    ...(opts.phone ? [`TEL;TYPE=CELL:${opts.phone}`] : []),
+    ...(opts.email ? [`EMAIL:${opts.email}`] : []),
+    `URL:${opts.url}`,
+    'NOTE:Verified Elec-ID profile',
+    'END:VCARD',
+  ].join('\r\n');
+  const blob = new Blob([vcf], { type: 'text/vcard' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${opts.name.replace(/ +/g, '-')}.vcf`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -101,6 +138,36 @@ const getSkillLevelTone = (level: string) => {
       return 'bg-white/[0.04] text-white border-white/[0.06]';
   }
 };
+
+const REPORT_TYPE_LABELS: Record<string, string> = {
+  eicr: 'EICR',
+  eic: 'EIC',
+  'minor-works': 'Minor Works',
+  'testing-only': 'Testing',
+  'pat-testing': 'PAT Testing',
+  'ev-charging': 'EV Charging',
+  'emergency-lighting': 'Emergency Lighting',
+  'fire-alarm': 'Fire Alarm',
+  'fire-alarm-inspection': 'Fire Alarm Inspection',
+  'fire-alarm-commissioning': 'Fire Alarm Commissioning',
+  'fire-alarm-design': 'Fire Alarm Design',
+  'fire-alarm-modification': 'Fire Alarm Modification',
+  'danger-notice': 'Danger Notice',
+  'completion-notice': 'Completion Notice',
+  'smoke-co-alarm': 'Smoke & CO Alarm',
+  bess: 'Battery Storage',
+  'solar-pv': 'Solar PV',
+};
+const reportTypeLabel = (t: string) =>
+  REPORT_TYPE_LABELS[t] ??
+  t.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+interface WorkRecord {
+  total_12mo: number;
+  total_all: number;
+  active_since: string | null;
+  by_type_12mo: Record<string, number>;
+}
 
 const getDisplayName = (name: string | undefined | null): string => {
   if (!name) return 'Unknown';
@@ -270,6 +337,9 @@ export default function PublicElecIdView() {
   const { token, elecIdNumber } = useParams<{ token?: string; elecIdNumber?: string }>();
   const [copiedId, setCopiedId] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const [workRecord, setWorkRecord] = useState<WorkRecord | null>(null);
+  const qrRef = useRef<HTMLDivElement>(null);
   const [viewingDocument, setViewingDocument] = useState<{
     url: string;
     title: string;
@@ -297,6 +367,19 @@ export default function PublicElecIdView() {
     if (data?.profile) {
       const name = getDisplayName(data.profile.employee?.name);
       document.title = `${name} – Elec-ID | Verified Electrician`;
+      // Tell the owner their credentials were checked (server dedupes to 1/day)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any)
+        .rpc('notify_elec_id_view', {
+          p_profile_id: data.profile.id,
+          p_via: isNumberLookup ? 'number' : 'share',
+        })
+        .then(() => {});
+      // Work record — only returns data when the holder has opted in
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any)
+        .rpc('get_elec_id_work_record', { p_profile_id: data.profile.id })
+        .then(({ data: wr }: { data: WorkRecord | null }) => setWorkRecord(wr ?? null));
     }
     return () => {
       document.title = 'Elec-Mate';
@@ -315,6 +398,38 @@ export default function PublicElecIdView() {
     copyToClipboard(window.location.href);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
+  };
+
+  const downloadVerificationPdf = async () => {
+    if (!data?.profile || pdfBusy) return;
+    setPdfBusy(true);
+    try {
+      const canvas = qrRef.current?.querySelector('canvas');
+      const qrDataUrl = canvas ? canvas.toDataURL('image/png') : null;
+      const p = data.profile;
+      await generateElecIdVerificationPdf({
+        name: getDisplayName(p.employee?.name),
+        role: getRoleDisplay(p.employee?.role),
+        elecIdNumber: p.elec_id_number,
+        isVerified: !!p.is_verified,
+        verifiedAt: p.verified_at ?? null,
+        ecsCardLabel: p.ecs_card_type ? getEcsCardLabel(p.ecs_card_type) : null,
+        ecsCardNumber: p.ecs_card_number ?? null,
+        ecsExpiry: p.ecs_expiry_date ?? null,
+        qualifications: (p.qualifications ?? []).map((q) => ({
+          name: getQualificationLabel(q.qualification_name),
+          awardingBody: q.awarding_body ?? null,
+          dateAchieved: q.date_achieved ?? null,
+          expiryDate: q.expiry_date ?? null,
+          verified: !!q.is_verified,
+        })),
+        skillsCount: p.skills?.length ?? 0,
+        yearsExperience: null,
+        qrDataUrl,
+      });
+    } finally {
+      setPdfBusy(false);
+    }
   };
 
   const findDocument = (
@@ -369,12 +484,22 @@ export default function PublicElecIdView() {
           <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-sm text-white">
             If you believe this is an error, contact the credential holder directly.
           </div>
-          <a
-            href="https://www.elec-mate.com"
-            className="inline-flex items-center gap-2 mt-6 text-sm text-elec-yellow hover:underline"
-          >
-            Learn about Elec-ID →
-          </a>
+          <div className="mt-6 flex items-center justify-center gap-5">
+            {isNumberLookup && (
+              <a
+                href="/verify"
+                className="inline-flex items-center gap-2 text-sm font-medium text-elec-yellow hover:underline"
+              >
+                Try another number →
+              </a>
+            )}
+            <a
+              href="https://www.elec-mate.com"
+              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white"
+            >
+              About Elec-ID
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -420,6 +545,12 @@ export default function PublicElecIdView() {
           </div>
 
           <div className="flex items-center gap-2">
+            <a
+              href="/verify"
+              className="hidden sm:flex h-11 px-3 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.06] transition-all text-sm font-medium items-center touch-manipulation"
+            >
+              Check another
+            </a>
             <button
               onClick={copyLink}
               className="h-11 px-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white hover:bg-white/[0.08] transition-all text-sm font-medium touch-manipulation"
@@ -483,6 +614,15 @@ export default function PublicElecIdView() {
                   </div>
                 </div>
 
+                {/* Hidden QR render feeding the verification PDF */}
+                <div ref={qrRef} className="hidden" aria-hidden>
+                  <QRCodeCanvas
+                    value={`https://www.elec-mate.com/verify/${profile.elec_id_number}`}
+                    size={512}
+                    marginSize={1}
+                  />
+                </div>
+
                 <button
                   onClick={copyElecId}
                   className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] transition-all touch-manipulation"
@@ -510,12 +650,39 @@ export default function PublicElecIdView() {
                       <p className="text-xs font-semibold text-emerald-400">
                         Verified professional
                       </p>
-                      <p className="text-[11px] text-white/65 mt-0.5">
-                        Verified {formatDate(profile.verified_at)}
+                      <p className="text-[11px] text-white/70 mt-0.5">
+                        Verified {formatDate(profile.verified_at)} — supporting documents checked
+                        against the record
                       </p>
                     </div>
                   </div>
                 )}
+
+                <div className="mt-3 flex gap-2">
+                  <button
+                    onClick={downloadVerificationPdf}
+                    disabled={pdfBusy}
+                    className="flex-1 flex items-center justify-center h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold hover:bg-yellow-400 transition-all touch-manipulation disabled:opacity-60"
+                  >
+                    {pdfBusy ? 'Preparing…' : 'Verification PDF'}
+                  </button>
+                  {sections.includes('basics') && (employee?.email || employee?.phone) && (
+                    <button
+                      onClick={() =>
+                        downloadVCard({
+                          name: displayName,
+                          role: displayRole,
+                          email: employee?.email,
+                          phone: employee?.phone,
+                          url: `https://www.elec-mate.com/verify/${profile.elec_id_number}`,
+                        })
+                      }
+                      className="flex-1 flex items-center justify-center h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white text-sm font-medium hover:bg-white/[0.1] transition-all touch-manipulation"
+                    >
+                      Save contact
+                    </button>
+                  )}
+                </div>
 
                 {sections.includes('basics') && (employee?.email || employee?.phone) && (
                   <div className="mt-4 flex gap-2">
@@ -585,6 +752,26 @@ export default function PublicElecIdView() {
               </SectionCard>
             )}
 
+            {/* Live-verify QR — hand the phone over, they scan, they see this page */}
+            <SectionCard>
+              <div className="p-5 flex items-center gap-4">
+                <div className="shrink-0 rounded-xl bg-white p-2">
+                  <QRCodeCanvas
+                    value={`https://www.elec-mate.com/verify/${profile.elec_id_number}`}
+                    size={84}
+                    marginSize={0}
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[13px] font-semibold text-white">Scan to verify live</p>
+                  <p className="mt-1 text-[11.5px] text-white/70 leading-relaxed">
+                    Anyone can scan this to open the live record — no app, no account, no stale
+                    photocopies.
+                  </p>
+                </div>
+              </div>
+            </SectionCard>
+
             {/* Limited access notice (desktop) */}
             {isTokenLookup && sections.length < 5 && (
               <div className="p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
@@ -600,6 +787,48 @@ export default function PublicElecIdView() {
 
           {/* ═══════ MAIN ═══════ */}
           <div className="space-y-5">
+            {/* Work record — live production counts, opt-in, unfakeable */}
+            {workRecord && workRecord.total_all > 0 && (
+              <SectionCard>
+                <SectionHead eyebrow="Live from the record" title="Work record" />
+                <div className="p-5">
+                  <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+                    <div>
+                      <span className="text-3xl font-bold text-white tabular-nums">
+                        {workRecord.total_12mo}
+                      </span>
+                      <span className="ml-2 text-[13px] text-white/75">
+                        certificates issued in the last 12 months
+                      </span>
+                    </div>
+                    <div className="text-[13px] text-white/75 tabular-nums">
+                      {workRecord.total_all} all time
+                      {workRecord.active_since ? ` · active since ${workRecord.active_since}` : ''}
+                    </div>
+                  </div>
+                  {Object.keys(workRecord.by_type_12mo).length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {Object.entries(workRecord.by_type_12mo)
+                        .sort((a, b) => b[1] - a[1])
+                        .map(([type, n]) => (
+                          <span
+                            key={type}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08] text-xs text-white"
+                          >
+                            <span className="font-bold tabular-nums">{n}</span>
+                            {reportTypeLabel(type)}
+                          </span>
+                        ))}
+                    </div>
+                  )}
+                  <p className="mt-4 text-[11.5px] text-white/60 leading-relaxed">
+                    Counted live from certificates generated through Elec-Mate — not self-declared.
+                    A card says qualified; this says working.
+                  </p>
+                </div>
+              </SectionCard>
+            )}
+
             {!hasCredentials && (
               <SectionCard>
                 <div className="p-10 text-center">

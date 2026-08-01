@@ -40,6 +40,7 @@ const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
 const PublicEmployerQuote = lazy(() => import('@/pages/PublicEmployerQuote'));
 const FireLogShared = lazy(() => import('@/pages/public/FireLogShared'));
+const VerifyElecIdLookup = lazy(() => import('@/pages/public/VerifyElecIdLookup'));
 import MfaGate from '@/components/auth/MfaGate';
 const PublicEmployerInvoice = lazy(() => import('@/pages/PublicEmployerInvoice'));
 const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
@@ -632,6 +633,14 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <StoryPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/verify"
+            element={
+              <LazyRoute>
+                <VerifyElecIdLookup />
               </LazyRoute>
             }
           />

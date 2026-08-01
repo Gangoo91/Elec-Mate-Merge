@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/select';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { QRCodeSVG } from 'qrcode.react';
+import { Switch } from '@/components/ui/switch';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 import {
   Eyebrow,
@@ -41,6 +42,37 @@ interface ShareLink {
 const ElecIdShare = () => {
   const { addNotification } = useNotifications();
   const { profile } = useElecIdProfile();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const workRecordInitial = (profile as any)?.work_record_public === true;
+  const [workRecordPublic, setWorkRecordPublic] = useState(workRecordInitial);
+  const [workRecordSaving, setWorkRecordSaving] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setWorkRecordPublic((profile as any)?.work_record_public === true);
+  }, [profile]);
+
+  const toggleWorkRecord = async (on: boolean) => {
+    setWorkRecordSaving(true);
+    setWorkRecordPublic(on);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any).rpc('set_my_work_record_public', {
+      p_public: on,
+    });
+    setWorkRecordSaving(false);
+    if (error) {
+      setWorkRecordPublic(!on);
+      addNotification({ title: 'Could not save', message: error.message, type: 'error' });
+    } else {
+      addNotification({
+        title: on ? 'Work record is now public' : 'Work record hidden',
+        message: on
+          ? 'Your live certificate counts now show on your public profile.'
+          : 'Certificate counts no longer appear publicly.',
+        type: 'success',
+      });
+    }
+  };
   const [isCreateLinkOpen, setIsCreateLinkOpen] = useState(false);
   const [selectedExpiry, setSelectedExpiry] = useState('7d');
   const [selectedSections, setSelectedSections] = useState<string[]>([
@@ -377,6 +409,33 @@ const ElecIdShare = () => {
 
   return (
     <div className="space-y-6">
+      {/* Work record — production-backed proof, opt-in */}
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7"
+      >
+        <Eyebrow>Work record</Eyebrow>
+        <div className="mt-3 flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-[15px] font-semibold text-white">
+              Show my live certificate counts publicly
+            </p>
+            <p className="mt-1.5 text-[12.5px] text-white/70 leading-relaxed">
+              Adds a "Work record" to your public profile: how many certificates you've issued
+              through Elec-Mate in the last 12 months, by type, and the year you started. Counts
+              only — never clients, addresses or job details. It's proof a photocopied card can't
+              give: that you're actively working at the trade right now.
+            </p>
+          </div>
+          <Switch
+            checked={workRecordPublic}
+            onCheckedChange={toggleWorkRecord}
+            disabled={workRecordSaving}
+          />
+        </div>
+      </motion.div>
+
       {/* Create-link sheet/dialog */}
       <Sheet open={isCreateLinkOpen} onOpenChange={setIsCreateLinkOpen}>
         <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">

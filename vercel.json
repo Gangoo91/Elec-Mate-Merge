@@ -936,6 +936,28 @@
   ],
   "rewrites": [
     {
+      "source": "/verify/:number",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|Slackbot|LinkedInBot|TelegramBot|Discordbot|Googlebot).*"
+        }
+      ],
+      "destination": "/api/og/verify?kind=number&id=:number"
+    },
+    {
+      "source": "/share/:token",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(WhatsApp|facebookexternalhit|Twitterbot|Slackbot|LinkedInBot|TelegramBot|Discordbot|Googlebot).*"
+        }
+      ],
+      "destination": "/api/og/verify?kind=share&id=:token"
+    },
+    {
       "source": "/privacy",
       "destination": "/"
     },

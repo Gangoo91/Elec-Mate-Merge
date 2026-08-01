@@ -303,6 +303,29 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
 
   const allClear = expiredItems.length === 0 && expiringIn30Days.length === 0;
 
+  /** The concierge line per item type: what renewing actually involves.
+      Kept deliberately modest — official links carry the detail. */
+  const renewalPlaybook = (item: ComplianceItem): { what: string; courseQuery?: string } => {
+    switch (item.type) {
+      case 'card':
+        return {
+          what: 'ECS renewal normally needs a current ECS Health, Safety & Environmental assessment — check yours is still in date before you apply, then renew through the official ECS site.',
+          courseQuery: 'health and safety',
+        };
+      case 'qualification':
+        return {
+          what: 'Contact the awarding body early — expiring qualifications often need refresher training or reassessment, and booking lead times can be weeks.',
+        };
+      case 'training':
+        return {
+          what: 'Rebook before it lapses — a refresher on a valid certificate is usually shorter and cheaper than starting the course again after expiry.',
+          courseQuery: item.name,
+        };
+      default:
+        return { what: 'Renew before the expiry date to keep your profile fully compliant.' };
+    }
+  };
+
   const getStepActionLabel = (actionType: SmartNextStep['actionType']) => {
     const map = {
       renew: 'Renew',
@@ -411,6 +434,82 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
           </div>
         </div>
       </motion.div>
+
+      {/* Renewal plan — the concierge: everything due in 90 days with what
+          renewal actually involves, most urgent first */}
+      {(() => {
+        const due = complianceItems
+          .map((i) => ({ item: i, days: getDaysUntilExpiry(i.expiryDate) }))
+          .filter((d) => d.days <= 90)
+          .sort((a, b) => a.days - b.days);
+        if (!due.length) return null;
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
+          >
+            <div className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06]">
+              <Eyebrow>Renewal plan</Eyebrow>
+              <h3 className="mt-1 text-lg font-semibold text-white">
+                {due.length} renewal{due.length > 1 ? 's' : ''} to sort
+              </h3>
+              <p className="text-[12.5px] text-white/70 mt-0.5">
+                Never turn up with a dead card — here's what each one needs.
+              </p>
+            </div>
+            <div className="divide-y divide-white/[0.06]">
+              {due.map(({ item, days }) => {
+                const play = renewalPlaybook(item);
+                return (
+                  <div key={item.id} className="px-5 sm:px-6 py-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-[14.5px] font-semibold text-white truncate">
+                        {item.name}
+                      </p>
+                      <span
+                        className={cn(
+                          'shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full border tabular-nums',
+                          days < 0
+                            ? 'text-red-400 bg-red-500/10 border-red-500/20'
+                            : days <= 30
+                              ? 'text-orange-400 bg-orange-500/10 border-orange-500/20'
+                              : 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+                        )}
+                      >
+                        {days < 0 ? `${Math.abs(days)}d overdue` : `${days}d left`}
+                      </span>
+                    </div>
+                    <p className="mt-1.5 text-[12.5px] text-white/75 leading-relaxed">
+                      {play.what}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {item.renewalUrl && (
+                        <button
+                          type="button"
+                          onClick={() => openExternalUrl(item.renewalUrl!)}
+                          className="h-10 px-3.5 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-yellow-400 touch-manipulation"
+                        >
+                          {item.type === 'card' ? 'Renew at ecscard.org.uk →' : 'Renewal info →'}
+                        </button>
+                      )}
+                      {play.courseQuery && (
+                        <button
+                          type="button"
+                          onClick={() => navigateToCourse(play.courseQuery!)}
+                          className="h-10 px-3.5 rounded-lg bg-white/[0.06] border border-white/[0.12] text-white text-[12.5px] font-medium hover:bg-white/[0.1] touch-manipulation"
+                        >
+                          Prep in the Study Centre
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        );
+      })()}
 
       {/* Quick stats */}
       <StatStrip

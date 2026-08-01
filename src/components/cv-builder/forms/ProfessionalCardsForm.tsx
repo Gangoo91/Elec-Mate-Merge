@@ -7,13 +7,16 @@ interface ProfessionalCardsFormProps {
   onChange: (data: CVData) => void;
 }
 
+// Labels match the official ECS colour meanings (see LEGACY_ECS_CARD_TYPES in
+// uk-electrician-constants — audit-verified vs ecscard.org.uk). Values stay
+// capitalised colours: the CV PDF badge system and stored CVs key off them.
 const ECS_CARD_TYPES = [
-  { value: 'Gold', label: 'Gold Card - Approved Electrician' },
-  { value: 'Blue', label: 'Blue Card - Electrician' },
-  { value: 'White', label: 'White Card - Provisional' },
-  { value: 'Yellow', label: 'Yellow Card - Trainee' },
-  { value: 'Green', label: 'Green Card - Apprentice' },
-  { value: 'Black', label: 'Black Card - Manager/Senior' },
+  { value: 'Gold', label: 'Gold Card — Fully qualified (NVQ L3 + AM2)' },
+  { value: 'Blue', label: 'Blue Card — Qualified electrical technician' },
+  { value: 'Yellow', label: 'Yellow Card — Apprentice or trainee' },
+  { value: 'White', label: 'White Card — Electrical labourer' },
+  { value: 'Green', label: "Green Card — Electrician's mate" },
+  { value: 'Black', label: 'Black Card — Manager or supervisor' },
 ];
 
 const DRIVING_LICENCE_OPTIONS = [
