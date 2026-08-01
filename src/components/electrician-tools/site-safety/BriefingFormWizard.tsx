@@ -573,7 +573,7 @@ export const BriefingFormWizard = ({
                 className={cn(
                   'w-full px-4 py-3 rounded-xl',
                   'bg-white/5 border border-white/10',
-                  'text-white placeholder:text-white',
+                  'text-white placeholder:text-white/25',
                   'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50',
                   'transition-all resize-none touch-manipulation'
                 )}
@@ -877,7 +877,7 @@ export const BriefingFormWizard = ({
                         placeholder="Trade / role (optional)"
                         className={cn(
                           'mt-1 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent',
-                          'px-0 py-1 text-[13px] text-white placeholder:text-white',
+                          'px-0 py-1 text-[13px] text-white placeholder:text-white/25',
                           'caret-elec-yellow transition-colors hover:border-white/[0.3]',
                           'focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation'
                         )}

@@ -129,7 +129,7 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
               placeholder="Search hazards, controls, PPE..."
               className={cn(
                 'w-full h-12 bg-white/[0.05] rounded-2xl pr-10 text-white',
-                'placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
+                'placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
                 'border border-white/[0.08]',
                 !query && 'pl-12'
               )}

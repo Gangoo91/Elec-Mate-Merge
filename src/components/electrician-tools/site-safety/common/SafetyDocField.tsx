@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils';
 /** Verbatim from the EV charging certificate — keep in step. */
 export const safetyInputCn =
   'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent ' +
-  'px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white ' +
+  'px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 ' +
   'caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] ' +
   'focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none ' +
   '[color-scheme:dark] touch-manipulation';
@@ -49,7 +49,7 @@ export const safetySelectTriggerCn =
 export const safetyTextareaCn =
   'input-underline w-full resize-none rounded-none border-0 border-b border-white/[0.15] ' +
   'bg-transparent px-1 py-2 text-base font-medium leading-relaxed text-white ' +
-  'placeholder:font-normal placeholder:text-white caret-elec-yellow ' +
+  'placeholder:font-normal placeholder:text-white/25 caret-elec-yellow ' +
   'transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow ' +
   'focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation';
 

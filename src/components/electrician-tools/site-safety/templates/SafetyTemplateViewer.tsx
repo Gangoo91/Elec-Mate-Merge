@@ -253,7 +253,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
                     onChange={(e) =>
                       setFieldValues((prev) => ({ ...prev, [field.key]: e.target.value }))
                     }
-                    className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+                    className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
                   />
                 </div>
               ))
@@ -266,7 +266,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
                   onChange={(e) =>
                     setFieldValues((prev) => ({ ...prev, company_name: e.target.value }))
                   }
-                  className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+                  className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
                 />
                 <Input
                   placeholder="Site address"
@@ -274,7 +274,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
                   onChange={(e) =>
                     setFieldValues((prev) => ({ ...prev, site_address: e.target.value }))
                   }
-                  className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+                  className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
                 />
               </>
             )}

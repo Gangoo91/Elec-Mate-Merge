@@ -69,13 +69,13 @@ export function PPEGridSection({ section, mode, onChange }: Props) {
             value={item.name}
             onChange={(e) => updateItem(i, { name: e.target.value })}
             placeholder="PPE item"
-            className="h-9 text-sm touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white flex-1"
+            className="h-9 text-sm touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
           />
           <Input
             value={item.specification ?? ''}
             onChange={(e) => updateItem(i, { specification: e.target.value || undefined })}
             placeholder="Spec"
-            className="h-9 text-sm touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white w-28"
+            className="h-9 text-sm touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 w-28"
           />
           <button
             onClick={() => removeItem(i)}

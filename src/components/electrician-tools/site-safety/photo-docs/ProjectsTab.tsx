@@ -165,7 +165,7 @@ export default function ProjectsTab({
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     placeholder="Search projects, customers, addresses..."
-                    className="pl-9 h-11 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-xl text-white placeholder:text-white"
+                    className="pl-9 h-11 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-xl text-white placeholder:text-white/25"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     autoFocus

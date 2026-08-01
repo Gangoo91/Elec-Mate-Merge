@@ -46,7 +46,7 @@ export function BulletListSection({ section, mode, onChange }: Props) {
             value={item}
             onChange={(e) => updateItem(i, e.target.value)}
             placeholder="List item"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white flex-1"
+            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
           />
           <button
             onClick={() => removeItem(i)}

@@ -201,7 +201,7 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search briefings..."
             className={cn(
-              'h-11 bg-[#1e1e1e] border-white/10 text-white placeholder:text-white touch-manipulation',
+              'h-11 bg-[#1e1e1e] border-white/10 text-white placeholder:text-white/25 touch-manipulation',
               'focus:border-yellow-500 focus:ring-yellow-500',
               !searchTerm && 'pl-10'
             )}

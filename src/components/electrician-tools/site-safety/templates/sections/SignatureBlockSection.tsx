@@ -89,14 +89,14 @@ export function SignatureBlockSection({ section, mode, onChange }: Props) {
             value={entry.role}
             onChange={(e) => updateEntry(i, { role: e.target.value })}
             placeholder="Role (e.g. Assessor, Supervisor)"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
           />
           <div className="grid grid-cols-2 gap-2">
             <Input
               value={entry.name}
               onChange={(e) => updateEntry(i, { name: e.target.value })}
               placeholder="Full name"
-              className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+              className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
             />
             <Input
               type="date"

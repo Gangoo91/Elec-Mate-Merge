@@ -655,7 +655,7 @@ export function SafetyTemplateEditor({
                           value={fieldValues[field.key] ?? ''}
                           onChange={(e) => updateFieldValue(field.key, e.target.value)}
                           placeholder={field.placeholder ?? field.label}
-                          className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+                          className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
                         />
                       </div>
                     ))}

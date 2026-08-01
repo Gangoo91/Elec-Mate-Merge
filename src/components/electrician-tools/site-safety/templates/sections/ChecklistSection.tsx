@@ -57,7 +57,7 @@ export function ChecklistSection({ section, mode, onChange }: Props) {
                 value={item.label}
                 onChange={(e) => updateLabel(i, e.target.value)}
                 placeholder="Checklist item"
-                className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white flex-1"
+                className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
               />
               <button
                 onClick={() => removeItem(i)}

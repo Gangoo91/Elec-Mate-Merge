@@ -48,13 +48,13 @@ export function KeyValueSection({ section, mode, onChange }: Props) {
             value={kv.label}
             onChange={(e) => updatePair(i, { label: e.target.value })}
             placeholder="Label"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white w-32 flex-shrink-0"
+            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 w-32 flex-shrink-0"
           />
           <Input
             value={kv.value}
             onChange={(e) => updatePair(i, { value: e.target.value })}
             placeholder="Value"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white flex-1"
+            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
           />
           <button
             onClick={() => removePair(i)}

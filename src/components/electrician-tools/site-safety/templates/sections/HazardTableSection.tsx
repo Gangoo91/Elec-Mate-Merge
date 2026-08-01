@@ -122,13 +122,13 @@ function HazardCard({
         value={hazard.hazard}
         onChange={(e) => update({ hazard: e.target.value })}
         placeholder="Hazard description"
-        className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+        className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
       />
       <Input
         value={hazard.who_at_risk}
         onChange={(e) => update({ who_at_risk: e.target.value })}
         placeholder="Who is at risk"
-        className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+        className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
       />
 
       <div className="grid grid-cols-3 gap-2">
@@ -179,7 +179,7 @@ function HazardCard({
                 controls[ci] = e.target.value;
                 update({ controls });
               }}
-              className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white flex-1"
+              className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25 flex-1"
               placeholder="Control measure"
             />
             <button

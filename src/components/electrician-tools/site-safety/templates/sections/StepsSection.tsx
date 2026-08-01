@@ -81,19 +81,19 @@ export function StepsSection({ section, mode, onChange }: Props) {
             value={step.title}
             onChange={(e) => updateStep(i, { title: e.target.value })}
             placeholder="Step title"
-            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+            className="h-11 text-base touch-manipulation border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
           />
           <Textarea
             value={step.description}
             onChange={(e) => updateStep(i, { description: e.target.value })}
             placeholder="Step description"
-            className="touch-manipulation text-base min-h-[80px] border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white"
+            className="touch-manipulation text-base min-h-[80px] border-white/[0.1] bg-white/[0.03] text-white placeholder:text-white/25"
           />
           <Input
             value={step.safety_notes ?? ''}
             onChange={(e) => updateStep(i, { safety_notes: e.target.value || undefined })}
             placeholder="Safety notes (optional)"
-            className="h-11 text-base touch-manipulation border-amber-500/20 bg-amber-500/5 text-white placeholder:text-white"
+            className="h-11 text-base touch-manipulation border-amber-500/20 bg-amber-500/5 text-white placeholder:text-white/25"
           />
         </div>
       ))}
