@@ -371,6 +371,49 @@ const EICRInspectionChecklist = ({
         : obs
     );
     onUpdate('defectObservations', updatedObservations);
+
+    /*
+      An observation created from a checklist item and that item's outcome are
+      ONE fact — the classification of that item. Re-coding the observation
+      (by hand, or by accepting the AI writer's suggested code) has to move the
+      checklist outcome with it, or the certificate contradicts itself:
+
+      the observation prints as C3 under "C3 and FI observations", the checklist
+      still prints C2 against the item, and `useEICRValidation` — which counts
+      C1/C2 from the CHECKLIST, not from linked observations — forces the report
+      Unsatisfactory. The result is a report marked UNSATISFACTORY whose
+      "C1 and C2 observations" table reads "None", which is indefensible.
+
+      Only linked observations sync. A free-standing observation has no
+      inspectionItemId and is counted directly by the validation hook.
+    */
+    const changed = updatedObservations.find((o) => o.id === id);
+    const raw =
+      field === 'defectCode'
+        ? (value as string)
+        : field === '__BULK__'
+          ? (value?.defectCode as string | undefined)
+          : undefined;
+
+    // Only the four real classifications map onto a checklist outcome. The
+    // observation card also offers N/A and LIM, which are NOT valid
+    // InspectionItem outcomes ('not-applicable' / 'limitation') — writing them
+    // straight through would put an unrenderable value in the schedule.
+    const CODES = ['C1', 'C2', 'C3', 'FI'] as const;
+    const newCode = CODES.includes(raw as (typeof CODES)[number])
+      ? (raw as InspectionItem['outcome'])
+      : undefined;
+
+    if (!newCode || !changed?.inspectionItemId) return;
+
+    const items = getInspectionItems();
+    const linked = items.find((i) => i.id === changed.inspectionItemId);
+    if (!linked || linked.outcome === newCode) return;
+
+    scrollSafeUpdate(
+      'inspectionItems',
+      items.map((i) => (i.id === changed.inspectionItemId ? { ...i, outcome: newCode } : i))
+    );
   };
 
   const removeDefectObservation = (id: string) => {
